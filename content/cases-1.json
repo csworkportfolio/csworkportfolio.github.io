@@ -50,7 +50,7 @@
           }
         ],
         "height": 569,
-        "gap": 0,
+        "gap": 50,
         "speed": 11,
         "label": "Click Visual to See Closer",
         "label_pos": "above",
@@ -192,7 +192,7 @@
             "desc": "This post ushered in the new year by spotlighting real Redzone customers and a key milestone they reached with the platform. Rather than opt for a generic “Happy New Year” message, I focused the creative on human accomplishment — using candid and posed photography and a bold layout to reflect energy and optimism."
           }
         ],
-        "gap": 0,
+        "gap": 50,
         "label": "Click Visual to Learn More",
         "play": "auto"
       },
@@ -462,7 +462,7 @@
             "v": "1228250187"
           }
         ],
-        "gap": 0,
+        "gap": 50,
         "label": "Click Visual to Learn More",
         "play": "auto"
       },
