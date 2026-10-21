@@ -38,7 +38,8 @@
         "height": 315,
         "gap": 50,
         "speed": 50,
-        "loop": true
+        "loop": true,
+        "play": "auto"
       },
       {
         "heading": "Graphic Design",
@@ -113,7 +114,8 @@
         ],
         "height": 315,
         "gap": 50,
-        "speed": 20
+        "speed": 20,
+        "play": "auto"
       },
       {
         "heading": "Projects",
@@ -185,7 +187,8 @@
         ],
         "height": 350,
         "gap": 50,
-        "speed": 50
+        "speed": 50,
+        "play": "hover"
       },
       {
         "heading": "Web, App, & Email",
@@ -247,7 +250,8 @@
         ],
         "height": 350,
         "gap": 50,
-        "speed": 75
+        "speed": 75,
+        "play": "click"
       },
       {
         "heading": "Video Work",
@@ -340,7 +344,8 @@
         ],
         "height": 380,
         "gap": 50,
-        "speed": 50
+        "speed": 50,
+        "play": "hover"
       },
       {
         "heading": "Short-Form: Social Media",
@@ -390,7 +395,8 @@
         ],
         "height": 384,
         "gap": 20,
-        "speed": 35
+        "speed": 35,
+        "play": "hover"
       },
       {
         "heading": "Long-Form: Blogs, Case Studies, and Executive Thought Leadership",
@@ -456,7 +462,8 @@
         ],
         "height": 352,
         "gap": 50,
-        "speed": 50
+        "speed": 50,
+        "play": "auto"
       },
       {
         "heading": "Paid Media",

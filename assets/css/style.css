@@ -256,10 +256,9 @@ button { font: inherit; color: inherit; }
   overflow: hidden; max-width: min(86vw, 1100px);
 }
 .tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-.tile-preview, .tile-player {
-  position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000;
-}
-.tile-preview { pointer-events: none; }
+.tile-video .tile-media { object-fit: contain; }
+.tile-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+.tile-preview { position: absolute; border: 0; background: transparent; pointer-events: none; }
 .tile.is-playing { cursor: default; }
 .tile.is-playing .play { display: none; }
 
@@ -323,6 +322,7 @@ button { font: inherit; color: inherit; }
   background: rgba(14,14,14,.96); color: #fff;
 }
 .lightbox::backdrop { background: rgba(0,0,0,.6); }
+.lightbox:focus { outline: none; }
 .lightbox[open] { display: block; }
 body.lb-open { overflow: hidden; }
 .lb-inner {

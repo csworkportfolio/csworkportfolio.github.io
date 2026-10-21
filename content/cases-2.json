@@ -61,7 +61,8 @@
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Bringing a Statewide Wellness Conference to Life Through Web and Social",
@@ -87,7 +88,8 @@
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Branding Work for Healthy Texas Week + General Visual Support",
@@ -112,7 +114,8 @@
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Visual Design for Statewide Health Initiatives",
@@ -137,7 +140,8 @@
           "Frontline.png"
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "End-to-End Video Production Featuring Public Leaders and Community Partners",
@@ -167,7 +171,8 @@
           "P_065.jpg",
           "Brochure-Asking-Question-1.jpg"
         ],
-        "gap": 10
+        "gap": 10,
+        "play": "hover"
       }
     ],
     "next": {
@@ -254,7 +259,8 @@
           }
         ],
         "gap": 10,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Visualizing Redzone’s Reach Across Global Production",
@@ -273,7 +279,8 @@
           }
         ],
         "gap": 10,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Transforming Partner Relationships into Scroll-Stopping Video Stories",
@@ -306,7 +313,8 @@
           "1701990351606.jfif",
           "1698869908109.jfif"
         ],
-        "gap": 30
+        "gap": 30,
+        "play": "hover"
       }
     ],
     "next": {
@@ -372,7 +380,8 @@
           }
         ],
         "gap": 30,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Exploring Form, Flow, and Function Through Web Design",
@@ -396,7 +405,8 @@
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       },
       {
         "h": "Pushing Visual Identity and Storytelling Beyond the Brief",
@@ -443,7 +453,8 @@
           }
         ],
         "gap": 20,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       },
       {
         "h": "Foundations in Strategy & Storytelling: Where Research, Insight, and Creative Thinking First Collided...",
@@ -508,7 +519,8 @@
         "gap": 30,
         "speed": 20,
         "loop": true,
-        "label": "Click to See Full Project"
+        "label": "Click to See Full Project",
+        "play": "auto"
       }
     ],
     "next": {

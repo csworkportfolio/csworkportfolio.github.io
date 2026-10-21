@@ -54,7 +54,8 @@
         "crop": "16/9",
         "speed": 11,
         "label": "Select Videos Play on Hover",
-        "label_pos": "above"
+        "label_pos": "above",
+        "play": "hover"
       },
       {
         "h": "Athlete Stories, Published on a Seasonal Beat",
@@ -76,7 +77,8 @@
         "gap": 50,
         "speed": 11,
         "label": "Click Visual to See Closer",
-        "label_pos": "above"
+        "label_pos": "above",
+        "play": "auto"
       },
       {
         "h": "Full Shopping Surfaces",
@@ -97,7 +99,8 @@
         ],
         "height": 517,
         "gap": 0,
-        "label": "Click Visual to See Closer"
+        "label": "Click Visual to See Closer",
+        "play": "auto"
       }
     ],
     "next": {
@@ -162,7 +165,8 @@
           "Redzone on the Web_edited.png"
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
@@ -190,7 +194,8 @@
           }
         ],
         "gap": 0,
-        "label": "Click Visual to Learn More / Select Videos Play on Hover"
+        "label": "Click Visual to Learn More / Select Videos Play on Hover",
+        "play": "hover"
       },
       {
         "h": "Building Culture, Community, and Educational Content Through Everyday Design",
@@ -222,7 +227,8 @@
           }
         ],
         "gap": 10,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       },
       {
         "h": "Extending the Brand into the Real World with Physical Touchpoints",
@@ -258,7 +264,8 @@
           }
         ],
         "gap": 10,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Amplifying Culture & Capability Through Video",
@@ -295,7 +302,8 @@
           "1730774975742.jfif",
           "1684871519806.jfif"
         ],
-        "gap": 10
+        "gap": 10,
+        "play": "hover"
       }
     ],
     "next": {
@@ -355,7 +363,8 @@
         ],
         "gap": 50,
         "speed": 50,
-        "label": "Select Videos Play on Hover"
+        "label": "Select Videos Play on Hover",
+        "play": "hover"
       },
       {
         "h": "Designing at the Speed of a Public Company's News Cycle",
@@ -371,7 +380,8 @@
           "SOLV Example 2 Transparent.png"
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       },
       {
         "h": "Bringing Field Stories and Project Milestones to Life Through Video",
@@ -401,7 +411,8 @@
         ],
         "gap": 130,
         "crop": "3/4",
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "click"
       }
     ],
     "next": {
@@ -452,7 +463,8 @@
           }
         ],
         "gap": 0,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "hover"
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
@@ -466,7 +478,8 @@
           "Cohesity Examples 2 TP.png"
         ],
         "gap": 100,
-        "label": "Click Visual to Learn More"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       }
     ],
     "next": {

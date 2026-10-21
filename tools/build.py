@@ -219,31 +219,37 @@ def fix_paths(item, root):
 PLAY_ICON = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>'
 
 
-def tile(item, i, root, crop=None, inline=False):
+def tile(item, i, root, crop=None, inline=False, play="hover"):
     label = item.get("title") or {"image": "image", "loop": "animation", "video": "video"}.get(item["type"], "video")
     alt = esc(item.get("title", ""))
     w, h = item["w"], item["h"]
     embed = item["type"] in ("vimeo", "youtube")
-    if item["type"] == "loop":
+    if item["type"] == "loop" or (item["type"] == "video" and play == "auto"):
+        # GIF-loops always play; an uploaded video plays silently only where Wix autoplays it.
         media = (f'<video class="tile-media" muted loop playsinline preload="none" '
                  f'poster="{root}{item["thumb"]}" data-src="{root}{item["src"]}" width="{w}" height="{h}" '
                  f'aria-hidden="true"></video>')
     else:
         media = (f'<img class="tile-media" src="{root}{item["thumb"]}" width="{w}" height="{h}" '
                  f'alt="{alt}" loading="lazy" decoding="async">')
-    play = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") else ""
+    autoplaying = play == "auto" and item["type"] in ("vimeo", "youtube", "video")
+    play_icon = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") and not autoplaying else ""
     # Like Wix, embedded videos show as 16:9 tiles; a gallery can also crop every tile to one shape.
     shape = crop or ("16/9" if embed else None)
     action = "Play video" if inline else "View larger"
-    attrs = f' data-video="{item["type"]}:{item["id"]}"' if embed else ""
+    attrs = (f' data-video="{item["type"]}:{item["id"]}" data-vw="{item["vw"]}" data-vh="{item["vh"]}"'
+             if embed else "")
     # Width comes from height x ratio in plain CSS math; Safari ignores aspect-ratio on buttons.
     if shape:
         sw, sh = (float(x) for x in shape.split("/"))
         ratio = sw / sh
     else:
         ratio = w / h
-    return (f'<li class="tile-wrap"><button class="tile" type="button" data-index="{i}"{attrs} '
-            f'style="--r:{ratio:.4f}" aria-label="{action}: {esc(label)}">{media}{play}</button></li>')
+    # Videos keep their own shape inside the tile, as on Wix; only a deliberate
+    # crop (like SOLV's 3:4 video gallery) fills the box.
+    cls = "tile tile-video" if embed and not (crop and crop != "16/9") else "tile"
+    return (f'<li class="tile-wrap"><button class="{cls}" type="button" data-index="{i}"{attrs} '
+            f'style="--r:{ratio:.4f}" aria-label="{action}: {esc(label)}">{media}{play_icon}</button></li>')
 
 
 def json_script(obj):
@@ -260,9 +266,10 @@ def strip(items, root, label, opts=None, kind="gallery", hint=False):
     opts = opts or {}
     inline = kind == "videos"
     data = json_script([fix_paths(it, root) for it in items])
-    tiles = "".join(tile(it, i, root, opts.get("crop"), inline) for i, it in enumerate(items))
+    tiles = "".join(tile(it, i, root, opts.get("crop"), inline, opts.get("play", "hover")) for i, it in enumerate(items))
     style = "".join(f"--{k}:{opts[o]}px;" for o, k in (("height", "tile-h"), ("gap", "gap")) if o in opts)
-    data_attrs = f' data-speed="{opts.get("speed", 0)}"' + (' data-loop' if opts.get("loop") else "")
+    data_attrs = (f' data-speed="{opts.get("speed", 0)}" data-play="{opts.get("play", "click" if inline else "hover")}"'
+                  + (' data-loop' if opts.get("loop") else ""))
     cls = "strip strip-videos" if inline else "strip"
     caption = ""
     if opts.get("label"):
@@ -346,7 +353,7 @@ def layout(page, site, root, body, media, og_image=None):
     <a href="#top" class="to-top">Back to top ↑</a>
   </div>
 </footer>
-<dialog class="lightbox" aria-label="Enlarged view">
+<dialog class="lightbox" aria-label="Enlarged view" tabindex="-1">
   <div class="lb-inner">
     <div class="lb-media"></div>
     <div class="lb-caption"></div>

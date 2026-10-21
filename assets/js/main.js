@@ -197,20 +197,42 @@
       : `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&modestbranding=1&rel=0`;
   }
 
-  // Wix plays gallery videos silently while the pointer rests on them.
-  function hoverPreview(tileEl) {
-    let frame = null;
-    tileEl.addEventListener("pointerenter", (e) => {
-      if (e.pointerType !== "mouse" || frame) return;
-      const [kind, id] = tileEl.dataset.video.split(":");
-      frame = Object.assign(document.createElement("iframe"), { src: previewUrl(kind, id), title: "", tabIndex: -1 });
-      frame.className = "tile-preview";
-      frame.setAttribute("allow", "autoplay; encrypted-media");
-      frame.setAttribute("aria-hidden", "true");
-      tileEl.appendChild(frame);
+  // A silent preview player sized to the video's own shape and centered in the
+  // tile, the way Wix fits vertical and square videos into its 16:9 tiles.
+  function addPreview(tileEl) {
+    if (tileEl.querySelector(".tile-preview")) return null;
+    const [kind, id] = tileEl.dataset.video.split(":");
+    const vw = Number(tileEl.dataset.vw), vh = Number(tileEl.dataset.vh);
+    const tw = tileEl.clientWidth, th = tileEl.clientHeight;
+    const k = Math.min(tw / vw, th / vh);
+    const frame = Object.assign(document.createElement("iframe"), { src: previewUrl(kind, id), title: "", tabIndex: -1 });
+    frame.className = "tile-preview";
+    frame.setAttribute("allow", "autoplay; encrypted-media");
+    frame.setAttribute("aria-hidden", "true");
+    Object.assign(frame.style, {
+      width: `${Math.round(vw * k)}px`, height: `${Math.round(vh * k)}px`,
+      left: `${Math.round((tw - vw * k) / 2)}px`, top: `${Math.round((th - vh * k) / 2)}px`,
     });
-    tileEl.addEventListener("pointerleave", () => { if (frame) { frame.remove(); frame = null; } });
+    tileEl.appendChild(frame);
+    return frame;
   }
+  const removePreview = (tileEl) => tileEl.querySelector(".tile-preview")?.remove();
+
+  // Wix "play on hover": the video runs silently while the pointer rests on it.
+  function hoverPreview(tileEl) {
+    tileEl.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") addPreview(tileEl); });
+    tileEl.addEventListener("pointerleave", () => removePreview(tileEl));
+  }
+
+  // Wix "autoplay": the video runs silently whenever it is on screen.
+  const autoObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) addPreview(e.target);
+          else removePreview(e.target);
+        }
+      }, { threshold: 0.3 })
+    : null;
 
   // The video rows play in place, with controls, when clicked.
   function playInline(tileEl, item) {
@@ -304,14 +326,20 @@
     dialog.setAttribute("aria-label", label ? `Enlarged view: ${label}` : "Enlarged view");
   }
 
-  function open(items, index) {
+  let openedByPointer = false;
+
+  function open(items, index, byPointer) {
+    openedByPointer = byPointer;
     current = { items, index };
     dialog.classList.toggle("single", items.length < 2);
     render();
     lightboxOpen = true;
     document.body.classList.add("lb-open");
     dialog.showModal();
-    dialog.querySelector(".lb-close").focus();
+    // Keyboard users land on Close; after a click, focus the dialog itself so
+    // browsers that ring programmatic focus (Safari) don't outline the button.
+    if (byPointer) dialog.focus({ preventScroll: true });
+    else dialog.querySelector(".lb-close").focus();
   }
 
   function go(delta) {
@@ -329,6 +357,11 @@
       lbMedia.replaceChildren(); // stops any playing video
       lightboxOpen = false;
       document.body.classList.remove("lb-open");
+      // The browser hands focus back to the gallery; after a click that would
+      // draw a focus ring around it, so let it go.
+      if (openedByPointer && document.activeElement && document.activeElement !== document.body) {
+        document.activeElement.blur();
+      }
     });
     dialog.addEventListener("click", (e) => {
       if (e.target === dialog || e.target.classList.contains("lb-inner") || e.target === lbMedia) dialog.close();
@@ -451,9 +484,13 @@
       const b = e.target.closest("[data-index]");
       if (!b) return;
       if (inline) playInline(b, items[Number(b.dataset.index)]);
-      else if (dialog) open(items, Number(b.dataset.index));
+      else if (dialog) open(items, Number(b.dataset.index), e.detail > 0);
     });
-    if (!inline && canHover && !reduceMotion) g.querySelectorAll(".tile[data-video]").forEach(hoverPreview);
+    const play = g.dataset.play;
+    if (!inline && !reduceMotion) {
+      if (play === "hover" && canHover) g.querySelectorAll(".tile[data-video]").forEach(hoverPreview);
+      if (play === "auto" && autoObserver) g.querySelectorAll(".tile[data-video]").forEach((t) => autoObserver.observe(t));
+    }
     if (g.classList.contains("strip")) initStrip(g);
     watchLoops(g);
   });
