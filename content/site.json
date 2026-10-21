@@ -5,37 +5,163 @@
   "avatar": "Updated Portrait BW_edited_edited.jpg",
   "description": "Digital marketing and design portfolio of Christian Sanchez: case studies, graphic design, web, video, social, and paid media.",
   "nav": [
-    { "label": "Case Studies", "slug": "" },
-    { "label": "Graphic Design", "slug": "graphic-design" },
-    { "label": "Web ∙ App ∙ Email", "slug": "web-app-email" },
-    { "label": "Video", "slug": "video-work" },
-    { "label": "Social & Writing", "slug": "organic-social" },
-    { "label": "Paid Media", "slug": "paid-ads" }
+    {
+      "label": "Case Studies",
+      "slug": "",
+      "short": "Cases",
+      "icon": "cases"
+    },
+    {
+      "label": "Graphic Design",
+      "slug": "graphic-design",
+      "short": "Design",
+      "icon": "design"
+    },
+    {
+      "label": "Web ∙ App ∙ Email",
+      "slug": "web-app-email",
+      "short": "Web",
+      "icon": "web"
+    },
+    {
+      "label": "Video",
+      "slug": "video-work",
+      "short": "Video",
+      "icon": "video"
+    },
+    {
+      "label": "Social & Writing",
+      "slug": "organic-social",
+      "short": "Social",
+      "icon": "social"
+    },
+    {
+      "label": "Paid Media",
+      "slug": "paid-ads",
+      "short": "Ads",
+      "icon": "ads"
+    }
   ],
   "videos": {
-    "1175822607": { "w": 240, "h": 426, "poster": "_-3b353e2834a4455eb3238621fcee578e.jpg" },
-    "1175822621": { "w": 240, "h": 426, "poster": "_-c112ce9f9fb947b4b7093ea4e49fea53.jpg" },
-    "1175822624": { "w": 240, "h": 426, "poster": "_-a308c5c72f684ef68b81d880bb5a00fd.jpg" },
-    "1228250186": { "w": 240, "h": 300, "poster": "_-4feed1b3e6ad421694aef620e7149dfa.jpg" },
-    "1228250187": { "w": 240, "h": 262, "poster": "_-3626ef3ef9954711aecb3828c9337944.jpg" },
-    "1228250188": { "w": 196, "h": 426, "poster": "_-c7a350ed8b9141ec91c8529f29cd4795.jpg" },
-    "1228250189": { "w": 196, "h": 426, "poster": "_-2b1cd62ab3c341258d2089c733c1637b.jpg" },
-    "1228250203": { "w": 426, "h": 240, "poster": "_-28926acd25ec4ea692709ce5b424ae20.jpg" },
-    "1228250217": { "w": 256, "h": 240, "poster": "_-3746b62004a04b3a9921571b4fee23d3.jpg" },
-    "1228250219": { "w": 420, "h": 240, "poster": "_-7e3f9eb936974a5fa27ff08c3a0d5be5.jpg" },
-    "1228250222": { "w": 420, "h": 240, "poster": "_-9ebe21dc71424e5d94f5f35419c09be5.jpg" },
-    "1228251265": { "w": 426, "h": 240, "poster": "_-e71d5167995c48ac8b0cd6d24a2a3d3f.jpg" },
-    "1228265177": { "w": 212, "h": 426, "poster": "_-354171ae9b3d43b2889bb9fc1c472f5d.jpg" },
-    "1231905548": { "w": 240, "h": 426, "poster": "_-fef1a8a41c50458791b27baf8fbcf2ac.jpg" },
-    "1231922947": { "w": 200, "h": 426, "poster": "_-aae726195456414fab4b0703e57cefeb.jpg" },
-    "1075028930": { "w": 240, "h": 240, "poster": "vimeo-1075028930.jpg" },
-    "1075028937": { "w": 240, "h": 426, "poster": "vimeo-1075028937.jpg" },
-    "1075028942": { "w": 240, "h": 426, "poster": "vimeo-1075028942.jpg" },
-    "1RKAiFOCbtE": { "w": 16, "h": 9, "poster": "_-77f06fb5ac64409b99c09edc9251bcef.jpg" },
-    "mdeXsU0Jfkg": { "w": 16, "h": 9, "poster": "_-cee53f262654447c8095e259335665d0.jpg" },
-    "QctJ8Uagr7w": { "w": 16, "h": 9, "poster": "_-e058851b20df433aa2ed32490b0ea56e.jpg" },
-    "nD0pXIu1OO4": { "w": 16, "h": 9, "poster": "_-7e5d5fb0219b4eebbfbc444855815cb3.jpg" },
-    "PxXYS6s87G8": { "w": 16, "h": 9, "poster": "_-7d54e2d42afc464a8ba81871de174933.jpg" },
-    "kPqrLVgfQQs": { "w": 16, "h": 9, "poster": "yt-kPqrLVgfQQs.jpg" }
+    "1175822607": {
+      "w": 240,
+      "h": 426,
+      "poster": "_-3b353e2834a4455eb3238621fcee578e.jpg"
+    },
+    "1175822621": {
+      "w": 240,
+      "h": 426,
+      "poster": "_-c112ce9f9fb947b4b7093ea4e49fea53.jpg"
+    },
+    "1175822624": {
+      "w": 240,
+      "h": 426,
+      "poster": "_-a308c5c72f684ef68b81d880bb5a00fd.jpg"
+    },
+    "1228250186": {
+      "w": 240,
+      "h": 300,
+      "poster": "_-4feed1b3e6ad421694aef620e7149dfa.jpg"
+    },
+    "1228250187": {
+      "w": 240,
+      "h": 262,
+      "poster": "_-3626ef3ef9954711aecb3828c9337944.jpg"
+    },
+    "1228250188": {
+      "w": 196,
+      "h": 426,
+      "poster": "_-c7a350ed8b9141ec91c8529f29cd4795.jpg"
+    },
+    "1228250189": {
+      "w": 196,
+      "h": 426,
+      "poster": "_-2b1cd62ab3c341258d2089c733c1637b.jpg"
+    },
+    "1228250203": {
+      "w": 426,
+      "h": 240,
+      "poster": "_-28926acd25ec4ea692709ce5b424ae20.jpg"
+    },
+    "1228250217": {
+      "w": 256,
+      "h": 240,
+      "poster": "_-3746b62004a04b3a9921571b4fee23d3.jpg"
+    },
+    "1228250219": {
+      "w": 420,
+      "h": 240,
+      "poster": "_-7e3f9eb936974a5fa27ff08c3a0d5be5.jpg"
+    },
+    "1228250222": {
+      "w": 420,
+      "h": 240,
+      "poster": "_-9ebe21dc71424e5d94f5f35419c09be5.jpg"
+    },
+    "1228251265": {
+      "w": 426,
+      "h": 240,
+      "poster": "_-e71d5167995c48ac8b0cd6d24a2a3d3f.jpg"
+    },
+    "1228265177": {
+      "w": 212,
+      "h": 426,
+      "poster": "_-354171ae9b3d43b2889bb9fc1c472f5d.jpg"
+    },
+    "1231905548": {
+      "w": 240,
+      "h": 426,
+      "poster": "_-fef1a8a41c50458791b27baf8fbcf2ac.jpg"
+    },
+    "1231922947": {
+      "w": 200,
+      "h": 426,
+      "poster": "_-aae726195456414fab4b0703e57cefeb.jpg"
+    },
+    "1075028930": {
+      "w": 240,
+      "h": 240,
+      "poster": "vimeo-1075028930.jpg"
+    },
+    "1075028937": {
+      "w": 240,
+      "h": 426,
+      "poster": "vimeo-1075028937.jpg"
+    },
+    "1075028942": {
+      "w": 240,
+      "h": 426,
+      "poster": "vimeo-1075028942.jpg"
+    },
+    "1RKAiFOCbtE": {
+      "w": 16,
+      "h": 9,
+      "poster": "_-77f06fb5ac64409b99c09edc9251bcef.jpg"
+    },
+    "mdeXsU0Jfkg": {
+      "w": 16,
+      "h": 9,
+      "poster": "_-cee53f262654447c8095e259335665d0.jpg"
+    },
+    "QctJ8Uagr7w": {
+      "w": 16,
+      "h": 9,
+      "poster": "_-e058851b20df433aa2ed32490b0ea56e.jpg"
+    },
+    "nD0pXIu1OO4": {
+      "w": 16,
+      "h": 9,
+      "poster": "_-7e5d5fb0219b4eebbfbc444855815cb3.jpg"
+    },
+    "PxXYS6s87G8": {
+      "w": 16,
+      "h": 9,
+      "poster": "_-7d54e2d42afc464a8ba81871de174933.jpg"
+    },
+    "kPqrLVgfQQs": {
+      "w": 16,
+      "h": 9,
+      "poster": "yt-kPqrLVgfQQs.jpg"
+    }
   }
 }

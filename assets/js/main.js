@@ -470,13 +470,13 @@
 
   // ---------- wire up ----------
 
-  // On narrow screens the section pills scroll sideways; show the current one.
-  const activePill = document.querySelector(".pill.is-active");
-  if (activePill) {
-    const row = activePill.parentElement;
-    if (row.scrollWidth > row.clientWidth) {
-      row.scrollLeft = activePill.offsetLeft - (row.clientWidth - activePill.offsetWidth) / 2;
-    }
+  // The section bar sticks just under the pinned header; give CSS the header's real height.
+  const head = document.querySelector(".site-header");
+  if (head) {
+    const setHead = () => document.documentElement.style.setProperty("--head-h", `${head.offsetHeight}px`);
+    setHead();
+    window.addEventListener("resize", setHead);
+    document.fonts && document.fonts.ready.then(setHead);
   }
 
   document.querySelectorAll("[data-gallery]").forEach((g) => {

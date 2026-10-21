@@ -12,10 +12,13 @@
   --red-hover: #a80008;
   --cream: #fcf4eb;
 
-  /* Everything is Arial. Arial Black stands in for the wide, heavy wordmark. */
-  --sans: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  --display: "Arial Black", "Arial Bold", Arial, sans-serif;
-  --light: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  /* The Job Search AI app's fonts (kit.css --font and --f-round): Apple's system font,
+     SF Pro, with SF Pro Rounded for numbers. Weights: 400 text, 700 titles, 300 for
+     the light labels, 500 buttons, 800 for the wordmark. */
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+  --light: var(--sans);
+  --round: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --wrap: 980px;
   --gutter: 24px;
@@ -30,6 +33,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   font-family: var(--sans);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink);
@@ -74,54 +78,84 @@ button { font: inherit; color: inherit; }
 }
 .brand-text { display: flex; flex-direction: column; gap: 4px; }
 .wordmark {
-  font-family: var(--display); font-weight: 900; color: var(--cream);
-  font-size: clamp(28px, 3.8vw, 40px); letter-spacing: .1em; line-height: 1;
+  font-family: var(--display); font-weight: 800; color: var(--cream);
+  font-size: clamp(30px, 4.2vw, 44px); letter-spacing: .1em; line-height: 1;
 }
-.byline { font-family: var(--light); font-weight: 400; font-size: 20px; }
+.byline { font-family: var(--light); font-weight: 300; font-size: 20px; }
 
-/* ---------- section pills ---------- */
+/* ---------- liquid glass (from the Job Search AI app, kit.css) ---------- */
+/* The app's light-theme glass: a translucent tint, blurred and saturated, with a
+   bright rim along the top, a hairline edge and a soft shadow. Buttons take the
+   same recipe tinted in the portfolio's own red and rust. */
+:root {
+  --glass-blur: blur(14px) saturate(190%);
+  --glass-rim: inset 0 .5px 0 rgba(255, 255, 255, .6);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
 
-.pills { padding: 18px 0 24px; }
-.page-home .pills { padding: 20px 0 16px; }
-.pills-row { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 16px; }
-.pill {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 145px; height: 35px; padding: 0 20px; border-radius: 999px;
-  background: var(--pill); color: #fff; text-decoration: none;
-  font-size: 14px; white-space: nowrap;
-  box-shadow: 0 1px 4px rgba(0,0,0,.6);
-  transition: background-color .15s, transform .15s;
+/* ---------- section tab bar ---------- */
+/* An exact copy of the Job Search AI app's switcher (kit.css .ktabs) in its light
+   theme, kept light in every mode because the portfolio page is always white: the same
+   glass, type, sizes, lens and accent. Only the tab names and icons are the portfolio's. */
+:root {
+  --tabglass: color-mix(in srgb, #ffffff 48%, transparent);
+  --tablens: rgba(0, 0, 0, .07);
+  --tabink: #000;
+  --glassline: rgba(0, 0, 0, .10);
+  --tabaccent: #0068da;
+  --tabshadow: inset 0 .5px 0 rgba(255, 255, 255, .6), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0, 0, 0, .10);
+  --tabband: #f6f6f6;
 }
-.pill:hover { background: #2d2d2d; }
-.pill.is-active { background: var(--rust); }
-.pill.is-active:hover { background: var(--rust-hover); }
-/* "WORK BY CATEGORY" sits in a thin bracket under the buttons, as on Wix. */
-.nav-label {
-  display: flex; align-items: flex-end; gap: 20px;
-  width: min(749px, calc(100% - 2 * var(--gutter))); margin: 11px auto 0;
-  font-size: 12px; font-style: italic; line-height: 16px; text-transform: uppercase; color: #333;
+
+/* The bar travels with the page: it stops just under the pinned header (main.js
+   measures the header into --head-h), or at the top of the window on the home page.
+   Only the bar itself takes clicks; the band around it lets them through to the page. */
+.pills {
+  padding: 18px 0 22px; display: flex; flex-direction: column; align-items: center;
+  position: sticky; top: var(--head-h, 158px); z-index: 45; pointer-events: none;
 }
-.nav-label span { transform: translateY(8px); white-space: nowrap; }
-.nav-label::before, .nav-label::after {
-  content: ""; flex: 1; height: 16px; border-bottom: 1px solid #666;
+.page-home .pills { padding: 20px 0; top: 0; }
+.ktabs { pointer-events: auto; }
+.ktabs {
+  display: flex; gap: 0; padding: 4px; box-sizing: border-box; border-radius: 999px;
+  height: clamp(52px, 5.4vw, 56px); max-width: calc(100% - 2 * var(--gutter));
+  background: var(--tabglass); -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow);
+  font-family: var(--sans); line-height: normal;
 }
-.nav-label::before { border-left: 1px solid #666; }
-.nav-label::after { border-right: 1px solid #666; }
+.ktab {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  /* roomier than the app (72px, 10px) so the icons and names breathe; eases down on narrower windows */
+  min-width: clamp(70px, 7.8vw, 84px); padding: 0 clamp(12px, 2.4vw, 32px); border-radius: 999px;
+  color: var(--tabink); font-size: 10px; font-weight: 600; letter-spacing: .01em; white-space: nowrap;
+  text-decoration: none; transition: background .18s;
+}
+.ktab svg { width: clamp(20px, 2.2vw, 22px); height: clamp(20px, 2.2vw, 22px); flex: 0 0 auto; fill: currentColor; }
+a.ktab:hover { text-decoration: none; background: color-mix(in srgb, var(--tabink) 8%, transparent); }
+.ktab.is-active, a.ktab.is-active:hover { color: var(--tabaccent); background: var(--tablens); }
+.ktab:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: -2px; }
+.ktab .short { display: none; }
+@media (prefers-reduced-transparency: reduce) { .ktabs { background: var(--tabband); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (prefers-reduced-motion: reduce) { .ktab { transition: none; } }
 
 /* ---------- buttons ---------- */
+/* Every control wears the tab bar's glass: the Job Search AI app's light theme.
+   White at 48%, blurred and saturated, a bright top rim, a hairline edge, a soft shadow. */
+.btn, .strip-arrow, .play, .lb-btn {
+  background: var(--tabglass); color: var(--tabink);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow);
+  transition: background-color .18s, opacity .2s;
+}
+.btn:hover, .strip-arrow:hover, .lb-btn:hover, .tile:hover .play {
+  background: color-mix(in srgb, #ffffff 66%, transparent);
+}
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 40px; padding: 0 26px; border-radius: 999px;
-  color: #fff; text-decoration: none; font-size: 15px; font-weight: 400;
-  transition: background-color .15s;
+  text-decoration: none; font-size: 15px; font-weight: 500;
 }
-.btn-red { background: var(--red); }
-.btn-red:hover { background: var(--red-hover); }
-.btn-rust { background: var(--rust); }
-.btn-rust:hover { background: var(--rust-hover); }
-.btn-gray { background: var(--pill); }
-.btn-gray:hover { background: #2d2d2d; }
 
 /* ---------- home ---------- */
 
@@ -143,7 +177,7 @@ button { font: inherit; color: inherit; }
 }
 .home-hero-text { padding: 34px 0 20px 43px; }
 .home-hero h1 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-.home-hero p { font-size: 17px; line-height: 1.4; color: #e8e8e8; }
+.home-hero p { font-size: 16px; line-height: 1.4; color: #e8e8e8; }
 .home-hero p + p { margin-top: 12px; }
 .home-portrait { width: 254px; height: auto; align-self: end; }
 
@@ -159,9 +193,9 @@ button { font: inherit; color: inherit; }
   display: grid; grid-template-columns: 234px minmax(0, 643px); column-gap: 44px; align-items: center;
   min-height: 361px; padding-left: calc(var(--gutter) + 42px);
 }
-.case-row .kicker { font-family: var(--light); font-weight: 400; font-size: 14px; line-height: 1.4; margin-bottom: 18px; }
+.case-row .kicker { font-family: var(--light); font-weight: 300; font-size: 14px; line-height: 1.4; margin-bottom: 18px; }
 .case-row h2 { font-size: 18px; line-height: 1.35; font-weight: 700; margin-bottom: 26px; }
-.case-row .btn { box-shadow: 0 1px 4px rgba(0,0,0,.6); min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
+.case-row .btn { min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
 /* Home-page work-sample slideshow */
 .slideshow {
   position: relative; width: 100%; max-width: 643px; justify-self: end;
@@ -175,6 +209,7 @@ button { font: inherit; color: inherit; }
 .ss-count {
   position: absolute; right: 10px; top: 9px; margin: 0;
   font-size: 12px; line-height: 14px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.6);
+  font-family: var(--round); font-weight: 600; font-variant-numeric: tabular-nums;
 }
 @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
 
@@ -195,7 +230,7 @@ button { font: inherit; color: inherit; }
 .case-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; margin-bottom: 20px; }
 .case-logos img { height: auto; max-height: 64px; width: auto; max-width: 300px; }
 .case-hero h1 { font-size: 18px; line-height: 1.4; font-weight: 700; max-width: 680px; }
-.case-sub { margin-top: 9px; font-family: var(--light); font-weight: 400; font-size: 16px; line-height: 1.45; color: #fff; }
+.case-sub { margin-top: 9px; font-family: var(--light); font-weight: 300; font-size: 16px; line-height: 1.45; color: #fff; }
 
 /* Vertical rhythm, taken from the typical gaps on the Wix case studies:
    lede 18px under the hero, 60px to THE PROBLEM, 40px between the two intro
@@ -237,8 +272,8 @@ button { font: inherit; color: inherit; }
 /* Matches the Wix "slider" galleries: tiles fill their box with no shadow,
    per-gallery height and gap (set inline), round arrows 23px from the edges. */
 
-.strip { position: relative; margin-top: 24px; --arrow-bg: var(--rust); }
-.page-category .strip { margin-top: 0; --arrow-bg: var(--red); }
+.strip { position: relative; margin-top: 24px; }
+.page-category .strip { margin-top: 0; }
 .strip-viewport {
   overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
   -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
@@ -264,20 +299,16 @@ button { font: inherit; color: inherit; }
 .play {
   position: absolute; left: 50%; top: 50%; width: 50px; height: 50px; margin: -25px 0 0 -25px;
   display: grid; place-items: center; border-radius: 50%;
-  background: rgba(0,0,0,.55); transition: background-color .15s, opacity .2s;
 }
-.play svg { width: 24px; height: 24px; fill: #fff; margin-left: 3px; }
-.tile:hover .play { background: var(--arrow-bg, var(--rust)); }
+.play svg { width: 22px; height: 22px; fill: currentColor; margin-left: 3px; }
 .tile:has(.tile-preview) .play { opacity: 0; }
 
 .strip-arrow {
-  position: absolute; top: calc(50% - 25px); width: 50px; height: 50px; border-radius: 50%;
-  border: 0; background: var(--arrow-bg); display: grid; place-items: center; cursor: pointer;
-  z-index: 2; transition: filter .15s;
+  position: absolute; top: calc(50% - 25px); width: 50px; height: 50px; border-radius: 50%; border: 0;
+  display: grid; place-items: center; cursor: pointer; z-index: 2;
 }
-.strip-arrow:hover { filter: brightness(1.12); }
 .strip-arrow[hidden] { display: none; }
-.strip-arrow svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.strip-arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .strip-prev { left: 23px; }
 .strip-next { right: 23px; }
 .strip.is-static .strip-arrow { display: none; }
@@ -286,15 +317,6 @@ button { font: inherit; color: inherit; }
 /* Video rows (QAD, Healthier Texas, Partnerships): 16:9 tiles that play in place,
    with full-height edge strips and a white chevron for navigation. */
 .strip-videos .strip-track { padding-left: 4px; padding-right: 4px; }
-.strip-videos .strip-arrow {
-  top: 0; bottom: 0; height: auto; width: 55px; border-radius: 0; background: none;
-}
-.strip-videos .strip-prev { left: 0; }
-.strip-videos .strip-next { right: 0; }
-.strip-videos .strip-arrow svg {
-  width: 30px; height: 30px; stroke-width: 2; opacity: .8;
-  filter: drop-shadow(0 0 3px rgba(0,0,0,.6));
-}
 
 /* Captions that sit with a gallery on Wix ("Click Visual to Learn More" etc.) */
 .gal-label {
@@ -346,12 +368,10 @@ body.lb-open { overflow: hidden; }
 .lb-caption p + p { margin-top: 10px; }
 .lb-caption .btn { margin-top: 20px; }
 .lb-btn {
-  position: absolute; width: 48px; height: 48px; border-radius: 50%; border: 0;
-  background: rgba(255,255,255,.1); display: grid; place-items: center; cursor: pointer;
-  transition: background-color .15s;
+  position: absolute; width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center;
 }
-.lb-btn:hover { background: rgba(255,255,255,.22); }
-.lb-btn svg { width: 24px; height: 24px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.lb-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .lb-close { top: 14px; right: 14px; }
 .lb-prev { left: 18px; top: calc(50% - 24px); }
 .lb-next { right: 18px; top: calc(50% - 24px); }
@@ -389,18 +409,26 @@ body.lb-open { overflow: hidden; }
   .header-row { padding-top: 14px; padding-bottom: 14px; }
   .brand { display: flex; justify-content: space-between; flex-direction: row-reverse; gap: 16px; width: 100%; }
   .brand-text { min-width: 0; }
-  /* "PORTFOLIO" in Arial Black is ~7.3em wide; fit it beside the 84px avatar. */
-  .wordmark { font-size: clamp(18px, calc((100vw - 134px) / 7.4), 30px); }
+  /* "PORTFOLIO" in SF Pro Heavy is ~6.6em wide; fit it beside the 84px avatar. */
+  .wordmark { font-size: clamp(18px, calc((100vw - 134px) / 6.7), 32px); }
   .avatar { width: 84px; height: 84px; flex: none; }
   .byline { font-size: 17px; }
 
-  .pills { padding: 14px 0 10px; }
-  .pills-row {
-    flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none;
-    padding-bottom: 4px;
+  /* the nav is its own layer (it has a page-transition name), so it carries the bar's height in the stack */
+  .pills { padding: 0; position: relative; top: auto; z-index: 60; }
+  .page-home .pills { padding: 16px 0 12px; }
+  .ktabs {
+    position: fixed; z-index: 55; height: 62px; max-width: none; padding: 4px 3px;
+    left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); top: auto;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
   }
-  .pills-row::-webkit-scrollbar { display: none; }
-  .pill { flex: none; min-width: 0; height: 36px; padding: 0 16px; }
+  .ktab { flex: 1 1 0; min-width: 0; padding: 0; }
+  .ktab svg { width: 26px; height: 26px; }
+  .ktab span { letter-spacing: -.02em; }
+  .ktab .full { display: none; }
+  .ktab .short { display: inline; }
+  /* room for the floating bar, kept inside the rust footer so no white band shows below it */
+  .footer-row { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
 
   .home-hero-inner { grid-template-columns: 1fr; gap: 0; padding-top: 36px; min-height: 0; }
   .home-hero-text { padding: 0 0 8px; }
@@ -409,7 +437,6 @@ body.lb-open { overflow: hidden; }
   .home-portrait { width: 62%; max-width: 260px; justify-self: end; margin-top: 12px; }
 
   .case-row-inner { grid-template-columns: 1fr; min-height: 300px; padding-left: var(--gutter); padding-top: 32px; padding-bottom: 32px; }
-  .nav-label { gap: 12px; }
   .slideshow { display: none; }
 
   .case-hero-inner { min-height: 300px; }
@@ -438,7 +465,9 @@ body.lb-open { overflow: hidden; }
 
 @view-transition { navigation: auto; }
 .site-header { view-transition-name: site-header; }
-.pills { view-transition-name: site-pills; }
+/* The name goes on the bar itself, not its container: an element with a transition name
+   stops the blur of any glass inside it from reaching the page behind. */
+.ktabs { view-transition-name: site-tabs; }
 .site-footer { view-transition-name: site-footer; }
 main { view-transition-name: page; }
 @keyframes page-in { from { transform: translateX(100%); } }
@@ -449,3 +478,9 @@ main { view-transition-name: page; }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
+
+@media (prefers-reduced-transparency: reduce) {
+  .btn, .strip-arrow, .play, .lb-btn { background: var(--tabband); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .ktab, .btn, .strip-arrow, .lb-btn { transition: none; } }
