@@ -234,8 +234,9 @@ def tile(item, i, root, crop=None, inline=False, play="hover"):
                  f'alt="{alt}" loading="lazy" decoding="async">')
     autoplaying = play == "auto" and item["type"] in ("vimeo", "youtube", "video")
     play_icon = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") and not autoplaying else ""
-    # Like Wix, embedded videos show as 16:9 tiles; a gallery can also crop every tile to one shape.
-    shape = crop or ("16/9" if embed else None)
+    # A video tile takes the video's own shape, so vertical videos sit one gallery
+    # gap from their neighbours; a gallery can still crop every tile to one shape.
+    shape = crop or (f'{item["vw"]}/{item["vh"]}' if embed else None)
     action = "Play video" if inline else "View larger"
     attrs = (f' data-video="{item["type"]}:{item["id"]}" data-vw="{item["vw"]}" data-vh="{item["vh"]}"'
              if embed else "")
@@ -245,9 +246,7 @@ def tile(item, i, root, crop=None, inline=False, play="hover"):
         ratio = sw / sh
     else:
         ratio = w / h
-    # Videos keep their own shape inside the tile, as on Wix; only a deliberate
-    # crop (like SOLV's 3:4 video gallery) fills the box.
-    cls = "tile tile-video" if embed and not (crop and crop != "16/9") else "tile"
+    cls = "tile tile-video" if embed else "tile"
     return (f'<li class="tile-wrap"><button class="{cls}" type="button" data-index="{i}"{attrs} '
             f'style="--r:{ratio:.4f}" aria-label="{action}: {esc(label)}">{media}{play_icon}</button></li>')
 

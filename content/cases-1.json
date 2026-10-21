@@ -51,11 +51,10 @@
         ],
         "height": 569,
         "gap": 0,
-        "crop": "16/9",
         "speed": 11,
-        "label": "Select Videos Play on Hover",
+        "label": "Click Visual to See Closer",
         "label_pos": "above",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Athlete Stories, Published on a Seasonal Beat",
@@ -166,7 +165,7 @@
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
@@ -194,8 +193,8 @@
           }
         ],
         "gap": 0,
-        "label": "Click Visual to Learn More / Select Videos Play on Hover",
-        "play": "hover"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       },
       {
         "h": "Building Culture, Community, and Educational Content Through Everyday Design",
@@ -265,7 +264,7 @@
         ],
         "gap": 10,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Amplifying Culture & Capability Through Video",
@@ -282,7 +281,8 @@
           "1075028942"
         ],
         "gap": 20,
-        "label": "Press Play to Watch Video"
+        "label": "Press Play to Watch Video",
+        "play": "click"
       },
       {
         "h": "Supporting Visual Consistency Through Custom Brand Photography",
@@ -303,7 +303,7 @@
           "1684871519806.jfif"
         ],
         "gap": 10,
-        "play": "hover"
+        "play": "auto"
       }
     ],
     "next": {
@@ -363,8 +363,8 @@
         ],
         "gap": 50,
         "speed": 50,
-        "label": "Select Videos Play on Hover",
-        "play": "hover"
+        "label": "Click Visual to Learn More",
+        "play": "auto"
       },
       {
         "h": "Designing at the Speed of a Public Company's News Cycle",
@@ -464,7 +464,7 @@
         ],
         "gap": 0,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",

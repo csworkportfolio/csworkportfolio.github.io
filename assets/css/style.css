@@ -256,7 +256,6 @@ button { font: inherit; color: inherit; }
   overflow: hidden; max-width: min(86vw, 1100px);
 }
 .tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-.tile-video .tile-media { object-fit: contain; }
 .tile-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .tile-preview { position: absolute; border: 0; background: transparent; pointer-events: none; }
 .tile.is-playing { cursor: default; }
@@ -269,7 +268,7 @@ button { font: inherit; color: inherit; }
 }
 .play svg { width: 24px; height: 24px; fill: #fff; margin-left: 3px; }
 .tile:hover .play { background: var(--arrow-bg, var(--rust)); }
-.tile:hover .tile-preview ~ .play, .tile .tile-preview + .play { opacity: 0; }
+.tile:has(.tile-preview) .play { opacity: 0; }
 
 .strip-arrow {
   position: absolute; top: calc(50% - 25px); width: 50px; height: 50px; border-radius: 50%;
@@ -361,7 +360,7 @@ body.lb-open { overflow: hidden; }
 /* ---------- footer ---------- */
 
 .site-footer { background: var(--rust); color: #fff; margin-top: 24px; }
-.page-case .site-footer { margin-top: 0; }
+.page-case .site-footer, .page-home .site-footer { margin-top: 0; }
 .footer-row {
   min-height: 120px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
   font-size: 14px;

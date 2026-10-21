@@ -188,7 +188,7 @@
         "height": 350,
         "gap": 50,
         "speed": 50,
-        "play": "hover"
+        "play": "auto"
       },
       {
         "heading": "Web, App, & Email",
@@ -345,7 +345,7 @@
         "height": 380,
         "gap": 50,
         "speed": 50,
-        "play": "hover"
+        "play": "auto"
       },
       {
         "heading": "Short-Form: Social Media",
@@ -396,7 +396,7 @@
         "height": 384,
         "gap": 20,
         "speed": 35,
-        "play": "hover"
+        "play": "auto"
       },
       {
         "heading": "Long-Form: Blogs, Case Studies, and Executive Thought Leadership",

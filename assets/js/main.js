@@ -237,6 +237,8 @@
   // The video rows play in place, with controls, when clicked.
   function playInline(tileEl, item) {
     if (tileEl.querySelector(".tile-player")) return;
+    if (autoObserver) autoObserver.unobserve(tileEl);
+    removePreview(tileEl);
     const f = document.createElement("iframe");
     f.className = "tile-player";
     f.src = embedUrl(item);
@@ -487,8 +489,8 @@
       else if (dialog) open(items, Number(b.dataset.index), e.detail > 0);
     });
     const play = g.dataset.play;
-    if (!inline && !reduceMotion) {
-      if (play === "hover" && canHover) g.querySelectorAll(".tile[data-video]").forEach(hoverPreview);
+    if (!reduceMotion) {
+      if (play === "hover" && canHover && !inline) g.querySelectorAll(".tile[data-video]").forEach(hoverPreview);
       if (play === "auto" && autoObserver) g.querySelectorAll(".tile[data-video]").forEach((t) => autoObserver.observe(t));
     }
     if (g.classList.contains("strip")) initStrip(g);

@@ -62,7 +62,7 @@
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Bringing a Statewide Wellness Conference to Life Through Web and Social",
@@ -89,7 +89,7 @@
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Branding Work for Healthy Texas Week + General Visual Support",
@@ -115,7 +115,7 @@
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Visual Design for Statewide Health Initiatives",
@@ -141,7 +141,7 @@
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "End-to-End Video Production Featuring Public Leaders and Community Partners",
@@ -156,7 +156,8 @@
           "kPqrLVgfQQs"
         ],
         "gap": 50,
-        "label": "Press Play to Watch Video"
+        "label": "Click Video to Play with Sound",
+        "play": "auto"
       },
       {
         "h": "Photography to Capture Real Moments and Mission Impact",
@@ -172,7 +173,7 @@
           "Brochure-Asking-Question-1.jpg"
         ],
         "gap": 10,
-        "play": "hover"
+        "play": "auto"
       }
     ],
     "next": {
@@ -260,7 +261,7 @@
         ],
         "gap": 10,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Visualizing Redzone’s Reach Across Global Production",
@@ -280,7 +281,7 @@
         ],
         "gap": 10,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Transforming Partner Relationships into Scroll-Stopping Video Stories",
@@ -295,7 +296,8 @@
           "1075028930"
         ],
         "gap": 0,
-        "label": "Press Play to Watch Video"
+        "label": "Click Video to Play with Sound",
+        "play": "auto"
       },
       {
         "h": "Supporting Authenticity and Tone by Capturing the Heart of the Frontline",
@@ -314,7 +316,7 @@
           "1698869908109.jfif"
         ],
         "gap": 30,
-        "play": "hover"
+        "play": "auto"
       }
     ],
     "next": {
@@ -381,7 +383,7 @@
         ],
         "gap": 30,
         "label": "Click Visual to Learn More",
-        "play": "hover"
+        "play": "auto"
       },
       {
         "h": "Exploring Form, Flow, and Function Through Web Design",
