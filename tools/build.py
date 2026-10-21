@@ -236,8 +236,14 @@ def tile(item, i, root, crop=None, inline=False):
     shape = crop or ("16/9" if embed else None)
     action = "Play video" if inline else "View larger"
     attrs = f' data-video="{item["type"]}:{item["id"]}"' if embed else ""
+    # Width comes from height x ratio in plain CSS math; Safari ignores aspect-ratio on buttons.
+    if shape:
+        sw, sh = (float(x) for x in shape.split("/"))
+        ratio = sw / sh
+    else:
+        ratio = w / h
     return (f'<li class="tile-wrap"><button class="tile" type="button" data-index="{i}"{attrs} '
-            f'style="--ar:{shape or f"{w}/{h}"}" aria-label="{action}: {esc(label)}">{media}{play}</button></li>')
+            f'style="--r:{ratio:.4f}" aria-label="{action}: {esc(label)}">{media}{play}</button></li>')
 
 
 def json_script(obj):

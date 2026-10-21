@@ -252,10 +252,10 @@ button { font: inherit; color: inherit; }
 .tile-wrap { flex: none; }
 .tile {
   position: relative; display: block; padding: 0; border: 0; background: none; cursor: pointer;
-  height: var(--tile-h, var(--strip-h)); aspect-ratio: var(--ar); overflow: hidden;
-  max-width: min(86vw, 1100px);
+  height: var(--tile-h, var(--strip-h)); width: calc(var(--tile-h, var(--strip-h)) * var(--r));
+  overflow: hidden; max-width: min(86vw, 1100px);
 }
-.tile-media { width: 100%; height: 100%; object-fit: cover; }
+.tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
 .tile-preview, .tile-player {
   position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000;
 }

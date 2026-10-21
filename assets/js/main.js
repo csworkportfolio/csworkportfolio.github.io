@@ -152,6 +152,14 @@
 
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([e]) => (s.visible = e.isIntersecting)).observe(el);
+      // Fetch every tile once the slider is close to the screen, so tiles never
+      // arrive blank as they glide in (lazy loading inside a scrolled box is unreliable).
+      const near = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        track.querySelectorAll('img[loading="lazy"]').forEach((img) => (img.loading = "eager"));
+        near.disconnect();
+      }, { rootMargin: "600px 0px" });
+      near.observe(el);
     }
 
     measure();
