@@ -405,10 +405,12 @@ button { font: inherit; color: inherit; }
 /* ---------- lightbox ---------- */
 
 .lightbox {
-  width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
+  position: fixed; inset: 0;
+  width: 100vw; height: 100vh; height: 100dvh;  /* dvh: the height actually visible between Safari's bars */
+  max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
   background: rgba(14,14,14,.96); color: #fff;
 }
-.lightbox::backdrop { background: rgba(0,0,0,.6); }
+.lightbox::backdrop { background: #0e0e0e; }  /* same dark as the box, so no gray shows around it on phones */
 .lightbox:focus { outline: none; }
 .lightbox[open] { display: block; }
 body.lb-open { overflow: hidden; }
@@ -479,7 +481,7 @@ body.lb-open { overflow: hidden; }
   .strip { --tile-h: var(--strip-h) !important; }
   /* phones and narrow windows: one scrolling page, the piece at full width with its whole caption under it,
      instead of a fixed box with a clipped caption */
-  .lb-inner { display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 72px 16px 48px; }
+  .lb-inner { display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 72px 16px calc(96px + env(safe-area-inset-bottom, 0px)); }
   .lb-media { height: auto; display: flex; justify-content: center; }
   .lb-media img, .lb-media video { max-height: 72vh; }
   .lb-pdf { height: 66vh; }
