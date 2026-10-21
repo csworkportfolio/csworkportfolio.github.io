@@ -197,6 +197,19 @@ button { font: inherit; color: inherit; }
 .case-row .kicker { font-family: var(--light); font-weight: 300; font-size: 14px; line-height: 1.4; margin-bottom: 18px; }
 .case-row h2 { font-size: 18px; line-height: 1.35; font-weight: 700; margin-bottom: 26px; }
 .case-row .btn { min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
+/* Read More shine: a gradient of the row photo's own colours (--s1..--s4, picked by the build) that loops under the button, seen through its glass (blurred and lightened
+   by it, the way liquid glass looks passing over colour). Lit while the row is on screen. */
+@property --shine { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.shine { position: relative; display: inline-flex; isolation: isolate; border-radius: 999px; }
+.shine::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 999px; pointer-events: none;
+  background: conic-gradient(from var(--shine), var(--s1, #0a84ff), var(--s2, #bf5af2), var(--s3, #ff375f), var(--s4, #ff9f0a), var(--s1, #0a84ff));
+  opacity: 0; transition: opacity .9s ease;
+  animation: shine-spin 3.5s linear infinite; animation-play-state: paused;
+}
+.shine.is-lit::before { opacity: 1; animation-play-state: running; }
+@keyframes shine-spin { to { --shine: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .shine::before { animation: none; } }
 /* Home-page work-sample slideshow */
 .slideshow {
   position: relative; width: 100%; max-width: 643px; justify-self: end;

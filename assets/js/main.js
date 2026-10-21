@@ -23,6 +23,20 @@
       }, { rootMargin: "200px" })
     : null;
 
+  // ---------- Read More shine: lights up as each case row scrolls into view ----------
+
+  const shines = document.querySelectorAll(".shine");
+  if (shines.length) {
+    if ("IntersectionObserver" in window) {
+      const shineObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) e.target.classList.toggle("is-lit", e.isIntersecting);
+      }, { rootMargin: "0px 0px -15% 0px" });
+      shines.forEach((s) => shineObserver.observe(s));
+    } else {
+      shines.forEach((s) => s.classList.add("is-lit"));
+    }
+  }
+
   function watchLoops(root) {
     root.querySelectorAll("video[data-src]").forEach((v) => {
       if (loopObserver) loopObserver.observe(v);

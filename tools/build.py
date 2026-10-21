@@ -12,6 +12,7 @@ Once media/manifest.json exists, pages can be rebuilt without the original
 files; only new or changed media needs them.
 """
 import argparse
+import colorsys
 import hashlib
 import html
 import json
@@ -365,6 +366,34 @@ def layout(page, site, root, body, media, og_image=None):
 '''
 
 
+def shine_colors(path, n=4):
+    """The main colours of a case row's photo, made vivid enough to read through the Read More glass."""
+    im = Image.open(path).convert("RGB")
+    im.thumbnail((96, 96))
+    q = im.quantize(16, method=Image.Quantize.MEDIANCUT)
+    pal = q.getpalette()
+    cols = []
+    for count, i in q.getcolors():
+        h, s, v = colorsys.rgb_to_hsv(*(c / 255 for c in pal[i * 3:i * 3 + 3]))
+        cols.append((count * (0.15 + s) * (0.2 + v), h, s, v))  # common, colourful and bright wins
+    picked = []
+    for _, h, s, v in sorted(cols, reverse=True):
+        if all(min(abs(h - p[0]), 1 - abs(h - p[0])) > 0.06 or abs(s - p[1]) > .35 for p in picked):
+            picked.append((h, s, v))
+        if len(picked) == n:
+            break
+    for i in range(n - len(picked)):  # too few distinct colours: add lighter tints of the ones found
+        h, s, v = picked[i % len(picked)]
+        picked.append((h, s * .45, 1))
+    out = []
+    for h, s, v in picked:
+        if s > .12:  # greys stay grey
+            s = min(1, s * 1.35 + .1)
+        v = min(1, max(.7, v * 1.4))
+        out.append("#%02x%02x%02x" % tuple(round(c * 255) for c in colorsys.hsv_to_rgb(h, s, v)))
+    return out
+
+
 def slideshow(names, title, root, media):
     """Auto-advancing slideshow of work samples for a home-page case row."""
     slides = []
@@ -392,13 +421,14 @@ def render_home(page, site, media):
     for c in page["cases"]:
         bg = media.get(c["bg"], "bg")
         slides = slideshow(c["slides"], c["title"], root, media)
+        shine = ";".join(f"--s{i}:{col}" for i, col in enumerate(shine_colors(ROOT / bg["src"]), 1))
         rows.append(f'''
 <article class="case-row" style="background-image:url('{root}{bg["src"]}')">
   <div class="wrap case-row-inner">
     <div class="case-row-text">
       <p class="kicker">{esc(c["kicker"])}</p>
       <h2>{esc(c["title"])}</h2>
-      <a class="btn btn-red" href="{root}{c["slug"]}/">Read More<span class="sr-only">: {esc(c["title"])}</span></a>
+      <span class="shine" style="{shine}"><a class="btn btn-red" href="{root}{c["slug"]}/">Read More<span class="sr-only">: {esc(c["title"])}</span></a></span>
     </div>
     {slides}
   </div>
