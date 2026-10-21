@@ -21,7 +21,9 @@
   --round: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --wrap: 980px;
-  --gutter: 24px;
+  /* the page runs edge to edge (viewport-fit=cover); in landscape on a notched iPhone the gutter widens to
+     clear the notch and rounded corners, so backgrounds fill the screen but text never sits under them */
+  --gutter: max(24px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
   --strip-h: 470px;
 }
 
@@ -461,9 +463,9 @@ body.lb-open { overflow: hidden; }
   display: grid; place-items: center;
 }
 .lb-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.lb-close { top: 14px; right: 14px; }
-.lb-prev { left: 18px; top: calc(50% - 24px); }
-.lb-next { right: 18px; top: calc(50% - 24px); }
+.lb-close { top: 14px; right: max(14px, env(safe-area-inset-right, 0px)); }
+.lb-prev { left: max(18px, env(safe-area-inset-left, 0px)); top: calc(50% - 24px); }
+.lb-next { right: max(18px, env(safe-area-inset-right, 0px)); top: calc(50% - 24px); }
 .lightbox.single .lb-prev, .lightbox.single .lb-next { display: none; }
 
 /* ---------- footer ---------- */
@@ -484,22 +486,22 @@ body.lb-open { overflow: hidden; }
   .strip { --tile-h: var(--strip-h) !important; }
   /* phones and narrow windows: one scrolling page, the piece at full width with its whole caption under it,
      instead of a fixed box with a clipped caption */
-  .lb-inner { display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 72px 16px calc(150px + env(safe-area-inset-bottom, 0px)); }  /* the last line clears the bar */
+  .lb-inner { display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 72px var(--gutter) calc(150px + env(safe-area-inset-bottom, 0px)); }  /* the last line clears the bar */
   .lightbox { --lb-room: 100%; }
   .lb-media { height: auto; max-width: none; display: flex; justify-content: center; }
   .lb-media img, .lb-media video { max-height: 72vh; }
   .lb-pdf { height: 66vh; }
   .lb-caption { max-height: none; overflow: visible; padding-right: 0; margin-top: 20px; }
   .lb-prev, .lb-next { top: auto; bottom: 16px; }
-  .lb-prev { left: auto; right: 76px; }
-  .lb-next { right: 16px; }
+  .lb-prev { left: auto; right: calc(max(16px, env(safe-area-inset-right, 0px)) + 60px); }
+  .lb-next { right: max(16px, env(safe-area-inset-right, 0px)); }
   .lightbox:not(.no-caption) .lb-prev, .lightbox:not(.no-caption) .lb-next { top: 8px; bottom: auto; }
-  .lightbox:not(.no-caption) .lb-prev { left: 14px; right: auto; }
-  .lightbox:not(.no-caption) .lb-next { left: 70px; right: auto; }
+  .lightbox:not(.no-caption) .lb-prev { left: max(14px, env(safe-area-inset-left, 0px)); right: auto; }
+  .lightbox:not(.no-caption) .lb-next { left: calc(max(14px, env(safe-area-inset-left, 0px)) + 56px); right: auto; }
 }
 
 @media (max-width: 720px) {
-  :root { --gutter: 16px; --strip-h: 300px; }
+  :root { --gutter: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); --strip-h: 300px; }
   .header-row { padding-top: 14px; padding-bottom: 14px; }
   .brand { display: flex; justify-content: space-between; flex-direction: row-reverse; gap: 16px; width: 100%; }
   .brand-text { min-width: 0; }
