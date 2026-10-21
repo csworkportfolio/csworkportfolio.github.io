@@ -219,10 +219,11 @@ def fix_paths(item, root):
 PLAY_ICON = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>'
 
 
-def tile(item, i, root, crop=None):
+def tile(item, i, root, crop=None, inline=False):
     label = item.get("title") or {"image": "image", "loop": "animation", "video": "video"}.get(item["type"], "video")
     alt = esc(item.get("title", ""))
     w, h = item["w"], item["h"]
+    embed = item["type"] in ("vimeo", "youtube")
     if item["type"] == "loop":
         media = (f'<video class="tile-media" muted loop playsinline preload="none" '
                  f'poster="{root}{item["thumb"]}" data-src="{root}{item["src"]}" width="{w}" height="{h}" '
@@ -232,46 +233,46 @@ def tile(item, i, root, crop=None):
                  f'alt="{alt}" loading="lazy" decoding="async">')
     play = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") else ""
     # Like Wix, embedded videos show as 16:9 tiles; a gallery can also crop every tile to one shape.
-    shape = crop or ("16/9" if item["type"] in ("vimeo", "youtube") else None)
-    cls = "tile tile-crop" if shape else "tile"
-    return (f'<li class="tile-wrap"><button class="{cls}" type="button" data-index="{i}" '
-            f'style="--ar:{shape or f"{w}/{h}"}" aria-label="View larger: {esc(label)}">{media}{play}</button></li>')
+    shape = crop or ("16/9" if embed else None)
+    action = "Play video" if inline else "View larger"
+    attrs = f' data-video="{item["type"]}:{item["id"]}"' if embed else ""
+    return (f'<li class="tile-wrap"><button class="tile" type="button" data-index="{i}"{attrs} '
+            f'style="--ar:{shape or f"{w}/{h}"}" aria-label="{action}: {esc(label)}">{media}{play}</button></li>')
 
 
 def json_script(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
-def strip(items, root, label, opts=None):
-    """Auto-scrolling gallery. opts may set Wix's per-gallery height, gap and crop."""
+CHEVRON_L = '<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>'
+CHEVRON_R = '<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>'
+
+
+def strip(items, root, label, opts=None, kind="gallery", hint=False):
+    """A Wix-style slider. opts carries the per-gallery Wix settings: height, gap,
+    crop, speed (continuous auto-scroll in px/s; absent = still), loop and label."""
     opts = opts or {}
+    inline = kind == "videos"
     data = json_script([fix_paths(it, root) for it in items])
-    tiles = "".join(tile(it, i, root, opts.get("crop")) for i, it in enumerate(items))
+    tiles = "".join(tile(it, i, root, opts.get("crop"), inline) for i, it in enumerate(items))
     style = "".join(f"--{k}:{opts[o]}px;" for o, k in (("height", "tile-h"), ("gap", "gap")) if o in opts)
-    return f'''
-<section class="strip" data-gallery aria-label="{esc(label)}"{f' style="{style}"' if style else ""}>
+    data_attrs = f' data-speed="{opts.get("speed", 0)}"' + (' data-loop' if opts.get("loop") else "")
+    cls = "strip strip-videos" if inline else "strip"
+    caption = ""
+    if opts.get("label"):
+        caption = f'<p class="gal-label{" above" if opts.get("label_pos") == "above" else ""}">{esc(opts["label"])}</p>'
+    section = f'''
+<section class="{cls}" data-gallery aria-label="{esc(label)}"{data_attrs}{f' style="{style}"' if style else ""}>
   <div class="strip-viewport" tabindex="0">
     <ul class="strip-track">{tiles}</ul>
   </div>
-  <button class="strip-arrow strip-prev" type="button" aria-label="Scroll gallery left"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-  <button class="strip-arrow strip-next" type="button" aria-label="Scroll gallery right"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-  <script type="application/json" class="gallery-data">{data}</script>
-</section>
-<p class="strip-hint"><span class="hint-mouse">Hover to pause · Scroll to see more · Click to view closer</span><span class="hint-touch">Swipe to see more · Tap to view closer</span></p>'''
-
-
-def video_grid(items, root):
-    data = json_script([fix_paths(it, root) for it in items])
-    cells = []
-    for i, it in enumerate(items):
-        label = "Play video" + (": " + esc(it["title"]) if it.get("title") else "")
-        cells.append(f'<li><button class="vcard" type="button" data-index="{i}" aria-label="{label}">'
-                     f'<img src="{root}{it["thumb"]}" alt="" loading="lazy" decoding="async">{PLAY_ICON}</button></li>')
-    return f'''
-<section class="video-grid count-{len(items)}" data-gallery aria-label="Videos">
-  <ul>{"".join(cells)}</ul>
+  <button class="strip-arrow strip-prev" type="button" aria-label="Previous item">{CHEVRON_L}</button>
+  <button class="strip-arrow strip-next" type="button" aria-label="Next item">{CHEVRON_R}</button>
   <script type="application/json" class="gallery-data">{data}</script>
 </section>'''
+    if hint:
+        caption += '<p class="strip-hint"><span class="hint-mouse">Hover to Pause / Swipe to See More / Click to View Closer</span><span class="hint-touch">Swipe to See More / Tap to View Closer</span></p>'
+    return (caption + section) if opts.get("label_pos") == "above" else (section + caption)
 
 
 def paragraphs(ps):
@@ -416,7 +417,7 @@ def render_category(page, site, media):
     for b in page["blocks"]:
         if "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
-            parts.append(strip(items, root, "Gallery", b))
+            parts.append(strip(items, root, "Gallery", b, hint=True))
         else:
             tag = "h1" if first_heading else "h2"
             first_heading = False
@@ -454,7 +455,7 @@ def render_case(page, site, media):
             parts.append(strip(items, root, "Project gallery", b))
         elif "videos" in b:
             items = [gallery_item({"v": v}, media, site) for v in b["videos"]]
-            parts.append(video_grid(items, root))
+            parts.append(strip(items, root, "Videos", {**b, "height": 378}, kind="videos"))
         else:
             intro = " intro" if b["h"] in ("THE PROBLEM", "THE SOLUTION") else ""
             parts.append(f'<section class="wrap prose{intro}"><h2>{esc(b["h"])}</h2>\n{paragraphs(b["p"])}</section>')

@@ -35,7 +35,10 @@
           "Email TS4P.png",
           "Website.png"
         ],
-        "height": 315
+        "height": 315,
+        "gap": 50,
+        "speed": 50,
+        "loop": true
       },
       {
         "heading": "Graphic Design",
@@ -108,7 +111,9 @@
             }
           }
         ],
-        "height": 315
+        "height": 315,
+        "gap": 50,
+        "speed": 20
       },
       {
         "heading": "Projects",
@@ -178,7 +183,9 @@
           },
           "Nike 1.png"
         ],
-        "height": 350
+        "height": 350,
+        "gap": 50,
+        "speed": 50
       },
       {
         "heading": "Web, App, & Email",
@@ -238,7 +245,9 @@
             "title": "Deep Dive into QAD Redzone Modules"
           }
         ],
-        "height": 350
+        "height": 350,
+        "gap": 50,
+        "speed": 75
       },
       {
         "heading": "Video Work",
@@ -329,7 +338,9 @@
             "title": "2024 New Year's with QAD Redzone"
           }
         ],
-        "height": 380
+        "height": 380,
+        "gap": 50,
+        "speed": 50
       },
       {
         "heading": "Short-Form: Social Media",
@@ -377,7 +388,9 @@
             }
           }
         ],
-        "height": 384
+        "height": 384,
+        "gap": 20,
+        "speed": 35
       },
       {
         "heading": "Long-Form: Blogs, Case Studies, and Executive Thought Leadership",
@@ -441,7 +454,9 @@
             "title": "Healthier Texas Summit Recap: X (Twitter) Ad"
           }
         ],
-        "height": 352
+        "height": 352,
+        "gap": 50,
+        "speed": 50
       },
       {
         "heading": "Paid Media",

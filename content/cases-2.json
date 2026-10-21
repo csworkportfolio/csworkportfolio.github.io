@@ -59,7 +59,9 @@
             "tools": "Adobe Illustrator, Adobe Photoshop, Mailchimp, WordPress",
             "desc": "This campaign helped strengthen brand recognition and drove strong turnout across web and email, while deepening our partnership with Austin Pets Alive! and increasing awareness around shared public health and animal welfare goals."
           }
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Bringing a Statewide Wellness Conference to Life Through Web and Social",
@@ -83,7 +85,9 @@
             "tools": "Adobe Illustrator, Canva, Adobe Photoshop",
             "desc": "This set of promotional graphics was created for various stages of the Healthier Texas Summit campaign—from calls for proposals to registration pushes. Designed to work across social, web, and email, the graphics balanced strong visual contrast with clear CTAs and consistent branding. Key speaker headshots were placed front and centre to personalise the event, while modern geometric overlays gave the campaign a tech-forward yet approachable tone.\nThe goal was to create something as energetic and impactful as the event itself — while making it effortless for viewers to engage."
           }
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Branding Work for Healthy Texas Week + General Visual Support",
@@ -106,7 +110,9 @@
             "tools": "Adobe Illustrator, Adobe Photoshop",
             "desc": "These social banners were part of two core awareness initiatives: a SNAP-funded campaign promoting community health during the pandemic, and a mobile app called 'Teach Healthier,' offering active brain breaks for kids. I focused on bright, diverse illustrations and clean, legible layouts that could connect with both parents and educators scrolling online. These visuals were used across social media, email newsletters, and website banners to help increase visibility and accessibility of our programs."
           }
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Visual Design for Statewide Health Initiatives",
@@ -129,7 +135,9 @@
             "desc": "This collection of digital graphics supported multiple Healthier Texas initiatives, including the Regional Workshop Series, Texas Walks, and SNAP-funded outreach. My role involved creating social-friendly visuals with clear, accessible layouts and consistent branding. Illustrations were used to help humanize virtual events and draw attention on social feeds. While each graphic had a unique audience or objective, they all reflected a shared mission: bringing Texans together through health-focused action."
           },
           "Frontline.png"
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "End-to-End Video Production Featuring Public Leaders and Community Partners",
@@ -142,7 +150,9 @@
           "nD0pXIu1OO4",
           "PxXYS6s87G8",
           "kPqrLVgfQQs"
-        ]
+        ],
+        "gap": 50,
+        "label": "Press Play to Watch Video"
       },
       {
         "h": "Photography to Capture Real Moments and Mission Impact",
@@ -156,7 +166,8 @@
           "DSC03133.jpg",
           "P_065.jpg",
           "Brochure-Asking-Question-1.jpg"
-        ]
+        ],
+        "gap": 10
       }
     ],
     "next": {
@@ -241,7 +252,9 @@
             "tools": "Adobe Photoshop, Procreate, Keynote",
             "desc": "Created as part of the same Apple-hosted summit deck, this slide walks the viewer through a day in the life of a plant operator using Redzone. Inspired by the gesture-based interface language of Apple’s own marketing, I designed this slide to feel tactile and intentional — placing each feature along the hand’s movement path to mirror real app interaction. It was one of our most memorable slides, connecting software usability with physical intuition."
           }
-        ]
+        ],
+        "gap": 10,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Visualizing Redzone’s Reach Across Global Production",
@@ -258,7 +271,9 @@
             "tools": "Adobe Photoshop",
             "desc": "To translate the scale and diversity of Redzone’s customer base into something instantly recognizable, I reimagined the traditional vending machine. But instead of snacks, each slot was filled with product package —everything from Cheesecake Factory's delectable dessert to Tyson chicken strips — designed to match real Redzone customers. Every detail, from the glowing Redzone light to the moving assembly line, was tailored to reflect the modern, tech-forward tone of the brand.\nThis visual became more than a graphic—it served as an activation point across web, social, and event placements. It visually embodies the question: What do all these brands have in common? Redzone. It’s a simple concept with layered meaning: everyday items, backed by extraordinary frontline teams using the same software."
           }
-        ]
+        ],
+        "gap": 10,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Transforming Partner Relationships into Scroll-Stopping Video Stories",
@@ -271,7 +286,9 @@
       {
         "videos": [
           "1075028930"
-        ]
+        ],
+        "gap": 0,
+        "label": "Press Play to Watch Video"
       },
       {
         "h": "Supporting Authenticity and Tone by Capturing the Heart of the Frontline",
@@ -288,7 +305,8 @@
           "1697025622812.jfif",
           "1701990351606.jfif",
           "1698869908109.jfif"
-        ]
+        ],
+        "gap": 30
       }
     ],
     "next": {
@@ -352,7 +370,9 @@
             "tools": "Adobe Photoshop, Lightroom, Premiere Pro",
             "desc": "This animated graphic was created as a freelance project for a client running the Boston Marathon with Team JAF (Joe Andruzzi Foundation), raising donations in memory of his father who passed away from cancer. More than just a race update, this piece served as a celebration of community, resilience, and purpose — honouring the reason behind every mile.\nThe design brings together elements of movement and emotion: a photo from the course, donor milestone messaging, and uplifting motion graphics that nod to the impact beyond the pavement. With over $13,000 raised for families facing cancer, it became a shared moment of gratitude and reflection for all who supported.\nProjects like this remind me of design’s deeper purpose — not to sell or promote, but to connect. To help visualize what it means when one person’s story moves hundreds to action."
           }
-        ]
+        ],
+        "gap": 30,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Exploring Form, Flow, and Function Through Web Design",
@@ -374,7 +394,9 @@
             "tools": "Figma, Adobe Photoshop",
             "desc": "This AI product marketplace mockup explores modularity and visual rhythm within a one-page layout. I wanted each tile to feel like a moment: a headline, a feature, a reason to keep scrolling. The futuristic aesthetic and neon-infused colour palette reinforce the product category, while the layout tests how call-to-actions and product discovery can coexist without overwhelming the user like most sites do."
           }
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Pushing Visual Identity and Storytelling Beyond the Brief",
@@ -419,7 +441,9 @@
             "tools": "Adobe InDesign, Illustrator",
             "desc": "This article spread explores a more academic, report-style layout on the topic of digital assistants and emerging AI tools. Designed as part of a advanced marketing project, the layout includes a hierarchy of callouts, subheads, and annotation symbols to guide both quick skimming and deep reading.\nThe image at the top serves as a subtle thematic anchor, depicting circuitry and digital systems without overwhelming the copy. The design challenge here was clarity: using rhythm, typography, and spacing to help complex content feel more approachable — without compromising credibility."
           }
-        ]
+        ],
+        "gap": 20,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Foundations in Strategy & Storytelling: Where Research, Insight, and Creative Thinking First Collided...",
@@ -479,7 +503,12 @@
               "label": "Open MKTG 321 Presentation (PDF)"
             }
           }
-        ]
+        ],
+        "height": 443,
+        "gap": 30,
+        "speed": 20,
+        "loop": true,
+        "label": "Click to See Full Project"
       }
     ],
     "next": {

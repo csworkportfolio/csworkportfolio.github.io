@@ -51,7 +51,10 @@
         ],
         "height": 569,
         "gap": 0,
-        "crop": "16/9"
+        "crop": "16/9",
+        "speed": 11,
+        "label": "Select Videos Play on Hover",
+        "label_pos": "above"
       },
       {
         "h": "Athlete Stories, Published on a Seasonal Beat",
@@ -69,7 +72,11 @@
           "Nike Spotlgiht.PNG",
           "Nike 3.png"
         ],
-        "height": 554
+        "height": 554,
+        "gap": 50,
+        "speed": 11,
+        "label": "Click Visual to See Closer",
+        "label_pos": "above"
       },
       {
         "h": "Full Shopping Surfaces",
@@ -89,7 +96,8 @@
           "Nike W.png"
         ],
         "height": 517,
-        "gap": 0
+        "gap": 0,
+        "label": "Click Visual to See Closer"
       }
     ],
     "next": {
@@ -152,7 +160,9 @@
             "desc": "Inventory tracking isn’t always the most exciting topic — so I injected a little energy with a looping animation featuring our official mascot, Gary the Goat. This asset was used across social and product channels to spotlight Redzone’s inventory feature in a fun, digestible way.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns."
           },
           "Redzone on the Web_edited.png"
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
@@ -179,7 +189,8 @@
             "desc": "This post ushered in the new year by spotlighting real Redzone customers and a key milestone they reached with the platform. Rather than opt for a generic “Happy New Year” message, I focused the creative on human accomplishment — using candid and posed photography and a bold layout to reflect energy and optimism."
           }
         ],
-        "gap": 0
+        "gap": 0,
+        "label": "Click Visual to Learn More / Select Videos Play on Hover"
       },
       {
         "h": "Building Culture, Community, and Educational Content Through Everyday Design",
@@ -210,7 +221,8 @@
             "desc": "I designed this carousel to break down one of Redzone’s more technical subjects: Overall Equipment Effectiveness (OEE). Each frame introduced an important subtopic — like minimizing downtime or identifying inefficiencies—while keeping the visuals clean, modern, and true to brand. I used illustrations to visualize the production line and custom iconography to add clarity to the stats-heavy content. This series was created for LinkedIn to support Redzone’s learning and compliance messaging in a more accessible and engaging way."
           }
         ],
-        "gap": 10
+        "gap": 10,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Extending the Brand into the Real World with Physical Touchpoints",
@@ -245,7 +257,8 @@
             "desc": "To drive social engagement at our trade shows, I designed a physical LinkedIn post cutout for attendees to pose with. The frame mimicked the layout of a real LinkedIn post and included branded prompts to tag Redzone. The activation worked as both a selfie opportunity and a conversation starter — leading to dozens of shares and direct traffic from new prospects on social."
           }
         ],
-        "gap": 10
+        "gap": 10,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Amplifying Culture & Capability Through Video",
@@ -260,7 +273,9 @@
           "QctJ8Uagr7w",
           "1075028937",
           "1075028942"
-        ]
+        ],
+        "gap": 20,
+        "label": "Press Play to Watch Video"
       },
       {
         "h": "Supporting Visual Consistency Through Custom Brand Photography",
@@ -337,7 +352,10 @@
           {
             "v": "1228250219"
           }
-        ]
+        ],
+        "gap": 50,
+        "speed": 50,
+        "label": "Select Videos Play on Hover"
       },
       {
         "h": "Designing at the Speed of a Public Company's News Cycle",
@@ -351,7 +369,9 @@
           "RE Plus.png",
           "SOLV Example 1 Transparent.png",
           "SOLV Example 2 Transparent.png"
-        ]
+        ],
+        "gap": 50,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Bringing Field Stories and Project Milestones to Life Through Video",
@@ -380,7 +400,8 @@
           }
         ],
         "gap": 130,
-        "crop": "3/4"
+        "crop": "3/4",
+        "label": "Click Visual to Learn More"
       }
     ],
     "next": {
@@ -429,7 +450,9 @@
           {
             "v": "1228250187"
           }
-        ]
+        ],
+        "gap": 0,
+        "label": "Click Visual to Learn More"
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
@@ -441,7 +464,9 @@
         "gallery": [
           "Cohesity Examples TP.png",
           "Cohesity Examples 2 TP.png"
-        ]
+        ],
+        "gap": 100,
+        "label": "Click Visual to Learn More"
       }
     ],
     "next": {

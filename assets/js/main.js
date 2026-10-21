@@ -1,9 +1,9 @@
-// Gallery strips (auto-scrolling, swipeable) and the lightbox.
+// Gallery sliders (set up like the Wix galleries they replace) and the lightbox.
 (() => {
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const SPEED = 38; // px per second
+  const canHover = window.matchMedia("(hover: hover)").matches;
   const strips = [];
   let lightboxOpen = false;
 
@@ -30,33 +30,64 @@
     });
   }
 
-  // ---------- strip ----------
+  // ---------- slider ----------
+  // Each slider reads its Wix settings from data attributes: data-speed is the
+  // continuous auto-scroll speed in px/s (0 = still) and data-loop makes it wrap.
+  // Arrows step one item at a time with Wix's slide easing.
+
+  const ease = (t) => { // cubic-bezier(.46,.1,.25,1), solved numerically
+    let lo = 0, hi = 1, x = t;
+    for (let i = 0; i < 20; i++) {
+      x = (lo + hi) / 2;
+      const bx = 3 * x * (1 - x) * (1 - x) * 0.46 + 3 * x * x * (1 - x) * 0.25 + x * x * x;
+      if (bx < t) lo = x; else hi = x;
+    }
+    return 3 * x * (1 - x) * (1 - x) * 0.1 + 3 * x * x * (1 - x) + x * x * x;
+  };
 
   function initStrip(el) {
     const viewport = el.querySelector(".strip-viewport");
     const track = el.querySelector(".strip-track");
+    const prev = el.querySelector(".strip-prev");
+    const next = el.querySelector(".strip-next");
     const originals = [...track.children];
-    const s = { el, viewport, loop: 0, pos: 0, lastSet: -1, pause: new Set(), resumeTimer: 0, visible: true };
+    const s = {
+      el, viewport, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0),
+      loops: el.hasAttribute("data-loop"), loop: 0, pos: 0, lastSet: -1,
+      pause: new Set(), resumeTimer: 0, visible: true, anim: 0,
+    };
+
+    const maxScroll = () => viewport.scrollWidth - viewport.clientWidth;
+
+    function arrows() {
+      if (el.classList.contains("is-static")) return;
+      const x = viewport.scrollLeft;
+      prev.hidden = !s.loop && x <= 1;
+      next.hidden = !s.loop && x >= maxScroll() - 1;
+    }
 
     function measure() {
       track.querySelectorAll("[data-clone]").forEach((n) => n.remove());
       el.classList.remove("is-static");
+      prev.hidden = next.hidden = false;
       s.loop = 0;
       if (track.scrollWidth <= viewport.clientWidth + 2) {
         el.classList.add("is-static");
         return;
       }
-      for (const li of originals) {
-        const c = li.cloneNode(true);
-        c.dataset.clone = "";
-        c.setAttribute("aria-hidden", "true");
-        c.querySelectorAll("button").forEach((b) => (b.tabIndex = -1));
-        track.appendChild(c);
+      if (s.loops) {
+        for (const li of originals) {
+          const c = li.cloneNode(true);
+          c.dataset.clone = "";
+          c.setAttribute("aria-hidden", "true");
+          c.querySelectorAll("button").forEach((b) => (b.tabIndex = -1));
+          track.appendChild(c);
+        }
+        watchLoops(track);
+        s.loop = track.querySelector("[data-clone]").offsetLeft - originals[0].offsetLeft;
       }
-      watchLoops(track);
-      const firstClone = track.querySelector("[data-clone]");
-      s.loop = firstClone.offsetLeft - originals[0].offsetLeft;
       s.pos = viewport.scrollLeft;
+      arrows();
     }
 
     function hold(reason, ms) {
@@ -76,21 +107,48 @@
     viewport.addEventListener("wheel", (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) hold("wheel", 2500); }, { passive: true });
 
     viewport.addEventListener("scroll", () => {
-      if (!s.loop) return;
+      arrows();
       const x = viewport.scrollLeft;
-      if (Math.abs(x - s.lastSet) <= 1) return; // our own animation frame
-      // A person is scrolling: keep the loop seamless in both directions.
-      if (x >= s.loop) viewport.scrollLeft = x - s.loop;
-      else if (x <= 0) viewport.scrollLeft = x + s.loop;
+      if (s.anim || Math.abs(x - s.lastSet) <= 1) return; // our own movement
+      if (s.loop) { // keep a looping slider seamless when a person scrolls it
+        if (x >= s.loop) viewport.scrollLeft = x - s.loop;
+        else if (x <= 0) viewport.scrollLeft = x + s.loop;
+      }
       s.pos = viewport.scrollLeft;
     }, { passive: true });
 
-    const step = (dir) => {
+    function glide(to) {
+      cancelAnimationFrame(s.anim);
+      const from = viewport.scrollLeft;
+      const dur = reduceMotion ? 0 : 600;
+      const t0 = performance.now();
+      const frame = (t) => {
+        const k = dur ? Math.min((t - t0) / dur, 1) : 1;
+        viewport.scrollLeft = from + (to - from) * ease(k);
+        s.lastSet = viewport.scrollLeft;
+        if (k < 1) s.anim = requestAnimationFrame(frame);
+        else { s.anim = 0; s.pos = viewport.scrollLeft; arrows(); }
+      };
+      s.anim = requestAnimationFrame(frame);
+    }
+
+    function step(dir) {
       hold("arrow", 4000);
-      viewport.scrollBy({ left: dir * viewport.clientWidth * 0.75, behavior: reduceMotion ? "auto" : "smooth" });
-    };
-    el.querySelector(".strip-prev").addEventListener("click", () => step(-1));
-    el.querySelector(".strip-next").addEventListener("click", () => step(1));
+      const items = [...track.children];
+      const x = viewport.scrollLeft;
+      const lefts = items.map((li) => li.offsetLeft - track.offsetLeft);
+      let to;
+      if (dir > 0) to = lefts.find((l) => l > x + 2);
+      else to = [...lefts].reverse().find((l) => l < x - 2);
+      if (to == null) to = dir > 0 ? maxScroll() : 0;
+      if (s.loop) { // wrap smoothly through the cloned copy
+        if (dir < 0 && x <= 2) { viewport.scrollLeft = x + s.loop; return step(dir); }
+        if (dir > 0 && to >= s.loop) { viewport.scrollLeft = x - s.loop; return step(dir); }
+      }
+      glide(Math.max(0, Math.min(to, maxScroll())));
+    }
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
 
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([e]) => (s.visible = e.isIntersecting)).observe(el);
@@ -111,13 +169,52 @@
     const dt = last ? Math.min((t - last) / 1000, 0.1) : 0;
     last = t;
     for (const s of strips) {
-      if (!s.loop || !s.visible || s.pause.size || lightboxOpen) continue;
-      s.pos += SPEED * dt;
-      if (s.pos >= s.loop) s.pos -= s.loop;
+      if (!s.speed || s.anim || !s.visible || s.pause.size || lightboxOpen) continue;
+      if (s.el.classList.contains("is-static")) continue;
+      s.pos += s.speed * dt;
+      if (s.loop && s.pos >= s.loop) s.pos -= s.loop;
+      const end = s.viewport.scrollWidth - s.viewport.clientWidth;
+      if (!s.loop && s.pos >= end) { s.pos = end; } // non-looping Wix sliders stop at the end
       s.viewport.scrollLeft = s.pos;
       s.lastSet = s.viewport.scrollLeft;
     }
     requestAnimationFrame(tick);
+  }
+
+  // ---------- videos inside sliders ----------
+
+  function previewUrl(kind, id) { // muted, chrome-free autoplay for hover previews
+    return kind === "vimeo"
+      ? `https://player.vimeo.com/video/${id}?background=1&dnt=1`
+      : `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&modestbranding=1&rel=0`;
+  }
+
+  // Wix plays gallery videos silently while the pointer rests on them.
+  function hoverPreview(tileEl) {
+    let frame = null;
+    tileEl.addEventListener("pointerenter", (e) => {
+      if (e.pointerType !== "mouse" || frame) return;
+      const [kind, id] = tileEl.dataset.video.split(":");
+      frame = Object.assign(document.createElement("iframe"), { src: previewUrl(kind, id), title: "", tabIndex: -1 });
+      frame.className = "tile-preview";
+      frame.setAttribute("allow", "autoplay; encrypted-media");
+      frame.setAttribute("aria-hidden", "true");
+      tileEl.appendChild(frame);
+    });
+    tileEl.addEventListener("pointerleave", () => { if (frame) { frame.remove(); frame = null; } });
+  }
+
+  // The video rows play in place, with controls, when clicked.
+  function playInline(tileEl, item) {
+    if (tileEl.querySelector(".tile-player")) return;
+    const f = document.createElement("iframe");
+    f.className = "tile-player";
+    f.src = embedUrl(item);
+    f.title = item.title || "Video player";
+    f.setAttribute("allow", "autoplay; fullscreen; picture-in-picture; encrypted-media");
+    f.setAttribute("allowfullscreen", "");
+    tileEl.appendChild(f);
+    tileEl.classList.add("is-playing");
   }
 
   // ---------- lightbox ----------
@@ -341,10 +438,14 @@
 
   document.querySelectorAll("[data-gallery]").forEach((g) => {
     const items = JSON.parse(g.querySelector(".gallery-data").textContent);
+    const inline = g.classList.contains("strip-videos");
     g.addEventListener("click", (e) => {
       const b = e.target.closest("[data-index]");
-      if (b && dialog) open(items, Number(b.dataset.index));
+      if (!b) return;
+      if (inline) playInline(b, items[Number(b.dataset.index)]);
+      else if (dialog) open(items, Number(b.dataset.index));
     });
+    if (!inline && canHover && !reduceMotion) g.querySelectorAll(".tile[data-video]").forEach(hoverPreview);
     if (g.classList.contains("strip")) initStrip(g);
     watchLoops(g);
   });
