@@ -412,10 +412,8 @@ def slideshow(names, title, root, media):
             el = (f'<video muted loop playsinline preload="none" poster="{root}{m["poster"]}" '
                   f'data-src="{root}{m["src"]}" width="{m["w"]}" height="{m["h"]}"></video>')
         slides.append(f'<li class="slide{" is-current" if i == 0 else ""}"{hidden}>{el}</li>')
-    n = len(names)
     return f'''<div class="slideshow" data-slideshow aria-roledescription="carousel" aria-label="Work samples: {esc(title)}">
       <ul class="slides">{"".join(slides)}</ul>
-      <p class="ss-count" aria-live="polite"><span class="ss-n">1</span>/{n}</p>
     </div>'''
 
 

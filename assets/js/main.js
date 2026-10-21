@@ -427,7 +427,6 @@
   function initSlideshow(root, order) {
     const track = root.querySelector(".slides");
     const slides = [...track.children];
-    const counter = root.querySelector(".ss-n");
     const pause = new Set();
     let index = 0;
     let timer = 0;
@@ -451,7 +450,6 @@
         li.classList.toggle("is-current", k === index);
         li.toggleAttribute("aria-hidden", k !== index);
       });
-      counter.textContent = index + 1;
       syncMedia();
     }
 

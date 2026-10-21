@@ -266,11 +266,6 @@ button { font: inherit; color: inherit; }
 .slide.is-current { opacity: 1; }
 /* Like the Wix slideshow, each sample fills the box (mockups carry their own margins). */
 .slide img, .slide video { width: 100%; height: 100%; max-width: none; object-fit: cover; }
-.ss-count {
-  position: absolute; right: 10px; top: 9px; margin: 0;
-  font-size: 12px; line-height: 14px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.6);
-  font-family: var(--round); font-weight: 600; font-variant-numeric: tabular-nums;
-}
 @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
 
 /* ---------- case study ---------- */
