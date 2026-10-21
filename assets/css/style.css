@@ -164,7 +164,7 @@ button { font: inherit; color: inherit; }
 .page-home .pills { padding: 20px 0; top: 0; }
 /* category pages: the intro scrolls away with the page and the switcher alone stays,
    pinned at the top of the window */
-.page-category .pills { top: 0; }
+.page-category .pills, .page-case .pills { top: 0; }
 .seg {
   pointer-events: auto; display: flex; gap: 2px; padding: 3px; height: 40px; box-sizing: border-box;
   max-width: calc(100% - 2 * var(--gutter)); border-radius: 999px;

@@ -313,7 +313,7 @@ def layout(page, site, root, body, media, og_image=None):
         attrs = ' class="seg-item is-active" aria-current="page"' if cur else ' class="seg-item"'
         nav.append(f'<a{attrs} href="{href}">{esc(n["label"])}</a>')
     avatar = media.get(site["avatar"])
-    if page["type"] == "category":
+    if page["type"] in ("category", "case"):
         header = category_banner(site, root, media)
     else:
         header = "" if page["type"] == "home" else f'''
