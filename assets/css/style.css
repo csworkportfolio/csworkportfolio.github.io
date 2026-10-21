@@ -83,6 +83,52 @@ button { font: inherit; color: inherit; }
 }
 .byline { font-family: var(--light); font-weight: 300; font-size: 20px; }
 
+/* Category pages: a short dark band with just a centred photo of Christian (the home hero, condensed). */
+.cat-hero {
+  display: flex; justify-content: center; align-items: flex-end; overflow: hidden;
+  background:
+    radial-gradient(ellipse 34% 120% at 50% 70%, #4a4a4a 0%, #2a2a2a 40%, rgba(0,0,0,0) 100%),
+    #000;
+}
+.cat-hero-link { display: block; line-height: 0; }
+.cat-hero-portrait img { height: 190px; width: auto; }
+.cat-hero-avatar { padding: 26px 0; align-items: center; }
+.cat-hero-avatar img { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; }
+/* with a line of text: the avatar and text sit side by side, centred as a pair */
+.cat-hero-link:has(.cat-hero-text) { display: flex; align-items: center; gap: 24px; color: #fff; text-decoration: none; line-height: normal; padding: 0 var(--gutter); }
+.cat-hero-text { display: flex; flex-direction: column; gap: 6px; }
+.cat-hero-title { font-size: 22px; font-weight: 700; }
+.cat-hero-sub { font-size: 16px; font-weight: 300; color: #d6d6d6; line-height: 1.6; }
+/* the rotating field: only the current word takes up room (so the sentence closes up around it as the
+   width eases to the next word); the others sit on top of it, hidden, ready to slide in. Underneath runs a
+   liquid-glass line: a frosted white bar with a bright rim, a sheen drifting along it and a slow glow. */
+.rotator { position: relative; display: inline-block; vertical-align: baseline; line-height: 1.2; transition: width .45s var(--ease); }
+.rot-word {
+  position: absolute; left: 0; top: 0; white-space: nowrap; color: #fff; font-weight: 400;
+  opacity: 0; transform: translateY(.6em); transition: opacity .45s ease, transform .45s var(--ease);
+}
+.rot-word.is-on { position: relative; opacity: 1; transform: none; }
+.rot-word.is-off { opacity: 0; transform: translateY(-.6em); }
+.rotator::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1.5px; border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,.28) 0%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.28) 100%) 0 0 / 200% 100%;
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.9), 0 0 0 .5px rgba(255,255,255,.18), 0 0 4px rgba(255,255,255,.2);
+  animation: glass-line 5s ease-in-out infinite;
+}
+@keyframes glass-line {
+  0%, 100% { background-position: 100% 0; box-shadow: inset 0 .5px 0 rgba(255,255,255,.9), 0 0 0 .5px rgba(255,255,255,.18), 0 0 4px rgba(255,255,255,.18); }
+  50% { background-position: 0% 0; box-shadow: inset 0 .5px 0 rgba(255,255,255,.9), 0 0 0 .5px rgba(255,255,255,.25), 0 0 12px rgba(255,255,255,.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rotator, .rot-word, .rot-word.is-off { transform: none; transition: opacity .2s; }
+  .rotator::after { animation: none; }
+}
+@media (max-width: 720px) {
+  .cat-hero-link:has(.cat-hero-text) { gap: 16px; }
+  .cat-hero-link:has(.cat-hero-text) img { width: 76px; height: 76px; flex: none; }
+  .cat-hero-title { font-size: 18px; } .cat-hero-sub { font-size: 14px; }
+}
+
 /* ---------- liquid glass (from the Job Search AI app, kit.css) ---------- */
 /* The app's light-theme glass: a translucent tint, blurred and saturated, with a
    bright rim along the top, a hairline edge and a soft shadow. Buttons take the
@@ -116,9 +162,8 @@ button { font: inherit; color: inherit; }
   position: sticky; top: var(--head-h, 158px); z-index: 45; pointer-events: none;
 }
 .page-home .pills { padding: 20px 0; top: 0; }
-/* category pages: the header scrolls away with the page and the switcher alone stays,
+/* category pages: the intro scrolls away with the page and the switcher alone stays,
    pinned at the top of the window */
-.page-category .site-header { position: relative; }
 .page-category .pills { top: 0; }
 .seg {
   pointer-events: auto; display: flex; gap: 2px; padding: 3px; height: 40px; box-sizing: border-box;
@@ -126,6 +171,7 @@ button { font: inherit; color: inherit; }
   background: color-mix(in srgb, #f2f2f2 86%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
   font-family: var(--sans); line-height: normal;
+  overflow-x: auto; scrollbar-width: none;  /* just above phone width the six sections can outgrow the window: swipe, don't spill */
 }
 .seg-item {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
@@ -177,7 +223,7 @@ button { font: inherit; color: inherit; }
   align-items: start; min-height: 274px; padding-top: 0;
 }
 .home-hero-text { padding: 34px 0 20px 43px; }
-.home-hero h1 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.home-hero .hero-hi { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
 .home-hero p { font-size: 16px; line-height: 1.4; color: #e8e8e8; }
 .home-hero p + p { margin-top: 12px; }
 .home-portrait { width: 254px; height: auto; align-self: end; }
@@ -274,7 +320,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- category ---------- */
 
-.cat-text { padding-top: 22px; padding-bottom: 28px; }
+.cat-text { padding-top: 22px; padding-bottom: 64px; }
 .cat-text h1, .cat-text h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
 .kicker-italic, .tools { font-style: italic; font-size: 16px; color: #333; }
 .tools { margin-top: 14px; }
@@ -433,20 +479,25 @@ body.lb-open { overflow: hidden; }
   .seg { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .seg::-webkit-scrollbar { display: none; }
 
-  .home-hero-inner { grid-template-columns: 1fr; gap: 0; padding-top: 36px; min-height: 0; }
-  .home-hero-text { padding: 0 0 8px; }
-  .home-hero h1 { font-size: 22px; }
+  /* like the Wix mobile hero: the last line sits beside the portrait, which rises up next to it */
+  .home-hero-inner { grid-template-columns: 50% 1fr; gap: 0; padding-top: 36px; min-height: 0; }
+  .home-hero-text { display: contents; }
+  .home-hero-text > * { grid-column: 1 / -1; position: relative; z-index: 1; }
+  .home-hero-text > p:last-child { grid-column: 1; grid-row: 4; align-self: start; }
+  .home-hero .hero-hi { font-size: 22px; }
   .home-hero p { font-size: 15px; }
-  .home-portrait { width: 62%; max-width: 260px; justify-self: end; margin-top: 12px; }
+  .home-portrait { grid-column: 1 / -1; grid-row: 4 / span 2; width: 72%; max-width: 300px; justify-self: end; align-self: end; margin-top: 0; margin-right: calc(-1 * var(--gutter)); }  /* tucked to the window edge, clear of the text */
 
-  .case-row-inner { grid-template-columns: 1fr; min-height: 300px; padding-left: var(--gutter); padding-top: 32px; padding-bottom: 32px; }
-  .slideshow { display: none; }
+  .case-row-inner { grid-template-columns: 1fr; min-height: 300px; padding-left: var(--gutter); padding-right: var(--gutter); padding-top: 32px; padding-bottom: 32px; }
+  .slideshow { justify-self: stretch; max-width: none; margin-top: 28px; }  /* the work samples sit under the text, as on Wix mobile */
+  .strip-arrow { display: none; }  /* phones swipe; the arrows only crowd the gallery */
 
   .case-hero-inner { min-height: 300px; }
   .case-logos img { max-height: 44px; max-width: 200px; }
   .case-sub { font-size: 17px; }
 
   .prose p, .cat-text p:not(.kicker-italic):not(.tools) { font-size: 17px; }
+  .cat-text { padding-bottom: 56px; }  /* phones: the Wix mobile gap above each gallery (~56px at phone scale) */
   .prose .lede { font-size: 16px; }
 
   .strip-track { gap: 14px; }
@@ -454,7 +505,7 @@ body.lb-open { overflow: hidden; }
   .prose { margin-top: 56px; padding-left: var(--gutter); }
   .lede-wrap + .prose { margin-top: 40px; }
   .prose.intro + .prose.intro { margin-top: 32px; }
-  .strip + .prose { margin-top: 64px; }
+  .strip + .prose { margin-top: 72px; }
   .gal-label + .prose { margin-top: 40px; }
   .gal-label.above { margin-top: 24px; }
   .prose p { line-height: 1.45; }
@@ -468,6 +519,7 @@ body.lb-open { overflow: hidden; }
 
 @view-transition { navigation: auto; }
 .site-header { view-transition-name: site-header; }
+.home-hero, .cat-hero { view-transition-name: site-hero; }
 /* The name goes on the switcher itself, not its container: an element with a transition
    name stops the blur of anything inside it from reaching the page behind. */
 .seg { view-transition-name: site-tabs; }
@@ -487,3 +539,41 @@ main { view-transition-name: page; }
 }
 
 @media (prefers-reduced-motion: reduce) { .btn, .strip-arrow, .lb-btn { transition: none; } }
+
+/* phones: the portrait sits a little further right, its far shoulder running off the edge, to give the text more room */
+@media (max-width: 560px) { .home-portrait { margin-right: calc(-1 * var(--gutter) - 28px); } }
+
+/* between a phone and the desktop layout there's room for all the intro beside the portrait, so it sits in a
+   column on the left (as on desktop) instead of the last line alone wrapping beside the head */
+@media (min-width: 561px) and (max-width: 720px) {
+  .home-hero-inner { grid-template-columns: minmax(0, 1fr) min(44%, 300px); column-gap: 20px; padding-top: 0; }
+  .home-hero-text { display: block; padding: 32px 0 28px; }
+  .home-hero-text > *, .home-hero-text > p:last-child { grid-column: auto; grid-row: auto; }
+  .home-portrait { grid-column: 2; grid-row: 1; width: 100%; max-width: none; align-self: end; margin-top: 24px; }
+}
+
+/* ---------- touch devices (data-os="ios", set in the page head) ----------
+   The Job Search AI app's split: an iPhone, an iPad, or any window 720px wide or less gets iOS sizes.
+   Controls grow to the 44pt touch target with 15px labels, and the category text takes the iOS type scale.
+   The section switcher becomes the app's chip bar: separate glass chips on a frosted bar across the window. */
+:root[data-os="ios"] .btn, :root[data-os="ios"] .case-row .btn { min-height: 44px; font-size: 15px; }
+:root[data-os="ios"] .pills {
+  padding: 10px 0; pointer-events: auto; view-transition-name: site-tabs;
+  background: color-mix(in srgb, #f9f9f9 78%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+}
+:root[data-os="ios"] .seg {
+  view-transition-name: none; width: 100%; max-width: 100%; height: auto; gap: 8px; padding: 0 var(--gutter); border-radius: 0;
+  background: none; -webkit-backdrop-filter: none; backdrop-filter: none; overflow-x: auto; scrollbar-width: none;
+}
+:root[data-os="ios"] .seg::-webkit-scrollbar { display: none; }
+:root[data-os="ios"] .seg-item {
+  height: 36px; padding: 0 16px; font-size: 15px; color: #000;
+  background: color-mix(in srgb, #ffffff 66%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 0 0 .5px rgba(0,0,0,.08);
+}
+:root[data-os="ios"] .seg-item.is-active { background: #007aff; color: #fff; box-shadow: none; }
+@media (min-width: 721px) { :root[data-os="ios"] .seg { justify-content: center; } }
+:root[data-os="ios"] .cat-text h1, :root[data-os="ios"] .cat-text h2 { font-size: 20px; margin-bottom: 6px; }
+:root[data-os="ios"] .kicker-italic, :root[data-os="ios"] .tools { font-size: 15px; }

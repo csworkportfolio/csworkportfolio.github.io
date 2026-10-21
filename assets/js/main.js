@@ -23,6 +23,27 @@
       }, { rootMargin: "200px" })
     : null;
 
+  // ---------- category header: the underlined field changes every 5 seconds ----------
+
+  document.querySelectorAll(".rotator").forEach((rot) => {
+    const words = [...rot.querySelectorAll(".rot-word")];
+    if (words.length < 2) return;
+    let i = 0;
+    setInterval(() => {
+      if (document.hidden) return;
+      const cur = words[i];
+      i = (i + 1) % words.length;
+      rot.style.width = cur.offsetWidth + "px";  // pin the old width, then ease to the new one
+      void rot.offsetWidth;
+      rot.style.width = words[i].offsetWidth + "px";
+      cur.classList.remove("is-on");
+      cur.classList.add("is-off");
+      words[i].classList.remove("is-off");
+      words[i].classList.add("is-on");
+      setTimeout(() => cur.classList.remove("is-off"), 500);
+    }, 5000);
+  });
+
   // ---------- Read More shine: lights up as each case row scrolls into view ----------
 
   const shines = document.querySelectorAll(".shine");

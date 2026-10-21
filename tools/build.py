@@ -313,7 +313,10 @@ def layout(page, site, root, body, media, og_image=None):
         attrs = ' class="seg-item is-active" aria-current="page"' if cur else ' class="seg-item"'
         nav.append(f'<a{attrs} href="{href}">{esc(n["label"])}</a>')
     avatar = media.get(site["avatar"])
-    header = "" if page["type"] == "home" else f'''
+    if page["type"] == "category":
+        header = category_banner(site, root, media)
+    else:
+        header = "" if page["type"] == "home" else f'''
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="{root}">
@@ -334,6 +337,8 @@ def layout(page, site, root, body, media, og_image=None):
 <meta property="og:title" content="{esc(page["title"])}">
 <meta property="og:description" content="{esc(desc)}">{og}
 <meta name="theme-color" content="#2b2b2b">
+<script>/* like the Job Search AI app: "ios" on an iPhone or iPad, or any window 720px wide or less, gets touch-sized controls */
+(function(){{var r=document.documentElement,i=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),m=matchMedia("(max-width: 720px)");function a(){{r.setAttribute("data-os",i||m.matches?"ios":"mac")}}a();m.addEventListener&&m.addEventListener("change",a)}})();</script>
 <link rel="stylesheet" href="{root}assets/css/style.css?v={asset_version("assets/css/style.css")}">
 <link rel="icon" href="{root}{avatar.get("sm", avatar["src"])}">
 <script src="{root}assets/js/main.js?v={asset_version("assets/js/main.js")}" defer></script>
@@ -414,9 +419,46 @@ def slideshow(names, title, root, media):
     </div>'''
 
 
+def category_banner(site, root, media):
+    """The category pages' header: a short band of the home hero's dark gradient with just a centred photo,
+    either the home page's cut-out portrait or the round avatar (site.json "category_header")."""
+    kind = site.get("category_header", "portrait")
+    img = media.get(site["home"]["portrait"] if kind == "portrait" else site["avatar"])
+    title, sub = site.get("category_title"), site.get("category_sub")
+    text = ""
+    if title:
+        words = site.get("category_words") or []
+        rot = ""
+        if words:  # "{word}" in the line: one field at a time, underlined, cycled by main.js; screen readers get the whole list
+            spans = "".join(f'<span class="rot-word{" is-on" if i == 0 else ""}">{esc(w)}</span>' for i, w in enumerate(words))
+            rot = f'<span class="rotator" aria-hidden="true">{spans}</span><span class="sr-only">{esc(", ".join(words))}</span>'
+        sub_ = f'<span class="cat-hero-sub">{esc(sub).replace("{word}", rot)}</span>' if sub else ""
+        text = f'<span class="cat-hero-text"><span class="cat-hero-title">{esc(title)}</span>{sub_}</span>'
+    alt = "" if title else "Christian Sanchez, back to the home page"
+    return f'''
+<header class="cat-hero cat-hero-{kind}">
+  <a class="cat-hero-link" href="{root}"><img src="{root}{img.get("sm", img["src"])}" width="{img["w"]}" height="{img["h"]}" alt="{alt}">{text}</a>
+</header>'''
+
+
+def intro_hero(home, root, media, tag):
+    """The "Hi, Christian Sanchez here." intro with the portrait: the home page's hero, and the header of the
+    category pages (where the greeting is not the page's heading, so it is a <p>)."""
+    portrait = media.get(home["portrait"])
+    return f'''
+<section class="home-hero">
+  <div class="wrap home-hero-inner">
+    <div class="home-hero-text">
+      <{tag} class="hero-hi">{esc(home["greeting"])}</{tag}>
+      {paragraphs(home["intro"])}
+    </div>
+    <img class="home-portrait" src="{root}{portrait.get("sm", portrait["src"])}" width="{portrait["w"]}" height="{portrait["h"]}" alt="Christian Sanchez">
+  </div>
+</section>'''
+
+
 def render_home(page, site, media):
     root = ""
-    portrait = media.get(page["portrait"])
     rows = []
     for c in page["cases"]:
         bg = media.get(c["bg"], "bg")
@@ -433,16 +475,7 @@ def render_home(page, site, media):
     {slides}
   </div>
 </article>''')
-    hero = f'''
-<section class="home-hero">
-  <div class="wrap home-hero-inner">
-    <div class="home-hero-text">
-      <h1>{esc(page["greeting"])}</h1>
-      {paragraphs(page["intro"])}
-    </div>
-    <img class="home-portrait" src="{root}{portrait.get("sm", portrait["src"])}" width="{portrait["w"]}" height="{portrait["h"]}" alt="Christian Sanchez">
-  </div>
-</section>'''
+    hero = intro_hero(page, root, media, "h1")
     page = {**page, "nav_active": ""}
     body = '<h2 class="sr-only">Case studies</h2>' + "".join(rows)
     html_ = layout(page, site, root, body, media)
@@ -522,6 +555,7 @@ def main():
     site = json.loads((CONTENT / "site.json").read_text())
 
     pages = [json.loads((CONTENT / "home.json").read_text())]
+    site["home"] = pages[0]  # the category pages reuse its intro
     for f in ("categories.json", "cases-1.json", "cases-2.json"):
         pages += json.loads((CONTENT / f).read_text())
 
