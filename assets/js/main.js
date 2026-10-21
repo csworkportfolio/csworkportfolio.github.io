@@ -371,7 +371,9 @@
     if (!f) return;
     const item = current.items[current.index];
     const boxW = lbMedia.clientWidth;
-    const boxH = lbMedia.clientHeight;
+    // on phones the media box grows with its content, so cap videos at 72% of the screen height instead
+    const stacked = matchMedia("(max-width: 900px)").matches;
+    const boxH = stacked ? window.innerHeight * 0.72 : lbMedia.clientHeight;
     const ar = item.vw / item.vh;
     let w = boxW, h = boxW / ar;
     if (h > boxH) { h = boxH; w = h * ar; }
@@ -402,6 +404,23 @@
     return pdfjs;
   }
 
+  // Click a page to zoom to 150% around the pointer; the zoom follows the mouse, and a second click (or
+  // leaving the page) zooms back out. On touch, a tap zooms in at that spot and the next tap zooms out.
+  const ZOOM = 1.5;
+  function zoomable(slot) {
+    const aim = (e) => {
+      const r = slot.getBoundingClientRect();
+      slot.style.setProperty("--zx", `${((e.clientX - r.left) / r.width) * 100}%`);
+      slot.style.setProperty("--zy", `${((e.clientY - r.top) / r.height) * 100}%`);
+    };
+    slot.addEventListener("click", (e) => {
+      aim(e);
+      slot.classList.toggle("is-zoomed");
+    });
+    slot.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse" && slot.classList.contains("is-zoomed")) aim(e); });
+    slot.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") slot.classList.remove("is-zoomed"); });
+  }
+
   async function showPdf(item, box) {
     const lib = await loadPdfJs();
     const doc = await lib.getDocument(new URL(item.link.href, location.href).href).promise;
@@ -413,6 +432,7 @@
       const slot = el("div", { class: "lb-pdf-page", "aria-label": `Page ${n} of ${doc.numPages}`, role: "img" });
       slot.style.aspectRatio = `${base.width} / ${base.height}`;
       slot.dataset.page = n;
+      zoomable(slot);
       pages.push(slot);
     }
     box.replaceChildren(...pages);
@@ -423,7 +443,8 @@
       const page = await doc.getPage(Number(slot.dataset.page));
       const vp1 = page.getViewport({ scale: 1 });
       // sharp at the screen's pixel density, but under ~12 MP so tall one-page PDFs stay within iOS canvas limits
-      const scale = Math.min((slot.clientWidth * (window.devicePixelRatio || 1)) / vp1.width,
+      // drawn at 1.5x so the zoom stays crisp
+      const scale = Math.min((slot.clientWidth * (window.devicePixelRatio || 1) * ZOOM) / vp1.width,
         Math.sqrt(12e6 / (vp1.width * vp1.height)));
       const vp = page.getViewport({ scale });
       const canvas = el("canvas", { width: Math.floor(vp.width), height: Math.floor(vp.height) });
@@ -439,6 +460,8 @@
 
   function render() {
     const item = current.items[current.index];
+    const inner = dialog.querySelector(".lb-inner");
+    if (inner) inner.scrollTop = 0;  // each piece starts at its top when the phone layout scrolls
     lbMedia.replaceChildren();
     lbCaption.replaceChildren();
     const label = item.title || "";
@@ -480,7 +503,12 @@
       }
       if (item.link) {
         const page = item.link.href.endsWith("/");  // a page of this site (Ghostwriting) opens in place; files open in a new tab
-        lbCaption.append(el("a", { class: "btn btn-rust", href: item.link.href, target: page ? null : "_blank", rel: page ? null : "noopener" }, item.link.label));
+        // the PDF already reads in the lightbox, so its button is for keeping a copy
+        const pdf = isPdf(item);
+        lbCaption.append(el("a", {
+          class: "btn btn-rust", href: item.link.href, download: pdf ? "" : null,
+          target: page || pdf ? null : "_blank", rel: page || pdf ? null : "noopener",
+        }, pdf ? "Download (PDF)" : item.link.label));
       }
     }
     dialog.setAttribute("aria-label", label ? `Enlarged view: ${label}` : "Enlarged view");
