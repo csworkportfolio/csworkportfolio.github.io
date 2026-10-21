@@ -239,11 +239,11 @@ def json_script(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
-def strip(items, root, label):
+def strip(items, root, label, height=None):
     data = json_script([fix_paths(it, root) for it in items])
     tiles = "".join(tile(it, i, root) for i, it in enumerate(items))
     return f'''
-<section class="strip" data-gallery aria-label="{esc(label)}">
+<section class="strip" data-gallery aria-label="{esc(label)}"{f' style="--tile-h:{height}px"' if height else ""}>
   <div class="strip-viewport" tabindex="0">
     <ul class="strip-track">{tiles}</ul>
   </div>
@@ -301,7 +301,7 @@ def layout(page, site, root, body, media, og_image=None):
     </a>
   </div>
 </header>'''
-    label = '<p class="nav-label">Work by category</p>' if page["type"] == "home" else ""
+    label = '<p class="nav-label"><span>Work by category</span></p>' if page["type"] == "home" else ""
     desc = page.get("description", site["description"])
     og = f'\n<meta property="og:image" content="{root}{og_image}">' if og_image else ""
     return f'''<!doctype html>
@@ -412,7 +412,7 @@ def render_category(page, site, media):
     for b in page["blocks"]:
         if "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
-            parts.append(strip(items, root, "Gallery"))
+            parts.append(strip(items, root, "Gallery", b.get("height")))
         else:
             tag = "h1" if first_heading else "h2"
             first_heading = False

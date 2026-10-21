@@ -14,7 +14,10 @@
           "TS4P.png",
           "SOLV Example 2 Transparent.png",
           "QRZ Web.png",
-          { "mp4": "Gary Task Complete.mp4", "title": "Redzone Pocket Coach: April Fools' Campaign (2025)" },
+          {
+            "mp4": "Gary Task Complete.mp4",
+            "title": "Redzone Pocket Coach: April Fools' Campaign (2025)"
+          },
           "RE Plus.png",
           "cc.png",
           "Fall.png",
@@ -31,31 +34,88 @@
           "Holiday Calendars.png",
           "Email TS4P.png",
           "Website.png"
-        ]
+        ],
+        "height": 315
       },
       {
         "heading": "Graphic Design",
         "kicker": "Web content, GIFs, print, reports, display ads, animation, and more",
         "tools": "Adobe Photoshop, Adobe Illustrator, Adobe InDesign, Adobe Substance 3D, Adobe After Effects, Figma, Canva",
-        "body": ["Social graphics, display ads, GIFs and light-motion assets, event banners and signage, print collateral, and reports, plus co-branded creative held to partner brand standards for Apple, Ferrara, and Gorilla Glue."]
+        "body": [
+          "Social graphics, display ads, GIFs and light-motion assets, event banners and signage, print collateral, and reports, plus co-branded creative held to partner brand standards for Apple, Ferrara, and Gorilla Glue."
+        ]
       },
       {
         "gallery": [
-          { "src": "Research 3.PNG", "link": { "href": "files/mktg-327.pdf", "label": "Open MKTG 327 (PDF)" } },
-          { "src": "Apple Campus Keynote_edited.png", "link": { "href": "files/apple-nama-2023.pdf", "label": "Open Apple NAMA 2023 (PDF)" } },
-          { "src": "Research 4.PNG", "link": { "href": "files/mktg-466-presentation.pptx", "label": "Download MKTG 466 Presentation (PowerPoint)" } },
-          { "src": "Research w Button.PNG", "link": { "href": "files/mktg-430-study.pdf", "label": "Open MKTG 430 Study (PDF)" } },
-          { "src": "Research 5.PNG", "link": { "href": "files/mktg-322-presentation.pdf", "label": "Open MKTG 322 Presentation (PDF)" } },
-          { "src": "Pages from MKTG 322 Presentation.png", "title": "Single Excerpt from Reviving a Struggling Brand Presentation" },
-          { "src": "Research 2.PNG", "link": { "href": "files/social-media-campaign.pdf", "label": "Open Social Media Campaign (PDF)" } },
-          { "src": "Research 7.PNG", "link": { "href": "files/mktg-323-presentation.pdf", "label": "Open MKTG 323 Presentation (PDF)" } },
-          { "src": "Research 6.PNG", "link": { "href": "files/mktg-321-presentation.pdf", "label": "Open MKTG 321 Presentation (PDF)" } }
-        ]
+          {
+            "src": "Research 3.PNG",
+            "link": {
+              "href": "files/mktg-327.pdf",
+              "label": "Open MKTG 327 (PDF)"
+            }
+          },
+          {
+            "src": "Apple Campus Keynote_edited.png",
+            "link": {
+              "href": "files/apple-nama-2023.pdf",
+              "label": "Open Apple NAMA 2023 (PDF)"
+            }
+          },
+          {
+            "src": "Research 4.PNG",
+            "link": {
+              "href": "files/mktg-466-presentation.pptx",
+              "label": "Download MKTG 466 Presentation (PowerPoint)"
+            }
+          },
+          {
+            "src": "Research w Button.PNG",
+            "link": {
+              "href": "files/mktg-430-study.pdf",
+              "label": "Open MKTG 430 Study (PDF)"
+            }
+          },
+          {
+            "src": "Research 5.PNG",
+            "link": {
+              "href": "files/mktg-322-presentation.pdf",
+              "label": "Open MKTG 322 Presentation (PDF)"
+            }
+          },
+          {
+            "src": "Pages from MKTG 322 Presentation.png",
+            "title": "Single Excerpt from Reviving a Struggling Brand Presentation"
+          },
+          {
+            "src": "Research 2.PNG",
+            "link": {
+              "href": "files/social-media-campaign.pdf",
+              "label": "Open Social Media Campaign (PDF)"
+            }
+          },
+          {
+            "src": "Research 7.PNG",
+            "link": {
+              "href": "files/mktg-323-presentation.pdf",
+              "label": "Open MKTG 323 Presentation (PDF)"
+            }
+          },
+          {
+            "src": "Research 6.PNG",
+            "link": {
+              "href": "files/mktg-321-presentation.pdf",
+              "label": "Open MKTG 321 Presentation (PDF)"
+            }
+          }
+        ],
+        "height": 315
       },
       {
         "heading": "Projects",
         "kicker": "Presentations, research, and more",
-        "body": ["Slide decks and excerpts from QAD Redzone and Texas A&M University's Mays Business School."]
+        "body": [
+          "Slide decks and excerpts from QAD Redzone and Texas A&M University's Mays Business School."
+        ]
       }
     ]
   },
@@ -67,33 +127,66 @@
       {
         "gallery": [
           "Nike G.png",
-          { "v": "1228250187" },
+          {
+            "v": "1228250187"
+          },
           "Nike 20.png",
-          { "src": "TT.png", "title": "Texans Thrive on the Web" },
-          { "v": "1228250222" },
-          { "src": "Newsletter 2_edited.jpg", "title": "Texas Sweats for Pets: Donations Welcome" },
-          { "src": "Redzone on the Web_edited.png", "title": "Redzone Videos & Content" },
-          { "v": "1228250189" },
+          {
+            "src": "TT.png",
+            "title": "Texans Thrive on the Web"
+          },
+          {
+            "v": "1228250222"
+          },
+          {
+            "src": "Newsletter 2_edited.jpg",
+            "title": "Texas Sweats for Pets: Donations Welcome"
+          },
+          {
+            "src": "Redzone on the Web_edited.png",
+            "title": "Redzone Videos & Content"
+          },
+          {
+            "v": "1228250189"
+          },
           "Nike 2.png",
-          { "src": "Newsletter 3_edited.jpg", "title": "Monthly Mix: July Newsletter" },
-          { "v": "1228250203" },
-          { "src": "Newsletter 1_edited.jpg", "title": "#BlackLivesMatter: Read Our Statement" },
+          {
+            "src": "Newsletter 3_edited.jpg",
+            "title": "Monthly Mix: July Newsletter"
+          },
+          {
+            "v": "1228250203"
+          },
+          {
+            "src": "Newsletter 1_edited.jpg",
+            "title": "#BlackLivesMatter: Read Our Statement"
+          },
           "nIKE S_edited.png",
-          { "v": "1228250188" },
+          {
+            "v": "1228250188"
+          },
           "Nike J.png",
           "Nike 5.png",
           "Nike 4.png",
           "Nike 3.png",
-          { "src": "Video-ezgif.com-crop.gif", "title": "Community Challenge 101" },
-          { "v": "1228251265" },
+          {
+            "src": "Video-ezgif.com-crop.gif",
+            "title": "Community Challenge 101"
+          },
+          {
+            "v": "1228251265"
+          },
           "Nike 1.png"
-        ]
+        ],
+        "height": 350
       },
       {
         "heading": "Web, App, & Email",
         "kicker": "Web content, app content, intranet, HTML and CSS, block editing, copywriting",
         "tools": "Adobe Experience Manager, WordPress, Craft CMS, HubSpot, MailChimp, Constant Contact, Microsoft Power Apps, SharePoint, Shopify",
-        "body": ["Web pages, app screens and notifications, intranet hubs, newsletters, event reminders, and product listings, published inside fixed release windows with the accessibility checks and QA routing that come with them, and co-branded campaign content made with the University of Texas, SNAP, and Blue Cross Blue Shield."]
+        "body": [
+          "Web pages, app screens and notifications, intranet hubs, newsletters, event reminders, and product listings, published inside fixed release windows with the accessibility checks and QA routing that come with them, and co-branded campaign content made with the University of Texas, SNAP, and Blue Cross Blue Shield."
+        ]
       }
     ]
   },
@@ -104,23 +197,56 @@
     "blocks": [
       {
         "gallery": [
-          { "v": "1175822607", "title": "Good Energy" },
-          { "v": "1RKAiFOCbtE", "title": "A Message from SOLV Energy CEO, George Hershman" },
-          { "v": "1175822621", "title": "Overview and Impact of Misae Solar" },
-          { "v": "mdeXsU0Jfkg", "title": "A Closer Look into QAD Redzone's 4 Modules" },
-          { "v": "1231905548", "title": "Mars Men PSA" },
-          { "v": "1175822624", "title": "We Power What's Next at SOLV Energy" },
-          { "v": "nD0pXIu1OO4", "title": "Tackling Food Insecurity with Urban Roots" },
-          { "v": "PxXYS6s87G8", "title": "2020 Community Challenge with Austin Mayor Steve Adler" },
-          { "v": "kPqrLVgfQQs", "title": "2021 Community Challenge App Instructional Video" },
-          { "v": "QctJ8Uagr7w", "title": "Deep Dive into QAD Redzone Modules" }
-        ]
+          {
+            "v": "1175822607",
+            "title": "Good Energy"
+          },
+          {
+            "v": "1RKAiFOCbtE",
+            "title": "A Message from SOLV Energy CEO, George Hershman"
+          },
+          {
+            "v": "1175822621",
+            "title": "Overview and Impact of Misae Solar"
+          },
+          {
+            "v": "mdeXsU0Jfkg",
+            "title": "A Closer Look into QAD Redzone's 4 Modules"
+          },
+          {
+            "v": "1231905548",
+            "title": "Mars Men PSA"
+          },
+          {
+            "v": "1175822624",
+            "title": "We Power What's Next at SOLV Energy"
+          },
+          {
+            "v": "nD0pXIu1OO4",
+            "title": "Tackling Food Insecurity with Urban Roots"
+          },
+          {
+            "v": "PxXYS6s87G8",
+            "title": "2020 Community Challenge with Austin Mayor Steve Adler"
+          },
+          {
+            "v": "kPqrLVgfQQs",
+            "title": "2021 Community Challenge App Instructional Video"
+          },
+          {
+            "v": "QctJ8Uagr7w",
+            "title": "Deep Dive into QAD Redzone Modules"
+          }
+        ],
+        "height": 350
       },
       {
         "heading": "Video Work",
         "kicker": "Directing, filming, scripting, editing",
         "tools": "Adobe Premiere Pro, Adobe After Effects, CapCut, Claude, ChatGPT, Riverside.fm",
-        "body": ["Customer stories filmed on plant floors, culture pieces, product walkthroughs, and event content for SOLV Energy, QAD Redzone, and Healthier Texas, with guests including former City of Austin Mayor Steve Adler and nonprofit partners like Urban Roots."]
+        "body": [
+          "Customer stories filmed on plant floors, culture pieces, product walkthroughs, and event content for SOLV Energy, QAD Redzone, and Healthier Texas, with guests including former City of Austin Mayor Steve Adler and nonprofit partners like Urban Roots."
+        ]
       }
     ]
   },
@@ -131,49 +257,135 @@
     "blocks": [
       {
         "gallery": [
-          { "src": "Screenshot 2025-02-21 at 4_edited_edited.jpg", "title": "Healthier Texas Summit: Call for Proposals" },
-          { "src": "Screenshot 2026-10-01 at 12.53.47 AM.jpeg", "title": "Productivity & Turnover" },
-          { "src": "IMG_1724.jpg", "title": "We Power What's Next at RE+" },
+          {
+            "src": "Screenshot 2025-02-21 at 4_edited_edited.jpg",
+            "title": "Healthier Texas Summit: Call for Proposals"
+          },
+          {
+            "src": "Screenshot 2026-10-01 at 12.53.47 AM.jpeg",
+            "title": "Productivity & Turnover"
+          },
+          {
+            "src": "IMG_1724.jpg",
+            "title": "We Power What's Next at RE+"
+          },
           "ezgif.com-video-to-gif-converter.gif",
-          { "src": "IMG_1723.jpg", "title": "We'll See You in Las Vegas" },
-          { "src": "TAL-ezgif.com-video-to-gif-converter.gif", "title": "History of the Assembly Line Carousel for Blog" },
-          { "src": "IMG_0967_edited.jpg", "title": "Texas Sweats for Pets: 3 Ways to Join" },
+          {
+            "src": "IMG_1723.jpg",
+            "title": "We'll See You in Las Vegas"
+          },
+          {
+            "src": "TAL-ezgif.com-video-to-gif-converter.gif",
+            "title": "History of the Assembly Line Carousel for Blog"
+          },
+          {
+            "src": "IMG_0967_edited.jpg",
+            "title": "Texas Sweats for Pets: 3 Ways to Join"
+          },
           "Productivity-ezgif.com-crop.gif",
           "Screenshot 2026-10-01 at 12.31.50 AM.png",
-          { "v": "1228265177" },
-          { "src": "Screenshot 2024-02-12 at 11_edited.jpg", "title": "2023 QAD Redzone Open Charity Golf Tournament" },
-          { "src": "Screenshot 2025-02-22 at 2.19_edited.jpg", "title": "February Work Anniversaries with QAD Redzone" },
+          {
+            "v": "1228265177"
+          },
+          {
+            "src": "Screenshot 2024-02-12 at 11_edited.jpg",
+            "title": "2023 QAD Redzone Open Charity Golf Tournament"
+          },
+          {
+            "src": "Screenshot 2025-02-22 at 2.19_edited.jpg",
+            "title": "February Work Anniversaries with QAD Redzone"
+          },
           "LeadingtheWay-ezgif.com-optimize.gif",
-          { "src": "FoodSafetyPodcast-ezgif.com-crop.gif", "title": "Summit Podcast Narration" },
-          { "src": "OEEInfographic-ezgif.com-optimize.gif", "title": "Manufacturing Carousel for Blog" },
-          { "src": "ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop.gif", "title": "2023 Holidays with QAD Redzone" },
-          { "src": "image0_edited.jpg", "title": "Supporting Our Frontline Workers" },
-          { "src": "ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop.gif", "title": "2021 Community Challenge Recap with Mayor Ron Nirenberg" },
-          { "src": "2BoothsAcrosstheUS-ezgif.com-crop.gif", "title": "Two Different Shows Across the World" },
-          { "src": "Compliance-ezgif.com-crop.gif", "title": "Compliance Workshop Invite" },
-          { "src": "ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop.gif", "title": "2024 New Year's with QAD Redzone" }
-        ]
+          {
+            "src": "FoodSafetyPodcast-ezgif.com-crop.gif",
+            "title": "Summit Podcast Narration"
+          },
+          {
+            "src": "OEEInfographic-ezgif.com-optimize.gif",
+            "title": "Manufacturing Carousel for Blog"
+          },
+          {
+            "src": "ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop.gif",
+            "title": "2023 Holidays with QAD Redzone"
+          },
+          {
+            "src": "image0_edited.jpg",
+            "title": "Supporting Our Frontline Workers"
+          },
+          {
+            "src": "ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop.gif",
+            "title": "2021 Community Challenge Recap with Mayor Ron Nirenberg"
+          },
+          {
+            "src": "2BoothsAcrosstheUS-ezgif.com-crop.gif",
+            "title": "Two Different Shows Across the World"
+          },
+          {
+            "src": "Compliance-ezgif.com-crop.gif",
+            "title": "Compliance Workshop Invite"
+          },
+          {
+            "src": "ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop.gif",
+            "title": "2024 New Year's with QAD Redzone"
+          }
+        ],
+        "height": 380
       },
       {
         "heading": "Short-Form: Social Media",
         "kicker": "Content strategy, design, video editing, photography",
         "tools": "Sprout Social, Hootsuite, Sprinklr, Meta Business Suite, Adobe Photoshop, Adobe Illustrator, Adobe Premiere Pro, CapCut, Canva",
-        "body": ["Organic content for Facebook, Instagram, LinkedIn, X, and YouTube: frontline workers on camera, seasonal campaigns with a voice of their own, employee advocacy creative people chose to put on their own networks, event coverage and original photography, and partner content with NVIDIA, Microsoft, Google Cloud, and Anthropic."]
+        "body": [
+          "Organic content for Facebook, Instagram, LinkedIn, X, and YouTube: frontline workers on camera, seasonal campaigns with a voice of their own, employee advocacy creative people chose to put on their own networks, event coverage and original photography, and partner content with NVIDIA, Microsoft, Google Cloud, and Anthropic."
+        ]
       },
       {
         "gallery": [
-          { "src": "LF1T Large.png", "title": "Redzone Case Study: Coil Specialist, Inc.", "link": { "href": "files/redzone-case-study-coil-specialist.pdf", "label": "Read the case study (PDF)" } },
-          { "src": "Long Form 6.jpeg", "title": "Cohesity and Google Cloud Unite to Tackle Hidden Threats", "link": { "href": "files/cohesity-google-cloud-hidden-threats.pdf", "label": "Read the blog (PDF)" } },
-          { "src": "ezgif.com-crop.gif" },
-          { "src": "Long Form 5.jpeg", "title": "How Does Social Support Affect Your Health", "link": { "href": "files/how-does-social-support-affect-your-health.pdf", "label": "Read the article (PDF)" } },
-          { "src": "Long Form 2 2.jpeg", "title": "Redzone Case Study: Companion Baking Company", "link": { "href": "files/redzone-case-study-companion-baking.pdf", "label": "Read the case study (PDF)" } }
-        ]
+          {
+            "src": "LF1T Large.png",
+            "title": "Redzone Case Study: Coil Specialist, Inc.",
+            "link": {
+              "href": "files/redzone-case-study-coil-specialist.pdf",
+              "label": "Read the case study (PDF)"
+            }
+          },
+          {
+            "src": "Long Form 6.jpeg",
+            "title": "Cohesity and Google Cloud Unite to Tackle Hidden Threats",
+            "link": {
+              "href": "files/cohesity-google-cloud-hidden-threats.pdf",
+              "label": "Read the blog (PDF)"
+            }
+          },
+          {
+            "src": "ezgif.com-crop.gif"
+          },
+          {
+            "src": "Long Form 5.jpeg",
+            "title": "How Does Social Support Affect Your Health",
+            "link": {
+              "href": "files/how-does-social-support-affect-your-health.pdf",
+              "label": "Read the article (PDF)"
+            }
+          },
+          {
+            "src": "Long Form 2 2.jpeg",
+            "title": "Redzone Case Study: Companion Baking Company",
+            "link": {
+              "href": "files/redzone-case-study-companion-baking.pdf",
+              "label": "Read the case study (PDF)"
+            }
+          }
+        ],
+        "height": 384
       },
       {
         "heading": "Long-Form: Blogs, Case Studies, and Executive Thought Leadership",
         "kicker": "Customer stories, c-suite perspectives, partner works, health explainers",
         "tools": "Microsoft Office, WordPress, Adobe Experience Manager, SEMrush, Google Analytics, Adobe Creative Suite",
-        "body": ["Customer case studies, partner blogs, and health explainers: interviewing customers about the results they saw on the plant floor, co-writing with Google Cloud on security, and turning health research into plain language for everyday readers. Each piece is structured to be found in search and repurposed across web, email, and social."]
+        "body": [
+          "Customer case studies, partner blogs, and health explainers: interviewing customers about the results they saw on the plant floor, co-writing with Google Cloud on security, and turning health research into plain language for everyday readers. Each piece is structured to be found in search and repurposed across web, email, and social."
+        ]
       }
     ]
   },
@@ -184,24 +396,60 @@
     "blocks": [
       {
         "gallery": [
-          { "src": "2_edited.jpg", "title": "White Paper: Linkedin InMail Ad" },
-          { "src": "Banner Edit.png", "title": "Leaderboard Ad for Pack Expo" },
-          { "v": "1231922947", "title": "Cohesity Catalyst Paris" },
-          { "src": "ScreenRecording2024-02-13at9.51.07AM-ezgif.com-crop.gif", "title": "Empower Your Frontline: LinkedIn Carousel Ad" },
-          { "src": "Video2-ezgif.com-crop.gif", "title": "Austin Fit Magazine Sweepstakes: Instagram Stories Ad" },
-          { "src": "VideoAd-ezgif.com-crop.gif", "title": "Book a Demo with QAD Redzone: Linkedin Video Ad" },
-          { "src": "Event_edited.jpg", "title": "Responding to the Pandemic: Facebook Event Ad" },
-          { "src": "Screenshot 2025-02-22 at 3.37_edited.jpg", "title": "Champion Employee Engagement: eBook Download Ad" },
-          { "src": "ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop.gif", "title": "Living Healthier Hotline: Facebook Carousel Ad" },
-          { "src": "Mobile Ad_edited.jpg", "title": "Mobile Ad for Pack Expo" },
-          { "src": "Video3-ezgif.com-video-to-gif-converter.gif", "title": "Healthier Texas Summit Recap: X (Twitter) Ad" }
-        ]
+          {
+            "src": "2_edited.jpg",
+            "title": "White Paper: Linkedin InMail Ad"
+          },
+          {
+            "src": "Banner Edit.png",
+            "title": "Leaderboard Ad for Pack Expo"
+          },
+          {
+            "v": "1231922947",
+            "title": "Cohesity Catalyst Paris"
+          },
+          {
+            "src": "ScreenRecording2024-02-13at9.51.07AM-ezgif.com-crop.gif",
+            "title": "Empower Your Frontline: LinkedIn Carousel Ad"
+          },
+          {
+            "src": "Video2-ezgif.com-crop.gif",
+            "title": "Austin Fit Magazine Sweepstakes: Instagram Stories Ad"
+          },
+          {
+            "src": "VideoAd-ezgif.com-crop.gif",
+            "title": "Book a Demo with QAD Redzone: Linkedin Video Ad"
+          },
+          {
+            "src": "Event_edited.jpg",
+            "title": "Responding to the Pandemic: Facebook Event Ad"
+          },
+          {
+            "src": "Screenshot 2025-02-22 at 3.37_edited.jpg",
+            "title": "Champion Employee Engagement: eBook Download Ad"
+          },
+          {
+            "src": "ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop.gif",
+            "title": "Living Healthier Hotline: Facebook Carousel Ad"
+          },
+          {
+            "src": "Mobile Ad_edited.jpg",
+            "title": "Mobile Ad for Pack Expo"
+          },
+          {
+            "src": "Video3-ezgif.com-video-to-gif-converter.gif",
+            "title": "Healthier Texas Summit Recap: X (Twitter) Ad"
+          }
+        ],
+        "height": 352
       },
       {
         "heading": "Paid Media",
         "kicker": "Campaign optimization, A/B testing, creative, budget management",
         "tools": "Meta Business Suite, LinkedIn Campaign Manager, X Ads, Google Ads, Google Analytics, Google Tag Manager",
-        "body": ["InMail, event promotion, Stories, carousel, and display ads for B2B software buyers and statewide public health audiences, with audience, creative, and placement tests running on each campaign and monthly reporting deciding where the budget moved next."]
+        "body": [
+          "InMail, event promotion, Stories, carousel, and display ads for B2B software buyers and statewide public health audiences, with audience, creative, and placement tests running on each campaign and monthly reporting deciding where the budget moved next."
+        ]
       }
     ]
   }
