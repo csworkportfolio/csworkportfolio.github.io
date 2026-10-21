@@ -417,6 +417,13 @@ button { font: inherit; color: inherit; }
 .lightbox[open] { display: block; }
 body.lb-open { overflow: hidden; }
 html.lb-tint, html.lb-tint body { background: #0e0e0e; }
+/* phones: the piece opens as a full page (main.js), in the normal flow so the window scrolls it */
+html.lb-page body > *:not(.lightbox) { display: none !important; }
+html.lb-page .lightbox { position: static; inset: auto; width: auto; height: auto; min-height: 100lvh; }
+html.lb-page .lb-inner { height: auto; overflow: visible; padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
+html.lb-page .lb-btn { position: fixed; }
+html.lb-page .lb-close { top: calc(14px + env(safe-area-inset-top, 0px)); }
+html.lb-page .lightbox:not(.no-caption) .lb-prev, html.lb-page .lightbox:not(.no-caption) .lb-next { top: calc(8px + env(safe-area-inset-top, 0px)); }
 /* The piece and its caption sit together as one centred pair, the caption a set distance from the
    piece's own edge whatever its shape, rather than the piece floating in a wide column. */
 .lightbox { --lb-room: calc(100vw - 176px - 360px - 56px); }  /* width left for the piece beside the caption */
@@ -601,6 +608,11 @@ main { view-transition-name: page; }
   .home-hero-text { display: block; padding: 32px 0 28px; }
   .home-hero-text > *, .home-hero-text > p:last-child { grid-column: auto; grid-row: auto; }
   .home-portrait { grid-column: 2; grid-row: 1; width: 100%; max-width: none; align-self: end; margin-top: 24px; }
+  /* wide enough (large phones in landscape, foldables) for the desktop case rows: text beside its slideshow */
+  .case-row-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 24px; min-height: 0; padding-top: 28px; padding-bottom: 28px; align-items: center; }
+  .case-row .kicker { margin-bottom: 12px; }
+  .case-row h2 { margin-bottom: 18px; }
+  .slideshow { margin-top: 0; justify-self: end; }
 }
 
 /* ---------- touch devices (data-os="ios", set in the page head) ----------

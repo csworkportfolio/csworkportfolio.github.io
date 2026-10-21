@@ -526,15 +526,31 @@
 
   let openedByPointer = false;
 
+  // Phones open a piece as a full page instead of a pinned pop-up: the rest of the page steps aside and the
+  // piece scrolls with the window, so it runs on under Safari's see-through toolbar like any page (a pinned
+  // layer can't). The phone's back gesture closes it, and closing returns to the same spot on the page.
+  const phoneView = () => matchMedia("(max-width: 900px)").matches;
+  let asPage = false;
+  let pageScroll = 0;
+
   function open(items, index, byPointer) {
     openedByPointer = byPointer;
     current = { items, index };
     dialog.classList.toggle("single", items.length < 2);
+    asPage = phoneView();
+    if (asPage) pageScroll = window.scrollY;
     render();
     lightboxOpen = true;
-    document.body.classList.add("lb-open");
     tintBars(true);
-    dialog.showModal();
+    if (asPage) {
+      document.documentElement.classList.add("lb-page");
+      dialog.show();
+      window.scrollTo({ top: 0, behavior: "instant" });
+      history.pushState({ lightbox: true }, "");
+    } else {
+      document.body.classList.add("lb-open");
+      dialog.showModal();
+    }
     // Keyboard users land on Close; after a click, focus the dialog itself so
     // browsers that ring programmatic focus (Safari) don't outline the button.
     if (byPointer) dialog.focus({ preventScroll: true });
@@ -545,10 +561,18 @@
     const n = current.items.length;
     current.index = (current.index + delta + n) % n;
     render();
+    if (asPage) window.scrollTo({ top: 0, behavior: "instant" });
   }
 
+  // closing a full-page piece steps back through history, so the back gesture and the X behave the same
+  function closeBox() {
+    if (asPage && history.state && history.state.lightbox) history.back();
+    else dialog.close();
+  }
+  window.addEventListener("popstate", () => { if (lightboxOpen && asPage) dialog.close(); });
+
   if (dialog) {
-    dialog.querySelector(".lb-close").addEventListener("click", () => dialog.close());
+    dialog.querySelector(".lb-close").addEventListener("click", closeBox);
     dialog.querySelector(".lb-prev").addEventListener("click", () => go(-1));
     dialog.querySelector(".lb-next").addEventListener("click", () => go(1));
     function closed() {
@@ -557,6 +581,11 @@
       lightboxOpen = false;
       document.body.classList.remove("lb-open");
       tintBars(false);
+      if (asPage) {
+        document.documentElement.classList.remove("lb-page");
+        window.scrollTo({ top: pageScroll, behavior: "instant" });  // the page scrolls smoothly elsewhere; jumps here
+        asPage = false;
+      }
       // The browser hands focus back to the gallery; after a click that would
       // draw a focus ring around it, so let it go.
       if (openedByPointer && document.activeElement && document.activeElement !== document.body) {
@@ -567,7 +596,7 @@
     // some browsers skip the close event; watching the open attribute catches every way the box shuts
     new MutationObserver(closed).observe(dialog, { attributes: true, attributeFilter: ["open"] });
     dialog.addEventListener("click", (e) => {
-      if (e.target === dialog || e.target.classList.contains("lb-inner") || e.target === lbMedia) dialog.close();
+      if (e.target === dialog || e.target.classList.contains("lb-inner") || e.target === lbMedia) closeBox();
     });
     dialog.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") go(1);
@@ -672,6 +701,26 @@
   // On a narrow screen the switcher scrolls sideways; open it with the current section centered.
   const seg = document.querySelector(".seg");
   const segOn = seg && seg.querySelector(".is-active");
+
+  // Touch chips on a wider screen (foldables, big phones turned sideways): shrink the labels and padding,
+  // within limits, until all six fit in one row like the desktop bar. Phones narrower than that still swipe.
+  function fitChips() {
+    if (!seg) return;
+    const items = [...seg.querySelectorAll(".seg-item")];
+    items.forEach((i) => { i.style.fontSize = ""; i.style.paddingInline = ""; });
+    seg.style.gap = "";
+    const chips = document.documentElement.dataset.os === "ios" && window.innerWidth > 560;
+    if (!chips || seg.scrollWidth <= seg.clientWidth) return;
+    for (const [font, pad, gap] of [[15, 14, 8], [15, 12, 8], [14, 12, 8], [14, 10, 8], [13, 10, 8], [13, 8, 6], [13, 7, 4]]) {
+      items.forEach((i) => { i.style.fontSize = font + "px"; i.style.paddingInline = pad + "px"; });
+      seg.style.gap = gap + "px";
+      if (seg.scrollWidth <= seg.clientWidth) return;
+    }
+  }
+  fitChips();
+  window.addEventListener("resize", fitChips);
+  if (document.fonts) document.fonts.ready.then(fitChips);
+
   if (segOn && seg.scrollWidth > seg.clientWidth) {
     seg.scrollLeft = segOn.offsetLeft - seg.offsetLeft - (seg.clientWidth - segOn.offsetWidth) / 2;
   }
