@@ -245,6 +245,92 @@
     }, { passive: true });
   }
 
+  // ---------- home-page slideshows ----------
+
+  const SLIDE_MS = 3800;
+
+  function initSlideshow(root, order) {
+    const track = root.querySelector(".slides");
+    const slides = [...track.children];
+    const counter = root.querySelector(".ss-n");
+    const pause = new Set();
+    let index = 0;
+    let timer = 0;
+
+    function syncMedia() {
+      slides.forEach((li, i) => {
+        const v = li.querySelector("video");
+        if (!v) return;
+        if (i === index && !pause.has("offscreen")) {
+          if (!v.src) v.src = v.dataset.src;
+          if (!reduceMotion) v.play().catch(() => {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }
+
+    function show(i) {
+      index = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(${-100 * index}%)`;
+      slides.forEach((li, k) => {
+        li.classList.toggle("is-current", k === index);
+        li.toggleAttribute("aria-hidden", k !== index);
+      });
+      counter.textContent = index + 1;
+      syncMedia();
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (reduceMotion || pause.size || slides.length < 2) return;
+      timer = setTimeout(() => { show(index + 1); schedule(); }, SLIDE_MS);
+    }
+    const hold = (r) => { pause.add(r); schedule(); };
+    const release = (r) => { pause.delete(r); schedule(); };
+
+    root.querySelector(".ss-prev").addEventListener("click", () => { show(index - 1); schedule(); });
+    root.querySelector(".ss-next").addEventListener("click", () => { show(index + 1); schedule(); });
+    root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hold("hover"); });
+    root.addEventListener("pointerleave", () => release("hover"));
+    root.addEventListener("focusin", () => hold("focus"));
+    root.addEventListener("focusout", () => release("focus"));
+
+    let sx = null;
+    root.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; hold("touch"); }, { passive: true });
+    root.addEventListener("touchend", (e) => {
+      if (sx != null) {
+        const dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+      }
+      sx = null;
+      release("touch");
+    }, { passive: true });
+
+    if ("IntersectionObserver" in window) {
+      pause.add("offscreen");
+      new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) {
+          // Fetch every slide once the row is close, so slides never appear blank.
+          root.querySelectorAll('img[loading="lazy"]').forEach((img) => (img.loading = "eager"));
+          pause.delete("offscreen");
+        } else {
+          pause.add("offscreen");
+        }
+        syncMedia();
+        schedule();
+      }, { rootMargin: "300px 0px" }).observe(root);
+    }
+    document.addEventListener("visibilitychange", () => (document.hidden ? hold("tab") : release("tab")));
+
+    // Stagger the rows so they don't all change at the same moment.
+    pause.add("start");
+    setTimeout(() => release("start"), (order % 4) * 900);
+    show(0);
+  }
+
+  document.querySelectorAll("[data-slideshow]").forEach((s, i) => initSlideshow(s, i));
+
   // ---------- wire up ----------
 
   // On narrow screens the section pills scroll sideways; show the current one.

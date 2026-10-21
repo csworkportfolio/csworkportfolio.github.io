@@ -12,51 +12,119 @@
     {
       "slug": "nike",
       "bg": "thomas-serer-R_0rTS9ENnk-unsplash.jpeg",
-      "mock": "Nike 14.png",
       "kicker": "Digital Content Publishing for Nike's App and Nike.com",
-      "title": "Shipping What 20 Million Nike Customers See First"
+      "title": "Shipping What 20 Million Nike Customers See First",
+      "slides": [
+        "Nike 14.png",
+        "Nike 12.png",
+        "Nike 5.png",
+        "Nike G.png",
+        "Nike 3.png",
+        "Nike 1.png",
+        "Nike 4.png",
+        "Nike 2.png"
+      ]
     },
     {
       "slug": "qad-redzone",
       "bg": "AdobeStock_1004035628.jpeg",
-      "mock": "Swag.png",
       "kicker": "Integrated Creative for QAD Redzone, B2B Manufacturing SaaS",
-      "title": "Humanizing the Brand with Frontline Workers and Growing LinkedIn Engagement 550%"
+      "title": "Humanizing the Brand with Frontline Workers and Growing LinkedIn Engagement 550%",
+      "slides": [
+        "Swag.png",
+        "1730738279639_edited.jpg",
+        "QRZ Web.png",
+        "QAD Redzone Presents_ Gary the GOAT",
+        "1697025622812_edited.jpg",
+        "The Assembly Line.png",
+        "RVPCanvas_15-ezgif.com-crop.gif",
+        "1684871520317_edited.jpg",
+        "Holiday Calendars.png",
+        "OEE.png",
+        "1684778142063_edited.jpg",
+        "Pasted Graphic_edited.jpg",
+        "Box.png",
+        "1684871519806_edited.jpg"
+      ]
     },
     {
       "slug": "solv-energy",
       "bg": "Cherry Valley Solar-3.jpg",
-      "mock": "SOLV Example 2 Transparent.png",
       "kicker": "Internal Tools and External Web for SOLV Energy",
-      "title": "Same-Day Web Updates for a Newly Public Energy Company, and a Self-Serve Advocacy Tool for Its Employees"
+      "title": "Same-Day Web Updates for a Newly Public Energy Company, and a Self-Serve Advocacy Tool for Its Employees",
+      "slides": [
+        "SOLV Example 2 Transparent.png",
+        "SOLV Example 1 Transparent.png",
+        "RE Plus.png"
+      ]
     },
     {
       "slug": "cohesity",
       "bg": "AdobeStock_784830317.jpeg",
-      "mock": "Cohesity Examples 2 TP.png",
       "kicker": "Internal Communications and Employee Advocacy for an AI-Powered Data Security Leader",
-      "title": "Reaching 7,000 Cohesity Employees Globally and Taking Advocacy Participation Past 70%"
+      "title": "Reaching 7,000 Cohesity Employees Globally and Taking Advocacy Participation Past 70%",
+      "slides": [
+        "Cohesity Examples 2 TP.png",
+        "ezgif.com-video-to-gif-converter-2.gif",
+        "Cohesity Examples TP.png"
+      ]
     },
     {
       "slug": "healthier-texas",
       "bg": "AdobeStock_603196626.jpeg",
-      "mock": "DSC03133_edited.jpg",
       "kicker": "Campaign Design for a Statewide Public Health Nonprofit",
-      "title": "Doubling a Wellness App to 40K Users and Taking a 1,000-Person Summit to 10K Online"
+      "title": "Doubling a Wellness App to 40K Users and Taking a 1,000-Person Summit to 10K Online",
+      "slides": [
+        "TT.png",
+        "TS4P.png",
+        "Brochure-Asking-Question-1_edited.jpg",
+        "Social Media.png",
+        "Social Banners.png",
+        "C_094_edited.jpg",
+        "HTS Speakers.png",
+        "HTW.png",
+        "HTS Speak.png",
+        "Frontline.png",
+        "cc.png",
+        "DSC03133_edited.jpg",
+        "Email TS4P.png",
+        "P_065_edited.jpg"
+      ]
     },
     {
       "slug": "partnerships",
       "bg": "AdobeStock_175466970.jpeg",
-      "mock": "Leading the Way.png",
       "kicker": "Cross-Channel Design for QAD Redzone's Manufacturing Partners",
-      "title": "Bringing Redzone's Work with Apple, Ferrara, and Gorilla Glue to Life Across Web, Video, and Social"
+      "title": "Bringing Redzone's Work with Apple, Ferrara, and Gorilla Glue to Life Across Web, Video, and Social",
+      "slides": [
+        "QRZ Partner.png",
+        "Partner Spotlight.png",
+        "Slide 1.png",
+        "Leading the Way.png",
+        "1701990351606_edited.jpg",
+        "Slide 2.png",
+        "1683214032733_edited_edited.jpg",
+        "1728574601960_edited.jpg"
+      ]
     },
     {
       "slug": "freelance",
       "bg": "AdobeStock_781926323.jpeg",
-      "mock": "News.png",
       "kicker": "Self-Led and Freelance Design",
-      "title": "Brand Identity, Web Layouts, and Campaign Experiments Made Outside the Day Job"
+      "title": "Brand Identity, Web Layouts, and Campaign Experiments Made Outside the Day Job",
+      "slides": [
+        "News.png",
+        "Website.png",
+        "MERC.png",
+        "Thumbnail.png",
+        "Mercedes.png",
+        "LANY.png",
+        "Hushum.png",
+        "Brochure Mockup Transparent_edited_edited.png",
+        "Go the Mile.png",
+        "Fall.png",
+        "AI.png"
+      ]
     }
   ]
 }

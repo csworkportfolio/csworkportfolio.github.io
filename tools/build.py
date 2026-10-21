@@ -278,6 +278,11 @@ def paragraphs(ps):
     return "\n".join(out)
 
 
+def asset_version(rel):
+    """Short content hash, so browsers fetch the file again whenever it changes."""
+    return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:8]
+
+
 def layout(page, site, root, body, media, og_image=None):
     nav = []
     active = page.get("nav_active", "")
@@ -309,12 +314,9 @@ def layout(page, site, root, body, media, og_image=None):
 <meta property="og:title" content="{esc(page["title"])}">
 <meta property="og:description" content="{esc(desc)}">{og}
 <meta name="theme-color" content="#2b2b2b">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400&family=Inter:ital,wght@0,400;0,700;1,400&family=Syne:wght@800&display=swap">
-<link rel="stylesheet" href="{root}assets/css/style.css">
+<link rel="stylesheet" href="{root}assets/css/style.css?v={asset_version("assets/css/style.css")}">
 <link rel="icon" href="{root}{avatar.get("sm", avatar["src"])}">
-<script src="{root}assets/js/main.js" defer></script>
+<script src="{root}assets/js/main.js?v={asset_version("assets/js/main.js")}" defer></script>
 </head>
 <body id="top" class="page-{page["type"]}">
 <a class="skip-link" href="#main">Skip to content</a>{header}
@@ -345,13 +347,35 @@ def layout(page, site, root, body, media, og_image=None):
 '''
 
 
+def slideshow(names, title, root, media):
+    """Auto-advancing slideshow of work samples for a home-page case row."""
+    slides = []
+    for i, name in enumerate(names):
+        m = media.get(name)
+        hidden = "" if i == 0 else ' aria-hidden="true"'
+        if m["kind"] == "image":
+            el = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" alt="" '
+                  f'loading="{"eager" if i == 0 else "lazy"}" decoding="async">')
+        else:
+            el = (f'<video muted loop playsinline preload="none" poster="{root}{m["poster"]}" '
+                  f'data-src="{root}{m["src"]}" width="{m["w"]}" height="{m["h"]}"></video>')
+        slides.append(f'<li class="slide{" is-current" if i == 0 else ""}"{hidden}>{el}</li>')
+    n = len(names)
+    return f'''<div class="slideshow" data-slideshow aria-roledescription="carousel" aria-label="Work samples: {esc(title)}">
+      <ul class="slides">{"".join(slides)}</ul>
+      <button class="ss-btn ss-prev" type="button" aria-label="Previous sample"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="ss-btn ss-next" type="button" aria-label="Next sample"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      <p class="ss-count" aria-live="polite"><span class="ss-n">1</span>/{n}</p>
+    </div>'''
+
+
 def render_home(page, site, media):
     root = ""
     portrait = media.get(page["portrait"])
     rows = []
     for c in page["cases"]:
         bg = media.get(c["bg"], "bg")
-        mock = media.get(c["mock"])
+        slides = slideshow(c["slides"], c["title"], root, media)
         rows.append(f'''
 <article class="case-row" style="background-image:url('{root}{bg["src"]}')">
   <div class="wrap case-row-inner">
@@ -360,7 +384,7 @@ def render_home(page, site, media):
       <h2>{esc(c["title"])}</h2>
       <a class="btn btn-red" href="{root}{c["slug"]}/">Read More<span class="sr-only">: {esc(c["title"])}</span></a>
     </div>
-    <img class="case-row-mock" src="{root}{mock.get("sm", mock["src"])}" width="{mock["w"]}" height="{mock["h"]}" alt="" loading="lazy" decoding="async">
+    {slides}
   </div>
 </article>''')
     hero = f'''
