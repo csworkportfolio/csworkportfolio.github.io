@@ -650,3 +650,10 @@ main { view-transition-name: page; }
 @media (min-width: 721px) { :root[data-os="ios"] .seg { justify-content: center; } }
 :root[data-os="ios"] .cat-text h1, :root[data-os="ios"] .cat-text h2 { font-size: 20px; margin-bottom: 6px; }
 :root[data-os="ios"] .kicker-italic, :root[data-os="ios"] .tools { font-size: 15px; }
+
+/* Foldables (open, portrait or landscape) and small tablets: wider side margins so text isn't hugging the
+   edge. Runs 44px to 60px; past 1100px the centred 980px column already leaves that much, and the column's
+   max width follows the gutter, so text lines up the same on either side of the change. */
+@media (min-width: 561px) and (max-width: 1100px) {
+  :root { --gutter: max(clamp(44px, 7vw, 60px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); }
+}
