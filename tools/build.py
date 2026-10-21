@@ -219,7 +219,7 @@ def fix_paths(item, root):
 PLAY_ICON = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>'
 
 
-def tile(item, i, root):
+def tile(item, i, root, crop=None):
     label = item.get("title") or {"image": "image", "loop": "animation", "video": "video"}.get(item["type"], "video")
     alt = esc(item.get("title", ""))
     w, h = item["w"], item["h"]
@@ -231,19 +231,25 @@ def tile(item, i, root):
         media = (f'<img class="tile-media" src="{root}{item["thumb"]}" width="{w}" height="{h}" '
                  f'alt="{alt}" loading="lazy" decoding="async">')
     play = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") else ""
-    return (f'<li class="tile-wrap"><button class="tile" type="button" data-index="{i}" '
-            f'style="--ar:{w}/{h}" aria-label="View larger: {esc(label)}">{media}{play}</button></li>')
+    # Like Wix, embedded videos show as 16:9 tiles; a gallery can also crop every tile to one shape.
+    shape = crop or ("16/9" if item["type"] in ("vimeo", "youtube") else None)
+    cls = "tile tile-crop" if shape else "tile"
+    return (f'<li class="tile-wrap"><button class="{cls}" type="button" data-index="{i}" '
+            f'style="--ar:{shape or f"{w}/{h}"}" aria-label="View larger: {esc(label)}">{media}{play}</button></li>')
 
 
 def json_script(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
-def strip(items, root, label, height=None):
+def strip(items, root, label, opts=None):
+    """Auto-scrolling gallery. opts may set Wix's per-gallery height, gap and crop."""
+    opts = opts or {}
     data = json_script([fix_paths(it, root) for it in items])
-    tiles = "".join(tile(it, i, root) for i, it in enumerate(items))
+    tiles = "".join(tile(it, i, root, opts.get("crop")) for i, it in enumerate(items))
+    style = "".join(f"--{k}:{opts[o]}px;" for o, k in (("height", "tile-h"), ("gap", "gap")) if o in opts)
     return f'''
-<section class="strip" data-gallery aria-label="{esc(label)}"{f' style="--tile-h:{height}px"' if height else ""}>
+<section class="strip" data-gallery aria-label="{esc(label)}"{f' style="{style}"' if style else ""}>
   <div class="strip-viewport" tabindex="0">
     <ul class="strip-track">{tiles}</ul>
   </div>
@@ -363,8 +369,6 @@ def slideshow(names, title, root, media):
     n = len(names)
     return f'''<div class="slideshow" data-slideshow aria-roledescription="carousel" aria-label="Work samples: {esc(title)}">
       <ul class="slides">{"".join(slides)}</ul>
-      <button class="ss-btn ss-prev" type="button" aria-label="Previous sample"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <button class="ss-btn ss-next" type="button" aria-label="Next sample"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
       <p class="ss-count" aria-live="polite"><span class="ss-n">1</span>/{n}</p>
     </div>'''
 
@@ -412,7 +416,7 @@ def render_category(page, site, media):
     for b in page["blocks"]:
         if "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
-            parts.append(strip(items, root, "Gallery", b.get("height")))
+            parts.append(strip(items, root, "Gallery", b))
         else:
             tag = "h1" if first_heading else "h2"
             first_heading = False
@@ -443,16 +447,17 @@ def render_case(page, site, media):
     <p class="case-sub">{esc(hero["subtitle"])}</p>
   </div>
 </section>
-<div class="wrap prose"><p class="lede">{esc(page["lede"])}</p></div>''']
+<div class="wrap prose lede-wrap"><p class="lede">{esc(page["lede"])}</p></div>''']
     for b in page["blocks"]:
         if "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
-            parts.append(strip(items, root, "Project gallery"))
+            parts.append(strip(items, root, "Project gallery", b))
         elif "videos" in b:
             items = [gallery_item({"v": v}, media, site) for v in b["videos"]]
             parts.append(video_grid(items, root))
         else:
-            parts.append(f'<section class="wrap prose"><h2>{esc(b["h"])}</h2>\n{paragraphs(b["p"])}</section>')
+            intro = " intro" if b["h"] in ("THE PROBLEM", "THE SOLUTION") else ""
+            parts.append(f'<section class="wrap prose{intro}"><h2>{esc(b["h"])}</h2>\n{paragraphs(b["p"])}</section>')
     nxt = page["next"]
     parts.append(f'''
 <nav class="wrap case-nav" aria-label="Case study navigation">

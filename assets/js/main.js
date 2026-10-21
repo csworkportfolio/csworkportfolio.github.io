@@ -247,7 +247,7 @@
 
   // ---------- home-page slideshows ----------
 
-  const SLIDE_MS = 3800;
+  const SLIDE_MS = 3500; // Wix: autoplay every 3.5s, 0.5s cross-fade (in CSS)
 
   function initSlideshow(root, order) {
     const track = root.querySelector(".slides");
@@ -272,7 +272,6 @@
 
     function show(i) {
       index = (i + slides.length) % slides.length;
-      track.style.transform = `translateX(${-100 * index}%)`;
       slides.forEach((li, k) => {
         li.classList.toggle("is-current", k === index);
         li.toggleAttribute("aria-hidden", k !== index);
@@ -289,8 +288,6 @@
     const hold = (r) => { pause.add(r); schedule(); };
     const release = (r) => { pause.delete(r); schedule(); };
 
-    root.querySelector(".ss-prev").addEventListener("click", () => { show(index - 1); schedule(); });
-    root.querySelector(".ss-next").addEventListener("click", () => { show(index + 1); schedule(); });
     root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hold("hover"); });
     root.addEventListener("pointerleave", () => release("hover"));
     root.addEventListener("focusin", () => hold("focus"));
