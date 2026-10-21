@@ -93,10 +93,11 @@ button { font: inherit; color: inherit; }
   --ease: cubic-bezier(.2, .8, .2, 1);
 }
 
-/* ---------- section tab bar ---------- */
-/* An exact copy of the Job Search AI app's switcher (kit.css .ktabs) in its light
-   theme, kept light in every mode because the portfolio page is always white: the same
-   glass, type, sizes, lens and accent. Only the tab names and icons are the portfolio's. */
+/* ---------- section switcher ---------- */
+/* The Job Search AI app's segmented control (the Tracker's Briefing / Log / Analysis /
+   Prep switch), a little taller (40px): a track of 5% black, 13px medium names in 70% black, and the open
+   section on a raised white pill. While it rides over photos the track is frosted, so it
+   reads as that same light gray on the white page and stays legible over images. */
 :root {
   --tabglass: color-mix(in srgb, #ffffff 48%, transparent);
   --tablens: rgba(0, 0, 0, .07);
@@ -107,36 +108,36 @@ button { font: inherit; color: inherit; }
   --tabband: #f6f6f6;
 }
 
-/* The bar travels with the page: it stops just under the pinned header (main.js
-   measures the header into --head-h), or at the top of the window on the home page.
-   Only the bar itself takes clicks; the band around it lets them through to the page. */
+/* It travels with the page: it stops just under the pinned header (main.js measures the
+   header into --head-h), or at the top of the window on the home page. Only the control
+   itself takes clicks; the band around it lets them through to the page. */
 .pills {
   padding: 18px 0 22px; display: flex; flex-direction: column; align-items: center;
   position: sticky; top: var(--head-h, 158px); z-index: 45; pointer-events: none;
 }
 .page-home .pills { padding: 20px 0; top: 0; }
-.ktabs { pointer-events: auto; }
-.ktabs {
-  display: flex; gap: 0; padding: 4px; box-sizing: border-box; border-radius: 999px;
-  height: clamp(52px, 5.4vw, 56px); max-width: calc(100% - 2 * var(--gutter));
-  background: var(--tabglass); -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
-  box-shadow: var(--tabshadow);
+/* category pages: the header scrolls away with the page and the switcher alone stays,
+   pinned at the top of the window */
+.page-category .site-header { position: relative; }
+.page-category .pills { top: 0; }
+.seg {
+  pointer-events: auto; display: flex; gap: 2px; padding: 3px; height: 40px; box-sizing: border-box;
+  max-width: calc(100% - 2 * var(--gutter)); border-radius: 999px;
+  background: color-mix(in srgb, #f2f2f2 86%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
   font-family: var(--sans); line-height: normal;
 }
-.ktab {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  /* roomier than the app (72px, 10px) so the icons and names breathe; eases down on narrower windows */
-  min-width: clamp(70px, 7.8vw, 84px); padding: 0 clamp(12px, 2.4vw, 32px); border-radius: 999px;
-  color: var(--tabink); font-size: 10px; font-weight: 600; letter-spacing: .01em; white-space: nowrap;
-  text-decoration: none; transition: background .18s;
+.seg-item {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  height: 34px; padding: 0 16px; border-radius: 999px;
+  font-size: 13px; font-weight: 500; color: rgba(0, 0, 0, .7); white-space: nowrap; text-decoration: none;
+  transition: background-color .18s, color .18s, box-shadow .18s;
 }
-.ktab svg { width: clamp(20px, 2.2vw, 22px); height: clamp(20px, 2.2vw, 22px); flex: 0 0 auto; fill: currentColor; }
-a.ktab:hover { text-decoration: none; background: color-mix(in srgb, var(--tabink) 8%, transparent); }
-.ktab.is-active, a.ktab.is-active:hover { color: var(--tabaccent); background: var(--tablens); }
-.ktab:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: -2px; }
-.ktab .short { display: none; }
-@media (prefers-reduced-transparency: reduce) { .ktabs { background: var(--tabband); -webkit-backdrop-filter: none; backdrop-filter: none; } }
-@media (prefers-reduced-motion: reduce) { .ktab { transition: none; } }
+.seg-item:hover { color: #000; text-decoration: none; }
+.seg-item.is-active { background: #fff; color: #000; box-shadow: 0 1px 2px rgba(0, 0, 0, .15), 0 0 0 .5px rgba(0, 0, 0, .06); }
+.seg-item:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: -2px; }
+@media (prefers-reduced-transparency: reduce) { .seg { background: #f2f2f2; -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (prefers-reduced-motion: reduce) { .seg-item { transition: none; } }
 
 /* ---------- buttons ---------- */
 /* Every control wears the tab bar's glass: the Job Search AI app's light theme.
@@ -414,21 +415,10 @@ body.lb-open { overflow: hidden; }
   .avatar { width: 84px; height: 84px; flex: none; }
   .byline { font-size: 17px; }
 
-  /* the nav is its own layer (it has a page-transition name), so it carries the bar's height in the stack */
-  .pills { padding: 0; position: relative; top: auto; z-index: 60; }
-  .page-home .pills { padding: 16px 0 12px; }
-  .ktabs {
-    position: fixed; z-index: 55; height: 62px; max-width: none; padding: 4px 3px;
-    left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); top: auto;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
-  }
-  .ktab { flex: 1 1 0; min-width: 0; padding: 0; }
-  .ktab svg { width: 26px; height: 26px; }
-  .ktab span { letter-spacing: -.02em; }
-  .ktab .full { display: none; }
-  .ktab .short { display: inline; }
-  /* room for the floating bar, kept inside the rust footer so no white band shows below it */
-  .footer-row { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .pills { padding: 12px 0 14px; }
+  .page-home .pills { padding: 14px 0; }
+  .seg { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .seg::-webkit-scrollbar { display: none; }
 
   .home-hero-inner { grid-template-columns: 1fr; gap: 0; padding-top: 36px; min-height: 0; }
   .home-hero-text { padding: 0 0 8px; }
@@ -465,9 +455,9 @@ body.lb-open { overflow: hidden; }
 
 @view-transition { navigation: auto; }
 .site-header { view-transition-name: site-header; }
-/* The name goes on the bar itself, not its container: an element with a transition name
-   stops the blur of any glass inside it from reaching the page behind. */
-.ktabs { view-transition-name: site-tabs; }
+/* The name goes on the switcher itself, not its container: an element with a transition
+   name stops the blur of anything inside it from reaching the page behind. */
+.seg { view-transition-name: site-tabs; }
 .site-footer { view-transition-name: site-footer; }
 main { view-transition-name: page; }
 @keyframes page-in { from { transform: translateX(100%); } }
@@ -483,4 +473,4 @@ main { view-transition-name: page; }
   .btn, .strip-arrow, .play, .lb-btn { background: var(--tabband); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
-@media (prefers-reduced-motion: reduce) { .ktab, .btn, .strip-arrow, .lb-btn { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .btn, .strip-arrow, .lb-btn { transition: none; } }

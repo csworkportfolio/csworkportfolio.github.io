@@ -470,6 +470,13 @@
 
   // ---------- wire up ----------
 
+  // On a narrow screen the switcher scrolls sideways; open it with the current section centered.
+  const seg = document.querySelector(".seg");
+  const segOn = seg && seg.querySelector(".is-active");
+  if (segOn && seg.scrollWidth > seg.clientWidth) {
+    seg.scrollLeft = segOn.offsetLeft - seg.offsetLeft - (seg.clientWidth - segOn.offsetWidth) / 2;
+  }
+
   // The section bar sticks just under the pinned header; give CSS the header's real height.
   const head = document.querySelector(".site-header");
   if (head) {

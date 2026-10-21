@@ -302,17 +302,6 @@ def asset_version(rel):
     return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:8]
 
 
-# Filled icons for the section tab bar, drawn in the spirit of SF Symbols, like the Job Search AI app's switcher.
-NAV_ICONS = {
-    # the app's own briefcase (kit.js TAB["/roles"], SF Symbols briefcase.fill)
-    "cases": '<path d="M2.5 10.1Q2.5 7.5 5.1 7.5L18.9 7.5Q21.5 7.5 21.5 10.1L21.5 12.65L2.5 12.65ZM2.5 13.75L21.5 13.75L21.5 17.9Q21.5 20.5 18.9 20.5L5.1 20.5Q2.5 20.5 2.5 17.9ZM8.2 7.7V5.5Q8.2 3.5 10.2 3.5H13.8Q15.8 3.5 15.8 5.5V7.7H14V5.5Q14 5.3 13.8 5.3H10.2Q10 5.3 10 5.5V7.7Z" transform="translate(0 -.5)"/>',
-    "design": '<path fill-rule="evenodd" d="M12 3c5 0 9 3.2 9 7.2a5 5 0 0 1-5 5h-1.5c-.9 0-1.7.7-1.7 1.7 0 .5.2.9.5 1.2.3.3.5.7.5 1.2 0 .9-.7 1.7-1.8 1.7A9 9 0 0 1 12 3zM7.5 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm3-4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>',
-    "web": '<path fill-rule="evenodd" d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 5v9h16V9H4zm1.6-3.3a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm3.2 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>',
-    "video": '<path fill-rule="evenodd" d="M5 4h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3zm5 4.3v7.4l6.2-3.7L10 8.3z"/>',
-    "social": '<path fill-rule="evenodd" d="M12 3c5 0 9 3.4 9 7.6s-4 7.6-9 7.6c-.9 0-1.8-.1-2.6-.3L4.8 20.3l1-3.8C4.1 15.1 3 13 3 10.6 3 6.4 7 3 12 3z"/>',
-    "ads": '<path fill-rule="evenodd" d="M19 4.6v14.8a1 1 0 0 1-1.5.9L12 17H9l.8 3.3a1 1 0 0 1-1 1.2H7.2a1 1 0 0 1-1-.8L5.3 17H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h8l5.5-3.3a1 1 0 0 1 1.5.9zM21 9.4a2.6 2.6 0 0 1 0 5.2V9.4z"/>',
-}
-
 
 def layout(page, site, root, body, media, og_image=None):
     nav = []
@@ -320,10 +309,8 @@ def layout(page, site, root, body, media, og_image=None):
     for n in site["nav"]:
         cur = n["slug"] == active
         href = root + (n["slug"] + "/" if n["slug"] else "")
-        attrs = ' class="ktab is-active" aria-current="page"' if cur else ' class="ktab"'
-        icon = NAV_ICONS.get(n["icon"], "")
-        nav.append(f'<a{attrs} href="{href}"><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg>'
-                   f'<span class="full">{esc(n["label"])}</span><span class="short" aria-hidden="true">{esc(n["short"])}</span></a>')
+        attrs = ' class="seg-item is-active" aria-current="page"' if cur else ' class="seg-item"'
+        nav.append(f'<a{attrs} href="{href}">{esc(n["label"])}</a>')
     avatar = media.get(site["avatar"])
     header = "" if page["type"] == "home" else f'''
 <header class="site-header">
@@ -353,7 +340,7 @@ def layout(page, site, root, body, media, og_image=None):
 <body id="top" class="page-{page["type"]}">
 <a class="skip-link" href="#main">Skip to content</a>{header}
 <nav class="pills" aria-label="Portfolio sections">
-  <div class="ktabs">{"".join(nav)}</div>
+  <div class="seg">{"".join(nav)}</div>
 </nav>
 <main id="main">
 {body}

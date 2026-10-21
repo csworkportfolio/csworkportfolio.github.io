@@ -7,39 +7,27 @@
   "nav": [
     {
       "label": "Case Studies",
-      "slug": "",
-      "short": "Cases",
-      "icon": "cases"
+      "slug": ""
     },
     {
       "label": "Graphic Design",
-      "slug": "graphic-design",
-      "short": "Design",
-      "icon": "design"
+      "slug": "graphic-design"
     },
     {
       "label": "Web ∙ App ∙ Email",
-      "slug": "web-app-email",
-      "short": "Web",
-      "icon": "web"
+      "slug": "web-app-email"
     },
     {
       "label": "Video",
-      "slug": "video-work",
-      "short": "Video",
-      "icon": "video"
+      "slug": "video-work"
     },
     {
       "label": "Social & Writing",
-      "slug": "organic-social",
-      "short": "Social",
-      "icon": "social"
+      "slug": "organic-social"
     },
     {
       "label": "Paid Media",
-      "slug": "paid-ads",
-      "short": "Ads",
-      "icon": "ads"
+      "slug": "paid-ads"
     }
   ],
   "videos": {
