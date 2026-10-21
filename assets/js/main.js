@@ -515,6 +515,15 @@
     dialog.setAttribute("aria-label", label ? `Enlarged view: ${label}` : "Enlarged view");
   }
 
+  // Safari colours its status bar and floating toolbar from the page behind them. While the pop-up is open
+  // the page and theme colour turn the pop-up's dark, so both bars match it instead of showing white or a band.
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const themeColor = themeMeta && themeMeta.content;
+  function tintBars(on) {
+    document.documentElement.classList.toggle("lb-tint", on);
+    if (themeMeta) themeMeta.content = on ? "#0e0e0e" : themeColor;
+  }
+
   let openedByPointer = false;
 
   function open(items, index, byPointer) {
@@ -524,6 +533,7 @@
     render();
     lightboxOpen = true;
     document.body.classList.add("lb-open");
+    tintBars(true);
     dialog.showModal();
     // Keyboard users land on Close; after a click, focus the dialog itself so
     // browsers that ring programmatic focus (Safari) don't outline the button.
@@ -541,17 +551,21 @@
     dialog.querySelector(".lb-close").addEventListener("click", () => dialog.close());
     dialog.querySelector(".lb-prev").addEventListener("click", () => go(-1));
     dialog.querySelector(".lb-next").addEventListener("click", () => go(1));
-    dialog.addEventListener("close", () => {
-      if (dialog.open) return; // reopened before this queued event fired
+    function closed() {
+      if (dialog.open || !lightboxOpen) return; // reopened in the meantime, or already tidied up
       lbMedia.replaceChildren(); // stops any playing video
       lightboxOpen = false;
       document.body.classList.remove("lb-open");
+      tintBars(false);
       // The browser hands focus back to the gallery; after a click that would
       // draw a focus ring around it, so let it go.
       if (openedByPointer && document.activeElement && document.activeElement !== document.body) {
         document.activeElement.blur();
       }
-    });
+    }
+    dialog.addEventListener("close", closed);
+    // some browsers skip the close event; watching the open attribute catches every way the box shuts
+    new MutationObserver(closed).observe(dialog, { attributes: true, attributeFilter: ["open"] });
     dialog.addEventListener("click", (e) => {
       if (e.target === dialog || e.target.classList.contains("lb-inner") || e.target === lbMedia) dialog.close();
     });

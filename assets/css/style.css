@@ -416,6 +416,7 @@ button { font: inherit; color: inherit; }
 .lightbox:focus { outline: none; }
 .lightbox[open] { display: block; }
 body.lb-open { overflow: hidden; }
+html.lb-tint, html.lb-tint body { background: #0e0e0e; }
 /* The piece and its caption sit together as one centred pair, the caption a set distance from the
    piece's own edge whatever its shape, rather than the piece floating in a wide column. */
 .lightbox { --lb-room: calc(100vw - 176px - 360px - 56px); }  /* width left for the piece beside the caption */
