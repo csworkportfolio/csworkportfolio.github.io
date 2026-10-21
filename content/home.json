@@ -1,0 +1,62 @@
+{
+  "slug": "",
+  "type": "home",
+  "title": "Christian's Work Portfolio",
+  "portrait": "Updated Portrait BW.png",
+  "greeting": "Hi, Christian Sanchez here.",
+  "intro": [
+    "I design content that's built to perform, rooted in authentic human stories. With experience across digital marketing, internal communications, web, and brand, I focus on creating visuals and systems that connect with people and convert. A landing page, a video, a social campaign, an all-hands: I approach every project with equal parts strategy, creativity, and heart.",
+    "Take a look. Everything here was built to make something (or someone) shine."
+  ],
+  "cases": [
+    {
+      "slug": "nike",
+      "bg": "thomas-serer-R_0rTS9ENnk-unsplash.jpeg",
+      "mock": "Nike 14.png",
+      "kicker": "Digital Content Publishing for Nike's App and Nike.com",
+      "title": "Shipping What 20 Million Nike Customers See First"
+    },
+    {
+      "slug": "qad-redzone",
+      "bg": "AdobeStock_1004035628.jpeg",
+      "mock": "Swag.png",
+      "kicker": "Integrated Creative for QAD Redzone, B2B Manufacturing SaaS",
+      "title": "Humanizing the Brand with Frontline Workers and Growing LinkedIn Engagement 550%"
+    },
+    {
+      "slug": "solv-energy",
+      "bg": "Cherry Valley Solar-3.jpg",
+      "mock": "SOLV Example 2 Transparent.png",
+      "kicker": "Internal Tools and External Web for SOLV Energy",
+      "title": "Same-Day Web Updates for a Newly Public Energy Company, and a Self-Serve Advocacy Tool for Its Employees"
+    },
+    {
+      "slug": "cohesity",
+      "bg": "AdobeStock_784830317.jpeg",
+      "mock": "Cohesity Examples 2 TP.png",
+      "kicker": "Internal Communications and Employee Advocacy for an AI-Powered Data Security Leader",
+      "title": "Reaching 7,000 Cohesity Employees Globally and Taking Advocacy Participation Past 70%"
+    },
+    {
+      "slug": "healthier-texas",
+      "bg": "AdobeStock_603196626.jpeg",
+      "mock": "DSC03133_edited.jpg",
+      "kicker": "Campaign Design for a Statewide Public Health Nonprofit",
+      "title": "Doubling a Wellness App to 40K Users and Taking a 1,000-Person Summit to 10K Online"
+    },
+    {
+      "slug": "partnerships",
+      "bg": "AdobeStock_175466970.jpeg",
+      "mock": "Leading the Way.png",
+      "kicker": "Cross-Channel Design for QAD Redzone's Manufacturing Partners",
+      "title": "Bringing Redzone's Work with Apple, Ferrara, and Gorilla Glue to Life Across Web, Video, and Social"
+    },
+    {
+      "slug": "freelance",
+      "bg": "AdobeStock_781926323.jpeg",
+      "mock": "News.png",
+      "kicker": "Self-Led and Freelance Design",
+      "title": "Brand Identity, Web Layouts, and Campaign Experiments Made Outside the Day Job"
+    }
+  ]
+}

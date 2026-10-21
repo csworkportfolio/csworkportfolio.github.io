@@ -1,0 +1,180 @@
+[
+  {
+    "slug": "nike",
+    "type": "case",
+    "title": "Christian's Work Portfolio with Nike",
+    "hero": {
+      "bg": "thomas-serer-R_0rTS9ENnk-unsplash.jpeg",
+      "logos": [],
+      "title": "How I Shipped What 20 Million Nike Customers See First",
+      "subtitle": "Digital Content Publishing for Nike's App and Nike.com | Contract via Insight Global"
+    },
+    "lede": "Nike's app and website form one of the largest direct-to-consumer retail surfaces in the world. Each featured placement, landing page, product grid, and notification started as a decision someone made upstream, then had to be executed correctly in front of an enormous audience. For three months in 2026, that execution was my job.",
+    "blocks": [
+      { "h": "THE PROBLEM", "p": [
+        "Content goes out continuously on both the app and the site, reaching people within minutes of going live. Requests arrive from marketing partners across the business faster than one calendar absorbs them, and a single campaign can touch an app shopping surface, a website landing page, a product grid, a notification, and the routing that connects all of it.",
+        "Some requests arrive incomplete: assets missing, timing that collides with work already scheduled, asks the platform cannot support. Delivery decides whether a campaign reaches anyone at all."
+      ] },
+      { "h": "THE SOLUTION", "p": [
+        "Each execution stayed with me from request through confirmation, and the check happened on a real device before anything got scheduled, since a desktop preview hides what a phone shows.",
+        "Conflicts and platform limits went back to partners while there was still time to change the plan. After each send, delivery data confirmed the content reached people the way the brief intended. Partners handed me a request and got back a live, working execution on the date they needed it.",
+        "Two smaller pieces of the job came out of the same seat: headline, product, and entry-point tests on live placements, reported in wrap briefs, and the team's authoring reference, which I drafted as the onboarding guide for incoming publishers."
+      ] },
+      { "h": "Building the Placements People See First", "p": [
+        "A featured placement is often the first thing someone sees when they open Nike.com or the app. It has to load instantly, read in a glance, and hold up with the sound off, which is how most people meet it.",
+        "Mine ran from request to live: sourcing the imagery and copy, constructing the placement, previewing it on device, and routing it into campaigns including the U.S. Open Tennis Championships, Back to School, and the FIFA World Cup, where updates published against live match results."
+      ] },
+      { "gallery": [ "Nike 20.png", { "v": "1228250189" }, { "v": "1228251265" }, { "v": "1228250188" }, { "v": "1228250203" } ] },
+      { "h": "Athlete Stories, Published on a Seasonal Beat", "p": [
+        "Some of the highest-stakes placements were built around real athletes. For Back to School, featured placements on incoming UCLA midfielder Mia Corona and USC tight end Mark Bowman paired their photography with copy and routed each into the gear from the shoot.",
+        "Talent-led content carries a different weight than product content. The names, the imagery, and the timing all have to be exactly right, and the season sets the publishing window. Getting these live correctly, on the day they were meant to run, was the whole job."
+      ] },
+      { "gallery": [ "Nike 4.png", "Nike Spotlight.PNG", "IMG_2266.PNG", "Nike Spotlight 2.PNG", "Nike Spotlgiht.PNG", "Nike 3.png" ] },
+      { "h": "Full Shopping Surfaces", "p": [
+        "Beyond single placements, I built complete shopping experiences: the hero, the category navigation, the product grid, and the routing that connects them.",
+        "The August Promotional Shop shows the assembly involved. Six category entry points, each with its own imagery and menu routing, linked into the parent surface alongside the featured carousel and product grids. Components were built one at a time and assembled in sequence, and the surface only worked once each piece resolved to the right destination.",
+        "A tile that lands nowhere is a product someone cannot buy."
+      ] },
+      { "gallery": [ "nIKE S_edited.png", "Nike L.png", "Nike Back.PNG", "Nike B.PNG", "Nike J.png", "Nike W.png" ] }
+    ],
+    "next": { "slug": "qad-redzone", "label": "Next Case Study" }
+  },
+  {
+    "slug": "qad-redzone",
+    "type": "case",
+    "title": "Christian's Work Portfolio with QAD Redzone",
+    "hero": {
+      "bg": "AdobeStock_1004035628.jpeg",
+      "logos": [ { "src": "QAD_Redzone_Logo_WHITE RGB.png", "alt": "QAD Redzone" } ],
+      "title": "Humanizing the Brand with Frontline Workers and Growing LinkedIn Engagement 550%",
+      "subtitle": "Integrated Creative for QAD Redzone"
+    },
+    "lede": "Plants around the world run their frontline teams on QAD Redzone, a connected workforce platform whose tools deliver real-time productivity and compliance insight. The brand had room to grow past product features. Over three years I scaled Redzone's creative presence across web, video, print, and social, half of it facing customers and half facing the company's own people, and built all of it around the workers running the software.",
+    "blocks": [
+      { "h": "THE PROBLEM", "p": [
+        "Manufacturing software tends to look as cold as the factory floor it serves, heavy on dashboards and distant from the people using it.",
+        "Redzone had a different story available. The results were there and so was the community impact, but the visual language had not caught up to either. The brand needed storytelling that put frontline workers on screen and a system that held together from one channel to the next."
+      ] },
+      { "h": "THE SOLUTION", "p": [
+        "Leading with the people who used the software rebuilt how Redzone communicated. Campaign branding, social graphics, product explainers, physical activations, and original photography gave the frontline community a design system where they were the hero, and stat-driven banners and product overviews were held to the same standard: personal in tone, true to the energy on the floor.",
+        "LinkedIn engagement grew 550% (2% to 14%). Reels and YouTube reach tripled (20K to 60K).",
+        "Two hundred new web and intranet pages lifted traffic 33%, six-figure paid budgets turned into 1M+ ad interactions at twice the industry-average CTR, and lead generation rose 105% year over year, the work behind the 2024 Team Collaborator Award."
+      ] },
+      { "h": "Simplifying Complex Features with Clean, On-Brand Visuals", "p": [
+        "Redzone's software is packed with capability, and none of it lands when it sits behind technical language and cluttered design. Competitors led with dense dashboards and cold UI screenshots that alienated more than they educated.",
+        "Starting with the tools manufacturing teams touched daily, I rebuilt how we explained them visually, so the work held up for existing users and for people meeting Redzone for the first time on our website or social channels. Branded feature graphics and light-motion assets blended interface mockups with messaging, and they lived in sales decks, on the website, in internal training, and across social.",
+        "The launch campaign for the Learning feature in the Redzone app on iPad and Apple TV grew out of this work. Workers on the plant floor were filmed using it to document repairs, and that footage became the selling point."
+      ] },
+      { "gallery": [
+        { "src": "QRZ Web.png", "title": "Productivity and Engagement with Manufacturing All Stars", "tools": "Adobe Illustrator", "desc": "Web banners I created highlighting productivity uplift and engagement stats while showing a real manufacturing team in their work environment. The goal was to ground the stat in something tangible — so instead of a cold chart, I layered the text over real candid photos of our customers that communicates trust, collaboration, and momentum.\nThe layout was optimized for use across paid media and retargeting campaigns. Clear, bold type and a focused stat allowed the message to cut through quickly, even in scroll-heavy environments." },
+        { "src": "QAD Redzone Presents_ Gary the GOAT", "title": "Parts Inventory Feature GIF with Gary", "tools": "Adobe Photoshop, Illustrator, Premiere Pro", "desc": "Inventory tracking isn’t always the most exciting topic — so I injected a little energy with a looping animation featuring our official mascot, Gary the Goat. This asset was used across social and product channels to spotlight Redzone’s inventory feature in a fun, digestible way.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns." },
+        "Redzone on the Web_edited.png"
+      ] },
+      { "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content", "p": [
+        "Holidays are filler for most software companies: a branded stock image with a timestamp. Seasonal moments were a chance to show that Redzone's voice could sound like the community the platform serves.",
+        "I led creative direction, scripting, design, and rollout across the holiday calendar, including New Year's reflections and April Fools' jokes. Tone shifted from one campaign to the next, and each turned a date on the calendar into a reason to talk with our community. Those posts became some of our highest-performing work, on and off the shop floor."
+      ] },
+      { "gallery": [
+        { "src": "RVPCanvas_15-ezgif.com-crop.gif", "title": "Redzone Vision Pro: April Fools’ Campaign", "tools": "Figma, Adobe After Effects, Substance 3D", "desc": "A real, but parody product launch for April Fools’ Day, this graphic introduced the fictional 'Redzone Vision Pro' — a mixed-reality headset with features exaggerating real use circumstances and promotion of an AR Goat Companion. I created the illustration, wrote mock release notes, and designed accompanying visuals that mimicked Apple’s branding with a Redzone twist.\nThis concept was expanded into a full microsite and teaser video, and was widely shared internally and externally as a standout moment of brand playfulness and design range." },
+        { "v": "1228250186" },
+        { "src": "New Years 2024 GIF.gif", "title": "Redzone New Year's Post", "tools": "Adobe Photoshop, Illustrator", "desc": "This post ushered in the new year by spotlighting real Redzone customers and a key milestone they reached with the platform. Rather than opt for a generic “Happy New Year” message, I focused the creative on human accomplishment — using candid and posed photography and a bold layout to reflect energy and optimism." }
+      ] },
+      { "h": "Building Culture, Community, and Educational Content Through Everyday Design", "p": [
+        "Social media at Redzone was a place to celebrate people and share what they knew, and the content direction covered playful culture posts and education-driven infographics, aimed at internal teams and the wider frontline community alike.",
+        "The employee anniversary series ran as stylized monthly calendars with illustrations for the time of year, each one a small spotlight on the people behind the company. Infographics and carousels translated topics like frontline retention and productivity gains into visuals people saved and shared.",
+        "Inside the company, the same instinct built the one-stop employee intranet that held onboarding, training, and policy material, the promotion behind WISE, our employee resource group for women and allies, and the school volunteer days, GivingTuesday drives, and community cleanups that got people to sign up."
+      ] },
+      { "gallery": [
+        { "src": "The Assembly Line.png", "title": "The History of the Assembly Line", "tools": "Adobe Photoshop", "desc": "This editorial-style series was created to support a feature on the Redzone blog and drive engagement on social channels. The design blends collage and texture-rich visuals to evoke different eras of manufacturing — starting with Henry Ford’s moving assembly line and ending in today’s AI-enhanced Industry 4.0. I developed a visual theme inspired by vintage magazines to make the information both nostalgic and futuristic, bridging the past and future of factory innovation through storytelling-led design." },
+        { "src": "Holiday Calendars.png", "title": "Monthly Work Anniversary Calendars", "tools": "Adobe Photoshop", "desc": "Each month, I designed custom-branded posts to celebrate Redzone employee anniversaries in a visually engaging way. These weren’t just internal shoutouts — they were small but powerful morale boosters that reminded teams they were valued. Each layout matched a seasonal theme, from heartfelt Valentine’s vibes to festive fireworks, with vibrant Redzone branding woven throughout. These graphics were shared company-wide and often sparked fun conversations and resharing among team members." },
+        { "src": "OEE.png", "title": "OEE Education Carousel", "tools": "Adobe Photoshop", "desc": "I designed this carousel to break down one of Redzone’s more technical subjects: Overall Equipment Effectiveness (OEE). Each frame introduced an important subtopic — like minimizing downtime or identifying inefficiencies—while keeping the visuals clean, modern, and true to brand. I used illustrations to visualize the production line and custom iconography to add clarity to the stats-heavy content. This series was created for LinkedIn to support Redzone’s learning and compliance messaging in a more accessible and engaging way." }
+      ] },
+      { "h": "Extending the Brand into the Real World with Physical Touchpoints", "p": [
+        "Branded experiences people could see, wear, hold, and remember pushed the creative into physical space. A creatively packaged iPad sent to a prospective customer. A jumbotron activation on the expo floor.",
+        "Each piece was made to feel human, start a conversation, and strengthen Redzone's presence in a form you could pick up and pass around."
+      ] },
+      { "gallery": [
+        { "src": "Swag.png", "title": "Redzone Factory Floor Shirt & Logo Design", "tools": "Adobe Illustrator", "desc": "For this piece of custom swag, I created an original character inspired by early animation styles — think Steamboat Willie, but on the factory floor. The design featured a personified iPad with gloved hands and sneakers. It was a lighthearted way to visualize Redzone’s connected workforce in motion, blending nostalgia with modern tech. This piece became a favorite among team members for its style — and for capturing how even software can have personality." },
+        { "src": "RZ_PACK23--1-of-1-.jpg", "title": "Jumbotron Video Loop for Trade Show Booth", "tools": "Adobe After Effects, Premiere Pro", "desc": "For a major trade show with a football stadium theme, I collaborated with the events team to ideate a large-scale video loop tailored for the jumbotron at our booth. The creative needed to be bold, high-contrast, and movement-rich — designed to be eye-catching from across the venue. I helped incorporate footage from multiple campaigns, layered animated UI previews, and added messaging that aligned with the game-day energy of the environment." },
+        { "src": "Box.png", "title": "Slide-to-Unlock iPad Mailer for Prospective Customers", "desc": "To break through the noise of traditional sales mailers, I designed an interactive iPad box experience that played on the nostalgic 'slide to unlock' gesture from early tablets and phones. The exterior featured a sleek cutout window with a movable paper insert. When slid from side to side, phrases like 'Empowering the Frontline' and 'Unlock Your Factory’s Potential' were revealed — turning the unboxing into a small moment of delight.\nThe design balanced polish with surprise, all while supporting a sales strategy that put product value and people front and center.\nThe mailer was distributed to select prospects based on their stage in the sales funnel, generating curiosity, conversation, and conversions." },
+        { "src": "RZ_PACK_DAY1-29.jpg", "title": "LinkedIn Photo Activation: Tag to Win", "tools": "Adobe Illustrator", "desc": "To drive social engagement at our trade shows, I designed a physical LinkedIn post cutout for attendees to pose with. The frame mimicked the layout of a real LinkedIn post and included branded prompts to tag Redzone. The activation worked as both a selfie opportunity and a conversation starter — leading to dozens of shares and direct traffic from new prospects on social." }
+      ] },
+      { "h": "Amplifying Culture & Capability Through Video", "p": [
+        "Video made the product more approachable, the features more digestible, and the people behind the software more visible. I concepted, scripted, directed, and edited work ranging from step-by-step walkthroughs to the story of Women Inspiring Success and Empowerment (WISE).",
+        "The rule was the same each time: team members speaking directly to camera, laughter left in the edit, visuals that said our tech exists to serve real people doing real work. These videos ran across internal communications, social launches, and onboarding."
+      ] },
+      { "videos": [ "mdeXsU0Jfkg", "QctJ8Uagr7w", "1075028937", "1075028942" ] },
+      { "h": "Supporting Visual Consistency Through Custom Brand Photography", "p": [
+        "When the moment called for it, I captured original photography for social and web, focused on people, process, and production. These images ran across campaign launches, blog posts, and internal assets and kept the brand's tone consistent with the push toward a more human identity."
+      ] },
+      { "gallery": [ "1730738279639.jfif", "1684871520317.jfif", "1683214032733_edited.jpg", "1730771091594.jfif", "1728574601960.jfif", "1684778142063.jfif", "1723216242522.jfif", "1730774975742.jfif", "1684871519806.jfif" ] }
+    ],
+    "next": { "slug": "solv-energy", "label": "Next Case Study" }
+  },
+  {
+    "slug": "solv-energy",
+    "type": "case",
+    "title": "Christian's Work Portfolio with SOLV Energy",
+    "hero": {
+      "bg": "Cherry Valley Solar-3.jpg",
+      "logos": [ { "src": "SOLV_Energy®_Standard_RGB_edited.png", "alt": "SOLV Energy" } ],
+      "title": "How I Modernized SOLV Energy's Web Presence and Built Power Apps That Streamlined Internal Workflows",
+      "subtitle": "Internal Tools & External Web for SOLV Energy"
+    },
+    "lede": "SOLV Energy is a lifecycle partner for utility-scale solar, storage, and energy infrastructure across the United States. With more than 20 GW of solar and storage under management and a fast-growing public profile (Nasdaq: MWH), SOLV Energy needed a digital presence that could keep pace with a company building, operating, and announcing at industry scale. This case study covers how I supported and built that digital presence across web, internal tools, graphic design, and video.",
+    "blocks": [
+      { "h": "THE PROBLEM", "p": [
+        "A renewable energy company has a harder communications job than most. SOLV Energy's audiences include investors, customers, prospective hires, craft workers, community partners, and thousands of employees in offices and on jobsites across the country. Each audience needs different proof points, different formats, and different channels. Communications systems had not kept pace with that growth. The SOLV Energy website needed steady, accurate updates as new projects, leadership news, and milestones landed. Internal teams needed faster, lighter ways to share approved content to their own networks. Visual storytelling needed to keep up with a project pipeline running nationally and in dozens of states at once."
+      ] },
+      { "h": "THE SOLUTION", "p": [
+        "I built a digital backbone that handled the day-to-day weight: a continuously updated external website, internal tools that turned approved content into employee-shareable assets, graphic design at the cadence project announcements demanded, and video work that brought the work on the ground into focus. Each piece was designed to scale with the company rather than break under it."
+      ] },
+      { "h": "Owning the Web Presence and Internal Tooling of a Public Energy Infrastructure Company", "p": [
+        "A public company moves fast, and its website has to move with it. I maintained and continuously updated solvenergy.com through WordPress, publishing project announcements, leadership additions, earnings news, and partnership wins as they landed. Updates often went live within hours of internal approval, with formatting, imagery, and SEO considerations dialed in before publish.",
+        "Beyond the external site, I built and launched an Employee Advocacy platform powered by Power Apps. Built to give SOLV Energy teammates one place to find pre-approved social content to share with their own networks, the platform turned a manual, email-based workflow into a self-serve experience. Employees can browse, preview, and share posts directly to their LinkedIn in seconds.",
+        "Together, those efforts kept the company's external presence current while activating the internal community as a force multiplier for visibility, advocacy, and recruiting."
+      ] },
+      { "gallery": [ { "v": "1228250222" }, { "v": "1228250217" }, "Screenshot 2026-05-17 at 2.33.37 AM.png", { "v": "1228250219" } ] },
+      { "h": "Designing at the Speed of a Public Company's News Cycle", "p": [
+        "When SOLV Energy goes public, breaks ground, or sends an executive to a conference, the visuals supporting that moment have to be ready as soon as possible and sometimes on the same day. I produced ongoing graphic design across speaker session cards, kudos and recognition posts, project announcements, and case study teasers, working within and gradually extending SOLV Energy's visual system.",
+        "Design prioritized clean composition, brand-consistent color palettes anchored on SOLV Energy's signature colors, and a headline hierarchy that made each graphic legible at thumbnail scale on social feeds. Every asset shipped quickly without sacrificing the polish an investor-grade or customer-facing audience expects."
+      ] },
+      { "gallery": [ "RE Plus.png", "SOLV Example 1 Transparent.png", "SOLV Example 2 Transparent.png" ] },
+      { "h": "Bringing Field Stories and Project Milestones to Life Through Video", "p": [
+        "Video is how SOLV Energy makes its work tangible to audiences who will never visit a jobsite. I helped concept, script, and produce multiple social media videos and internal content for project milestones, customer testimonials, and culture moments, with a focus on letting the people doing the work speak for themselves.",
+        "Editing stayed minimal and the people stayed central, with on-site capture, light branding overlay, and pacing tuned for both LinkedIn and longer-form internal use."
+      ] },
+      { "gallery": [ { "v": "1175822607", "title": "Good Energy" }, { "v": "1RKAiFOCbtE", "title": "A Message from SOLV Energy CEO, George Hershman" }, { "v": "1175822621", "title": "Overview and Impact of Misae Solar" }, { "v": "1175822624", "title": "We Power What's Next at SOLV Energy" } ] }
+    ],
+    "next": { "slug": "cohesity", "label": "Next Case Study" }
+  },
+  {
+    "slug": "cohesity",
+    "type": "case",
+    "title": "Christian's Work Portfolio with Cohesity",
+    "hero": {
+      "bg": "AdobeStock_784830317.jpeg",
+      "logos": [ { "src": "Cohesity_Logo_White.png", "alt": "Cohesity" } ],
+      "title": "How I Led 3,000 Employee Advocacy and Cross-Channel Design at Cohesity",
+      "subtitle": "Employee Advocacy and Integrated Creative for an AI-Powered Data Security Leader"
+    },
+    "lede": "Cohesity is the leader in AI-powered data security and management, trusted by 70% of the Global 500 across 140+ countries. While the company protects the world's most critical data, its brand and content needed to feel as human as the people behind it. This case study explores how I helped power Cohesity's Champions employee advocacy program and design cohesive creative across PR, blogs, newsletters, and global events.",
+    "blocks": [
+      { "h": "THE PROBLEM", "p": [
+        "Enterprise cybersecurity content has a reputation. It's dense, technical, and written for boardrooms instead of the people who actually share it, read it, and live with the threats it covers. Cohesity had powerful product news, deep customer stories, and real industry credibility, but the social voice and visual presence often felt indistinguishable from the rest of the enterprise software space. Employees weren't sharing content they didn't connect with, and the brand was missing chances to land with both internal advocates and external audiences in a way that felt human, modern, and worth talking about."
+      ] },
+      { "h": "THE SOLUTION", "p": [
+        "I rebuilt how Cohesity showed up. I authored a new brand voice for the Champions employee advocacy program, closer to Duolingo and Figma social than corporate LinkedIn, and operationalized a daily content engine that fed 3,000+ active Champions with posts they actually wanted to share. Alongside the advocacy work, I led original creative design across PR campaigns, blog hero graphics, newsletter design, and global event activations. The result was a Cohesity presence that felt sharper, faster, and more share-worthy across every customer-facing channel."
+      ] },
+      { "h": "Reframing Cohesity's Voice for an Employee Advocacy Program That Actually Got Shared", "p": [
+        "I rebuilt Cohesity's Employee Advocacy program from the ground up, authoring a new brand voice closer to Duolingo and Figma social than corporate LinkedIn and running a daily content engine for 3,000+ advocates globally. Beyond core post writing, I led the redesign of the program, internal competitions, expanded program reach into international markets, connected advocacy work across multiple departments, and headed an executive advocacy program where I personally wrote and edited posts for the Chief Product and Chief Financial Officers. The result was a sharper, faster Cohesity voice that turned employee voices into one of the company's strongest social channels."
+      ] },
+      { "gallery": [ "ezgif.com-video-to-gif-converter-2.gif", { "v": "1228250187" } ] },
+      { "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content", "p": [
+        "Beyond employee advocacy, I supported the creative team across Cohesity's most visible moments, including partnership campaigns with Google Cloud, AWS, NVIDIA, Hewlett-Packard, and Microsoft, blog hero graphics for executive thought leadership, weekly Security Spotlight and Empire Strikes Backups newsletter creative, and event activations. The visual language had to feel modern enough to compete with consumer-grade design while still landing credibility in enterprise cybersecurity."
+      ] },
+      { "gallery": [ "Cohesity Examples TP.png", "Cohesity Examples 2 TP.png" ] }
+    ],
+    "next": { "slug": "healthier-texas", "label": "Next Case Study" }
+  }
+]
