@@ -702,25 +702,6 @@
   const seg = document.querySelector(".seg");
   const segOn = seg && seg.querySelector(".is-active");
 
-  // Touch chips on a wider screen (foldables, big phones turned sideways): shrink the labels and padding,
-  // within limits, until all six fit in one row like the desktop bar. Phones narrower than that still swipe.
-  function fitChips() {
-    if (!seg) return;
-    const items = [...seg.querySelectorAll(".seg-item")];
-    items.forEach((i) => { i.style.fontSize = ""; i.style.paddingInline = ""; });
-    seg.style.gap = "";
-    const chips = document.documentElement.dataset.os === "ios" && window.innerWidth > 560;
-    if (!chips || seg.scrollWidth <= seg.clientWidth) return;
-    for (const [font, pad, gap] of [[15, 14, 8], [15, 12, 8], [14, 12, 8], [14, 10, 8], [13, 10, 8], [13, 8, 6], [13, 7, 4]]) {
-      items.forEach((i) => { i.style.fontSize = font + "px"; i.style.paddingInline = pad + "px"; });
-      seg.style.gap = gap + "px";
-      if (seg.scrollWidth <= seg.clientWidth) return;
-    }
-  }
-  fitChips();
-  window.addEventListener("resize", fitChips);
-  if (document.fonts) document.fonts.ready.then(fitChips);
-
   if (segOn && seg.scrollWidth > seg.clientWidth) {
     seg.scrollLeft = segOn.offsetLeft - seg.offsetLeft - (seg.clientWidth - segOn.offsetWidth) / 2;
   }
