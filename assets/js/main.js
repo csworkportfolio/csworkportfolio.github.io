@@ -370,10 +370,11 @@
     const f = lbMedia.querySelector("iframe");
     if (!f) return;
     const item = current.items[current.index];
-    const boxW = lbMedia.clientWidth;
+    // desktop: the media column sizes to its content, so measure the room it may take (--lb-room) instead
+    const boxW = matchMedia("(max-width: 900px)").matches ? lbMedia.clientWidth : window.innerWidth - 176 - 360 - 56;
     // on phones the media box grows with its content, so cap videos at 72% of the screen height instead
     const stacked = matchMedia("(max-width: 900px)").matches;
-    const boxH = stacked ? window.innerHeight * 0.72 : lbMedia.clientHeight;
+    const boxH = stacked ? window.innerHeight * 0.72 : window.innerHeight - 110;
     const ar = item.vw / item.vh;
     let w = boxW, h = boxW / ar;
     if (h > boxH) { h = boxH; w = h * ar; }

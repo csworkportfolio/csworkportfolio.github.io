@@ -406,7 +406,7 @@ button { font: inherit; color: inherit; }
 
 .lightbox {
   position: fixed; inset: 0;
-  width: 100vw; height: 100vh; height: 100dvh;  /* dvh: the height actually visible between Safari's bars */
+  width: 100vw; height: 100vh; height: 100lvh;  /* lvh: full screen height, so the content scrolls on under Safari's see-through bar */
   max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
   background: rgba(14,14,14,.96); color: #fff;
 }
@@ -414,24 +414,27 @@ button { font: inherit; color: inherit; }
 .lightbox:focus { outline: none; }
 .lightbox[open] { display: block; }
 body.lb-open { overflow: hidden; }
+/* The piece and its caption sit together as one centred pair, the caption a set distance from the
+   piece's own edge whatever its shape, rather than the piece floating in a wide column. */
+.lightbox { --lb-room: calc(100vw - 176px - 360px - 56px); }  /* width left for the piece beside the caption */
 .lb-inner {
-  height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 32px; padding: 56px 88px 40px; align-items: center;
+  height: 100%; display: grid; grid-template-columns: auto 360px; justify-content: center;
+  gap: 56px; padding: 56px 88px 40px; align-items: center;
 }
 .lightbox.no-caption .lb-inner { grid-template-columns: minmax(0, 1fr); }
 .lightbox.no-caption .lb-caption { display: none; }
-.lb-media { height: 100%; min-height: 0; display: grid; place-items: center; }
+.lb-media { height: 100%; min-height: 0; max-width: var(--lb-room); display: grid; place-items: center; }
 .lb-media img, .lb-media video {
-  max-width: 100%; max-height: calc(100vh - 110px); width: auto; height: auto; object-fit: contain;
+  max-width: var(--lb-room); max-height: calc(100vh - 110px); width: auto; height: auto; object-fit: contain;
 }
 .lb-media iframe {
   border: 0; display: block; background: #000;
-  max-width: 100%; max-height: calc(100vh - 110px);
+  max-width: var(--lb-room); max-height: calc(100vh - 110px);
 }
 .lb-caption { align-self: center; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 6px; }
 /* a linked PDF reads in place: its pages in one column that scrolls inside the lightbox */
 .lb-pdf {
-  width: 100%; max-width: 860px; height: calc(100vh - 110px); overflow-y: auto; overscroll-behavior: contain;
+  width: min(860px, var(--lb-room)); height: calc(100vh - 110px); overflow-y: auto; overscroll-behavior: contain;
   display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 0 4px; border-radius: 6px;
   scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.35) transparent;
 }
@@ -481,8 +484,9 @@ body.lb-open { overflow: hidden; }
   .strip { --tile-h: var(--strip-h) !important; }
   /* phones and narrow windows: one scrolling page, the piece at full width with its whole caption under it,
      instead of a fixed box with a clipped caption */
-  .lb-inner { display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 72px 16px calc(96px + env(safe-area-inset-bottom, 0px)); }
-  .lb-media { height: auto; display: flex; justify-content: center; }
+  .lb-inner { display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 72px 16px calc(150px + env(safe-area-inset-bottom, 0px)); }  /* the last line clears the bar */
+  .lightbox { --lb-room: 100%; }
+  .lb-media { height: auto; max-width: none; display: flex; justify-content: center; }
   .lb-media img, .lb-media video { max-height: 72vh; }
   .lb-pdf { height: 66vh; }
   .lb-caption { max-height: none; overflow: visible; padding-right: 0; margin-top: 20px; }
