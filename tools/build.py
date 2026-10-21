@@ -284,7 +284,7 @@ def strip(items, root, label, opts=None, kind="gallery", hint=False):
   <script type="application/json" class="gallery-data">{data}</script>
 </section>'''
     if hint:
-        caption += '<p class="strip-hint"><span class="hint-mouse">Hover to Pause / Swipe to See More / Click to View Closer</span><span class="hint-touch">Swipe to See More / Tap to View Closer</span></p>'
+        caption += '<p class="strip-hint"><span class="hint-mouse">Hover to Slow Down / Swipe to See More / Click to View Closer</span><span class="hint-touch">Swipe to See More / Tap to View Closer</span></p>'
     return (caption + section) if opts.get("label_pos") == "above" else (section + caption)
 
 
@@ -326,6 +326,7 @@ def layout(page, site, root, body, media, og_image=None):
   </div>
 </header>'''
     desc = page.get("description", site["description"])
+    robots = f'\n<meta name="robots" content="{page["robots"]}">' if page.get("robots") else ""
     og = f'\n<meta property="og:image" content="{root}{og_image}">' if og_image else ""
     return f'''<!doctype html>
 <html lang="en">
@@ -333,7 +334,7 @@ def layout(page, site, root, body, media, og_image=None):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(page["title"])}</title>
-<meta name="description" content="{esc(desc)}">
+<meta name="description" content="{esc(desc)}">{robots}
 <meta property="og:title" content="{esc(page["title"])}">
 <meta property="og:description" content="{esc(desc)}">{og}
 <meta name="theme-color" content="#2b2b2b">
@@ -430,7 +431,12 @@ def category_banner(site, root, media):
         if words:  # "{word}" in the line: one field at a time, underlined, cycled by main.js; screen readers get the whole list
             spans = "".join(f'<span class="rot-word{" is-on" if i == 0 else ""}">{esc(w)}</span>' for i, w in enumerate(words))
             rot = f'<span class="rotator" aria-hidden="true">{spans}</span><span class="sr-only">{esc(", ".join(words))}</span>'
-        sub_ = f'<span class="cat-hero-sub">{esc(sub).replace("{word}", rot)}</span>' if sub else ""
+        sub_ = ""
+        if sub:
+            # split at the first comma, so phones can put "rooted in…" on its own line
+            head, sep, tail = esc(sub).partition(", ")
+            line = f'<span class="sub-a">{head}{sep.strip()}</span> <span class="sub-b">{tail}</span>' if sep else head
+            sub_ = f'<span class="cat-hero-sub">{line.replace("{word}", rot)}</span>'
         text = f'<span class="cat-hero-text"><span class="cat-hero-title">{esc(title)}</span>{sub_}</span>'
     alt = "" if title else "Christian Sanchez, back to the home page"
     return f'''
@@ -480,6 +486,29 @@ def render_home(page, site, media):
     # The home hero sits above the section nav, like the original site.
     return html_.replace('<a class="skip-link" href="#main">Skip to content</a>',
                          '<a class="skip-link" href="#main">Skip to content</a>' + hero, 1)
+
+
+def render_locked(page, site, media):
+    """A password-locked page (Ghostwriting): the category layout, with its gallery and text stored encrypted
+    (tools/lock_ghostwriting.py) and unlocked in the browser by main.js. Linked only from Social & Writing."""
+    lock = (CONTENT / page["lock"]).read_text().strip()
+    body = f'''
+<section class="wrap lock" data-lock>
+  <h1>{esc(page["heading"])}</h1>
+  <p class="lock-note">These posts were published under executives' names, so this page is password protected.<br>
+  To view it, enter the last four digits of my phone number, listed at the top of my resume.</p>
+  <form class="lock-form">
+    <label class="sr-only" for="lock-pw">Password</label>
+    <input id="lock-pw" class="lock-input" type="password" inputmode="numeric" autocomplete="off" placeholder="Last 4 digits" required>
+    <button class="btn" type="submit">Unlock</button>
+  </form>
+  <p class="lock-error" role="alert" hidden>That password didn't work. Try again.</p>
+  <noscript><p class="lock-error">This page needs JavaScript to unlock.</p></noscript>
+  <script type="application/json" class="lock-data">{lock}</script>
+</section>
+<div class="lock-content" hidden></div>'''
+    page = {**page, "type": "category", "robots": "noindex, nofollow"}
+    return layout(page, site, "../", body, media)
 
 
 def render_category(page, site, media):
@@ -556,10 +585,15 @@ def main():
     site["home"] = pages[0]  # the category pages reuse its intro
     for f in ("categories.json", "cases-1.json", "cases-2.json"):
         pages += json.loads((CONTENT / f).read_text())
+    if (CONTENT / "ghostwriting.lock.json").exists():
+        pages.append({"type": "locked", "slug": "ghostwriting", "lock": "ghostwriting.lock.json",
+                      "nav_active": "organic-social", "heading": "Executive Ghostwriting",
+                      "title": "Christian's Executive Ghostwriting",
+                      "description": "Executive ghostwriting samples (password protected)."})
 
     for page in pages:
         print(f"page /{page['slug']}")
-        render = {"home": render_home, "category": render_category, "case": render_case}[page["type"]]
+        render = {"home": render_home, "category": render_category, "case": render_case, "locked": render_locked}[page["type"]]
         out = render(page, site, media)
         dest = ROOT / page["slug"] / "index.html" if page["slug"] else ROOT / "index.html"
         dest.parent.mkdir(exist_ok=True)

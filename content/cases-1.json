@@ -35,26 +35,39 @@
       },
       {
         "gallery": [
-          "Nike 20.png",
           {
-            "v": "1228250189"
+            "src": "Nike 20.png",
+            "title": "Hard in the Paint Tennis Landing Page",
+            "desc": "A tennis landing page built around the Slam City Collection, led by a \"Hard in the Paint\" hero that asks shoppers to gear up for NYC's biggest tennis showdown. Below it, an Athlete Picks carousel routes into Carlos Alcaraz, Naomi Osaka and Serena Williams.\nThe second view carries the surface into Look of Tennis and Slam Collection entry points plus a Popular Right Now grid. Each tile had to resolve to the right shop before anything went live."
           },
           {
-            "v": "1228251265"
+            "v": "1228250189",
+            "title": "Back in Style Back to School App Story",
+            "desc": "A Back to School placement in the Nike app, opening on two students in Nike gear on stadium bleachers under the headline \"Head back to school in style.\" The copy invites shoppers to find looks for school, sport and everything in between.\nI previewed it on device before scheduling, since this kind of story is usually met on a phone with the sound off. It had to read in a glance and route cleanly into the gear."
           },
           {
-            "v": "1228250188"
+            "v": "1228251265",
+            "title": "Men's Hero Carousel on Nike.com",
+            "desc": "A men's landing page on Nike.com with a rotating hero carousel under the Shop All, Shoes, Clothing, Accessories and Sale navigation. This recording shows the motion between slides, from a trail shoe in mid-stride to a close portrait.\nFeatured placements like this are often the first thing someone sees on the site. I built and checked them so each slide loaded fast and landed on the right destination."
           },
           {
-            "v": "1228250203"
+            "v": "1228250188",
+            "title": "ACG Zegama Hike App Feature",
+            "desc": "An app feature for the ACG Zegama Hike, opening on a cinematic shot of a globe and circuitry stamped \"All Conditions Research Dept.\" The headline below calls it a rock-solid shoe with trail runner DNA.\nI built the placement from the supplied video and copy, then checked it on a real device so the motion, type and navigation held up together. A desktop preview would have hidden how the story actually plays on a phone."
+          },
+          {
+            "v": "1228250203",
+            "title": "Play Mind Games Nike Mind Landing Page",
+            "desc": "A landing page for Nike Mind and the 24.7 Collection, led by a \"Play Mind Games\" hero that invites shoppers to lock in before the game. An Explore Nike Mind row below breaks the footwear down in close-up product imagery.\nI assembled the hero, copy and product row into one surface and routed the Shop button into the collection. The recording shows how the page moves from the campaign image into the product story."
           }
         ],
         "height": 569,
         "gap": 50,
-        "speed": 11,
+        "speed": 60,
         "label": "Click Visual to See Closer",
         "label_pos": "above",
-        "play": "auto"
+        "play": "auto",
+        "loop": true
       },
       {
         "h": "Athlete Stories, Published on a Seasonal Beat",
@@ -65,19 +78,44 @@
       },
       {
         "gallery": [
-          "Nike 4.png",
-          "Nike Spotlight.PNG",
-          "IMG_2266.PNG",
-          "Nike Spotlight 2.PNG",
-          "Nike Spotlgiht.PNG",
-          "Nike 3.png"
+          {
+            "src": "Nike 4.png",
+            "title": "Gear for a Great Year Back to School Carousel",
+            "desc": "A Back to School page on Nike.com with First-Day Footwear, Backpacks, Shop All and Sport Ready navigation above a \"Gear for a Great Year\" carousel. Athlete photography labeled Jazzy Davidson of USC Basketball and Lamar Bo Jackson of Ohio State Football routes into Women's, Kids and Men's shops.\nTalent-led tiles carry extra weight, so every name and destination had to be exactly right for the season's publishing window."
+          },
+          {
+            "src": "Nike Spotlight.PNG",
+            "title": "Mark Bowman Back to School Spotlight",
+            "desc": "A Back to School feature in the Nike app on USC tight end Mark Bowman, pairing campus photography with copy about turning heads in top Nike gear. The story continues into a second image labeled with his name, school and sport.\nI paired the shoot imagery with the copy and routed the feature into the gear he wears. Getting the name, imagery and timing right was the whole job."
+          },
+          {
+            "src": "IMG_2266.PNG",
+            "title": "Mark Bowman Back-to-School Styles Shop Row",
+            "desc": "Further down the Mark Bowman story, the feature turns into shopping: product tiles with prices, a View All button and a Back-to-School Styles carousel that opens on Apparel.\nThis is where the athlete story connects to the gear from the shoot. I routed each tile and category entry point so someone moved from his photography straight into something they could buy."
+          },
+          {
+            "src": "Nike Spotlight 2.PNG",
+            "title": "Mia Corona Back to School Spotlight",
+            "desc": "A Back to School feature in the Nike app on incoming UCLA freshman and midfielder Mia Corona, photographed in a striped Nike jersey against warm wood paneling. The copy frames her look as ready for the coming school year.\nI built the placement from the shoot imagery and copy and checked it on device before scheduling. Talent content leaves no room for small mistakes in names or timing."
+          },
+          {
+            "src": "Nike Spotlgiht.PNG",
+            "title": "Mia Corona Back-to-School Styles Shop Row",
+            "desc": "The shopping half of the Mia Corona story, with product tiles and prices above a Back-to-School Styles carousel that leads with her classroom portrait and an Apparel entry point.\nI connected the athlete photography to the gear from the shoot so the story ended in a place to shop rather than a dead end. Each tile was checked to make sure it landed on the right destination."
+          },
+          {
+            "src": "Nike 3.png",
+            "title": "Shop Women's, Men's and All Entry Tiles",
+            "desc": "A row of three category entry tiles routing into Shop Women's, Shop Men's and Shop All, each built on bold athletic photography in a track, a locker room and a sports-room setting. The footwear in each image sits front and center.\nI placed the imagery and wired each tile to its destination, keeping the labels short so the row reads in a glance on desktop and mobile."
+          }
         ],
         "height": 554,
         "gap": 50,
-        "speed": 11,
+        "speed": 60,
         "label": "Click Visual to See Closer",
         "label_pos": "above",
-        "play": "auto"
+        "play": "auto",
+        "loop": true
       },
       {
         "h": "Full Shopping Surfaces",
@@ -89,17 +127,44 @@
       },
       {
         "gallery": [
-          "nIKE S_edited.png",
-          "Nike L.png",
-          "Nike Back.PNG",
-          "Nike B.PNG",
-          "Nike J.png",
-          "Nike W.png"
+          {
+            "src": "nIKE S_edited.png",
+            "title": "Tennis Slam Product Grid on Nike.com",
+            "desc": "A Tennis Slam product grid on Nike.com showing 96 results, with category filters on the left and NikeCourt Slam apparel and Nike GP Challenge 1.5 PRM shoes in the grid.\nProduct grids are where a campaign turns into something people can buy. I set up the grid and its filters so the collection loaded with the right products and every tile resolved to a working product page."
+          },
+          {
+            "src": "Nike L.png",
+            "title": "Nike Soccer x LEGO Collection Shop",
+            "desc": "A Nike x LEGO Collection shop in the app, led by a Nike Soccer x LEGO Collection hero of minifigures in kit, with tabs for Shoes, Tops and T-Shirts and Hoodies above a product grid of LEGO sneaker builds.\nI assembled the hero, the category tabs and the grid into one surface and checked that each tab filtered to the right products before it went live."
+          },
+          {
+            "src": "Nike Back.PNG",
+            "title": "Men's Shop Tab with Category Navigation",
+            "desc": "The Men's view of the app's Shop tab, with a featured carousel opening on the Nike 24.7 Collection above category tiles for Shoes, Clothing, Accessories, Sport, Back to School and Sale.\nThis is the kind of full shopping surface I assembled one component at a time. Each tile carries its own imagery and menu routing, and the surface only works once every piece lands in the right place."
+          },
+          {
+            "src": "Nike B.PNG",
+            "title": "Sport Category Page in the Nike App",
+            "desc": "The Sport category page reached from the Shop tab, with a tennis hero, a featured row including Basketball Must-Haves and the ACG Chamo Camo Collection, and a menu running from All Conditions Gear through Golf.\nEach row and menu item had its own routing into the parent surface. I built and checked them in sequence so no entry point led to an empty page."
+          },
+          {
+            "src": "Nike J.png",
+            "title": "Jannik Sinner Graphic Tee Product Page",
+            "desc": "A product page on Nike.com for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt, with an image gallery, size selector, Add to Bag and pickup options.\nThis is where every placement and grid eventually has to land. A tile that routes anywhere else is a product someone cannot buy, so I traced destinations through to pages like this one before anything was scheduled."
+          },
+          {
+            "src": "Nike W.png",
+            "title": "Women's Back to School Bags Shop",
+            "desc": "A Women's Back to School Bags shop in the app, with tabs for Backpacks, Duffels and Drawstring Bags, a Back to School feature card promising top picks for staying ahead of the game, and a grid led by the Nike Varsity Elite.\nI assembled the tabs, feature card and grid into one surface and checked each piece on device so every tab and tile resolved to the right products."
+          }
         ],
         "height": 517,
-        "gap": 0,
+        "gap": 50,
         "label": "Click Visual to See Closer",
-        "play": "auto"
+        "play": "auto",
+        "speed": 60,
+        "label_pos": "above",
+        "loop": true
       }
     ],
     "next": {
@@ -161,7 +226,11 @@
             "tools": "Adobe Photoshop, Illustrator, Premiere Pro",
             "desc": "Inventory tracking isn’t always the most exciting topic — so I injected a little energy with a looping animation featuring our official mascot, Gary the Goat. This asset was used across social and product channels to spotlight Redzone’s inventory feature in a fun, digestible way.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns."
           },
-          "Redzone on the Web_edited.png"
+          {
+            "src": "Redzone on the Web_edited.png",
+            "title": "Redzone Resource Library and Video Pages",
+            "desc": "Real screenshots of the Redzone website at the time, showing two sides of it: a filterable resource library on desktop and a video page on mobile. Each card leads with a branded cover, from infographics like 'Analytics for Everyone' to the 'Tales of Triumph from the Factory Floor' ebook.\nThe goal was the same as the rest of my feature work: keep complex topics clean and inviting. On the video page, real team members fill the frame before the copy explains anything, so visitors meet the people first and the platform second."
+          }
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
@@ -183,7 +252,10 @@
             "desc": "A real, but parody product launch for April Fools’ Day, this graphic introduced the fictional 'Redzone Vision Pro' — a mixed-reality headset with features exaggerating real use circumstances and promotion of an AR Goat Companion. I created the illustration, wrote mock release notes, and designed accompanying visuals that mimicked Apple’s branding with a Redzone twist.\nThis concept was expanded into a full microsite and teaser video, and was widely shared internally and externally as a standout moment of brand playfulness and design range."
           },
           {
-            "v": "1228250186"
+            "v": "1228250186",
+            "title": "Gary the Goat: Task Complete",
+            "desc": "Gary the Goat, Redzone's official mascot, is back in a short animated clip built around the satisfying moment a task gets checked off. Like the rest of the seasonal and playful content, it trades a generic post for a bit of personality the community could recognize.\nI kept it brief and loopable so it works as a quick social moment, letting Gary carry the brand voice while the message stays simple: the work got done.",
+            "tools": "Adobe Photoshop, Illustrator, Premiere Pro"
           },
           {
             "src": "New Years 2024 GIF.gif",
@@ -274,15 +346,37 @@
         ]
       },
       {
-        "videos": [
-          "mdeXsU0Jfkg",
-          "QctJ8Uagr7w",
-          "1075028937",
-          "1075028942"
-        ],
+        "height": 378,
         "gap": 20,
-        "label": "Press Play to Watch Video",
-        "play": "click"
+        "crop": "16/9",
+        "label": "Click a Video to Watch",
+        "play": "click",
+        "gallery": [
+          {
+            "v": "mdeXsU0Jfkg",
+            "title": "A Closer Look into QAD Redzone's 4 Modules",
+            "tools": "Adobe Premiere Pro",
+            "desc": "A four-minute overview of Redzone's four connected modules (Productivity, Compliance, Reliability, and Learning) and how they work together on the factory floor. I concepted, scripted, directed, and edited it as the starting point for anyone new to Redzone or weighing the full platform.\nInstead of a screen-recorded feature list, team members walk through the platform on camera, so the software reads as something real people use to communicate faster and fix problems sooner."
+          },
+          {
+            "v": "1075028937",
+            "title": "Women Inspiring Success and Empowerment (WISE): Women's History Month 2025",
+            "tools": "Adobe Premiere Pro",
+            "desc": "A Women's History Month piece telling the story of Women Inspiring Success and Empowerment (WISE) through team members speaking directly to camera, in their own words and with the laughter left in.\nIt ran across internal communications and social, putting the people behind the software at the center instead of the product."
+          },
+          {
+            "v": "QctJ8Uagr7w",
+            "title": "Deep Dive into QAD Redzone Modules",
+            "tools": "Adobe Premiere Pro",
+            "desc": "The longer walkthrough, built around the 29% productivity increase behind the platform. It shows each module in action, from live OEE, throughput, and downtime data in Productivity to a fully paperless shop floor in Compliance, with production, quality, and maintenance teams working from the same live data.\nWhere the overview earns attention, this one answers the detailed questions prospects and new users bring next."
+          },
+          {
+            "v": "1075028942",
+            "title": "Women Inspiring Success and Empowerment (WISE): International Women's Day 2024",
+            "tools": "Adobe Premiere Pro",
+            "desc": "The International Women's Day piece that set the format for WISE the year before: real team members, unscripted moments, and an edit that feels like a conversation rather than a corporate announcement.\nShared across internal communications and social, it helped make WISE visible across the company and beyond it."
+          }
+        ]
       },
       {
         "h": "Supporting Visual Consistency Through Custom Brand Photography",
@@ -292,18 +386,56 @@
       },
       {
         "gallery": [
-          "1730738279639.jfif",
-          "1684871520317.jfif",
-          "1683214032733_edited.jpg",
-          "1730771091594.jfif",
-          "1728574601960.jfif",
-          "1684778142063.jfif",
-          "1723216242522.jfif",
-          "1730774975742.jfif",
-          "1684871519806.jfif"
+          {
+            "src": "1730738279639.jfif",
+            "title": "Candid Conversation on the Expo Floor",
+            "desc": "A Redzone team member laughs mid-conversation with two attendees in red shirts on a busy trade show floor. Moments like this are what I looked for at events: real reactions, not staged handshakes.\nShots like this fed social posts and event recaps, giving the brand's human-first direction an unposed face."
+          },
+          {
+            "src": "1684871520317.jfif",
+            "title": "Tee Shot at a Redzone Golf Outing",
+            "desc": "Shot from behind the gallery, this frame catches a golfer just after impact, with two onlookers framing the drive against an open Texas-blue sky. I liked the layered depth, which puts the viewer in the group watching.\nCommunity events were part of the Redzone story too, and photos like this showed the relationships behind the software away from the plant floor."
+          },
+          {
+            "src": "1683214032733_edited.jpg",
+            "title": "Celebrating a Paperless Shop Floor",
+            "desc": "Plant workers in hard hats and lab coats throw sheets of paper into the air, a spontaneous celebration of going paperless. It is the kind of moment no stock library can supply.\nI kept the frame loose and energetic so the joy reads first. The image puts frontline workers at the center of the story Redzone tells about its compliance tools."
+          },
+          {
+            "src": "1730771091594.jfif",
+            "title": "Evening Reception Under Warm Lantern Light",
+            "desc": "A packed reception fills a dramatic venue lit by amber lanterns, with a towering multi-armed statue as the backdrop. I shot from above to capture the scale of the crowd and the glow of the room together.\nEvent photography like this showed how much of the Redzone community gathered in person, giving campaign and recap posts a sense of place."
+          },
+          {
+            "src": "1728574601960.jfif",
+            "title": "Students on a Food Production Floor Tour",
+            "desc": "In hairnets, gowns and blue gloves, a group of young visitors listens closely as a plant team member walks them through the production line. The shot centers on their attention, not the equipment.\nI captured it to show the community side of manufacturing: plants opening their doors to the next generation of frontline workers."
+          },
+          {
+            "src": "1684778142063.jfif",
+            "title": "Morning at The Hills Course",
+            "desc": "Golf bags in the foreground lead the eye past a stone marker for The Hills Course, a clubhouse clock, and carts heading out. It is a quiet establishing shot that sets the scene before the play begins.\nI used frames like this to give event coverage a sense of place, so the recap felt like a day out with the community and not a run of headshots."
+          },
+          {
+            "src": "1723216242522.jfif",
+            "title": "Productivity Roadshow Stop with an IndyCar",
+            "desc": "A Redzone 'Productivity NOW for Manufacturing' banner stands beside a full IndyCar and racing suit on a checkered floor while guests mingle. The setting brings real energy to a software event.\nI framed the car and the conversation together so the photo works both as an event recap and as proof that the community showed up in person."
+          },
+          {
+            "src": "1730774975742.jfif",
+            "title": "Redzone Community Awards 2024 Main Stage",
+            "desc": "The main screen announces the 10th Anniversary Redzone Community Awards 2024 over fireworks graphics, with a row of numbered Redzone jerseys lit up below. The crowd in silhouette keeps the focus on the stage.\nI captured the room as the event opened, giving the community recap an establishing shot that conveys the scale and celebration of the night."
+          },
+          {
+            "src": "1684871519806.jfif",
+            "title": "Live Painting of the Golf Course",
+            "desc": "Over an artist's shoulder, a canvas of the golf course takes shape, with figures, flag and fairway painted in real time while the actual green stretches out beyond. The over-the-shoulder angle puts the viewer right at the easel.\nI liked how it captured a slower, creative moment inside a busy event day, adding warmth and variety to the coverage."
+          }
         ],
         "gap": 10,
-        "play": "auto"
+        "play": "auto",
+        "speed": 60,
+        "loop": true
       }
     ],
     "next": {
@@ -351,18 +483,29 @@
       {
         "gallery": [
           {
-            "v": "1228250222"
+            "v": "1228250222",
+            "title": "SOLV Energy Homepage Hero Walkthrough",
+            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was."
           },
           {
-            "v": "1228250217"
+            "v": "1228250217",
+            "title": "Employee Advocacy Power App in Action",
+            "desc": "Sharing approved content used to mean digging through emails. I built this Employee Advocacy platform in Power Apps so SOLV Energy teammates have one place to find pre-approved posts, sorted by tags like Impact, Mission, and Project Spotlight.\nEach card previews the post before sharing, and employees can push it straight to their LinkedIn in seconds. The result turned a manual workflow into a self-serve experience that helps with visibility and recruiting.",
+            "tools": "Microsoft Power Apps"
           },
-          "Screenshot 2026-05-17 at 2.33.37 AM.png",
           {
-            "v": "1228250219"
+            "src": "Screenshot 2026-05-17 at 2.33.37 AM.png",
+            "title": "Publishing a News Article Behind the Scenes",
+            "desc": "Here's a look at the publishing side of the job: an article entry with its title, one-sentence extract, background image, and subject and media categories, shown next to a live preview of the SOLV Energy news page.\nEvery announcement went through this kind of setup before going live. I checked formatting, imagery, and categorization in the preview so each story looked right the moment it published."
+          },
+          {
+            "v": "1228250219",
+            "title": "Design, Build, Operate, Optimize Services Page",
+            "desc": "A scroll through one of solvenergy.com's interior pages, opening on crews in hard hats at work in the field and the headline Design. Build. Operate. Optimize. It explains SOLV Energy's end-to-end services for solar, battery storage, and high-voltage infrastructure.\nI kept pages like this accurate and current as the company grew, so customers and investors landing deeper in the site found the same polish as the homepage."
           }
         ],
         "gap": 50,
-        "speed": 50,
+        "speed": 60,
         "label": "Click Visual to Learn More",
         "play": "auto"
       },
@@ -375,9 +518,21 @@
       },
       {
         "gallery": [
-          "RE Plus.png",
-          "SOLV Example 1 Transparent.png",
-          "SOLV Example 2 Transparent.png"
+          {
+            "src": "RE Plus.png",
+            "title": "RE+ 2025 Event and Speaking Session Graphics",
+            "desc": "For RE+ in Las Vegas, I made a pair of graphics: a bold blue announcement for the event and a darker companion piece listing SOLV Energy's two speaking sessions with Eric Butticaz, Director of Apprenticeship, including times and rooms.\nThe Venetian skyline and SOLV's sunburst mark tie the two together, while the lime accents and clear type keep the session details easy to read at thumbnail size on social."
+          },
+          {
+            "src": "SOLV Example 1 Transparent.png",
+            "title": "Conference Speaker Card and Kudos Post",
+            "desc": "These two cover both sides of SOLV Energy's event presence. On the left, a speaking session card for CFO Chad Plotkin at the 38th Annual ROTH Conference. On the right, a kudos post recognizing Kate for representing the company at the 2026 IECA Annual Conference & Expo.\nBoth are built on the brand's signature blues and sunburst motif, with a headline hierarchy that stays readable even as a small social thumbnail."
+          },
+          {
+            "src": "SOLV Example 2 Transparent.png",
+            "title": "Announcement and Case Study Teaser Graphics",
+            "desc": "Not every post needs a face. The left graphic is an \"In Case You Missed It\" announcement about SOLV Energy's O&M scale and largest single-site agreement, set over a field photo of solar panels and wildflowers.\nThe right is a case study teaser that opens with a question about underperforming sites. I let the white space and the sunburst frame do the work, ending with a simple prompt to read the case study."
+          }
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
@@ -394,19 +549,23 @@
         "gallery": [
           {
             "v": "1175822607",
-            "title": "Good Energy"
+            "title": "Good Energy",
+            "desc": "A vertical social video that opens on a sweeping aerial of a SOLV Energy project under construction, with crews, trucks, and structures spread across the site. It's part of the short-form work I helped concept, script, and produce for project milestones and culture moments.\nEditing stayed minimal so the work on the ground carried the story, with light branding and pacing tuned for social feeds."
           },
           {
             "v": "1RKAiFOCbtE",
-            "title": "A Message from SOLV Energy CEO, George Hershman"
+            "title": "A Message from SOLV Energy CEO, George Hershman",
+            "desc": "Sometimes the best move is to let leadership talk. In this piece, CEO George Hershman speaks directly to camera in a relaxed interview setting about SOLV Energy and its work.\nI kept the edit simple and the speaker central, matching the approach I used across SOLV's video content: let the people behind the company speak for themselves, with branding that supports the message instead of competing with it."
           },
           {
             "v": "1175822621",
-            "title": "Overview and Impact of Misae Solar"
+            "title": "Overview and Impact of Misae Solar",
+            "desc": "This vertical video gives a site overview of the Misae Solar project, starting with a drone shot over rows of panels stretching toward the horizon. It was one of several pieces I helped produce to show audiences what SOLV Energy's projects look like up close.\nI paired on-site footage with light brand overlays and kept the pacing quick enough for LinkedIn while still giving the scale of the site room to land."
           },
           {
             "v": "1175822624",
-            "title": "We Power What's Next at SOLV Energy"
+            "title": "We Power What's Next at SOLV Energy",
+            "desc": "This one opens somewhere unexpected for an energy company: a deep blue night sky full of stars. From there, it builds toward SOLV Energy's line, We Power What's Next, as a culture piece for both social and internal audiences.\nI helped concept and produce it with the same rule I used across SOLV's video work: minimal editing, the people kept central, and pacing that fits LinkedIn and longer-form internal use alike."
           }
         ],
         "gap": 130,
@@ -457,9 +616,15 @@
       },
       {
         "gallery": [
-          "ezgif.com-video-to-gif-converter-2.gif",
           {
-            "v": "1228250187"
+            "src": "ezgif.com-video-to-gif-converter-2.gif",
+            "title": "Champions Advocacy Hub Trending Posts Feed",
+            "desc": "This is where Cohesity's Champions found content to share each day. The Trending Posts view shows the week's most active posts, from the HPE alliance to the agentic support portal, with a live feed of colleagues sharing alongside.\nI wrote the posts that filled this feed in a voice closer to Duolingo and Figma social than corporate LinkedIn, so 3,000+ advocates actually wanted to post them. Leaderboards and challenges kept the energy up."
+          },
+          {
+            "v": "1228250187",
+            "title": "The Empire Strikes Backups Champions Newsletter",
+            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links."
           }
         ],
         "gap": 50,
@@ -474,8 +639,16 @@
       },
       {
         "gallery": [
-          "Cohesity Examples TP.png",
-          "Cohesity Examples 2 TP.png"
+          {
+            "src": "Cohesity Examples TP.png",
+            "title": "Webinar, Hiring, and NVIDIA GTC Social Graphics",
+            "desc": "Three posts, three different jobs: a webinar promo on ransomware gang behavior, a bold pink We're Hiring card for a role in São Paulo, and an event graphic for Cohesity at NVIDIA GTC 2026.\nEach one leans on Cohesity's green and magenta palette and tight condensed type, so they read like a set while handling very different messages. The goal was consumer-grade energy that still felt credible in enterprise security."
+          },
+          {
+            "src": "Cohesity Examples 2 TP.png",
+            "title": "Google Cloud Next, Blog Hero, and Newsletter Creative",
+            "desc": "A mix from Cohesity's busiest channels: a booth promo for Google Cloud Next 26 in Las Vegas, a blog hero announcing that the future of support is here and it's agentic, and a punchy Your backups are next. graphic.\nI kept each piece simple and direct, letting the bright green and big type carry the message so it held up across events, blogs, and weekly Security Spotlight newsletter creative."
+          }
         ],
         "gap": 100,
         "label": "Click Visual to Learn More",

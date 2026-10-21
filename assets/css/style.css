@@ -126,7 +126,14 @@ button { font: inherit; color: inherit; }
 @media (max-width: 720px) {
   .cat-hero-link:has(.cat-hero-text) { gap: 16px; }
   .cat-hero-link:has(.cat-hero-text) img { width: 76px; height: 76px; flex: none; }
-  .cat-hero-title { font-size: 18px; } .cat-hero-sub { font-size: 14px; }
+  .cat-hero-title { font-size: 18px; } .cat-hero-sub { font-size: 15px; }
+  /* phones: the line always breaks after its comma; main.js shrinks the type if the first half wouldn't fit */
+  .cat-hero-link:has(.cat-hero-text) { width: 100%; }
+  .cat-hero-text { flex: 1 1 auto; min-width: 0; }
+  .sub-a, .sub-b { display: block; }
+  .sub-a { white-space: nowrap; }
+  .cat-hero-sub.is-one-line { white-space: nowrap; }
+  .cat-hero-sub.is-one-line .sub-a, .cat-hero-sub.is-one-line .sub-b { display: inline; }
 }
 
 /* ---------- liquid glass (from the Job Search AI app, kit.css) ---------- */
@@ -321,6 +328,7 @@ button { font: inherit; color: inherit; }
 .tools { margin-top: 14px; }
 .cat-text .kicker-italic + p { margin-top: 14px; }
 .cat-text .tools + p { margin-top: 4px; }
+.cat-text p:not(.kicker-italic):not(.tools) + p { margin-top: 16px; }  /* a blank line between body paragraphs */
 .cat-text p:not(.kicker-italic):not(.tools) { font-size: 17px; line-height: 1.5; }
 
 /* ---------- gallery sliders ---------- */
@@ -336,14 +344,17 @@ button { font: inherit; color: inherit; }
 .strip-viewport::-webkit-scrollbar { display: none; }
 .strip-track {
   list-style: none; margin: 0; padding: 0;
-  display: flex; gap: var(--gap, 10px); width: max-content;
+  display: flex; align-items: center; gap: var(--gap, 10px); width: max-content;
 }
 .strip.is-static .strip-track { margin: 0 auto; }
 .tile-wrap { flex: none; }
 .tile {
   position: relative; display: block; padding: 0; border: 0; background: none; cursor: pointer;
-  height: var(--tile-h, var(--strip-h)); width: calc(var(--tile-h, var(--strip-h)) * var(--r));
-  overflow: hidden; max-width: min(86vw, 1100px);
+  /* a wide piece that would outgrow the screen (86vw, or 1100px) gets shorter instead of being cropped,
+     so phones always show the whole image */
+  --fit: min(var(--tile-h, var(--strip-h)), calc(min(86vw, 1100px) / var(--r)));
+  height: var(--fit); width: calc(var(--fit) * var(--r));
+  overflow: hidden;
 }
 .tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
 .tile-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
@@ -377,7 +388,7 @@ button { font: inherit; color: inherit; }
 .gal-label {
   width: 343px; max-width: calc(100% - 2 * var(--gutter)); min-height: 40px; margin: 4px auto 0;
   display: flex; align-items: center; justify-content: center; text-align: center;
-  font-size: 14px; font-style: italic; line-height: 1.3; color: #404040;
+  font-size: 12px; font-style: italic; line-height: 1.3; color: #777;  /* same as the strip hint */
 }
 .gal-label.above { margin: 32px auto 7px; }
 .gal-label.above + .strip { margin-top: 0; }
@@ -416,6 +427,17 @@ body.lb-open { overflow: hidden; }
   max-width: 100%; max-height: calc(100vh - 110px);
 }
 .lb-caption { align-self: center; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 6px; }
+/* a linked PDF reads in place: its pages in one column that scrolls inside the lightbox */
+.lb-pdf {
+  width: 100%; max-width: 860px; height: calc(100vh - 110px); overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 0 4px; border-radius: 6px;
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.35) transparent;
+}
+.lb-pdf:not(.is-ready) { justify-content: center; }
+.lb-pdf:focus { outline: none; }
+.lb-pdf-page { width: 100%; flex: none; background: #fff; border-radius: 3px; overflow: hidden; }
+.lb-pdf-page canvas { display: block; width: 100%; height: auto; }
+.lb-media .lb-pdf img { max-height: 100%; }
 .lb-caption h2 { font-size: 20px; line-height: 1.3; margin-bottom: 4px; }
 .lb-caption .lb-by { color: #aaa; font-size: 14px; margin-bottom: 14px; }
 .lb-caption .lb-tools { font-style: italic; color: #ccc; font-size: 14px; margin-bottom: 12px; }
@@ -450,6 +472,7 @@ body.lb-open { overflow: hidden; }
   .strip { --tile-h: var(--strip-h) !important; }
   .lb-inner { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; padding: 64px 16px 16px; gap: 16px; }
   .lb-media img, .lb-media video, .lb-media iframe { max-height: calc(100vh - 260px); }
+  .lb-pdf { height: calc(100vh - 260px); }
   .lb-caption { max-height: 180px; align-self: start; }
   .lb-prev, .lb-next { top: auto; bottom: 16px; }
   .lb-prev { left: auto; right: 76px; }
@@ -537,6 +560,20 @@ main { view-transition-name: page; }
 
 /* phones: the portrait sits a little further right, its far shoulder running off the edge, to give the text more room */
 @media (max-width: 560px) { .home-portrait { margin-right: calc(-1 * var(--gutter) - 28px); } }
+
+/* password-locked page (Ghostwriting): a centred unlock form until the right password decrypts the content */
+.lock { padding-top: 64px; padding-bottom: 96px; text-align: center; }
+.lock h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.lock-note { color: #555; font-size: 15px; margin-bottom: 24px; }
+.lock-form { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.lock-input {
+  height: 44px; width: min(280px, 100%); padding: 0 16px; border-radius: 999px; font: inherit; font-size: 15px;
+  border: 0; background: rgba(0,0,0,.05); box-shadow: inset 0 0 0 .5px rgba(0,0,0,.12);
+}
+.lock-input:focus { outline: 2px solid #007aff; outline-offset: 2px; }
+.lock .btn { min-height: 44px; }
+.lock-error { margin-top: 14px; color: #c0281f; font-size: 14px; }
+.lock[hidden], .lock-content[hidden], .lock-error[hidden] { display: none; }
 
 /* between a phone and the desktop layout there's room for all the intro beside the portrait, so it sits in a
    column on the left (as on desktop) instead of the last line alone wrapping beside the head */

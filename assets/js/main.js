@@ -29,6 +29,54 @@
     const words = [...rot.querySelectorAll(".rot-word")];
     if (words.length < 2) return;
     let i = 0;
+    // The header keeps one height whichever phrase is showing: measure the sentence with each phrase in place
+    // and reserve room for the tallest, so a longer phrase rewraps the line without the band growing.
+    const sub = rot.closest(".cat-hero-sub");
+    function reserve() {
+      if (!sub) return;
+      sub.style.minHeight = "";
+      rot.style.transition = "none";
+      // phones: "<phrase> built to perform," stays on one line, so the type shrinks just enough for the
+      // longest phrase to fit (down to 12px; past that the line may wrap rather than run off the screen)
+      const first = sub.querySelector(".sub-a");
+      sub.style.fontSize = "";
+      if (first) first.style.whiteSpace = "";
+      // where the whole sentence fits on one line with every phrase (wider phones, small tablets), keep it on one
+      sub.classList.remove("is-one-line");
+      if (first && getComputedStyle(first).display === "block") {
+        sub.classList.add("is-one-line");
+        for (const w of words) {
+          rot.style.width = w.offsetWidth + "px";
+          if (sub.scrollWidth > sub.clientWidth + 1) { sub.classList.remove("is-one-line"); break; }
+        }
+      }
+      if (first && getComputedStyle(first).display === "block") {
+        const base = parseFloat(getComputedStyle(sub).fontSize);
+        let need = 0;
+        for (const w of words) {
+          rot.style.width = w.offsetWidth + "px";
+          need = Math.max(need, first.scrollWidth);
+        }
+        const room = sub.clientWidth;
+        if (need > room) {
+          const size = Math.floor(base * room / need * 0.97 * 10) / 10;  // a little slack for rounding
+          sub.style.fontSize = Math.max(12, size) + "px";
+          if (size < 12) first.style.whiteSpace = "normal";
+        }
+      }
+      let tallest = 0;
+      for (const w of words) {
+        rot.style.width = w.offsetWidth + "px";
+        tallest = Math.max(tallest, sub.offsetHeight);
+      }
+      rot.style.width = words[i].offsetWidth + "px";
+      void rot.offsetWidth;
+      rot.style.transition = "";
+      sub.style.minHeight = tallest + "px";
+    }
+    reserve();
+    window.addEventListener("resize", reserve);
+    if (document.fonts) document.fonts.ready.then(reserve);
     setInterval(() => {
       if (document.hidden) return;
       const cur = words[i];
@@ -87,7 +135,7 @@
     const next = el.querySelector(".strip-next");
     const originals = [...track.children];
     const s = {
-      el, viewport, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0),
+      el, viewport, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0), v: 0, hover: false,
       loops: el.hasAttribute("data-loop"), loop: 0, pos: 0, lastSet: -1,
       pause: new Set(), resumeTimer: 0, visible: true, anim: 0,
     };
@@ -102,7 +150,10 @@
     }
 
     function measure() {
-      track.querySelectorAll("[data-clone]").forEach((n) => n.remove());
+      track.querySelectorAll("[data-clone]").forEach((n) => {
+        if (autoObserver) n.querySelectorAll(".tile[data-video]").forEach((v) => autoObserver.unobserve(v));
+        n.remove();
+      });
       el.classList.remove("is-static");
       prev.hidden = next.hidden = false;
       s.loop = 0;
@@ -116,6 +167,9 @@
           c.dataset.clone = "";
           c.setAttribute("aria-hidden", "true");
           c.querySelectorAll("button").forEach((b) => (b.tabIndex = -1));
+          c.querySelectorAll(".tile-preview").forEach((f) => f.remove());
+          // the copies' videos autoplay too, so the loop doesn't turn them into still posters
+          if (autoObserver && el.dataset.play === "auto" && !reduceMotion) c.querySelectorAll(".tile[data-video]").forEach((v) => autoObserver.observe(v));
           track.appendChild(c);
         }
         watchLoops(track);
@@ -133,8 +187,9 @@
       }
     }
 
-    el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hold("hover"); });
-    el.addEventListener("pointerleave", () => s.pause.delete("hover"));
+    // hovering slows the slider to HOVER_SPEED instead of stopping it
+    el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") s.hover = true; });
+    el.addEventListener("pointerleave", () => { s.hover = false; });
     el.addEventListener("focusin", () => hold("focus"));
     el.addEventListener("focusout", () => s.pause.delete("focus"));
     viewport.addEventListener("touchstart", () => hold("touch"), { passive: true });
@@ -207,6 +262,7 @@
     strips.push(s);
   }
 
+  const HOVER_SPEED = 25;  // px/s while the pointer rests on a slider
   let last = 0;
   function tick(t) {
     const dt = last ? Math.min((t - last) / 1000, 0.1) : 0;
@@ -214,7 +270,9 @@
     for (const s of strips) {
       if (!s.speed || s.anim || !s.visible || s.pause.size || lightboxOpen) continue;
       if (s.el.classList.contains("is-static")) continue;
-      s.pos += s.speed * dt;
+      const target = s.hover ? Math.min(s.speed, HOVER_SPEED) : s.speed;
+      s.v = s.v ? s.v + (target - s.v) * Math.min(1, dt * 4) : target;  // ease between paces over about half a second
+      s.pos += s.v * dt;
       if (s.loop && s.pos >= s.loop) s.pos -= s.loop;
       const end = s.viewport.scrollWidth - s.viewport.clientWidth;
       if (!s.loop && s.pos >= end) { s.pos = end; } // non-looping Wix sliders stop at the end
@@ -321,13 +379,77 @@
     f.style.height = `${Math.floor(h)}px`;
   }
 
+  // ---------- PDFs in the lightbox ----------
+  // A card that links to a PDF (case studies, articles, class projects) opens the document itself in the
+  // lightbox: every page rendered by PDF.js into one scrolling column, pages drawn as they come into view.
+
+  const PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+  let pdfjs = null;
+  const isPdf = (item) => item.link && /\.pdf$/i.test(item.link.href);
+
+  function loadPdfJs() {
+    if (!pdfjs) {
+      pdfjs = new Promise((resolve, reject) => {
+        const s = el("script", { src: PDFJS + "pdf.min.js" });
+        s.onload = () => {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js";
+          resolve(window.pdfjsLib);
+        };
+        s.onerror = () => { pdfjs = null; reject(new Error("PDF.js failed to load")); };
+        document.head.append(s);
+      });
+    }
+    return pdfjs;
+  }
+
+  async function showPdf(item, box) {
+    const lib = await loadPdfJs();
+    const doc = await lib.getDocument(new URL(item.link.href, location.href).href).promise;
+    if (current.items[current.index] !== item || !box.isConnected) return;
+    const first = await doc.getPage(1);
+    const base = first.getViewport({ scale: 1 });
+    const pages = [];
+    for (let n = 1; n <= doc.numPages; n++) {
+      const slot = el("div", { class: "lb-pdf-page", "aria-label": `Page ${n} of ${doc.numPages}`, role: "img" });
+      slot.style.aspectRatio = `${base.width} / ${base.height}`;
+      slot.dataset.page = n;
+      pages.push(slot);
+    }
+    box.replaceChildren(...pages);
+    box.classList.add("is-ready");
+    const draw = async (slot) => {
+      if (slot.dataset.drawn) return;
+      slot.dataset.drawn = "1";
+      const page = await doc.getPage(Number(slot.dataset.page));
+      const vp1 = page.getViewport({ scale: 1 });
+      // sharp at the screen's pixel density, but under ~12 MP so tall one-page PDFs stay within iOS canvas limits
+      const scale = Math.min((slot.clientWidth * (window.devicePixelRatio || 1)) / vp1.width,
+        Math.sqrt(12e6 / (vp1.width * vp1.height)));
+      const vp = page.getViewport({ scale });
+      const canvas = el("canvas", { width: Math.floor(vp.width), height: Math.floor(vp.height) });
+      slot.style.aspectRatio = `${vp1.width} / ${vp1.height}`;
+      slot.append(canvas);
+      await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+    };
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { io.unobserve(e.target); draw(e.target); }
+    }, { root: box, rootMargin: "600px 0px" });
+    pages.forEach((p) => io.observe(p));
+  }
+
   function render() {
     const item = current.items[current.index];
     lbMedia.replaceChildren();
     lbCaption.replaceChildren();
     const label = item.title || "";
 
-    if (item.type === "image") {
+    if (item.type === "image" && isPdf(item)) {
+      // the cover shows while the document loads; if the PDF can't be shown, the cover stays
+      const box = el("div", { class: "lb-pdf", tabindex: "0", "aria-label": `${label || "Document"}: scroll to read` });
+      box.append(el("img", { src: item.full, alt: label, width: item.w, height: item.h }));
+      lbMedia.append(box);
+      showPdf(item, box).catch(() => {});
+    } else if (item.type === "image") {
       lbMedia.append(el("img", { src: item.full, alt: label, width: item.w, height: item.h }));
     } else if (item.type === "loop") {
       const v = el("video", { src: item.src, poster: item.thumb, muted: true, loop: true, playsinline: true, autoplay: !reduceMotion, controls: reduceMotion });
@@ -357,7 +479,8 @@
         }
       }
       if (item.link) {
-        lbCaption.append(el("a", { class: "btn btn-rust", href: item.link.href, target: "_blank", rel: "noopener" }, item.link.label));
+        const page = item.link.href.endsWith("/");  // a page of this site (Ghostwriting) opens in place; files open in a new tab
+        lbCaption.append(el("a", { class: "btn btn-rust", href: item.link.href, target: page ? null : "_blank", rel: page ? null : "noopener" }, item.link.label));
       }
     }
     dialog.setAttribute("aria-label", label ? `Enlarged view: ${label}` : "Enlarged view");
@@ -519,7 +642,7 @@
     document.fonts && document.fonts.ready.then(setHead);
   }
 
-  document.querySelectorAll("[data-gallery]").forEach((g) => {
+  function setupGallery(g) {
     const items = JSON.parse(g.querySelector(".gallery-data").textContent);
     const inline = g.classList.contains("strip-videos");
     g.addEventListener("click", (e) => {
@@ -535,7 +658,57 @@
     }
     if (g.classList.contains("strip")) initStrip(g);
     watchLoops(g);
-  });
+  }
 
-  if (strips.length && !reduceMotion) requestAnimationFrame(tick);
+  let ticking = false;
+  function startTicking() {
+    if (ticking || !strips.length || reduceMotion) return;
+    ticking = true;
+    requestAnimationFrame(tick);
+  }
+
+  document.querySelectorAll("[data-gallery]").forEach(setupGallery);
+  startTicking();
+
+  // ---------- password-locked pages (Ghostwriting) ----------
+  // The gallery and text are stored encrypted (tools/lock_ghostwriting.py): PBKDF2-SHA256 turns the password
+  // into an AES-GCM key, and only the right password decrypts them. Unlocked once, the page stays open for
+  // the rest of the browser session.
+
+  const lock = document.querySelector("[data-lock]");
+  if (lock) {
+    const data = JSON.parse(lock.querySelector(".lock-data").textContent);
+    const form = lock.querySelector(".lock-form");
+    const input = lock.querySelector(".lock-input");
+    const error = lock.querySelector(".lock-error");
+    const content = document.querySelector(".lock-content");
+    const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+    const KEY = "lock:" + location.pathname;
+
+    async function unlock(password) {
+      const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
+      const key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", hash: "SHA-256", salt: bytes(data.salt), iterations: data.iter },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"],
+      );
+      const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes(data.iv) }, key, bytes(data.ct));
+      content.innerHTML = new TextDecoder().decode(plain);
+      content.hidden = false;
+      lock.hidden = true;
+      content.querySelectorAll("[data-gallery]").forEach(setupGallery);
+      startTicking();
+      try { sessionStorage.setItem(KEY, password); } catch (e) {}
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      error.hidden = true;
+      form.querySelector("button").disabled = true;
+      try { await unlock(input.value); } catch (err) { error.hidden = false; input.select(); }
+      form.querySelector("button").disabled = false;
+    });
+    let saved = null;
+    try { saved = sessionStorage.getItem(KEY); } catch (e) {}
+    if (saved) unlock(saved).catch(() => {});
+  }
 })();

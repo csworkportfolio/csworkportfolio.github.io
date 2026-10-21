@@ -6,38 +6,150 @@
     "blocks": [
       {
         "gallery": [
-          "Cohesity Examples 2A.png",
-          "The Assembly Line.png",
-          "QAD Redzone Presents_ Gary the GOAT",
-          "QRZ Partner.png",
-          "Hushum.png",
-          "TS4P.png",
-          "SOLV Example 2 Transparent.png",
-          "QRZ Web.png",
+          {
+            "src": "Cohesity Examples 2A.png",
+            "title": "Cohesity Event, Blog, Webinar, and Hiring Graphics",
+            "desc": "A cross-section of Cohesity's busiest channels in one spread: a Google Cloud Next 26 booth promo for Mandalay Bay in Las Vegas, a blog hero announcing that the future of support is agentic, a ransomware webinar card, a We're Hiring post for São Paulo, and an NVIDIA GTC 2026 event graphic.\nI held every piece to Cohesity's bright green and magenta palette with tight condensed type, so very different messages still read as one credible set."
+          },
+          {
+            "src": "The Assembly Line.png",
+            "title": "The History of the Assembly Line",
+            "desc": "This editorial-style series supported a feature on the Redzone blog and drove engagement on social. It traces manufacturing from Henry Ford's moving assembly line all the way to today's AI-enhanced Industry 4.0.\nI blended collage and texture-rich visuals inspired by vintage magazines, so the story felt nostalgic and futuristic at once, bridging the past and future of factory innovation.",
+            "tools": "Adobe Photoshop"
+          },
+          {
+            "src": "QAD Redzone Presents_ Gary the GOAT",
+            "title": "Parts Inventory Feature GIF with Gary",
+            "desc": "Inventory tracking isn't always the most exciting topic — so I injected a little energy with a looping animation featuring our official mascot, Gary the Goat. This asset was used across social and product channels to spotlight Redzone's inventory feature in a fun, digestible way.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns.",
+            "tools": "Adobe Photoshop, Illustrator, Premiere Pro"
+          },
+          {
+            "src": "QRZ Partner.png",
+            "title": "Customer Testimonials: Web & Social Graphics",
+            "desc": "A set of branded testimonials for Redzone's web and social channels, each built around a tangible result, like a 34% changeover time reduction or the equivalent of a free plant's worth of capacity.\nQuotes from frontline leaders at Nestlé Purina, Post Consumer Brands, and Gorilla Glue sit alongside brand-aligned photography and data visuals. I let the customer voices lead, using layout and color to support a message of real transformation.",
+            "tools": "Adobe Illustrator"
+          },
+          {
+            "src": "Hushum.png",
+            "title": "Hushhum AI: Marketing Materials",
+            "desc": "Hushum is an AI-powered ambience app that helps people focus, sleep, and relax with customizable white, pink, and green noise. For its launch campaign, I created lifestyle-driven social graphics that lead with the emotional benefit rather than the feature set.\nSun-warmed portraits and fluid shapes mirror the calming waveforms of ambient sound, each paired with a short, lyrical line of copy. The goal was to position Hushum not as a utility, but as a feeling."
+          },
+          {
+            "src": "TS4P.png",
+            "title": "Texas Sweats for Pets: Campaign Social Graphics",
+            "desc": "Texas Sweats for Pets was a virtual fitness-a-thon from Healthier Texas that invited Texans to work out alongside their pets at the start of 2021. I led the visual direction and created all the key graphic assets.\nVibrant illustrations and high-energy type brought warmth to a fully digital experience, from 'Fur & Fitness' posts to a three-ways-to-join card, all built around the partnership with Austin Pets Alive!",
+            "tools": "Adobe Illustrator, Adobe Photoshop"
+          },
+          {
+            "src": "SOLV Example 2 Transparent.png",
+            "title": "SOLV Energy Announcement and Case Study Teaser Graphics",
+            "desc": "Not every post needs a face. The left graphic is an \"In Case You Missed It\" announcement about SOLV Energy's O&M scale and largest single-site agreement, set over a field photo of solar panels and wildflowers.\nThe right is a case study teaser that opens with a question about underperforming sites. I let the white space and the sunburst frame do the work, ending with a simple prompt to read the case study."
+          },
+          {
+            "src": "QRZ Web.png",
+            "title": "Productivity and Engagement with Manufacturing All Stars",
+            "desc": "Web banners highlighting productivity uplift and engagement stats, set against a real manufacturing team in their work environment. Instead of a cold chart, I layered the stat over candid photos of our customers to communicate trust, collaboration, and momentum.\nThe layout was optimized for paid media and retargeting campaigns, with bold type and a single focused stat so the message cuts through quickly in scroll-heavy feeds.",
+            "tools": "Adobe Illustrator"
+          },
           {
             "mp4": "Gary Task Complete.mp4",
-            "title": "Redzone Pocket Coach: April Fools' Campaign (2025)"
+            "title": "Redzone Pocket Coach: April Fools' Campaign (2025)",
+            "desc": "For Redzone's April Fools' campaign, Pocket Coach opens on an iPad spinning through space before the screen gives way to a grassy field, where a pixel-art Gary the Goat in a red jersey runs up to greet the viewer.\nI staged the reveal like a polished product launch, then let the 8-bit mascot steal the show before closing on a clean QAD | Redzone lockup, keeping the joke firmly on brand."
           },
-          "RE Plus.png",
-          "cc.png",
-          "Fall.png",
-          "Slide 1.png",
-          "SOLV Example 1 Transparent.png",
-          "Go the Mile.png",
-          "News.png",
-          "HTS Speak.png",
-          "HTW.png",
-          "Box.png",
-          "HTS Speakers.png",
-          "Frontline.png",
-          "LANY.png",
-          "Holiday Calendars.png",
-          "Email TS4P.png",
-          "Website.png"
+          {
+            "src": "RE Plus.png",
+            "title": "RE+ 2025 Event and Speaking Session Graphics",
+            "desc": "For RE+ in Las Vegas, I made a pair of graphics: a bold blue announcement for the event and a darker companion piece listing SOLV Energy's two speaking sessions with Eric Butticaz, Director of Apprenticeship, including times and rooms.\nThe Venetian skyline and SOLV's sunburst mark tie the two together, while the lime accents and clear type keep the session details easy to read at thumbnail size on social."
+          },
+          {
+            "src": "cc.png",
+            "title": "Community Challenge Web Banner",
+            "desc": "A promotional banner for the Community Challenge, one of Healthier Texas' most impactful programs. Vibrant, high-contrast colors and a custom illustrated walking path reflect momentum and unity.\nA wave-like trail of diverse community members carries the metaphor of collective movement toward better health. The banner helped drive registrations during peak campaign periods and aligned with the broader brand update across channels.",
+            "tools": "Adobe Illustrator, Adobe Photoshop"
+          },
+          {
+            "src": "Fall.png",
+            "title": "Fall in Style: Editorial Promo",
+            "desc": "A promotional concept for a fall fashion campaign, built on a brief I set for myself: capture the feeling of mid-air motion and let the visual lead the storytelling.\nLarge, condensed type and a minimalist palette anchor the dynamic composition, while the floating figure, subtly shadowed for depth, carries the seasonal call to action. The result could live in a print magazine or serve as key art for a digital ad set.",
+            "tools": "Adobe Photoshop, Illustrator"
+          },
+          {
+            "src": "Slide 1.png",
+            "title": "Apple Presentation: Community Growth Slide",
+            "desc": "This keynote visual kicked off a manufacturing leadership summit hosted by Apple. I paired growth stats with real frontline workers to keep the human impact behind the numbers front and center.\nWorking alongside Apple's team, I refined it with a more stylized illustration concept and shadowing that tied brand color to Apple's cinematic depth. The presentation was delivered by QAD Redzone's Blake Strickland.",
+            "tools": "Adobe Photoshop, Procreate, Keynote"
+          },
+          {
+            "src": "SOLV Example 1 Transparent.png",
+            "title": "SOLV Energy Conference Speaker Card and Kudos Post",
+            "desc": "These two cover both sides of SOLV Energy's event presence. On the left, a speaking session card for CFO Chad Plotkin at the 38th Annual ROTH Conference. On the right, a kudos post recognizing Kate for representing the company at the 2026 IECA Annual Conference & Expo.\nBoth are built on the brand's signature blues and sunburst motif, with a headline hierarchy that stays readable even as a small social thumbnail."
+          },
+          {
+            "src": "Go the Mile.png",
+            "title": "Go the Mile: Outdoor Promotional Poster",
+            "desc": "Inspired by outdoor lifestyle brands and editorial photography, this poster pairs dramatic imagery with oversized type that demands attention. 'Go the Mile' works as both a motivational message and a literal call to explore.\nThe muted palette and textures reinforce the natural setting, and minimal copy lets the image carry the emotional weight. I wanted a cover that reads from a distance and holds up close.",
+            "tools": "Adobe InDesign, Photoshop"
+          },
+          {
+            "src": "News.png",
+            "title": "Daily News Social Template System",
+            "desc": "This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second, with a consistent footer tying the set together."
+          },
+          {
+            "src": "HTS Speak.png",
+            "title": "Healthier Texas Summit Speaker Highlights",
+            "desc": "A speaker spotlight series promoting the annual Healthier Texas Summit, featuring keynote guests like Vice Admiral Jerome M. Adams and Dr. Nadine Gracia in a bold, clean layout built to stop the scroll.\nSubtle gradients and textured overlays added visual warmth while reinforcing credibility, in line with the summit's mission of public health equity. It put the voices shaping the national health conversation front and center.",
+            "tools": "Adobe Photoshop, Illustrator"
+          },
+          {
+            "src": "HTW.png",
+            "title": "Healthy Texas Week Logo Design",
+            "desc": "Made for a statewide wellness initiative, this logo pairs playful retro script lettering with a bold blue Texas silhouette. I wanted it to feel inviting and optimistic, something families and educators could rally around.\nThe script adds movement and personality across digital and print. Though the event was ultimately cancelled due to COVID-19, the mark still served as a unifying visual during the early campaign rollout.",
+            "tools": "Adobe Illustrator"
+          },
+          {
+            "src": "Box.png",
+            "title": "Slide-to-Unlock iPad Mailer for Prospective Customers",
+            "desc": "To break through the noise of traditional sales mailers, I designed an iPad box that played on the nostalgic 'slide to unlock' gesture. A cutout window with a movable paper insert revealed phrases like 'Empowering the Frontline' and 'Unlock Your Factory's Potential.'\nThe mailer went to select prospects based on their stage in the sales funnel, turning the unboxing into a small moment of delight that sparked curiosity and conversation."
+          },
+          {
+            "src": "HTS Speakers.png",
+            "title": "Healthier Texas Summit General Campaign",
+            "desc": "Promotional graphics for every stage of the Healthier Texas Summit campaign, from calls for proposals to registration pushes, built to work across social, web, and email.\nKey speaker headshots sit front and center to personalize the event, while modern geometric overlays give it a tech-forward yet approachable tone. Strong contrast and clear CTAs made it effortless for viewers to engage.",
+            "tools": "Adobe Illustrator, Canva, Adobe Photoshop"
+          },
+          {
+            "src": "Frontline.png",
+            "title": "#GivingTuesdayNow Thank-You to Essential Workers",
+            "desc": "When the pandemic put frontline workers under enormous strain, It's Time Texas wanted to pause and simply say thank you. I designed this #GivingTuesdayNow social graphic around a single masked healthcare worker, cropped on an angle so the photo feels candid rather than staged.\nThe message sits in bold, stacked blue bars that echo the brand palette and read instantly in a crowded feed, letting the image carry the gratitude."
+          },
+          {
+            "src": "LANY.png",
+            "title": "LANY Live at Stubb's: Instagram Story Promo",
+            "desc": "A promotional piece for indie-pop band LANY's live show at Stubb's BBQ in Austin, TX, designed for the vertical, fast-scrolling world of Instagram Stories.\nLayered typography bleeds downward with subtle opacity and color shifts, mimicking the rhythm and buildup before a concert, while the high-contrast hero photo puts viewers eye-level with the band. It was a chance to balance clarity with fan excitement."
+          },
+          {
+            "src": "Holiday Calendars.png",
+            "title": "Monthly Work Anniversary Calendars",
+            "desc": "Each month, I designed custom-branded posts celebrating Redzone employee anniversaries. They weren't just internal shoutouts, but small morale boosters that reminded teams they were valued.\nEvery layout followed a seasonal theme, from heartfelt Valentine's vibes to festive fireworks, with vibrant Redzone branding throughout. The graphics were shared company-wide and often sparked fun conversations and resharing among team members.",
+            "tools": "Adobe Photoshop"
+          },
+          {
+            "src": "Email TS4P.png",
+            "title": "Texas Sweats for Pets: Campaign Email Header",
+            "desc": "The email header for Texas Sweats for Pets, a virtual fitness-a-thon held January 27–29, 2021. Illustrated Texans walk dogs, cycle, and stretch around a bold blue-and-orange script lockup, with Austin Pets Alive! and It's Time Texas logos anchoring the date bar.\nThe campaign strengthened brand recognition and drove strong turnout across web and email, while deepening the partnership with Austin Pets Alive!",
+            "tools": "Adobe Illustrator, Adobe Photoshop, Mailchimp"
+          },
+          {
+            "src": "Website.png",
+            "title": "Fashion E-Commerce Interface",
+            "desc": "This fashion interface was designed to feel bold and energetic, with a heavy emphasis on visual identity and shopability. A high-contrast palette and oversized grid put products first across web and mobile.\nI included interactive components like real-time color swatches and review stars to simulate a full user experience. The mobile version keeps the same hierarchy, with a card-style, digital-wallet aesthetic built to swipe as smoothly as it scrolls.",
+            "tools": "Figma, Adobe Illustrator"
+          }
         ],
         "height": 315,
         "gap": 50,
-        "speed": 50,
+        "speed": 60,
         "loop": true,
         "play": "auto"
       },
@@ -56,66 +168,84 @@
             "link": {
               "href": "files/mktg-327.pdf",
               "label": "Open MKTG 327 (PDF)"
-            }
+            },
+            "title": "MKTG 327 Study: Digital Campaign for Chili's",
+            "desc": "This study explored how to reinvigorate a plateaued restaurant brand through online and in-store changes, with research and feedback from Chili's Bar & Grill.\nWe found that casual dining had been declining and that each social platform called for a different tone. The plan targeted young families with children through social advertising."
           },
           {
             "src": "Apple Campus Keynote_edited.png",
             "link": {
               "href": "files/apple-nama-2023.pdf",
               "label": "Open Apple NAMA 2023 (PDF)"
-            }
+            },
+            "title": "Apple Campus Event Presentation for NAMA 2023",
+            "desc": "The cover for an excerpt from my presentation at an Apple campus event for NAMA 2023. Frontline workers holding rugged tablets stand in a near-black frame beside a timeline that climbs from 700 in 2020 to 1,200 in 2023.\nI kept the type light and let a single red accent mark the current year, so the people and the numbers carry the story. The full excerpt opens as a PDF."
           },
           {
             "src": "Research 4.PNG",
             "link": {
               "href": "files/mktg-466-presentation.pptx",
               "label": "Download MKTG 466 Presentation (PowerPoint)"
-            }
+            },
+            "title": "MKTG 466 Presentation: Strategic City Planning for Bryan",
+            "desc": "This presentation analysed the infrastructure of Bryan, Texas, and how new transportation options could handle growing city traffic.\nThe research pointed to the influx of Texas A&M students as both the city's biggest threat and its biggest opportunity. Our recommendations focused on linking College Station with Bryan's growing downtown."
           },
           {
             "src": "Research w Button.PNG",
             "link": {
               "href": "files/mktg-430-study.pdf",
               "label": "Open MKTG 430 Study (PDF)"
-            }
+            },
+            "title": "MKTG 430 Study: Assistive Robots in Elder Care",
+            "desc": "Our team researched how robotics could help address the elderly care crisis, combining survey data with industry analysis.\nThe findings showed that most respondents had little experience with medical robots and preferred more human-like designs. We recommended focusing on tools that support doctors and caregivers, rather than personal companion robots."
           },
           {
             "src": "Research 5.PNG",
             "link": {
               "href": "files/mktg-322-presentation.pdf",
               "label": "Open MKTG 322 Presentation (PDF)"
-            }
+            },
+            "title": "MKTG 322 Presentation: Reviving the Pinterest Brand",
+            "desc": "This presentation looked at how Pinterest could win back users by understanding what today's customers want.\nThe research highlighted food waste among 18 to 34 year olds and the weight people give to friends' recommendations. Our idea was an add-on feature that scans grocery barcodes, tracks expiration dates and suggests recipes before food goes bad."
           },
           {
             "src": "Pages from MKTG 322 Presentation.png",
-            "title": "Single Excerpt from Reviving a Struggling Brand Presentation"
+            "title": "Single Excerpt from Reviving a Struggling Brand Presentation",
+            "desc": "One slide from my MKTG 322 presentation on reviving the Pinterest brand. It introduces Pinterest as an online pinboard, with themed boards for recipes, workouts, hairstyles, and weddings framed in Pinterest red.\nThe full deck went on to propose an add-on feature that scans grocery barcodes, tracks expiration dates, and suggests recipes before food goes bad, aimed at reducing food waste among 18 to 34 year olds."
           },
           {
             "src": "Research 2.PNG",
             "link": {
               "href": "files/social-media-campaign.pdf",
               "label": "Open Social Media Campaign (PDF)"
-            }
+            },
+            "title": "Social Media Campaign: How Universities Communicate",
+            "desc": "Prepared for Mays Business School, this study looked at how universities use social media to share information, including a close look at a peer school's Facebook strategy.\nOur research found that people prefer interpersonal posts, with Facebook skewing older and Instagram younger. We recommended Instagram Stories content, such as a \"day in the life of a business major\" series."
           },
           {
             "src": "Research 7.PNG",
             "link": {
               "href": "files/mktg-323-presentation.pdf",
               "label": "Open MKTG 323 Presentation (PDF)"
-            }
+            },
+            "title": "MKTG 323 Presentation: Chipotle Brand Trust Research",
+            "desc": "This market research project examined how consumer perception of Chipotle shifted after the 2015 E. coli outbreaks.\nThe survey analysis showed that brand loyalty took a hit, but the core customer base largely held steady. We recommended competitive pricing while staying true to food quality and portion sizes, with a clear focus on trust and loyalty."
           },
           {
             "src": "Research 6.PNG",
             "link": {
               "href": "files/mktg-321-presentation.pdf",
               "label": "Open MKTG 321 Presentation (PDF)"
-            }
+            },
+            "title": "MKTG 321 Presentation: Quick Lift Product Development",
+            "desc": "Working as \"The Five Marketeers,\" our team found an underserved market segment and developed Quick Lift, a new product designed to solve a problem people didn't know they had.\nThe research covered distribution through Amazon and radio's peak listening hours. Our recommendations set out five packaging principles and suggested Snapchat's AR features as a playful way to advertise."
           }
         ],
         "height": 315,
         "gap": 50,
         "speed": 20,
-        "play": "auto"
+        "play": "auto",
+        "loop": true
       },
       {
         "heading": "Projects",
@@ -133,62 +263,119 @@
     "blocks": [
       {
         "gallery": [
-          "Nike G.png",
           {
-            "v": "1228250187"
+            "src": "Nike G.png",
+            "title": "Nike App Shop Tab and Sport Category Screens",
+            "desc": "Two Nike app screens side by side: the Shop tab, opening on a Nike 24.7 Collection carousel above Shoes, Clothing, Accessories and Sport tiles, and the Sport page it leads into, with a tennis hero up top.\nBelow that hero sits a row of collection cards, from Basketball Must-Haves to the ACG Chamo Camo Collection. Each tile in the grid had to open onto the right category before anything went live."
           },
-          "Nike 20.png",
+          {
+            "v": "1228250187",
+            "title": "The Empire Strikes Backups Champions Newsletter",
+            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links."
+          },
+          {
+            "src": "Nike 20.png",
+            "title": "Hard in the Paint Tennis Landing Page",
+            "desc": "A tennis landing page built around the Slam City Collection, led by a \"Hard in the Paint\" hero that asks shoppers to gear up for NYC's biggest tennis showdown. Below it, an Athlete Picks carousel routes into Carlos Alcaraz, Naomi Osaka and Serena Williams.\nThe second view carries the surface into Look of Tennis and Slam Collection entry points plus a Popular Right Now grid. Each tile had to resolve to the right shop before anything went live."
+          },
           {
             "src": "TT.png",
-            "title": "Texans Thrive on the Web"
+            "title": "Texans Thrive on the Web",
+            "desc": "At the start of the pandemic, Healthier Texas launched Texans Thrive, a statewide storytelling campaign built to connect communities through shared experience. I designed the visual identity for the site and all of its campaign graphics.\nThe layout is clean and mobile-forward, anchored by warm photography and user-submitted stories, so each one reads like a page from a community scrapbook. Custom illustrations and call-to-action modules invite visitors to share their own voices.",
+            "tools": "Adobe Photoshop, WordPress"
           },
           {
-            "v": "1228250222"
+            "v": "1228250222",
+            "title": "SOLV Energy Homepage Hero Walkthrough",
+            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was."
           },
           {
             "src": "Newsletter 2_edited.jpg",
-            "title": "Texas Sweats for Pets: Donations Welcome"
+            "title": "Texas Sweats for Pets: Donations Welcome",
+            "desc": "Texas Sweats for Pets was a three-day virtual fitness-a-thon, January 27 to 29, 2021, with live classes from It's Time Texas instructors and adoptable cats and dogs from Austin Pets Alive!. This email opens on the illustrated campaign header and the line \"One Event. Two Great Causes.\"\nBelow it, a Make a Donation button and a Three Easy Ways to Get Involved section give readers a clear next step, from giving to signing up as a fundraiser.",
+            "tools": "Adobe Illustrator, Adobe Photoshop, Mailchimp"
           },
           {
             "src": "Redzone on the Web_edited.png",
-            "title": "Redzone Videos & Content"
+            "title": "Redzone Videos & Content",
+            "desc": "Real screenshots of the Redzone website at the time, showing two sides of it: a filterable resource library on desktop and a video page on mobile. Each card leads with a branded cover, from infographics like 'Analytics for Everyone' to the 'Tales of Triumph from the Factory Floor' ebook.\nThe goal was the same as the rest of my feature work: keep complex topics clean and inviting. On the video page, real team members fill the frame before the copy explains anything, so visitors meet the people first and the platform second."
           },
           {
-            "v": "1228250189"
+            "v": "1228250189",
+            "title": "Back in Style Back to School App Story",
+            "desc": "A Back to School placement in the Nike app, opening on two students in Nike gear on stadium bleachers under the headline \"Head back to school in style.\" The copy invites shoppers to find looks for school, sport and everything in between.\nI previewed it on device before scheduling, since this kind of story is usually met on a phone with the sound off. It had to read in a glance and route cleanly into the gear."
           },
-          "Nike 2.png",
+          {
+            "src": "Nike 2.png",
+            "title": "Back to School and Nike x LEGO App Screens",
+            "desc": "A pair of Nike app screens. On the left, a Back to School card offering top picks for staying ahead of the game sits above a backpack shelf, with the Nike Varsity Elite beside a silver Best Seller.\nOn the right, the Nike X LEGO Collection page filters by Shoes and Tops and opens on a Nike Soccer x LEGO hero of minifigures in team kits. Both had to route cleanly from story to product."
+          },
           {
             "src": "Newsletter 3_edited.jpg",
-            "title": "Monthly Mix: July Newsletter"
+            "title": "Monthly Mix: July Newsletter",
+            "desc": "The July 2020 edition of It's Time Texas Monthly Mix opens on a quote from March of Dimes President and CEO Stacey Stewart about racism in healthcare. The lead story, from the It's Time Texas Blog, examines health disparities in the context of COVID-19.\nThe layout leans on one illustrated row of workers across many professions, followed by a short recap of that month's Community Lab forum and a Read the Blog button that carries readers to the full post."
           },
           {
-            "v": "1228250203"
+            "v": "1228250203",
+            "title": "Play Mind Games Nike Mind Landing Page",
+            "desc": "A landing page for Nike Mind and the 24.7 Collection, led by a \"Play Mind Games\" hero that invites shoppers to lock in before the game. An Explore Nike Mind row below breaks the footwear down in close-up product imagery.\nI assembled the hero, copy and product row into one surface and routed the Shop button into the collection. The recording shows how the page moves from the campaign image into the product story."
           },
           {
             "src": "Newsletter 1_edited.jpg",
-            "title": "#BlackLivesMatter: Read Our Statement"
+            "title": "#BlackLivesMatter: Read Our Statement",
+            "desc": "Under a Black Lives Matter kicker, this It's Time Texas newsletter leads with Race and Justice in Public Health, set over a mural of open, multicolored hands. The copy names two public health crises, COVID-19 and systemic racism, and quotes the organization's statement of solidarity.\nA Read the Statement button points to the full text, while a Coming Soon block below announces that the Healthier Texas Summit is moving online."
           },
-          "nIKE S_edited.png",
           {
-            "v": "1228250188"
+            "src": "nIKE S_edited.png",
+            "title": "Tennis Slam Product Grid on Nike.com",
+            "desc": "A Tennis Slam product grid on Nike.com showing 96 results, with category filters on the left and NikeCourt Slam apparel and Nike GP Challenge 1.5 PRM shoes in the grid.\nProduct grids are where a campaign turns into something people can buy. I set up the grid and its filters so the collection loaded with the right products and every tile resolved to a working product page."
           },
-          "Nike J.png",
-          "Nike 5.png",
-          "Nike 4.png",
-          "Nike 3.png",
+          {
+            "v": "1228250188",
+            "title": "ACG Zegama Hike App Feature",
+            "desc": "An app feature for the ACG Zegama Hike, opening on a cinematic shot of a globe and circuitry stamped \"All Conditions Research Dept.\" The headline below calls it a rock-solid shoe with trail runner DNA.\nI built the placement from the supplied video and copy, then checked it on a real device so the motion, type and navigation held up together. A desktop preview would have hidden how the story actually plays on a phone."
+          },
+          {
+            "src": "Nike J.png",
+            "title": "Jannik Sinner Graphic Tee Product Page",
+            "desc": "A product page on Nike.com for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt, with an image gallery, size selector, Add to Bag and pickup options.\nThis is where every placement and grid eventually has to land. A tile that routes anywhere else is a product someone cannot buy, so I traced destinations through to pages like this one before anything was scheduled."
+          },
+          {
+            "src": "Nike 5.png",
+            "title": "Mark Bowman Back-to-School Styles App Story",
+            "desc": "Back-to-School Styles in the Nike app, starring USC Football's Mark Bowman on a campus bench with a ball in hand. The carousel card on the left opens into the full story on the right, where the copy calls him a tight end who brings focused energy to all he does.\nTalent-led placements like this need the name, school and position exactly right, and the Apparel link has to land in the right shop."
+          },
+          {
+            "src": "Nike 4.png",
+            "title": "Gear for a Great Year Back to School Carousel",
+            "desc": "A Back to School page on Nike.com with First-Day Footwear, Backpacks, Shop All and Sport Ready navigation above a \"Gear for a Great Year\" carousel. Athlete photography labeled Jazzy Davidson of USC Basketball and Lamar Bo Jackson of Ohio State Football routes into Women's, Kids and Men's shops.\nTalent-led tiles carry extra weight, so every name and destination had to be exactly right for the season's publishing window."
+          },
+          {
+            "src": "Nike 3.png",
+            "title": "Shop Women's, Men's and All Entry Tiles",
+            "desc": "A row of three category entry tiles routing into Shop Women's, Shop Men's and Shop All, each built on bold athletic photography in a track, a locker room and a sports-room setting. The footwear in each image sits front and center.\nI placed the imagery and wired each tile to its destination, keeping the labels short so the row reads in a glance on desktop and mobile."
+          },
           {
             "src": "Video-ezgif.com-crop.gif",
-            "title": "Community Challenge 101"
+            "title": "Community Challenge 101",
+            "desc": "An animated email for the It's Time Texas Community Challenge, headed Everything You Need to Know and built from rotating tiles for sharing the journey, shopping gear and what to expect this year. Connect. Commit. Contribute. sets the tone below.\nThe copy invites readers to start a fundraising team or donate to keep the 8-week Challenge free, then closes on a single Learn More button."
           },
           {
-            "v": "1228251265"
+            "v": "1228251265",
+            "title": "Men's Hero Carousel on Nike.com",
+            "desc": "A men's landing page on Nike.com with a rotating hero carousel under the Shop All, Shoes, Clothing, Accessories and Sale navigation. This recording shows the motion between slides, from a trail shoe in mid-stride to a close portrait.\nFeatured placements like this are often the first thing someone sees on the site. I built and checked them so each slide loaded fast and landed on the right destination."
           },
-          "Nike 1.png"
+          {
+            "src": "Nike 1.png",
+            "title": "Mia Corona Back-to-School Styles App Story",
+            "desc": "Another Back-to-School Styles story in the Nike app, this one featuring incoming UCLA freshman and midfielder Mia Corona in a striped Nike jersey against warm wood paneling. The carousel card links to Apparel, and the full story pairs her portrait with a short line of copy.\nStories like this are met on a phone in a quick swipe between cards, so the photo, name and copy all had to read at a glance."
+          }
         ],
         "height": 350,
         "gap": 50,
-        "speed": 50,
-        "play": "auto"
+        "speed": 60,
+        "play": "auto",
+        "loop": true
       },
       {
         "heading": "Web, App, & Email",
@@ -209,43 +396,63 @@
         "gallery": [
           {
             "v": "1175822607",
-            "title": "Good Energy"
+            "title": "Good Energy",
+            "desc": "This vertical social piece opens on a sweeping aerial of a SOLV Energy project under construction, with crews, trucks, and structures spread across the site. It's one of the short-form videos I helped concept, script, and produce for project milestones and culture moments.\nI kept the editing minimal so the work on the ground carried the story, with light branding and pacing tuned for social feeds.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "1RKAiFOCbtE",
-            "title": "A Message from SOLV Energy CEO, George Hershman"
+            "title": "A Message from SOLV Energy CEO, George Hershman",
+            "desc": "Sometimes the best move is to let leadership talk. Here, SOLV Energy CEO George Hershman speaks directly to camera in a relaxed interview setting about the company and its work.\nI kept the edit simple and the speaker central, the same approach I took across SOLV's video content: let the people behind the company speak for themselves, with branding that supports the message instead of competing with it.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "1175822621",
-            "title": "Overview and Impact of Misae Solar"
+            "title": "Overview and Impact of Misae Solar",
+            "desc": "A drone shot over rows of panels stretching toward the horizon opens this vertical site overview of the Misae Solar project. It was one of several pieces I helped produce to show audiences what SOLV Energy's projects look like up close.\nI paired on-site footage with light brand overlays and kept the pacing quick enough for LinkedIn while still giving the scale of the site room to land.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "mdeXsU0Jfkg",
-            "title": "A Closer Look into QAD Redzone's 4 Modules"
+            "title": "A Closer Look into QAD Redzone's 4 Modules",
+            "desc": "A four-minute overview of Redzone's four connected modules (Productivity, Compliance, Reliability, and Learning) and how they work together on the factory floor. I concepted, scripted, directed, and edited it as the starting point for anyone new to Redzone or weighing the full platform.\nRather than a screen-recorded feature list, team members walk through the platform on camera, so the software reads as something real people use to communicate faster and fix problems sooner.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "1231905548",
-            "title": "Mars Men PSA"
+            "title": "Mars Men PSA",
+            "desc": "This short vertical PSA opens on a man in a puffer jacket and sunglasses talking straight into a handheld mic against snow and evergreens, with bold on-screen captions setting an irreverent tone for a men's health message.\nI kept it under a minute and captioned for sound-off viewing, letting the direct-to-camera delivery and the cheeky text do the work of stopping the scroll.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "1175822624",
-            "title": "We Power What's Next at SOLV Energy"
+            "title": "We Power What's Next at SOLV Energy",
+            "desc": "This one opens somewhere unexpected for an energy company: a deep blue night sky full of stars. From there it builds toward SOLV Energy's line, We Power What's Next, as a culture piece for both social and internal audiences.\nI helped concept and produce it with the rule I used across SOLV's video work: minimal editing, the people kept central, and pacing that fits LinkedIn and longer-form internal use alike.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "nD0pXIu1OO4",
-            "title": "Tackling Food Insecurity with Urban Roots"
+            "title": "Tackling Food Insecurity with Urban Roots",
+            "desc": "This partner spotlight heads out to the farm with Urban Roots, a nonprofit working to fight food insecurity. I wanted the story to come straight from the people doing the work, so it's built around an on-site interview set against rows of fresh greens.\nI handled production end to end, from scripting and filming to editing and motion, for a short, grounded film that puts a human face on the partnerships behind Healthier Texas' programs.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "PxXYS6s87G8",
-            "title": "2020 Community Challenge with Austin Mayor Steve Adler"
+            "title": "2020 Community Challenge with Austin Mayor Steve Adler",
+            "desc": "For the 2020 Community Challenge, I filmed Austin Mayor Steve Adler in his office, surrounded by the city's past Community Challenge trophies. Basketball in hand, he invites Austinites to get moving and help defend the title.\nI wanted a public leader's message to feel approachable and playful, so the framing leans on the trophies and props instead of a formal podium address, and keeping it under a minute made it easy to share.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "kPqrLVgfQQs",
-            "title": "2021 Community Challenge App Instructional Video"
+            "title": "2021 Community Challenge App Instructional Video",
+            "desc": "When the Community Challenge moved into a new app, participants needed a clear, friendly guide to getting started. I produced this walkthrough to introduce the app and show people how to join in.\nIt opens on the bright orange Community Challenge branding and carries that energy throughout, with pacing and clarity tuned so first-time users of any comfort level could follow along and feel ready to participate.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "v": "QctJ8Uagr7w",
-            "title": "Deep Dive into QAD Redzone Modules"
+            "title": "Deep Dive into QAD Redzone Modules",
+            "desc": "The longer walkthrough, built around the 29% productivity increase behind the platform. It shows each module in action, from live OEE, throughput, and downtime data in Productivity to a fully paperless shop floor in Compliance, with production, quality, and maintenance teams working from the same live data.\nWhere the four-module overview earns attention, this one answers the detailed questions prospects and new users bring next.",
+            "tools": "Adobe Premiere Pro"
           }
         ],
         "height": 350,
@@ -272,80 +479,122 @@
         "gallery": [
           {
             "src": "Screenshot 2025-02-21 at 4_edited_edited.jpg",
-            "title": "Healthier Texas Summit: Call for Proposals"
+            "title": "Healthier Texas Summit: Call for Proposals",
+            "desc": "This Facebook post opened the call for proposals for the 2022 Healthier Texas Summit, a collaboration between It's Time Texas and The University of Texas System. I paired a candid photo of an attendee speaking up during a session with the summit lockup and a clear \"Apply Now\" band.\nThe goal was to show the summit as a place where every voice gets the mic, inviting professionals to bring sessions, discussions and workshops of their own.",
+            "tools": "Adobe Illustrator, Canva, Adobe Photoshop"
           },
           {
             "src": "Screenshot 2026-10-01 at 12.53.47 AM.jpeg",
-            "title": "Productivity & Turnover"
+            "title": "Productivity & Turnover",
+            "desc": "Tax Day gave this LinkedIn post a timely hook: while everyone was thinking about savings, it made the case for savings on the manufacturing floor. The copy plays on receipts and refunds, then points to Redzone's G2 rating as proof from the community.\nFor the graphic, I set the productivity and turnover stats over a candid photo of a frontline team gathered around a tablet, closing with a bold \"Book a Demo\" button."
           },
           {
             "src": "IMG_1724.jpg",
-            "title": "We Power What's Next at RE+"
+            "title": "We Power What's Next at RE+",
+            "desc": "Event coverage from RE+ 2025 in Las Vegas, posted to SOLV Energy's Facebook page. The collage leads with a wall-sized \"We Power What's Next\" screen towering over attendees, followed by shots of the show floor, a wrapped SOLV display and a gauge graphic carrying the same line.\nThe caption opens with the idea that almost every connection at RE+ starts with two words, and the photos were chosen to prove that point at a glance."
           },
-          "ezgif.com-video-to-gif-converter.gif",
+          {
+            "src": "ezgif.com-video-to-gif-converter.gif",
+            "title": "Parts Inventory Webinar Post with Gary",
+            "desc": "\"You goat to go\" set the tone for this LinkedIn post promoting a Redzone webinar on the new Parts Inventory feature in the Reliability module. To make a CMMS walkthrough feel inviting, I animated our mascot, Gary the Goat, popping in beside a tablet as the app moves from the dashboard to the parts list.\nThe loop ends on a simple callout, \"Need a part?\", so the feature's value lands even before anyone reads the caption.",
+            "tools": "Adobe Photoshop, Illustrator, Premiere Pro"
+          },
           {
             "src": "IMG_1723.jpg",
-            "title": "We'll See You in Las Vegas"
+            "title": "We'll See You in Las Vegas",
+            "desc": "Ahead of RE+ 2025 in Las Vegas, I designed this announcement for SOLV Energy's Instagram. Cut-out photos of the Venetian and Palazzo towers sit alongside SOLV crew members in hard hats, all on a bold blue field with the RE+ mark and SOLV's sunburst.\nThe scrapbook-style collage gave a trade-show save-the-date some personality, and the \"Straight Outta Desert Center\" hard hat sticker added a wink for people who know the work."
           },
           {
             "src": "TAL-ezgif.com-video-to-gif-converter.gif",
-            "title": "History of the Assembly Line Carousel for Blog"
+            "title": "History of the Assembly Line Carousel for Blog",
+            "desc": "This LinkedIn carousel supported a Redzone blog feature on the history of the assembly line, moving from Ransom Olds and Henry Ford through the age of automation to Industry 4.0. I built each frame with collage and texture inspired by vintage magazines, plus a red-and-cyan offset that nods to old 3D prints.\nThe final slide brings in Gary the Goat in 3D glasses with a \"Book A Demo\" call to action, ending the history lesson on a playful note.",
+            "tools": "Adobe Photoshop"
           },
           {
             "src": "IMG_0967_edited.jpg",
-            "title": "Texas Sweats for Pets: 3 Ways to Join"
+            "title": "Texas Sweats for Pets: 3 Ways to Join",
+            "desc": "Texas Sweats for Pets was a virtual fitness-a-thon from Healthier Texas, It's Time Texas and Austin Pets Alive! that invited Texans to work out alongside their pets. For launch day, I designed this Instagram graphic laying out three ways to join: buy a ticket, donate $5 for a drawing entry, or start a fundraiser.\nA flat illustration of a walker and pup, paw-print bullets and a \"Starts Today at 6pm!\" badge kept the message warm and easy to act on.",
+            "tools": "Adobe Illustrator, Adobe Photoshop"
           },
-          "Productivity-ezgif.com-crop.gif",
-          "Screenshot 2026-10-01 at 12.31.50 AM.png",
           {
-            "v": "1228265177"
+            "src": "Productivity-ezgif.com-crop.gif",
+            "title": "Game Day at the Redzone Booth",
+            "desc": "Football season gave this LinkedIn video its playbook. The post opens on sports-style copy about fierce players and unmatched teamwork, then cuts to a Redzone team member at our football-themed trade show booth, ball in hand, walking viewers through the platform.\nThe clip ends on a close-up of the productivity dashboard on a tablet, so the sports metaphor lands on the real product frontline teams use every day."
+          },
+          {
+            "src": "Screenshot 2026-10-01 at 12.31.50 AM.png",
+            "title": "Father's Day Letter from Redzone",
+            "desc": "For Father's Day, this Redzone LinkedIn post told the story of Francisco, a frontline team member following in the footsteps of his father, who retired after a long career on the Jelly Belly Candy Company factory floor. The story is set as a letter tucked into a red envelope sealed with the Redzone mark.\nThe post simply reads \"With Love, Redzone,\" letting the letter carry the emotion: legacy as pride in work done well."
+          },
+          {
+            "v": "1228265177",
+            "title": "Creating Healthy Habits Instagram Live",
+            "desc": "This Instagram Live on the Healthier Texas account was a relaxed conversation about creating healthy habits, filmed at a kitchen table with a mug of coffee in hand. Going live gave followers a real-time, conversational way into the topic instead of a polished ad.\nThe casual setting suited the subject, since building healthy habits is really about small, everyday choices, and a familiar face made that message feel approachable."
           },
           {
             "src": "Screenshot 2024-02-12 at 11_edited.jpg",
-            "title": "2023 QAD Redzone Open Charity Golf Tournament"
+            "title": "2023 QAD Redzone Open Charity Golf Tournament",
+            "desc": "Event day for the 2nd Annual QAD Redzone Open Charity Golf Tournament, which the post shares had raised over $70,000 for the Special Operations Warrior Foundation. The collage pairs a tee shot framed by onlookers, an artist live-painting the course, and players warming up on the driving range.\nCommunity events were part of the Redzone story too, and this coverage showed the relationships behind the software away from the plant floor."
           },
           {
             "src": "Screenshot 2025-02-22 at 2.19_edited.jpg",
-            "title": "February Work Anniversaries with QAD Redzone"
+            "title": "February Work Anniversaries with QAD Redzone",
+            "desc": "Each month I designed a branded post celebrating Redzone team members' work anniversaries, and February leaned into Valentine's season with hearts, paper airplanes, a hot air balloon and a pink skyline. Headshots sit in alternating red, navy and white frames so a grid of 19 faces still feels lively.\nThese posts were small morale boosters that reminded people they were valued, and they often sparked congratulations and resharing across the team.",
+            "tools": "Adobe Photoshop"
           },
-          "LeadingtheWay-ezgif.com-optimize.gif",
+          {
+            "src": "LeadingtheWay-ezgif.com-optimize.gif",
+            "title": "Leading the Way: Women on the Frontline",
+            "desc": "For Women's History Month, I designed this LinkedIn document carousel spotlighting women driving change at Redzone customer sites. Each page pairs a portrait with real accomplishments, like Mireya Jimenez leading digital adoption at Pioneer Frozen Foods, Shannon Bone building a safety and waste committee from scratch, and Mallory Chavez helping her team adopt new tech.\nThe purple, award-style layouts put recognition and visibility at the center."
+          },
           {
             "src": "FoodSafetyPodcast-ezgif.com-crop.gif",
-            "title": "Summit Podcast Narration"
+            "title": "Summit Podcast Narration",
+            "desc": "This LinkedIn video shares a snippet from the Food Safety Matters podcast, recorded live at the Food Safety Summit with Andrew Lansinger of QAD Redzone. His message about giving frontline team members a voice, a platform and recognition runs as narration over footage from the show floor.\nBurned-in captions make the clip work with the sound off, and cuts between the podcast set and the Redzone booth keep the pace moving."
           },
           {
             "src": "OEEInfographic-ezgif.com-optimize.gif",
-            "title": "Manufacturing Carousel for Blog"
+            "title": "Manufacturing Carousel for Blog",
+            "desc": "I designed this LinkedIn carousel to break down Overall Equipment Effectiveness (OEE), one of Redzone's more technical subjects. Frames move from what OEE is (availability x performance x quality) to why it matters, common inefficiencies and the power of real-time data.\nIsometric illustrations of the production line and bold condensed headlines keep the stats-heavy content clean and on brand, turning a dense topic into something easy to swipe through.",
+            "tools": "Adobe Photoshop"
           },
           {
             "src": "ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop.gif",
-            "title": "2023 Holidays with QAD Redzone"
+            "title": "2023 Holidays with QAD Redzone",
+            "desc": "To close out the year, this LinkedIn post thanked the Redzone community for the stories that inspire our work. The animated card is a tablet-shaped frame wishing everyone a joyful holiday season and a successful 2023, with snowflakes drifting across a Redzone-red background.\nThe loop is short and quiet on purpose: a warm sign-off that fits the feed without competing with the message of thanks."
           },
           {
             "src": "image0_edited.jpg",
-            "title": "Supporting Our Frontline Workers"
+            "title": "Supporting Our Frontline Workers",
+            "desc": "For #GivingTuesdayNow, this It's Time Texas Instagram carousel thanked nurses, community health workers and essential workers. The caption invited followers to tag someone supporting health and share a story of appreciation.\nThe design pairs a portrait of a masked healthcare worker with bold, stacked type on bright blue bars, kept simple so the gratitude is the first thing people read."
           },
           {
             "src": "ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop.gif",
-            "title": "2021 Community Challenge Recap with Mayor Ron Nirenberg"
+            "title": "2021 Community Challenge Recap with Mayor Ron Nirenberg",
+            "desc": "To build momentum for the 2022 It's Time Texas Community Challenge, this #FlashbackFriday post on Healthier Texas's Facebook revisited San Antonio Mayor Ron Nirenberg accepting the Metro-sized community award for his area at the previous competition.\nA public leader speaking straight to camera from his office made the challenge feel personal, while the branded #CommunityChallenge lower third and registration link turned the throwback into a call to sign up."
           },
           {
             "src": "2BoothsAcrosstheUS-ezgif.com-crop.gif",
-            "title": "Two Different Shows Across the World"
+            "title": "Two Different Shows Across the World",
+            "desc": "Greetings from FABTECH and PACK EXPO: QAD Redzone took over two cities at once, and this LinkedIn video brought both shows into one post. The booth team tosses a football in front of our football-themed booth before Gary the Goat pops in holding a \"Get Certified\" sign.\nThe goal was to show the energy at both booths and invite manufacturers in Chicago and Las Vegas to stop by or book a demo."
           },
           {
             "src": "Compliance-ezgif.com-crop.gif",
-            "title": "Compliance Workshop Invite"
+            "title": "Compliance Workshop Invite",
+            "desc": "This LinkedIn post invited QAD Redzone community admins to a Compliance Workshop hosted by Joe Thielen, Customer Success Coach, opening on the line that compliance isn't just about meeting standards, it's about setting them.\nThe short video cuts from frontline conversations on the plant floor to close-ups of the app on a tablet, then resolves into the Redzone logo, keeping the focus on the people who use the tools every day."
           },
           {
             "src": "ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop.gif",
-            "title": "2024 New Year's with QAD Redzone"
+            "title": "2024 New Year's with QAD Redzone",
+            "desc": "\"Let's make 2024 the Year of the Connected Worker!\" This LinkedIn post rang in the new year by spotlighting real Redzone customers instead of a generic greeting, linking to a roundup of success stories from around our community.\nI animated a disco-ball \"Happy New Year\" over a lineup of frontline team members, then let red and blue fireworks burst before resolving on the QAD Redzone logo.",
+            "tools": "Adobe Photoshop, Illustrator"
           }
         ],
         "height": 380,
         "gap": 50,
-        "speed": 50,
-        "play": "auto"
+        "speed": 60,
+        "play": "auto",
+        "loop": true
       },
       {
         "heading": "Short-Form: Social Media",
@@ -363,7 +612,8 @@
             "link": {
               "href": "files/redzone-case-study-coil-specialist.pdf",
               "label": "Read the case study (PDF)"
-            }
+            },
+            "desc": "This Redzone case study follows Coil Specialist, Inc., a component manufacturer that drove productivity up 37% with QAD Redzone. Writing customer stories meant interviewing people about the results they saw on the plant floor, then shaping those conversations into a clear narrative.\nI structured the piece to be found in search and repurposed across web, email and social. The full case study is available here as a PDF."
           },
           {
             "src": "Long Form 6.jpeg",
@@ -371,10 +621,17 @@
             "link": {
               "href": "files/cohesity-google-cloud-hidden-threats.pdf",
               "label": "Read the blog (PDF)"
-            }
+            },
+            "desc": "Co-written with Google Cloud, this Cohesity blog looks at how the two companies work together to tackle hidden security threats. Partner pieces like this meant balancing two brands' voices and technical points of view while keeping the story clear for the reader.\nI structured the post to be found in search and repurposed across web, email and social. The full blog is available here as a PDF."
           },
           {
-            "src": "ezgif.com-crop.gif"
+            "src": "ezgif.com-crop.gif",
+            "title": "Ghostwriting for Executive Leaders",
+            "desc": "Not every byline is my own. These cards collect ghostwriting for executive leaders at national and global organizations, including Cohesity, Redzone and SOLV Energy, turning c-suite perspectives into thought leadership that sounds like the person signing it.\nThe lock on each card marks pieces that are shared privately, since this work was published under someone else's name.",
+            "link": {
+              "href": "ghostwriting/",
+              "label": "View the posts (password required)"
+            }
           },
           {
             "src": "Long Form 5.jpeg",
@@ -382,7 +639,8 @@
             "link": {
               "href": "files/how-does-social-support-affect-your-health.pdf",
               "label": "Read the article (PDF)"
-            }
+            },
+            "desc": "Written for Healthier Texas, this article explores the link between social connection and everyday health. Health explainers like this one start with research and turn it into plain language for everyday readers, without losing the substance.\nI structured the piece to be found in search and easy to repurpose across web, email and social. The full article is available here as a PDF."
           },
           {
             "src": "Long Form 2 2.jpeg",
@@ -390,7 +648,8 @@
             "link": {
               "href": "files/redzone-case-study-companion-baking.pdf",
               "label": "Read the case study (PDF)"
-            }
+            },
+            "desc": "Companion Baking Company's story centers on enlisting everyone on the team to improve equipment reliability with Redzone. For case studies like this, I interviewed customers about the results they saw on the plant floor and built the narrative around their experience.\nThe headline puts people first, and the piece was structured to be found in search and repurposed across web, email and social. The full case study is available here as a PDF."
           }
         ],
         "height": 384,
@@ -417,53 +676,66 @@
         "gallery": [
           {
             "src": "2_edited.jpg",
-            "title": "White Paper: Linkedin InMail Ad"
+            "title": "White Paper: Linkedin InMail Ad",
+            "desc": "This sponsored InMail invited new community partners into It's Time Texas' free, confidential health coaching program. Sent from a program director's profile, it reads like a personal note, walking through weekly phone consultations, text and email follow-up, and services in English and Spanish.\nI kept the subject line direct and put a single Learn More button up top, so the ask was clear before anyone scrolled into the details."
           },
           {
             "src": "Banner Edit.png",
-            "title": "Leaderboard Ad for Pack Expo"
+            "title": "Leaderboard Ad for Pack Expo",
+            "desc": "A leaderboard banner for QAD Redzone at Pack Expo Las Vegas, shown here running across the top of Food Business News. It fits the brand lockup, a Book a Demo button, and the booth number, SU-8233, into one strip.\nThe right side belongs to frontline workers in hairnets gathered around a tablet, so food manufacturers see people like their own teams before they ever reach the booth."
           },
           {
             "v": "1231922947",
-            "title": "Cohesity Catalyst Paris"
+            "title": "Cohesity Catalyst Paris",
+            "desc": "A 14-second promo for Cohesity Catalyst on Tour in Paris, built around a save-the-date poster set on a tree-lined Paris street, with the Eiffel Tower, March 12 date, and 1:00 to 5:30 PM CET time front and center.\nThe post copy frames the event around proving resilience under pressure, from faster recovery across cloud and SaaS to AI-powered data security, and invites people to join in person or by livestream.",
+            "tools": "Adobe Premiere Pro"
           },
           {
             "src": "ScreenRecording2024-02-13at9.51.07AM-ezgif.com-crop.gif",
-            "title": "Empower Your Frontline: LinkedIn Carousel Ad"
+            "title": "Empower Your Frontline: LinkedIn Carousel Ad",
+            "desc": "This LinkedIn carousel promoted Redzone's free eBook, The New Connected Workforce, with intro copy citing an average 29% increase in productivity, 74% increase in engagement, and 32% reduction in staff turnover.\nEach card pairs a real plant-floor celebration with one bold headline, from 100% Paperless and Huddled & Connected to Results in Just 90 Days, before closing on a clean Download the eBook card."
           },
           {
             "src": "Video2-ezgif.com-crop.gif",
-            "title": "Austin Fit Magazine Sweepstakes: Instagram Stories Ad"
+            "title": "Austin Fit Magazine Sweepstakes: Instagram Stories Ad",
+            "desc": "An Instagram Stories ad for Texas Sweats for Pets, a virtual fitness-a-thon from It's Time Texas. The hook: create a fundraiser for a chance to have you and your pet featured in an issue of Austin Fit Magazine.\nA wide-eyed dog photo does most of the work, framed by hand-lettered orange headlines and a bright blue panel, with the Create a Fundraiser button and Learn More swipe-up kept within thumb's reach."
           },
           {
             "src": "VideoAd-ezgif.com-crop.gif",
-            "title": "Book a Demo with QAD Redzone: Linkedin Video Ad"
+            "title": "Book a Demo with QAD Redzone: Linkedin Video Ad",
+            "desc": "This LinkedIn video ad turned a Productivity & QA Roadshow at Pearson's Candy Company in St. Paul into a reason to book a demo. The post copy shares how the host and guest plants used Redzone to drive culture change and boost productivity upwards of 22%.\nThe footage moves from operators at work on the candy line to guest speakers telling their story on camera, so the proof comes from the people running the plants."
           },
           {
             "src": "Event_edited.jpg",
-            "title": "Responding to the Pandemic: Facebook Event Ad"
+            "title": "Responding to the Pandemic: Facebook Event Ad",
+            "desc": "A Facebook event ad for Responding to a Pandemic, a free live discussion in the Healthier Texas Summit Series, presented by Blue Cross Blue Shield of Texas. The link headline spells out the angle: how Texas organizations are pivoting.\nThe creative leads with the date and time across the top, then lets a colorful illustration of masked faces carry the topic, with a Get Tickets button closing the loop."
           },
           {
             "src": "Screenshot 2025-02-22 at 3.37_edited.jpg",
-            "title": "Champion Employee Engagement: eBook Download Ad"
+            "title": "Champion Employee Engagement: eBook Download Ad",
+            "desc": "Linemen set at the line of scrimmage make the backdrop for this Redzone eBook ad, with Champion Employee Engagement stacked in bold white type over the action. The copy offers five strategies to attract, engage, and retain frontline workers.\nThe football imagery gives a heavy manufacturing topic, the labor shortage, some momentum, and a single Download button is the only next step."
           },
           {
             "src": "ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop.gif",
-            "title": "Living Healthier Hotline: Facebook Carousel Ad"
+            "title": "Living Healthier Hotline: Facebook Carousel Ad",
+            "desc": "I wrote this Facebook carousel for It's Time Texas' Living Healthier hotline, opening on a simple idea: transform your health for yourself, but not by yourself. It promoted free, bilingual, and confidential health coaching.\nEach card pairs a real-life photo with one benefit, from meal planning advice to goal setting and progress tracking, with the hotline number on a bright banner and a Contact Us button on every card."
           },
           {
             "src": "Mobile Ad_edited.jpg",
-            "title": "Mobile Ad for Pack Expo"
+            "title": "Mobile Ad for Pack Expo",
+            "desc": "The mobile companion to the Pack Expo leaderboard, sized to sit above articles on Food Business News. With less room to work with, I trimmed it to the essentials: the QAD Redzone lockup, See You at Booth SU-8233, and the Pack Expo Las Vegas badge.\nThe same frontline team photo carries over from the desktop banner, so the campaign reads as one consistent message across screens."
           },
           {
             "src": "Video3-ezgif.com-video-to-gif-converter.gif",
-            "title": "Healthier Texas Summit Recap: X (Twitter) Ad"
+            "title": "Healthier Texas Summit Recap: X (Twitter) Ad",
+            "desc": "After the Healthier Texas Summit Series wrapped, this X ad gave people a second chance to catch it, pointing to an archive with every session saved. The animated card cycles through session graphics, from Health and Social Justice to Partnering and Collaborating Across Sectors During a Crisis.\nEach card keeps the summit's illustrated look, ending on the Healthier Texas Summit Series logo so the brand gets the last word."
           }
         ],
         "height": 352,
         "gap": 50,
-        "speed": 50,
-        "play": "auto"
+        "speed": 60,
+        "play": "auto",
+        "loop": true
       },
       {
         "heading": "Paid Media",

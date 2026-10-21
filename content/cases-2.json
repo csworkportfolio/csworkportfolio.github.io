@@ -137,7 +137,11 @@
             "tools": "Adobe Illustrator, Adobe Photoshop",
             "desc": "This collection of digital graphics supported multiple Healthier Texas initiatives, including the Regional Workshop Series, Texas Walks, and SNAP-funded outreach. My role involved creating social-friendly visuals with clear, accessible layouts and consistent branding. Illustrations were used to help humanize virtual events and draw attention on social feeds. While each graphic had a unique audience or objective, they all reflected a shared mission: bringing Texans together through health-focused action."
           },
-          "Frontline.png"
+          {
+            "src": "Frontline.png",
+            "title": "#GivingTuesdayNow Thank-You to Essential Workers",
+            "desc": "When the pandemic put frontline workers under enormous strain, It's Time Texas wanted to pause and simply say thank you. I designed this #GivingTuesdayNow social graphic around a single masked healthcare worker, cropped on an angle so the photo feels candid rather than staged.\nThe message sits in bold, stacked blue bars that echo the brand palette and read instantly in a crowded feed. Keeping the copy short let the image carry the gratitude while the logo stayed quietly in the corner."
+          }
         ],
         "gap": 50,
         "label": "Click Visual to Learn More",
@@ -150,14 +154,26 @@
         ]
       },
       {
-        "videos": [
-          "nD0pXIu1OO4",
-          "PxXYS6s87G8",
-          "kPqrLVgfQQs"
-        ],
         "gap": 50,
-        "label": "Click Video to Play with Sound",
-        "play": "auto"
+        "label": "Click a Video to Watch",
+        "play": "click",
+        "gallery": [
+          {
+            "v": "nD0pXIu1OO4",
+            "title": "Tackling Food Insecurity with Urban Roots",
+            "desc": "This partner spotlight takes viewers out to the farm with Urban Roots, a nonprofit working to fight food insecurity. I wanted the story to come straight from the people doing the work, so the piece is built around an on-site interview set against rows of fresh greens.\nI handled the production end to end, from scripting and filming to editing and motion. The result is a short, grounded film that puts a human face on the partnerships behind Healthier Texas' programs."
+          },
+          {
+            "v": "PxXYS6s87G8",
+            "title": "2020 Community Challenge with Mayor Steve Adler",
+            "desc": "For the 2020 Community Challenge, I filmed Austin Mayor Steve Adler in his office, surrounded by the city's past Community Challenge trophies. Basketball in hand, he invites Austinites to get moving and help defend the title.\nKeeping it under a minute made it easy to share across social channels. I wanted a public leader's message to feel approachable and playful, so the framing leans on the trophies and props rather than a formal podium address."
+          },
+          {
+            "v": "kPqrLVgfQQs",
+            "title": "Community Challenge App Walkthrough Video",
+            "desc": "When the Community Challenge moved into a new app, participants needed a clear, friendly guide to getting started. I produced this walkthrough video to introduce the app and show people how to join in.\nThe piece opens on the bright orange Community Challenge branding and keeps that same energy throughout. I focused on pacing and clarity so that first-time users of any comfort level could follow along and feel ready to participate."
+          }
+        ]
       },
       {
         "h": "Photography to Capture Real Moments and Mission Impact",
@@ -167,10 +183,26 @@
       },
       {
         "gallery": [
-          "C_094.jpg",
-          "DSC03133.jpg",
-          "P_065.jpg",
-          "Brochure-Asking-Question-1.jpg"
+          {
+            "src": "C_094.jpg",
+            "title": "Healthier Texas Summit: Conversations Between Sessions",
+            "desc": "Some of the best moments at the Healthier Texas Summit happened in the hallways. I caught this exchange between a speaker and an attendee outdoors between sessions, both mid-thought and fully engaged.\nShooting candidly with natural light kept the image warm and unposed. Photos like this gave our social posts and newsletters a real sense of the connections the Summit was built to spark."
+          },
+          {
+            "src": "DSC03133.jpg",
+            "title": "Breakout Session at the Summit",
+            "desc": "A presenter walks a packed room through a program in one of the Summit's breakout sessions. I framed the shot from the back of the audience so the speaker, the slide and the crowd all read in a single image.\nThe branded \"SHARE!\" sign in the background was a nice bonus, tying the moment back to the event's social push. These wide shots were useful for recap posts and blog content after the event."
+          },
+          {
+            "src": "P_065.jpg",
+            "title": "Attendees Taking Notes in a Workshop",
+            "desc": "This shot focuses on one attendee writing notes during a session, with the rest of the room softly blurred around her. I used a shallow depth of field to pull the eye to the act of learning itself.\nI wanted the Summit photography to feel like it was about the people in the seats, not just the speakers on stage. Images like this helped show that the event was hands-on and worth attending."
+          },
+          {
+            "src": "Brochure-Asking-Question-1.jpg",
+            "title": "Audience Q&A During a General Session",
+            "desc": "An attendee steps up to the microphone during an audience Q&A in the main ballroom. I picked her out of a full room and kept the crowd around her as soft foreground, so she still reads clearly as one voice among many.\nThis is the kind of moment I looked for most: real participation rather than polished stage shots. The file name suggests it went on to support printed brochure material as well as digital channels."
+          }
         ],
         "gap": 10,
         "play": "auto"
@@ -292,12 +324,17 @@
         ]
       },
       {
-        "videos": [
-          "1075028930"
-        ],
         "gap": 0,
-        "label": "Click Video to Play with Sound",
-        "play": "auto"
+        "label": "Click a Video to Watch",
+        "play": "click",
+        "gallery": [
+          {
+            "v": "1075028930",
+            "title": "Stories from the Factory Floor: Episode One",
+            "desc": "The first entry in the 'Stories from the Factory Floor' series opens with a quote card and audio waveform introducing a continuous improvement leader at Valentine. It is told in their own words, with Redzone and partner branding sharing the frame.\nI shaped the visual language to feel like a short-form story, not corporate PR: bold red title bar, simple type, and the partner's voice carrying the narrative.",
+            "tools": "Adobe Premiere Pro"
+          }
+        ]
       },
       {
         "h": "Supporting Authenticity and Tone by Capturing the Heart of the Frontline",
@@ -310,10 +347,26 @@
       },
       {
         "gallery": [
-          "1683214032733_edited.jpg",
-          "1697025622812.jfif",
-          "1701990351606.jfif",
-          "1698869908109.jfif"
+          {
+            "src": "1683214032733_edited.jpg",
+            "title": "Frontline Team Celebrates Going Paperless",
+            "desc": "Hard hats, lab coats and a flurry of tossed paper: a plant team celebrates in the moment, arms raised and smiling. I wanted the frame to feel as loose and joyful as the room did.\nThis is the kind of image that shows real change starting with real people, and it carried that message into customer stories and social posts."
+          },
+          {
+            "src": "1697025622812.jfif",
+            "title": "Hard Hats Under the Redzone Scoreboard",
+            "desc": "A live Redzone scoreboard hangs above the plant floor while team members in yellow hard hats look on, softly out of focus. Keeping the screen sharp and the people blurred puts the data and its audience in one frame.\nI used depth of field to show the software where it actually lives, on the floor, in front of the people it serves."
+          },
+          {
+            "src": "1701990351606.jfif",
+            "title": "Knowledge-Sharing Session at a Partner Site",
+            "desc": "In a brightly branded room, a presenter shares Redzone University and Knowledge Base highlights with a circle of attendees, with panelists waiting to the side. The wide angle captures the whole room and how engaged it was.\nPhotos like this showed partners as community members, not just customers, learning alongside each other in person."
+          },
+          {
+            "src": "1698869908109.jfif",
+            "title": "Plant Tour Gathered Around Live Data",
+            "desc": "A group in hard hats, hairnets and white coats gathers beneath a wall-mounted Redzone screen during a plant tour, every head turned toward the live numbers. I shot from inside the group so the viewer stands with them.\nIt captures the brand promise in one frame: real-time data shared openly on the floor with the people who make the product."
+          }
         ],
         "gap": 30,
         "play": "auto"
@@ -363,7 +416,11 @@
             "title": "Hushhum AI: Marketing Materials",
             "desc": "Hushum is an AI-powered ambience app designed to help users focus, sleep, and relax through customizable white, pink, and green noise. As part of their launch campaign, I created a series of lifestyle-driven social graphics that would immediately communicate the emotional benefit of the app — not just the feature set.\nI leaned into evocative visuals: sun-warmed portraits and fluid shapes that mirror the calming waveforms of ambient sound. Each graphic paired a stylized human moment with a short, lyrical line of copy to invite curiosity and gently explain the product’s key differentiator — the ability to dial into the right kind of noise for your moment.\nThis project balanced expressive storytelling with brand development, helping position Hushum not as a utility, but as a feeling."
           },
-          "News.png",
+          {
+            "src": "News.png",
+            "title": "Daily News Social Template System",
+            "desc": "This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second. A consistent footer with source credits and a \"Follow us on X\" prompt keeps the whole set feeling like one recognisable channel."
+          },
           {
             "src": "Thumbnail.png",
             "title": "Youtube Thumbnail for Video Series",
@@ -372,7 +429,8 @@
           },
           {
             "src": "LANY.png",
-            "desc": "Promotional piece for indie-pop band LANY’s live performance at Stubb’s BBQ in Austin, TX. The challenge was to capture the band’s sleek, modern aesthetic while injecting the visual energy of a live show announcement — all within the vertical, fast-scrolling world of Instagram Stories.\nThe layered typography gives the illusion of motion and repetition, mimicking the rhythm and buildup of anticipation before a concert. Each line of text bleeds downward with subtle opacity and colour shifts, creating a sense of scale and sound. The hero photo — styled with high contrast and crisp light — plants the viewer eye-level with the band, drawing them into the scene.\nThis was a great opportunity to experiment with music branding in a way that balanced clarity with fan excitement, and pushed Instagram-native design choices to feel bold, scroll-stopping, and rhythmic."
+            "desc": "Promotional piece for indie-pop band LANY’s live performance at Stubb’s BBQ in Austin, TX. The challenge was to capture the band’s sleek, modern aesthetic while injecting the visual energy of a live show announcement — all within the vertical, fast-scrolling world of Instagram Stories.\nThe layered typography gives the illusion of motion and repetition, mimicking the rhythm and buildup of anticipation before a concert. Each line of text bleeds downward with subtle opacity and colour shifts, creating a sense of scale and sound. The hero photo — styled with high contrast and crisp light — plants the viewer eye-level with the band, drawing them into the scene.\nThis was a great opportunity to experiment with music branding in a way that balanced clarity with fan excitement, and pushed Instagram-native design choices to feel bold, scroll-stopping, and rhythmic.",
+            "title": "LANY Live at Stubb's: Instagram Story Promo"
           },
           {
             "src": "John 2.3 (1).gif",
@@ -383,7 +441,9 @@
         ],
         "gap": 30,
         "label": "Click Visual to Learn More",
-        "play": "auto"
+        "play": "auto",
+        "speed": 60,
+        "loop": true
       },
       {
         "h": "Exploring Form, Flow, and Function Through Web Design",
@@ -451,12 +511,15 @@
           {
             "src": "Pages from MKTG 430.png",
             "tools": "Adobe InDesign, Illustrator",
-            "desc": "This article spread explores a more academic, report-style layout on the topic of digital assistants and emerging AI tools. Designed as part of a advanced marketing project, the layout includes a hierarchy of callouts, subheads, and annotation symbols to guide both quick skimming and deep reading.\nThe image at the top serves as a subtle thematic anchor, depicting circuitry and digital systems without overwhelming the copy. The design challenge here was clarity: using rhythm, typography, and spacing to help complex content feel more approachable — without compromising credibility."
+            "desc": "This article spread explores a more academic, report-style layout on the topic of digital assistants and emerging AI tools. Designed as part of a advanced marketing project, the layout includes a hierarchy of callouts, subheads, and annotation symbols to guide both quick skimming and deep reading.\nThe image at the top serves as a subtle thematic anchor, depicting circuitry and digital systems without overwhelming the copy. The design challenge here was clarity: using rhythm, typography, and spacing to help complex content feel more approachable — without compromising credibility.",
+            "title": "Assistive Robotics Report: Editorial Page Layout"
           }
         ],
         "gap": 20,
         "label": "Click Visual to Learn More",
-        "play": "auto"
+        "play": "auto",
+        "speed": 60,
+        "loop": true
       },
       {
         "h": "Foundations in Strategy & Storytelling: Where Research, Insight, and Creative Thinking First Collided...",
@@ -472,49 +535,63 @@
             "link": {
               "href": "files/mktg-430-study.pdf",
               "label": "Open MKTG 430 Study (PDF)"
-            }
+            },
+            "title": "MKTG 430 Study: Assistive Robots in Elder Care",
+            "desc": "Our team researched how robotics could help address the elderly care crisis, combining survey data with industry analysis.\nThe findings showed that most respondents had little experience with medical robots and preferred more human-like designs. We recommended focusing on tools that support doctors and caregivers, rather than personal companion robots."
           },
           {
             "src": "Research 4.PNG",
             "link": {
               "href": "files/mktg-466-presentation.pptx",
               "label": "Download MKTG 466 Presentation (PowerPoint)"
-            }
+            },
+            "title": "MKTG 466 Presentation: Strategic City Planning for Bryan",
+            "desc": "This presentation analysed the infrastructure of Bryan, Texas, and how new transportation options could handle growing city traffic.\nThe research pointed to the influx of Texas A&M students as both the city's biggest threat and its biggest opportunity. Our recommendations focused on linking College Station with Bryan's growing downtown."
           },
           {
             "src": "Research 3.PNG",
             "link": {
               "href": "files/mktg-327.pdf",
               "label": "Open MKTG 327 Study (PDF)"
-            }
+            },
+            "title": "MKTG 327 Study: Digital Campaign for Chili's",
+            "desc": "This study explored how to reinvigorate a plateaued restaurant brand through online and in-store changes, with research and feedback from Chili's Bar & Grill.\nWe found that casual dining had been declining and that each social platform called for a different tone. The plan targeted young families with children through social advertising."
           },
           {
             "src": "Research 2.PNG",
             "link": {
               "href": "files/social-media-campaign-v2.pdf",
               "label": "Open Social Media Campaign (PDF)"
-            }
+            },
+            "title": "Social Media Campaign: How Universities Communicate",
+            "desc": "Prepared for Mays Business School, this study looked at how universities use social media to share information, including a close look at a peer school's Facebook strategy.\nOur research found that people prefer interpersonal posts, with Facebook skewing older and Instagram younger. We recommended Instagram Stories content, such as a \"day in the life of a business major\" series."
           },
           {
             "src": "Research 5.PNG",
             "link": {
               "href": "files/mktg-322-presentation.pdf",
               "label": "Open MKTG 322 Presentation (PDF)"
-            }
+            },
+            "title": "MKTG 322 Presentation: Reviving the Pinterest Brand",
+            "desc": "This presentation looked at how Pinterest could win back users by understanding what today's customers want.\nThe research highlighted food waste among 18 to 34 year olds and the weight people give to friends' recommendations. Our idea was an add-on feature that scans grocery barcodes, tracks expiration dates and suggests recipes before food goes bad."
           },
           {
             "src": "Research 7.PNG",
             "link": {
               "href": "files/mktg-323-presentation.pdf",
               "label": "Open MKTG 323 Presentation (PDF)"
-            }
+            },
+            "title": "MKTG 323 Presentation: Chipotle Brand Trust Research",
+            "desc": "This market research project examined how consumer perception of Chipotle shifted after the 2015 E. coli outbreaks.\nThe survey analysis showed that brand loyalty took a hit, but the core customer base largely held steady. We recommended competitive pricing while staying true to food quality and portion sizes, with a clear focus on trust and loyalty."
           },
           {
             "src": "Research 6.PNG",
             "link": {
               "href": "files/mktg-321-presentation.pdf",
               "label": "Open MKTG 321 Presentation (PDF)"
-            }
+            },
+            "title": "MKTG 321 Presentation: Quick Lift Product Development",
+            "desc": "Working as \"The Five Marketeers,\" our team found an underserved market segment and developed Quick Lift, a new product designed to solve a problem people didn't know they had.\nThe research covered distribution through Amazon and radio's peak listening hours. Our recommendations set out five packaging principles and suggested Snapchat's AR features as a playful way to advertise."
           }
         ],
         "height": 443,
