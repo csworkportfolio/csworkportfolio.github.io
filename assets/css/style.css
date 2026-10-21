@@ -175,7 +175,7 @@ button { font: inherit; color: inherit; }
 }
 .seg-item {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
-  height: 34px; padding: 0 16px; border-radius: 999px;
+  height: 34px; padding: 0 clamp(10px, calc((100vw - 580px) / 12), 16px); border-radius: 999px;  /* eases in just above phone width so all six fit */
   font-size: 13px; font-weight: 500; color: rgba(0, 0, 0, .7); white-space: nowrap; text-decoration: none;
   transition: background-color .18s, color .18s, box-shadow .18s;
 }
