@@ -3,6 +3,24 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // In-app browsers (LinkedIn, Instagram) and mobile Safari change the window height as their toolbars slide,
+  // many times per scroll. Layout that reacts to every resize then fights the scroll and the page shudders.
+  // So: the viewport height is the small, stable one (100svh), refreshed only when the width changes, and
+  // the layout code listens for width changes only.
+  const probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none";
+  document.documentElement.appendChild(probe);
+  let vhCache = probe.offsetHeight || window.innerHeight;
+  const viewH = () => vhCache;
+  let lastW = window.innerWidth;
+  const widthWatchers = [];
+  const onWidthResize = (fn) => widthWatchers.push(fn);
+  window.addEventListener("resize", () => {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    vhCache = probe.offsetHeight || window.innerHeight;
+    widthWatchers.forEach((fn) => fn());
+  });
   const canHover = window.matchMedia("(hover: hover)").matches;
   const strips = [];
   let lightboxOpen = false;
@@ -75,7 +93,7 @@
       sub.style.minHeight = tallest + "px";
     }
     reserve();
-    window.addEventListener("resize", reserve);
+    onWidthResize(reserve);
     if (document.fonts) document.fonts.ready.then(reserve);
     setInterval(() => {
       if (document.hidden) return;
@@ -142,7 +160,7 @@
   }
   if (shaped) {
     if (shaped.complete) standPortrait(); else shaped.addEventListener("load", standPortrait);
-    window.addEventListener("resize", standPortrait);
+    onWidthResize(standPortrait);
     if (document.fonts) document.fonts.ready.then(standPortrait);
   }
 
@@ -310,7 +328,7 @@
 
     measure();
     let w = viewport.clientWidth;
-    window.addEventListener("resize", () => {
+    onWidthResize(() => {
       if (viewport.clientWidth !== w) { w = viewport.clientWidth; measure(); }
     });
     // Images without known sizes could change the width once loaded.
@@ -784,7 +802,7 @@
     seg.classList.toggle("is-scrolling", seg.scrollWidth > seg.clientWidth + 1);
   }
   markScrolling();
-  window.addEventListener("resize", markScrolling);
+  onWidthResize(markScrolling);
   if (document.fonts) document.fonts.ready.then(markScrolling);
 
   if (segOn && seg.scrollWidth > seg.clientWidth) {
@@ -796,7 +814,7 @@
   if (head) {
     const setHead = () => document.documentElement.style.setProperty("--head-h", `${head.offsetHeight}px`);
     setHead();
-    window.addEventListener("resize", setHead);
+    onWidthResize(setHead);
     document.fonts && document.fonts.ready.then(setHead);
   }
 
@@ -883,7 +901,7 @@
   };
   const progress = (el, pin) => {
     const r = el.getBoundingClientRect();
-    const run = r.height - (window.innerHeight - pin);
+    const run = r.height - (viewH() - pin);
     return run > 0 ? Math.min(1, Math.max(0, (pin - r.top) / run)) : 0;
   };
   const scenes = [];
@@ -911,7 +929,7 @@
       if (!isLive()) { panels[+b.dataset.go].scrollIntoView({ block: "start" }); return; }
       // scroll to the middle of that stage's stretch of the section
       const top = scene.getBoundingClientRect().top + window.scrollY;
-      const run = scene.offsetHeight - (window.innerHeight - pinTop());
+      const run = scene.offsetHeight - (viewH() - pinTop());
       window.scrollTo({ top: top - pinTop() + run * ((+b.dataset.go + 0.5) / n), behavior: "smooth" });
     }));
     // the switcher under the phone swaps which placement goes through the stages
@@ -940,12 +958,12 @@
     const fits = () => {
       if (tooTall || phone.matches || !isLive()) return;
       const need = text.offsetHeight - panelsBox.offsetHeight + Math.max(panelsBox.offsetHeight, ...panels.map((p) => p.offsetHeight));
-      if (need > window.innerHeight - pinTop()) { tooTall = true; live(); }
+      if (need > viewH() - pinTop()) { tooTall = true; live(); }
     };
     live();
     fits();
     phone.addEventListener("change", () => { live(); fits(); });
-    window.addEventListener("resize", fits);
+    onWidthResize(fits);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fits);
     scenes.push((pin) => {
       if (!isLive()) return;
@@ -996,7 +1014,7 @@
       if (matchMedia("(max-width: 720px)").matches) {
         // phones: the board doesn't pin, so the date runs while the board crosses the screen
         const r = board.getBoundingClientRect();
-        p = Math.min(1, Math.max(0, (window.innerHeight * 0.75 - r.top) / (r.height + window.innerHeight * 0.2)));
+        p = Math.min(1, Math.max(0, (viewH() * 0.75 - r.top) / (r.height + viewH() * 0.2)));
       } else {
         p = Math.min(1, Math.max(0, (progress(scene, pin) - 0.1) / 0.8));
       }
@@ -1068,7 +1086,7 @@
     figs.classList.add("is-js");
     let on = -1;
     scenes.push(() => {
-      const line = window.innerHeight * 0.5;
+      const line = viewH() * 0.5;
       let at = 0;
       panels.forEach((p, i) => { if (p.getBoundingClientRect().top < line) at = i; });
       at = Math.min(at, pics.length - 1);
@@ -1095,12 +1113,12 @@
     };
     const fits = () => {
       if (tooTall || phone.matches || !isLive()) return;
-      if (inner.offsetHeight + 40 > window.innerHeight - pinTop()) { tooTall = true; live(); }
+      if (inner.offsetHeight + 40 > viewH() - pinTop()) { tooTall = true; live(); }
     };
     live();
     fits();
     phone.addEventListener("change", () => { live(); fits(); });
-    window.addEventListener("resize", fits);
+    onWidthResize(fits);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fits);
     scenes.push((pin) => {
       if (!isLive()) return;
@@ -1119,7 +1137,7 @@
   const fills = reduceMotion ? [] : [...document.querySelectorAll("[data-fill] li")];
   if (fills.length) {
     scenes.push(() => {
-      const vh = window.innerHeight;
+      const vh = viewH();
       fills.forEach((li) => {
         if (li.closest(".scene.is-live")) return;
         const r = li.getBoundingClientRect();
@@ -1156,7 +1174,7 @@
     const run = () => { queued = false; const pin = pinTop(); scenes.forEach((f) => f(pin)); };
     const queue = () => { if (!queued) { queued = true; requestAnimationFrame(run); } };
     window.addEventListener("scroll", queue, { passive: true });
-    window.addEventListener("resize", queue);
+    onWidthResize(queue);
     run();
   }
 

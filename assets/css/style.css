@@ -808,8 +808,8 @@ main { view-transition-name: page; }
 .sc-count strong { display: block; font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: -.035em; color: var(--ink); font-variant-numeric: tabular-nums; }
 
 /* live: the stage holds still under the switcher for one screen per stage */
-.scene.is-live { height: calc((var(--n) * 70 + 40) * 1vh); }
-.scene.is-live .sc-stage { position: sticky; top: var(--pin); height: calc(100vh - var(--pin)); display: flex; align-items: center; overflow: hidden; }
+.scene.is-live { height: calc((var(--n) * 70 + 40) * 1vh); height: calc((var(--n) * 70 + 40) * 1svh); }
+.scene.is-live .sc-stage { position: sticky; top: var(--pin); height: calc(100vh - var(--pin)); height: calc(100svh - var(--pin)); display: flex; align-items: center; overflow: hidden; }
 .scene.is-live .sc-grid { width: 100%; }
 .scene.is-live .sc-panels { position: relative; min-height: 270px; }
 .scene.is-live .sc-panel { position: absolute; inset: 0 0 auto; margin: 0; opacity: 0; transform: translateY(18px); transition: opacity .35s, transform .45s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
@@ -825,7 +825,7 @@ main { view-transition-name: page; }
 .scene.is-live .ph {
   /* never taller than the pinned stage less room for the count: height is width / .4605 */
   /* room above for the lifted top slice and below for the bottom slice and the switcher, at any window height */
-  width: min(300px, 70%, calc((100vh - var(--pin) - 320px) * 0.4605));
+  width: min(300px, 70%, calc((100vh - var(--pin) - 320px) * 0.4605)); width: min(300px, 70%, calc((100svh - var(--pin) - 320px) * 0.4605));
   transform: rotateX(calc(var(--tilt, 1) * 12deg)) rotateY(calc(var(--tilt, 1) * -28deg)) rotateZ(calc(var(--tilt, 1) * 3deg)) translateY(var(--lift, 0px));
   transition: transform .9s cubic-bezier(.2,.7,.2,1);
 }
@@ -975,7 +975,7 @@ a.tl-label:hover strong { color: #ff9a66; }
 .tl-scene + .prose { margin-top: 130px; }
 
 .tl-scene.is-live { height: 260vh; }
-.tl-scene.is-live .tl-stage { position: sticky; top: var(--pills-h, 80px); min-height: calc(100vh - var(--pills-h, 80px)); padding: 48px 0; display: flex; align-items: center; }
+.tl-scene.is-live .tl-stage { position: sticky; top: var(--pills-h, 80px); min-height: calc(100vh - var(--pills-h, 80px)); min-height: calc(100svh - var(--pills-h, 80px)); padding: 48px 0; display: flex; align-items: center; }
 .tl-scene.is-live .tl-wrap { width: 100%; }
 .tl-scene.is-live .tl-readout { display: flex; align-items: baseline; gap: 18px; margin-top: 44px; }
 .tl-readout strong { font-family: var(--display); font-size: clamp(30px, 3.6vw, 46px); letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -1026,8 +1026,8 @@ a.tl-label:hover strong { color: #ff9a66; }
 /* as a scene (desktop, with script): the stage holds, one phase lights per stretch of scroll */
 .ph-scene { margin-top: 100px; }
 .ph-scene .prose { margin-top: 0; }
-.ph-scene.is-live { height: calc((var(--n) * 55 + 45) * 1vh); }
-.ph-scene.is-live .ph-stage { position: sticky; top: var(--pills-h, 80px); height: calc(100vh - var(--pills-h, 80px)); display: flex; align-items: center; overflow: hidden; }
+.ph-scene.is-live { height: calc((var(--n) * 55 + 45) * 1vh); height: calc((var(--n) * 55 + 45) * 1svh); }
+.ph-scene.is-live .ph-stage { position: sticky; top: var(--pills-h, 80px); height: calc(100vh - var(--pills-h, 80px)); height: calc(100svh - var(--pills-h, 80px)); display: flex; align-items: center; overflow: hidden; }
 .ph-scene.is-live .ph-stage > .prose { width: 100%; }
 .ph-scene.is-live .phases { gap: 14px; }
 .ph-scene.is-live .phases strong { font-size: clamp(40px, 5.6vw, 72px); transition: color .25s linear; }
