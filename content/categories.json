@@ -5,145 +5,147 @@
     "title": "Christian's Graphic Design Portfolio",
     "blocks": [
       {
+        "heading": "Graphic Design",
+        "kicker": "Social, web, event, print and motion pieces, including work I designed for QAD Redzone, Cohesity, SOLV Energy and Healthier Texas.",
+        "tools": "Adobe Photoshop, Adobe Illustrator, Adobe Premiere Pro, Adobe After Effects, Adobe Substance 3D",
+        "body": []
+      },
+      {
         "gallery": [
-          {
-            "src": "Cohesity Examples 2A.png",
-            "title": "Cohesity Event, Blog, Webinar, and Hiring Graphics",
-            "desc": "A cross-section of Cohesity's busiest channels in one spread: a Google Cloud Next 26 booth promo for Mandalay Bay in Las Vegas, a blog hero announcing that the future of support is agentic, a ransomware webinar card, a We're Hiring post for São Paulo, and an NVIDIA GTC 2026 event graphic.\nI held every piece to Cohesity's bright green and magenta palette with tight condensed type, so very different messages still read as one credible set."
-          },
           {
             "src": "The Assembly Line.png",
             "title": "The History of the Assembly Line",
-            "desc": "This editorial-style series supported a feature on the Redzone blog and drove engagement on social. It traces manufacturing from Henry Ford's moving assembly line all the way to today's AI-enhanced Industry 4.0.\nI blended collage and texture-rich visuals inspired by vintage magazines, so the story felt nostalgic and futuristic at once, bridging the past and future of factory innovation.",
-            "tools": "Adobe Photoshop"
+            "desc": "This editorial-style series supported a feature on the Redzone blog and ran on social. It traces manufacturing from Henry Ford's moving assembly line to today's AI-enhanced Industry 4.0.\nI blended collage and texture-rich visuals inspired by vintage magazines, so the story felt nostalgic and futuristic at once, bridging the past and future of factory innovation.",
+            "tools": "Adobe Photoshop",
+            "cap": "I designed the collage series for a Redzone blog feature and its social posts."
           },
           {
             "src": "QAD Redzone Presents_ Gary the GOAT",
             "title": "Parts Inventory Feature GIF with Gary",
-            "desc": "Inventory tracking isn't always the most exciting topic — so I injected a little energy with a looping animation featuring our official mascot, Gary the Goat. This asset was used across social and product channels to spotlight Redzone's inventory feature in a fun, digestible way.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns.",
-            "tools": "Adobe Photoshop, Illustrator, Premiere Pro"
+            "desc": "Inventory tracking isn't always the most exciting topic, so I added some energy with a looping animation featuring our official mascot, Gary the Goat. It ran across social and product channels to spotlight Redzone's inventory feature.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns.",
+            "tools": "Adobe Photoshop, Illustrator, Premiere Pro",
+            "cap": "I designed the looping animation with Gary the Goat, Redzone's mascot, for social and product channels."
+          },
+          {
+            "mp4": "Gary Task Complete.mp4",
+            "title": "Redzone Pocket Coach: April Fools' Campaign (2025)",
+            "desc": "For Redzone's April Fools' campaign, Pocket Coach opens on an iPad spinning through space before the screen gives way to a grassy field, where a pixel-art Gary the Goat in a red jersey runs up to greet the viewer.\nI staged the reveal like a polished product launch, then let the 8-bit mascot steal the show before closing on a clean QAD | Redzone lockup, keeping the joke firmly on brand.",
+            "tile_light": 540,
+            "cap": "QAD Redzone April Fools' campaign, 2025. I built the spinning iPad and animated Gary, staged like a product launch.",
+            "tools": "Adobe Substance 3D, Adobe After Effects"
+          },
+          {
+            "src": "QRZ Web.png",
+            "title": "Productivity and Engagement with Manufacturing All Stars",
+            "desc": "Web banners highlighting productivity and engagement stats, set against a real manufacturing team at work. I layered each stat over candid photos of our customers.\nThe layout was optimized for paid media and retargeting campaigns, with bold type and a single focused stat so the message cuts through quickly in scroll-heavy feeds.",
+            "tools": "Adobe Illustrator",
+            "cap": "Web banners I designed for the paid media and retargeting campaigns I ran, with the stat set over candid photos of a real customer team."
           },
           {
             "src": "QRZ Partner.png",
             "title": "Customer Testimonials: Web & Social Graphics",
-            "desc": "A set of branded testimonials for Redzone's web and social channels, each built around a tangible result, like a 34% changeover time reduction or the equivalent of a free plant's worth of capacity.\nQuotes from frontline leaders at Nestlé Purina, Post Consumer Brands, and Gorilla Glue sit alongside brand-aligned photography and data visuals. I let the customer voices lead, using layout and color to support a message of real transformation.",
-            "tools": "Adobe Illustrator"
+            "desc": "A set of branded testimonials for Redzone's web and social channels, each built around a tangible result, like a 34% changeover time reduction or the equivalent of a free plant's worth of capacity.\nQuotes from frontline leaders at Nestlé Purina, Post Consumer Brands, and Gorilla Glue sit alongside brand-aligned photography and data visuals. I let the customer voices lead, using layout and color to keep the focus on their results.",
+            "tools": "Adobe Illustrator",
+            "cap": "I designed Redzone's testimonial set for web and social and let the customer quotes lead."
           },
           {
-            "src": "Hushum.png",
-            "title": "Hushhum AI: Marketing Materials",
-            "desc": "Hushum is an AI-powered ambience app that helps people focus, sleep, and relax with customizable white, pink, and green noise. For its launch campaign, I created lifestyle-driven social graphics that lead with the emotional benefit rather than the feature set.\nSun-warmed portraits and fluid shapes mirror the calming waveforms of ambient sound, each paired with a short, lyrical line of copy. The goal was to position Hushum not as a utility, but as a feeling."
+            "src": "Box.png",
+            "title": "Slide-to-Unlock iPad Mailer for Prospective Customers",
+            "desc": "To break through the noise of traditional sales mailers, I designed an iPad box that played on the nostalgic 'slide to unlock' gesture. A cutout window with a movable paper insert revealed phrases like 'Empowering the Frontline' and 'Unlock Your Factory's Potential.'\nThe mailer went to select prospects based on their stage in the sales funnel.",
+            "cap": "A mailer I designed to look like an iPad box, with a window and a sliding insert that reveals lines like Empowering the Frontline. It went to selected prospects by their stage in the sales funnel."
+          },
+          {
+            "src": "Cohesity Examples 2A.png",
+            "title": "Cohesity Event, Blog, Webinar, and Hiring Graphics",
+            "desc": "A cross-section of Cohesity's busiest channels in one spread: a Google Cloud Next 26 booth promo for Mandalay Bay in Las Vegas, a blog hero announcing that the future of support is agentic, a ransomware webinar card, a We're Hiring post for São Paulo, and an NVIDIA GTC 2026 event graphic.\nI held every piece to Cohesity's bright green and magenta palette with tight condensed type, so very different messages still read as one credible set.",
+            "cap": "I held the set to Cohesity's green and magenta palette across event, blog, webinar and hiring posts."
+          },
+          {
+            "src": "SOLV Example 2 Transparent.png",
+            "title": "SOLV Energy Announcement and Case Study Teaser Graphics",
+            "desc": "The left graphic is an \"In Case You Missed It\" announcement about SOLV Energy's O&M scale and largest single-site agreement, set over a field photo of solar panels and wildflowers.\nThe right is a case study teaser that opens with a question about underperforming sites. I let the white space and the sunburst frame do the work, ending with a simple prompt to read the case study.",
+            "cap": "I designed SOLV Energy's In Case You Missed It announcement and the case study teaser."
+          },
+          {
+            "src": "SOLV Example 1 Transparent.png",
+            "title": "SOLV Energy Conference Speaker Card and Kudos Post",
+            "desc": "These two cover both sides of SOLV Energy's event presence. On the left, a speaking session card for CFO Chad Plotkin at the 38th Annual ROTH Conference. On the right, a kudos post recognizing Kate for representing the company at the 2026 IECA Annual Conference & Expo.\nBoth are built on the brand's signature blues and sunburst motif, with a headline hierarchy that stays readable even as a small social thumbnail.",
+            "cap": "I designed SOLV Energy's conference speaker card and the kudos post."
+          },
+          {
+            "src": "RE Plus.png",
+            "title": "RE+ 2025 Event and Speaking Session Graphics",
+            "desc": "For RE+ in Las Vegas, I made a pair of graphics: a bold blue announcement for the event and a darker companion piece listing SOLV Energy's two speaking sessions with Eric Butticaz, Director of Apprenticeship, including times and rooms.\nThe Venetian skyline and SOLV's sunburst mark tie the two together, while the lime accents and clear type keep the session details easy to read at thumbnail size on social.",
+            "cap": "I made SOLV Energy's RE+ event announcement and the speaking session card."
           },
           {
             "src": "TS4P.png",
             "title": "Texas Sweats for Pets: Campaign Social Graphics",
             "desc": "Texas Sweats for Pets was a virtual fitness-a-thon from Healthier Texas that invited Texans to work out alongside their pets at the start of 2021. I led the visual direction and created all the key graphic assets.\nVibrant illustrations and high-energy type brought warmth to a fully digital experience, from 'Fur & Fitness' posts to a three-ways-to-join card, all built around the partnership with Austin Pets Alive!",
-            "tools": "Adobe Illustrator, Adobe Photoshop"
-          },
-          {
-            "src": "SOLV Example 2 Transparent.png",
-            "title": "SOLV Energy Announcement and Case Study Teaser Graphics",
-            "desc": "Not every post needs a face. The left graphic is an \"In Case You Missed It\" announcement about SOLV Energy's O&M scale and largest single-site agreement, set over a field photo of solar panels and wildflowers.\nThe right is a case study teaser that opens with a question about underperforming sites. I let the white space and the sunburst frame do the work, ending with a simple prompt to read the case study."
-          },
-          {
-            "src": "QRZ Web.png",
-            "title": "Productivity and Engagement with Manufacturing All Stars",
-            "desc": "Web banners highlighting productivity uplift and engagement stats, set against a real manufacturing team in their work environment. Instead of a cold chart, I layered the stat over candid photos of our customers to communicate trust, collaboration, and momentum.\nThe layout was optimized for paid media and retargeting campaigns, with bold type and a single focused stat so the message cuts through quickly in scroll-heavy feeds.",
-            "tools": "Adobe Illustrator"
-          },
-          {
-            "mp4": "Gary Task Complete.mp4",
-            "title": "Redzone Pocket Coach: April Fools' Campaign (2025)",
-            "desc": "For Redzone's April Fools' campaign, Pocket Coach opens on an iPad spinning through space before the screen gives way to a grassy field, where a pixel-art Gary the Goat in a red jersey runs up to greet the viewer.\nI staged the reveal like a polished product launch, then let the 8-bit mascot steal the show before closing on a clean QAD | Redzone lockup, keeping the joke firmly on brand."
-          },
-          {
-            "src": "RE Plus.png",
-            "title": "RE+ 2025 Event and Speaking Session Graphics",
-            "desc": "For RE+ in Las Vegas, I made a pair of graphics: a bold blue announcement for the event and a darker companion piece listing SOLV Energy's two speaking sessions with Eric Butticaz, Director of Apprenticeship, including times and rooms.\nThe Venetian skyline and SOLV's sunburst mark tie the two together, while the lime accents and clear type keep the session details easy to read at thumbnail size on social."
-          },
-          {
-            "src": "cc.png",
-            "title": "Community Challenge Web Banner",
-            "desc": "A promotional banner for the Community Challenge, one of Healthier Texas' most impactful programs. Vibrant, high-contrast colors and a custom illustrated walking path reflect momentum and unity.\nA wave-like trail of diverse community members carries the metaphor of collective movement toward better health. The banner helped drive registrations during peak campaign periods and aligned with the broader brand update across channels.",
-            "tools": "Adobe Illustrator, Adobe Photoshop"
-          },
-          {
-            "src": "Fall.png",
-            "title": "Fall in Style: Editorial Promo",
-            "desc": "A promotional concept for a fall fashion campaign, built on a brief I set for myself: capture the feeling of mid-air motion and let the visual lead the storytelling.\nLarge, condensed type and a minimalist palette anchor the dynamic composition, while the floating figure, subtly shadowed for depth, carries the seasonal call to action. The result could live in a print magazine or serve as key art for a digital ad set.",
-            "tools": "Adobe Photoshop, Illustrator"
-          },
-          {
-            "src": "Slide 1.png",
-            "title": "Apple Presentation: Community Growth Slide",
-            "desc": "This keynote visual kicked off a manufacturing leadership summit hosted by Apple. I paired growth stats with real frontline workers to keep the human impact behind the numbers front and center.\nWorking alongside Apple's team, I refined it with a more stylized illustration concept and shadowing that tied brand color to Apple's cinematic depth. The presentation was delivered by QAD Redzone's Blake Strickland.",
-            "tools": "Adobe Photoshop, Procreate, Keynote"
-          },
-          {
-            "src": "SOLV Example 1 Transparent.png",
-            "title": "SOLV Energy Conference Speaker Card and Kudos Post",
-            "desc": "These two cover both sides of SOLV Energy's event presence. On the left, a speaking session card for CFO Chad Plotkin at the 38th Annual ROTH Conference. On the right, a kudos post recognizing Kate for representing the company at the 2026 IECA Annual Conference & Expo.\nBoth are built on the brand's signature blues and sunburst motif, with a headline hierarchy that stays readable even as a small social thumbnail."
-          },
-          {
-            "src": "Go the Mile.png",
-            "title": "Go the Mile: Outdoor Promotional Poster",
-            "desc": "Inspired by outdoor lifestyle brands and editorial photography, this poster pairs dramatic imagery with oversized type that demands attention. 'Go the Mile' works as both a motivational message and a literal call to explore.\nThe muted palette and textures reinforce the natural setting, and minimal copy lets the image carry the emotional weight. I wanted a cover that reads from a distance and holds up close.",
-            "tools": "Adobe InDesign, Photoshop"
-          },
-          {
-            "src": "News.png",
-            "title": "Daily News Social Template System",
-            "desc": "This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second, with a consistent footer tying the set together."
+            "tools": "Adobe Illustrator, Adobe Photoshop",
+            "cap": "I led the visual direction and created the key graphics for this Healthier Texas campaign."
           },
           {
             "src": "HTS Speak.png",
             "title": "Healthier Texas Summit Speaker Highlights",
-            "desc": "A speaker spotlight series promoting the annual Healthier Texas Summit, featuring keynote guests like Vice Admiral Jerome M. Adams and Dr. Nadine Gracia in a bold, clean layout built to stop the scroll.\nSubtle gradients and textured overlays added visual warmth while reinforcing credibility, in line with the summit's mission of public health equity. It put the voices shaping the national health conversation front and center.",
-            "tools": "Adobe Photoshop, Illustrator"
+            "desc": "A speaker spotlight series promoting the annual Healthier Texas Summit, featuring keynote guests like Vice Admiral Jerome M. Adams and Dr. Nadine Gracia in a bold, clean layout.\nSubtle gradients and textured overlays added visual warmth while reinforcing credibility, in line with the summit's mission of public health equity.",
+            "tools": "Adobe Photoshop, Illustrator",
+            "cap": "I designed the speaker spotlight series for the Healthier Texas Summit."
           },
           {
             "src": "HTW.png",
             "title": "Healthy Texas Week Logo Design",
             "desc": "Made for a statewide wellness initiative, this logo pairs playful retro script lettering with a bold blue Texas silhouette. I wanted it to feel inviting and optimistic, something families and educators could rally around.\nThe script adds movement and personality across digital and print. Though the event was ultimately cancelled due to COVID-19, the mark still served as a unifying visual during the early campaign rollout.",
-            "tools": "Adobe Illustrator"
+            "tools": "Adobe Illustrator",
+            "cap": "I designed the Healthy Texas Week logo in Illustrator."
+          }
+        ],
+        "height": 315,
+        "gap": 50,
+        "speed": 60,
+        "loop": true,
+        "play": "auto",
+        "hint": false
+      },
+      {
+        "heading": "Freelance and Self-Initiated",
+        "kicker": "Pieces made outside the day job: a freelance promo for LANY, and briefs I set myself.",
+        "tools": "Adobe Photoshop, Adobe Illustrator, Adobe InDesign, Figma",
+        "body": []
+      },
+      {
+        "gallery": [
+          {
+            "src": "Fall.png",
+            "title": "Fall in Style: Editorial Promo",
+            "desc": "Self-initiated. A promotional concept for a fall fashion campaign, built on a brief I set for myself: capture the feeling of mid-air motion and let the visual lead the storytelling.\nLarge, condensed type and a minimalist palette anchor the dynamic composition, while the floating figure, subtly shadowed for depth, carries the seasonal call to action. The result could live in a print magazine or serve as key art for a digital ad set.",
+            "tools": "Adobe Photoshop, Illustrator"
           },
           {
-            "src": "Box.png",
-            "title": "Slide-to-Unlock iPad Mailer for Prospective Customers",
-            "desc": "To break through the noise of traditional sales mailers, I designed an iPad box that played on the nostalgic 'slide to unlock' gesture. A cutout window with a movable paper insert revealed phrases like 'Empowering the Frontline' and 'Unlock Your Factory's Potential.'\nThe mailer went to select prospects based on their stage in the sales funnel, turning the unboxing into a small moment of delight that sparked curiosity and conversation."
-          },
-          {
-            "src": "HTS Speakers.png",
-            "title": "Healthier Texas Summit General Campaign",
-            "desc": "Promotional graphics for every stage of the Healthier Texas Summit campaign, from calls for proposals to registration pushes, built to work across social, web, and email.\nKey speaker headshots sit front and center to personalize the event, while modern geometric overlays give it a tech-forward yet approachable tone. Strong contrast and clear CTAs made it effortless for viewers to engage.",
-            "tools": "Adobe Illustrator, Canva, Adobe Photoshop"
-          },
-          {
-            "src": "Frontline.png",
-            "title": "#GivingTuesdayNow Thank-You to Essential Workers",
-            "desc": "When the pandemic put frontline workers under enormous strain, It's Time Texas wanted to pause and simply say thank you. I designed this #GivingTuesdayNow social graphic around a single masked healthcare worker, cropped on an angle so the photo feels candid rather than staged.\nThe message sits in bold, stacked blue bars that echo the brand palette and read instantly in a crowded feed, letting the image carry the gratitude."
+            "src": "Hushum.png",
+            "title": "Hushhum AI: Marketing Materials",
+            "desc": "Self-initiated. Hushhum is an AI-powered ambience app that helps people focus, sleep, and relax with customizable white, pink, and green noise. As a concept launch campaign, I created lifestyle-driven social graphics that lead with the emotional benefit rather than the feature set.\nSun-warmed portraits and fluid shapes mirror the calming waveforms of ambient sound, each paired with a short, lyrical line of copy."
           },
           {
             "src": "LANY.png",
             "title": "LANY Live at Stubb's: Instagram Story Promo",
-            "desc": "A promotional piece for indie-pop band LANY's live show at Stubb's BBQ in Austin, TX, designed for the vertical, fast-scrolling world of Instagram Stories.\nLayered typography bleeds downward with subtle opacity and color shifts, mimicking the rhythm and buildup before a concert, while the high-contrast hero photo puts viewers eye-level with the band. It was a chance to balance clarity with fan excitement."
+            "desc": "Freelance. A promotional piece for indie-pop band LANY's live show at Stubb's BBQ in Austin, TX, designed for the vertical, fast-scrolling world of Instagram Stories.\nLayered typography bleeds downward with subtle opacity and color shifts, mimicking the rhythm and buildup before a concert, while the high-contrast hero photo puts viewers eye-level with the band."
           },
           {
-            "src": "Holiday Calendars.png",
-            "title": "Monthly Work Anniversary Calendars",
-            "desc": "Each month, I designed custom-branded posts celebrating Redzone employee anniversaries. They weren't just internal shoutouts, but small morale boosters that reminded teams they were valued.\nEvery layout followed a seasonal theme, from heartfelt Valentine's vibes to festive fireworks, with vibrant Redzone branding throughout. The graphics were shared company-wide and often sparked fun conversations and resharing among team members.",
-            "tools": "Adobe Photoshop"
+            "src": "News.png",
+            "title": "Daily News Social Template System",
+            "desc": "Self-initiated. This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second, with a consistent footer tying the set together."
           },
           {
-            "src": "Email TS4P.png",
-            "title": "Texas Sweats for Pets: Campaign Email Header",
-            "desc": "The email header for Texas Sweats for Pets, a virtual fitness-a-thon held January 27–29, 2021. Illustrated Texans walk dogs, cycle, and stretch around a bold blue-and-orange script lockup, with Austin Pets Alive! and It's Time Texas logos anchoring the date bar.\nThe campaign strengthened brand recognition and drove strong turnout across web and email, while deepening the partnership with Austin Pets Alive!",
-            "tools": "Adobe Illustrator, Adobe Photoshop, Mailchimp"
+            "src": "Go the Mile.png",
+            "title": "Go the Mile: Outdoor Promotional Poster",
+            "desc": "Self-initiated. Inspired by outdoor lifestyle brands and editorial photography, this poster pairs dramatic imagery with oversized type. 'Go the Mile' works as both a motivational message and a literal call to explore.\nThe muted palette and textures reinforce the natural setting, and minimal copy lets the image carry the emotional weight. I wanted a cover that reads from a distance and holds up close.",
+            "tools": "Adobe InDesign, Photoshop"
           },
           {
             "src": "Website.png",
             "title": "Fashion E-Commerce Interface",
-            "desc": "This fashion interface was designed to feel bold and energetic, with a heavy emphasis on visual identity and shopability. A high-contrast palette and oversized grid put products first across web and mobile.\nI included interactive components like real-time color swatches and review stars to simulate a full user experience. The mobile version keeps the same hierarchy, with a card-style, digital-wallet aesthetic built to swipe as smoothly as it scrolls.",
+            "desc": "Self-initiated. This fashion interface was designed to feel bold and energetic, with a heavy emphasis on visual identity and shopability. A high-contrast palette and oversized grid put products first across web and mobile.\nI included interactive components like real-time color swatches and review stars to simulate a full user experience. The mobile version keeps the same hierarchy, with a card-style, digital-wallet aesthetic.",
             "tools": "Figma, Adobe Illustrator"
           }
         ],
@@ -154,15 +156,27 @@
         "play": "auto"
       },
       {
-        "heading": "Graphic Design",
-        "kicker": "Web content, GIFs, print, reports, display ads, animation, and more",
-        "tools": "Adobe Photoshop, Adobe Illustrator, Adobe InDesign, Adobe Substance 3D, Adobe After Effects, Figma, Canva",
-        "body": [
-          "Social graphics, display ads, GIFs and light-motion assets, event banners and signage, print collateral, and reports, plus co-branded creative held to partner brand standards for Apple, Ferrara, and Gorilla Glue."
-        ]
+        "heading": "Presentations",
+        "kicker": "Presentation design for QAD Redzone, plus team decks from my marketing courses at Texas A&M University's Mays Business School.",
+        "body": []
       },
       {
         "gallery": [
+          {
+            "src": "Apple Campus Keynote_edited.png",
+            "link": {
+              "href": "files/apple-nama-2023.pdf",
+              "label": "Open Apple NAMA 2023 (PDF)"
+            },
+            "title": "Apple Campus Event Presentation for NAMA 2023",
+            "desc": "The cover for an excerpt from a presentation I designed for an Apple campus event for NAMA 2023, which a colleague presented. Frontline workers holding rugged tablets stand in a near-black frame beside a timeline that climbs from 700 in 2020 to 1,200 in 2023.\nI kept the type light and let a single red accent mark the current year, so the people and the numbers carry the story. The full excerpt opens as a PDF."
+          },
+          {
+            "src": "Slide 1.png",
+            "title": "Apple Presentation: Community Growth Slide",
+            "desc": "This keynote visual kicked off a manufacturing leadership summit hosted by Apple. I paired growth stats with real frontline workers to keep the human impact behind the numbers front and center.\nWorking alongside Apple's team, I refined it with a more stylized illustration concept and shadowing that tied brand color to Apple's cinematic depth. The presentation was delivered by QAD Redzone's Blake Strickland.",
+            "tools": "Adobe Photoshop, Procreate, Keynote"
+          },
           {
             "src": "Research 3.PNG",
             "link": {
@@ -171,47 +185,6 @@
             },
             "title": "MKTG 327 Study: Digital Campaign for Chili's",
             "desc": "This study explored how to reinvigorate a plateaued restaurant brand through online and in-store changes, with research and feedback from Chili's Bar & Grill.\nWe found that casual dining had been declining and that each social platform called for a different tone. The plan targeted young families with children through social advertising."
-          },
-          {
-            "src": "Apple Campus Keynote_edited.png",
-            "link": {
-              "href": "files/apple-nama-2023.pdf",
-              "label": "Open Apple NAMA 2023 (PDF)"
-            },
-            "title": "Apple Campus Event Presentation for NAMA 2023",
-            "desc": "The cover for an excerpt from my presentation at an Apple campus event for NAMA 2023. Frontline workers holding rugged tablets stand in a near-black frame beside a timeline that climbs from 700 in 2020 to 1,200 in 2023.\nI kept the type light and let a single red accent mark the current year, so the people and the numbers carry the story. The full excerpt opens as a PDF."
-          },
-          {
-            "src": "Research 4.PNG",
-            "link": {
-              "href": "files/mktg-466-presentation.pptx",
-              "label": "Download MKTG 466 Presentation (PowerPoint)"
-            },
-            "title": "MKTG 466 Presentation: Strategic City Planning for Bryan",
-            "desc": "This presentation analysed the infrastructure of Bryan, Texas, and how new transportation options could handle growing city traffic.\nThe research pointed to the influx of Texas A&M students as both the city's biggest threat and its biggest opportunity. Our recommendations focused on linking College Station with Bryan's growing downtown."
-          },
-          {
-            "src": "Research w Button.PNG",
-            "link": {
-              "href": "files/mktg-430-study.pdf",
-              "label": "Open MKTG 430 Study (PDF)"
-            },
-            "title": "MKTG 430 Study: Assistive Robots in Elder Care",
-            "desc": "Our team researched how robotics could help address the elderly care crisis, combining survey data with industry analysis.\nThe findings showed that most respondents had little experience with medical robots and preferred more human-like designs. We recommended focusing on tools that support doctors and caregivers, rather than personal companion robots."
-          },
-          {
-            "src": "Research 5.PNG",
-            "link": {
-              "href": "files/mktg-322-presentation.pdf",
-              "label": "Open MKTG 322 Presentation (PDF)"
-            },
-            "title": "MKTG 322 Presentation: Reviving the Pinterest Brand",
-            "desc": "This presentation looked at how Pinterest could win back users by understanding what today's customers want.\nThe research highlighted food waste among 18 to 34 year olds and the weight people give to friends' recommendations. Our idea was an add-on feature that scans grocery barcodes, tracks expiration dates and suggests recipes before food goes bad."
-          },
-          {
-            "src": "Pages from MKTG 322 Presentation.png",
-            "title": "Single Excerpt from Reviving a Struggling Brand Presentation",
-            "desc": "One slide from my MKTG 322 presentation on reviving the Pinterest brand. It introduces Pinterest as an online pinboard, with themed boards for recipes, workouts, hairstyles, and weddings framed in Pinterest red.\nThe full deck went on to propose an add-on feature that scans grocery barcodes, tracks expiration dates, and suggests recipes before food goes bad, aimed at reducing food waste among 18 to 34 year olds."
           },
           {
             "src": "Research 2.PNG",
@@ -223,38 +196,27 @@
             "desc": "Prepared for Mays Business School, this study looked at how universities use social media to share information, including a close look at a peer school's Facebook strategy.\nOur research found that people prefer interpersonal posts, with Facebook skewing older and Instagram younger. We recommended Instagram Stories content, such as a \"day in the life of a business major\" series."
           },
           {
-            "src": "Research 7.PNG",
+            "src": "Research 5.PNG",
             "link": {
-              "href": "files/mktg-323-presentation.pdf",
-              "label": "Open MKTG 323 Presentation (PDF)"
+              "href": "files/mktg-322-presentation.pdf",
+              "label": "Open MKTG 322 Presentation (PDF)"
             },
-            "title": "MKTG 323 Presentation: Chipotle Brand Trust Research",
-            "desc": "This market research project examined how consumer perception of Chipotle shifted after the 2015 E. coli outbreaks.\nThe survey analysis showed that brand loyalty took a hit, but the core customer base largely held steady. We recommended competitive pricing while staying true to food quality and portion sizes, with a clear focus on trust and loyalty."
-          },
-          {
-            "src": "Research 6.PNG",
-            "link": {
-              "href": "files/mktg-321-presentation.pdf",
-              "label": "Open MKTG 321 Presentation (PDF)"
-            },
-            "title": "MKTG 321 Presentation: Quick Lift Product Development",
-            "desc": "Working as \"The Five Marketeers,\" our team found an underserved market segment and developed Quick Lift, a new product designed to solve a problem people didn't know they had.\nThe research covered distribution through Amazon and radio's peak listening hours. Our recommendations set out five packaging principles and suggested Snapchat's AR features as a playful way to advertise."
+            "title": "MKTG 322 Presentation: Reviving the Pinterest Brand",
+            "desc": "This presentation looked at how Pinterest could win back users by understanding what today's customers want.\nThe research highlighted food waste among 18 to 34 year olds and the weight people give to friends' recommendations. Our idea was an add-on feature that scans grocery barcodes, tracks expiration dates and suggests recipes before food goes bad."
           }
         ],
         "height": 315,
         "gap": 50,
         "speed": 20,
-        "play": "auto",
-        "loop": true
-      },
-      {
-        "heading": "Projects",
-        "kicker": "Presentations, research, and more",
-        "body": [
-          "Slide decks and excerpts from QAD Redzone and Texas A&M University's Mays Business School."
-        ]
+        "loop": true,
+        "play": "auto"
       }
-    ]
+    ],
+    "v2": true,
+    "eager_first": 4,
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+    }
   },
   {
     "slug": "web-app-email",

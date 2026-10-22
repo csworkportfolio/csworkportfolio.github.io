@@ -1,19 +1,20 @@
 {
   "slug": "",
   "type": "home",
-  "title": "Christian's Work Portfolio",
+  "title": "Christian Sanchez | Digital Marketing and Web Content Portfolio",
   "portrait": "Updated Portrait BW.png",
   "greeting": "Hi, Christian Sanchez here.",
   "intro": [
-    "I design content that's built to perform, rooted in authentic human stories. With experience across digital marketing, internal communications, web, and brand, I focus on creating visuals and systems that connect with people and convert. A landing page, a video, a social campaign, an all-hands: I approach every project with equal parts strategy, creativity, and heart.",
-    "Take a look. Everything here was built to make something (or someone) shine."
+    "I'm a digital marketer in Austin, TX, working across web content, content marketing, social, brand and internal communications. Most recently I was Digital Content Manager (Contract) for the Nike App and Nike.com.",
+    "Earlier, I spent three years at QAD Redzone as Digital Marketing & Web Content Specialist."
   ],
   "cases": [
     {
       "slug": "nike",
+      "name": "Nike",
       "bg": "thomas-serer-R_0rTS9ENnk-unsplash.jpeg",
-      "kicker": "Digital Content Publishing for Nike's App and Nike.com",
-      "title": "Shipping What 20 Million Nike Customers See First",
+      "kicker": "Digital Content Manager (Contract) | Nike App and Nike.com",
+      "title": "How I Shipped What 20 Million Nike Customers See First",
       "slides": [
         "Nike 14.png",
         "Nike 12.png",
@@ -23,32 +24,66 @@
         "Nike 1.png",
         "Nike 4.png",
         "Nike 2.png"
+      ],
+      "figures": [
+        [
+          "20M+",
+          "Customers a single activation could reach"
+        ],
+        [
+          "3",
+          "Major campaigns running at the same time"
+        ]
       ]
     },
     {
       "slug": "qad-redzone",
+      "name": "QAD Redzone",
       "bg": "AdobeStock_1004035628.jpeg",
-      "kicker": "Integrated Creative for QAD Redzone, B2B Manufacturing SaaS",
+      "kicker": "Digital Marketing & Web Content Specialist | QAD Redzone",
       "title": "Three Years Building Redzone's Brand and the Process Behind It",
       "slides": [
+        "QRZ Web.png",
+        "OEE.png",
+        "RVPCanvas_15-ezgif.com-crop.gif",
+        "The Assembly Line.png",
+        "QAD Redzone Presents_ Gary the GOAT",
+        "Holiday Calendars.png",
+        "Box.png",
         "Swag.png",
         "1730738279639_edited.jpg",
-        "QRZ Web.png",
-        "QAD Redzone Presents_ Gary the GOAT",
         "1697025622812_edited.jpg",
-        "The Assembly Line.png",
-        "RVPCanvas_15-ezgif.com-crop.gif",
         "1684871520317_edited.jpg",
-        "Holiday Calendars.png",
-        "OEE.png",
         "1684778142063_edited.jpg",
         "Pasted Graphic_edited.jpg",
-        "Box.png",
         "1684871519806_edited.jpg"
+      ],
+      "figures": [
+        [
+          "7x",
+          "LinkedIn engagement, 2% to 14%"
+        ],
+        [
+          "200+",
+          "SEO-optimized web and intranet pages, traffic up 33% year over year"
+        ]
+      ]
+    },
+    {
+      "slug": "cohesity",
+      "name": "Cohesity",
+      "bg": "AdobeStock_784830317.jpeg",
+      "kicker": "Internal Communications and Employee Advocacy for an AI-Powered Data Security Leader",
+      "title": "Reaching 7,000 Cohesity Employees and 70% Engagement Among 3,000 Advocates",
+      "slides": [
+        "Cohesity Examples 2 TP.png",
+        "ezgif.com-video-to-gif-converter-2.gif",
+        "Cohesity Examples TP.png"
       ]
     },
     {
       "slug": "solv-energy",
+      "name": "SOLV Energy",
       "bg": "Cherry Valley Solar-3.jpg",
       "kicker": "Internal Tools and External Web for SOLV Energy",
       "title": "Same-Day Web Updates for a Newly Public Energy Company, and a Self-Serve Advocacy Tool for Its Employees",
@@ -59,21 +94,11 @@
       ]
     },
     {
-      "slug": "cohesity",
-      "bg": "AdobeStock_784830317.jpeg",
-      "kicker": "Internal Communications and Employee Advocacy for an AI-Powered Data Security Leader",
-      "title": "Reaching 7,000 Cohesity Employees Globally and Taking Advocacy Participation Past 70%",
-      "slides": [
-        "Cohesity Examples 2 TP.png",
-        "ezgif.com-video-to-gif-converter-2.gif",
-        "Cohesity Examples TP.png"
-      ]
-    },
-    {
       "slug": "healthier-texas",
+      "name": "Healthier Texas",
       "bg": "AdobeStock_603196626.jpeg",
       "kicker": "Campaign Design for a Statewide Public Health Nonprofit",
-      "title": "Doubling a Wellness App to 40K Users and Taking a 1,000-Person Summit to 10K Online",
+      "title": "Growing a Wellness App to 40K Users and Taking a 1,000-Person Summit to 10K Online",
       "slides": [
         "TT.png",
         "TS4P.png",
@@ -93,6 +118,7 @@
     },
     {
       "slug": "partnerships",
+      "name": "Partnerships",
       "bg": "AdobeStock_175466970.jpeg",
       "kicker": "Cross-Channel Design for QAD Redzone's Manufacturing Partners",
       "title": "Bringing Redzone's Work with Apple, Ferrara, and Gorilla Glue to Life Across Web, Video, and Social",
@@ -109,6 +135,7 @@
     },
     {
       "slug": "freelance",
+      "name": "Freelance",
       "bg": "AdobeStock_781926323.jpeg",
       "kicker": "Self-Led and Freelance Design",
       "title": "Brand Identity, Web Layouts, and Campaign Experiments Made Outside the Day Job",
@@ -126,5 +153,10 @@
         "AI.png"
       ]
     }
-  ]
+  ],
+  "description": "Christian Sanchez, digital marketer in Austin, TX. Most recently Digital Content Manager (Contract) for the Nike App and Nike.com. Earlier, three years as Digital Marketing & Web Content Specialist at QAD Redzone. Case studies and work samples.",
+  "hero_contact": true,
+  "contact": {
+    "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+  }
 }

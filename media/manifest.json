@@ -1422,19 +1422,6 @@
   "boxv": 1,
   "mtime": 1792566631
  },
- "default:Pages from MKTG 322 Presentation.png": {
-  "kind": "image",
-  "files": [
-   "media/pages-from-mktg-322-presentation-ed4776.webp",
-   "media/pages-from-mktg-322-presentation-ed4776-sm.webp"
-  ],
-  "src": "media/pages-from-mktg-322-presentation-ed4776.webp",
-  "sm": "media/pages-from-mktg-322-presentation-ed4776-sm.webp",
-  "w": 2000,
-  "h": 1125,
-  "boxv": 1,
-  "mtime": 1792566631
- },
  "default:Pages from MKTG 430.png": {
   "kind": "image",
   "files": [
@@ -2573,6 +2560,18 @@
   "w": 1280,
   "h": 720,
   "boxv": 1,
+  "mtime": 1792566631
+ },
+ "light540:Gary Task Complete.mp4": {
+  "kind": "video",
+  "src": "media/gary-task-complete-e8bd76-light.mp4",
+  "poster": "media/gary-task-complete-e8bd76-light-poster.webp",
+  "w": 540,
+  "h": 676,
+  "files": [
+   "media/gary-task-complete-e8bd76-light.mp4",
+   "media/gary-task-complete-e8bd76-light-poster.webp"
+  ],
   "mtime": 1792566631
  },
  "light:QAD Redzone Presents_ Gary the GOAT": {

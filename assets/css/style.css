@@ -238,9 +238,11 @@ button { font: inherit; color: inherit; }
   align-items: start; min-height: 274px; padding-top: 0;
 }
 .home-hero-text { padding: 34px 0 20px 43px; }
-.home-hero .hero-hi { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-.home-hero p { font-size: 16px; line-height: 1.4; color: #e8e8e8; }
+.home-hero .hero-hi { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.05; letter-spacing: -.025em; font-weight: 700; margin-bottom: 14px; }
+.home-hero p { font-size: 17px; line-height: 1.4; color: #e8e8e8; }
 .home-hero p + p { margin-top: 12px; }
+.home-hero .hero-contact .contact-row { margin-top: 14px; }
+.home-hero .hero-contact a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 .home-portrait { width: 254px; height: auto; align-self: end; }
 
 .case-row {
@@ -255,8 +257,9 @@ button { font: inherit; color: inherit; }
   display: grid; grid-template-columns: 234px minmax(0, 643px); column-gap: 44px; align-items: center;
   min-height: 361px; padding-left: calc(var(--gutter) + 42px);
 }
-.case-row .kicker { font-family: var(--light); font-weight: 300; font-size: 14px; line-height: 1.4; margin-bottom: 18px; }
-.case-row h2 { font-size: 18px; line-height: 1.35; font-weight: 700; margin-bottom: 26px; }
+.case-row .kicker { font-family: var(--sans); font-weight: 400; font-size: 15px; line-height: 1.4; color: rgba(255,255,255,.82); margin-bottom: 18px; }
+.case-row h2 { font-size: clamp(20px, 1.9vw, 24px); line-height: 1.2; letter-spacing: -.015em; font-weight: 700; margin-bottom: 26px; }
+.case-row .case-result { font-size: 15px; line-height: 1.4; color: rgba(255,255,255,.82); margin: -14px 0 18px; }
 .case-row .btn { min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
 /* Read More shine: a gradient of the row photo's own colours (--s1..--s4, picked by the build) that loops under the button, seen through its glass (blurred and lightened
    by it, the way liquid glass looks passing over colour). Lit while the row is on screen. */
@@ -282,6 +285,10 @@ button { font: inherit; color: inherit; }
 /* Like the Wix slideshow, each sample fills the box (mockups carry their own margins). */
 .slide img, .slide video { width: 100%; height: 100%; max-width: none; object-fit: cover; }
 @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
+.ss-prev { left: 16px; }
+.ss-next { right: 16px; }
+.ss-arrow { opacity: 0; transition: opacity .2s ease; }
+.slideshow:hover .ss-arrow, .slideshow:focus-within .ss-arrow { opacity: 1; }
 
 /* ---------- case study ---------- */
 
@@ -339,6 +346,10 @@ button { font: inherit; color: inherit; }
 .cat-text .tools + p { margin-top: 4px; }
 .cat-text p:not(.kicker-italic):not(.tools) + p { margin-top: 16px; }  /* a blank line between body paragraphs */
 .cat-text p:not(.kicker-italic):not(.tools) { font-size: 17px; line-height: 1.5; }
+/* a heading that introduces the strip below it sits close to that strip (Graphic Design) */
+.cat-text.is-lead { padding-top: 64px; padding-bottom: 20px; }
+.cat-text.is-lead.is-first { padding-top: 22px; }
+.cat-contact { padding-top: 56px; }
 
 /* ---------- gallery sliders ---------- */
 /* Matches the Wix "slider" galleries: tiles fill their box with no shadow,
@@ -556,7 +567,7 @@ html.lb-page .lightbox:not(.no-caption) .lb-prev, html.lb-page .lightbox:not(.no
   .home-hero-text { display: contents; }
   .home-hero-text > * { grid-column: 1 / -1; position: relative; z-index: 1; }
   .home-hero-text > p:last-child { grid-column: 1; grid-row: 4; align-self: start; }
-  .home-hero .hero-hi { font-size: 22px; }
+  .home-hero .hero-hi { font-size: 26px; }
   .home-hero p { font-size: 15px; }
   .home-portrait { grid-column: 1 / -1; grid-row: 4 / span 2; width: 72%; max-width: 300px; justify-self: end; align-self: end; margin-top: 0; margin-right: calc(-1 * var(--gutter)); }  /* tucked to the window edge, clear of the text */
 
@@ -686,11 +697,12 @@ main { view-transition-name: page; }
   :root { --gutter: max(clamp(44px, 7vw, 60px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); }
 }
 
-/* narrower desktop windows: tabs the size of the Read More buttons below them (35px, 14px, 20px each
-   side); the bar runs edge to edge and swipes when the six don't fit */
+/* narrower desktop windows: tabs keep the Read More buttons' height and text size, with side padding that
+   shares out the width, so all six fit from about 1000px; below that the bar swipes and fades at its end */
 @media (min-width: 721px) and (max-width: 1100px) {
   .seg { height: auto; }
-  .seg-item { height: 35px; padding: 0 20px; font-size: 14px; }
+  .seg-item { height: 35px; padding: 0 clamp(10px, calc((100vw - 2 * var(--gutter) - 540px) / 12), 20px); font-size: 14px; }
+  .seg.is-scrolling:not(.at-end) { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 48px), transparent); }
 }
 
 /* The intro from big phones (incl. the folded iPhone Duo, ~466px) to small desktops (440-1100px): the portrait sits at the right, rising from
@@ -1119,3 +1131,101 @@ a.tl-label:hover strong { color: #ff9a66; }
 @media print {
   .js-reveal .case-v2 [data-reveal] > * { opacity: 1; transform: none; }
 }
+
+/* ---------- home: the closing contact block ---------- */
+.page-home #contact { margin-top: 64px; padding-bottom: 72px; }
+.page-home #contact .statement { font-size: clamp(20px, 1.9vw, 24px); line-height: 1.25; }
+
+/* ---------- Graphic Design: the case-v2 type scale for category headings ---------- */
+@media (min-width: 721px) {
+  .cat-v2 .cat-text h1, :root[data-os="ios"] .cat-v2 .cat-text h1 { font-size: clamp(34px, 3.8vw, 46px); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 14px; }
+  .cat-v2 .cat-text h2, :root[data-os="ios"] .cat-v2 .cat-text h2 { font-size: clamp(26px, 3vw, 34px); line-height: 1.1; letter-spacing: -.025em; margin-bottom: 12px; }
+  .cat-v2 .cat-text .kicker-italic, :root[data-os="ios"] .cat-v2 .cat-text .kicker-italic { font-size: 21px; line-height: 1.4; max-width: 58ch; }
+}
+@media (max-width: 720px) {
+  .cat-v2 .cat-text h1, :root[data-os="ios"] .cat-v2 .cat-text h1 { font-size: 28px; line-height: 1.1; margin-bottom: 10px; }
+  .cat-v2 .cat-text h2, :root[data-os="ios"] .cat-v2 .cat-text h2 { font-size: 24px; line-height: 1.15; margin-bottom: 10px; }
+  .cat-v2 .cat-text .kicker-italic, :root[data-os="ios"] .cat-v2 .cat-text .kicker-italic { font-size: 18px; line-height: 1.4; }
+  .cat-text.is-lead { padding-top: 56px; padding-bottom: 16px; }
+  .cat-text.is-lead.is-first { padding-top: 22px; }
+  .page-home #contact { margin-top: 40px; padding-bottom: 48px; }
+}
+.cat-v2 .cat-text .kicker-italic { font-style: normal; color: var(--ink); }
+.cat-v2 .cat-text .tools, :root[data-os="ios"] .cat-v2 .cat-text .tools { font-style: normal; font-size: 15px; color: var(--muted); }
+
+/* ---------- home: the case studies as one scene ---------- */
+/* Laid out one after another by default (phones, short windows, reduced motion, no script): each case is its
+   text beside a rounded box holding its photo and slideshow. On a desktop main.js sets .is-live: the stage
+   holds under the tab bar while the section scrolls past, and each case's box slides up over the last. */
+.work { background: #0b0b0b; color: #fff; }
+.wk-names { display: none; }
+.wk-cases { max-width: 1240px; margin: 0 auto; padding: 88px var(--gutter); display: grid; gap: 112px; }
+.wk-case { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); column-gap: 56px; align-items: center; }
+.wk-text .kicker { font-size: 15px; line-height: 1.4; color: rgba(255,255,255,.7); margin-bottom: 14px; }
+.wk-text h2 { font-size: clamp(26px, 2.6vw, 36px); line-height: 1.12; letter-spacing: -.025em; font-weight: 700; margin-bottom: 24px; text-wrap: balance; }
+.wk-text .case-result { margin: -8px 0 24px; }
+.wk-text .btn { min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
+.wk-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 28px; margin: 0 0 28px; }
+.wk-figs div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; }
+.wk-figs dd { margin: 0; font-family: var(--round); font-weight: 700; font-size: clamp(34px, 3.4vw, 48px); line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.wk-figs dt { font-size: 14px; line-height: 1.4; color: rgba(255,255,255,.66); }
+.wk-box {
+  position: relative; isolation: isolate; overflow: hidden; border-radius: 28px;
+  aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 6%;
+  background: #161616 center / cover no-repeat;
+}
+.wk-box::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(0,0,0,.42); }
+.wk-box .slideshow { width: 100%; max-width: none; margin: 0; justify-self: center; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+
+.work.is-live { height: calc(var(--n) * 80vh + 100vh); height: calc(var(--n) * 80svh + 100svh); }
+.work.is-live .wk-stage { position: sticky; top: var(--pills-h, 80px); height: calc(100vh - var(--pills-h, 80px)); height: calc(100svh - var(--pills-h, 80px)); overflow: hidden; }
+.work.is-live .wk-inner {
+  position: relative; height: 100%; max-width: 1240px; margin: 0 auto; padding: 36px var(--gutter) 40px;
+  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 56px; row-gap: 24px;
+}
+.work.is-live .wk-names { display: flex; flex-direction: column; grid-column: 1; grid-row: 2; list-style: none; margin: 0; padding: 0; position: relative; z-index: 30; }
+.wk-names button {
+  display: flex; align-items: center; gap: 12px; padding: 4px 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 14px; line-height: 20px; color: rgba(255,255,255,.4); transition: color .3s ease;
+}
+.wk-names button::before { content: ""; width: 16px; height: 2px; border-radius: 1px; background: currentColor; transition: width .3s ease; }
+.wk-names button:hover { color: rgba(255,255,255,.75); }
+.wk-names button.is-done { color: rgba(255,255,255,.62); }
+.wk-names button.is-on { color: #fff; }
+.wk-names button.is-on::before { width: 32px; }
+.work.is-live .wk-cases { grid-column: 1 / -1; grid-row: 1 / -1; position: relative; max-width: none; margin: 0; padding: 0; display: block; }
+.work.is-live .wk-case {
+  position: absolute; inset: 0; z-index: var(--k); column-gap: 56px; row-gap: 24px;
+  grid-template-rows: minmax(0, 1fr) calc(var(--n) * 28px); align-items: center; pointer-events: none;
+}
+.work.is-live .wk-text {
+  grid-column: 1; grid-row: 1; visibility: hidden;
+  opacity: calc(var(--te, 0) * (1 - var(--tl, 0)));
+  transform: translateY(calc((1 - var(--te, 0)) * 24px - var(--tl, 0) * 24px));
+}
+.work.is-live .wk-case.is-shown .wk-text { visibility: visible; }
+.work.is-live .wk-case.is-on .wk-text { pointer-events: auto; }
+.work.is-live .wk-box {
+  grid-column: 2; grid-row: 1 / -1; align-self: stretch; aspect-ratio: auto; height: 100%; pointer-events: auto;
+  transform-origin: 50% 0; will-change: transform;
+  transform: translateY(calc((1 - var(--e, 0)) * 106%)) scale(calc(1 - var(--l, 0) * .07));
+  filter: brightness(calc(1 - var(--l, 0) * .5));
+  box-shadow: 0 -18px 50px rgba(0,0,0,.5);
+}
+.work.is-live .wk-box .slideshow { width: min(100%, calc((100svh - var(--pills-h, 80px) - 76px) * .88 * 643 / 361)); }
+
+@media (max-width: 720px) {
+  .wk-cases { padding: 48px var(--gutter) 56px; gap: 64px; }
+  .wk-case { grid-template-columns: 1fr; row-gap: 24px; }
+  .wk-text h2 { font-size: 24px; line-height: 1.18; margin-bottom: 18px; }
+  .wk-figs { margin-bottom: 22px; }
+  .wk-figs dd { font-size: 34px; }
+  .wk-box { aspect-ratio: 4 / 3; border-radius: 22px; padding: 5%; margin: 0 calc(-1 * var(--gutter) + 8px); }
+  :root[data-os="ios"] .wk-text .btn { min-height: 44px; font-size: 15px; }
+}
+/* the cases rise in once as they arrive, when the scene isn't live */
+.js-reveal .work:not(.is-live) .wk-case[data-reveal] > * { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.js-reveal .work:not(.is-live) .wk-case[data-reveal] > .wk-box { transform: translateY(40px) scale(.96); }
+.js-reveal .work:not(.is-live) .wk-case[data-reveal].is-in > * { opacity: 1; transform: none; }
+.js-reveal .work:not(.is-live) .wk-case[data-reveal].is-in > .wk-box { transition-delay: .08s; }
+@media (prefers-reduced-motion: reduce) { .js-reveal .work .wk-case[data-reveal] > * { opacity: 1 !important; transform: none !important; transition: none; } }

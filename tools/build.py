@@ -219,12 +219,15 @@ def gallery_item(raw, media, site):
             item["box"] = m["box"]
     else:
         item.update(type=m["kind"], src=m["src"], thumb=m["poster"], w=m["w"], h=m["h"])
+        if raw.get("tile_light"):
+            # a lighter encode for the strip tile only; the lightbox keeps the full clip
+            item["tile_src"] = media.get(name, f"light{raw['tile_light']}")["src"]
     return item
 
 
 def fix_paths(item, root):
     out = dict(item)
-    for k in ("thumb", "full", "src"):
+    for k in ("thumb", "full", "src", "tile_src"):
         if k in out:
             out[k] = root + out[k]
     if "link" in out:
@@ -237,7 +240,7 @@ def fix_paths(item, root):
 PLAY_ICON = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>'
 
 
-def tile(item, i, root, crop=None, inline=False, play="hover", gid=0):
+def tile(item, i, root, crop=None, inline=False, play="hover", gid=0, eager=False):
     label = item.get("title") or {"image": "image", "loop": "animation", "video": "video"}.get(item["type"], "video")
     alt = esc(item.get("title", ""))
     w, h = item["w"], item["h"]
@@ -245,11 +248,13 @@ def tile(item, i, root, crop=None, inline=False, play="hover", gid=0):
     if item["type"] == "loop" or (item["type"] == "video" and play == "auto"):
         # GIF-loops always play; an uploaded video plays silently only where Wix autoplays it.
         media = (f'<video class="tile-media" muted loop playsinline preload="none" '
-                 f'poster="{root}{item["thumb"]}" data-src="{root}{item["src"]}" width="{w}" height="{h}" '
+                 f'poster="{root}{item["thumb"]}" data-src="{root}{item.get("tile_src", item["src"])}" width="{w}" height="{h}" '
                  f'aria-hidden="true"></video>')
     else:
+        # the first tiles of a page's first strip load straight away, so it never opens as an empty band
+        load = ('eager" fetchpriority="high' if i < 2 else "eager") if eager else "lazy"
         media = (f'<img class="tile-media" src="{root}{item["thumb"]}" width="{w}" height="{h}" '
-                 f'alt="{alt}" loading="lazy" decoding="async">')
+                 f'alt="{alt}" loading="{load}" decoding="async">')
     autoplaying = play == "auto" and item["type"] in ("vimeo", "youtube", "video")
     play_icon = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") and not autoplaying else ""
     # A video tile takes the video's own shape, so vertical videos sit one gallery
@@ -286,14 +291,15 @@ CHEVRON_R = '<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>'
 STRIP_IDS = itertools.count(1)   # keeps tile caption ids unique across the galleries on a page
 
 
-def strip(items, root, label, opts=None, kind="gallery", hint=False):
+def strip(items, root, label, opts=None, kind="gallery", hint=False, eager=0):
     """A Wix-style slider. opts carries the per-gallery Wix settings: height, gap,
     crop, speed (continuous auto-scroll in px/s; absent = still), loop and label."""
     opts = opts or {}
     inline = kind == "videos"
     data = json_script([fix_paths(it, root) for it in items])
     gid = next(STRIP_IDS)
-    tiles = "".join(tile(it, i, root, opts.get("crop"), inline, opts.get("play", "hover"), gid) for i, it in enumerate(items))
+    tiles = "".join(tile(it, i, root, opts.get("crop"), inline, opts.get("play", "hover"), gid, i < eager)
+                    for i, it in enumerate(items))
     style = "".join(f"--{k}:{opts[o]}px;" for o, k in (("height", "tile-h"), ("gap", "gap")) if o in opts)
     # the widest piece's ratio: on a narrow screen every tile shrinks to the height that piece fits at, so a
     # strip keeps one height instead of each tile shrinking on its own
@@ -462,21 +468,48 @@ def shine_colors(path, n=4):
     return out
 
 
-def slideshow(names, title, root, media):
+def piece_titles():
+    """Each work sample's title from the galleries (category pages and case studies), by source file,
+    so a home slideshow can name what it shows."""
+    titles = {}
+    def walk(x):
+        if isinstance(x, dict):
+            name = x.get("src") or x.get("mp4")
+            if isinstance(name, str) and x.get("title"):
+                titles.setdefault(name, x["title"])
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+    for f in ["categories.json", *sorted(p.name for p in CONTENT.glob("cases-*.json"))]:
+        walk(json.loads((CONTENT / f).read_text()))
+    return titles
+
+
+def slideshow(names, title, root, media, titles=None):
     """Auto-advancing slideshow of work samples for a home-page case row."""
+    titles = titles or {}
     slides = []
     for i, name in enumerate(names):
         m = media.get(name)
         hidden = "" if i == 0 else ' aria-hidden="true"'
+        alt = esc(titles.get(name, ""))
         if m["kind"] == "image":
-            el = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" alt="" '
+            el = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" alt="{alt}" '
                   f'loading="{"eager" if i == 0 else "lazy"}" decoding="async">')
         else:
+            label = f' aria-label="{alt}"' if alt else ""
             el = (f'<video muted loop playsinline preload="none" poster="{root}{m["poster"]}" '
-                  f'data-src="{root}{m["src"]}" width="{m["w"]}" height="{m["h"]}"></video>')
+                  f'data-src="{root}{m["src"]}" width="{m["w"]}" height="{m["h"]}"{label}></video>')
         slides.append(f'<li class="slide{" is-current" if i == 0 else ""}"{hidden}>{el}</li>')
+    # previous and next, shown on hover and keyboard focus, so every sample can be reached without waiting
+    # (and at all with reduced motion, where the slideshow never advances on its own)
+    arrows = (f'<button class="strip-arrow ss-arrow ss-prev" type="button" aria-label="Previous sample">{CHEVRON_L}</button>'
+              f'<button class="strip-arrow ss-arrow ss-next" type="button" aria-label="Next sample">{CHEVRON_R}</button>'
+              if len(names) > 1 else "")
     return f'''<div class="slideshow" data-slideshow aria-roledescription="carousel" aria-label="Work samples: {esc(title)}">
-      <ul class="slides">{"".join(slides)}</ul>
+      <ul class="slides">{"".join(slides)}</ul>{arrows}
     </div>'''
 
 
@@ -507,7 +540,7 @@ def category_banner(site, root, media):
 </header>'''
 
 
-def intro_hero(home, root, media, tag):
+def intro_hero(home, root, media, tag, site=None):
     """The "Hi, Christian Sanchez here." intro with the portrait: the home page's hero, and the header of the
     category pages (where the greeting is not the page's heading, so it is a <p>)."""
     portrait = media.get(home["portrait"])
@@ -518,13 +551,18 @@ def intro_hero(home, root, media, tag):
     shaped = (f'<span class="hero-spacer" aria-hidden="true"></span>'
               f'<img class="home-portrait-float" src="{src}" width="{portrait["w"]}" height="{portrait["h"]}" alt="" '
               f'aria-hidden="true" style="shape-outside:url(\'{src}\')">')
+    # on the home page the email and LinkedIn sit under the intro; it stays a <p>, the last one, since
+    # main.js stands the portrait beside the intro's last paragraph
+    contact = ""
+    if tag == "h1" and site and home.get("hero_contact"):
+        contact = f'\n      <p class="hero-contact">{contact_links(site, root, "contact-row")}</p>'
     return f'''
 <section class="home-hero">
   <div class="wrap home-hero-inner">
     <div class="home-hero-text">
       {shaped}
       <{tag} class="hero-hi">{esc(home["greeting"])}</{tag}>
-      {paragraphs(home["intro"])}
+      {paragraphs(home["intro"])}{contact}
     </div>
     <img class="home-portrait" src="{root}{portrait.get("sm", portrait["src"])}" width="{portrait["w"]}" height="{portrait["h"]}" alt="Christian Sanchez">
   </div>
@@ -533,25 +571,51 @@ def intro_hero(home, root, media, tag):
 
 def render_home(page, site, media):
     root = ""
-    rows = []
-    for c in page["cases"]:
+    cases = []
+    titles = piece_titles()
+    n = len(page["cases"])
+    for i, c in enumerate(page["cases"]):
         bg = media.get(c["bg"], "bg")
-        slides = slideshow(c["slides"], c["title"], root, media)
-        shine = ";".join(f"--s{i}:{col}" for i, col in enumerate(shine_colors(ROOT / bg["src"]), 1))
-        rows.append(f'''
-<article class="case-row" style="background-image:url('{root}{bg["src"]}')">
-  <div class="wrap case-row-inner">
-    <div class="case-row-text">
+        slides = slideshow(c["slides"], c["title"], root, media, titles)
+        shine = ";".join(f"--s{k}:{col}" for k, col in enumerate(shine_colors(ROOT / bg["src"]), 1))
+        figs = ""
+        if c.get("figures"):
+            cells = "".join(f'<div><dt>{esc(d)}</dt><dd data-count="{esc(v)}">{esc(v)}</dd></div>' for v, d in c["figures"])
+            figs = f'\n      <dl class="wk-figs">{cells}</dl>'
+        elif c.get("result"):
+            figs = f'\n      <p class="case-result">{esc(c["result"])}</p>'
+        cases.append(f'''
+<article class="wk-case" data-case="{i}" style="--k:{i}">
+  <div class="wk-text">
       <p class="kicker">{esc(c["kicker"])}</p>
-      <h2>{esc(c["title"])}</h2>
+      <h2>{esc(c["title"])}</h2>{figs}
       <span class="shine" style="{shine}"><a class="btn btn-red" href="{root}{c["slug"]}/">Read More<span class="sr-only">: {esc(c["title"])}</span></a></span>
-    </div>
+  </div>
+  <div class="wk-box" style="background-image:url('{root}{bg["src"]}')">
     {slides}
   </div>
 </article>''')
-    hero = intro_hero(page, root, media, "h1")
+    # the case studies as one scene: on a desktop the stage holds under the tab bar and each case's box
+    # slides up over the last as the section scrolls past (main.js); phones, short windows and reduced
+    # motion get the cases one after another
+    names = "".join(f'<li><button type="button" data-go="{i}">{esc(c.get("name", c["slug"]))}</button></li>'
+                    for i, c in enumerate(page["cases"]))
+    rows = [f'''
+<section class="work" data-scene="work" style="--n:{n}" aria-label="Case studies">
+  <div class="wk-stage">
+    <div class="wk-inner">
+      <ol class="wk-names" aria-label="Case studies">{names}</ol>
+      <div class="wk-cases">{"".join(cases)}
+      </div>
+    </div>
+  </div>
+</section>''']
+    hero = intro_hero(page, root, media, "h1", site)
     page = {**page, "nav_active": ""}
     body = '<h2 class="sr-only">Case studies</h2>' + "".join(rows)
+    if page.get("contact"):
+        body += (f'\n<section class="wrap prose statement-wrap" id="contact"><p class="statement">'
+                 f'{esc(page["contact"]["statement"])}</p>{contact_links(site, root, "contact-row")}</section>')
     html_ = layout(page, site, root, body, media)
     # The home hero sits above the section nav, like the original site.
     return html_.replace('<a class="skip-link" href="#main">Skip to content</a>',
@@ -585,22 +649,38 @@ def render_category(page, site, media):
     root = "../"
     parts = []
     first_heading = True
-    for b in page["blocks"]:
+    first_gallery = True
+    blocks = page["blocks"]
+    for n, b in enumerate(blocks):
         if "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
-            parts.append(strip(items, root, "Gallery", b, hint=True))
+            # a strip takes its name from the heading just above it, when there is one
+            prev = blocks[n - 1] if n else None
+            label = f'{prev["heading"]} gallery' if page.get("v2") and prev and "heading" in prev else "Gallery"
+            eager = page.get("eager_first", 0) if first_gallery else 0
+            first_gallery = False
+            parts.append(strip(items, root, label, b, hint=b.get("hint", True), eager=eager))
         else:
             tag = "h1" if first_heading else "h2"
             first_heading = False
             tools = f'<p class="tools">Tools: {esc(b["tools"])}</p>' if b.get("tools") else ""
+            # a heading that introduces the strip below it sits close to that strip
+            lead = ""
+            if page.get("v2") and n + 1 < len(blocks) and "gallery" in blocks[n + 1]:
+                lead = " is-lead is-first" if n == 0 else " is-lead"
             parts.append(f'''
-<section class="wrap cat-text">
+<section class="wrap cat-text{lead}">
   <{tag}>{esc(b["heading"])}</{tag}>
   <p class="kicker-italic">{esc(b["kicker"])}</p>
   {tools}
   {paragraphs(b["body"])}
 </section>''')
+    if page.get("contact"):
+        parts.append(f'<section class="wrap cat-text cat-contact" id="contact"><p>{esc(page["contact"]["statement"])}</p>'
+                     f'{contact_links(site, root, "contact-row")}</section>')
     page = {**page, "nav_active": page["slug"]}
+    if page.get("v2"):
+        page["body_class"] = "cat-v2"   # the case-v2 type scale for this category's headings
     return layout(page, site, root, "\n".join(parts), media)
 
 

@@ -722,7 +722,7 @@
       slides.forEach((li, i) => {
         const v = li.querySelector("video");
         if (!v) return;
-        if (i === index && !pause.has("offscreen")) {
+        if (i === index && !pause.has("offscreen") && !pause.has("scene")) {
           if (!v.src) v.src = v.dataset.src;
           if (!reduceMotion) v.play().catch(() => {});
         } else if (!v.paused) {
@@ -747,11 +747,17 @@
     }
     const hold = (r) => { pause.add(r); schedule(); };
     const release = (r) => { pause.delete(r); schedule(); };
+    // the home scene holds the slideshows of the cases not in view (all of its boxes stay on screen)
+    root.addEventListener("scene-hold", () => { hold("scene"); syncMedia(); });
+    root.addEventListener("scene-release", () => { pause.delete("scene"); syncMedia(); schedule(); });
 
     root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") hold("hover"); });
     root.addEventListener("pointerleave", () => release("hover"));
     root.addEventListener("focusin", () => hold("focus"));
     root.addEventListener("focusout", () => release("focus"));
+
+    root.querySelector(".ss-prev")?.addEventListener("click", () => { hold("user"); show(index - 1); });
+    root.querySelector(".ss-next")?.addEventListener("click", () => { hold("user"); show(index + 1); });
 
     let sx = null;
     root.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; hold("touch"); }, { passive: true });
@@ -800,7 +806,13 @@
     if (!seg) return;
     seg.classList.remove("is-scrolling");
     seg.classList.toggle("is-scrolling", seg.scrollWidth > seg.clientWidth + 1);
+    markEnd();
   }
+  // the fade at the bar's right edge (CSS) clears once it is scrolled to the end
+  function markEnd() {
+    if (seg) seg.classList.toggle("at-end", seg.scrollLeft + seg.clientWidth >= seg.scrollWidth - 1);
+  }
+  if (seg) seg.addEventListener("scroll", markEnd, { passive: true });
   markScrolling();
   onWidthResize(markScrolling);
   if (document.fonts) document.fonts.ready.then(markScrolling);
@@ -894,7 +906,7 @@
   // sections stay laid out still.
 
   const pinTop = () => {
-    const pills = document.querySelector(".page-case .pills");
+    const pills = document.querySelector(".page-case .pills, .page-home .pills");
     const h = pills ? pills.offsetHeight : 0;
     document.documentElement.style.setProperty("--pills-h", `${h}px`);
     return h;
@@ -993,6 +1005,87 @@
         const to = +count.dataset.to;
         const v = at === n - 1 ? Math.round(to * Math.min(1, local * 1.6) / 10000) * 10000 : 0;
         count.textContent = fmt.format(v) + (v >= to ? "+" : "");   // "as many as": the plus lands with the last figure
+      }
+    });
+  });
+
+  // home: the case studies as one scene. Each case has a stretch of the section; over the last third of a
+  // stretch the next case's box slides up over the current one, which settles back and dims, and the text
+  // beside it crossfades. The figures count up as their case arrives.
+  document.querySelectorAll('[data-scene="work"]').forEach((scene) => {
+    const cases = [...scene.querySelectorAll(".wk-case")];
+    const names = [...scene.querySelectorAll(".wk-names button")];
+    const shows = cases.map((c) => c.querySelector("[data-slideshow]"));
+    const n = cases.length;
+    const phone = matchMedia("(max-width: 720px)");
+    const EDGE = 0.35;   // the share of a stretch the hand-over takes
+    const clamp = (v) => Math.min(1, Math.max(0, v));
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const figs = cases.map((c) => [...c.querySelectorAll("[data-count]")].map((dd) => {
+      const m = dd.dataset.count.match(/^([\d,]+)(.*)$/);
+      return m ? { dd, to: +m[1].replace(/,/g, ""), rest: m[2], comma: m[1].includes(",") } : null;
+    }).filter(Boolean));
+    const fmt = new Intl.NumberFormat("en-US");
+    let on = -1;
+    let held = [];
+    const isLive = () => scene.classList.contains("is-live");
+    const setHeld = (want) => {
+      shows.forEach((sh, i) => {
+        if (!sh || held[i] === want[i]) return;
+        sh.dispatchEvent(new Event(want[i] ? "scene-hold" : "scene-release"));
+      });
+      held = want;
+    };
+    const live = () => {
+      const roomy = viewH() - pinTop() >= 600 && innerWidth > 720;
+      scene.classList.toggle("is-live", !reduceMotion && !phone.matches && roomy);
+      on = -1;
+      if (!isLive()) {
+        cases.forEach((c) => { c.classList.remove("is-on", "is-shown"); ["--e", "--l", "--te", "--tl"].forEach((v) => c.style.removeProperty(v)); });
+        names.forEach((b) => { b.classList.remove("is-on", "is-done"); b.removeAttribute("aria-current"); });
+        figs.flat().forEach((f) => { f.dd.textContent = f.dd.dataset.count; });
+        setHeld(cases.map(() => false));
+      }
+    };
+    names.forEach((b) => b.addEventListener("click", () => {
+      const top = scene.getBoundingClientRect().top + window.scrollY;
+      const run = scene.offsetHeight - (viewH() - pinTop());
+      window.scrollTo({ top: top - pinTop() + run * (+b.dataset.go / (n - 1 || 1)), behavior: "smooth" });
+    }));
+    live();
+    onWidthResize(live);
+    phone.addEventListener("change", live);
+    scenes.push((pin) => {
+      if (!isLive()) return;
+      const r = scene.getBoundingClientRect();
+      const run = r.height - (viewH() - pin);
+      // 0 at the first case, n - 1 at the last; below 0 while the section is still coming up the screen
+      const x = run > 0 ? ((pin - r.top) / run) * (n - 1) : 0;
+      const at = Math.min(n - 1, Math.max(0, Math.round(x)));
+      cases.forEach((c, k) => {
+        const e = k === 0 ? 1 : clamp((x - (k - 1) - (1 - EDGE)) / EDGE);
+        const l = k === n - 1 ? 0 : clamp((x - k - (1 - EDGE)) / EDGE);
+        c.style.setProperty("--e", e.toFixed(3));
+        c.style.setProperty("--l", l.toFixed(3));
+        // the words hand over in turn (out, then in) so two sets never overlap
+        c.style.setProperty("--te", (k === 0 ? 1 : clamp(e * 2 - 1)).toFixed(3));
+        c.style.setProperty("--tl", clamp(l * 2).toFixed(3));
+        c.classList.toggle("is-shown", e > 0 && l < 1);
+        c.classList.toggle("is-on", k === at);
+        const t = ease(k === 0 ? clamp((x + 0.7) / 0.6) : clamp(e * 2 - 1));
+        figs[k].forEach((f) => {
+          const v = Math.round(f.to * t);
+          f.dd.textContent = (f.comma ? fmt.format(v) : String(v)) + (t >= 1 ? f.rest : f.rest.replace(/\+$/, ""));   // the plus lands with the last figure, as on Nike
+        });
+      });
+      if (at !== on) {
+        on = at;
+        names.forEach((b, i) => {
+          b.classList.toggle("is-on", i === at);
+          b.classList.toggle("is-done", i < at);
+          if (i === at) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+        });
+        setHeld(cases.map((_, i) => i !== at));
       }
     });
   });
@@ -1149,7 +1242,7 @@
 
   // the scene pages: each block rises in once as it arrives
   if (!reduceMotion && "IntersectionObserver" in window) {
-    const blocks = [...document.querySelectorAll(".case-v2 .glance-wrap, .case-v2 .prose:not(.lede-wrap), .case-v2 .strip, .case-v2 .case-nav")];
+    const blocks = [...document.querySelectorAll(".case-v2 .glance-wrap, .case-v2 .prose:not(.lede-wrap), .case-v2 .strip, .case-v2 .case-nav, .work .wk-case")];
     if (blocks.length) {
       document.documentElement.classList.add("js-reveal");
       const arrive = new IntersectionObserver((entries) => {
