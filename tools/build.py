@@ -342,6 +342,7 @@ def layout(page, site, root, body, media, og_image=None):
 <meta property="og:title" content="{esc(page["title"])}">
 <meta property="og:description" content="{esc(desc)}">{og}
 <meta name="theme-color" content="#2b2b2b">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="cfb8039e-58d3-4d85-b5f8-6567b963fee6" data-domains="csworkportfolio.github.io"></script>
 <script>/* like the Job Search AI app: "ios" on an iPhone or iPad, or any window 720px wide or less, gets touch-sized controls */
 (function(){{var r=document.documentElement,i=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),m=matchMedia("(max-width: 720px)");function a(){{r.setAttribute("data-os",i||m.matches?"ios":"mac")}}a();m.addEventListener&&m.addEventListener("change",a)}})();</script>
 <link rel="stylesheet" href="{root}assets/css/style.css?v={asset_version("assets/css/style.css")}">
