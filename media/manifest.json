@@ -844,6 +844,17 @@
   ],
   "mtime": 1792566631
  },
+ "default:LF1T Large trimmed.png": {
+  "kind": "image",
+  "files": [
+   "media/lf1t-large-trimmed-7db8ac.webp"
+  ],
+  "src": "media/lf1t-large-trimmed-7db8ac.webp",
+  "w": 980,
+  "h": 720,
+  "boxv": 1,
+  "mtime": 1792664742
+ },
  "default:LF1T Large.png": {
   "kind": "image",
   "files": [
