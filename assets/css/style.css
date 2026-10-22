@@ -327,6 +327,7 @@ button { font: inherit; color: inherit; }
 }
 .gal-label + .case-nav { padding-top: 62px; }
 .case-nav .btn { min-width: 184px; }
+.case-nav-link { align-self: center; font-size: 15px; font-weight: 500; color: var(--ink); }
 
 /* ---------- category ---------- */
 
@@ -351,20 +352,33 @@ button { font: inherit; color: inherit; }
 }
 .strip-viewport::-webkit-scrollbar { display: none; }
 .strip-track {
-  list-style: none; margin: 0; padding: 0;
+  list-style: none; margin: 0; padding: 0; will-change: transform;
   display: flex; align-items: center; gap: var(--gap, 10px); width: max-content;
 }
 .strip.is-static .strip-track { margin: 0 auto; }
-.tile-wrap { flex: none; }
+.tile-wrap {
+  flex: none;
+  /* a wide piece that would outgrow the screen (86vw, or 1100px) gets shorter instead of being cropped,
+     so phones always show the whole image; the ratio (--r) is set on the item, so its caption shares the width */
+  --fit: min(var(--tile-h, var(--strip-h)), calc(min(86vw, 1100px) / var(--r)));
+  width: calc(var(--fit) * var(--r));
+}
 .tile {
   position: relative; display: block; padding: 0; border: 0; background: none; cursor: pointer;
-  /* a wide piece that would outgrow the screen (86vw, or 1100px) gets shorter instead of being cropped,
-     so phones always show the whole image */
-  --fit: min(var(--tile-h, var(--strip-h)), calc(min(86vw, 1100px) / var(--r)));
-  height: var(--fit); width: calc(var(--fit) * var(--r));
+  height: var(--fit); width: 100%;
   overflow: hidden;
 }
-.tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+/* a caption under the tile: the piece and his part in it */
+.tile-cap { margin: 10px var(--cr, 0) 0 var(--cl, 0); font-size: 14px; line-height: 1.4; color: var(--muted); }  /* lines up with the picture, not the file's transparent margin */
+.tile-cap strong { display: block; color: var(--ink); font-weight: 600; }
+.strip:has(.tile-cap) .strip-track { align-items: flex-start; }
+.strip:has(.tile-cap) .strip-arrow { top: calc(var(--tile-h, var(--strip-h)) / 2 - 25px); }
+/* a light band behind a strip, for white screenshots on the white page; the first tile starts on the text column's edge */
+.strip-ground { margin-top: 48px; padding: 40px 0; background: var(--tabband); }
+.strip-ground .strip-track { padding-left: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); padding-right: var(--gutter); }
+.strip-ground + .prose, .strip-ground + .ph-scene { margin-top: 100px; }
+.strip:has(.tile-cap):not(.strip-ground) .strip-track { padding-left: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); padding-right: var(--gutter); }
+.tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; transform: scale(var(--zoom, 1)); }
 .tile-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .tile-preview { position: absolute; border: 0; background: transparent; pointer-events: none; }
 .tile.is-playing { cursor: default; }
@@ -487,9 +501,11 @@ html.lb-page .lightbox:not(.no-caption) .lb-prev, html.lb-page .lightbox:not(.no
 .site-footer { background: var(--rust); color: #fff; margin-top: 24px; }
 .page-case .site-footer, .page-home .site-footer { margin-top: 0; }
 .footer-row {
-  min-height: 120px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 120px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
   font-size: 14px;
 }
+.footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.footer-links a { color: #fff; }
 .to-top { text-decoration: none; opacity: .9; }
 .to-top:hover { opacity: 1; text-decoration: underline; }
 
@@ -692,4 +708,408 @@ main { view-transition-name: page; }
     margin: 6px calc(-1 * var(--gutter) - 16px) 0 12px;  /* a little lower and further right, the far shoulder off the edge */
     shape-image-threshold: .35; shape-margin: 14px;
   }
+}
+
+/* ---------- case study modules (Nike): figures, the request-to-live scene, the campaign scoreboard, phases ----------
+   main.js turns the two scenes on (.is-live) only with script and without reduced motion; otherwise each one
+   is laid out still, whole and readable. */
+
+.prose[id], .scene, .tl-scene { scroll-margin-top: 70px; }
+
+/* figures: a large figure over what it counts */
+.glance-wrap { margin-top: 56px; padding-left: calc(var(--gutter) + 9px); }
+.glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 32px; margin: 0; }
+.glance div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; }
+.glance dd {
+  margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(34px, 4.6vw, 58px);
+  line-height: .95; letter-spacing: -.035em; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.glance dt { font-size: 15px; line-height: 1.4; color: var(--muted); max-width: 22ch; }
+.glance-wrap + .prose { margin-top: 110px; }
+
+/* request-to-live scene */
+.scene { position: relative; margin-top: 120px; }
+.sc-stage { --pin: var(--pills-h, 80px); }
+.sc-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-left: calc(var(--gutter) + 9px); }
+.sc-text h2 { font-size: clamp(30px, 3.6vw, 46px); line-height: 1.02; letter-spacing: -.03em; font-weight: 700; }
+.sc-text > p { margin-top: 14px; font-size: 18px; line-height: 1.45; }
+.sc-names { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.sc-names button {
+  padding: 6px 0; background: none; border: 0; font: inherit; font-size: 15px; color: #767676; cursor: pointer;
+  transition: color .25s;
+}
+.sc-names button:hover, .sc-names button:focus-visible { color: var(--ink); }
+.sc-panels { margin-top: 26px; }
+.sc-panel { scroll-margin-top: calc(var(--pills-h, 60px) + 16px); }
+.sc-panel + .sc-panel { margin-top: 40px; }
+.sc-who { font-size: 15px; line-height: 1.3; font-weight: 600; color: var(--muted); }
+.sc-who.is-me { color: var(--rust); }
+.sc-panel h3 { margin-top: 6px; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.05; letter-spacing: -.03em; font-weight: 700; }
+.sc-panel > p:not(.sc-who) { margin-top: 12px; font-size: 18px; line-height: 1.5; }
+.sc-checks { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+.sc-checks li { position: relative; padding-left: 26px; font-size: 16px; line-height: 1.4; }
+.sc-checks li::before { content: ""; position: absolute; left: 2px; top: .45em; width: 12px; height: 7px; border: solid var(--rust); border-width: 0 0 2.5px 2.5px; transform: rotate(-45deg); }
+
+.sc-visual { display: flex; flex-direction: column; align-items: center; perspective: 1400px; }
+/* the still layout on a desktop (reduced motion, no script, or a window too short to pin): the phone rides
+   beside the stages instead of sitting in the middle of a tall column */
+@media (min-width: 721px) {
+  .scene:not(.is-live) .sc-grid { align-items: start; }
+  .scene:not(.is-live) .sc-visual { position: sticky; top: calc(var(--pills-h, 80px) + 24px); }
+}
+.ph { margin: 0; width: min(300px, 70%); aspect-ratio: 921 / 2000; position: relative; transform-style: preserve-3d; }
+/* the frame: a titanium ring with a lit edge, the island, the action, volume and side keys; everything is
+   sized from the phone's width (--phw, set by main.js), so it holds at any size */
+.ph-body {
+  position: absolute; inset: 0; border-radius: calc(var(--phw, 300px) * .135); background: #0b0b0b; padding: 0; overflow: visible;
+  transform-style: preserve-3d; box-shadow: 0 0 0 calc(var(--phw, 300px) * .008) #0a0a0a;   /* the thin black bezel inside the frame */
+}
+/* the frame: a dark graphite ring around the bezel, lighter than the screen's black, lit along its top-left edge */
+.ph-body::before {
+  content: ""; position: absolute; inset: calc(var(--phw, 300px) * -.034); border-radius: calc(var(--phw, 300px) * .17);
+  padding: calc(var(--phw, 300px) * .026);
+  background: linear-gradient(155deg, #5a5a5c 0%, #353537 22%, #232325 48%, #2c2c2e 70%, #4a4a4c 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+/* the body has thickness: two darker faces sit a few pixels behind it, so a turned phone shows its side */
+.ph-body::after {
+  content: ""; position: absolute; inset: calc(var(--phw, 300px) * -.034); border-radius: calc(var(--phw, 300px) * .17);
+  background: linear-gradient(155deg, #3a3a3c, #202022 55%, #343436); transform: translateZ(calc(var(--phw, 300px) * -.036));
+  box-shadow: 0 0 0 1px #1a1a1c;
+}
+.ph-key { background: #2e2e30; box-shadow: inset 0 0 0 1px #1c1c1e; }
+.ph-screen { position: absolute; inset: 0; border-radius: calc(var(--phw, 300px) * .105); transform-style: preserve-3d; }
+.ph-roll { position: absolute; inset: 0; transform-style: preserve-3d; }
+.ph-layer { position: absolute; left: 0; right: 0; overflow: hidden; background: #000; }
+.ph-layer:first-child { border-radius: calc(var(--phw, 300px) * .105) calc(var(--phw, 300px) * .105) 0 0; }
+.ph-layer:nth-child(3) { border-radius: 0 0 calc(var(--phw, 300px) * .105) calc(var(--phw, 300px) * .105); }
+.ph-next { position: absolute; left: 0; top: calc(100% - 1px); width: 100%; height: calc(100% + 1px); object-fit: cover; max-width: none; display: block; visibility: hidden; transition: visibility 0s linear 1.8s; }
+/* the switcher under the phone: the site's segmented glass, small */
+.sc-switch {
+  display: inline-flex; gap: 2px; padding: 3px; margin-top: 52px; border-radius: 999px;   /* clear of the tilted phone's bottom edge */
+  background: var(--tabglass); -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); box-shadow: var(--tabshadow);
+}
+.sc-switch button { padding: 0 16px; height: 32px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 13px; font-weight: 500; color: var(--tabink); cursor: pointer; transition: background-color .18s, color .18s; }
+.sc-switch button.is-on { background: #007aff; color: #fff; }
+.ph-island {
+  position: absolute; left: 50%; top: calc(var(--phw, 300px) * .03); width: calc(var(--phw, 300px) * .32); height: calc(var(--phw, 300px) * .09);
+  transform: translateX(-50%) translateZ(1px); border-radius: 999px; background: #000;
+}
+.ph-key { position: absolute; width: calc(var(--phw, 300px) * .016); border-radius: 2px; }
+.ph-key-action { left: calc(var(--phw, 300px) * -.044); top: 14.5%; height: 3%; }
+.ph-key-up { left: calc(var(--phw, 300px) * -.044); top: 20.5%; height: 5.5%; }
+.ph-key-down { left: calc(var(--phw, 300px) * -.044); top: 27.5%; height: 5.5%; }
+.ph-key-side { right: calc(var(--phw, 300px) * -.044); top: 23%; height: 8%; }
+.ph-layer img { position: absolute; left: 0; width: 100%; max-width: none; display: block; }
+.ph-glow, .ph-halo, .ph-copybox, .ph-stamp, .ph-chip, .ph-live { display: none; }
+@property --glow-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.sc-count { margin-top: 30px; text-align: center; font-size: 15px; color: var(--muted); }
+.sc-count strong { display: block; font-family: var(--display); font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: -.035em; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* live: the stage holds still under the switcher for one screen per stage */
+.scene.is-live { height: calc((var(--n) * 70 + 40) * 1vh); }
+.scene.is-live .sc-stage { position: sticky; top: var(--pin); height: calc(100vh - var(--pin)); display: flex; align-items: center; overflow: hidden; }
+.scene.is-live .sc-grid { width: 100%; }
+.scene.is-live .sc-panels { position: relative; min-height: 270px; }
+.scene.is-live .sc-panel { position: absolute; inset: 0 0 auto; margin: 0; opacity: 0; transform: translateY(18px); transition: opacity .35s, transform .45s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
+.scene.is-live .sc-panel.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.scene.is-live .sc-panel.is-on .sc-checks li { animation: sc-rise .5s cubic-bezier(.2,.7,.2,1) both; }
+.scene.is-live .sc-panel.is-on .sc-checks li:nth-child(2) { animation-delay: .08s; }
+.scene.is-live .sc-panel.is-on .sc-checks li:nth-child(3) { animation-delay: .16s; }
+.scene.is-live .sc-panel.is-on .sc-checks li:nth-child(4) { animation-delay: .24s; }
+@keyframes sc-rise { from { opacity: 0; transform: translateY(10px); } }
+.scene.is-live .sc-names button.is-on { color: var(--ink); font-weight: 600; }
+.scene.is-live .sc-names button.is-done { color: #4a4a4a; }
+
+.scene.is-live .ph {
+  /* never taller than the pinned stage less room for the count: height is width / .4605 */
+  /* room above for the lifted top slice and below for the bottom slice and the switcher, at any window height */
+  width: min(300px, 70%, calc((100vh - var(--pin) - 320px) * 0.4605));
+  transform: rotateX(calc(var(--tilt, 1) * 12deg)) rotateY(calc(var(--tilt, 1) * -28deg)) rotateZ(calc(var(--tilt, 1) * 3deg)) translateY(var(--lift, 0px));
+  transition: transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.scene.is-live .ph-layer {
+  transform: translate3d(calc(var(--x, 0) * var(--spread, 1px) * var(--apart, 0)), calc(var(--y, 0) * var(--spread, 1px) * var(--apart, 0)), calc((var(--i) * 64px + 24px) * var(--spread-z, 1) * var(--apart, 0)));
+  /* the slices stay crisp while apart (Apple never dims an exploded part); their lift shows as a shadow instead */
+  box-shadow: 0 calc(var(--apart, 0) * 36px) calc(var(--apart, 0) * 56px) calc(var(--apart, 0) * -18px) rgba(0,0,0,.55);
+}
+/* the slices sit dim over the black body while apart and come up to full as they assemble */
+/* the phone's shadow on the page: soft, large, low, falling down and a little right, the way Apple lights a device */
+.scene.is-live .ph-body { box-shadow: 0 0 0 calc(var(--phw, 300px) * .008) #0a0a0a, 0 60px 90px -30px rgba(0,0,0,.4), 0 20px 30px -20px rgba(0,0,0,.3); }
+/* once the slices have assembled the screen clips like a real one; at Live it rolls down to the shop row the story routes into */
+.scene.is-live[data-stage="2"] .ph-screen, .scene.is-live[data-stage="3"] .ph-screen, .scene.is-live[data-stage="4"] .ph-screen,
+.scene.is-live[data-stage="5"] .ph-screen, .scene.is-live[data-stage="6"] .ph-screen, .scene.is-live.is-whole .ph-screen { overflow: clip; transform-style: flat; }
+.scene.is-live[data-stage="2"] .ph-roll, .scene.is-live[data-stage="3"] .ph-roll, .scene.is-live[data-stage="4"] .ph-roll,
+.scene.is-live[data-stage="5"] .ph-roll, .scene.is-live[data-stage="6"] .ph-roll, .scene.is-live.is-whole .ph-roll { transform-style: flat; }   /* flat, so the screen's clip holds */
+.scene.is-live .ph-roll { transition: transform 1.7s cubic-bezier(.3,.7,.2,1) .7s; }
+.scene.is-live[data-stage="6"] .ph-roll { transform: translateY(-100%); }
+.scene.is-live[data-stage="6"] .ph-next { visibility: visible; transition-delay: 0s; }
+.scene.is-live .ph-layer::after { content: none; }
+.scene.is-live .ph-layer:nth-child(1) { --x: -36; --y: -40; }
+.scene.is-live .ph-layer:nth-child(2) { --x: 56; --y: 6; }
+.scene.is-live .ph-layer:nth-child(3) { --x: -18; --y: 30; }
+/* the device check: a glow runs around the screen's edge, the way Siri's does, while the build is looked over */
+.scene.is-live .ph-glow {
+  display: block; position: absolute; inset: calc(var(--phw, 300px) * -.012); border-radius: calc(var(--phw, 300px) * .117);
+  padding: calc(var(--phw, 300px) * .018);   /* the inner edge then matches the screen's own corner radius */
+  background: conic-gradient(from var(--glow-a), #ff5f6d, #ffb340, #ffe34d, #5ddc84, #3fa9ff, #b06bff, #ff5f6d);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: blur(calc(var(--phw, 300px) * .012)) saturate(1.3);
+  opacity: 0; transition: opacity .4s; animation: ph-glow 3.2s linear infinite; pointer-events: none;
+}
+@keyframes ph-glow { to { --glow-a: 360deg; } }
+/* a glass sheen over the ring, so it reads as light under the site's glass rather than a painted stripe */
+.scene.is-live .ph-glow::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.08) 45%, rgba(255,255,255,.4));
+  -webkit-backdrop-filter: blur(6px) saturate(160%); backdrop-filter: blur(6px) saturate(160%);
+}
+/* the same light bleeding softly inward over the screen and outward past the frame, breathing faintly.
+   The ring itself follows the screen's rounded shape; the blur lives on the parent, so the softening is never
+   clipped by the ring's own mask and there is no edge to see either side */
+.scene.is-live .ph-halo {
+  display: block; position: absolute; inset: calc(var(--phw, 300px) * -.2);
+  filter: blur(calc(var(--phw, 300px) * .055)) saturate(1.2);
+  opacity: 0; transition: opacity .5s; animation: ph-breathe 2.6s ease-in-out infinite; pointer-events: none;
+  transform: translateZ(2px);
+}
+.scene.is-live .ph-halo::before {
+  content: ""; position: absolute; inset: calc(var(--phw, 300px) * .2); border-radius: calc(var(--phw, 300px) * .117);
+  padding: calc(var(--phw, 300px) * .1);
+  background: conic-gradient(from var(--glow-a), #ff5f6d, #ffb340, #ffe34d, #5ddc84, #3fa9ff, #b06bff, #ff5f6d);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: ph-glow 3.2s linear infinite;
+}
+@keyframes ph-breathe { 50% { filter: blur(calc(var(--phw, 300px) * .08)) saturate(1.2); } }
+/* the legal review: the copy is picked out the way the system highlights a selection, a soft tinted lift, no outline */
+.scene.is-live .ph-copybox {
+  display: block; position: absolute; left: 4%; right: 4%; top: 58.3%; height: 13.2%; border-radius: calc(var(--phw, 300px) * .065);   /* sits just inside the caption band */
+  background: rgba(255,255,255,.2); box-shadow: inset 0 0 0 1px rgba(255,255,255,.6), 0 0 0 6px rgba(255,255,255,.08);
+  -webkit-backdrop-filter: brightness(1.25); backdrop-filter: brightness(1.25);
+  opacity: 0; transform: translateZ(30px) scale(1.04); transition: opacity .35s, transform .45s cubic-bezier(.2,.7,.2,1);
+}
+/* the tags on the phone wear the site's glass, a touch whiter because they sit on photographs */
+.scene.is-live .ph-stamp {
+  display: flex; align-items: center; gap: 8px; position: absolute; left: 50%; top: 30%; padding: 10px 16px 10px 10px; border-radius: 999px;
+  background: rgba(255,255,255,.78); color: var(--tabink); font-size: 15px; font-weight: 600; white-space: nowrap;
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.28); opacity: 0; transform: translate3d(-50%, 0, 80px) scale(1.6); transition: opacity .3s, transform .5s cubic-bezier(.3,1.5,.5,1);
+}
+.ph-stamp svg { width: 28px; height: 28px; border-radius: 50%; background: var(--rust); fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.scene.is-live .ph-chip, .scene.is-live .ph-live {
+  display: block; position: absolute; left: 50%; top: 8%; padding: 9px 15px; border-radius: 999px; white-space: nowrap;
+  font-size: 14px; font-weight: 600; box-shadow: 0 18px 40px rgba(0,0,0,.28);
+  opacity: 0; transform: translate3d(-50%, -14px, 70px); transition: opacity .3s, transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.scene.is-live .ph-chip, .scene.is-live .ph-live {
+  background: rgba(255,255,255,.78); color: var(--tabink);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.28);
+}
+.scene.is-live .ph-live {   /* the live dot in the accent */
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.28);
+}
+.scene.is-live .ph-live::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--rust); animation: ph-pulse 1.4s ease-in-out infinite; }
+@keyframes ph-pulse { 50% { opacity: .25; } }
+.scene.is-live .sc-count { opacity: 0; transform: translateY(14px); transition: opacity .4s, transform .5s cubic-bezier(.2,.7,.2,1); }
+
+/* a still walkthrough: a photograph with its caption instead of the phone, riding beside the stages */
+.sc-photo { margin: 0; width: min(520px, 100%); }
+.sc-photo img { display: block; width: 100%; height: auto; max-width: none; }   /* each picture keeps its own shape, nothing is cropped */
+.sc-photo figcaption { margin-top: 12px; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.scene.sc-still + .prose { margin-top: 130px; }
+.sc-video { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: pointer; overflow: hidden; border-radius: 0; }
+.sc-video img { display: block; width: 100%; height: auto; }
+.sc-video:has(.tile-preview) .play { opacity: 0; }
+.sc-figs { display: grid; width: min(520px, 100%); }
+.sc-figs > figure { grid-area: 1 / 1; width: 100%; opacity: 0; transition: opacity .5s; pointer-events: none; }   /* the hidden pictures never catch a click meant for the visible one */
+.sc-figs:not(.is-js) > figure:first-child, .sc-figs > figure.is-on { pointer-events: auto; }
+.sc-figs:not(.is-js) > figure:first-child, .sc-figs > figure.is-on { opacity: 1; }
+.strip-viewport { transition: opacity .5s; }
+.strip.is-fading .strip-viewport { opacity: 0; }
+.scene.sc-still .sc-names { display: flex; }
+
+/* what each stage does to the phone */
+.scene.is-live[data-stage="0"] .ph { --tilt: 1.1; }
+.scene.is-live[data-stage="1"] .ph { --tilt: .8; }
+.scene.is-live[data-stage="2"] .ph { --tilt: 0; }
+.scene.is-live[data-stage="2"] .ph-glow { opacity: 1; }
+.scene.is-live[data-stage="2"] .ph-halo { opacity: .55; }
+.scene.is-live[data-stage="3"] .ph { --tilt: .35; }
+.scene.is-live[data-stage="3"] .ph-stamp { opacity: 1; transform: translate3d(-50%, 0, 80px) scale(1); }
+.scene.is-live[data-stage="4"] .ph { --tilt: .35; }
+.scene.is-live[data-stage="4"] .ph-copybox { opacity: 1; transform: translateZ(30px) scale(1); }
+.scene.is-live[data-stage="5"] .ph { --tilt: .6; }
+.scene.is-live[data-stage="5"] .ph-chip { opacity: 1; transform: translate3d(-50%, 0, 70px); }
+.scene.is-live[data-stage="6"] .ph { --tilt: 0; --lift: -10px; }
+.scene.is-live[data-stage="6"] .ph-live { opacity: 1; transform: translate3d(-50%, 0, 70px); }
+.scene.is-live[data-stage="6"] .sc-count { opacity: 1; transform: none; }
+
+/* campaign scoreboard: a dark field */
+.tl-scene { position: relative; margin-top: 140px; background: #0e0e0e; color: #fff; }
+.tl-stage { padding: 110px 0 100px; }
+.tl-wrap { padding-left: calc(var(--gutter) + 9px); }
+.tl-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 48px; align-items: end; }
+.tl-head h2 { font-size: clamp(34px, 4.8vw, 64px); line-height: .98; letter-spacing: -.035em; font-weight: 700; }
+.tl-head p { font-size: 18px; line-height: 1.5; color: #d6d6d6; }
+.tl-head p + p { grid-column: 2; margin-top: -4px; }
+.tl-readout { display: none; }
+.tl-board { margin-top: 64px; }
+.tl-months { position: relative; height: 22px; margin-left: 260px; }
+.tl-months span:not(.tl-now) { position: absolute; top: 0; font-size: 14px; color: #8f8f8f; }
+.tl-lanes { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 14px; }
+.tl-lane { display: grid; grid-template-columns: 260px 1fr; align-items: center; }
+.tl-label { color: #fff; text-decoration: none; padding-right: 20px; }
+.tl-label strong { display: block; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
+.tl-label span { display: block; margin-top: 3px; font-size: 14px; line-height: 1.35; color: #9d9d9d; }
+a.tl-label:hover strong { color: #ff9a66; }
+.tl-scene :focus-visible { outline-color: #fff; outline-offset: 4px; }
+.tl-track { position: relative; height: 56px; border-radius: 10px; background: #1c1c1c; overflow: hidden; }
+.tl-bar { position: absolute; top: 0; bottom: 0; border-radius: 10px; background: #3a3a3a; overflow: hidden; }
+.tl-bar i { position: absolute; inset: 0; background: var(--rust); transform-origin: left; transform: scaleX(var(--fill, 1)); }
+/* the lane for everything smaller that ran the whole time: a dim bar, never counted */
+.tl-lane-always .tl-bar i { background: #4a4a4a; }
+.tl-note { margin-top: 26px; font-size: 14px; color: #8f8f8f; }
+.tl-scene + .prose { margin-top: 130px; }
+
+.tl-scene.is-live { height: 260vh; }
+.tl-scene.is-live .tl-stage { position: sticky; top: var(--pills-h, 80px); min-height: calc(100vh - var(--pills-h, 80px)); padding: 48px 0; display: flex; align-items: center; }
+.tl-scene.is-live .tl-wrap { width: 100%; }
+.tl-scene.is-live .tl-readout { display: flex; align-items: baseline; gap: 18px; margin-top: 44px; }
+.tl-readout strong { font-family: var(--display); font-size: clamp(30px, 3.6vw, 46px); letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tl-readout span { font-size: 17px; color: #ff9a66; }
+.tl-scene.is-live .tl-board { margin-top: 26px; }
+.tl-scene.is-live .tl-now { position: absolute; top: 28px; left: var(--now, 0%); width: 2px; height: var(--board-h, 220px); background: #fff; border-radius: 2px; z-index: 2; }
+.tl-scene.is-live .tl-lane.is-on .tl-label strong { color: #fff; }
+.tl-scene.is-live .tl-lane:not(.is-on) .tl-label strong { color: #7a7a7a; transition: color .3s; }
+.tl-lane.tl-lane-always .tl-label strong, .tl-scene.is-live .tl-lane.tl-lane-always .tl-label strong { color: #bdbdbd; }   /* the smaller promotions stay quieter than the big three */
+
+/* one line of the case set large, on its own */
+.prose.statement-wrap { margin-top: 56px; }
+.prose p.statement { max-width: 22ch; font-family: var(--display); font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -.025em; font-weight: 700; }
+
+/* learn-then-teach: words that fill as they reach the middle of the screen */
+.phases { list-style: none; margin: 34px 0 0; padding: 0; display: grid; gap: 22px; }
+.phases li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: center; }   /* each line sits centred on its word, whether it runs one line or two */
+.phases strong {
+  font-family: var(--display); font-size: clamp(48px, 8vw, 104px); line-height: .9; letter-spacing: -.045em; font-weight: 800;
+  color: color-mix(in srgb, var(--ink) calc(var(--fill, 1) * 100%), #d2d2d2);
+}
+.phases li > span { font-size: 18px; line-height: 1.45; opacity: calc(.35 + var(--fill, 1) * .65); }
+.ph-topics { margin-top: 40px !important; max-width: 640px; }
+/* the reference, drawn as the document: a page with its contents on a light band, after the words about it */
+.ph-scene + .ph-notes { margin-top: 110px; }
+.ref-figure { margin-top: 36px; }   /* the band runs edge to edge, like the gallery bands */
+.ref-band { background: var(--tabband); padding: 64px var(--gutter); display: flex; justify-content: center; perspective: 1400px; }
+/* the page is a sheet held in 3D: it tilts a little toward the pointer (main.js) and floats on a soft shadow */
+.ref-page {
+  background: #fff; width: min(560px, 100%); padding: 40px 44px 44px;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(var(--rz, 0px));
+  transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s;
+  box-shadow: 0 40px 70px -40px rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.05);
+  will-change: transform;
+}
+.ref-band.is-near .ref-page { box-shadow: 0 60px 90px -40px rgba(0,0,0,.4), 0 2px 6px rgba(0,0,0,.05); }
+.ref-title { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.2; letter-spacing: -.02em; }
+.ref-sub { margin-top: 22px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.ref-list { list-style: none; counter-reset: ref; margin: 8px 0 0; padding: 0; }
+.ref-list li { display: flex; gap: 14px; padding: 7px 0; font-size: 15px; line-height: 1.4; }
+.ref-list li::before { counter-increment: ref; content: counter(ref); flex: none; width: 1.6em; font-family: var(--round); color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 720px) {
+  .ph-scene + .ph-notes { margin-top: 64px; }
+  .ref-band { padding: 24px var(--gutter); }
+  .ref-page { padding: 24px 22px 28px; }
+}
+
+/* as a scene (desktop, with script): the stage holds, one phase lights per stretch of scroll */
+.ph-scene { margin-top: 100px; }
+.ph-scene .prose { margin-top: 0; }
+.ph-scene.is-live { height: calc((var(--n) * 55 + 45) * 1vh); }
+.ph-scene.is-live .ph-stage { position: sticky; top: var(--pills-h, 80px); height: calc(100vh - var(--pills-h, 80px)); display: flex; align-items: center; overflow: hidden; }
+.ph-scene.is-live .ph-stage > .prose { width: 100%; }
+.ph-scene.is-live .phases { gap: 14px; }
+.ph-scene.is-live .phases strong { font-size: clamp(40px, 5.6vw, 72px); transition: color .25s linear; }
+.ph-scene.is-live .phases li > span { opacity: 0; transform: translateY(10px); transition: opacity .45s, transform .55s cubic-bezier(.2,.7,.2,1); }
+.ph-scene.is-live .phases li.is-on > span { opacity: 1; transform: none; }
+.ph-scene.is-live .prose p.ph-topics { opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .6s cubic-bezier(.2,.7,.2,1); }   /* outranks the entrance rule */
+.ph-scene.is-live.is-done .prose p.ph-topics { opacity: 1; transform: none; }
+
+@media (max-width: 900px) {
+  .glance { grid-template-columns: 1fr 1fr; }
+  .sc-grid { gap: 28px; }
+  .tl-head { grid-template-columns: 1fr; }
+  .tl-head p + p { grid-column: auto; margin-top: 10px; }
+  .tl-months { margin-left: 200px; }
+  .tl-lane { grid-template-columns: 200px 1fr; }
+}
+@media (max-width: 720px) {
+  .glance-wrap { margin-top: 36px; padding-left: var(--gutter); }
+  .glance { gap: 24px 18px; }
+  .glance-wrap + .prose { margin-top: 64px; }
+  .scene { margin-top: 72px; }
+  .sc-grid { grid-template-columns: 1fr; padding-left: var(--gutter); }
+  .sc-visual { order: -1; }
+  /* phones: the scene never pins (main.js keeps .is-live off under 721px); the whole phone sits on top of
+     the heading, the intro and the seven stages in order */
+  .ph { width: min(210px, 56vw); }
+  .scene:not(.is-live) .sc-names, .scene:not(.is-live) .sc-count { display: none; }
+  .sc-panel h3 { font-size: 26px; }
+  .sc-panel > p:not(.sc-who) { font-size: 16px; }
+  .strip-ground .strip-track, .strip:has(.tile-cap):not(.strip-ground) .strip-track { padding-left: var(--gutter); }
+  .sc-figs > figure:not(:first-child) { display: none; }   /* phones: one picture on top of the stacked stages */
+  .sc-figs > figure:first-child { opacity: 1; }
+  .strip-ground + .prose, .strip-ground + .ph-scene { margin-top: 48px; }
+  .tile-cap span { display: none; }   /* phone tiles carry the title; the full caption opens with the tile */
+  .tl-scene { margin-top: 80px; }
+  .tl-stage { padding: 64px 0; }
+  .tl-wrap { padding-left: var(--gutter); }
+  .tl-months { margin-left: 0; }
+  .tl-lane { grid-template-columns: 1fr; gap: 8px; }
+  .tl-track { height: 40px; }
+  /* phones: the scoreboard doesn't pin (it is taller than the screen); its date runs as the board passes */
+  .tl-scene.is-live { height: auto; }
+  .tl-scene.is-live .tl-stage { position: static; min-height: 0; padding: 64px 0; display: block; }
+  .tl-scene.is-live .tl-readout { position: sticky; top: var(--pills-h, 60px); z-index: 3; margin: 32px calc(-1 * var(--gutter)) 0; padding: 10px var(--gutter); background: #0e0e0e; }
+  .tl-scene.is-live .tl-now { display: none; }
+  .phases li { grid-template-columns: 1fr; gap: 6px; }
+  .tl-scene + .prose { margin-top: 72px; }
+}
+
+/* ---------- the scene pages' type scale (body.case-v2): one scale from the headline down ----------
+   The headline is the largest thing on the page, section heads are visible, the lede reads as text. */
+.case-v2 { --edge: calc(var(--gutter) + 9px); }
+.contact-row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; font-size: 16px; }
+.contact-row a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+#contact .statement { max-width: 30ch; }
+@media (min-width: 721px) {
+  .case-v2 .case-hero h1 { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.05; letter-spacing: -.025em; max-width: 22ch; }
+  .case-v2 .case-hero-inner { min-height: 420px; padding-left: var(--edge); }
+  .case-v2 .case-sub { font-size: 17px; }
+  .case-v2 .prose h2 { font-size: clamp(26px, 3vw, 34px); line-height: 1.1; letter-spacing: -.025em; margin-bottom: 14px; }
+  .case-v2 .prose .lede { font-style: normal; text-align: left; font-size: 21px; line-height: 1.4; max-width: 58ch; color: var(--ink); }
+  .case-v2 .tl-head h2 { font-size: clamp(30px, 3.6vw, 46px); }
+  .case-v2 .sc-panel h3 { font-size: clamp(24px, 2.6vw, 32px); }
+  .case-v2 .phases strong { font-size: clamp(44px, 6.5vw, 84px); }
+  .case-v2 .case-nav { padding-left: var(--edge); padding-right: var(--edge); }
+  .case-v2 .prose.statement-wrap { margin-top: 110px; }
+}
+@media (max-width: 720px) {
+  .case-v2 .prose h2 { font-size: 24px; line-height: 1.15; margin-bottom: 10px; }
+}
+
+/* ---------- entrance motion on the scene pages: each block rises in once as it arrives (main.js marks them) ---------- */
+.js-reveal .case-v2 [data-reveal] > * { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.js-reveal .case-v2 [data-reveal].is-in > * { opacity: 1; transform: none; }
+.js-reveal .case-v2 [data-reveal].is-in > :nth-child(2) { transition-delay: .07s; }
+.js-reveal .case-v2 [data-reveal].is-in > :nth-child(3) { transition-delay: .14s; }
+.js-reveal .case-v2 [data-reveal].is-in > :nth-child(4) { transition-delay: .21s; }
+.js-reveal .case-v2 [data-reveal].is-in > :nth-child(n+5) { transition-delay: .28s; }
+.js-reveal .case-v2 .strip[data-reveal] > * { transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .case-v2 [data-reveal] > * { opacity: 1; transform: none; transition: none; }
+}
+@media print {
+  .js-reveal .case-v2 [data-reveal] > * { opacity: 1; transform: none; }
 }

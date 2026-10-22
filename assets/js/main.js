@@ -189,8 +189,8 @@
     const next = el.querySelector(".strip-next");
     const originals = [...track.children];
     const s = {
-      el, viewport, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0), v: 0, hover: false,
-      loops: el.hasAttribute("data-loop"), loop: 0, pos: 0, lastSet: -1,
+      el, viewport, track, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0), v: 0, hover: false,
+      loops: el.hasAttribute("data-loop"), restart: el.hasAttribute("data-restart"), loop: 0, pos: 0, lastSet: -1,
       pause: new Set(), resumeTimer: 0, visible: true, anim: 0,
     };
 
@@ -221,6 +221,7 @@
           c.dataset.clone = "";
           c.setAttribute("aria-hidden", "true");
           c.querySelectorAll("button").forEach((b) => (b.tabIndex = -1));
+          c.querySelectorAll("[id]").forEach((n) => n.removeAttribute("id"));   // the captions' ids stay unique
           c.querySelectorAll(".tile-preview").forEach((f) => f.remove());
           // the copies' videos autoplay too, so the loop doesn't turn them into still posters
           if (autoObserver && el.dataset.play === "auto" && !reduceMotion) c.querySelectorAll(".tile[data-video]").forEach((v) => autoObserver.observe(v));
@@ -254,6 +255,7 @@
       arrows();
       const x = viewport.scrollLeft;
       if (s.anim || Math.abs(x - s.lastSet) <= 1) return; // our own movement
+      track.style.transform = "";   // a person took over: drop the sub-pixel nudge
       if (s.loop) { // keep a looping slider seamless when a person scrolls it
         if (x >= s.loop) viewport.scrollLeft = x - s.loop;
         else if (x <= 0) viewport.scrollLeft = x + s.loop;
@@ -324,14 +326,32 @@
     for (const s of strips) {
       if (!s.speed || s.anim || !s.visible || s.pause.size || lightboxOpen) continue;
       if (s.el.classList.contains("is-static")) continue;
-      const target = s.hover ? Math.min(s.speed, HOVER_SPEED) : s.speed;
+      const target = s.hover ? Math.min(HOVER_SPEED, s.speed / 2) : s.speed;
       s.v = s.v ? s.v + (target - s.v) * Math.min(1, dt * 4) : target;  // ease between paces over about half a second
       s.pos += s.v * dt;
       if (s.loop && s.pos >= s.loop) s.pos -= s.loop;
       const end = s.viewport.scrollWidth - s.viewport.clientWidth;
-      if (!s.loop && s.pos >= end) { s.pos = end; } // non-looping Wix sliders stop at the end
-      s.viewport.scrollLeft = s.pos;
+      if (!s.loop && s.pos >= end) {
+        s.pos = end;   // non-looping Wix sliders stop at the end
+        if (s.restart && !s.restarting) {   // ...unless they restart: a pause, a fade out, back to the start, a fade in
+          s.restarting = true;
+          s.pause.add("restart");
+          setTimeout(() => {
+            s.el.classList.add("is-fading");
+            setTimeout(() => {
+              s.pos = 0; s.viewport.scrollLeft = 0; s.lastSet = 0; s.v = 0; s.track.style.transform = "";
+              s.el.classList.remove("is-fading");
+              setTimeout(() => { s.pause.delete("restart"); s.restarting = false; }, 600);
+            }, 500);
+          }, 1500);
+        }
+      }
+      // scrollLeft only moves in whole pixels (Safari rounds it), which judders at slow speeds; the whole
+      // pixels go to scrollLeft and the fraction rides on the track as a transform, so the motion stays smooth
+      const whole = Math.floor(s.pos);
+      s.viewport.scrollLeft = whole;
       s.lastSet = s.viewport.scrollLeft;
+      s.track.style.transform = `translate3d(${(whole - s.pos).toFixed(3)}px, 0, 0)`;
     }
     requestAnimationFrame(tick);
   }
@@ -341,7 +361,7 @@
   function previewUrl(kind, id) { // muted, chrome-free autoplay for hover previews
     return kind === "vimeo"
       ? `https://player.vimeo.com/video/${id}?background=1&dnt=1`
-      : `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&modestbranding=1&rel=0`;
+      : `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${id}&modestbranding=1&rel=0&cc_load_policy=0&iv_load_policy=3`;   // no captions or annotations over a silent preview
   }
 
   // A silent preview player sized to the video's own shape and centered in the
@@ -848,6 +868,296 @@
     let saved = null;
     try { saved = sessionStorage.getItem(KEY); } catch (e) {}
     if (saved) unlock(saved).catch(() => {});
+  }
+
+  // ---------- case study scenes (Nike): a stage that holds still while its section scrolls past ----------
+  // Each scene section is several screens tall and its stage is sticky; the scroll through the section is
+  // the scene's progress, 0 to 1. Nothing captures the wheel. With reduced motion (or no script) the
+  // sections stay laid out still.
+
+  const pinTop = () => {
+    const pills = document.querySelector(".page-case .pills");
+    const h = pills ? pills.offsetHeight : 0;
+    document.documentElement.style.setProperty("--pills-h", `${h}px`);
+    return h;
+  };
+  const progress = (el, pin) => {
+    const r = el.getBoundingClientRect();
+    const run = r.height - (window.innerHeight - pin);
+    return run > 0 ? Math.min(1, Math.max(0, (pin - r.top) / run)) : 0;
+  };
+  const scenes = [];
+
+  document.querySelectorAll('[data-scene="flow"]').forEach((scene) => {
+    const panels = [...scene.querySelectorAll(".sc-panel")];
+    const names = [...scene.querySelectorAll(".sc-names button")];
+    const ph = scene.querySelector(".ph");
+    const count = scene.querySelector(".sc-count strong");
+    const text = scene.querySelector(".sc-text");
+    const panelsBox = scene.querySelector(".sc-panels");
+    const n = panels.length;
+    const phone = matchMedia("(max-width: 720px)");
+    let stage = -1;
+    let tooTall = false;   // a window too short for the text column gets the still layout instead of a cropped pin
+    const fmt = new Intl.NumberFormat("en-US");
+    const isLive = () => scene.classList.contains("is-live");
+    // the frame's radii, island and keys are sized from the phone's width
+    if (ph) {
+      const sizePhone = () => ph.style.setProperty("--phw", `${ph.getBoundingClientRect().width}px`);
+      sizePhone();
+      if ("ResizeObserver" in window) new ResizeObserver(sizePhone).observe(ph); else window.addEventListener("resize", sizePhone);
+    }
+    names.forEach((b) => b.addEventListener("click", () => {
+      if (!isLive()) { panels[+b.dataset.go].scrollIntoView({ block: "start" }); return; }
+      // scroll to the middle of that stage's stretch of the section
+      const top = scene.getBoundingClientRect().top + window.scrollY;
+      const run = scene.offsetHeight - (window.innerHeight - pinTop());
+      window.scrollTo({ top: top - pinTop() + run * ((+b.dataset.go + 0.5) / n), behavior: "smooth" });
+    }));
+    // the switcher under the phone swaps which placement goes through the stages
+    const sw = scene.querySelector(".sc-switch");
+    if (sw && ph) {
+      const sets = JSON.parse(scene.querySelector(".sc-sets").textContent);
+      sw.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+        const set = sets[+b.dataset.set];
+        ph.querySelectorAll(".ph-layer img").forEach((img) => { img.src = set.src; });
+        const nx = ph.querySelector(".ph-next"); if (nx) nx.src = set.next;
+        sw.querySelectorAll("button").forEach((x) => x.classList.toggle("is-on", x === b));
+      }));
+    }
+    if (reduceMotion) return;
+    const live = () => {
+      scene.classList.toggle("is-live", !!ph && !phone.matches && !tooTall);   // a still walkthrough (a photo, no phone) never pins
+      stage = -1;
+      if (!isLive()) {   // back to the still layout: whole phone, every panel, the full figure
+        scene.removeAttribute("data-stage");
+        if (ph) ["--apart", "--scan"].forEach((v) => ph.style.removeProperty(v));
+        panels.forEach((el) => el.classList.remove("is-on"));
+        names.forEach((el) => { el.classList.remove("is-on", "is-done"); el.removeAttribute("aria-current"); });
+        if (count) count.textContent = fmt.format(+count.dataset.to) + "+";
+      }
+    };
+    const fits = () => {
+      if (tooTall || phone.matches || !isLive()) return;
+      const need = text.offsetHeight - panelsBox.offsetHeight + Math.max(panelsBox.offsetHeight, ...panels.map((p) => p.offsetHeight));
+      if (need > window.innerHeight - pinTop()) { tooTall = true; live(); }
+    };
+    live();
+    fits();
+    phone.addEventListener("change", () => { live(); fits(); });
+    window.addEventListener("resize", fits);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fits);
+    scenes.push((pin) => {
+      if (!isLive()) return;
+      const p = progress(scene, pin);
+      const at = Math.min(n - 1, Math.floor(p * n));
+      const local = p * n - at;
+      if (at !== stage) {
+        stage = at;
+        scene.dataset.stage = String(at);
+        panels.forEach((el, i) => el.classList.toggle("is-on", i === at));
+        names.forEach((el, i) => {
+          el.classList.toggle("is-on", i === at);
+          el.classList.toggle("is-done", i < at);
+          if (i === at) el.setAttribute("aria-current", "step"); else el.removeAttribute("aria-current");
+        });
+      }
+      // the layers come together over the first two stages; the scan runs down during the device check
+      if (ph) {
+        // the slices are back together by 60% of the Build stage, and from then on the screen clips like a real one
+        const apart = Math.max(0, 1 - p * n / 1.6);
+        ph.style.setProperty("--apart", (apart * apart).toFixed(3));   // eased: they settle gently rather than sliding in at full pace
+        scene.classList.toggle("is-whole", apart === 0);
+
+        ph.style.setProperty("--scan", at === 2 ? Math.min(1, local * 1.15).toFixed(3) : "0");
+      }
+      if (count) {
+        const to = +count.dataset.to;
+        const v = at === n - 1 ? Math.round(to * Math.min(1, local * 1.6) / 10000) * 10000 : 0;
+        count.textContent = fmt.format(v) + (v >= to ? "+" : "");   // "as many as": the plus lands with the last figure
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-scene="timeline"]').forEach((scene) => {
+    if (reduceMotion) return;
+    const lanes = [...scene.querySelectorAll(".tl-lane")];
+    const date = scene.querySelector(".tl-date");
+    const live = scene.querySelector(".tl-live");
+    const months = scene.querySelector(".tl-months");
+    const board = scene.querySelector(".tl-board");
+    const start = new Date(scene.dataset.start + "T12:00:00");
+    const days = +scene.dataset.days;
+    const fmt = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" });
+    scene.classList.add("is-live");
+    scenes.push((pin) => {
+      // the date moves through the middle 80% of the hold, so it rests on the first and last day
+      let p;
+      if (matchMedia("(max-width: 720px)").matches) {
+        // phones: the board doesn't pin, so the date runs while the board crosses the screen
+        const r = board.getBoundingClientRect();
+        p = Math.min(1, Math.max(0, (window.innerHeight * 0.75 - r.top) / (r.height + window.innerHeight * 0.2)));
+      } else {
+        p = Math.min(1, Math.max(0, (progress(scene, pin) - 0.1) / 0.8));
+      }
+      const pct = p * 100;
+      months.style.setProperty("--now", `${pct}%`);
+      months.style.setProperty("--board-h", `${board.offsetHeight - 22}px`);
+      date.textContent = fmt.format(new Date(start.getTime() + Math.round(p * days) * 864e5));
+      let on = 0, always = false;
+      lanes.forEach((l) => {
+        const s = +l.dataset.start, e = +l.dataset.end;
+        const fill = Math.min(1, Math.max(0, (pct - s) / (e - s)));
+        l.querySelector(".tl-bar i").style.setProperty("--fill", fill.toFixed(3));
+        const isOn = pct >= s && pct <= e;
+        l.classList.toggle("is-on", isOn);
+        if (!isOn) return;
+        if ("always" in l.dataset) always = true; else on++;   // the smaller promotions ran throughout and are not counted
+      });
+      const big = on === 0 ? "Between campaigns" : on === 1 ? "1 campaign live" : `${on} campaigns live`;
+      live.textContent = always ? `${big}, plus smaller promotions` : big;
+    });
+  });
+
+  // the reference page tilts a little toward the pointer, like a sheet held up to read
+  document.querySelectorAll(".ref-band").forEach((band) => {
+    const page = band.querySelector(".ref-page");
+    if (!page || reduceMotion) return;
+    if (!canHover) {
+      // phones and tablets: the sheet tilts with the device instead, relative to how it was first held.
+      // Only where motion data needs no permission prompt (iOS asks, so iPhones and iPads get the flat sheet).
+      if (!("DeviceOrientationEvent" in window) || typeof DeviceOrientationEvent.requestPermission === "function") return;
+      let base = null;
+      const onTilt = (e) => {
+        if (e.beta == null || e.gamma == null) return;
+        if (!base) base = { b: e.beta, g: e.gamma };
+        const dx = Math.max(-1, Math.min(1, (e.gamma - base.g) / 25)), dy = Math.max(-1, Math.min(1, (e.beta - base.b) / 25));
+        page.style.setProperty("--ry", `${(dx * 8).toFixed(2)}deg`);
+        page.style.setProperty("--rx", `${(-dy * 6).toFixed(2)}deg`);
+      };
+      const start = () => window.addEventListener("deviceorientation", onTilt);
+      start();
+      return;
+    }
+    band.addEventListener("pointermove", (e) => {
+      const r = band.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+      page.style.setProperty("--ry", `${(dx * 10).toFixed(2)}deg`);
+      page.style.setProperty("--rx", `${(-dy * 7).toFixed(2)}deg`);
+      page.style.setProperty("--rz", "14px");
+      band.classList.add("is-near");
+    });
+    band.addEventListener("pointerleave", () => {
+      ["--rx", "--ry", "--rz"].forEach((v) => page.style.removeProperty(v));
+      band.classList.remove("is-near");
+    });
+  });
+
+  // a video figure in a still walkthrough: a silent preview in place, the lightbox player on click
+  document.querySelectorAll(".sc-video").forEach((btn) => {
+    const item = JSON.parse(btn.parentElement.querySelector(".sc-video-data").textContent);
+    if (autoObserver && !reduceMotion) autoObserver.observe(btn);
+    btn.addEventListener("click", (e) => open([item], 0, e.detail > 0));
+  });
+
+  // a still walkthrough with one picture per stage: the picture changes as each stage reaches the middle of the window
+  document.querySelectorAll(".scene.sc-still .sc-figs").forEach((figs) => {
+    const scene = figs.closest(".scene");
+    const panels = [...scene.querySelectorAll(".sc-panel")];
+    const pics = [...figs.querySelectorAll("figure")];
+    figs.classList.add("is-js");
+    let on = -1;
+    scenes.push(() => {
+      const line = window.innerHeight * 0.5;
+      let at = 0;
+      panels.forEach((p, i) => { if (p.getBoundingClientRect().top < line) at = i; });
+      at = Math.min(at, pics.length - 1);
+      if (at !== on) { on = at; pics.forEach((f, i) => f.classList.toggle("is-on", i === at)); }
+    });
+  });
+
+  // learn-then-teach as a scene: the stage holds and each phase lights up in turn (desktop only; phones and
+  // short windows get the free-scrolling version below)
+  document.querySelectorAll('[data-scene="phases"]').forEach((scene) => {
+    if (reduceMotion) return;
+    const items = [...scene.querySelectorAll(".phases li")];
+    const inner = scene.querySelector(".ph-stage > .prose");
+    const n = items.length;
+    const phone = matchMedia("(max-width: 720px)");
+    let tooTall = false;
+    const isLive = () => scene.classList.contains("is-live");
+    const live = () => {
+      scene.classList.toggle("is-live", !phone.matches && !tooTall);
+      if (!isLive()) {
+        scene.classList.remove("is-done");
+        items.forEach((li) => { li.classList.remove("is-on"); li.style.removeProperty("--fill"); });
+      }
+    };
+    const fits = () => {
+      if (tooTall || phone.matches || !isLive()) return;
+      if (inner.offsetHeight + 40 > window.innerHeight - pinTop()) { tooTall = true; live(); }
+    };
+    live();
+    fits();
+    phone.addEventListener("change", () => { live(); fits(); });
+    window.addEventListener("resize", fits);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fits);
+    scenes.push((pin) => {
+      if (!isLive()) return;
+      const p = progress(scene, pin);
+      const at = Math.min(n - 1, Math.floor(p * n));
+      const local = p * n - at;
+      items.forEach((li, i) => {
+        li.style.setProperty("--fill", i < at ? "1" : i === at ? Math.min(1, local * 1.6).toFixed(3) : "0");
+        li.classList.toggle("is-on", i <= at);
+      });
+      scene.classList.toggle("is-done", at === n - 1 && local > 0.45);
+    });
+  });
+
+  // the phase words fill from grey to ink as they reach the middle of the screen (when the section is not a live scene)
+  const fills = reduceMotion ? [] : [...document.querySelectorAll("[data-fill] li")];
+  if (fills.length) {
+    scenes.push(() => {
+      const vh = window.innerHeight;
+      fills.forEach((li) => {
+        if (li.closest(".scene.is-live")) return;
+        const r = li.getBoundingClientRect();
+        const f = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (vh * 0.35)));
+        li.style.setProperty("--fill", f.toFixed(3));
+      });
+    });
+  }
+
+  // the scene pages: each block rises in once as it arrives
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    const blocks = [...document.querySelectorAll(".case-v2 .glance-wrap, .case-v2 .prose:not(.lede-wrap), .case-v2 .strip, .case-v2 .case-nav")];
+    if (blocks.length) {
+      document.documentElement.classList.add("js-reveal");
+      const arrive = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          // in view, or already scrolled past (a jump down the page): shown, and no longer watched
+          if (e.isIntersecting || e.boundingClientRect.bottom < 0) { e.target.classList.add("is-in"); arrive.unobserve(e.target); }
+        }
+      }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+      blocks.forEach((b) => { b.dataset.reveal = ""; arrive.observe(b); });
+      // a jump down the page (a link to a section) skips blocks without ever showing them: on each scroll,
+      // anything left above the window is simply shown, so scrolling back up never meets hidden text
+      scenes.push(() => {
+        blocks.forEach((b) => {
+          if (!b.classList.contains("is-in") && b.getBoundingClientRect().bottom < 0) { b.classList.add("is-in"); arrive.unobserve(b); }
+        });
+      });
+    }
+  }
+
+  if (scenes.length) {
+    let queued = false;
+    const run = () => { queued = false; const pin = pinTop(); scenes.forEach((f) => f(pin)); };
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(run); } };
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    run();
   }
 
   // ---------- visit alerts: a phone notification (ntfy app, subscribed to this topic) when someone opens the site ----------

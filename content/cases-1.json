@@ -7,169 +7,397 @@
       "bg": "thomas-serer-R_0rTS9ENnk-unsplash.jpeg",
       "logos": [],
       "title": "How I Shipped What 20 Million Nike Customers See First",
-      "subtitle": "Digital Content Publishing for Nike's App and Nike.com | Contract via Insight Global"
+      "subtitle": "Digital Content Manager (Contract) | Nike App and Nike.com"
     },
-    "lede": "Nike's app and website form one of the largest direct-to-consumer retail surfaces in the world. Each featured placement, landing page, product grid, and notification started as a decision someone made upstream, then had to be executed correctly in front of an enormous audience. For three months in 2026, that execution was my job.",
+    "lede": "From June to August 2026 I was a Digital Content Manager at Nike on a planned three-month contract. I published campaign content and app notifications to Nike.com and the Nike app, reaching as many as 20M customers per activation, verified delivery after each send, and co-developed the authoring reference the team now uses to onboard publishers. Every placement starts as a decision someone made upstream. Getting it live, correct, and on time was my job.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
+        "h": "More Requests Than One Calendar Can Hold",
         "p": [
-          "Content goes out continuously on both the app and the site, reaching people within minutes of going live. Requests arrive from marketing partners across the business faster than one calendar absorbs them, and a single campaign can touch an app shopping surface, a website landing page, a product grid, a notification, and the routing that connects all of it.",
-          "Some requests arrive incomplete: assets missing, timing that collides with work already scheduled, asks the platform cannot support. Delivery decides whether a campaign reaches anyone at all."
+          "Requests reach Nike's publishing team from marketing partners across the business, and one campaign can touch an app shopping surface, a landing page, a product grid, a notification, and the routing between them.",
+          "Some arrive incomplete: assets missing, timing that collides with work already scheduled, or a request the platform cannot support. With as many as 20 million people on the other end of one activation, delivery decides whether a campaign reaches anyone at all."
         ]
       },
       {
-        "h": "THE SOLUTION",
+        "h": "From Request to Live",
+        "id": "process",
         "p": [
-          "Each execution stayed with me from request through confirmation, and the check happened on a real device before anything got scheduled, since a desktop preview hides what a phone shows.",
-          "Conflicts and platform limits went back to partners while there was still time to change the plan. After each send, delivery data confirmed the content reached people the way the brief intended. Partners handed me a request and got back a live, working execution on the date they needed it.",
-          "Two smaller pieces of the job came out of the same seat: headline, product, and entry-point tests on live placements, reported in wrap briefs, and the team's authoring reference, which I drafted as the onboarding guide for incoming publishers."
+          "I owned each placement from brief to verified delivery, and nothing was scheduled until it held up on a real phone. QA sign-off and legal review belonged to others; the build came back to me to schedule, and my part ended once delivery was confirmed.",
+          "Scroll through one placement to see which steps were mine."
+        ],
+        "steps": [
+          {
+            "t": "Brief",
+            "title": "Intake the Brief",
+            "d": "A brief arrived from a marketing partner with the copy, imagery, links, and timing. I filled in what I could, and when something was missing or conflicting I went to the stakeholder who had the answer while the plan could still change.",
+            "checks": [
+              "Assets and copy complete",
+              "Timing clear of work already scheduled",
+              "Fits what the platform supports"
+            ]
+          },
+          {
+            "t": "Build",
+            "title": "Build the Placement",
+            "d": "I built it in Nike's proprietary CMS: the module, the copy, the imagery, and the routing behind every tile and button.",
+            "checks": [
+              "Matches the Figma source",
+              "Every tile and button routes to a live destination",
+              "Alt text, captions, and heading structure in place"
+            ]
+          },
+          {
+            "t": "Device Check",
+            "title": "Check It on a Real Device",
+            "d": "Before handing it off, I previewed it on a phone and on desktop, across breakpoints, in the app and on the web. Defects went to the development team with what I saw and where.",
+            "checks": [
+              "Holds at every breakpoint",
+              "Behaves the same in the app and on the web",
+              "Reads at a glance with the sound off",
+              "Copy and visuals hold to brand guidelines"
+            ]
+          },
+          {
+            "t": "QA Sign-Off",
+            "who": "QA",
+            "title": "QA Sign-Off",
+            "d": "The build went to QA and came back signed off, or with fixes for me. I ran the same check on other publishers' builds, so I knew what QA would look for before I handed mine off."
+          },
+          {
+            "t": "Legal Review",
+            "who": "Legal",
+            "title": "Legal Copy Review",
+            "d": "Claims and promotional copy cleared legal review before anything was released."
+          },
+          {
+            "t": "Schedule",
+            "title": "Schedule the Release",
+            "d": "I scheduled it into a fixed publish window, coordinated with the operations, UX, and technical production teams. A claim that changed after sign-off went back through legal, and a changed link or image went back through the device check, before anything was released.",
+            "checks": [
+              "Publish window confirmed",
+              "No collision with placements already live"
+            ]
+          },
+          {
+            "t": "Verify",
+            "title": "Go Live and Verify",
+            "d": "After each send I confirmed the placement myself. Tests on headlines, featured products, and category entry points went into wrap briefs for campaign stakeholders, and those results belong to Nike.",
+            "checks": [
+              "Live on Nike.com and in the app",
+              "Notification delivered",
+              "Findings reported in the wrap brief"
+            ]
+          }
+        ],
+        "phone": "Nike Spotlight.PNG",
+        "layers": [
+          0,
+          0.5767,
+          0.7215,
+          1
+        ],
+        "reach": "Customers a single activation could reach",
+        "next": "IMG_2266.PNG",
+        "sets": [
+          {
+            "name": "Mark Bowman",
+            "phone": "Nike Spotlight.PNG",
+            "next": "IMG_2266.PNG"
+          },
+          {
+            "name": "Mia Corona",
+            "phone": "Nike Spotlight 2.PNG",
+            "next": "Nike Spotlgiht.PNG"
+          }
+        ]
+      },
+      {
+        "h": "Three Campaigns at Once",
+        "id": "campaigns",
+        "p": [
+          "I joined with the World Cup already near its end and posted updates against live match results; Back to School needed athlete stories and full shopping surfaces; the U.S. Open needed its tennis shop live for the tournament. Smaller campaigns ran alongside these three."
+        ],
+        "range": [
+          "2026-06-01",
+          "2026-08-31"
+        ],
+        "caption": "Bars show roughly when each campaign was in my queue. Back to School and the U.S. Open link to their work below.",
+        "lanes": [
+          {
+            "t": "FIFA World Cup",
+            "note": "Updates against live match results, not pictured",
+            "start": "2026-06-01",
+            "end": "2026-07-19"
+          },
+          {
+            "t": "Back to School",
+            "note": "Athlete stories and shopping surfaces",
+            "start": "2026-07-06",
+            "end": "2026-08-31",
+            "href": "#athletes"
+          },
+          {
+            "t": "U.S. Open",
+            "note": "Tennis landing page and product grid",
+            "start": "2026-07-13",
+            "end": "2026-08-31",
+            "href": "#shops"
+          },
+          {
+            "t": "Smaller promotions",
+            "note": "Several running at any time, not pictured",
+            "start": "2026-06-01",
+            "end": "2026-08-31",
+            "always": true
+          }
         ]
       },
       {
         "h": "Building the Placements People See First",
         "p": [
-          "A featured placement is often the first thing someone sees when they open Nike.com or the app. It has to load instantly, read in a glance, and hold up with the sound off, which is how most people meet it.",
-          "Mine ran from request to live: sourcing the imagery and copy, constructing the placement, previewing it on device, and routing it into campaigns including the U.S. Open Tennis Championships, Back to School, and the FIFA World Cup, where updates published against live match results."
-        ]
+          "A featured placement is often the first thing someone sees when they open Nike.com or the app. It has to read at a glance, on a phone, with the sound off.",
+          "I ran mine from request to live: placing the imagery and copy from the brief, building the placement, previewing it on a device, and routing it into its campaign."
+        ],
+        "id": "placements"
       },
       {
         "gallery": [
           {
             "src": "Nike 20.png",
             "title": "Hard in the Paint Tennis Landing Page",
-            "desc": "A tennis landing page built around the Slam City Collection, led by a \"Hard in the Paint\" hero that asks shoppers to gear up for NYC's biggest tennis showdown. Below it, an Athlete Picks carousel routes into Carlos Alcaraz, Naomi Osaka and Serena Williams.\nThe second view carries the surface into Look of Tennis and Slam Collection entry points plus a Popular Right Now grid. Each tile had to resolve to the right shop before anything went live."
+            "desc": "The Slam City Collection's tennis landing page, with Athlete Picks routing into Carlos Alcaraz, Naomi Osaka, and Serena Williams.\nThe second view carries the surface into Look of Tennis, the Slam Collection, and a Popular Right Now grid. I checked that every tile opened the right shop before anything went live.",
+            "cap": "I checked that every tile opened the right shop before anything went live."
           },
           {
             "v": "1228250189",
             "title": "Back in Style Back to School App Story",
-            "desc": "A Back to School placement in the Nike app, opening on two students in Nike gear on stadium bleachers under the headline \"Head back to school in style.\" The copy invites shoppers to find looks for school, sport and everything in between.\nI previewed it on device before scheduling, since this kind of story is usually met on a phone with the sound off. It had to read in a glance and route cleanly into the gear."
+            "desc": "An app story inviting students to find looks for school, sport, and everything in between.\nStories like this are usually met on a phone with the sound off, so I checked on a device that the message carried without it.",
+            "cap": "Stories like this are usually met on a phone with the sound off, so I checked on a device that the message carried without it."
           },
           {
             "v": "1228251265",
             "title": "Men's Hero Carousel on Nike.com",
-            "desc": "A men's landing page on Nike.com with a rotating hero carousel under the Shop All, Shoes, Clothing, Accessories and Sale navigation. This recording shows the motion between slides, from a trail shoe in mid-stride to a close portrait.\nFeatured placements like this are often the first thing someone sees on the site. I built and checked them so each slide loaded fast and landed on the right destination."
+            "desc": "The rotating hero on Nike.com's men's page, recorded to show the motion between slides.\nI built each slide and checked the carousel across breakpoints, so the motion and crops held from a phone up to a wide desktop.",
+            "cap": "I built each slide and checked the carousel across breakpoints, so the motion and crops held from a phone up to a wide desktop."
           },
           {
             "v": "1228250188",
             "title": "ACG Zegama Hike App Feature",
-            "desc": "An app feature for the ACG Zegama Hike, opening on a cinematic shot of a globe and circuitry stamped \"All Conditions Research Dept.\" The headline below calls it a rock-solid shoe with trail runner DNA.\nI built the placement from the supplied video and copy, then checked it on a real device so the motion, type and navigation held up together. A desktop preview would have hidden how the story actually plays on a phone."
+            "desc": "An app feature for the ACG Zegama Hike, a trail shoe from Nike's All Conditions Gear line.\nI built it from the supplied video and copy, then checked it on a real phone so the motion, type, and navigation held up together. A desktop preview would have hidden how the story plays on a phone.",
+            "cap": "I built it from the supplied video and copy, then checked it on a real phone so the motion, type, and navigation held up together."
           },
           {
             "v": "1228250203",
             "title": "Play Mind Games Nike Mind Landing Page",
-            "desc": "A landing page for Nike Mind and the 24.7 Collection, led by a \"Play Mind Games\" hero that invites shoppers to lock in before the game. An Explore Nike Mind row below breaks the footwear down in close-up product imagery.\nI assembled the hero, copy and product row into one surface and routed the Shop button into the collection. The recording shows how the page moves from the campaign image into the product story."
+            "desc": "A landing page for Nike Mind and the 24.7 Collection, moving from the campaign image into close-up product shots.\nI assembled the hero, copy, and product row into one surface and routed the Shop button into the collection.",
+            "cap": "I assembled the hero, copy, and product row into one surface and routed the Shop button into the collection."
           }
         ],
         "height": 569,
         "gap": 50,
         "speed": 60,
-        "label": "Click Visual to See Closer",
+        "label": "",
         "label_pos": "above",
         "play": "auto",
-        "loop": true
+        "loop": true,
+        "ground": true
       },
       {
-        "h": "Athlete Stories, Published on a Seasonal Beat",
+        "h": "Athlete Stories, Timed to the Season",
         "p": [
-          "Some of the highest-stakes placements were built around real athletes. For Back to School, featured placements on incoming UCLA midfielder Mia Corona and USC tight end Mark Bowman paired their photography with copy and routed each into the gear from the shoot.",
-          "Talent-led content carries a different weight than product content. The names, the imagery, and the timing all have to be exactly right, and the season sets the publishing window. Getting these live correctly, on the day they were meant to run, was the whole job."
-        ]
+          "Some of the highest-stakes placements I built were around named athletes. For Back to School, I paired the photography of incoming UCLA midfielder Mia Corona and USC tight end Mark Bowman with their copy and routed each story into the gear from the shoot.",
+          "Names, imagery, and timing had to be exactly right, because the season set the day and the day did not move."
+        ],
+        "id": "athletes"
       },
       {
         "gallery": [
           {
             "src": "Nike 4.png",
             "title": "Gear for a Great Year Back to School Carousel",
-            "desc": "A Back to School page on Nike.com with First-Day Footwear, Backpacks, Shop All and Sport Ready navigation above a \"Gear for a Great Year\" carousel. Athlete photography labeled Jazzy Davidson of USC Basketball and Lamar Bo Jackson of Ohio State Football routes into Women's, Kids and Men's shops.\nTalent-led tiles carry extra weight, so every name and destination had to be exactly right for the season's publishing window."
+            "desc": "Nike.com's Back to School carousel, with athletes from USC Basketball and Ohio State Football routing into the Women's, Kids, and Men's shops.\nI built the carousel and routed each athlete tile into its shop. Talent-led tiles carry extra weight, so every name and destination had to be exactly right for the season's publishing window.",
+            "cap": "I built the carousel and routed each athlete tile into its shop."
           },
           {
             "src": "Nike Spotlight.PNG",
             "title": "Mark Bowman Back to School Spotlight",
-            "desc": "A Back to School feature in the Nike app on USC tight end Mark Bowman, pairing campus photography with copy about turning heads in top Nike gear. The story continues into a second image labeled with his name, school and sport.\nI paired the shoot imagery with the copy and routed the feature into the gear he wears. Getting the name, imagery and timing right was the whole job."
+            "desc": "An app feature on USC tight end Mark Bowman, pairing campus photography with copy about the gear he wears.\nBefore scheduling it I checked his name, school, and position against the brief.",
+            "cap": "Before scheduling it I checked his name, school, and position against the brief."
           },
           {
             "src": "IMG_2266.PNG",
             "title": "Mark Bowman Back-to-School Styles Shop Row",
-            "desc": "Further down the Mark Bowman story, the feature turns into shopping: product tiles with prices, a View All button and a Back-to-School Styles carousel that opens on Apparel.\nThis is where the athlete story connects to the gear from the shoot. I routed each tile and category entry point so someone moved from his photography straight into something they could buy."
+            "desc": "Further down the Bowman story, the feature turns into shopping.\nI routed each tile and category entry point so someone could go from his photograph straight to something they could buy.",
+            "cap": "I routed each tile and category entry point so someone could go from his photograph straight to something they could buy."
           },
           {
             "src": "Nike Spotlight 2.PNG",
             "title": "Mia Corona Back to School Spotlight",
-            "desc": "A Back to School feature in the Nike app on incoming UCLA freshman and midfielder Mia Corona, photographed in a striped Nike jersey against warm wood paneling. The copy frames her look as ready for the coming school year.\nI built the placement from the shoot imagery and copy and checked it on device before scheduling. Talent content leaves no room for small mistakes in names or timing."
+            "desc": "An app feature on incoming UCLA midfielder Mia Corona, styled for the coming school year.\nI built the placement from the shoot imagery and copy, matching the crop to the Figma source so her portrait held on every screen size.",
+            "cap": "I built the placement from the shoot imagery and copy, matching the crop to the Figma source so her portrait held on every screen size."
           },
           {
             "src": "Nike Spotlgiht.PNG",
             "title": "Mia Corona Back-to-School Styles Shop Row",
-            "desc": "The shopping half of the Mia Corona story, with product tiles and prices above a Back-to-School Styles carousel that leads with her classroom portrait and an Apparel entry point.\nI connected the athlete photography to the gear from the shoot so the story ended in a place to shop rather than a dead end. Each tile was checked to make sure it landed on the right destination."
+            "desc": "The shopping half of the Mia Corona story, with product tiles and a Back-to-School Styles carousel.\nI connected her photography to the gear from the shoot, so the story ended in a place to shop.",
+            "cap": "I connected her photography to the gear from the shoot, so the story ended in a place to shop."
           },
           {
             "src": "Nike 3.png",
-            "title": "Shop Women's, Men's and All Entry Tiles",
-            "desc": "A row of three category entry tiles routing into Shop Women's, Shop Men's and Shop All, each built on bold athletic photography in a track, a locker room and a sports-room setting. The footwear in each image sits front and center.\nI placed the imagery and wired each tile to its destination, keeping the labels short so the row reads in a glance on desktop and mobile."
+            "title": "Shop Women's, Men's, and All Entry Tiles",
+            "desc": "Three entry tiles into Shop Women's, Shop Men's, and Shop All, each led by the footwear.\nI placed the imagery and wired each tile to its shop, then checked the row on desktop and on a phone.",
+            "cap": "I placed the imagery and wired each tile to its shop, then checked the row on desktop and on a phone."
           }
         ],
         "height": 554,
         "gap": 50,
         "speed": 60,
-        "label": "Click Visual to See Closer",
+        "label": "",
         "label_pos": "above",
         "play": "auto",
-        "loop": true
+        "loop": true,
+        "ground": true
       },
       {
         "h": "Full Shopping Surfaces",
         "p": [
-          "Beyond single placements, I built complete shopping experiences: the hero, the category navigation, the product grid, and the routing that connects them.",
-          "The August Promotional Shop shows the assembly involved. Six category entry points, each with its own imagery and menu routing, linked into the parent surface alongside the featured carousel and product grids. Components were built one at a time and assembled in sequence, and the surface only worked once each piece resolved to the right destination.",
-          "A tile that lands nowhere is a product someone cannot buy."
-        ]
+          "Beyond single placements, I built complete shopping experiences: the hero, the category navigation, the product grid, and the routing that connects them. Where a surface carried SEO metadata and taxonomy tags, I set those in the CMS too.",
+          "An August promotional shop shows what that takes. Six category entry points, each with its own imagery and menu routing, sit on one surface with the featured carousel and product grids. I built the pieces one at a time and assembled them in order, and the surface only worked once every piece led to the right place."
+        ],
+        "id": "shops"
+      },
+      {
+        "statement": "A tile that lands nowhere is a product someone cannot buy."
       },
       {
         "gallery": [
           {
             "src": "nIKE S_edited.png",
             "title": "Tennis Slam Product Grid on Nike.com",
-            "desc": "A Tennis Slam product grid on Nike.com showing 96 results, with category filters on the left and NikeCourt Slam apparel and Nike GP Challenge 1.5 PRM shoes in the grid.\nProduct grids are where a campaign turns into something people can buy. I set up the grid and its filters so the collection loaded with the right products and every tile resolved to a working product page."
+            "desc": "The Tennis Slam product grid on Nike.com, with its category filters.\nProduct grids are where a campaign turns into a purchase. I set up the grid and its filters so the collection loaded the right products and every tile opened a working product page.",
+            "cap": "I set up the grid and its filters so the collection loaded the right products and every tile opened a working product page."
           },
           {
             "src": "Nike L.png",
             "title": "Nike Soccer x LEGO Collection Shop",
-            "desc": "A Nike x LEGO Collection shop in the app, led by a Nike Soccer x LEGO Collection hero of minifigures in kit, with tabs for Shoes, Tops and T-Shirts and Hoodies above a product grid of LEGO sneaker builds.\nI assembled the hero, the category tabs and the grid into one surface and checked that each tab filtered to the right products before it went live."
+            "desc": "The Nike Soccer x LEGO Collection shop in the app, with tabs for each product type.\nI assembled the hero, the tabs, and the grid into one surface and checked that each tab filtered to the right products before it went live.",
+            "cap": "I assembled the hero, the tabs, and the grid into one surface and checked that each tab filtered to the right products before it went live."
           },
           {
             "src": "Nike Back.PNG",
             "title": "Men's Shop Tab with Category Navigation",
-            "desc": "The Men's view of the app's Shop tab, with a featured carousel opening on the Nike 24.7 Collection above category tiles for Shoes, Clothing, Accessories, Sport, Back to School and Sale.\nThis is the kind of full shopping surface I assembled one component at a time. Each tile carries its own imagery and menu routing, and the surface only works once every piece lands in the right place."
+            "desc": "The men's view of the app's Shop tab: six tiles, six destinations, and a carousel above them.\nI assembled surfaces like this one component at a time and tested the whole surface before scheduling.",
+            "cap": "I assembled surfaces like this one component at a time and tested the whole surface before scheduling."
           },
           {
             "src": "Nike B.PNG",
             "title": "Sport Category Page in the Nike App",
-            "desc": "The Sport category page reached from the Shop tab, with a tennis hero, a featured row including Basketball Must-Haves and the ACG Chamo Camo Collection, and a menu running from All Conditions Gear through Golf.\nEach row and menu item had its own routing into the parent surface. I built and checked them in sequence so no entry point led to an empty page."
+            "desc": "The Sport category page, reached from the Shop tab.\nEach row and menu item had its own destination. I built and checked them in order so no entry point led to an empty page.",
+            "cap": "Each row and menu item had its own destination. I built and checked them in order so no entry point led to an empty page."
           },
           {
             "src": "Nike J.png",
             "title": "Jannik Sinner Graphic Tee Product Page",
-            "desc": "A product page on Nike.com for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt, with an image gallery, size selector, Add to Bag and pickup options.\nThis is where every placement and grid eventually has to land. A tile that routes anywhere else is a product someone cannot buy, so I traced destinations through to pages like this one before anything was scheduled."
+            "desc": "A Jannik Sinner tee's product page on Nike.com.\nEvery placement and grid eventually has to land on a page like this, so I traced each destination through to it before anything was scheduled.",
+            "cap": "Every placement and grid eventually has to land on a page like this, so I traced each destination through to it before anything was scheduled."
           },
           {
             "src": "Nike W.png",
             "title": "Women's Back to School Bags Shop",
-            "desc": "A Women's Back to School Bags shop in the app, with tabs for Backpacks, Duffels and Drawstring Bags, a Back to School feature card promising top picks for staying ahead of the game, and a grid led by the Nike Varsity Elite.\nI assembled the tabs, feature card and grid into one surface and checked each piece on device so every tab and tile resolved to the right products."
+            "desc": "The Women's Back to School bags shop in the app.\nI assembled the tabs, feature card, and grid, then checked it in the app and on mobile web, which do not always render a module the same way.",
+            "cap": "I assembled the tabs, feature card, and grid, then checked it in the app and on mobile web, which do not always render a module the same way."
           }
         ],
         "height": 517,
         "gap": 50,
-        "label": "Click Visual to See Closer",
+        "label": "",
         "play": "auto",
         "speed": 60,
         "label_pos": "above",
-        "loop": true
+        "loop": true,
+        "ground": true
+      },
+      {
+        "h": "Learn It, Then Teach It",
+        "id": "guide",
+        "p": [
+          "I joined Nike's publishing team mid-season on a proprietary CMS I had never used, and kept my own notes as I learned it. With a teammate I co-developed the team's authoring reference, and before the contract ended as planned I trained the publishers staying on."
+        ],
+        "phases": [
+          {
+            "t": "Shadow",
+            "d": "Watched placements go through before building one."
+          },
+          {
+            "t": "QA",
+            "d": "Checked other publishers' builds against Figma, copy, alt text, and links, the fastest way to learn what breaks."
+          },
+          {
+            "t": "Publish",
+            "d": "Took placements from brief to live on my own."
+          },
+          {
+            "t": "Teach",
+            "d": "Co-developed the authoring reference and trained the publishers who stayed on."
+          }
+        ],
+        "topics": "The reference covers platform constraints, accessibility standards, QA routing, scheduling rules, and how modules differ on mobile and desktop. The team adopted it as the onboarding guide for incoming publishers, which is the clearest sign it worked."
+      },
+      {
+        "h": "The Reference, Section by Section",
+        "id": "reference",
+        "notes": true,
+        "p": [
+          "It started as my own notes from the first weeks: everything that held true across executions, nothing tied to a single brief. Those notes became the authoring reference, with a teammate, and the team adopted it as the onboarding guide for incoming publishers."
+        ],
+        "items": [
+          "Deep Links and Callback URLs, and What Breaks Them",
+          "Brief and Category Codes",
+          "Authoring Tool Constraints, and How to Flag a Deviation from Figma",
+          "Where Copy, Assets, Alt Text, and Logos Live",
+          "Push and Inbox Builds",
+          "Variants: When Two Builds Share One Execution",
+          "Pinned, Featured, and Boosted Placements",
+          "Scheduling Windows and QA Holds",
+          "QA Routing by Surface",
+          "Delivery Checks After Each Send",
+          "Triggered Sends and Evergreen Clones",
+          "Naming Conventions",
+          "Working Habits Worth Keeping",
+          "Incident Reporting"
+        ],
+        "p2": [
+          "Its fourteen sections, in plain terms and with the tool names left out, are below. Two habits from the last of them that I still keep: preview on a device before QA, every time, and copy and paste copy, never retype it."
+        ],
+        "doc_title": "Nike App Authoring Reference"
       }
     ],
     "next": {
       "slug": "qad-redzone",
-      "label": "Next Case Study"
+      "label": "Next Case Study: QAD Redzone"
+    },
+    "glance": [
+      [
+        "20M+",
+        "Customers a single activation could reach"
+      ],
+      [
+        "3",
+        "Major campaigns running at the same time"
+      ],
+      [
+        "4",
+        "Surfaces: Nike.com, mobile web, the Nike app, app notifications"
+      ],
+      [
+        "3 months",
+        "June to August 2026, remote, a contract that ended as planned"
+      ]
+    ],
+    "description": "Christian Sanchez, Digital Content Manager (Contract) at Nike, June to August 2026. Published campaign content and app notifications to Nike.com and the Nike app, reaching as many as 20M customers per activation.",
+    "og_title": "Christian Sanchez, Digital Content Manager (Contract) at Nike",
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
     }
   },
   {
@@ -184,263 +412,367 @@
           "alt": "QAD Redzone"
         }
       ],
-      "title": "Humanizing the Brand with Frontline Workers and Growing LinkedIn Engagement 550%",
-      "subtitle": "Integrated Creative for QAD Redzone"
+      "title": "Three Years Building Redzone's Brand and the Process Behind It",
+      "subtitle": "Digital Marketing & Web Content Specialist | QAD Redzone"
     },
-    "lede": "Plants around the world run their frontline teams on QAD Redzone, a connected workforce platform whose tools deliver real-time productivity and compliance insight. The brand had room to grow past product features. Over three years I scaled Redzone's creative presence across web, video, print, and social, half of it facing customers and half facing the company's own people, and built all of it around the workers running the software.",
+    "lede": "From June 2022 to August 2025 I was a Digital Marketing & Web Content Specialist at QAD Redzone, a connected workforce platform for plant floors. I joined as a new visual identity rolled out, working remotely on a marketing team of about three to five that grew to about fifteen. Over three years I built the intake process, 200+ SEO-optimized web and intranet pages, and the video, photography, and LinkedIn mix that put the people on the plant floor in front of the product, about half of it for customers and half for Redzone's own people.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
+        "h": "A New Identity, a Small Team, No Intake Process",
+        "id": "setup",
         "p": [
-          "Manufacturing software tends to look as cold as the factory floor it serves, heavy on dashboards and distant from the people using it.",
-          "Redzone had a different story available. The results were there and so was the community impact, but the visual language had not caught up to either. The brand needed storytelling that put frontline workers on screen and a system that held together from one channel to the next."
+          "There was no intake process when I arrived. Requests came in with whatever the stakeholder had to hand, and the brand had a new identity to grow into.",
+          "Manufacturing software tends to look as cold as the factory floor it serves. Every competitor was very data heavy, with the person in the background. The product was wonderful, but the people running it on the floor were the story.",
+          "I owned the work end to end, from the first brainstorm to live: web content, organic social, paid media, video, and photography, with the landing pages behind them and the event leads tracked in Marketo, Salesforce, and 6sense."
         ]
       },
       {
-        "h": "THE SOLUTION",
+        "h": "From the Event Link to the Expo Floor",
+        "id": "process",
         "p": [
-          "Leading with the people who used the software rebuilt how Redzone communicated. Campaign branding, social graphics, product explainers, physical activations, and original photography gave the frontline community a design system where they were the hero, and stat-driven banners and product overviews were held to the same standard: personal in tone, true to the energy on the floor.",
-          "LinkedIn engagement grew 550% (2% to 14%). Reels and YouTube reach tripled (20K to 60K).",
-          "Two hundred new web and intranet pages lifted traffic 33%, six-figure paid budgets turned into 1M+ ad interactions at twice the industry-average CTR, and lead generation rose 105% year over year, the work behind the 2024 Team Collaborator Award."
+          "I owned creative and web requests from the first conversation to live. The brainstorm started with me and the stakeholder, review went back to them (and on co-branded pages to the customer's team), and the work went out under my name.",
+          "Here are the five steps and which of them were mine."
+        ],
+        "steps": [
+          {
+            "t": "Brainstorm",
+            "title": "Lead the First Conversation",
+            "d": "Requests started with me in the room. I led the early brainstorms with stakeholders about what an event or campaign needed and what we had to work with. Even so, some arrived as literally the event link three weeks out, with nothing yet to catch what was missing."
+          },
+          {
+            "t": "Intake",
+            "title": "Build the Intake, Then Use It",
+            "d": "I built the intake form, the ticket, and the checklist in monday.com where none existed. After one launch package came in with too little time to do it well, the post-event surveys showed the real lead time was about two weeks, and that went into the form too.",
+            "checks": [
+              "Logo as an SVG",
+              "Banner size",
+              "Event details",
+              "About two weeks of lead time"
+            ]
+          },
+          {
+            "t": "Build",
+            "title": "Build It",
+            "d": "The landing page from scratch, the graphics, the video, or all three, and for the booth the jumbotron loop, built with the events team from campaign footage and animated UI. Stakeholders did not have to wait for creative; a request could come back in less than two hours."
+          },
+          {
+            "t": "Review",
+            "who": "Stakeholders",
+            "title": "Stakeholders Review",
+            "d": "Internal stakeholders, and on co-branded pages the customer's team, reviewed over Slack and monday.com before anything went live."
+          },
+          {
+            "t": "Live",
+            "title": "Live, and On to the Next One",
+            "d": "Live on the website, the intranet, the feed, or the booth. With intake catching what was missing, I could put out a fire instead of everything being a fire."
+          }
+        ],
+        "figures": [
+          {
+            "src": "1730738279639.jfif",
+            "alt": "A conversation on the expo floor",
+            "caption": "Most requests started in a conversation like this one on the expo floor, where I led the first discussions with stakeholders about what an event or campaign needed."
+          },
+          {
+            "src": "RZ_PACK23--1-of-1-.jpg",
+            "alt": "Redzone's booth at PACK EXPO",
+            "caption": "Redzone's booth at PACK EXPO. The intake form caught what the booth needed before the show: logo files, banner sizes, the event details."
+          },
+          {
+            "src": "_-cee53f262654447c8095e259335665d0.jpg",
+            "alt": "A frame from the 4 Modules overview video",
+            "caption": "My 4 Modules overview, filmed at PACK EXPO, playing silently here; click it to watch with sound. The jumbotron loop I built with the events team ran above the stand.",
+            "v": "mdeXsU0Jfkg",
+            "title": "A Closer Look into QAD Redzone's 4 Modules",
+            "desc": "A four-minute overview, filmed at PACK EXPO, of Redzone's four connected modules (Productivity, Compliance, Reliability, and Learning) and how they work together on the factory floor. I concepted, scripted, directed, and edited it as the starting point for anyone new to Redzone."
+          },
+          {
+            "src": "RZ_PACK_DAY1-29.jpg",
+            "alt": "The LinkedIn photo activation at a trade show",
+            "caption": "The LinkedIn photo activation on the show floor, reviewed with the events team before it went to print."
+          },
+          {
+            "src": "1730774975742.jfif",
+            "alt": "The Redzone Community Awards 2024 main stage",
+            "caption": "The 10th Anniversary Redzone Community Awards 2024, the night that ran alongside PACK EXPO in Las Vegas. I photographed the room for the recap."
+          }
         ]
       },
       {
-        "h": "Simplifying Complex Features with Clean, On-Brand Visuals",
+        "h": "200+ SEO-Optimized Pages and 33% More Traffic",
+        "id": "web",
         "p": [
-          "Redzone's software is packed with capability, and none of it lands when it sits behind technical language and cluttered design. Competitors led with dense dashboards and cold UI screenshots that alienated more than they educated.",
-          "Starting with the tools manufacturing teams touched daily, I rebuilt how we explained them visually, so the work held up for existing users and for people meeting Redzone for the first time on our website or social channels. Branded feature graphics and light-motion assets blended interface mockups with messaging, and they lived in sales decks, on the website, in internal training, and across social.",
-          "The launch campaign for the Learning feature in the Redzone app on iPad and Apple TV grew out of this work. Workers on the plant floor were filmed using it to document repairs, and that footage became the selling point."
+          "Over three years I wrote and built 200+ SEO-optimized web and intranet pages, in the website's global CMS and in SharePoint on the intranet, from event landing pages made from scratch on short notice to co-branded industry pages with customer brands. By my own estimate a quarter of the website was written by me. I also built the launch package for the public 2023 Productivity Benchmark Report (landing page, gated download, social series, one-pager) and launched Redzone University in October 2023 (copy, graphics, brochures), tracking enrollment and reporting it up every month.",
+          "Traffic rose 33% year over year (56K to 75K sessions), target terms moved from page two into the top 3 results in 6 to 9 months, and lead generation rose 105% year over year. The paid campaigns I ran turned six-figure budgets into 1M+ ad interactions at twice the industry-average CTR. In 2024 my roughly fifteen colleagues voted me the Team Collaborator Award for that year's work, from the Learning campaign and the website to everything in between.",
+          "Beyond the pages, nurture and onboarding email lifted demo requests 10%, and a leave-a-review nurture campaign I ran fed Redzone's 2023 Top 100 listing on G2, where it reached #83 of 130,000 SaaS products with a 4.9 rating. The rest of the stack: WordPress, Adobe Experience Manager, monday.com, Marketo, HubSpot, Salesforce, 6sense, GA4, Google Tag Manager, Hotjar, Screaming Frog, and Figma."
         ]
       },
       {
+        "gap": 50,
+        "speed": 10,
+        "label": "",
+        "play": "auto",
+        "ground": true,
         "gallery": [
+          {
+            "src": "Redzone on the Web_edited.png",
+            "title": "Redzone Resource Library and Video Pages",
+            "cap": "Two pages I built and published on the Redzone site, part of the 200+ web and intranet pages I wrote.",
+            "desc": "Two pages from the Redzone website at the time: the filterable resource library on desktop and a video page on mobile, each card leading with a branded cover.\nTwo pages I built and published on the Redzone site, part of the 200+ web and intranet pages I wrote. On the video page, team members fill the frame before the copy explains anything, so visitors meet the people first and the platform second."
+          },
           {
             "src": "QRZ Web.png",
             "title": "Productivity and Engagement with Manufacturing All Stars",
             "tools": "Adobe Illustrator",
-            "desc": "Web banners I created highlighting productivity uplift and engagement stats while showing a real manufacturing team in their work environment. The goal was to ground the stat in something tangible — so instead of a cold chart, I layered the text over real candid photos of our customers that communicates trust, collaboration, and momentum.\nThe layout was optimized for use across paid media and retargeting campaigns. Clear, bold type and a focused stat allowed the message to cut through quickly, even in scroll-heavy environments."
+            "cap": "Web banners I designed for the paid media and retargeting campaigns I ran, with the stat set over candid photos of a real customer team.",
+            "desc": "Web banners I designed for paid media and retargeting, pairing a productivity or engagement stat with a real manufacturing team in their plant. The goal was to ground the stat in something tangible, so instead of a cold chart I set the type over candid photographs of our customers.\nThese ran inside the paid campaigns I owned from the brainstorm on. Across that program, six-figure budgets turned into 1M+ ad interactions at twice the industry-average CTR."
           },
+          {
+            "src": "LF1T Large.png",
+            "title": "Redzone Case Study: Coil Specialist, Inc.",
+            "link": {
+              "href": "files/redzone-case-study-coil-specialist.pdf",
+              "label": "Read the case study (PDF)"
+            },
+            "desc": "This Redzone case study follows Coil Specialist, Inc., a component manufacturer that drove productivity up 37% with QAD Redzone. Writing customer stories meant interviewing people about the results they saw on the plant floor, then shaping those conversations into a clear narrative.\nI structured the piece to be found in search and repurposed across web, email and social. The full case study is available here as a PDF.",
+            "cap": "A customer story I interviewed for, wrote, and built as a page on the Redzone site."
+          },
+          {
+            "src": "Long Form 2 2.jpeg",
+            "title": "Redzone Case Study: Companion Baking Company",
+            "link": {
+              "href": "files/redzone-case-study-companion-baking.pdf",
+              "label": "Read the case study (PDF)"
+            },
+            "desc": "Companion Baking Company's story centers on enlisting everyone on the team to improve equipment reliability with Redzone. For case studies like this, I interviewed customers about the results they saw on the plant floor and built the narrative around their experience.\nThe headline puts people first, and the piece was structured to be found in search and repurposed across web, email and social. The full case study is available here as a PDF.",
+            "cap": "A customer story I interviewed for, wrote, and built as a page on the Redzone site."
+          }
+        ],
+        "restart": true
+      },
+      {
+        "h": "From Fifth, to Fourth, to First Place in LinkedIn Engagement",
+        "id": "linkedin",
+        "p": [
+          "When I joined, Redzone ranked fifth among its competitors on LinkedIn engagement. I tracked each post type every month and shifted the mix toward customer stories, humor, and short video, and the ranking moved to fourth, then to first.",
+          "LinkedIn engagement grew 7x (2% to 14%), and Reels and YouTube reach grew 3x (20K to 60K). Redzone was first among those competitors on LinkedIn engagement when I left in August 2025."
+        ]
+      },
+      {
+        "gap": 50,
+        "speed": 10,
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "gallery": [
           {
             "src": "QAD Redzone Presents_ Gary the GOAT",
+            "light": true,
             "title": "Parts Inventory Feature GIF with Gary",
-            "tools": "Adobe Photoshop, Illustrator, Premiere Pro",
-            "desc": "Inventory tracking isn’t always the most exciting topic — so I injected a little energy with a looping animation featuring our official mascot, Gary the Goat. This asset was used across social and product channels to spotlight Redzone’s inventory feature in a fun, digestible way.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns."
+            "tools": "Procreate, Adobe Photoshop, Premiere Pro",
+            "cap": "I drew the frames in Procreate from the still mascot art, finished them in Photoshop, and cut the loop in Premiere Pro, so it was built entirely in-house.",
+            "desc": "A looping animation of Gary the Goat, Redzone's mascot, made to give the Parts Inventory feature a little energy on social and product channels.\nI drew the animation frames in Procreate from the still mascot art, finished them in Photoshop, and cut them in Premiere Pro, so the loop was built entirely in-house and could be reused from web explainers to internal campaigns."
           },
-          {
-            "src": "Redzone on the Web_edited.png",
-            "title": "Redzone Resource Library and Video Pages",
-            "desc": "Real screenshots of the Redzone website at the time, showing two sides of it: a filterable resource library on desktop and a video page on mobile. Each card leads with a branded cover, from infographics like 'Analytics for Everyone' to the 'Tales of Triumph from the Factory Floor' ebook.\nThe goal was the same as the rest of my feature work: keep complex topics clean and inviting. On the video page, real team members fill the frame before the copy explains anything, so visitors meet the people first and the platform second."
-          }
-        ],
-        "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
-      },
-      {
-        "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
-        "p": [
-          "Holidays are filler for most software companies: a branded stock image with a timestamp. Seasonal moments were a chance to show that Redzone's voice could sound like the community the platform serves.",
-          "I led creative direction, scripting, design, and rollout across the holiday calendar, including New Year's reflections and April Fools' jokes. Tone shifted from one campaign to the next, and each turned a date on the calendar into a reason to talk with our community. Those posts became some of our highest-performing work, on and off the shop floor."
-        ]
-      },
-      {
-        "gallery": [
           {
             "src": "RVPCanvas_15-ezgif.com-crop.gif",
-            "title": "Redzone Vision Pro: April Fools’ Campaign",
+            "title": "Redzone Vision Pro: April Fools' Campaign",
             "tools": "Figma, Adobe After Effects, Substance 3D",
-            "desc": "A real, but parody product launch for April Fools’ Day, this graphic introduced the fictional 'Redzone Vision Pro' — a mixed-reality headset with features exaggerating real use circumstances and promotion of an AR Goat Companion. I created the illustration, wrote mock release notes, and designed accompanying visuals that mimicked Apple’s branding with a Redzone twist.\nThis concept was expanded into a full microsite and teaser video, and was widely shared internally and externally as a standout moment of brand playfulness and design range."
-          },
-          {
-            "v": "1228250186",
-            "title": "Gary the Goat: Task Complete",
-            "desc": "Gary the Goat, Redzone's official mascot, is back in a short animated clip built around the satisfying moment a task gets checked off. Like the rest of the seasonal and playful content, it trades a generic post for a bit of personality the community could recognize.\nI kept it brief and loopable so it works as a quick social moment, letting Gary carry the brand voice while the message stays simple: the work got done.",
-            "tools": "Adobe Photoshop, Illustrator, Premiere Pro"
-          },
-          {
-            "src": "New Years 2024 GIF.gif",
-            "title": "Redzone New Year's Post",
-            "tools": "Adobe Photoshop, Illustrator",
-            "desc": "This post ushered in the new year by spotlighting real Redzone customers and a key milestone they reached with the platform. Rather than opt for a generic “Happy New Year” message, I focused the creative on human accomplishment — using candid and posed photography and a bold layout to reflect energy and optimism."
-          }
-        ],
-        "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
-      },
-      {
-        "h": "Building Culture, Community, and Educational Content Through Everyday Design",
-        "p": [
-          "Social media at Redzone was a place to celebrate people and share what they knew, and the content direction covered playful culture posts and education-driven infographics, aimed at internal teams and the wider frontline community alike.",
-          "The employee anniversary series ran as stylized monthly calendars with illustrations for the time of year, each one a small spotlight on the people behind the company. Infographics and carousels translated topics like frontline retention and productivity gains into visuals people saved and shared.",
-          "Inside the company, the same instinct built the one-stop employee intranet that held onboarding, training, and policy material, the promotion behind WISE, our employee resource group for women and allies, and the school volunteer days, GivingTuesday drives, and community cleanups that got people to sign up."
-        ]
-      },
-      {
-        "gallery": [
-          {
-            "src": "The Assembly Line.png",
-            "title": "The History of the Assembly Line",
-            "tools": "Adobe Photoshop",
-            "desc": "This editorial-style series was created to support a feature on the Redzone blog and drive engagement on social channels. The design blends collage and texture-rich visuals to evoke different eras of manufacturing — starting with Henry Ford’s moving assembly line and ending in today’s AI-enhanced Industry 4.0. I developed a visual theme inspired by vintage magazines to make the information both nostalgic and futuristic, bridging the past and future of factory innovation through storytelling-led design."
-          },
-          {
-            "src": "Holiday Calendars.png",
-            "title": "Monthly Work Anniversary Calendars",
-            "tools": "Adobe Photoshop",
-            "desc": "Each month, I designed custom-branded posts to celebrate Redzone employee anniversaries in a visually engaging way. These weren’t just internal shoutouts — they were small but powerful morale boosters that reminded teams they were valued. Each layout matched a seasonal theme, from heartfelt Valentine’s vibes to festive fireworks, with vibrant Redzone branding woven throughout. These graphics were shared company-wide and often sparked fun conversations and resharing among team members."
+            "cap": "My April Fools' product: the illustration, the mock release notes, and the visuals in Apple's style with a Redzone twist. The concept grew into a microsite and a teaser video.",
+            "desc": "A parody product launch for April Fools' Day: the fictional Redzone Vision Pro, a mixed-reality headset with features that exaggerated real use cases, plus an AR Goat Companion. I created the illustration, wrote the mock release notes, and designed the visuals that mimicked Apple's branding with a Redzone twist.\nThe concept was expanded into a microsite and a teaser video."
           },
           {
             "src": "OEE.png",
             "title": "OEE Education Carousel",
             "tools": "Adobe Photoshop",
-            "desc": "I designed this carousel to break down one of Redzone’s more technical subjects: Overall Equipment Effectiveness (OEE). Each frame introduced an important subtopic — like minimizing downtime or identifying inefficiencies—while keeping the visuals clean, modern, and true to brand. I used illustrations to visualize the production line and custom iconography to add clarity to the stats-heavy content. This series was created for LinkedIn to support Redzone’s learning and compliance messaging in a more accessible and engaging way."
+            "cap": "A LinkedIn carousel I designed to break down Overall Equipment Effectiveness, with illustrations of the production line and custom icons for the stats-heavy parts.",
+            "desc": "I designed this carousel to break down one of Redzone's more technical subjects: Overall Equipment Effectiveness (OEE). Each frame introduced an important subtopic, like minimizing downtime or identifying inefficiencies, while keeping the visuals clean and true to brand. I used illustrations to visualize the production line and custom iconography to add clarity to the stats-heavy content. This series was created for LinkedIn to support Redzone's learning and compliance messaging in plain terms."
           }
         ],
-        "gap": 10,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "restart": true
       },
       {
-        "h": "Extending the Brand into the Real World with Physical Touchpoints",
+        "h": "People on Camera",
+        "id": "video",
         "p": [
-          "Branded experiences people could see, wear, hold, and remember pushed the creative into physical space. A creatively packaged iPad sent to a prospective customer. A jumbotron activation on the expo floor.",
-          "Each piece was made to feel human, start a conversation, and strengthen Redzone's presence in a form you could pick up and pass around."
+          "I concepted, scripted, directed, and edited video for Redzone, with team members walking through the platform on camera. The 4 Modules overview, filmed at PACK EXPO, is the piece I am proudest of. For the Learning feature launch on iPad and Apple TV, plant-floor workers were filmed using it to document repairs, how to fix a robot or clean a machine, and that footage carried the campaign; it is not reproduced here."
         ]
       },
       {
-        "gallery": [
-          {
-            "src": "Swag.png",
-            "title": "Redzone Factory Floor Shirt & Logo Design",
-            "tools": "Adobe Illustrator",
-            "desc": "For this piece of custom swag, I created an original character inspired by early animation styles — think Steamboat Willie, but on the factory floor. The design featured a personified iPad with gloved hands and sneakers. It was a lighthearted way to visualize Redzone’s connected workforce in motion, blending nostalgia with modern tech. This piece became a favorite among team members for its style — and for capturing how even software can have personality."
-          },
-          {
-            "src": "RZ_PACK23--1-of-1-.jpg",
-            "title": "Jumbotron Video Loop for Trade Show Booth",
-            "tools": "Adobe After Effects, Premiere Pro",
-            "desc": "For a major trade show with a football stadium theme, I collaborated with the events team to ideate a large-scale video loop tailored for the jumbotron at our booth. The creative needed to be bold, high-contrast, and movement-rich — designed to be eye-catching from across the venue. I helped incorporate footage from multiple campaigns, layered animated UI previews, and added messaging that aligned with the game-day energy of the environment."
-          },
-          {
-            "src": "Box.png",
-            "title": "Slide-to-Unlock iPad Mailer for Prospective Customers",
-            "desc": "To break through the noise of traditional sales mailers, I designed an interactive iPad box experience that played on the nostalgic 'slide to unlock' gesture from early tablets and phones. The exterior featured a sleek cutout window with a movable paper insert. When slid from side to side, phrases like 'Empowering the Frontline' and 'Unlock Your Factory’s Potential' were revealed — turning the unboxing into a small moment of delight.\nThe design balanced polish with surprise, all while supporting a sales strategy that put product value and people front and center.\nThe mailer was distributed to select prospects based on their stage in the sales funnel, generating curiosity, conversation, and conversions."
-          },
-          {
-            "src": "RZ_PACK_DAY1-29.jpg",
-            "title": "LinkedIn Photo Activation: Tag to Win",
-            "tools": "Adobe Illustrator",
-            "desc": "To drive social engagement at our trade shows, I designed a physical LinkedIn post cutout for attendees to pose with. The frame mimicked the layout of a real LinkedIn post and included branded prompts to tag Redzone. The activation worked as both a selfie opportunity and a conversation starter — leading to dozens of shares and direct traffic from new prospects on social."
-          }
-        ],
-        "gap": 10,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
-      },
-      {
-        "h": "Amplifying Culture & Capability Through Video",
-        "p": [
-          "Video made the product more approachable, the features more digestible, and the people behind the software more visible. I concepted, scripted, directed, and edited work ranging from step-by-step walkthroughs to the story of Women Inspiring Success and Empowerment (WISE).",
-          "The rule was the same each time: team members speaking directly to camera, laughter left in the edit, visuals that said our tech exists to serve real people doing real work. These videos ran across internal communications, social launches, and onboarding."
-        ]
-      },
-      {
-        "height": 378,
-        "gap": 20,
-        "crop": "16/9",
-        "label": "Click a Video to Watch",
         "play": "click",
+        "height": 420,
+        "gap": 20,
+        "ground": true,
+        "label": "",
+        "speed": 10,
         "gallery": [
-          {
-            "v": "mdeXsU0Jfkg",
-            "title": "A Closer Look into QAD Redzone's 4 Modules",
-            "tools": "Adobe Premiere Pro",
-            "desc": "A four-minute overview of Redzone's four connected modules (Productivity, Compliance, Reliability, and Learning) and how they work together on the factory floor. I concepted, scripted, directed, and edited it as the starting point for anyone new to Redzone or weighing the full platform.\nInstead of a screen-recorded feature list, team members walk through the platform on camera, so the software reads as something real people use to communicate faster and fix problems sooner."
-          },
-          {
-            "v": "1075028937",
-            "title": "Women Inspiring Success and Empowerment (WISE): Women's History Month 2025",
-            "tools": "Adobe Premiere Pro",
-            "desc": "A Women's History Month piece telling the story of Women Inspiring Success and Empowerment (WISE) through team members speaking directly to camera, in their own words and with the laughter left in.\nIt ran across internal communications and social, putting the people behind the software at the center instead of the product."
-          },
           {
             "v": "QctJ8Uagr7w",
             "title": "Deep Dive into QAD Redzone Modules",
             "tools": "Adobe Premiere Pro",
-            "desc": "The longer walkthrough, built around the 29% productivity increase behind the platform. It shows each module in action, from live OEE, throughput, and downtime data in Productivity to a fully paperless shop floor in Compliance, with production, quality, and maintenance teams working from the same live data.\nWhere the overview earns attention, this one answers the detailed questions prospects and new users bring next."
+            "cap": "My longer walkthrough, built around the 29% productivity increase from Redzone's public 2023 Benchmark Report.",
+            "desc": "I scripted, directed, and edited this longer walkthrough, built around the 29% productivity increase reported in Redzone's public 2023 Benchmark Report. It shows each module in action, from live OEE, throughput, and downtime data in Productivity to a fully paperless shop floor in Compliance, with production, quality, and maintenance teams working from the same live data.\nIt answers the detailed questions prospects and new users bring after the overview.",
+            "zoom": 1.2
           },
           {
-            "v": "1075028942",
-            "title": "Women Inspiring Success and Empowerment (WISE): International Women's Day 2024",
+            "v": "mdeXsU0Jfkg",
+            "title": "A Closer Look into QAD Redzone's 4 Modules",
             "tools": "Adobe Premiere Pro",
-            "desc": "The International Women's Day piece that set the format for WISE the year before: real team members, unscripted moments, and an edit that feels like a conversation rather than a corporate announcement.\nShared across internal communications and social, it helped make WISE visible across the company and beyond it."
+            "cap": "Filmed at PACK EXPO: my overview of the four connected modules, the starting point for anyone new to Redzone.",
+            "desc": "A four-minute overview, filmed at PACK EXPO, of Redzone's four connected modules (Productivity, Compliance, Reliability, and Learning) and how they work together on the factory floor. I concepted, scripted, directed, and edited it as the starting point for anyone new to Redzone.\nTeam members walk through the platform on camera, so the software reads as something real people use to communicate faster and fix problems sooner."
           }
-        ]
+        ],
+        "restart": true
       },
       {
-        "h": "Supporting Visual Consistency Through Custom Brand Photography",
+        "h": "The Brand in Person: Trade Shows, Mailers, and Swag",
+        "id": "events",
         "p": [
-          "When the moment called for it, I captured original photography for social and web, focused on people, process, and production. These images ran across campaign launches, blog posts, and internal assets and kept the brand's tone consistent with the push toward a more human identity."
+          "Events were where the brand had to work in a room. A LinkedIn-post cutout gave attendees something to pose with and a tag to win an iPad, a shirt put an original character on people's backs, and for prospects a dimensional mailer built to look like an iPad box went out by their stage in the sales funnel."
         ]
       },
       {
+        "gap": 50,
+        "speed": 10,
+        "label": "",
+        "play": "auto",
+        "ground": true,
         "gallery": [
           {
-            "src": "1730738279639.jfif",
-            "title": "Candid Conversation on the Expo Floor",
-            "desc": "A Redzone team member laughs mid-conversation with two attendees in red shirts on a busy trade show floor. Moments like this are what I looked for at events: real reactions, not staged handshakes.\nShots like this fed social posts and event recaps, giving the brand's human-first direction an unposed face."
+            "src": "RZ_PACK_DAY1-29.jpg",
+            "title": "LinkedIn Photo Activation: Tag to Win",
+            "tools": "Adobe Illustrator",
+            "cap": "A LinkedIn post at human scale that I designed for attendees to pose with at trade shows, with prompts to tag Redzone for a chance to win an iPad. It worked as a selfie opportunity and a conversation starter.",
+            "desc": "To drive social engagement at trade shows, I designed a physical LinkedIn post cutout for attendees to pose with. The frame mimicked the layout of a real LinkedIn post and included branded prompts to tag Redzone, with free iPads for the winners.\nThe activation worked as both a selfie opportunity and a conversation starter."
           },
           {
-            "src": "1684871520317.jfif",
-            "title": "Tee Shot at a Redzone Golf Outing",
-            "desc": "Shot from behind the gallery, this frame catches a golfer just after impact, with two onlookers framing the drive against an open Texas-blue sky. I liked the layered depth, which puts the viewer in the group watching.\nCommunity events were part of the Redzone story too, and photos like this showed the relationships behind the software away from the plant floor."
+            "src": "Box.png",
+            "title": "Slide-to-Unlock iPad Mailer for Prospective Customers",
+            "cap": "A mailer I designed to look like an iPad box, with a window and a sliding insert that reveals lines like Empowering the Frontline. It went to selected prospects by their stage in the sales funnel.",
+            "desc": "To break through the noise of traditional sales mailers, I designed an iPad box that played on the slide-to-unlock gesture from early tablets and phones. The exterior had a cutout window with a movable paper insert; slid from side to side, it revealed lines like 'Empowering the Frontline' and 'Unlock Your Factory's Potential', a small surprise on opening.\nThe mailer went to selected prospects based on their stage in the sales funnel."
           },
+          {
+            "src": "Swag.png",
+            "title": "Redzone Factory Floor Shirt & Logo Design",
+            "tools": "Adobe Illustrator",
+            "cap": "An original character I drew for a Redzone shirt: a personified iPad with gloved hands and sneakers, in the style of early animation.",
+            "desc": "For this piece of custom swag, I created an original character inspired by early animation styles: think Steamboat Willie, but on the factory floor. The design featured a personified iPad with gloved hands and sneakers. It was a lighthearted way to visualize Redzone's connected workforce in motion, blending nostalgia with modern tech."
+          }
+        ],
+        "restart": true
+      },
+      {
+        "h": "Original Photography: People, Process, and Production",
+        "id": "photos",
+        "p": [
+          "When the moment called for it, I shot the photography myself, for social and web, focused on people, process, and production."
+        ]
+      },
+      {
+        "gap": 10,
+        "speed": 10,
+        "label": "",
+        "play": "auto",
+        "gallery": [
           {
             "src": "1683214032733_edited.jpg",
             "title": "Celebrating a Paperless Shop Floor",
-            "desc": "Plant workers in hard hats and lab coats throw sheets of paper into the air, a spontaneous celebration of going paperless. It is the kind of moment no stock library can supply.\nI kept the frame loose and energetic so the joy reads first. The image puts frontline workers at the center of the story Redzone tells about its compliance tools."
-          },
-          {
-            "src": "1730771091594.jfif",
-            "title": "Evening Reception Under Warm Lantern Light",
-            "desc": "A packed reception fills a dramatic venue lit by amber lanterns, with a towering multi-armed statue as the backdrop. I shot from above to capture the scale of the crowd and the glow of the room together.\nEvent photography like this showed how much of the Redzone community gathered in person, giving campaign and recap posts a sense of place."
+            "cap": "My photograph of plant workers in hard hats and lab coats throwing paper into the air, a celebration of going paperless, shot for social and web.",
+            "desc": "Plant workers in hard hats and lab coats throw sheets of paper into the air, a celebration of going paperless.\nI kept the frame loose and energetic so the joy reads first, which is what my photography for social and web was for."
           },
           {
             "src": "1728574601960.jfif",
             "title": "Students on a Food Production Floor Tour",
-            "desc": "In hairnets, gowns and blue gloves, a group of young visitors listens closely as a plant team member walks them through the production line. The shot centers on their attention, not the equipment.\nI captured it to show the community side of manufacturing: plants opening their doors to the next generation of frontline workers."
+            "cap": "I photographed a plant team member walking students through the production line, the community side of manufacturing.",
+            "desc": "In hairnets, gowns, and blue gloves, a group of young visitors listens as a plant team member walks them through the production line. The shot centers on their attention.\nI took it to show the community side of manufacturing: plants opening their doors to the next generation of frontline workers."
           },
           {
-            "src": "1684778142063.jfif",
-            "title": "Morning at The Hills Course",
-            "desc": "Golf bags in the foreground lead the eye past a stone marker for The Hills Course, a clubhouse clock, and carts heading out. It is a quiet establishing shot that sets the scene before the play begins.\nI used frames like this to give event coverage a sense of place, so the recap felt like a day out with the community and not a run of headshots."
-          },
-          {
-            "src": "1723216242522.jfif",
-            "title": "Productivity Roadshow Stop with an IndyCar",
-            "desc": "A Redzone 'Productivity NOW for Manufacturing' banner stands beside a full IndyCar and racing suit on a checkered floor while guests mingle. The setting brings real energy to a software event.\nI framed the car and the conversation together so the photo works both as an event recap and as proof that the community showed up in person."
+            "src": "1730738279639.jfif",
+            "title": "Candid Conversation on the Expo Floor",
+            "cap": "I shot this on a busy trade show floor to catch a real reaction. Frames like it fed social posts and event recaps.",
+            "desc": "Three people mid-conversation on a busy trade show floor, one laughing. Moments like this are what I looked for at events.\nShots like this fed social posts and event recaps and gave the brand's human-first direction an unposed face."
           },
           {
             "src": "1730774975742.jfif",
             "title": "Redzone Community Awards 2024 Main Stage",
-            "desc": "The main screen announces the 10th Anniversary Redzone Community Awards 2024 over fireworks graphics, with a row of numbered Redzone jerseys lit up below. The crowd in silhouette keeps the focus on the stage.\nI captured the room as the event opened, giving the community recap an establishing shot that conveys the scale and celebration of the night."
+            "cap": "I photographed the room as the 10th Anniversary Redzone Community Awards 2024 opened, the night that ran alongside PACK EXPO in Las Vegas, to give the recap the scale of it.",
+            "desc": "The main screen announces the 10th Anniversary Redzone Community Awards 2024 over fireworks graphics, with a row of numbered Redzone jerseys lit below. The crowd in silhouette keeps the focus on the stage.\nI photographed the room as the event opened, the night that ran alongside PACK EXPO in Las Vegas, as the establishing shot for the community recap."
           },
           {
-            "src": "1684871519806.jfif",
-            "title": "Live Painting of the Golf Course",
-            "desc": "Over an artist's shoulder, a canvas of the golf course takes shape, with figures, flag and fairway painted in real time while the actual green stretches out beyond. The over-the-shoulder angle puts the viewer right at the easel.\nI liked how it captured a slower, creative moment inside a busy event day, adding warmth and variety to the coverage."
+            "src": "1723216242522.jfif",
+            "title": "Productivity Roadshow Stop with an IndyCar",
+            "cap": "At a Productivity roadshow stop I framed the Redzone banner, the IndyCar, and the conversation together, as a recap and as proof the community showed up.",
+            "desc": "A Redzone 'Productivity NOW for Manufacturing' banner stands beside a full IndyCar and racing suit on a checkered floor while guests mingle.\nI framed the car and the conversation together so the photograph works as an event recap and as proof that the community showed up in person."
           }
         ],
-        "gap": 10,
-        "play": "auto",
-        "speed": 60,
-        "loop": true
+        "restart": true
+      },
+      {
+        "h": "Half the Work Faced the Company's Own People",
+        "id": "inside",
+        "p": [
+          "About half of what I made was for Redzone's own people. I built and maintained my sections of the SharePoint intranet: the onboarding, training, and policy material I produced. I helped shape the promotion plan for WISE, Women Inspiring Success and Empowerment, the employee resource group for women and allies, filmed its promo video, and edited the International Women's Day 2024 and Women's History Month 2025 pieces. The monthly work-anniversary posts ran from May 2024 to July 2025, the volunteer days and GivingTuesday drives got their promotion from the same desk, and I taught recurring internal sessions on social and personal branding."
+        ]
+      },
+      {
+        "play": "click",
+        "crop": "16/9",
+        "height": 378,
+        "gap": 20,
+        "ground": true,
+        "label": "",
+        "speed": 10,
+        "gallery": [
+          {
+            "v": "1075028937",
+            "title": "WISE: Women's History Month 2025",
+            "tools": "Adobe Premiere Pro",
+            "cap": "My edit, with team members speaking to camera in their own words and the laughter left in. It ran across internal communications and social.",
+            "desc": "A Women's History Month piece telling the story of WISE, Women Inspiring Success and Empowerment, through team members speaking to camera in their own words, with the laughter left in.\nI edited it, and it ran across internal communications and social, with the people behind the software at the center."
+          },
+          {
+            "v": "1075028942",
+            "title": "WISE: International Women's Day 2024",
+            "tools": "Adobe Premiere Pro",
+            "cap": "My edit of the piece that set the format for WISE: real team members, unscripted moments, an edit that feels like a conversation.",
+            "desc": "My edit of the International Women's Day 2024 piece, which set the format for WISE: real team members, unscripted moments, and an edit that feels like a conversation.\nIt ran across internal communications and social and helped make WISE visible across the company."
+          },
+          {
+            "src": "Holiday Calendars.png",
+            "title": "Monthly Work Anniversary Calendars",
+            "tools": "Adobe Photoshop",
+            "cap": "One post a month from May 2024 to July 2025, each on a seasonal theme with Redzone branding throughout. Names are replaced with placeholders here.",
+            "desc": "Each month from May 2024 to July 2025 I designed a branded post celebrating Redzone employee work anniversaries. Each layout matched a seasonal theme, from Valentine's hearts to fireworks, with Redzone branding throughout.\nThe posts were shared company-wide. Names are replaced with placeholders here."
+          }
+        ],
+        "restart": true
       }
     ],
     "next": {
       "slug": "solv-energy",
-      "label": "Next Case Study"
+      "label": "Next Case Study: SOLV Energy"
+    },
+    "og_title": "Christian Sanchez, Digital Marketing & Web Content Specialist at QAD Redzone",
+    "description": "Christian Sanchez, Digital Marketing & Web Content Specialist at QAD Redzone, June 2022 to August 2025, remote. Built the intake forms, tickets, and checklists where none existed; 200+ web and intranet pages lifted traffic 33% year over year; LinkedIn engagement grew 7x (2% to 14%).",
+    "glance": [
+      [
+        "7x",
+        "LinkedIn engagement, 2% to 14%"
+      ],
+      [
+        "1st",
+        "In LinkedIn engagement among competitors, up from fifth"
+      ],
+      [
+        "200+",
+        "SEO-optimized web and intranet pages, traffic up 33% year over year"
+      ],
+      [
+        "2024",
+        "Team Collaborator Award, voted by my colleagues"
+      ]
+    ],
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
     }
   },
   {
@@ -576,7 +908,7 @@
     ],
     "next": {
       "slug": "cohesity",
-      "label": "Next Case Study"
+      "label": "Next Case Study: Cohesity"
     }
   },
   {
@@ -657,7 +989,7 @@
     ],
     "next": {
       "slug": "healthier-texas",
-      "label": "Next Case Study"
+      "label": "Next Case Study: Healthier Texas"
     }
   }
 ]

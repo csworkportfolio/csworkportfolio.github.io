@@ -14,6 +14,7 @@ files; only new or changed media needs them.
 import argparse
 import colorsys
 import hashlib
+import itertools
 import html
 import json
 import re
@@ -68,6 +69,8 @@ class Media:
         self.used.add(key)
         src = self.find(name)
         entry = self.manifest.get(key)
+        if entry and entry.get("kind") == "image" and entry.get("boxv") != 1:
+            entry = None   # older entry without the visible-box measurement: process it again
         if entry and (src is None or entry.get("mtime") == int(src.stat().st_mtime)):
             if all((ROOT / f).exists() for f in entry["files"]):
                 return entry
@@ -81,12 +84,12 @@ class Media:
         return entry
 
     def process(self, src, name, role):
-        base = self.slug(name) + ("-bg" if role == "bg" else "")
+        base = self.slug(name) + ("-bg" if role == "bg" else "") + ("-light" if role.startswith("light") else "")
         kind = sniff(src)
-        if kind == "gif":
-            return self.to_video(src, base, gif=True)
-        if kind == "mp4":
-            return self.to_video(src, base, gif=False)
+        if kind in ("gif", "mp4"):
+            if role.startswith("light"):
+                return self.to_video(src, base, gif=kind == "gif", max_w=int(role[5:] or 720), crf="30")
+            return self.to_video(src, base, gif=kind == "gif")
         im = Image.open(src)
         im = ImageOps.exif_transpose(im)
         im = im.convert("RGBA" if has_alpha(im) else "RGB")
@@ -101,13 +104,23 @@ class Media:
             if small.size != full.size:
                 out["sm"] = save_webp(small, f"{base}-sm.webp", q=80)
         out["w"], out["h"] = full.size
+        out["boxv"] = 1
+        if im.mode == "RGBA":
+            # where the picture itself ends inside its transparent margins (a baked-in shadow counts as margin),
+            # as fractions of the image, so a caption can line up with the visible edge rather than the file's
+            bb = im.getchannel("A").point(lambda a: 255 if a > 128 else 0).getbbox()
+            if bb:
+                w, h = im.size
+                box = [round(bb[0] / w, 4), round(bb[1] / h, 4), round(bb[2] / w, 4), round(bb[3] / h, 4)]
+                if box != [0, 0, 1, 1]:
+                    out["box"] = box
         out["files"] = [v for k, v in out.items() if k in ("src", "sm")]
         return out
 
-    def to_video(self, src, base, gif):
+    def to_video(self, src, base, gif, max_w=None, crf=None):
         mp4 = f"media/{base}.mp4"
-        crf = "27" if gif else "26"
-        vf = f"scale='trunc(min({VIDEO_MAX_W},iw)/2)*2':-2:flags=lanczos"
+        crf = crf or ("27" if gif else "26")
+        vf = f"scale='trunc(min({max_w or VIDEO_MAX_W},iw)/2)*2':-2:flags=lanczos"
         cmd = ["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf", vf,
                "-c:v", "libx264", "-preset", "medium", "-crf", crf,
                "-pix_fmt", "yuv420p", "-movflags", "+faststart"]
@@ -188,7 +201,7 @@ def gallery_item(raw, media, site):
     """Normalize a gallery entry from content JSON into data for the page."""
     if isinstance(raw, str):
         raw = {"src": raw}
-    item = {k: raw[k] for k in ("title", "desc", "tools", "link") if k in raw}
+    item = {k: raw[k] for k in ("title", "desc", "tools", "link", "cap", "zoom") if k in raw}
     if "v" in raw:
         vid = raw["v"]
         meta = site["videos"][vid]
@@ -197,9 +210,13 @@ def gallery_item(raw, media, site):
                     thumb=poster.get("sm", poster["src"]), w=poster["w"], h=poster["h"])
         return item
     name = raw.get("src") or raw.get("mp4")
-    m = media.get(name)
+    # "light": true (720px) or a width in px asks for a smaller encode of a heavy loop, for this item only
+    light = raw.get("light")
+    m = media.get(name, f"light{light if isinstance(light, int) and light is not True else ''}" if light else "default")
     if m["kind"] == "image":
         item.update(type="image", thumb=m.get("sm", m["src"]), full=m["src"], w=m["w"], h=m["h"])
+        if m.get("box"):
+            item["box"] = m["box"]
     else:
         item.update(type=m["kind"], src=m["src"], thumb=m["poster"], w=m["w"], h=m["h"])
     return item
@@ -220,7 +237,7 @@ def fix_paths(item, root):
 PLAY_ICON = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>'
 
 
-def tile(item, i, root, crop=None, inline=False, play="hover"):
+def tile(item, i, root, crop=None, inline=False, play="hover", gid=0):
     label = item.get("title") or {"image": "image", "loop": "animation", "video": "video"}.get(item["type"], "video")
     alt = esc(item.get("title", ""))
     w, h = item["w"], item["h"]
@@ -248,8 +265,16 @@ def tile(item, i, root, crop=None, inline=False, play="hover"):
     else:
         ratio = w / h
     cls = "tile tile-video" if embed else "tile"
-    return (f'<li class="tile-wrap"><button class="{cls}" type="button" data-index="{i}"{attrs} '
-            f'style="--r:{ratio:.4f}" aria-label="{action}: {esc(label)}">{media}{play_icon}</button></li>')
+    # a caption under the tile (the piece's title and his part in it), when the gallery has one
+    cap, by = "", ""
+    if item.get("cap"):
+        cap = f'<p class="tile-cap" id="cap-{gid}-{i}"><strong>{esc(item.get("title", ""))}</strong><span>{esc(item["cap"])}</span></p>'
+        by = f' aria-describedby="cap-{gid}-{i}"'
+    box = item.get("box")
+    inset = f"--cl:{box[0] * 100:.2f}%;--cr:{(1 - box[2]) * 100:.2f}%;" if box else ""
+    zoom = f' style="--zoom:{item["zoom"]}"' if item.get("zoom") else ""   # crops in a little, for a poster with letterbox bars
+    return (f'<li class="tile-wrap" style="--r:{ratio:.4f};{inset}"><button class="{cls}" type="button" data-index="{i}"{attrs}{by}{zoom} '
+            f'aria-label="{action}: {esc(label)}">{media}{play_icon}</button>{cap}</li>')
 
 
 def json_script(obj):
@@ -258,6 +283,7 @@ def json_script(obj):
 
 CHEVRON_L = '<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>'
 CHEVRON_R = '<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>'
+STRIP_IDS = itertools.count(1)   # keeps tile caption ids unique across the galleries on a page
 
 
 def strip(items, root, label, opts=None, kind="gallery", hint=False):
@@ -266,11 +292,14 @@ def strip(items, root, label, opts=None, kind="gallery", hint=False):
     opts = opts or {}
     inline = kind == "videos"
     data = json_script([fix_paths(it, root) for it in items])
-    tiles = "".join(tile(it, i, root, opts.get("crop"), inline, opts.get("play", "hover")) for i, it in enumerate(items))
+    gid = next(STRIP_IDS)
+    tiles = "".join(tile(it, i, root, opts.get("crop"), inline, opts.get("play", "hover"), gid) for i, it in enumerate(items))
     style = "".join(f"--{k}:{opts[o]}px;" for o, k in (("height", "tile-h"), ("gap", "gap")) if o in opts)
     data_attrs = (f' data-speed="{opts.get("speed", 0)}" data-play="{opts.get("play", "click" if inline else "hover")}"'
-                  + (' data-loop' if opts.get("loop") else ""))
+                  + (' data-loop' if opts.get("loop") else "") + (' data-restart' if opts.get("restart") else ""))
     cls = "strip strip-videos" if inline else "strip"
+    if opts.get("ground"):
+        cls += " strip-ground"   # a light band behind the tiles, for white screenshots on the white page
     caption = ""
     if opts.get("label"):
         caption = f'<p class="gal-label{" above" if opts.get("label_pos") == "above" else ""}">{esc(opts["label"])}</p>'
@@ -302,6 +331,22 @@ def asset_version(rel):
     """Short content hash, so browsers fetch the file again whenever it changes."""
     return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:8]
 
+
+
+def contact_links(site, root, cls):
+    """Email, LinkedIn and resume links, each only when site.json has it, so nothing prints a placeholder."""
+    links = []
+    if site.get("email"):
+        links.append(f'<a href="mailto:{esc(site["email"])}">{esc(site["email"])}</a>')
+    if site.get("linkedin"):
+        links.append(f'<a href="{esc(site["linkedin"])}" rel="noopener">LinkedIn</a>')
+    if site.get("resume"):
+        links.append(f'<a href="{root}files/christian-sanchez-resume.pdf">Resume (PDF)</a>')
+    return f'<span class="{cls}">{"".join(links)}</span>' if links else ""
+
+
+def footer_links(site):
+    return contact_links(site, "", "footer-links")
 
 
 def layout(page, site, root, body, media, og_image=None):
@@ -339,7 +384,7 @@ def layout(page, site, root, body, media, og_image=None):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page["title"])}</title>
 <meta name="description" content="{esc(desc)}">{robots}
-<meta property="og:title" content="{esc(page["title"])}">
+<meta property="og:title" content="{esc(page.get("og_title") or page["title"])}">
 <meta property="og:description" content="{esc(desc)}">{og}
 <meta name="theme-color" content="#2b2b2b">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="cfb8039e-58d3-4d85-b5f8-6567b963fee6" data-domains="csworkportfolio.github.io"></script>
@@ -351,7 +396,7 @@ def layout(page, site, root, body, media, og_image=None):
 <link rel="apple-touch-icon" href="{root}assets/icons/apple-touch-icon.png">
 <script src="{root}assets/js/main.js?v={asset_version("assets/js/main.js")}" defer></script>
 </head>
-<body id="top" class="page-{page["type"]}">
+<body id="top" class="page-{page["type"]}{" " + page["body_class"] if page.get("body_class") else ""}">
 <a class="skip-link" href="#main">Skip to content</a>{header}
 <nav class="pills" aria-label="Portfolio sections">
   <div class="seg">{"".join(nav)}</div>
@@ -361,7 +406,7 @@ def layout(page, site, root, body, media, og_image=None):
 </main>
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <span>© {esc(site["name"])}</span>
+    <span>© {esc(site["name"])}</span>{footer_links(site)}
     <a href="#top" class="to-top">Back to top ↑</a>
   </div>
 </footer>
@@ -549,6 +594,136 @@ def render_category(page, site, media):
     return layout(page, site, root, "\n".join(parts), media)
 
 
+def glance(rows):
+    """The figures under a case study's intro: a large figure and what it counts."""
+    cells = "".join(f'<div><dt>{esc(d)}</dt><dd>{esc(n)}</dd></div>' for n, d in rows)
+    return f'<div class="wrap glance-wrap"><dl class="glance">{cells}</dl></div>'
+
+
+def section_open(b, cls="", tag="section"):
+    sid = f' id="{esc(b["id"])}"' if b.get("id") else ""
+    return f'<{tag} class="wrap prose{cls}"{sid}><h2>{esc(b["h"])}</h2>\n{paragraphs(b.get("p", []))}'
+
+
+def flow(b, media, root):
+    """Request-to-live: a scroll scene. The stage pins under the switcher while the section scrolls past;
+    each stage's words take the left side and a real placement, in a phone held in 3D, goes through that
+    stage on the right (its layers apart for the brief, together for the build, scanned, signed off,
+    scheduled, live). Without script, or with reduced motion, it is the stages in order beside the phone."""
+    n = len(b["steps"])
+    me_cls = ' class="is-me"'
+    names = "".join(
+        f'<li><button type="button" data-go="{i}"{me_cls if s.get("who", "me") == "me" else ""}>{esc(s["t"])}</button></li>'
+        for i, s in enumerate(b["steps"]))
+    panels = []
+    for i, s in enumerate(b["steps"]):
+        mine = s.get("who", "me") == "me"
+        checks = "".join(f"<li>{esc(c)}</li>" for c in s.get("checks", []))
+        panels.append(
+            f'<div class="sc-panel" data-panel="{i}">'
+            f'<p class="sc-who{" is-me" if mine else ""}">{"My Part" if mine else esc(s["who"])}</p>'
+            f'<h3>{esc(s.get("title", s["t"]))}</h3><p>{esc(s["d"])}</p>'
+            + (f'<ul class="sc-checks">{checks}</ul>' if checks else "") + "</div>")
+    if not b.get("phone"):
+        # a still walkthrough: the scene never pins; a captioned photograph rides beside the stages, and with
+        # "figures" (one per stage) the photograph changes as each stage comes into view
+        figs = b.get("figures") or [{"src": b["photo"], "alt": b.get("alt", ""), "caption": b.get("caption", "")}]
+        parts = []
+        for fg in figs:
+            m = media.get(fg["src"])
+            cap = f'<figcaption>{esc(fg["caption"])}</figcaption>' if fg.get("caption") else ""
+            img = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" '
+                   f'alt="{esc(fg.get("alt", ""))}" loading="lazy" decoding="async">')
+            if fg.get("v"):
+                # a video figure: it plays silently in place once on screen, and a click opens it in the lightbox
+                item = {"type": video_kind(fg["v"]), "id": fg["v"], "vw": 16, "vh": 9, "thumb": root + m.get("sm", m["src"]),
+                        "w": m["w"], "h": m["h"], "title": fg.get("title", ""), "desc": fg.get("desc", "")}
+                img = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{fg["v"]}" data-vw="16" data-vh="9" '
+                       f'aria-label="Play video: {esc(fg.get("title", ""))}">{img}{PLAY_ICON}</button>'
+                       f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
+            parts.append(f'<figure class="sc-photo">{img}{cap}</figure>')
+        figure = f'<div class="sc-figs">{"".join(parts)}</div>' if len(parts) > 1 else parts[0]
+        return (f'<section class="scene sc-still" id="{esc(b.get("id", "process"))}" data-scene="flow" style="--n:{n}" aria-label="{esc(b["h"])}">'
+                '<div class="sc-stage"><div class="wrap sc-grid">'
+                f'<div class="sc-text"><h2>{esc(b["h"])}</h2>{paragraphs(b.get("p", []))}'
+                f'<ol class="sc-names">{names}</ol><div class="sc-panels">{"".join(panels)}</div></div>'
+                f'<div class="sc-visual">{figure}</div></div></div></section>')
+    m = media.get(b["phone"])
+    img = f'{root}{m["src"]}'
+    cuts = b.get("layers", [0, 1])
+    layers = []
+    for i in range(len(cuts) - 1):
+        t, h = cuts[i], cuts[i + 1] - cuts[i]
+        layers.append(
+            f'<div class="ph-layer" style="--i:{i};top:{t * 100:.2f}%;height:{h * 100:.2f}%">'
+            f'<img src="{img}" alt="" style="top:{-t / h * 100:.2f}%;height:{100 / h:.2f}%" loading="lazy"></div>')
+    reach = esc(b.get("reach", ""))
+    nxt = media.get(b["next"]) if b.get("next") else None
+    next_img = f'<img class="ph-next" src="{root}{nxt["src"]}" alt="" loading="lazy">' if nxt else ""
+    # "sets": other placements the reader can switch the phone to (the same cuts apply: Nike's story template)
+    sets = [{"name": s_["name"], "src": root + media.get(s_["phone"])["src"], "next": root + media.get(s_["next"])["src"]} for s_ in b.get("sets", [])]
+    switch = ""
+    if len(sets) > 1:
+        on_cls = ' class="is-on"'
+        btns = "".join(f'<button type="button" data-set="{i}"{on_cls if i == 0 else ""}>{esc(s_["name"])}</button>' for i, s_ in enumerate(sets))
+        switch = (f'<div class="sc-switch" role="group" aria-label="Choose the placement shown">{btns}</div>'
+                  f'<script type="application/json" class="sc-sets">{json_script(sets)}</script>')
+    phone = (f'<figure class="ph" aria-hidden="true"><div class="ph-body">'
+             f'<div class="ph-screen"><div class="ph-roll">{"".join(layers)}{next_img}</div></div>'
+             '<span class="ph-island"></span><span class="ph-key ph-key-action"></span><span class="ph-key ph-key-up"></span>'
+             '<span class="ph-key ph-key-down"></span><span class="ph-key ph-key-side"></span>'
+             '<span class="ph-halo"></span><span class="ph-glow"></span><span class="ph-copybox"></span>'
+             '<span class="ph-stamp"><svg viewBox="0 0 48 48"><path d="M14 25l7 7 13-15"/></svg>QA approved</span>'
+             '<span class="ph-chip">Scheduled for its publish window</span>'
+             '<span class="ph-live">Live</span></div></figure>')
+    return (f'<section class="scene" id="{esc(b.get("id", "process"))}" data-scene="flow" style="--n:{n}" aria-label="{esc(b["h"])}">'
+            '<div class="sc-stage"><div class="wrap sc-grid">'
+            f'<div class="sc-text"><h2>{esc(b["h"])}</h2>{paragraphs(b.get("p", []))}'
+            f'<ol class="sc-names">{names}</ol><div class="sc-panels">{"".join(panels)}</div></div>'
+            f'<div class="sc-visual">{phone}{switch}'
+            + (f'<p class="sc-count" aria-hidden="true"><strong data-to="{b.get("reach_to", 20000000)}">{b.get("reach_to", 20000000):,}+</strong>{reach}</p>' if reach else "")
+            + '</div></div></div></section>')
+
+
+def timeline(b):
+    """Campaign timeline as a dark scoreboard. Scrolling moves a date from the first day of the contract to
+    the last: each campaign's bar fills up to that date, and the readout says the date and how many were
+    live. Without script, or with reduced motion, the bars are drawn whole."""
+    from datetime import date
+    start, end = (date.fromisoformat(d) for d in b["range"])
+    span = (end - start).days
+    pct = lambda d: round((date.fromisoformat(d) - start).days / span * 100, 2)
+    months, d = [], start.replace(day=1)
+    while d <= end:
+        months.append(f'<span style="left:{max(0, (d - start).days / span * 100):.2f}%">{d.strftime("%B")}</span>')
+        d = d.replace(year=d.year + (d.month == 12), month=d.month % 12 + 1)
+    lanes = "".join(
+        f'<li class="tl-lane{" tl-lane-always" if l.get("always") else ""}" data-start="{pct(l["start"])}" data-end="{pct(l["end"])}"{" data-always" if l.get("always") else ""}>'
+        + (f'<a class="tl-label" href="{esc(l["href"])}"><strong>{esc(l["t"])}</strong><span>{esc(l["note"])}</span></a>' if l.get("href")
+           else f'<span class="tl-label"><strong>{esc(l["t"])}</strong><span>{esc(l["note"])}</span></span>')
+        + f'<div class="tl-track"><span class="tl-bar" style="left:{pct(l["start"])}%;width:{pct(l["end"]) - pct(l["start"]):.2f}%"><i></i></span></div></li>'
+        for l in b["lanes"])
+    return (f'<section class="tl-scene" id="{esc(b["id"])}" data-scene="timeline" data-start="{start.isoformat()}" data-days="{span}">'
+            '<div class="tl-stage"><div class="wrap tl-wrap">'
+            f'<div class="tl-head"><h2>{esc(b["h"])}</h2>{paragraphs(b.get("p", []))}</div>'
+            '<p class="tl-readout" aria-hidden="true"><strong class="tl-date">June to August</strong><span class="tl-live"></span></p>'
+            f'<div class="tl-board"><div class="tl-months">{"".join(months)}<span class="tl-now"></span></div><ol class="tl-lanes">{lanes}</ol></div>'
+            + (f'<p class="tl-note">{esc(b["caption"])}</p>' if b.get("caption") else "")
+            + '</div></div></section>')
+
+
+def phases(b):
+    """Learn-then-teach: a scene. On a desktop the stage holds while each phase word fills from grey to ink
+    in turn and its line appears beside it; on phones, with reduced motion or without script, the words
+    fill as they reach the middle of the screen."""
+    items = "".join(f'<li><strong>{esc(p["t"])}</strong><span>{esc(p["d"])}</span></li>' for p in b["phases"])
+    return (f'<section class="scene ph-scene" id="{esc(b.get("id", "guide"))}" data-scene="phases" style="--n:{len(b["phases"])}" aria-label="{esc(b["h"])}">'
+            f'<div class="ph-stage"><div class="wrap prose ph-section"><h2>{esc(b["h"])}</h2>\n{paragraphs(b.get("p", []))}'
+            f'<ol class="phases" data-fill>{items}</ol>'
+            + (f'<p class="ph-topics">{esc(b["topics"])}</p>' if b.get("topics") else "")
+            + "</div></div></section>")
+
+
 def render_case(page, site, media):
     root = "../"
     hero = page["hero"]
@@ -565,8 +740,26 @@ def render_case(page, site, media):
   </div>
 </section>
 <div class="wrap prose lede-wrap"><p class="lede">{esc(page["lede"])}</p></div>''']
+    if page.get("glance"):
+        parts.append(glance(page["glance"]))
     for b in page["blocks"]:
-        if "gallery" in b:
+        if "steps" in b:
+            parts.append(flow(b, media, root))
+        elif "lanes" in b:
+            parts.append(timeline(b))
+        elif "phases" in b:
+            parts.append(phases(b))
+        elif b.get("notes"):
+            # a reference's table of contents, as a two-column list in a tinted band
+            # drawn as the document itself: a page with its contents, on a light band beside the words
+            items = "".join(f"<li>{esc(t)}</li>" for t in b["items"])
+            parts.append(section_open(b, " ph-notes") + paragraphs(b.get("p2", [])) + "</section>"
+                         f'<div class="ref-figure"><div class="ref-band"><div class="ref-page" role="img" aria-label="The contents of the authoring reference">'
+                         f'<p class="ref-title">{esc(b.get("doc_title", "Authoring reference"))}</p><p class="ref-sub">Contents</p>'
+                         f'<ol class="ref-list">{items}</ol></div></div></div>')
+        elif "statement" in b:
+            parts.append(f'<div class="wrap prose statement-wrap"><p class="statement">{esc(b["statement"])}</p></div>')
+        elif "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
             parts.append(strip(items, root, "Project gallery", b))
         elif "videos" in b:
@@ -574,15 +767,20 @@ def render_case(page, site, media):
             parts.append(strip(items, root, "Videos", {**b, "height": 378}, kind="videos"))
         else:
             intro = " intro" if b["h"] in ("THE PROBLEM", "THE SOLUTION") else ""
-            parts.append(f'<section class="wrap prose{intro}"><h2>{esc(b["h"])}</h2>\n{paragraphs(b["p"])}</section>')
+            parts.append(section_open(b, intro) + "</section>")
+    if page.get("contact"):
+        # the page's ending: one line to the reader and the ways to reach him (from site.json)
+        parts.append(f'<section class="wrap prose statement-wrap" id="contact"><p class="statement">{esc(page["contact"]["statement"])}</p>'
+                     f'{contact_links(site, root, "contact-row")}</section>')
     nxt = page["next"]
     parts.append(f'''
 <nav class="wrap case-nav" aria-label="Case study navigation">
-  <a class="btn btn-rust" href="{root}">Back to Case Studies</a>
-  <a class="btn btn-gray" href="#top">Top of Page</a>
+  <a class="case-nav-link" href="{root}">Back to Case Studies</a>
   <a class="btn btn-rust" href="{root}{nxt["slug"]}/">{esc(nxt["label"])}</a>
 </nav>''')
-    page = {**page, "nav_active": "", "description": page["lede"][:155].rsplit(" ", 1)[0] + "…"}
+    page = {**page, "nav_active": "", "description": page.get("description") or page["lede"][:155].rsplit(" ", 1)[0] + "…"}
+    if page.get("glance") or any("steps" in b for b in page["blocks"]):
+        page["body_class"] = "case-v2"   # the larger type scale that the scene pages use
     return layout(page, site, root, "\n".join(parts), media, og_image=bg["src"])
 
 
