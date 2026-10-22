@@ -341,7 +341,9 @@ def layout(page, site, root, body, media, og_image=None):
 <script>/* like the Job Search AI app: "ios" on an iPhone or iPad, or any window 720px wide or less, gets touch-sized controls */
 (function(){{var r=document.documentElement,i=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),m=matchMedia("(max-width: 720px)");function a(){{r.setAttribute("data-os",i||m.matches?"ios":"mac")}}a();m.addEventListener&&m.addEventListener("change",a)}})();</script>
 <link rel="stylesheet" href="{root}assets/css/style.css?v={asset_version("assets/css/style.css")}">
-<link rel="icon" href="{root}{avatar.get("sm", avatar["src"])}">
+<link rel="icon" type="image/png" sizes="32x32" href="{root}assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="{root}assets/icons/icon-512.png">
+<link rel="apple-touch-icon" href="{root}assets/icons/apple-touch-icon.png">
 <script src="{root}assets/js/main.js?v={asset_version("assets/js/main.js")}" defer></script>
 </head>
 <body id="top" class="page-{page["type"]}">
