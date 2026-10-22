@@ -368,6 +368,12 @@ button { font: inherit; color: inherit; }
   height: var(--fit); width: 100%;
   overflow: hidden;
 }
+/* the locked Ghostwriting page was encrypted with the older markup, where the ratio sits on the button itself:
+   size those tiles from their own ratio so they keep the strip's height */
+.tile[style*="--r"] {
+  --fit: min(var(--tile-h, var(--strip-h)), calc(min(86vw, 1100px) / var(--r)));
+  width: calc(var(--fit) * var(--r)); height: var(--fit);
+}
 /* a caption under the tile: the piece and his part in it */
 .tile-cap { margin: 10px var(--cr, 0) 0 var(--cl, 0); font-size: 14px; line-height: 1.4; color: var(--muted); }  /* lines up with the picture, not the file's transparent margin */
 .tile-cap strong { display: block; color: var(--ink); font-weight: 600; }
