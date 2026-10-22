@@ -607,10 +607,6 @@ main { view-transition-name: page; }
 /* between a phone and the desktop layout there's room for all the intro beside the portrait, so it sits in a
    column on the left (as on desktop) instead of the last line alone wrapping beside the head */
 @media (min-width: 561px) and (max-width: 720px) {
-  .home-hero-inner { grid-template-columns: minmax(0, 1fr) min(44%, 300px); column-gap: 20px; padding-top: 0; }
-  .home-hero-text { display: block; padding: 32px 0 28px; }
-  .home-hero-text > *, .home-hero-text > p:last-child { grid-column: auto; grid-row: auto; }
-  .home-portrait { grid-column: 2; grid-row: 1; width: 100%; max-width: none; align-self: end; margin-top: 24px; }
   /* wide enough (large phones in landscape, foldables) for the desktop case rows: text beside its slideshow */
   .case-row-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 24px; min-height: 0; padding-top: 28px; padding-bottom: 28px; align-items: center; }
   .case-row .kicker { margin-bottom: 12px; }
@@ -670,4 +666,27 @@ main { view-transition-name: page; }
 @media (min-width: 721px) and (max-width: 1100px) {
   .seg { height: auto; }
   .seg-item { height: 35px; padding: 0 20px; font-size: 14px; }
+}
+
+/* The intro from big phones to small desktops (500-1100px): the portrait sits at the right, rising from
+   the switcher bar (cropped by it when the text is short), and the text wraps around its outline (shape-outside reads
+   the photo's transparent background), so the words follow the head and shoulders instead of a box. An
+   invisible spacer floated above the portrait pushes it down to the bottom; main.js keeps the spacer the
+   right height as the text rewraps. */
+.home-portrait-float, .hero-spacer { display: none; }
+@media (min-width: 500px) and (max-width: 1100px) {
+  :root { --pw: clamp(240px, 32vw, 300px); }
+  .home-hero-inner { display: block; padding-top: 0; min-height: 0; }
+  .home-portrait { display: none; }
+  /* the band is as tall as the text (never shorter than the head and shoulders); a portrait taller than
+     that runs off the bottom edge and is cropped there */
+  .home-hero-text { display: block; box-sizing: border-box; padding: 28px 0 0; min-height: calc(var(--pw) * .72 + 28px); }
+  .home-hero-text > p:last-child { padding-bottom: 24px; }
+  .home-hero-text > *, .home-hero-text > p:last-child { grid-column: auto; grid-row: auto; }
+  .hero-spacer { display: block; float: right; width: 1px; height: 0; }
+  .home-portrait-float {
+    display: block; float: right; clear: right; width: var(--pw); height: auto; max-width: none;
+    margin: 6px calc(-1 * var(--gutter) - 16px) 0 12px;  /* a little lower and further right, the far shoulder off the edge */
+    shape-image-threshold: .35; shape-margin: 14px;
+  }
 }

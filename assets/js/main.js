@@ -92,6 +92,60 @@
     }, 5000);
   });
 
+  // ---------- intro: keep the wrapped portrait standing on the bottom edge ----------
+  // The spacer above the floated portrait pushes it down when the text runs longer than the portrait, so it
+  // still reaches the bottom edge. Lowering it lets the text wrap wider higher up, which shortens the text,
+  // so search for the smallest push that puts the portrait's bottom at or below the end of the text.
+  const heroText = document.querySelector(".home-hero-text");
+  const spacer = heroText && heroText.querySelector(".hero-spacer");
+  const shaped = heroText && heroText.querySelector(".home-portrait-float");
+  function standPortrait() {
+    if (!spacer || !shaped) return;
+    spacer.style.height = "0px";
+    shaped.style.marginBottom = "";
+    shaped.style.marginTop = "";
+    if (getComputedStyle(spacer).display === "none" || !shaped.offsetHeight) return;
+    const last = heroText.querySelector("p:last-child");
+    const top = () => heroText.getBoundingClientRect().top + parseFloat(getComputedStyle(heroText).paddingTop);
+    const textEnd = () => last.getBoundingClientRect().bottom - top();
+    const fits = (s) => { spacer.style.height = s + "px"; return s + shaped.offsetHeight >= textEnd() - 0.5; };
+    const settle = () => {
+      let lo = 0, hi = Math.ceil(textEnd());
+      if (fits(0)) return void (spacer.style.height = "0px");
+      while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (fits(mid)) hi = mid; else lo = mid; }
+      spacer.style.height = hi + "px";
+    };
+    // with short text the portrait stays near the top and the band ends with the text, cropping the portrait:
+    // a negative bottom margin stops the photo's lower part from stretching the band
+    shaped.style.marginBottom = "";
+    shaped.style.marginTop = "";
+    settle();
+    // near the top, line the top of the head up with the top of "Hi, Christian Sanchez here." (the head
+    // starts 3.85% down the photo; the greeting's letters start half its leading below its box)
+    if (parseFloat(spacer.style.height) === 0) {
+      const hi = heroText.querySelector(".hero-hi");
+      const hiBox = hi.getBoundingClientRect();
+      const cs = getComputedStyle(hi);
+      const lead = (parseFloat(cs.lineHeight) || hiBox.height) - parseFloat(cs.fontSize);
+      const letters = hiBox.top + lead / 2 + parseFloat(cs.fontSize) * 0.12;
+      const head = shaped.getBoundingClientRect().top + shaped.offsetHeight * 0.0385;
+      const nudge = Math.round(letters - head);
+      if (nudge) {
+        shaped.style.marginTop = parseFloat(getComputedStyle(shaped).marginTop) + nudge + "px";
+        settle();
+      }
+    }
+    const end = Math.max(last.getBoundingClientRect().bottom,
+      heroText.getBoundingClientRect().top + parseFloat(getComputedStyle(heroText).minHeight || 0));
+    const over = shaped.getBoundingClientRect().bottom - end;
+    if (over > 1) shaped.style.marginBottom = -Math.round(over) + "px";
+  }
+  if (shaped) {
+    if (shaped.complete) standPortrait(); else shaped.addEventListener("load", standPortrait);
+    window.addEventListener("resize", standPortrait);
+    if (document.fonts) document.fonts.ready.then(standPortrait);
+  }
+
   // ---------- Read More shine: lights up as each case row scrolls into view ----------
 
   const shines = document.querySelectorAll(".shine");

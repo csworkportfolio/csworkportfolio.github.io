@@ -449,10 +449,18 @@ def intro_hero(home, root, media, tag):
     """The "Hi, Christian Sanchez here." intro with the portrait: the home page's hero, and the header of the
     category pages (where the greeting is not the page's heading, so it is a <p>)."""
     portrait = media.get(home["portrait"])
+    src = root + portrait.get("sm", portrait["src"])
+    # A second copy of the portrait sits at the start of the text, floated with its own outline as the wrap
+    # shape, so on big phones to small desktops the intro flows around the silhouette (CSS shows one or other).
+    # an invisible spacer floats above it so the portrait sits on the bottom edge (main.js sizes the spacer)
+    shaped = (f'<span class="hero-spacer" aria-hidden="true"></span>'
+              f'<img class="home-portrait-float" src="{src}" width="{portrait["w"]}" height="{portrait["h"]}" alt="" '
+              f'aria-hidden="true" style="shape-outside:url(\'{src}\')">')
     return f'''
 <section class="home-hero">
   <div class="wrap home-hero-inner">
     <div class="home-hero-text">
+      {shaped}
       <{tag} class="hero-hi">{esc(home["greeting"])}</{tag}>
       {paragraphs(home["intro"])}
     </div>
