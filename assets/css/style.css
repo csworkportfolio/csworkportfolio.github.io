@@ -668,13 +668,13 @@ main { view-transition-name: page; }
   .seg-item { height: 35px; padding: 0 20px; font-size: 14px; }
 }
 
-/* The intro from big phones to small desktops (500-1100px): the portrait sits at the right, rising from
+/* The intro from big phones (incl. the folded iPhone Duo, ~466px) to small desktops (440-1100px): the portrait sits at the right, rising from
    the switcher bar (cropped by it when the text is short), and the text wraps around its outline (shape-outside reads
    the photo's transparent background), so the words follow the head and shoulders instead of a box. An
    invisible spacer floated above the portrait pushes it down to the bottom; main.js keeps the spacer the
    right height as the text rewraps. */
 .home-portrait-float, .hero-spacer { display: none; }
-@media (min-width: 500px) and (max-width: 1100px) {
+@media (min-width: 440px) and (max-width: 1100px) {
   :root { --pw: clamp(240px, 32vw, 300px); }
   .home-hero-inner { display: block; padding-top: 0; min-height: 0; }
   .home-portrait { display: none; }
