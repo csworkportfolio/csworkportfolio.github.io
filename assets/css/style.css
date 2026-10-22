@@ -693,3 +693,10 @@ main { view-transition-name: page; }
     shape-image-threshold: .35; shape-margin: 14px;
   }
 }
+
+/* Safari on iOS 26+ colours its own bars (and the iPhone Duo's side toolbar) by sampling pinned elements
+   touching the top and bottom edges of the screen, not the page background. These two hairline strips
+   give it the header's near-black to pick up. They are 3px tall and let every tap through. */
+.safari-tint { position: fixed; left: 0; right: 0; height: 3px; background: #0e0e0e; z-index: 60; pointer-events: none; }
+.safari-tint-top { top: 0; }
+.safari-tint-bottom { bottom: 0; }

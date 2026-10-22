@@ -345,6 +345,7 @@ def layout(page, site, root, body, media, og_image=None):
 <script src="{root}assets/js/main.js?v={asset_version("assets/js/main.js")}" defer></script>
 </head>
 <body id="top" class="page-{page["type"]}">
+<div class="safari-tint safari-tint-top" aria-hidden="true"></div><div class="safari-tint safari-tint-bottom" aria-hidden="true"></div>
 <a class="skip-link" href="#main">Skip to content</a>{header}
 <nav class="pills" aria-label="Portfolio sections">
   <div class="seg">{"".join(nav)}</div>
