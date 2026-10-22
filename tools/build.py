@@ -327,7 +327,11 @@ def layout(page, site, root, body, media, og_image=None):
 </header>'''
     desc = page.get("description", site["description"])
     robots = f'\n<meta name="robots" content="{page["robots"]}">' if page.get("robots") else ""
-    og = f'\n<meta property="og:image" content="{root}{og_image}">' if og_image else ""
+    # every page shares the same preview: the top of the home page (absolute URL, as link previews need)
+    share = "https://csworkportfolio.github.io/assets/share.jpg"
+    og = (f'\n<meta property="og:image" content="{share}">\n<meta property="og:image:width" content="1200">'
+          f'\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">'
+          f'\n<meta name="twitter:image" content="{share}">')
     return f'''<!doctype html>
 <html lang="en">
 <head>
