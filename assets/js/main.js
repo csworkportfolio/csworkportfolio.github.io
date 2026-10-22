@@ -702,6 +702,17 @@
   const seg = document.querySelector(".seg");
   const segOn = seg && seg.querySelector(".is-active");
 
+  // A bar too long for the screen runs edge to edge and scrolls (CSS .is-scrolling). Measured in the
+  // centred, rounded form first, since the full-width form always has the room it needs.
+  function markScrolling() {
+    if (!seg) return;
+    seg.classList.remove("is-scrolling");
+    seg.classList.toggle("is-scrolling", seg.scrollWidth > seg.clientWidth + 1);
+  }
+  markScrolling();
+  window.addEventListener("resize", markScrolling);
+  if (document.fonts) document.fonts.ready.then(markScrolling);
+
   if (segOn && seg.scrollWidth > seg.clientWidth) {
     seg.scrollLeft = segOn.offsetLeft - seg.offsetLeft - (seg.clientWidth - segOn.offsetWidth) / 2;
   }

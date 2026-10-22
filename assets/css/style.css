@@ -189,7 +189,7 @@ button { font: inherit; color: inherit; }
   transition: background-color .18s, color .18s, box-shadow .18s;
 }
 .seg-item:hover { color: #000; text-decoration: none; }
-.seg-item.is-active { background: #fff; color: #000; box-shadow: 0 1px 2px rgba(0, 0, 0, .15), 0 0 0 .5px rgba(0, 0, 0, .06); }
+.seg-item.is-active { background: #007aff; color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .15); }  /* the same blue as the phone chip */
 .seg-item:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: -2px; }
 @media (prefers-reduced-transparency: reduce) { .seg { background: #f2f2f2; -webkit-backdrop-filter: none; backdrop-filter: none; } }
 @media (prefers-reduced-motion: reduce) { .seg-item { transition: none; } }
@@ -644,8 +644,12 @@ main { view-transition-name: page; }
     width: auto; max-width: calc(100% - 2 * var(--gutter)); margin: 0 auto; padding: 3px; gap: 2px;
     border-radius: 999px; background: color-mix(in srgb, #f2f2f2 86%, transparent);
   }
-  :root[data-os="ios"] .seg-item { height: 36px; padding: 0 20px; background: none; box-shadow: none; color: rgba(0, 0, 0, .7); }
-  :root[data-os="ios"] .seg-item.is-active { background: #fff; color: #000; box-shadow: 0 1px 2px rgba(0,0,0,.15), 0 0 0 .5px rgba(0,0,0,.06); }
+  /* the same size as the Read More buttons on touch screens: 44px tall, 15px labels, 20px each side */
+  :root[data-os="ios"] .seg-item { height: 44px; padding: 0 20px; font-size: 15px; background: none; box-shadow: none; color: rgba(0, 0, 0, .7); }
+  /* when the six don't fit (foldable portrait or landscape), the bar runs to both screen edges and scrolls
+     inside them, rather than a rounded bar clipping the tabs at its ends; main.js sets .is-scrolling */
+  :root[data-os="ios"] .seg.is-scrolling { width: 100%; max-width: none; border-radius: 0; padding: 3px var(--gutter); scroll-padding-inline: var(--gutter); }
+  :root[data-os="ios"] .seg-item.is-active { background: #007aff; color: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.15); }
 }
 @media (min-width: 721px) { :root[data-os="ios"] .seg { justify-content: center; } }
 :root[data-os="ios"] .cat-text h1, :root[data-os="ios"] .cat-text h2 { font-size: 20px; margin-bottom: 6px; }
