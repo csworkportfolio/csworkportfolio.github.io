@@ -849,4 +849,72 @@
     try { saved = sessionStorage.getItem(KEY); } catch (e) {}
     if (saved) unlock(saved).catch(() => {});
   }
+
+  // ---------- visit alerts: a phone notification (ntfy app, subscribed to this topic) when someone opens the site ----------
+  // One alert per visit: a page opened within 30 minutes of the last one counts as the same visit.
+  // Opening the site once with ?me marks that device as Christian's (no alerts, and Umami stops counting it too);
+  // ?me=off undoes it.
+
+  (() => {
+    const TOPIC = "cs-portfolio-n0iBxagSHhbI0lKZ";
+    const VISIT_GAP = 30 * 60 * 1000;
+    const store = (() => { try { return localStorage; } catch (e) { return null; } })();
+    if (!store) return;
+    const params = new URLSearchParams(location.search);
+    if (params.has("me")) {
+      const off = params.get("me") === "off";
+      try {
+        if (off) store.removeItem("umami.disabled"); else store.setItem("umami.disabled", "1");
+      } catch (e) {}
+      params.delete("me");
+      history.replaceState(history.state, "", location.pathname + (params.toString() ? "?" + params : "") + location.hash);
+      alert(off ? "Visit alerts and Umami are back on for this device."
+                : "This device is marked as yours: no visit alerts, and Umami won't count it.");
+      return;
+    }
+    if (location.hostname !== "csworkportfolio.github.io" || store.getItem("umami.disabled")) return;
+    if (navigator.webdriver || /bot|crawl|spider|preview|headless/i.test(navigator.userAgent)) return;
+    const now = Date.now();
+    const last = Number(store.getItem("cs-visit-last")) || 0;
+    try { store.setItem("cs-visit-last", String(now)); } catch (e) {}
+    if (now - last < VISIT_GAP) return;
+
+    // where they came from, by name for the usual places; no referrer means a typed link, a bookmark, or an app
+    // (the LinkedIn and mail apps often hide where a link was opened from)
+    const SOURCES = [
+      [/(^|\.)(linkedin\.com|lnkd\.in)$/, "LinkedIn"], [/(^|\.)google\./, "Google"], [/(^|\.)bing\.com$/, "Bing"],
+      [/(^|\.)duckduckgo\.com$/, "DuckDuckGo"], [/(^|\.)indeed\./, "Indeed"], [/(^|\.)glassdoor\./, "Glassdoor"],
+      [/(^|\.)(facebook\.com|fb\.me)$/, "Facebook"], [/(^|\.)instagram\.com$/, "Instagram"],
+      [/(^|\.)(x\.com|t\.co|twitter\.com)$/, "X"], [/(^|\.)github\.com$/, "GitHub"],
+      [/(^|\.)(chatgpt\.com|openai\.com)$/, "ChatGPT"], [/(^|\.)(claude\.ai|perplexity\.ai)$/, "AI search"],
+      [/mail\./, "Email"],
+    ];
+    let from = "Direct link or bookmark";
+    try {
+      const ref = document.referrer && new URL(document.referrer).hostname;
+      if (ref && ref !== location.hostname) {
+        from = (SOURCES.find(([re]) => re.test(ref)) || [, ref.replace(/^www\./, "")])[1];
+      }
+    } catch (e) {}
+    const page = document.title.split(/\s+[|–—-]\s+/)[0] || location.pathname;
+
+    // City, State, Country from the visitor's IP (GeoJS, free and keyless); if that's blocked, the time zone city
+    const zone = (Intl.DateTimeFormat().resolvedOptions().timeZone || "").split("/").pop().replace(/_/g, " ");
+    const place = fetch("https://get.geojs.io/v1/ip/geo.json")
+      .then((r) => r.json())
+      .then((g) => [g.city, g.region, g.country].filter(Boolean).join(", ") || Promise.reject())
+      .catch(() => (zone ? `Near ${zone} (time zone)` : "Location unknown"));
+
+    place.then((where) => {
+      // A plain-text body keeps this a "simple" request (no CORS preflight); ntfy reads the JSON from it.
+      fetch("https://ntfy.sh/", {
+        method: "POST",
+        keepalive: true,
+        body: JSON.stringify({
+          topic: TOPIC, title: "Website Visitor", message: [where, page, from].join("\n"),
+          click: location.href,
+        }),
+      }).catch(() => {});
+    });
+  })();
 })();
