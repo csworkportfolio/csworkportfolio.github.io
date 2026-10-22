@@ -295,6 +295,16 @@ def strip(items, root, label, opts=None, kind="gallery", hint=False):
     gid = next(STRIP_IDS)
     tiles = "".join(tile(it, i, root, opts.get("crop"), inline, opts.get("play", "hover"), gid) for i, it in enumerate(items))
     style = "".join(f"--{k}:{opts[o]}px;" for o, k in (("height", "tile-h"), ("gap", "gap")) if o in opts)
+    # the widest piece's ratio: on a narrow screen every tile shrinks to the height that piece fits at, so a
+    # strip keeps one height instead of each tile shrinking on its own
+    def _ratio(it):
+        shape = opts.get("crop") or (f'{it["vw"]}/{it["vh"]}' if it["type"] in ("vimeo", "youtube") else None)
+        if shape:
+            a, b_ = (float(x) for x in shape.split("/"))
+            return a / b_
+        return it["w"] / it["h"]
+    if items:
+        style += f"--rmax:{max(_ratio(it) for it in items):.4f};"
     data_attrs = (f' data-speed="{opts.get("speed", 0)}" data-play="{opts.get("play", "click" if inline else "hover")}"'
                   + (' data-loop' if opts.get("loop") else "") + (' data-restart' if opts.get("restart") else ""))
     cls = "strip strip-videos" if inline else "strip"

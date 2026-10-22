@@ -360,7 +360,7 @@ button { font: inherit; color: inherit; }
   flex: none;
   /* a wide piece that would outgrow the screen (86vw, or 1100px) gets shorter instead of being cropped,
      so phones always show the whole image; the ratio (--r) is set on the item, so its caption shares the width */
-  --fit: min(var(--tile-h, var(--strip-h)), calc(min(86vw, 1100px) / var(--r)));
+  --fit: min(var(--tile-h, var(--strip-h)), calc(min(86vw, 1100px) / var(--rmax, var(--r))));
   width: calc(var(--fit) * var(--r));
 }
 .tile {
