@@ -29,7 +29,10 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* The page canvas is dark, matching the header band: it is what Safari shows (and tints its bars from)
+   wherever the page itself doesn't reach: beside the iPhone Duo's side toolbar, the notch strips, and
+   when you pull past the top or bottom. The body keeps the white paper for the content itself. */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: #0e0e0e; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
