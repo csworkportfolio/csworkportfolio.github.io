@@ -654,7 +654,9 @@ def lock_widget(src, shapes, height=470, gap=20, note=True):
     that fills as the digits go in. The right code decrypts the posts in the browser (main.js) and the
     bubbles pop open into them. Nothing readable is in the page until then."""
     n = next(LOCK_IDS)
-    bubbles = "".join(f'<li class="gw-bubble" style="--i:{i};--r:{r}"><span class="gw-shine"></span></li>' for i, r in enumerate(shapes))
+    lock_icon = ('<span class="gw-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/>'
+                 '<path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>')
+    bubbles = "".join(f'<li class="gw-bubble" style="--i:{i};--r:{r}"><span class="gw-shine"></span>{lock_icon}</li>' for i, r in enumerate(shapes))
     rmax = max(shapes)
     rsum = sum(shapes)
     dots = '<span class="gw-dot"></span>' * 4

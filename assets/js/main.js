@@ -265,10 +265,34 @@
     // hovering slows the slider to HOVER_SPEED instead of stopping it
     el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") s.hover = true; });
     el.addEventListener("pointerleave", () => { s.hover = false; });
-    el.addEventListener("focusin", () => hold("focus"));
+    el.addEventListener("focusin", (e) => { if (e.target.matches(":focus-visible")) hold("focus"); });   // keyboard focus only; a tapped button shouldn't stop it
     el.addEventListener("focusout", () => s.pause.delete("focus"));
-    viewport.addEventListener("touchstart", () => hold("touch"), { passive: true });
-    viewport.addEventListener("touchend", () => hold("touch", 3500), { passive: true });
+    // a touch that turns out to be the page scrolling up or down lets the strip carry straight on; only a
+    // sideways swipe (or a tap) holds it for a few seconds
+    let tx = 0, ty = 0;
+    viewport.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; hold("touch"); }, { passive: true });
+    viewport.addEventListener("touchend", (e) => {
+      const t = e.changedTouches[0];
+      const dx = Math.abs(t.clientX - tx), dy = Math.abs(t.clientY - ty);
+      if (dy > 12 && dy > dx) s.pause.delete("touch"); else hold("touch", 3500);
+    }, { passive: true });
+    viewport.addEventListener("touchcancel", () => s.pause.delete("touch"), { passive: true });
+    // a pause / play button with the arrows, for strips that move on their own
+    const nextBtn = el.querySelector(".strip-next");
+    if (s.speed && nextBtn && el.closest(".cat-v2")) {
+      const pb = document.createElement("button");
+      pb.type = "button";
+      pb.className = "strip-arrow strip-pause";
+      pb.setAttribute("aria-label", "Pause gallery");
+      pb.innerHTML = '<svg viewBox="0 0 24 24"><path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg>';
+      pb.addEventListener("click", () => {
+        const paused = s.pause.has("user");
+        if (paused) s.pause.delete("user"); else s.pause.add("user");
+        pb.classList.toggle("is-paused", !paused);
+        pb.setAttribute("aria-label", paused ? "Pause gallery" : "Play gallery");
+      });
+      nextBtn.after(pb);
+    }
     viewport.addEventListener("wheel", (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) hold("wheel", 2500); }, { passive: true });
 
     viewport.addEventListener("scroll", () => {
@@ -657,7 +681,13 @@
   let asPage = false;
   let pageScroll = 0;
 
+  // a tap or click just before opening counts as a pointer open even when it reached us through a button that
+  // opens the piece for it (the expand buttons), so phones never get the keyboard focus ring on Close
+  let lastPointer = -Infinity;
+  document.addEventListener("pointerdown", () => { lastPointer = performance.now(); }, true);
+
   function open(items, index, byPointer) {
+    byPointer = byPointer || performance.now() - lastPointer < 1500;
     openedByPointer = byPointer;
     current = { items, index };
     dialog.classList.toggle("single", items.length < 2);
@@ -1082,6 +1112,40 @@
     window.addEventListener("scroll", () => requestAnimationFrame(move), { passive: true });
   }
 
+  // The locked file was made with the site's older strip markup; once open, the posts are brought in line with
+  // the other strips: the band and spacing, a title and short snippet under each, and the arrows with the expand
+  // button below on the right.
+  function modernize(content) {
+    const st = content.querySelector(".strip");
+    if (!st) return;
+    let items = [];
+    try { items = JSON.parse(st.querySelector(".gallery-data").textContent); } catch (e) {}
+    st.classList.add("strip-ground");
+    st.style.setProperty("--gap", "40px");
+    const gid = "gw";
+    st.querySelectorAll(".tile-wrap").forEach((li, i) => {
+      const b = li.querySelector(".tile");
+      const r = b && b.style.getPropertyValue("--r");
+      if (r) { li.style.setProperty("--r", r); b.style.removeProperty("--r"); }
+      const it = items[i] || {};
+      if (!li.querySelector(".tile-cap") && it.title) {
+        const first = (it.desc || "").split("\n")[0].split(/(?<=[.!?])\s+/)[0] || "";
+        const cap = el("p", { class: "tile-cap", id: `cap-${gid}-${i}` });
+        cap.append(el("strong", {}, it.title));
+        if (first) cap.append(el("span", {}, first.length > 120 ? first.slice(0, 117).replace(/\s+\S*$/, "") + "…" : first));
+        li.append(cap);
+        if (b) b.setAttribute("aria-describedby", `cap-${gid}-${i}`);
+      }
+    });
+    const next = st.querySelector(".strip-next");
+    if (next && !st.querySelector(".strip-open")) {
+      const ob = document.createElement("button");
+      ob.type = "button"; ob.className = "strip-arrow strip-open"; ob.setAttribute("aria-label", "View the piece in view larger");
+      ob.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';
+      next.after(ob);
+    }
+  }
+
   // The passcode is four glass dots that fill as the digits go in; the fourth digit tries it. On the right code
   // the empty bubbles pop one after another and the posts rise in where they were. The same lock sits on the
   // Ghostwriting page and on Social & Writing, and opening either opens both for the session.
@@ -1123,6 +1187,7 @@
       content.innerHTML = html;
       // under a section's own heading, the posts' heading would say the same thing twice
       if (lock.closest(".gw-wrap")) content.querySelectorAll(".cat-text h2").forEach((h) => h.remove());
+      modernize(content);
       const open = () => {
         lock.hidden = true;
         content.hidden = false;

@@ -1559,3 +1559,65 @@ a.tl-label:hover strong { color: #ff9a66; }
   .lightbox .lb-pdf-page.is-zoomed { cursor: zoom-out; }
   .lightbox .lb-btn, .lightbox .lb-caption a { cursor: pointer; }
 }
+
+/* the unlocked posts sit on the section's band already, so their strip needs no second band of its own */
+.gw-wrap .lock-content .strip-ground { background: none; margin-top: 0; padding-top: 8px; }
+/* each locked pane carries a lock in glass at its centre; on phones the panes scroll sideways like any strip,
+   at the posts' height and spacing */
+.gw-lock {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%; z-index: 2; width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center; color: #1d1d1f;
+  background: color-mix(in srgb, #ffffff 55%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(180%); backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.9), 0 0 0 .5px rgba(0,0,0,.08), 0 8px 20px -8px rgba(0,0,0,.25);
+}
+.gw-lock svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.gw.is-open .gw-lock { opacity: 0; transition: opacity .2s ease; }
+@media (max-width: 720px) {
+  .gw-bubbles {
+    --gg: 40px; gap: var(--gg); justify-content: flex-start; overflow-x: auto; overflow-y: visible; scroll-snap-type: x mandatory;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    padding: 6px var(--gutter) 22px; scroll-padding-inline: var(--gutter);
+    --fit: min(var(--gh, 470px), calc(86vw / var(--rmax, .6)));
+  }
+  .gw-bubbles::-webkit-scrollbar { display: none; }
+  .gw-bubble { scroll-snap-align: start; animation-name: gw-glow; }
+  .gw-lock { width: 44px; height: 44px; } .gw-lock svg { width: 19px; height: 19px; }
+}
+
+/* pause / play with each moving strip's arrows: first in the row, so the controls read [pause] [expand] [<] [>]
+   (touch screens, where a gallery can't be slowed by hovering) */
+.strip-pause { display: none !important; }
+.strip-pause svg path { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+.strip-pause .i-play { display: none; fill: currentColor; stroke: none; }
+.strip-pause.is-paused .i-pause { display: none; }
+.strip-pause.is-paused .i-play { display: block; }
+@media (hover: none) {
+  .cat-v2 .strip:not(.is-static) .strip-pause { display: grid !important; }
+  .cat-v2 .strip:has(.strip-pause) .strip-pause { right: calc(var(--gutter) + 144px); }
+  .cat-v2 .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(var(--gutter) + 96px); }
+}
+@media (hover: none) and (min-width: 721px) {
+  .cat-v2 .strip:has(.strip-pause) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 144px); }
+  .cat-v2 .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
+}
+
+/* phones: the category strips give the work the room (pieces up to about half the screen tall, wide ones near
+   the full width), with less empty band around them; the intro sits a little further from its band */
+@media (max-width: 720px) {
+  .cat-v2 { --strip-h: min(410px, 50svh); }
+  .cat-v2 .strip-ground { margin-top: 16px; padding-top: 24px; padding-bottom: 72px; }
+  .cat-v2 .strip .strip-arrow { bottom: 20px; }
+  .cat-v2 .tile-cap { margin-top: 8px; }
+}
+/* phones: a lot more air between pieces, with each piece at the largest size the screen allows */
+@media (max-width: 720px) {
+  .cat-v2 .strip { --gap: 64px !important; }
+  .cat-v2 .strip-track { gap: var(--gap); }   /* the older phone rule packed every strip at 14px */
+}
+/* phones: only the gap after a strip's first piece is tight, so a sliver of the next piece shows when the page
+   opens, even if nothing moves (its looped copy matches, so the loop stays seamless) */
+@media (max-width: 720px) {
+  .cat-v2 .strip-track > .tile-wrap:first-child,
+  .cat-v2 .strip-track > .tile-wrap:not([data-clone]) + .tile-wrap[data-clone] { margin-right: calc(20px - var(--gap)); }
+}
