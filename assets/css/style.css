@@ -6,8 +6,8 @@
   --paper: #fff;
   --charcoal: #2b2b2b;
   --pill: #404040;
-  --rust: #993500;
-  --rust-hover: #7a2a00;
+  --rust: #6b2c24;        /* the brick red behind Naomi Osaka in the Nike tennis page */
+  --rust-hover: #55231c;
   --red: #d1000a;
   --red-hover: #a80008;
   --cream: #fcf4eb;
@@ -26,6 +26,8 @@
   --gutter: max(24px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
   --strip-h: 470px;
 }
+/* on dark ground the small accents (checks, focus ring, bars) take a lighter step of the same brick red */
+@media (prefers-color-scheme: dark) { :root { --rust: #c25a4a; --rust-hover: #a84a3d; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -91,9 +93,7 @@ button { font: inherit; color: inherit; }
 /* Category pages: a short dark band with just a centred photo of Christian (the home hero, condensed). */
 .cat-hero {
   display: flex; justify-content: center; align-items: flex-end; overflow: hidden;
-  background:
-    radial-gradient(ellipse 34% 120% at 50% 70%, #4a4a4a 0%, #2a2a2a 40%, rgba(0,0,0,0) 100%),
-    #000;
+  background: radial-gradient(ellipse 34% 120% at 50% 70%, #3a3a3d 0%, #1c1c1e 55%, #0b0b0b 100%);
 }
 .cat-hero-link { display: block; line-height: 0; }
 .cat-hero-portrait img { height: 190px; width: auto; }
@@ -223,14 +223,8 @@ button { font: inherit; color: inherit; }
 
 .home-hero {
   color: #fff;
-  background:
-    radial-gradient(circle at 15.51% 82.88%, #000 0%, #000 17.5%, rgba(0,0,0,0) 35%),
-    radial-gradient(circle at 75.84% 58.62%, #000 0%, #000 17.5%, rgba(0,0,0,0) 35%),
-    radial-gradient(circle at 85.88% 58.81%, #404040 0%, #404040 14.59%, rgba(64,64,64,0) 24%),
-    radial-gradient(circle at 5.56% 79.37%, rgba(64,64,64,.99) 0%, rgba(64,64,64,.99) 25%, rgba(64,64,64,0) 50%),
-    radial-gradient(circle at 23.99% 34.55%, #404040 0%, #404040 52.89%, rgba(64,64,64,0) 88%),
-    radial-gradient(circle at 36.95% 53.07%, #000 0%, #000 30%, rgba(0,0,0,0) 100%),
-    radial-gradient(circle at 48.9% 49.52%, #000 0%, #000 100%, rgba(0,0,0,0) 100%);
+  /* one soft light behind the portrait, the dark twin of light mode's header, settling into the tab band's black */
+  background: radial-gradient(ellipse 45% 110% at 82% 40%, #3a3a3d 0%, #1c1c1e 45%, #0b0b0b 100%);
   overflow: hidden;
 }
 .home-hero-inner {
@@ -238,11 +232,29 @@ button { font: inherit; color: inherit; }
   align-items: start; min-height: 274px; padding-top: 0;
 }
 .home-hero-text { padding: 34px 0 20px 43px; }
+/* on wide screens the intro shares the case scene's left edge below it, the portrait its right edge */
+@media (min-width: 1101px) {
+  .page-home .home-hero-inner { max-width: 1240px; padding-left: var(--gutter); padding-right: var(--gutter); box-sizing: border-box; grid-template-columns: minmax(0, 680px) 1fr; }
+  .page-home .home-hero-text { padding-left: 0; }
+  .page-home .home-portrait { justify-self: end; margin-right: 40px; }
+}
 .home-hero .hero-hi { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.05; letter-spacing: -.025em; font-weight: 700; margin-bottom: 14px; }
 .home-hero p { font-size: 17px; line-height: 1.4; color: #e8e8e8; }
 .home-hero p + p { margin-top: 12px; }
-.home-hero .hero-contact .contact-row { margin-top: 14px; }
-.home-hero .hero-contact a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.home-hero .hero-contact .contact-row { margin-top: 18px; }
+.home-hero .hc-short { display: none; }
+@media (max-width: 439px) {
+  .home-hero .hero-contact .contact-row { flex-direction: column; align-items: flex-start; }
+  .home-hero .hc-full { display: none; }
+  .home-hero .hc-short { display: inline; }
+}
+/* on first load the intro and portrait rise in once, like the blocks below */
+.page-home .home-hero-text > *, .page-home .home-portrait, .page-home .home-portrait-float { animation: hero-in .7s cubic-bezier(.2, .7, .2, 1) both; }
+.page-home .home-hero-text > :nth-child(n+4) { animation-delay: .08s; }
+.page-home .home-hero-text > :nth-child(n+5) { animation-delay: .16s; }
+.page-home .home-portrait, .page-home .home-portrait-float { animation-delay: .1s; animation-duration: .9s; }
+@keyframes hero-in { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) { .page-home .home-hero-text > *, .page-home .home-portrait { animation: none; } }
 .home-portrait { width: 254px; height: auto; align-self: end; }
 
 .case-row {
@@ -331,7 +343,8 @@ button { font: inherit; color: inherit; }
 }
 .gal-label + .case-nav { padding-top: 62px; }
 .case-nav .btn { min-width: 184px; }
-.case-nav-link { align-self: center; font-size: 15px; font-weight: 500; color: var(--ink); }
+.case-nav-link { align-self: center; font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; }
+.case-nav-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- category ---------- */
 
@@ -383,7 +396,7 @@ button { font: inherit; color: inherit; }
   width: calc(var(--fit) * var(--r)); height: var(--fit);
 }
 /* a caption under the tile: the piece and his part in it */
-.tile-cap { margin: 10px var(--cr, 0) 0 var(--cl, 0); font-size: 14px; line-height: 1.4; color: var(--muted); }  /* lines up with the picture, not the file's transparent margin */
+.tile-cap { margin: 16px var(--cr, 0) 0 var(--cl, 0); font-size: 14px; line-height: 1.4; color: var(--muted); }  /* lines up with the picture, not the file's transparent margin */
 .tile-cap strong { display: block; color: var(--ink); font-weight: 600; }
 .strip:has(.tile-cap) .strip-track { align-items: flex-start; }
 .strip:has(.tile-cap) .strip-arrow { top: calc(var(--tile-h, var(--strip-h)) / 2 - 25px); }
@@ -513,16 +526,36 @@ html.lb-page .lightbox:not(.no-caption) .lb-prev, html.lb-page .lightbox:not(.no
 
 /* ---------- footer ---------- */
 
-.site-footer { background: var(--rust); color: #fff; margin-top: 24px; }
+/* no bar: the page simply ends with a glass Back to top pill, and the name and contact links in quiet type */
+.site-footer { margin-top: 24px; color: var(--muted); }
 .page-case .site-footer, .page-home .site-footer { margin-top: 0; }
 .footer-row {
-  min-height: 120px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
-  font-size: 14px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px;
+  padding-top: 32px; padding-bottom: 48px; font-size: 14px;
 }
+.page-home .footer-row { max-width: 1240px; }  /* the home page lines up with its case scene and closing block */
+.footer-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
-.footer-links a { color: #fff; }
-.to-top { text-decoration: none; opacity: .9; }
-.to-top:hover { opacity: 1; text-decoration: underline; }
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.to-top {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 18px; border-radius: 999px;
+  font-size: 15px; font-weight: 500; color: var(--tabink); text-decoration: none;
+  background: var(--tabglass);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow); transition: background-color .18s;
+}
+.to-top:hover { background: color-mix(in srgb, #ffffff 66%, transparent); text-decoration: none; }
+.to-top:focus-visible { outline: 2px solid #0a84ff; outline-offset: 2px; }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .to-top:hover { background: rgba(255, 255, 255, .18); }
+  /* the home page's ending is dark in dark mode, so its footer row joins it */
+  .page-home .site-footer { background: #0b0b0b; color: #a1a1a6; box-shadow: 0 0 0 100vmax #0b0b0b; clip-path: inset(0 -100vmax); }
+  .page-home .footer-links a { color: #a1a1a6; }
+  .page-home .footer-links a:hover { color: #f5f5f7; }
+  .page-home .to-top { color: #f5f5f7; background: rgba(255, 255, 255, .1); box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .2), 0 0 0 .5px rgba(255, 255, 255, .12), 0 8px 24px rgba(0, 0, 0, .3); }
+  .page-home .to-top:hover { background: rgba(255, 255, 255, .18); }
+}
 
 /* ---------- small screens ---------- */
 
@@ -1096,8 +1129,54 @@ a.tl-label:hover strong { color: #ff9a66; }
 /* ---------- the scene pages' type scale (body.case-v2): one scale from the headline down ----------
    The headline is the largest thing on the page, section heads are visible, the lede reads as text. */
 .case-v2 { --edge: calc(var(--gutter) + 9px); }
-.contact-row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; font-size: 16px; }
-.contact-row a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+/* the email and LinkedIn in every contact block are glass pills, the site's controls; on dark ground
+   (the home hero, dark mode) they take the glass's dark form */
+.contact-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.contact-row a {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 18px; border-radius: 999px;
+  font-size: 15px; font-weight: 500; color: var(--tabink); text-decoration: none;
+  background: var(--tabglass);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: var(--tabshadow);
+  transition: background-color .18s;
+}
+.contact-row a:hover { background: color-mix(in srgb, #ffffff 66%, transparent); text-decoration: none; }
+.contact-row a:focus-visible { outline: 2px solid #0a84ff; outline-offset: 2px; }
+.home-hero .contact-row a {
+  color: #fff; background: rgba(255, 255, 255, .12);
+  box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .28), 0 0 0 .5px rgba(255, 255, 255, .14), 0 8px 24px rgba(0, 0, 0, .25);
+}
+.home-hero .contact-row a:hover { background: rgba(255, 255, 255, .2); }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .contact-row a, .page-home #contact .contact-row a {
+    color: #f5f5f7; background: rgba(255, 255, 255, .1);
+    box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .2), 0 0 0 .5px rgba(255, 255, 255, .12), 0 8px 24px rgba(0, 0, 0, .3);
+  }
+  html.can-dark .contact-row a:hover, .page-home #contact .contact-row a:hover { background: rgba(255, 255, 255, .18); }
+}
+/* the email, the action we want, is the warm one: a soft wash of the footer's brick red that drifts when the
+   pointer is on it; LinkedIn stays plain glass beside it */
+.contact-row a:first-child {
+  color: #5c2219;
+  background: linear-gradient(120deg, #f7dcd5 0%, #fcefeb 45%, #f4d4cb 100%) 0 0 / 200% 100%;
+  box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .8), 0 0 0 .5px rgba(107, 44, 36, .14), 0 8px 24px rgba(107, 44, 36, .16);
+  transition: background-position .8s cubic-bezier(.2, .7, .2, 1), box-shadow .3s;
+}
+.contact-row a:first-child:hover { background-position: 100% 0; box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .8), 0 0 0 .5px rgba(107, 44, 36, .2), 0 10px 28px rgba(107, 44, 36, .24); }
+/* on dark ground (the home hero always, the rest in dark mode) the wash is the brick red itself, kept soft */
+.home-hero .contact-row a:first-child {
+  color: #fff; background: linear-gradient(120deg, #84392e 0%, #642b23 45%, #8a3e31 100%) 0 0 / 200% 100%;
+  box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .22), 0 0 0 .5px rgba(255, 255, 255, .08), 0 8px 24px rgba(107, 44, 36, .3);
+}
+.home-hero .contact-row a:first-child:hover { background-position: 100% 0; box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .28), 0 0 0 .5px rgba(255, 255, 255, .12), 0 10px 30px rgba(142, 59, 47, .4); }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .contact-row a:first-child, .page-home #contact .contact-row a:first-child {
+    color: #fff; background: linear-gradient(120deg, #84392e 0%, #642b23 45%, #8a3e31 100%) 0 0 / 200% 100%;
+    box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .22), 0 0 0 .5px rgba(255, 255, 255, .08), 0 8px 24px rgba(107, 44, 36, .3);
+  }
+  html.can-dark .contact-row a:first-child:hover, .page-home #contact .contact-row a:first-child:hover { background-position: 100% 0; box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .28), 0 0 0 .5px rgba(255, 255, 255, .12), 0 10px 30px rgba(142, 59, 47, .4); }
+}
+@media (prefers-reduced-motion: reduce) { .contact-row a:first-child { transition: none; } }
 #contact .statement { max-width: 30ch; }
 @media (min-width: 721px) {
   .case-v2 .case-hero h1 { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.05; letter-spacing: -.025em; max-width: 22ch; }
@@ -1132,6 +1211,9 @@ a.tl-label:hover strong { color: #ff9a66; }
 
 /* ---------- home: the closing contact block ---------- */
 .page-home #contact { margin-top: 64px; padding-bottom: 72px; }
+/* the closing block shares the case scene's left edge above it */
+.page-home #contact { max-width: 1240px; padding-left: var(--gutter); padding-right: var(--gutter); }
+.page-home #contact > * { margin-left: 0; padding-left: 0; }
 .page-home #contact .statement { font-size: clamp(20px, 1.9vw, 24px); line-height: 1.25; }
 
 /* ---------- Graphic Design: the case-v2 type scale for category headings ---------- */
@@ -1179,7 +1261,7 @@ a.tl-label:hover strong { color: #ff9a66; }
 
 .work.is-live .wk-stage { position: sticky; top: var(--pills-h, 80px); height: calc(100vh - var(--pills-h, 80px)); height: calc(100svh - var(--pills-h, 80px)); overflow: hidden; }
 .work.is-live .wk-inner {
-  position: relative; height: 100%; max-width: 1240px; margin: 0 auto; padding: 36px var(--gutter) 40px;
+  position: relative; height: 100%; max-width: 1240px; margin: 0 auto; padding: 36px var(--gutter) 104px;   /* the bottom leaves room for the next case to peek up */
   display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 56px; row-gap: 24px;
 }
 .work.is-live .wk-names { display: flex; flex-direction: column; grid-column: 1; grid-row: 2; list-style: none; margin: 0; padding: 0; position: relative; z-index: 30; }
@@ -1207,11 +1289,12 @@ a.tl-label:hover strong { color: #ff9a66; }
 .work.is-live .wk-box {
   grid-column: 2; grid-row: 1 / -1; align-self: stretch; aspect-ratio: auto; height: 100%; pointer-events: auto;
   transform-origin: 50% 0; will-change: transform;
-  transform: translateY(calc((1 - var(--e, 0)) * 106%)) scale(calc(1 - var(--l, 0) * .07));
+  /* waiting cases sit just below the screen; the next one (--p, main.js) rises to show its top 48px */
+  transform: translateY(calc((1 - var(--e, 0)) * (100% + 120px - var(--p, 0) * 64px))) scale(calc(1 - var(--l, 0) * .07));
   filter: brightness(calc(1 - var(--l, 0) * .5));
   box-shadow: 0 -18px 50px rgba(0,0,0,.5);
 }
-.work.is-live .wk-box .slideshow { width: min(100%, calc((100svh - var(--pills-h, 80px) - 76px) * .88 * 643 / 361)); }
+.work.is-live .wk-box .slideshow { width: min(100%, calc((100svh - var(--pills-h, 80px) - 140px) * .88 * 643 / 361)); }
 
 @media (max-width: 720px) {
   .wk-cases { padding: 48px var(--gutter) 56px; gap: 64px; }
@@ -1234,14 +1317,10 @@ a.tl-label:hover strong { color: #ff9a66; }
 /* ---------- category strips held in 3D (desktop): each tile leans toward the pointer on a soft shadow
    (main.js); pieces with clear backgrounds get a shadow that follows the artwork, not a box ---------- */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (min-width: 721px) {
-  .cat-v2 .strip-viewport { padding: 36px 0 48px; margin: -36px 0 -48px; }
   .cat-v2 .strip .tile {
     transform: perspective(1000px) translate(var(--tx, 0px), var(--ty, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(var(--rz, 0px));
-    transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
-    box-shadow: 0 calc(14px + var(--lift, 0) * 22px) calc(30px + var(--lift, 0) * 26px) calc(-20px - var(--lift, 0) * 4px) rgba(0,0,0, calc(.22 + var(--lift, 0) * .16));
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), filter .45s ease;
   }
-  .cat-v2 .strip .tile-wrap[style*="--cl"] .tile { box-shadow: none; overflow: visible; }
-  .cat-v2 .strip .tile-wrap[style*="--cl"] .tile-media { filter: drop-shadow(0 calc(10px + var(--lift, 0) * 14px) calc(12px + var(--lift, 0) * 10px) rgba(0,0,0, calc(.18 + var(--lift, 0) * .14))); }
 }
 /* long-form pieces as rounded paper notes on the light band */
 :is(.strip-notes .tile, .tile.is-note) { border-radius: 16px; background: #fff; }
@@ -1607,7 +1686,7 @@ a.tl-label:hover strong { color: #ff9a66; }
   .cat-v2 { --strip-h: min(410px, 50svh); }
   .cat-v2 .strip-ground { margin-top: 16px; padding-top: 24px; padding-bottom: 72px; }
   .cat-v2 .strip .strip-arrow { bottom: 20px; }
-  .cat-v2 .tile-cap { margin-top: 8px; }
+  .cat-v2 .tile-cap { margin-top: 14px; }
 }
 /* phones: a lot more air between pieces, with each piece at the largest size the screen allows */
 @media (max-width: 720px) {
@@ -1685,7 +1764,6 @@ a.tl-label:hover strong { color: #ff9a66; }
   html.can-dark .cat-v2 .cat-text .kicker-italic { color: var(--ink); }
   html.can-dark .tile-cap { color: var(--muted); }
   html.can-dark .tile-cap strong { color: var(--ink); }
-  html.can-dark .contact-row a { color: var(--ink); }
   /* the tab bar */
   html.can-dark .seg { background: color-mix(in srgb, #1c1c1e 86%, transparent); }
   html.can-dark .seg-item { color: rgba(255,255,255,.72); }
@@ -1754,4 +1832,110 @@ a.tl-label:hover strong { color: #ff9a66; }
   :root[data-os="ios"] .page-home .seg { background: color-mix(in srgb, #1c1c1e 92%, transparent); }
   :root[data-os="ios"] .page-home .seg-item { background: none; box-shadow: none; color: rgba(255,255,255,.72); }
   :root[data-os="ios"] .page-home .seg-item.is-active { background: #0a84ff; color: #fff; }
+}
+/* in dark mode the home page's closing contact block joins the dark too */
+@media (prefers-color-scheme: dark) {
+  .page-home #contact { background: #0b0b0b; color: #f5f5f7; margin-top: 0; padding-top: 64px; box-shadow: 0 0 0 100vmax #0b0b0b; clip-path: inset(0 -100vmax); }
+  .page-home #contact .statement { color: #f5f5f7; }
+}
+
+/* a piece filmed on the strip's own ground: no card edge, shadow or rounding of its own, so only its pages show */
+.tile.is-bare, .cat-v2 .strip .tile.is-bare { box-shadow: none; background: transparent; border-radius: 0; }
+
+/* ---------- one shadow for every piece in a gallery ----------
+   It follows the artwork's own outline (a drop shadow, not a box), so a single graphic, a collage of cards and a
+   rounded note all sit on the page the same way. Two layers: a tight contact shadow and a soft ambient one.
+   On desktop the lean toward the pointer (--lift, main.js) deepens it. Darker ground needs a stronger shadow. */
+.tile { --sh-a: .16; --sh-b: .10; }
+@media (prefers-color-scheme: dark) { html.can-dark .tile { --sh-a: .55; --sh-b: .35; } }
+.tile:not(.is-bare) {
+  filter:   /* drawn after the tile's own clipping, so a cropped or zoomed piece still casts its full shadow */
+    drop-shadow(0 calc(2px + var(--lift, 0) * 2px) calc(3px + var(--lift, 0) * 2px) rgba(0, 0, 0, var(--sh-b)))
+    drop-shadow(0 calc(12px + var(--lift, 0) * 14px) calc(14px + var(--lift, 0) * 10px) rgba(0, 0, 0, calc(var(--sh-a) + var(--lift, 0) * .1)));
+}
+
+/* ---------- the light/dark switch, top right of every page ----------
+   It sits on the dark header band in both modes, so it wears the site's dark glass. It shows the mode a click
+   switches to: a moon in light mode, a sun in dark mode. main.js remembers the choice. */
+.theme-toggle {
+  position: absolute; z-index: 60; top: calc(14px + env(safe-area-inset-top, 0px)); right: var(--gutter);
+  width: 36px; height: 36px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+  display: grid; place-items: center; color: #f5f5f7;
+  background: rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .28), 0 0 0 .5px rgba(255, 255, 255, .14), 0 8px 24px rgba(0, 0, 0, .25);
+  transition: background-color .18s, transform .18s;
+}
+.theme-toggle:hover { background: rgba(255, 255, 255, .2); }
+.theme-toggle:active { transform: scale(.94); }
+.theme-toggle:focus-visible { outline: 2px solid #0a84ff; outline-offset: 2px; }
+.theme-toggle svg { width: 18px; height: 18px; grid-area: 1 / 1; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: opacity .25s, transform .35s cubic-bezier(.2,.7,.2,1); }
+.theme-toggle .tt-moon { fill: currentColor; stroke: none; }
+.theme-toggle .tt-sun { opacity: 0; transform: rotate(-60deg) scale(.6); }
+@media (prefers-color-scheme: dark) {
+  .theme-toggle .tt-moon { opacity: 0; transform: rotate(60deg) scale(.6); }
+  .theme-toggle .tt-sun { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .theme-toggle svg { transition: none; } }
+/* a switched page eases from one mode to the other instead of snapping */
+html.theme-switching, html.theme-switching * { transition: background-color .3s ease, color .3s ease, border-color .3s ease !important; }
+html.theme-light { color-scheme: light; }
+html.can-dark.theme-dark { color-scheme: dark; }
+
+/* the strip clips sideways scrolling, so it leaves room above and below for the pieces' shadow */
+.strip-viewport { padding: 28px 0 56px; margin: -28px 0 -56px; }
+
+/* ---------- dark mode: a gallery wall wash ----------
+   On near-black a shadow has nothing to show against, so in dark mode each piece is lifted by light instead:
+   a soft, wide glow a few shades above the band, centred behind the piece and never moving; the band itself
+   stays flat, so the filmed presentation stacks (shot on that exact grey) still melt into it. */
+@media (prefers-color-scheme: dark) {
+  html.can-dark .strip .tile-wrap { position: relative; isolation: isolate; }
+  html.can-dark .strip .tile-wrap::before {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    left: -14%; right: -14%; top: -18%; height: calc(var(--fit) * 1.36);
+    background: radial-gradient(closest-side, rgba(255, 255, 255, .085), rgba(255, 255, 255, .035) 55%, transparent);
+  }
+  html.can-dark .strip .tile-wrap:has(.tile.is-bare)::before { content: none; }
+}
+
+/* ---------- light mode: light headers and a light home page ----------
+   In dark mode the headers and the home page keep their dark design; in light mode they turn light to match
+   the rest of the site: a soft light-grey glow behind the portrait, dark type, light glass controls. */
+@media (prefers-color-scheme: light) {
+  .home-hero { background: radial-gradient(ellipse 45% 110% at 82% 40%, #ffffff 0%, #f0f0f3 45%, #e8e8ed 100%); color: #1d1d1f; }
+  .cat-hero { background: radial-gradient(ellipse 34% 120% at 50% 70%, #ffffff 0%, #eeeef2 55%, #e6e6eb 100%); color: #1d1d1f; }
+  .home-hero p { color: #424245; }
+  .cat-hero-title { color: #1d1d1f; }
+  .cat-hero-sub { color: #515154; }
+  .rot-word { color: #1d1d1f; }
+  .rotator::after { background: linear-gradient(90deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.55) 50%, rgba(0,0,0,.18) 100%) 0 0 / 200% 100%; box-shadow: none; }
+  .home-hero .contact-row a { color: #1d1d1f; background: rgba(255, 255, 255, .6); box-shadow: inset 0 .5px 0 #fff, 0 0 0 .5px rgba(0, 0, 0, .1), 0 8px 24px rgba(0, 0, 0, .08); }
+  .home-hero .contact-row a:hover { background: rgba(255, 255, 255, .85); }
+  .home-hero .contact-row a:first-child { color: #5c2219; background: linear-gradient(120deg, #f7dcd5 0%, #fcefeb 45%, #f4d4cb 100%) 0 0 / 200% 100%; box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .8), 0 0 0 .5px rgba(107, 44, 36, .14), 0 8px 24px rgba(107, 44, 36, .16); }
+  .home-hero .contact-row a:first-child:hover { background-position: 100% 0; }
+  .theme-toggle { color: #1d1d1f; background: rgba(255, 255, 255, .6); box-shadow: inset 0 .5px 0 #fff, 0 0 0 .5px rgba(0, 0, 0, .1), 0 8px 24px rgba(0, 0, 0, .08); }
+  .theme-toggle:hover { background: rgba(255, 255, 255, .85); }
+  /* the home page's case scene and ending on one light grey */
+  .page-home .pills, .page-home #contact, .page-home .site-footer { background: #f5f5f7; box-shadow: 0 0 0 100vmax #f5f5f7; clip-path: inset(0 -100vmax); }
+  .page-home #contact { margin-top: 0; padding-top: 64px; }
+  .work { background: #f5f5f7; color: #1d1d1f; }
+  .wk-text .kicker, .wk-figs dt { color: #6e6e73; }
+  .wk-names button { color: rgba(0, 0, 0, .35); }
+  .wk-names button:hover { color: rgba(0, 0, 0, .7); }
+  .wk-names button.is-done { color: rgba(0, 0, 0, .55); }
+  .wk-names button.is-on { color: #1d1d1f; }
+  /* the stacked case boxes: on light ground the arriving box casts a soft shadow up over the one it covers, and
+     the covered box steps back by fading a little rather than dimming toward black */
+  .wk-box, .work.is-live .wk-box { box-shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 -8px 28px rgba(0, 0, 0, .10), 0 18px 40px rgba(0, 0, 0, .12); }
+  .work.is-live .wk-box { filter: brightness(calc(1 - var(--l, 0) * .06)) saturate(calc(1 - var(--l, 0) * .25)); }
+  .wk-box .slideshow:focus-visible { outline-color: #1d1d1f; }
+}
+
+/* the portraits' light/dark <picture> takes no box of its own, so the image inside lays out as before */
+.theme-pic { display: contents; }
+.theme-pic source { display: none; }   /* with the picture unboxed, its source would otherwise take a grid cell */
+/* light mode: the header ends on a clean edge, no fade under the portrait */
+@media (prefers-color-scheme: light) {
+  .home-portrait, .home-portrait-float { -webkit-mask-image: none; mask-image: none; }
 }

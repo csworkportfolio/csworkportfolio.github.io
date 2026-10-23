@@ -3,10 +3,43 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // pieces with a dark-mode copy (a social video with its app in dark mode): dark-mode visitors get that copy
-  if (document.documentElement.classList.contains("can-dark") && matchMedia("(prefers-color-scheme: dark)").matches) {
-    document.querySelectorAll("video[data-src-dark]").forEach((v) => { v.dataset.src = v.dataset.srcDark; v.poster = v.dataset.posterDark; });
+  // Light or dark: the device's setting, unless the visitor picked one with the switch (kept in localStorage;
+  // the head script puts .theme-light or .theme-dark on <html> before the page paints).
+  const root = document.documentElement;
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const isDark = () => root.classList.contains("theme-dark") || (!root.classList.contains("theme-light") && systemDark.matches);
+  // pieces with a dark-mode copy (a social video with its app in dark mode, a screenshot): each mode gets its copy
+  document.querySelectorAll("video[data-src-dark]").forEach((v) => { v.dataset.srcLight = v.dataset.src; v.dataset.posterLight = v.getAttribute("poster") || ""; });
+  document.querySelectorAll("picture.tile-pic source").forEach((s) => { s.dataset.media = s.media; });
+  function applyTheme() {
+    const dark = root.classList.contains("can-dark") && isDark();
+    document.querySelectorAll("video[data-src-dark]").forEach((v) => {
+      const src = dark ? v.dataset.srcDark : v.dataset.srcLight, poster = dark ? v.dataset.posterDark : v.dataset.posterLight;
+      if (v.dataset.src !== src) {
+        v.dataset.src = src;
+        if (v.getAttribute("src")) { const playing = !v.paused; v.src = src; if (playing) v.play().catch(() => {}); }
+      }
+      if (poster && v.getAttribute("poster") !== poster) v.poster = poster;
+    });
+    // the portraits: colour in light mode, black and white in dark, following the switch
+    document.querySelectorAll("picture.theme-pic source").forEach((s) => { s.media = isDark() ? "not all" : "all"; });
+    // a <picture>'s dark source follows the switch, not just the device
+    document.querySelectorAll("picture.tile-pic source").forEach((s) => { s.media = dark ? "all" : "not all"; });
+    const btn = document.querySelector(".theme-toggle");
+    if (btn) btn.setAttribute("aria-label", isDark() ? "Switch to light mode" : "Switch to dark mode");
   }
+  applyTheme();
+  systemDark.addEventListener?.("change", applyTheme);
+  document.querySelector(".theme-toggle")?.addEventListener("click", () => {
+    const next = isDark() ? "light" : "dark";
+    root.classList.add("theme-switching");
+    root.classList.remove("theme-light", "theme-dark");
+    // picking what the device already uses means following the device again
+    if ((next === "dark") === systemDark.matches) { try { localStorage.removeItem("theme"); } catch (e) {} }
+    else { root.classList.add(`theme-${next}`); try { localStorage.setItem("theme", next); } catch (e) {} }
+    applyTheme();
+    setTimeout(() => root.classList.remove("theme-switching"), 400);
+  });
   // In-app browsers (LinkedIn, Instagram) and mobile Safari change the window height as their toolbars slide,
   // many times per scroll. Layout that reacts to every resize then fights the scroll and the page shudders.
   // So: the viewport height is the small, stable one (100svh), refreshed only when the width changes, and
@@ -447,7 +480,9 @@
     const [kind, id] = tileEl.dataset.video.split(":");
     const vw = Number(tileEl.dataset.vw), vh = Number(tileEl.dataset.vh);
     const tw = tileEl.clientWidth, th = tileEl.clientHeight;
-    const k = Math.min(tw / vw, th / vh);
+    // the tile already has the video's shape, so the player covers it, with a 2px bleed on every side:
+    // fitting it inside left sub-pixel slivers of the poster (often a white web header) showing round the edge
+    const k = Math.max(tw / vw, th / vh) * (1 + 4 / Math.min(tw, th));
     const frame = Object.assign(document.createElement("iframe"), { src: previewUrl(kind, id), title: "", tabIndex: -1 });
     frame.className = "tile-preview";
     frame.setAttribute("allow", "autoplay; encrypted-media");
@@ -635,11 +670,12 @@
     pages.forEach((p) => io.observe(p));
   }
 
-  const darkPage = () => document.documentElement.classList.contains("can-dark") && matchMedia("(prefers-color-scheme: dark)").matches;
+  const darkPage = () => root.classList.contains("can-dark") && isDark();
   function render() {
     let item = current.items[current.index];
     if (item.full_dark && darkPage()) item = { ...item, full: item.full_dark, thumb: item.thumb_dark || item.thumb };
     if (item.src_dark && darkPage()) item = { ...item, src: item.src_dark, thumb: item.thumb_dark || item.thumb };
+    if (item.pop_full) item = { ...item, type: "image", full: item.pop_full, thumb: item.pop_full, w: item.pop_w, h: item.pop_h };   // a moving tile opens as a still
     const inner = dialog.querySelector(".lb-inner");
     if (inner) inner.scrollTop = 0;  // each piece starts at its top when the phone layout scrolls
     lbMedia.replaceChildren();
@@ -1538,6 +1574,9 @@
         const e = k === 0 ? 1 : clamp((u - (st - HAND)) / HAND);
         const l = k === n - 1 ? 0 : clamp((u - (st + widths[k] - HAND)) / HAND);
         c.style.setProperty("--e", e.toFixed(3));
+        // the next case peeks up from the bottom edge once the one before it has fully arrived
+        const prevE = k === 0 ? 0 : (k === 1 ? 1 : clamp((u - (starts[k - 1] - HAND)) / HAND));
+        c.style.setProperty("--p", prevE.toFixed(3));
         c.style.setProperty("--l", l.toFixed(3));
         // the words hand over in turn (out, then in) so two sets never overlap
         c.style.setProperty("--te", (k === 0 ? 1 : clamp(e * 2 - 1)).toFixed(3));

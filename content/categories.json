@@ -21,6 +21,7 @@
           },
           {
             "src": "QAD Redzone Presents_ Gary the GOAT",
+            "dark": "dark/Gary the GOAT dark.mp4",
             "title": "Parts Inventory Feature GIF with Gary",
             "desc": "Inventory tracking isn't always the most exciting topic, so I added some energy with a looping animation featuring our official mascot, Gary the Goat. It ran across social and product channels to spotlight Redzone's inventory feature.\nThe animation leads with visual clarity and ends with a wink. I designed it to feel native to the brand and built entirely in-house, allowing us to repurpose it in everything from web explainers to internal campaigns.",
             "tools": "Adobe Photoshop, Illustrator, Premiere Pro",
@@ -28,6 +29,7 @@
           },
           {
             "mp4": "Gary Task Complete.mp4",
+            "dark": "dark/Gary Task Complete dark.mp4",
             "title": "Redzone Pocket Coach: April Fools' Campaign (2025)",
             "desc": "For Redzone's April Fools' campaign, Pocket Coach opens on an iPad spinning through space before the screen gives way to a grassy field, where a pixel-art Gary the Goat in a red jersey runs up to greet the viewer.\nI staged the reveal like a polished product launch, then let the 8-bit mascot steal the show before closing on a clean QAD | Redzone lockup, keeping the joke firmly on brand.",
             "tile_light": 540,
@@ -49,13 +51,13 @@
             "cap": "I let the customer quotes lead, with photos and data visuals in support."
           },
           {
-            "src": "Box.png",
+            "src": "Box clean.png",
             "title": "Slide-to-Unlock iPad Mailer for Prospective Customers",
             "desc": "To break through the noise of traditional sales mailers, I designed an iPad box that played on the nostalgic 'slide to unlock' gesture. A cutout window with a movable paper insert revealed phrases like 'Empowering the Frontline' and 'Unlock Your Factory's Potential.'\nThe mailer went to select prospects based on their stage in the sales funnel.",
             "cap": "I designed it to look like an iPad box, with a sliding insert that reveals lines like Empowering the Frontline. It went to prospects by sales-funnel stage."
           },
           {
-            "src": "Cohesity Examples 2A.png",
+            "src": "Cohesity Examples 2A Transparent.png",
             "title": "Cohesity Event, Blog, Webinar, and Hiring Graphics",
             "desc": "A cross-section of Cohesity's busiest channels in one spread: a Google Cloud Next 26 booth promo for Mandalay Bay in Las Vegas, a blog hero announcing that the future of support is agentic, a ransomware webinar card, a We're Hiring post for São Paulo, and an NVIDIA GTC 2026 event graphic.\nI held every piece to Cohesity's bright green and magenta palette with tight condensed type, so very different messages still read as one credible set.",
             "cap": "I held the set to Cohesity's green and magenta palette across event, blog, webinar and hiring posts."
@@ -116,37 +118,43 @@
       {
         "gallery": [
           {
-            "src": "Fall.png",
+            "src": "Fall trimmed.png",
             "title": "Fall in Style: Editorial Promo",
             "desc": "Self-initiated. A promotional concept for a fall fashion campaign, built on a brief I set for myself: capture the feeling of mid-air motion and let the visual lead the storytelling.\nLarge, condensed type and a minimalist palette anchor the dynamic composition, while the floating figure, subtly shadowed for depth, carries the seasonal call to action. The result could live in a print magazine or serve as key art for a digital ad set.",
-            "tools": "Adobe Photoshop, Illustrator"
+            "tools": "Adobe Photoshop, Illustrator",
+            "cap": "Self-initiated. A fall fashion promo built around mid-air motion and condensed type."
           },
           {
-            "src": "Hushum.png",
+            "src": "Hushum trimmed.png",
             "title": "Hushhum AI: Marketing Materials",
-            "desc": "Self-initiated. Hushhum is an AI-powered ambience app that helps people focus, sleep, and relax with customizable white, pink, and green noise. As a concept launch campaign, I created lifestyle-driven social graphics that lead with the emotional benefit rather than the feature set.\nSun-warmed portraits and fluid shapes mirror the calming waveforms of ambient sound, each paired with a short, lyrical line of copy."
+            "desc": "Self-initiated. Hushhum is an AI-powered ambience app that helps people focus, sleep, and relax with customizable white, pink, and green noise. As a concept launch campaign, I created lifestyle-driven social graphics that lead with the emotional benefit rather than the feature set.\nSun-warmed portraits and fluid shapes mirror the calming waveforms of ambient sound, each paired with a short, lyrical line of copy.",
+            "cap": "Self-initiated. Launch social graphics for Hushhum, an AI ambience app for focus and sleep."
           },
           {
-            "src": "LANY.png",
+            "src": "LANY trimmed.png",
             "title": "LANY Live at Stubb's: Instagram Story Promo",
-            "desc": "Freelance. A promotional piece for indie-pop band LANY's live show at Stubb's BBQ in Austin, TX, designed for the vertical, fast-scrolling world of Instagram Stories.\nLayered typography bleeds downward with subtle opacity and color shifts, mimicking the rhythm and buildup before a concert, while the high-contrast hero photo puts viewers eye-level with the band."
+            "desc": "Freelance. A promotional piece for indie-pop band LANY's live show at Stubb's BBQ in Austin, TX, designed for the vertical, fast-scrolling world of Instagram Stories.\nLayered typography bleeds downward with subtle opacity and color shifts, mimicking the rhythm and buildup before a concert, while the high-contrast hero photo puts viewers eye-level with the band.",
+            "cap": "Freelance. An Instagram Story promo for LANY at Stubb's."
           },
           {
-            "src": "News.png",
+            "src": "News trimmed.png",
             "title": "Daily News Social Template System",
-            "desc": "Self-initiated. This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second, with a consistent footer tying the set together."
+            "desc": "Self-initiated. This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second, with a consistent footer tying the set together.",
+            "cap": "Self-initiated. A square social template system for daily news, one accent color per category."
           },
           {
-            "src": "Go the Mile.png",
+            "src": "Go the Mile trimmed.png",
             "title": "Go the Mile: Outdoor Promotional Poster",
             "desc": "Self-initiated. Inspired by outdoor lifestyle brands and editorial photography, this poster pairs dramatic imagery with oversized type. 'Go the Mile' works as both a motivational message and a literal call to explore.\nThe muted palette and textures reinforce the natural setting, and minimal copy lets the image carry the emotional weight. I wanted a cover that reads from a distance and holds up close.",
-            "tools": "Adobe InDesign, Photoshop"
+            "tools": "Adobe InDesign, Photoshop",
+            "cap": "Self-initiated. An outdoor poster pairing editorial photography with oversized type."
           },
           {
-            "src": "Website.png",
+            "src": "Website trimmed.png",
             "title": "Fashion E-Commerce Interface",
             "desc": "Self-initiated. This fashion interface was designed to feel bold and energetic, with a heavy emphasis on visual identity and shopability. A high-contrast palette and oversized grid put products first across web and mobile.\nI included interactive components like real-time color swatches and review stars to simulate a full user experience. The mobile version keeps the same hierarchy, with a card-style, digital-wallet aesthetic.",
-            "tools": "Figma, Adobe Illustrator"
+            "tools": "Figma, Adobe Illustrator",
+            "cap": "Self-initiated. A fashion e-commerce interface for web and mobile, designed in Figma."
           }
         ],
         "height": 315,
@@ -164,24 +172,24 @@
       {
         "gallery": [
           {
-            "src": "Apple Campus Keynote_edited.png",
+            "src": "covers/nama light.mp4",
+            "bare": true,
+            "dark": "covers/nama dark.mp4",
+            "pop": "covers/nama pop.png",
             "link": {
               "href": "files/apple-nama-2023.pdf",
               "label": "Open Apple NAMA 2023 (PDF)"
             },
-            "title": "Apple Campus Event Presentation for NAMA 2023",
-            "desc": "The cover for an excerpt from a presentation I designed for an Apple campus event for NAMA 2023, which a colleague presented. Frontline workers holding rugged tablets stand in a near-black frame beside a timeline that climbs from 700 in 2020 to 1,200 in 2023.\nI kept the type light and let a single red accent mark the current year, so the people and the numbers carry the story. The full excerpt opens as a PDF.",
-            "cap": "QAD Redzone. I designed the deck and a colleague presented it. Opens as a PDF."
-          },
-          {
-            "src": "Slide 1.png",
-            "title": "Apple Presentation: Community Growth Slide",
-            "desc": "This keynote visual kicked off a manufacturing leadership summit hosted by Apple. I paired growth stats with real frontline workers to keep the human impact behind the numbers front and center.\nWorking alongside Apple's team, I refined it with a more stylized illustration concept and shadowing that tied brand color to Apple's cinematic depth. The presentation was delivered by QAD Redzone's Blake Strickland.",
+            "title": "Apple Campus Presentation for NAMA 2023",
+            "desc": "This keynote slide opened a presentation I designed for NAMA 2023, a manufacturing leadership summit hosted by Apple on its campus. QAD Redzone's Blake Strickland delivered it. I paired the community's growth, from 700 in 2020 to 1,200 in 2023, with real frontline workers holding rugged tablets, so the human impact sat right beside the numbers.\nWorking alongside Apple's team, I refined it with a more stylized illustration concept and shadowing that tied brand color to Apple's cinematic depth, with a single red accent marking the current year. The full excerpt opens as a PDF.",
             "tools": "Adobe Photoshop, Procreate, Keynote",
-            "cap": "QAD Redzone. I designed the slide for a manufacturing leadership summit hosted by Apple."
+            "cap": "QAD Redzone. I designed the deck for a manufacturing leadership summit hosted by Apple, and a colleague presented it. Opens as a PDF."
           },
           {
-            "src": "Research 3.PNG",
+            "src": "covers/chilis light.mp4",
+            "bare": true,
+            "dark": "covers/chilis dark.mp4",
+            "pop": "covers/chilis pop.png",
             "link": {
               "href": "files/mktg-327.pdf",
               "label": "Open MKTG 327 (PDF)"
@@ -191,7 +199,10 @@
             "cap": "Texas A&M team study. Opens as a PDF."
           },
           {
-            "src": "Research 2.PNG",
+            "src": "covers/mays light.mp4",
+            "bare": true,
+            "dark": "covers/mays dark.mp4",
+            "pop": "covers/mays pop.png",
             "link": {
               "href": "files/social-media-campaign.pdf",
               "label": "Open Social Media Campaign (PDF)"
@@ -201,7 +212,10 @@
             "cap": "Texas A&M team study for Mays Business School. Opens as a PDF."
           },
           {
-            "src": "Research 5.PNG",
+            "src": "covers/pin light.mp4",
+            "bare": true,
+            "dark": "covers/pin dark.mp4",
+            "pop": "covers/pin pop.png",
             "link": {
               "href": "files/mktg-322-presentation.pdf",
               "label": "Open MKTG 322 Presentation (PDF)"
@@ -707,6 +721,7 @@
           },
           {
             "src": "PDF Preview how-does-social-support-affect-your-health.png",
+            "dark": "dark/blog-social-support dark.png",
             "title": "How Does Social Support Affect Your Health",
             "link": {
               "href": "files/how-does-social-support-affect-your-health.pdf",

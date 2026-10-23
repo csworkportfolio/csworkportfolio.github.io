@@ -69,7 +69,7 @@ class Media:
         self.used.add(key)
         src = self.find(name)
         entry = self.manifest.get(key)
-        if entry and entry.get("kind") == "image" and entry.get("boxv") != 1:
+        if entry and entry.get("kind") == "image" and entry.get("boxv") != 3:
             entry = None   # older entry without the visible-box measurement: process it again
         if entry and (src is None or entry.get("mtime") == int(src.stat().st_mtime)):
             if all((ROOT / f).exists() for f in entry["files"]):
@@ -90,9 +90,28 @@ class Media:
             if role.startswith("light"):
                 return self.to_video(src, base, gif=kind == "gif", max_w=int(role[5:] or 720), crf="30")
             return self.to_video(src, base, gif=kind == "gif")
+        # the file name carries the processing version, so a browser that cached an older version (say, with
+        # the old baked-in shadow) fetches the new one instead of showing it from cache
+        base += "-v3"
         im = Image.open(src)
         im = ImageOps.exif_transpose(im)
         im = im.convert("RGBA" if has_alpha(im) else "RGB")
+        if im.mode == "RGBA" and role != "bg":
+            # many old exports sit on a wide transparent canvas (with a baked-in shadow): crop to the artwork
+            # itself, so a strip spaces pieces by their real edges and the site's own shadow takes over
+            bb = im.getchannel("A").point(lambda a: 255 if a > 128 else 0).getbbox()
+            if bb and bb != (0, 0, *im.size):
+                im = im.crop(bb)
+            # the old baked-in shadow is near-black at partial opacity: clear it, so it can't end in a hard line at
+            # the crop's edge (the site draws its own shadow); the artwork's anti-aliased edges keep their colour
+            px = im.load()
+            a = im.getchannel("A")
+            mx = im.convert("RGB").point(lambda v: v).split()
+            dark = Image.merge("RGB", mx).convert("L").point(lambda v: 255 if v < 60 else 0)
+            soft = a.point(lambda v: 255 if v < 235 else 0)
+            from PIL import ImageChops
+            kill = ImageChops.multiply(dark, soft)
+            im.putalpha(ImageChops.subtract(a, kill))
         out = {"kind": "image", "files": []}
         if role == "bg":
             full = fit(im, max_w=BG_MAX_W)
@@ -104,7 +123,7 @@ class Media:
             if small.size != full.size:
                 out["sm"] = save_webp(small, f"{base}-sm.webp", q=80)
         out["w"], out["h"] = full.size
-        out["boxv"] = 1
+        out["boxv"] = 3
         if im.mode == "RGBA":
             # where the picture itself ends inside its transparent margins (a baked-in shadow counts as margin),
             # as fractions of the image, so a caption can line up with the visible edge rather than the file's
@@ -201,7 +220,7 @@ def gallery_item(raw, media, site):
     """Normalize a gallery entry from content JSON into data for the page."""
     if isinstance(raw, str):
         raw = {"src": raw}
-    item = {k: raw[k] for k in ("title", "desc", "tools", "link", "cap", "zoom", "note") if k in raw}
+    item = {k: raw[k] for k in ("title", "desc", "tools", "link", "cap", "zoom", "note", "bare") if k in raw}
     if "v" in raw:
         vid = raw["v"]
         meta = site["videos"][vid]
@@ -226,6 +245,10 @@ def gallery_item(raw, media, site):
         if raw.get("dark"):
             md = media.get(raw["dark"])
             item.update(src_dark=md["src"], thumb_dark=md["poster"])
+        if raw.get("pop"):
+            # a still for the pop-up (the moving tile is for the strip; opened, the piece holds still)
+            mp = media.get(raw["pop"])
+            item.update(pop_full=mp["src"], pop_w=mp["w"], pop_h=mp["h"])
         if raw.get("tile_light"):
             # a lighter encode for the strip tile only; the lightbox keeps the full clip
             item["tile_src"] = media.get(name, f"light{raw['tile_light']}")["src"]
@@ -234,7 +257,7 @@ def gallery_item(raw, media, site):
 
 def fix_paths(item, root):
     out = dict(item)
-    for k in ("thumb", "full", "src", "tile_src", "thumb_dark", "full_dark", "src_dark"):
+    for k in ("thumb", "full", "src", "tile_src", "thumb_dark", "full_dark", "src_dark", "pop_full"):
         if k in out:
             out[k] = root + out[k]
     if "link" in out:
@@ -282,7 +305,9 @@ def tile(item, i, root, crop=None, inline=False, play="hover", gid=0, eager=Fals
         ratio = w / h
     cls = "tile tile-video" if embed else "tile"
     if item.get("note"):
-        cls += " is-note"   # a document shown as a paper note with an expand mark, as on Social & Writing
+        cls += " is-note"
+    if item.get("bare"):
+        cls += " is-bare"   # a piece shot on the strip's own ground (the shuffling study pages): no card edge of its own   # a document shown as a paper note with an expand mark, as on Social & Writing
     # a caption under the tile (the piece's title and his part in it), when the gallery has one
     cap, by = "", ""
     if item.get("cap"):
@@ -362,6 +387,49 @@ def paragraphs(ps):
     return "\n".join(out)
 
 
+def themed_css():
+    """style.css follows the device with @media (prefers-color-scheme) blocks. The site also has a light/dark
+    switch, which puts .theme-light or .theme-dark on <html>. Write assets/css/site.css: each such block now
+    steps aside when the visitor picked the other mode, and a copy of it applies when they picked this one."""
+    css = (ROOT / "assets/css/style.css").read_text()
+    out, i = [], 0
+    pat = re.compile(r"@media \(prefers-color-scheme: (dark|light)\)((?: and \([^)]*\))*)\s*\{")
+    for m in pat.finditer(css):
+        if m.start() < i:
+            continue
+        mode, extra = m.group(1), m.group(2)
+        depth, j = 1, m.end()
+        while depth:
+            depth += {"{": 1, "}": -1}.get(css[j], 0)
+            j += 1
+        body = css[m.end():j - 1]
+        other = "light" if mode == "dark" else "dark"
+
+        def rewrite(state):
+            rules = []
+            for sel, decl in re.findall(r"([^{}]+)\{([^{}]*)\}", re.sub(r"/\*.*?\*/", "", body, flags=re.S)):
+                sels = []
+                for one in sel.split(","):
+                    one = one.strip()
+                    if not one:
+                        continue
+                    h = re.match(r"^(html|:root)((?:\.[\w-]+|\[[^\]]*\])*)(.*)$", one, re.S)
+                    if h:
+                        sels.append(f"{h.group(1)}{state}{h.group(2)}{h.group(3)}")
+                    else:
+                        sels.append(f"html{state} {one}")
+                rules.append(f"{', '.join(sels)} {{{decl}}}")
+            return "\n  ".join(rules)
+
+        out.append(css[i:m.start()])
+        out.append(f"@media (prefers-color-scheme: {mode}){extra} {{\n  {rewrite(f':not(.theme-{other})')}\n}}\n")
+        forced = rewrite(f".theme-{mode}")
+        out.append(f"@media all{extra} {{\n  {forced}\n}}" if extra else forced)
+        i = j
+    out.append(css[i:])
+    (ROOT / "assets/css/site.css").write_text("/* generated by tools/build.py from style.css: edit style.css */\n" + "".join(out))
+
+
 def asset_version(rel):
     """Short content hash, so browsers fetch the file again whenever it changes."""
     return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:8]
@@ -418,24 +486,28 @@ def layout(page, site, root, body, media, og_image=None):
 <html lang="en"{dark_cls}>
 <head>
 <meta charset="utf-8">
-<meta name="color-scheme" content="{"light" if page["type"] == "home" else "light dark"}">
+<meta name="color-scheme" content="light dark">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page["title"])}</title>
 <meta name="description" content="{esc(desc)}">{robots}
 <meta property="og:title" content="{esc(page.get("og_title") or page["title"])}">
 <meta property="og:description" content="{esc(desc)}">{og}
-<meta name="theme-color" content="#2b2b2b">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#e8e8ed">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="cfb8039e-58d3-4d85-b5f8-6567b963fee6" data-domains="csworkportfolio.github.io"></script>
+<script>/* the visitor's light/dark choice from the switch, applied before anything paints */
+(function(){{try{{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.classList.add("theme-"+t)}}catch(e){{}}}})();</script>
 <script>/* like the Job Search AI app: "ios" on an iPhone or iPad, or any window 720px wide or less, gets touch-sized controls */
 (function(){{var r=document.documentElement,i=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),m=matchMedia("(max-width: 720px)");function a(){{r.setAttribute("data-os",i||m.matches?"ios":"mac")}}a();m.addEventListener&&m.addEventListener("change",a)}})();</script>
-<link rel="stylesheet" href="{root}assets/css/style.css?v={asset_version("assets/css/style.css")}">
+<link rel="stylesheet" href="{root}assets/css/site.css?v={asset_version("assets/css/site.css")}">
 <link rel="icon" type="image/png" sizes="32x32" href="{root}assets/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="{root}assets/icons/icon-512.png">
 <link rel="apple-touch-icon" href="{root}assets/icons/apple-touch-icon.png">
 <script src="{root}assets/js/main.js?v={asset_version("assets/js/main.js")}" defer></script>
 </head>
 <body id="top" class="page-{page["type"]}{" " + page["body_class"] if page.get("body_class") else ""}">
-<a class="skip-link" href="#main">Skip to content</a>{header}
+<a class="skip-link" href="#main">Skip to content</a>
+<button class="theme-toggle" type="button" aria-label="Switch to dark mode"><svg class="tt-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z"/></svg><svg class="tt-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>{header}
 <nav class="pills" aria-label="Portfolio sections">
   <div class="seg">{"".join(nav)}</div>
 </nav>
@@ -444,8 +516,8 @@ def layout(page, site, root, body, media, og_image=None):
 </main>
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <span>© {esc(site["name"])}</span>{footer_links(site)}
-    <a href="#top" class="to-top">Back to top ↑</a>
+    <a href="#top" class="to-top">Back to top <span aria-hidden="true">↑</span></a>
+    <span class="footer-meta"><span>© {esc(site["name"])}</span>{footer_links(site)}</span>
   </div>
 </footer>
 <dialog class="lightbox" aria-label="Enlarged view" tabindex="-1">
@@ -530,11 +602,22 @@ def slideshow(names, title, root, media, titles=None):
     </div>'''
 
 
+def light_pic(img_html, light, root):
+    """Wrap a portrait <img> so light mode shows the colour photo (source media follows the device; main.js
+    retargets it when the visitor uses the switch). The <picture> takes no box of its own (style.css)."""
+    if not light:
+        return img_html
+    return (f'<picture class="theme-pic"><source media="(prefers-color-scheme: light)" '
+            f'srcset="{root}{light.get("sm", light["src"])}">{img_html}</picture>')
+
+
 def category_banner(site, root, media):
     """The category pages' header: a short band of the home hero's dark gradient with just a centred photo,
     either the home page's cut-out portrait or the round avatar (site.json "category_header")."""
     kind = site.get("category_header", "portrait")
     img = media.get(site["home"]["portrait"] if kind == "portrait" else site["avatar"])
+    lkey = site["home"].get("portrait_light") if kind == "portrait" else site.get("avatar_light")
+    light = media.get(lkey) if lkey else None
     title, sub = site.get("category_title"), site.get("category_sub")
     text = ""
     if title:
@@ -553,7 +636,7 @@ def category_banner(site, root, media):
     alt = "" if title else "Christian Sanchez, back to the home page"
     return f'''
 <header class="cat-hero cat-hero-{kind}">
-  <a class="cat-hero-link" href="{root}"><img src="{root}{img.get("sm", img["src"])}" width="{img["w"]}" height="{img["h"]}" alt="{alt}">{text}</a>
+  <a class="cat-hero-link" href="{root}">{light_pic(f'<img src="{root}{img.get("sm", img["src"])}" width="{img["w"]}" height="{img["h"]}" alt="{alt}">', light, root)}{text}</a>
 </header>'''
 
 
@@ -561,18 +644,23 @@ def intro_hero(home, root, media, tag, site=None):
     """The "Hi, Christian Sanchez here." intro with the portrait: the home page's hero, and the header of the
     category pages (where the greeting is not the page's heading, so it is a <p>)."""
     portrait = media.get(home["portrait"])
+    light = media.get(home["portrait_light"]) if home.get("portrait_light") else None   # the colour photo, light mode
     src = root + portrait.get("sm", portrait["src"])
     # A second copy of the portrait sits at the start of the text, floated with its own outline as the wrap
     # shape, so on big phones to small desktops the intro flows around the silhouette (CSS shows one or other).
     # an invisible spacer floats above it so the portrait sits on the bottom edge (main.js sizes the spacer)
     shaped = (f'<span class="hero-spacer" aria-hidden="true"></span>'
-              f'<img class="home-portrait-float" src="{src}" width="{portrait["w"]}" height="{portrait["h"]}" alt="" '
-              f'aria-hidden="true" style="shape-outside:url(\'{src}\')">')
+              + light_pic(f'<img class="home-portrait-float" src="{src}" width="{portrait["w"]}" height="{portrait["h"]}" alt="" '
+                          f'aria-hidden="true" style="shape-outside:url(\'{src}\')">', light, root))
     # on the home page the email and LinkedIn sit under the intro; it stays a <p>, the last one, since
     # main.js stands the portrait beside the intro's last paragraph
     contact = ""
     if tag == "h1" and site and home.get("hero_contact"):
-        contact = f'\n      <p class="hero-contact">{contact_links(site, root, "contact-row")}</p>'
+        links = contact_links(site, root, "contact-row")
+        if site.get("email"):  # phones show "Email" on the pill, the full address doesn't fit beside the portrait
+            e = esc(site["email"])
+            links = links.replace(f'>{e}</a>', f'><span class="hc-full">{e}</span><span class="hc-short">Email</span></a>', 1)
+        contact = f'\n      <p class="hero-contact">{links}</p>'
     return f'''
 <section class="home-hero">
   <div class="wrap home-hero-inner">
@@ -581,7 +669,7 @@ def intro_hero(home, root, media, tag, site=None):
       <{tag} class="hero-hi">{esc(home["greeting"])}</{tag}>
       {paragraphs(home["intro"])}{contact}
     </div>
-    <img class="home-portrait" src="{root}{portrait.get("sm", portrait["src"])}" width="{portrait["w"]}" height="{portrait["h"]}" alt="Christian Sanchez">
+    {light_pic(f'<img class="home-portrait" src="{root}{portrait.get("sm", portrait["src"])}" width="{portrait["w"]}" height="{portrait["h"]}" alt="Christian Sanchez">', light, root)}
   </div>
 </section>'''
 
@@ -988,6 +1076,7 @@ def main():
     args = ap.parse_args()
     src_dirs = args.src or [ROOT.parent / "wix-export", ROOT.parent / "source-extra"]
     MEDIA.mkdir(exist_ok=True)
+    themed_css()
     media = Media(src_dirs)
     site = json.loads((CONTENT / "site.json").read_text())
 

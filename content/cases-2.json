@@ -549,7 +549,10 @@
             "desc": "This presentation analysed the infrastructure of Bryan, Texas, and how new transportation options could handle growing city traffic.\nThe research pointed to the influx of Texas A&M students as both the city's biggest threat and its biggest opportunity. Our recommendations focused on linking College Station with Bryan's growing downtown."
           },
           {
-            "src": "Research 3.PNG",
+            "src": "covers/chilis light.mp4",
+            "bare": true,
+            "dark": "covers/chilis dark.mp4",
+            "pop": "covers/chilis pop.png",
             "link": {
               "href": "files/mktg-327.pdf",
               "label": "Open MKTG 327 Study (PDF)"
@@ -558,7 +561,10 @@
             "desc": "This study explored how to reinvigorate a plateaued restaurant brand through online and in-store changes, with research and feedback from Chili's Bar & Grill.\nWe found that casual dining had been declining and that each social platform called for a different tone. The plan targeted young families with children through social advertising."
           },
           {
-            "src": "Research 2.PNG",
+            "src": "covers/mays light.mp4",
+            "bare": true,
+            "dark": "covers/mays dark.mp4",
+            "pop": "covers/mays pop.png",
             "link": {
               "href": "files/social-media-campaign-v2.pdf",
               "label": "Open Social Media Campaign (PDF)"
@@ -567,7 +573,10 @@
             "desc": "Prepared for Mays Business School, this study looked at how universities use social media to share information, including a close look at a peer school's Facebook strategy.\nOur research found that people prefer interpersonal posts, with Facebook skewing older and Instagram younger. We recommended Instagram Stories content, such as a \"day in the life of a business major\" series."
           },
           {
-            "src": "Research 5.PNG",
+            "src": "covers/pin light.mp4",
+            "bare": true,
+            "dark": "covers/pin dark.mp4",
+            "pop": "covers/pin pop.png",
             "link": {
               "href": "files/mktg-322-presentation.pdf",
               "label": "Open MKTG 322 Presentation (PDF)"
