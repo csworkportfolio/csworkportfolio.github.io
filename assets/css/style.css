@@ -2045,7 +2045,7 @@ html .pills > .seg.is-scrolling { background: none; }
 .only-phone { display: none; }
 @media (max-width: 720px) { .only-phone { display: inline; } .only-wide { display: none; } }
 /* reduced motion gets no play button, so phones keep the plain line there */
-@media (max-width: 720px) and (prefers-reduced-motion: reduce) { .only-phone { display: none; } .only-wide { display: inline; } }
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) { .sc-text .only-phone { display: none; } .sc-text .only-wide { display: inline; } }
 
 /* phones: a still walkthrough's pictures sit in their own steps (main.js moves them), shown in full */
 @media (max-width: 720px) {

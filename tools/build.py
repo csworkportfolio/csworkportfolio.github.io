@@ -931,6 +931,9 @@ def flow(b, media, root):
         for fg in figs:
             m = media.get(fg["src"])
             cap = f'<figcaption>{esc(fg["caption"])}</figcaption>' if fg.get("caption") else ""
+            if fg.get("caption_phone"):   # a shorter label on phones, where the step's own text sits right below
+                cap = (f'<figcaption><span class="only-wide">{esc(fg["caption"])}</span>'
+                       f'<span class="only-phone">{esc(fg["caption_phone"])}</span></figcaption>')
             img = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" '
                    f'alt="{esc(fg.get("alt", ""))}" loading="lazy" decoding="async">')
             if fg.get("v"):
