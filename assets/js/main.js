@@ -1433,6 +1433,50 @@
       }));
     }
     if (reduceMotion) return;
+    // phones: a play button beside the switcher runs the phone through the same steps the desktop scroll does,
+    // slowly and in place (no pinning), naming each step as it goes; tap again or scroll away to stop
+    if (ph && sw) {
+      const play = document.createElement("button");
+      play.type = "button"; play.className = "sc-play"; play.setAttribute("aria-label", "Play the steps");
+      play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-stop" d="M9 6v12M15 6v12"/></svg>';
+      const step = document.createElement("p");
+      step.className = "sc-step"; step.setAttribute("aria-live", "polite");
+      const row = document.createElement("div");   // the switcher and the play button share one centred row
+      row.className = "sc-row"; sw.before(row); row.append(sw, play); row.after(step);
+      const STEP_S = [2.6, 2.6, 3.6, 2.4, 2.6, 2.4, 3.4];   // seconds per step; the device check and Live get a little longer
+      const total = STEP_S.reduce((a, b) => a + b, 0);
+      let raf = 0, t0 = 0, last = -1;
+      const stop = () => {
+        cancelAnimationFrame(raf); raf = 0; last = -1;
+        scene.classList.remove("is-demo", "is-whole"); scene.removeAttribute("data-stage");
+        ["--apart", "--scan"].forEach((v) => ph.style.removeProperty(v));
+        play.classList.remove("is-on"); play.setAttribute("aria-label", "Play the steps"); step.textContent = "";
+      };
+      const frame = (now) => {
+        const sec = (now - t0) / 1000;
+        if (sec > total + 1.6) { stop(); return; }
+        let at = 0, acc = 0;
+        while (at < n - 1 && sec >= acc + STEP_S[at]) { acc += STEP_S[at]; at++; }
+        const local = Math.min(1, (sec - acc) / STEP_S[at]);
+        const p = Math.min(1, (at + local) / n);
+        if (at !== last) {
+          last = at; scene.dataset.stage = String(at);
+          const name = names[at] ? names[at].textContent : "";
+          step.textContent = `${at + 1} of ${n} \u00b7 ${name}${names[at] && names[at].classList.contains("is-me") ? " \u00b7 my part" : ""}`;
+        }
+        const apart = Math.max(0, 1 - p * n / 1.6);
+        ph.style.setProperty("--apart", (apart * apart).toFixed(3));
+        scene.classList.toggle("is-whole", apart === 0);
+        ph.style.setProperty("--scan", at === 2 ? Math.min(1, local * 1.15).toFixed(3) : "0");
+        raf = requestAnimationFrame(frame);
+      };
+      play.addEventListener("click", () => {
+        if (raf) { stop(); return; }
+        scene.classList.add("is-demo"); play.classList.add("is-on"); play.setAttribute("aria-label", "Stop");
+        t0 = performance.now(); raf = requestAnimationFrame(frame);
+      });
+      if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { if (!e.isIntersecting && raf) stop(); }).observe(ph);
+    }
     const live = () => {
       scene.classList.toggle("is-live", !!ph && !phone.matches && !tooTall);   // a still walkthrough (a photo, no phone) never pins
       stage = -1;
