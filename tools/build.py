@@ -384,6 +384,9 @@ def paragraphs(ps):
     for p in ps:
         if isinstance(p, dict) and "quote" in p:
             out.append(f'<blockquote><p>“{esc(p["quote"])}”</p></blockquote>')
+        elif isinstance(p, dict) and "phone" in p:
+            # one line said differently on phones (where, say, a play button replaces scrolling)
+            out.append(f'<p><span class="only-wide">{esc(p["p"])}</span><span class="only-phone">{esc(p["phone"])}</span></p>')
         else:
             out.append(f"<p>{esc(p)}</p>")
     return "\n".join(out)

@@ -2194,3 +2194,21 @@ html.theme-light .glance-logos img { filter: brightness(0); opacity: .45; }
 /* the phone play-through resetting: the rolled screen and the next one return at once, nothing left showing */
 .ph.is-reset .ph-roll, .ph.is-reset .ph-next { transition: none !important; }
 .ph.is-reset .ph-next { visibility: hidden !important; }
+
+/* phones: a walkthrough reads heading, intro, its picture, the lead-in line, then the steps, so the picture sits inside the
+   section it belongs to instead of above the heading */
+@media (max-width: 720px) {
+  .scene:not(.is-live) .sc-grid { row-gap: 0; }
+  .scene:not(.is-live) .sc-text { display: contents; }
+  .scene:not(.is-live) .sc-text > * { grid-column: 1; order: 0; }
+  .scene:not(.is-live) .sc-visual { order: 1; margin: 28px 0 8px; }
+  /* the lead-in line ("Here are the five steps…") stays right above the steps it introduces */
+  .scene:not(.is-live) .sc-text > p:last-of-type:not(:first-of-type) { order: 2; margin-top: 24px; }
+  .scene:not(.is-live) .sc-text > .sc-names, .scene:not(.is-live) .sc-text > .sc-panels { order: 3; }
+}
+
+/* a line worded for phones and one for wider screens; each shows only where it fits */
+.only-phone { display: none; }
+@media (max-width: 720px) { .only-phone { display: inline; } .only-wide { display: none; } }
+/* reduced motion gets no play button, so phones keep the plain line there */
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) { .only-phone { display: none; } .only-wide { display: inline; } }

@@ -23,7 +23,10 @@
         "id": "process",
         "p": [
           "I owned each placement from brief to verified delivery, and nothing was scheduled until it held up on a real phone. QA sign-off and legal review belonged to others; the build came back to me to schedule, and my part ended once delivery was confirmed.",
-          "Scroll through one placement to see which steps were mine."
+          {
+            "p": "Scroll through one placement to see which steps were mine.",
+            "phone": "Press play to walk through one placement and see which steps were mine."
+          }
         ],
         "steps": [
           {
