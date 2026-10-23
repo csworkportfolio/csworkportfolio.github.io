@@ -2024,3 +2024,7 @@ html .pills > .seg.is-scrolling { background: none; }
   .sc-step { min-height: 1.4em; margin: 12px 0 0; font-size: 15px; color: var(--muted); text-align: center; }
   .scene.is-demo .ph { transition: transform .9s cubic-bezier(.2,.7,.2,1); }
 }
+
+/* the phone play-through resetting: the rolled screen and the next one return at once, nothing left showing */
+.ph.is-reset .ph-roll, .ph.is-reset .ph-next { transition: none !important; }
+.ph.is-reset .ph-next { visibility: hidden !important; }

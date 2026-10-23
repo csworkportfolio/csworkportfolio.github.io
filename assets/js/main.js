@@ -1448,7 +1448,10 @@
       let raf = 0, t0 = 0, last = -1;
       const stop = () => {
         cancelAnimationFrame(raf); raf = 0; last = -1;
+        // reset in one step: without this the next screen (shown at Verify) lingers below the phone while it fades out
+        ph.classList.add("is-reset");
         scene.classList.remove("is-demo", "is-whole"); scene.removeAttribute("data-stage");
+        requestAnimationFrame(() => requestAnimationFrame(() => ph.classList.remove("is-reset")));
         ["--apart", "--scan"].forEach((v) => ph.style.removeProperty(v));
         play.classList.remove("is-on"); play.setAttribute("aria-label", "Play the steps"); step.textContent = "";
       };
