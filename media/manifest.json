@@ -2935,17 +2935,29 @@
   "boxv": 3,
   "mtime": 1792566631
  },
- "light540:Gary Task Complete.mp4": {
+ "light360:Gary Task Complete.mp4": {
   "kind": "video",
   "src": "media/gary-task-complete-e8bd76-light.mp4",
   "poster": "media/gary-task-complete-e8bd76-light-poster.webp",
-  "w": 540,
-  "h": 676,
+  "w": 360,
+  "h": 450,
   "files": [
    "media/gary-task-complete-e8bd76-light.mp4",
    "media/gary-task-complete-e8bd76-light-poster.webp"
   ],
   "mtime": 1792566631
+ },
+ "light360:dark/Gary Task Complete dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-gary-task-complete-dark-3bbbcf-light.mp4",
+  "poster": "media/dark-gary-task-complete-dark-3bbbcf-light-poster.webp",
+  "w": 360,
+  "h": 450,
+  "files": [
+   "media/dark-gary-task-complete-dark-3bbbcf-light.mp4",
+   "media/dark-gary-task-complete-dark-3bbbcf-light-poster.webp"
+  ],
+  "mtime": 1792744249
  },
  "light:QAD Redzone Presents_ Gary the GOAT": {
   "kind": "loop",

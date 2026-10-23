@@ -1562,6 +1562,24 @@
       const first = new IntersectionObserver(([en]) => { if (en.isIntersecting) { runFirst(); first.disconnect(); } }, { threshold: 0.6 });
       first.observe(cases[0].querySelector(".wk-figs"));
     }
+    // the cases after the first fetch their photo and slides only as they come near, so the home page doesn't
+    // download every case at once (the stacked boxes all count as on screen to the browser)
+    const hydrate = (c) => {
+      if (!c || c.dataset.ready) return;
+      c.dataset.ready = "1";
+      c.querySelectorAll("img[data-defer-src]").forEach((im) => { im.src = im.dataset.deferSrc; im.removeAttribute("data-defer-src"); });
+      const box = c.querySelector(".wk-box[data-bg]");
+      if (box) { box.style.backgroundImage = `url('${box.dataset.bg}')`; box.removeAttribute("data-bg"); }
+    };
+    hydrate(cases[0]); hydrate(cases[1]);
+    const nearIO = "IntersectionObserver" in window && new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && !isLive()) hydrate(e.target); }), { rootMargin: "1200px 0px" });
+    if (nearIO) cases.forEach((c) => nearIO.observe(c));
+    // once the page has settled, the rest load one by one in the background, so scrolling never waits on them
+    window.addEventListener("load", () => {
+      let k = 0;
+      const next = () => { while (k < n && cases[k].dataset.ready) k++; if (k < n) { hydrate(cases[k]); setTimeout(next, 1200); } };
+      setTimeout(next, 3000);
+    }, { once: true });
     scenes.push((pin) => {
       if (!isLive()) return;
       const r = scene.getBoundingClientRect();
@@ -1570,6 +1588,7 @@
       const u = run > 0 ? ((pin - r.top) / run) * total : 0;
       let at = 0;
       starts.forEach((st, k) => { if (u >= st - HAND / 2) at = k; });
+      hydrate(cases[at]); hydrate(cases[at + 1]); hydrate(cases[at + 2]);
       cases.forEach((c, k) => {
         const st = starts[k];
         const e = k === 0 ? 1 : clamp((u - (st - HAND)) / HAND);

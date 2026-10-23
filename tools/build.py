@@ -252,12 +252,14 @@ def gallery_item(raw, media, site):
         if raw.get("tile_light"):
             # a lighter encode for the strip tile only; the lightbox keeps the full clip
             item["tile_src"] = media.get(name, f"light{raw['tile_light']}")["src"]
+            if raw.get("dark"):
+                item["tile_src_dark"] = media.get(raw["dark"], f"light{raw['tile_light']}")["src"]
     return item
 
 
 def fix_paths(item, root):
     out = dict(item)
-    for k in ("thumb", "full", "src", "tile_src", "thumb_dark", "full_dark", "src_dark", "pop_full"):
+    for k in ("thumb", "full", "src", "tile_src", "tile_src_dark", "thumb_dark", "full_dark", "src_dark", "pop_full"):
         if k in out:
             out[k] = root + out[k]
     if "link" in out:
@@ -279,7 +281,7 @@ def tile(item, i, root, crop=None, inline=False, play="hover", gid=0, eager=Fals
         # GIF-loops always play; an uploaded video plays silently only where Wix autoplays it.
         media = (f'<video class="tile-media" muted loop playsinline preload="none" '
                  f'poster="{root}{item["thumb"]}" data-src="{root}{item.get("tile_src", item["src"])}" width="{w}" height="{h}" '
-                 + (f'data-src-dark="{root}{item["src_dark"]}" data-poster-dark="{root}{item["thumb_dark"]}" ' if item.get("src_dark") else "")
+                 + (f'data-src-dark="{root}{item.get("tile_src_dark", item["src_dark"])}" data-poster-dark="{root}{item["thumb_dark"]}" ' if item.get("src_dark") else "")
                  + 'aria-hidden="true"></video>')
     else:
         # the first tiles of a page's first strip load straight away, so it never opens as an empty band
@@ -722,6 +724,10 @@ def render_home(page, site, media):
             else:
                 it.update(type=m["kind"], src=m["src"], thumb=m["poster"], w=m["w"], h=m["h"])
             quick.append(fix_paths(it, root))
+        box_bg = (f'style="background-image:url(\'{root}{bg["src"]}\')"' if i == 0 else
+                  f'data-bg="{root}{bg["src"]}"')   # later cases fetch their photo and slides as they come near (main.js)
+        if i > 0:
+            slides = re.sub(r'(<img[^>]*?) src="', r'\1 data-defer-src="', slides)
         cases.append(f'''
 <article class="wk-case" data-case="{i}" style="--k:{i}">
   <script type="application/json" class="wk-quick">{json_script(quick)}</script>
@@ -730,7 +736,7 @@ def render_home(page, site, media):
       <h2>{esc(c["title"])}</h2>{figs}
       <span class="shine" style="{shine}"><a class="btn btn-red" href="{root}{c["slug"]}/">Read More<span class="sr-only">: {esc(c["title"])}</span></a></span>
   </div>
-  <div class="wk-box" style="background-image:url('{root}{bg["src"]}')">
+  <div class="wk-box" {box_bg}>
     {slides}
   </div>
 </article>''')

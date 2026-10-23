@@ -80,27 +80,12 @@ button { font: inherit; color: inherit; }
 
 /* ---------- header ---------- */
 
-.site-header { background: var(--charcoal); color: #fff; position: sticky; top: 0; z-index: 40; }
-.header-row { padding-top: 20px; padding-bottom: 20px; }
-.brand { display: inline-flex; align-items: center; gap: 28px; text-decoration: none; }
-.avatar {
-  width: 112px; height: 112px; border-radius: 50%; object-fit: cover;
-  background: #111;
-}
-.brand-text { display: flex; flex-direction: column; gap: 4px; }
-.wordmark {
-  font-family: var(--display); font-weight: 800; color: var(--cream);
-  font-size: clamp(30px, 4.2vw, 44px); letter-spacing: .1em; line-height: 1;
-}
-.byline { font-family: var(--light); font-weight: 300; font-size: 20px; }
-
 /* Category pages: a short dark band with just a centred photo of Christian (the home hero, condensed). */
 .cat-hero {
   display: flex; justify-content: center; align-items: flex-end; overflow: hidden;
   background: radial-gradient(ellipse 34% 120% at 50% 70%, #3a3a3d 0%, #1c1c1e 55%, #0b0b0b 100%);
 }
 .cat-hero-link { display: block; line-height: 0; }
-.cat-hero-portrait img { height: 190px; width: auto; }
 .cat-hero-avatar { padding: 26px 0; align-items: center; }
 .cat-hero-avatar img { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; }
 /* with a line of text: the avatar and text sit side by side, centred as a pair */
@@ -261,22 +246,6 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) { .page-home .home-hero-text > *, .page-home .home-portrait { animation: none; } }
 .home-portrait { width: 266px; height: auto; align-self: end; }   /* the top of the hair lines up with the top of the greeting's letters */
 
-.case-row {
-  position: relative; color: #fff; isolation: isolate;
-  background: #111 center / cover no-repeat;
-}
-.case-row::before {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: rgba(0,0,0,.5);
-}
-.case-row-inner {
-  display: grid; grid-template-columns: 234px minmax(0, 643px); column-gap: 44px; align-items: center;
-  min-height: 361px; padding-left: calc(var(--gutter) + 42px);
-}
-.case-row .kicker { font-family: var(--sans); font-weight: 400; font-size: 15px; line-height: 1.4; color: rgba(255,255,255,.82); margin-bottom: 18px; }
-.case-row h2 { font-size: clamp(20px, 1.9vw, 24px); line-height: 1.2; letter-spacing: -.015em; font-weight: 700; margin-bottom: 26px; }
-.case-row .case-result { font-size: 15px; line-height: 1.4; color: rgba(255,255,255,.82); margin: -14px 0 18px; }
-.case-row .btn { min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
 /* Read More shine: a gradient of the row photo's own colours (--s1..--s4, picked by the build) that loops under the button, seen through its glass (blurred and lightened
    by it, the way liquid glass looks passing over colour). Lit while the row is on screen. */
 @property --shine { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -331,7 +300,6 @@ button { font: inherit; color: inherit; }
 .lede-wrap + .prose { margin-top: 60px; }
 .prose.intro + .prose.intro { margin-top: 40px; }
 .strip + .prose { margin-top: 140px; }
-.gal-label + .prose { margin-top: 96px; }
 .prose h2 { font-size: 14px; line-height: 20px; font-weight: 700; margin-bottom: 5px; }
 .prose p { font-size: 18px; line-height: 25px; }
 .prose p + p, .prose blockquote + p, .prose p + blockquote { margin-top: 25px; }
@@ -345,7 +313,6 @@ button { font: inherit; color: inherit; }
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px;
   padding: 106px calc(var(--gutter) + 17px) 31px;
 }
-.gal-label + .case-nav { padding-top: 62px; }
 .case-nav .btn { min-width: 184px; }
 .case-nav-link { align-self: center; font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; }
 .case-nav-link:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -439,22 +406,6 @@ button { font: inherit; color: inherit; }
 .strip-videos .strip-track { padding-left: 4px; padding-right: 4px; }
 
 /* Captions that sit with a gallery on Wix ("Click Visual to Learn More" etc.) */
-.gal-label {
-  width: 343px; max-width: calc(100% - 2 * var(--gutter)); min-height: 40px; margin: 4px auto 0;
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  font-size: 12px; font-style: italic; line-height: 1.3; color: #777;  /* same as the strip hint */
-}
-.gal-label.above { margin: 32px auto 7px; }
-.gal-label.above + .strip { margin-top: 0; }
-
-.strip-hint {
-  text-align: center; font-size: 12px; font-style: italic; color: #777; margin-top: 10px;
-}
-.hint-touch { display: none; }
-@media (hover: none) {
-  .hint-mouse { display: none; }
-  .hint-touch { display: inline; }
-}
 
 /* ---------- lightbox ---------- */
 
@@ -589,13 +540,7 @@ html.theme-dark.can-dark .to-top:hover { background: rgba(255, 255, 255, .18); }
 
 @media (max-width: 720px) {
   :root { --gutter: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); --strip-h: 300px; }
-  .header-row { padding-top: 14px; padding-bottom: 14px; }
-  .brand { display: flex; justify-content: space-between; flex-direction: row-reverse; gap: 16px; width: 100%; }
-  .brand-text { min-width: 0; }
   /* "PORTFOLIO" in SF Pro Heavy is ~6.6em wide; fit it beside the 84px avatar. */
-  .wordmark { font-size: clamp(18px, calc((100vw - 134px) / 6.7), 32px); }
-  .avatar { width: 84px; height: 84px; flex: none; }
-  .byline { font-size: 17px; }
 
   .pills { padding: 12px 0 14px; }
   .page-home .pills { padding: 14px 0; }
@@ -611,7 +556,6 @@ html.theme-dark.can-dark .to-top:hover { background: rgba(255, 255, 255, .18); }
   .home-hero p { font-size: 15px; }
   .home-portrait { grid-column: 1 / -1; grid-row: 4 / span 2; width: 72%; max-width: 300px; justify-self: end; align-self: end; margin-top: 0; margin-right: calc(-1 * var(--gutter)); }  /* tucked to the window edge, clear of the text */
 
-  .case-row-inner { grid-template-columns: 1fr; min-height: 300px; padding-left: var(--gutter); padding-right: var(--gutter); padding-top: 32px; padding-bottom: 32px; }
   .slideshow { justify-self: stretch; max-width: none; margin-top: 28px; }  /* the work samples sit under the text, as on Wix mobile */
   .strip-arrow { display: none; }  /* phones swipe; the arrows only crowd the gallery */
 
@@ -629,8 +573,6 @@ html.theme-dark.can-dark .to-top:hover { background: rgba(255, 255, 255, .18); }
   .lede-wrap + .prose { margin-top: 40px; }
   .prose.intro + .prose.intro { margin-top: 32px; }
   .strip + .prose { margin-top: 72px; }
-  .gal-label + .prose { margin-top: 40px; }
-  .gal-label.above { margin-top: 24px; }
   .prose p { line-height: 1.45; }
   .prose .lede { text-align: left; }
   .case-hero-inner { padding-left: var(--gutter); }
@@ -641,7 +583,6 @@ html.theme-dark.can-dark .to-top:hover { background: rgba(255, 255, 255, .18); }
 /* ---------- page transitions ---------- */
 
 @view-transition { navigation: auto; }
-.site-header { view-transition-name: site-header; }
 .home-hero, .cat-hero { view-transition-name: site-hero; }
 /* The name goes on the switcher itself, not its container: an element with a transition
    name stops the blur of anything inside it from reaching the page behind. */
@@ -684,9 +625,7 @@ main { view-transition-name: page; }
    column on the left (as on desktop) instead of the last line alone wrapping beside the head */
 @media (min-width: 561px) and (max-width: 720px) {
   /* wide enough (large phones in landscape, foldables) for the desktop case rows: text beside its slideshow */
-  .case-row-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 24px; min-height: 0; padding-top: 28px; padding-bottom: 28px; align-items: center; }
-  .case-row .kicker { margin-bottom: 12px; }
-  .case-row h2 { margin-bottom: 18px; }
+
   .slideshow { margin-top: 0; justify-self: end; }
 }
 
@@ -694,7 +633,7 @@ main { view-transition-name: page; }
    The Job Search AI app's split: an iPhone, an iPad, or any window 720px wide or less gets iOS sizes.
    Controls grow to the 44pt touch target with 15px labels, and the category text takes the iOS type scale.
    The section switcher becomes the app's chip bar: separate glass chips on a frosted bar across the window. */
-:root[data-os="ios"] .btn, :root[data-os="ios"] .case-row .btn { min-height: 44px; font-size: 15px; }
+:root[data-os="ios"] .btn { min-height: 44px; font-size: 15px; }
 :root[data-os="ios"] .pills {
   padding: 10px 0; pointer-events: auto; view-transition-name: site-tabs;
   background: color-mix(in srgb, #f9f9f9 78%, transparent);
@@ -1262,7 +1201,6 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 .wk-case { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); column-gap: 56px; align-items: center; }
 .wk-text .kicker { font-size: 15px; line-height: 1.4; color: rgba(255,255,255,.7); margin-bottom: 14px; }
 .wk-text h2 { font-size: clamp(26px, 2.6vw, 36px); line-height: 1.12; letter-spacing: -.025em; font-weight: 700; margin-bottom: 24px; text-wrap: balance; }
-.wk-text .case-result { margin: -8px 0 24px; }
 .wk-text .btn { min-height: 35px; min-width: 138px; padding: 0 20px; font-size: 14px; }
 .wk-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 28px; margin: 0 0 28px; }
 .wk-figs div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; }
@@ -1497,7 +1435,6 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 /* the posts keep the panes' spacing too (the locked markup carries its own older gap) */
 .gw-wrap .lock-content .strip, .lock-content.gw-full .strip { --gap: var(--gg, 40px) !important; }
 
-
 /* category strips all sit on the light band: close under their heading, arrows centred on the pictures */
 .cat-v2 .strip-ground { margin-top: 8px; }
 .strip-ground:has(.tile-cap) .strip-arrow { top: calc(40px + var(--tile-h, var(--strip-h)) / 2 - 25px); }
@@ -1531,7 +1468,6 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 @media (max-width: 720px) { .ss-dots { gap: 8px; padding: 0 12px; height: 32px; } .ss-toggle { width: 32px; height: 32px; } .ss-toggle::before, .ss-toggle::after { top: 10px; } .ss-toggle::before { left: 11px; } .ss-toggle::after { left: 17.5px; } .ss-toggle.is-paused::before { left: 12px; top: 9px; } }
 @media (prefers-reduced-motion: reduce) { .ss-dots button { transition: none; } }
 @media (max-width: 720px) { .wk-box { padding-bottom: 60px; } .wk-box .ss-ctl { bottom: 14px; } }
-
 
 /* the home quick view: samples open from the case boxes into the pop-up, with the case's summary beside them */
 .wk-box .slideshow { cursor: zoom-in; }
@@ -1645,7 +1581,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 .ex-box img { display: block; max-height: 100%; height: auto; width: auto; max-width: 100%; object-fit: contain; min-width: 0; border-radius: 14px; cursor: zoom-in; box-shadow: 0 34px 70px -30px rgba(0,0,0,.45); }
 /* the unlocked section: the locked file's old caption line and closing paragraph stay out of view (the context now
    sits above the panes) */
-.gw-wrap .lock-content .gal-label, .gw-wrap .lock-content .cat-text { display: none; }
+.gw-wrap .lock-content .cat-text { display: none; }
 .cat-locked p:not(.kicker-italic) { margin-top: 14px; font-size: 17px; line-height: 1.55; max-width: 68ch; }
 
 /* in the pop-up, the zoom-out cursor shows where a click closes (desktop): an image and the space around it */
