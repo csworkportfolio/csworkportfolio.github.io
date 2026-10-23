@@ -1740,8 +1740,8 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
   html:not(.theme-light).can-dark .ex-rail button.is-done { background: rgba(255,255,255,.5); }
   html:not(.theme-light).can-dark .ex-rail button.is-on { background: rgba(255,255,255,.18); }
   html:not(.theme-light).can-dark .ex-rail button i { background: #f5f5f7; }
-  html:not(.theme-light).can-dark .ref-page { color: #1d1d1f; }
-  html:not(.theme-light).can-dark .focus-dots button { background: rgba(255,255,255,.25); }
+  html:not(.theme-light).can-dark .ref-page { background: #1c1c1e; color: #f5f5f7; box-shadow: 0 0 0 .5px rgba(255,255,255,.12), 0 40px 70px -40px rgba(0,0,0,.6); }
+  html:not(.theme-light).can-dark .ref-band.is-near .ref-page { box-shadow: 0 0 0 .5px rgba(255,255,255,.14), 0 60px 90px -40px rgba(0,0,0,.7); }
 }
 html.theme-dark.can-dark {
     --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
@@ -1776,8 +1776,8 @@ html.theme-dark.can-dark {
   html.theme-dark.can-dark .ex-rail button.is-done { background: rgba(255,255,255,.5); }
   html.theme-dark.can-dark .ex-rail button.is-on { background: rgba(255,255,255,.18); }
   html.theme-dark.can-dark .ex-rail button i { background: #f5f5f7; }
-  html.theme-dark.can-dark .ref-page { color: #1d1d1f; }
-  html.theme-dark.can-dark .focus-dots button { background: rgba(255,255,255,.25); }
+  html.theme-dark.can-dark .ref-page { background: #1c1c1e; color: #f5f5f7; box-shadow: 0 0 0 .5px rgba(255,255,255,.12), 0 40px 70px -40px rgba(0,0,0,.6); }
+  html.theme-dark.can-dark .ref-band.is-near .ref-page { box-shadow: 0 0 0 .5px rgba(255,255,255,.14), 0 60px 90px -40px rgba(0,0,0,.7); }
 /* touch screens: the tab band and its pills in dark too */
 @media (prefers-color-scheme: dark) {
   html:not(.theme-light).can-dark[data-os="ios"] .pills { background: color-mix(in srgb, #000 72%, transparent); }
@@ -2218,3 +2218,15 @@ html.theme-light .glance-logos img { filter: brightness(0); opacity: .45; }
   .scene.figs-inline .sc-visual { display: none; }
   .scene.figs-inline .sc-panel > .sc-photo { opacity: 1; pointer-events: auto; width: 100%; margin: 14px 0 18px; }
 }
+
+/* dark mode, every page: the canvas behind the content is dark too, so nothing light shows through while pages
+   slide between each other (the home page kept a white body under its sections, which flashed as a white bar
+   when the header changed height mid-transition) */
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light), html:not(.theme-light) body { background: #000; }
+  html:not(.theme-light) .page-home { background: #0b0b0b; }
+  html:not(.theme-light)::view-transition { background: #000; }
+}
+html.theme-dark, html.theme-dark body { background: #000; }
+  html.theme-dark .page-home { background: #0b0b0b; }
+  html.theme-dark::view-transition { background: #000; }

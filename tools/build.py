@@ -433,6 +433,8 @@ def themed_css():
                     h = re.match(r"^(html|:root)((?:\.[\w-]+|\[[^\]]*\])*)(.*)$", one, re.S)
                     if h:
                         sels.append(f"{h.group(1)}{state}{h.group(2)}{h.group(3)}")
+                    elif one.startswith("::"):   # a pseudo-element of the root (::view-transition) hangs off html itself
+                        sels.append(f"html{state}{one}")
                     else:
                         sels.append(f"html{state} {one}")
                 rules.append(f"{', '.join(sels)} {{{decl}}}")
@@ -512,8 +514,9 @@ def layout(page, site, root, body, media, og_image=None):
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e8e8ed">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="cfb8039e-58d3-4d85-b5f8-6567b963fee6" data-domains="csworkportfolio.github.io"></script>
-<script>/* the visitor's light/dark choice from the switch, applied before anything paints */
-(function(){{try{{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.classList.add("theme-"+t)}}catch(e){{}}}})();</script>
+<script>/* the visitor's light/dark choice from the switch, applied before anything paints: the class for the
+   stylesheet, the canvas colour (so the first frame isn't the other mode's white or black) and the browser's bar */
+(function(){{try{{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){{var r=document.documentElement;r.classList.add("theme-"+t);r.style.colorScheme=t;r.style.background=t==="dark"?"#000":"#fff";document.addEventListener("DOMContentLoaded",function(){{r.style.background=""}});document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){{m.content=t==="dark"?"#000000":"#e8e8ed"}})}}}}catch(e){{}}}})();</script>
 <script>/* like the Job Search AI app: "ios" on an iPhone or iPad, or any window 720px wide or less, gets touch-sized controls */
 (function(){{var r=document.documentElement,i=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),m=matchMedia("(max-width: 720px)");function a(){{r.setAttribute("data-os",i||m.matches?"ios":"mac")}}a();m.addEventListener&&m.addEventListener("change",a)}})();</script>
 <link rel="stylesheet" href="{root}assets/css/site.css?v={asset_version("assets/css/site.css")}">

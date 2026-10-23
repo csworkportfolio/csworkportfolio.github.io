@@ -27,6 +27,11 @@
     document.querySelectorAll("picture.tile-pic source").forEach((s) => { s.media = dark ? "all" : "not all"; });
     const btn = document.querySelector(".theme-toggle");
     if (btn) btn.setAttribute("aria-label", isDark() ? "Switch to light mode" : "Switch to dark mode");
+    // the browser's own bar (Safari's toolbar, the status bar) follows the switch too, not just the device
+    const picked = root.classList.contains("theme-dark") ? "#000000" : root.classList.contains("theme-light") ? "#e8e8ed" : null;
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => {
+      m.content = picked || (/dark/.test(m.media) ? "#000000" : "#e8e8ed");
+    });
   }
   applyTheme();
   systemDark.addEventListener?.("change", applyTheme);
@@ -751,10 +756,11 @@
   // Safari colours its status bar and floating toolbar from the page behind them. While the pop-up is open
   // the page and theme colour turn the pop-up's dark, so both bars match it instead of showing white or a band.
   const themeMetas = [...document.querySelectorAll('meta[name="theme-color"]')];
-  const themeColors = themeMetas.map((m) => m.content);
+  let themeColors = themeMetas.map((m) => m.content);
   function tintBars(on) {
     document.documentElement.classList.toggle("lb-tint", on);
     const tint = isDark() ? "#0e0e0e" : "#f5f5f7";   // the pop-up's own background in each mode
+    if (on) themeColors = themeMetas.map((m) => m.content);   // whatever the bar was just before opening
     themeMetas.forEach((m, i) => { m.content = on ? tint : themeColors[i]; });
   }
 

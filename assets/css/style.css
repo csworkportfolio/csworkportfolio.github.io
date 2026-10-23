@@ -1726,9 +1726,9 @@ a.tl-label:hover strong { color: #ff9a66; }
   html.can-dark .ex-rail button.is-done { background: rgba(255,255,255,.5); }
   html.can-dark .ex-rail button.is-on { background: rgba(255,255,255,.18); }
   html.can-dark .ex-rail button i { background: #f5f5f7; }
-  /* case studies: the reference sheet stays paper; the dots and figures follow the text colour */
-  html.can-dark .ref-page { color: #1d1d1f; }
-  html.can-dark .focus-dots button { background: rgba(255,255,255,.25); }
+  /* case studies: the reference sheet goes dark with the page, a raised dark sheet with a faint edge */
+  html.can-dark .ref-page { background: #1c1c1e; color: #f5f5f7; box-shadow: 0 0 0 .5px rgba(255,255,255,.12), 0 40px 70px -40px rgba(0,0,0,.6); }
+  html.can-dark .ref-band.is-near .ref-page { box-shadow: 0 0 0 .5px rgba(255,255,255,.14), 0 60px 90px -40px rgba(0,0,0,.7); }
 }
 /* touch screens: the tab band and its pills in dark too */
 @media (prefers-color-scheme: dark) {
@@ -2051,4 +2051,13 @@ html .pills > .seg.is-scrolling { background: none; }
 @media (max-width: 720px) {
   .scene.figs-inline .sc-visual { display: none; }
   .scene.figs-inline .sc-panel > .sc-photo { opacity: 1; pointer-events: auto; width: 100%; margin: 14px 0 18px; }
+}
+
+/* dark mode, every page: the canvas behind the content is dark too, so nothing light shows through while pages
+   slide between each other (the home page kept a white body under its sections, which flashed as a white bar
+   when the header changed height mid-transition) */
+@media (prefers-color-scheme: dark) {
+  html, html body { background: #000; }
+  .page-home { background: #0b0b0b; }
+  ::view-transition { background: #000; }
 }
