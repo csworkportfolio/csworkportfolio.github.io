@@ -855,23 +855,6 @@
   "boxv": 1,
   "mtime": 1792664742
  },
- "default:LF1T Large.png": {
-  "kind": "image",
-  "files": [
-   "media/lf1t-large-b72565.webp"
-  ],
-  "src": "media/lf1t-large-b72565.webp",
-  "w": 1280,
-  "h": 720,
-  "boxv": 1,
-  "box": [
-   0.2344,
-   0.0,
-   1.0,
-   1.0
-  ],
-  "mtime": 1792566631
- },
  "default:Leading the Way.png": {
   "kind": "image",
   "files": [
@@ -912,32 +895,6 @@
   "src": "media/long-form-2-2-ef6e43.webp",
   "sm": "media/long-form-2-2-ef6e43-sm.webp",
   "w": 1957,
-  "h": 1440,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Long Form 5.jpeg": {
-  "kind": "image",
-  "files": [
-   "media/long-form-5-ec599b.webp",
-   "media/long-form-5-ec599b-sm.webp"
-  ],
-  "src": "media/long-form-5-ec599b.webp",
-  "sm": "media/long-form-5-ec599b-sm.webp",
-  "w": 1958,
-  "h": 1440,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Long Form 6.jpeg": {
-  "kind": "image",
-  "files": [
-   "media/long-form-6-1d3843.webp",
-   "media/long-form-6-1d3843-sm.webp"
-  ],
-  "src": "media/long-form-6-1d3843.webp",
-  "sm": "media/long-form-6-1d3843-sm.webp",
-  "w": 1958,
   "h": 1440,
   "boxv": 1,
   "mtime": 1792566631
@@ -1399,6 +1356,58 @@
    "media/oeeinfographic-ezgif-com-optimize-2620f7-poster.webp"
   ],
   "mtime": 1792566631
+ },
+ "default:PDF Preview cohesity-google-cloud-hidden-threats.png": {
+  "kind": "image",
+  "files": [
+   "media/pdf-preview-cohesity-google-cloud-hidden-threats-fe13ed.webp",
+   "media/pdf-preview-cohesity-google-cloud-hidden-threats-fe13ed-sm.webp"
+  ],
+  "src": "media/pdf-preview-cohesity-google-cloud-hidden-threats-fe13ed.webp",
+  "sm": "media/pdf-preview-cohesity-google-cloud-hidden-threats-fe13ed-sm.webp",
+  "w": 1400,
+  "h": 1750,
+  "boxv": 1,
+  "mtime": 1792717558
+ },
+ "default:PDF Preview how-does-social-support-affect-your-health.png": {
+  "kind": "image",
+  "files": [
+   "media/pdf-preview-how-does-social-support-affect-your--57ebfc.webp",
+   "media/pdf-preview-how-does-social-support-affect-your--57ebfc-sm.webp"
+  ],
+  "src": "media/pdf-preview-how-does-social-support-affect-your--57ebfc.webp",
+  "sm": "media/pdf-preview-how-does-social-support-affect-your--57ebfc-sm.webp",
+  "w": 1400,
+  "h": 1867,
+  "boxv": 1,
+  "mtime": 1792717559
+ },
+ "default:PDF Preview redzone-case-study-coil-specialist.png": {
+  "kind": "image",
+  "files": [
+   "media/pdf-preview-redzone-case-study-coil-specialist-5e4918.webp",
+   "media/pdf-preview-redzone-case-study-coil-specialist-5e4918-sm.webp"
+  ],
+  "src": "media/pdf-preview-redzone-case-study-coil-specialist-5e4918.webp",
+  "sm": "media/pdf-preview-redzone-case-study-coil-specialist-5e4918-sm.webp",
+  "w": 1400,
+  "h": 1120,
+  "boxv": 1,
+  "mtime": 1792717558
+ },
+ "default:PDF Preview redzone-case-study-companion-baking.png": {
+  "kind": "image",
+  "files": [
+   "media/pdf-preview-redzone-case-study-companion-baking-cbff14.webp",
+   "media/pdf-preview-redzone-case-study-companion-baking-cbff14-sm.webp"
+  ],
+  "src": "media/pdf-preview-redzone-case-study-companion-baking-cbff14.webp",
+  "sm": "media/pdf-preview-redzone-case-study-companion-baking-cbff14-sm.webp",
+  "w": 1400,
+  "h": 1400,
+  "boxv": 1,
+  "mtime": 1792717559
  },
  "default:P_065.jpg": {
   "kind": "image",
@@ -2428,18 +2437,6 @@
    0.0827,
    0.9285,
    0.8827
-  ],
-  "mtime": 1792566631
- },
- "default:ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/ezgif-com-crop-6c62e8.mp4",
-  "poster": "media/ezgif-com-crop-6c62e8-poster.webp",
-  "w": 1280,
-  "h": 936,
-  "files": [
-   "media/ezgif-com-crop-6c62e8.mp4",
-   "media/ezgif-com-crop-6c62e8-poster.webp"
   ],
   "mtime": 1792566631
  },

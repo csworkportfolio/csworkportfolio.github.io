@@ -280,15 +280,12 @@ button { font: inherit; color: inherit; }
   aspect-ratio: 643 / 361; overflow: hidden;
 }
 .slides { list-style: none; margin: 0; padding: 0; height: 100%; position: relative; }
-.slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s ease; }
-.slide.is-current { opacity: 1; }
+/* one sample fades out completely, then the next fades in (rather than the two blending) */
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; }
+.slide.is-current { opacity: 1; transition: opacity .5s ease .7s; }   /* out fully, a short beat on the empty box, then in */
 /* Like the Wix slideshow, each sample fills the box (mockups carry their own margins). */
 .slide img, .slide video { width: 100%; height: 100%; max-width: none; object-fit: cover; }
 @media (prefers-reduced-motion: reduce) { .slide { transition: none; } }
-.ss-prev { left: 16px; }
-.ss-next { right: 16px; }
-.ss-arrow { opacity: 0; transition: opacity .2s ease; }
-.slideshow:hover .ss-arrow, .slideshow:focus-within .ss-arrow { opacity: 1; }
 
 /* ---------- case study ---------- */
 
@@ -1175,9 +1172,10 @@ a.tl-label:hover strong { color: #ff9a66; }
   background: #161616 center / cover no-repeat;
 }
 .wk-box::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(0,0,0,.42); }
-.wk-box .slideshow { width: 100%; max-width: none; margin: 0; justify-self: center; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+.wk-box .slideshow { width: 100%; max-width: none; margin: 0; justify-self: center; }
 
-.work.is-live { height: calc(var(--n) * 80vh + 100vh); height: calc(var(--n) * 80svh + 100svh); }
+.work.is-live { height: calc(var(--units, 6) * 100vh + 100vh); height: calc(var(--units, 6) * 100svh + 100svh); }
+
 .work.is-live .wk-stage { position: sticky; top: var(--pills-h, 80px); height: calc(100vh - var(--pills-h, 80px)); height: calc(100svh - var(--pills-h, 80px)); overflow: hidden; }
 .work.is-live .wk-inner {
   position: relative; height: 100%; max-width: 1240px; margin: 0 auto; padding: 36px var(--gutter) 40px;
@@ -1229,3 +1227,335 @@ a.tl-label:hover strong { color: #ff9a66; }
 .js-reveal .work:not(.is-live) .wk-case[data-reveal].is-in > * { opacity: 1; transform: none; }
 .js-reveal .work:not(.is-live) .wk-case[data-reveal].is-in > .wk-box { transition-delay: .08s; }
 @media (prefers-reduced-motion: reduce) { .js-reveal .work .wk-case[data-reveal] > * { opacity: 1 !important; transform: none !important; transition: none; } }
+.cat-v2 .cat-text .tools + p, .cat-v2 .cat-text .kicker-italic + p { margin-top: 18px; }
+.cat-v2 .cat-text p:not(.kicker-italic):not(.tools) { max-width: 68ch; }
+
+/* ---------- category strips held in 3D (desktop): each tile leans toward the pointer on a soft shadow
+   (main.js); pieces with clear backgrounds get a shadow that follows the artwork, not a box ---------- */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (min-width: 721px) {
+  .cat-v2 .strip-viewport { padding: 36px 0 48px; margin: -36px 0 -48px; }
+  .cat-v2 .strip .tile {
+    transform: perspective(1000px) translate(var(--tx, 0px), var(--ty, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(var(--rz, 0px));
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
+    box-shadow: 0 calc(14px + var(--lift, 0) * 22px) calc(30px + var(--lift, 0) * 26px) calc(-20px - var(--lift, 0) * 4px) rgba(0,0,0, calc(.22 + var(--lift, 0) * .16));
+  }
+  .cat-v2 .strip .tile-wrap[style*="--cl"] .tile { box-shadow: none; overflow: visible; }
+  .cat-v2 .strip .tile-wrap[style*="--cl"] .tile-media { filter: drop-shadow(0 calc(10px + var(--lift, 0) * 14px) calc(12px + var(--lift, 0) * 10px) rgba(0,0,0, calc(.18 + var(--lift, 0) * .14))); }
+}
+/* long-form pieces as rounded paper notes on the light band */
+.strip-notes .tile { border-radius: 16px; background: #fff; }
+.strip-notes .tile-media { border-radius: inherit; }
+
+/* ---------- locked ghostwriting: liquid-glass bubbles and a four-dot passcode ---------- */
+.gw-wrap { margin-top: 8px; padding: 40px var(--gutter) 48px; background: var(--tabband); }
+.gw { text-align: center; }
+.gw-bubbles {
+  list-style: none; margin: 0 auto 32px; padding: 6px 0 22px; display: flex; justify-content: center; gap: var(--gg, 20px);
+  /* the same height rule as the posts' strip: a pane shrinks with the screen rather than being cropped */
+  --fit: min(var(--gh, 470px), calc(min(86vw, 1100px) / var(--rmax, .6)));
+}
+/* the panes wear the site's liquid glass: the tab bar's frost, a bright rim and hairline edge, and the header
+   line's sheen drifting across with its slow glow (offset per pane so they never move in step) */
+.gw-bubble {
+  position: relative; overflow: hidden; isolation: isolate;
+  flex: none; height: var(--fit); width: calc(var(--fit) * var(--r, .5)); border-radius: 24px;
+  background: color-mix(in srgb, #ffffff 34%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.95), 0 0 0 .5px rgba(0,0,0,.14), 0 34px 60px -32px rgba(0,0,0,.38), 0 2px 6px rgba(0,0,0,.05);
+  animation: gw-float 6s ease-in-out infinite, gw-glow 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -1.2s), calc(var(--i) * -1s);
+}
+.gw-bubble::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.95) 50%, rgba(255,255,255,0) 70%) 0 0 / 260% 100%;
+  animation: gw-sheen 5s ease-in-out infinite; animation-delay: calc(var(--i) * -1s);
+}
+.gw-bubble::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,1), inset 0 0 0 1px rgba(255,255,255,.65), inset 0 -40px 60px -20px rgba(0,0,0,.07), inset 0 40px 50px -30px rgba(255,255,255,.7);
+}
+@keyframes gw-sheen { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0% 0; } }
+@keyframes gw-glow {
+  0%, 100% { box-shadow: inset 0 .5px 0 rgba(255,255,255,.95), 0 0 0 .5px rgba(0,0,0,.14), 0 34px 60px -32px rgba(0,0,0,.38), 0 0 0 rgba(255,255,255,0); }
+  50% { box-shadow: inset 0 .5px 0 rgba(255,255,255,.95), 0 0 0 .5px rgba(0,0,0,.10), 0 34px 60px -32px rgba(0,0,0,.38), 0 0 28px rgba(255,255,255,1); }
+}
+@keyframes gw-float { 50% { transform: translateY(-6px); } }
+.gw.is-open .gw-bubble { animation: gw-pop .5s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: calc(var(--i) * .11s); }
+.gw.is-open .gw-bubble::before { animation: none; }
+@keyframes gw-pop {
+  0% { transform: scale(1); opacity: 1; }
+  35% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1.12); opacity: 0; filter: blur(8px); }
+}
+.gw.is-open .gw-form, .gw.is-open .lock-note { opacity: 0; transition: opacity .3s ease; }
+.gw-pin { position: relative; display: inline-flex; padding: 12px 18px; cursor: text; }
+.gw-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0; padding: 0; font-size: 16px; cursor: text; }
+.gw-dots { display: flex; gap: 16px; pointer-events: none; }
+.gw-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: color-mix(in srgb, #ffffff 50%, transparent);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.9), inset 0 0 0 1px rgba(0,0,0,.14), 0 4px 10px -4px rgba(0,0,0,.25);
+  transition: background-color .18s ease, transform .18s cubic-bezier(.2,.7,.2,1);
+}
+.gw-dot.is-on { background: var(--ink); transform: scale(1.06); }
+.gw-pin:focus-within .gw-dots { outline: 2px solid #007aff; outline-offset: 8px; border-radius: 999px; }
+.gw.is-wrong .gw-dots { animation: gw-shake .42s cubic-bezier(.36,.07,.19,.97); }
+@keyframes gw-shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.gw .lock-error { margin-top: 10px; }
+.gw[hidden] { display: none; }
+.lock-content.gw-reveal .tile-wrap { animation: gw-rise .6s cubic-bezier(.2,.7,.2,1) both; }
+.lock-content.gw-reveal .tile-wrap:nth-child(2) { animation-delay: .08s; }
+.lock-content.gw-reveal .tile-wrap:nth-child(3) { animation-delay: .16s; }
+.lock-content.gw-reveal .tile-wrap:nth-child(4) { animation-delay: .24s; }
+.lock-content.gw-reveal .tile-wrap:nth-child(n+5) { animation-delay: .32s; }
+@keyframes gw-rise { from { opacity: 0; transform: translateY(18px) scale(.94); } }
+@media (prefers-reduced-motion: reduce) { .gw-bubble, .gw-bubble::before, .gw.is-wrong .gw-dots, .lock-content.gw-reveal .tile-wrap { animation: none; } }
+@media (max-width: 720px) { .gw-bubbles { justify-content: flex-start; overflow: hidden; margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); padding-left: var(--gutter); } }
+.gw-bubbles { justify-content: safe center; overflow: hidden; }
+.lock .gw-bubbles { width: 100vw; margin-left: calc(50% - 50vw); padding-left: var(--gutter); padding-right: var(--gutter); }
+.lock .gw { width: 100vw; margin-left: calc(50% - 50vw); padding: 40px 0 48px; margin-top: 24px; background: var(--tabband); }
+.lock .gw .gw-bubbles { width: auto; margin-left: 0; }
+.lock .gw { overflow: hidden; } .lock .gw .gw-bubbles { margin-right: 0; }
+/* a small liquid-glass expand mark in each note's top corner, so it reads as something that opens */
+.strip-notes .tile::after {
+  content: ""; position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7'/%3E%3C/svg%3E") center / 15px no-repeat,
+              color-mix(in srgb, #ffffff 62%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.9), 0 0 0 .5px var(--glassline), 0 6px 16px rgba(0,0,0,.18);
+  transition: transform .25s var(--ease);
+}
+.strip-notes .tile:hover::after { transform: scale(1.08); }
+
+/* wider than a phone, the panes run edge to edge: their height is whatever lets the five fill the band's
+   width (capped), and the posts they open take the same height so each lands where its pane was */
+@media (min-width: 721px) {
+  .gw-bubbles { --fit: min(var(--gmax, 640px), calc((100vw - 2 * var(--gutter) - var(--gn, 4) * var(--gg, 20px)) / var(--rsum, 2.4))); justify-content: center; }
+  .gw-wrap .lock-content .strip, .lock-content.gw-full .strip { --tile-h: min(var(--gmax, 640px), calc((100vw - 2 * var(--gutter) - var(--gn, 4) * var(--gg, 20px)) / var(--rsum, 2.4))) !important; }
+}
+
+/* ---------- the Read More shine on the other buttons and the notes' expand mark: the same turning colours,
+   seen through the glass, lit while on screen (main.js) or under the pointer; the arrows stay plain ---------- */
+.btn:not(.shine .btn) { position: relative; }
+.btn:not(.shine .btn) { isolation: isolate; }
+.btn:not(.shine .btn)::before, .strip-notes .tile::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: conic-gradient(from var(--shine), var(--s1, #0a84ff), var(--s2, #bf5af2), var(--s3, #ff375f), var(--s4, #ff9f0a), var(--s1, #0a84ff));
+  opacity: 0; transition: opacity .9s ease;
+  animation: shine-spin 3.5s linear infinite; animation-play-state: paused;
+}
+/* inside a button the colours sit under its frost, so they get the same softening the Read More glass gives
+   them: blurred, washed with the glass's white, and kept inside the button's rounded edge */
+.btn:not(.shine .btn) { overflow: hidden; }
+.btn:not(.shine .btn)::before {
+  inset: -10px; border-radius: 0;
+  background: linear-gradient(color-mix(in srgb, #ffffff 46%, transparent), color-mix(in srgb, #ffffff 46%, transparent)),
+              conic-gradient(from var(--shine), var(--s1, #0a84ff), var(--s2, #bf5af2), var(--s3, #ff375f), var(--s4, #ff9f0a), var(--s1, #0a84ff));
+  filter: blur(9px) saturate(160%);
+}
+.btn.is-lit:not(.shine .btn)::before, .btn:not(.shine .btn):hover::before, .strip-notes .tile.is-lit::before { opacity: 1; animation-play-state: running; }
+/* the expand mark's shine sits under its glass circle in the note's corner */
+.strip-notes .tile::before { inset: auto; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; z-index: 1; }
+.strip-notes .tile::after { z-index: 2; }
+@media (prefers-reduced-motion: reduce) { .btn::before, .strip-notes .tile::before { animation: none; } }
+@media (min-width: 721px) { .gw-bubbles { overflow: visible; padding-bottom: 40px; margin-bottom: 14px; } }
+
+/* the passcode reads as a field: a label, and a blinking cursor in the next empty dot */
+.gw-form { flex-direction: column; align-items: center; gap: 2px; }
+.gw-label { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .01em; }
+.gw-dot { position: relative; }
+.gw-dot.is-next::after {
+  content: ""; position: absolute; left: calc(50% - 1px); top: 4px; width: 2px; height: 12px; border-radius: 1px;
+  background: #007aff; animation: gw-caret 1.1s steps(1, end) infinite;
+}
+@keyframes gw-caret { 50% { opacity: 0; } }
+.gw-pin:focus-within .gw-dot.is-next { box-shadow: inset 0 1px 1px rgba(255,255,255,.9), inset 0 0 0 1.5px #007aff, 0 4px 10px -4px rgba(0,0,0,.25); }
+.gw.is-open .gw-dot::after { display: none; }
+@media (prefers-reduced-motion: reduce) { .gw-dot.is-next::after { animation: none; } }
+
+/* the panes get the same turning colours as the Read More and expand buttons, seen through white frost:
+   a blurred conic of the shine's colours, turned by rotating the layer (cheap) rather than redrawing it,
+   under a frost that carries the drifting sheen and the bright rim */
+.gw-bubble { background: color-mix(in srgb, #ffffff 30%, transparent); }
+.gw-bubble::before { display: none; }
+.gw-shine {
+  position: absolute; left: 50%; top: 50%; width: 220%; aspect-ratio: 1; translate: -50% -50%;
+  background: conic-gradient(var(--s1, #0a84ff), var(--s2, #bf5af2), var(--s3, #ff375f), var(--s4, #ff9f0a), var(--s1, #0a84ff));
+  filter: blur(46px); opacity: .55; will-change: transform; pointer-events: none;
+  animation: gw-turn 14s linear infinite; animation-delay: calc(var(--i) * -2.8s);
+}
+@keyframes gw-turn { to { rotate: 360deg; } }
+.gw-bubble::after {
+  z-index: 1;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.8) 50%, rgba(255,255,255,0) 70%) 0 0 / 260% 100%,
+    color-mix(in srgb, #ffffff 58%, transparent);
+  animation: gw-sheen 5s ease-in-out infinite; animation-delay: calc(var(--i) * -1s);
+}
+@media (prefers-reduced-motion: reduce) { .gw-shine, .gw-bubble::after { animation: none; } }
+
+/* the posts keep the panes' spacing too (the locked markup carries its own older gap) */
+.gw-wrap .lock-content .strip, .lock-content.gw-full .strip { --gap: var(--gg, 40px) !important; }
+
+
+/* category strips all sit on the light band: close under their heading, arrows centred on the pictures */
+.cat-v2 .strip-ground { margin-top: 8px; }
+.strip-ground:has(.tile-cap) .strip-arrow { top: calc(40px + var(--tile-h, var(--strip-h)) / 2 - 25px); }
+
+/* ---------- home slideshow controls: a glass pill of dots (the current one a filling bar) and pause / play ---------- */
+.ss-ctl { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; }
+.wk-box .ss-ctl { position: absolute; left: 0; right: 0; bottom: 16px; margin: 0; z-index: 2; }
+.ss-dots, .ss-toggle {
+  background: color-mix(in srgb, #ffffff 55%, transparent);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.8), 0 0 0 .5px rgba(0,0,0,.06), 0 6px 18px rgba(0,0,0,.18);
+}
+.ss-dots { display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 16px; border-radius: 999px; }
+.ss-dots button {
+  position: relative; overflow: hidden; width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(0,0,0,.42); transition: width .45s cubic-bezier(.2,.7,.2,1), background-color .3s ease;
+}
+.ss-dots button:hover { background: rgba(0,0,0,.6); }
+.ss-dots button.is-on { width: 34px; background: rgba(0,0,0,.28); }
+.ss-dots button::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: rgba(0,0,0,.85); transform-origin: 0 50%; transform: scaleX(0); }
+.ss-dots button.is-on::after { transform: scaleX(1); }
+.ss-ctl.is-timing .ss-dots button.is-on::after { animation: ss-fill var(--ss-ms, 2500ms) linear both; }
+.ss-ctl.is-held .ss-dots button.is-on::after { animation-play-state: paused; }
+@keyframes ss-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.ss-dots button:focus-visible, .ss-toggle:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
+.ss-toggle { position: relative; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; }
+.ss-toggle::before, .ss-toggle::after { content: ""; position: absolute; top: 12px; width: 3.5px; height: 12px; border-radius: 1.5px; background: #1d1d1f; }
+.ss-toggle::before { left: 13px; } .ss-toggle::after { left: 19.5px; }
+.ss-toggle.is-paused::after { display: none; }
+.ss-toggle.is-paused::before { left: 14px; top: 11px; width: 0; height: 0; border-radius: 0; background: none; border-style: solid; border-width: 7px 0 7px 11px; border-color: transparent transparent transparent #1d1d1f; }
+@media (max-width: 720px) { .ss-dots { gap: 8px; padding: 0 12px; height: 32px; } .ss-toggle { width: 32px; height: 32px; } .ss-toggle::before, .ss-toggle::after { top: 10px; } .ss-toggle::before { left: 11px; } .ss-toggle::after { left: 17.5px; } .ss-toggle.is-paused::before { left: 12px; top: 9px; } }
+@media (prefers-reduced-motion: reduce) { .ss-dots button { transition: none; } }
+@media (max-width: 720px) { .wk-box { padding-bottom: 60px; } .wk-box .ss-ctl { bottom: 14px; } }
+
+
+/* the home quick view: samples open from the case boxes into the pop-up, with the case's summary beside them */
+.wk-box .slideshow { cursor: zoom-in; }
+.wk-box .slideshow:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+.lb-caption .lb-kicker { color: #aaa; font-size: 14px; line-height: 1.4; margin-bottom: 8px; }
+.lightbox.is-quick .lb-caption h2 { font-size: 24px; line-height: 1.2; letter-spacing: -.015em; margin-bottom: 16px; }
+.lb-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; margin: 0 0 16px; }
+.lb-figs div { display: flex; flex-direction: column-reverse; gap: 4px; }
+.lb-figs dd { margin: 0; font-family: var(--round); font-weight: 700; font-size: 30px; line-height: 1; color: #fff; }
+.lb-figs dt { font-size: 13px; line-height: 1.35; color: #aaa; }
+.lb-caption .lb-sample { margin-top: 14px; font-size: 13px; color: #9a9a9a; }
+
+/* the pop-up on dark liquid glass (the home quick view and the category pages): the page stays in view behind it,
+   blurred and dimmed, and the piece and its words sit on one smoky pane with a bright rim */
+.lightbox.is-glass { background: transparent; color: #fff; --lb-room: calc(100vw - 240px - 360px - 56px - 112px); }
+.lightbox.is-glass::backdrop {
+  background: color-mix(in srgb, #000 38%, transparent);
+  -webkit-backdrop-filter: blur(28px) saturate(150%); backdrop-filter: blur(28px) saturate(150%);
+}
+.lightbox.is-glass .lb-inner {
+  height: calc(100% - 80px); margin: 40px 120px; padding: 48px 56px 40px; border-radius: 32px;
+  background: color-mix(in srgb, #1c1c1e 58%, transparent);
+  -webkit-backdrop-filter: blur(30px) saturate(170%); backdrop-filter: blur(30px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.10), 0 0 0 .5px rgba(0,0,0,.4), 0 40px 90px -30px rgba(0,0,0,.6);
+}
+/* tablets and open foldables: the piece on top, the words under it, in a pane that scrolls if it must */
+@media (min-width: 901px) and (max-width: 1240px) and (orientation: portrait) {
+  .lightbox.is-glass { --lb-room: 100%; }
+  .lightbox.is-glass .lb-inner {
+    margin: 32px 88px; height: calc(100% - 64px); overflow-y: auto; overscroll-behavior: contain;
+    display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 32px; padding: 48px 48px 44px;
+  }
+  .lightbox.is-glass .lb-media { height: auto; width: 100%; flex: none; }
+  .lightbox.is-glass .lb-media img, .lightbox.is-glass .lb-media video { max-height: 58vh; width: auto; max-width: 100%; }
+  .lightbox.is-glass .lb-caption { align-self: center; width: 100%; max-width: 620px; max-height: none; overflow: visible; padding-right: 0; }
+}
+@media (max-width: 900px) {
+  .lightbox.is-glass { background: #121214; --lb-room: 100%; }
+  .lightbox.is-glass .lb-inner { height: auto; margin: 0; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; padding-left: var(--gutter); padding-right: var(--gutter); }
+  html.lb-page .lightbox.is-glass .lb-inner { padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
+}
+
+/* category strips: Apple's paddle arrows, a pair under the strip on the right, clear of the pictures; shown on
+   phones too, faded at an end the strip can't go past */
+.cat-v2 .strip-ground { padding-bottom: 84px; }
+.cat-v2 .strip .strip-arrow {
+  display: grid; top: auto !important; bottom: 26px; left: auto; width: 36px; height: 36px;
+  background: #e8e8ed; color: #1d1d1f; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+  transition: background-color .2s ease, opacity .2s ease;
+}
+.cat-v2 .strip .strip-arrow:hover { background: #dcdce1; }
+.cat-v2 .strip .strip-arrow svg { width: 17px; height: 17px; stroke-width: 2.6; }
+.cat-v2 .strip .strip-next { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); }
+.cat-v2 .strip .strip-prev { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 48px); }
+.cat-v2 .strip .strip-arrow[hidden] { display: grid; opacity: .4; pointer-events: none; }
+.cat-v2 .strip.is-static .strip-arrow { display: none; }
+@media (max-width: 720px) { .cat-v2 .strip .strip-next { right: var(--gutter); } .cat-v2 .strip .strip-prev { right: calc(var(--gutter) + 48px); } }
+/* the category pop-up is a full viewer, so its glass fills the whole screen; only the home quick view floats as
+   a pane */
+@media (min-width: 901px) {
+  .lightbox.is-glass:not(.is-quick) { --lb-room: calc(100vw - 176px - 360px - 56px); }
+  .lightbox.is-glass:not(.is-quick) .lb-inner {
+    margin: 0; height: 100%; border-radius: 0; box-shadow: none; padding: 56px 88px 40px;
+    background: color-mix(in srgb, #1c1c1e 62%, transparent);
+  }
+}
+@media (min-width: 901px) and (max-width: 1240px) and (orientation: portrait) {
+  /* stacked, so the visual takes the full width rather than leaving room for a caption column beside it */
+  .lightbox.is-glass:not(.is-quick) { --lb-room: 100%; }
+  .lightbox.is-glass:not(.is-quick) .lb-inner { margin: 0; height: 100%; padding: 80px 96px 56px; }
+  .lightbox.is-glass:not(.is-quick) .lb-media img, .lightbox.is-glass:not(.is-quick) .lb-media video { max-height: 62vh; }
+  .lightbox.is-glass:not(.is-quick) .lb-pdf { width: 100%; height: 60vh; }
+}
+
+/* a piece in a strip shows the zoom cursor (it opens larger); videos keep the pointing hand (they play) */
+.strip .tile { cursor: zoom-in; }
+.strip .tile-video, .strip .tile:has(.play) { cursor: pointer; }
+
+/* the expand button sits with each strip's arrows (and in the home slideshow controls) rather than on every piece */
+.cat-v2 .strip .strip-open { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
+.strip-open svg { width: 15px !important; height: 15px !important; }
+@media (max-width: 720px) { .cat-v2 .strip .strip-open { right: calc(var(--gutter) + 96px); } }
+.strip:not(.cat-v2 .strip) .strip-open { display: none; }
+.ss-open { color: #1d1d1f; }
+.ss-open svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.ss-open::before, .ss-open::after { content: none !important; }
+
+/* ---------- the unlocked ghostwriting posts as a reading scene (desktop; main.js sets .is-live) ---------- */
+.ex-scene { display: none; }
+.lock-content.ex-on .strip { display: none; }
+.ex-scene.is-live { display: block; height: calc(var(--units, 8) * 100vh + 100vh); height: calc(var(--units, 8) * 100svh + 100svh); margin: 0 calc(-1 * var(--gutter)); }
+.ex-stage { position: sticky; top: var(--pills-h, 60px); height: calc(100vh - var(--pills-h, 60px)); height: calc(100svh - var(--pills-h, 60px)); overflow: hidden; }
+.ex-inner { position: relative; height: 100%; max-width: 1180px; margin: 0 auto; }
+.ex-case {
+  position: absolute; inset: 40px var(--gutter) 56px; z-index: var(--k);
+  display: grid; grid-template-columns: minmax(340px, 1fr) minmax(0, 1.3fr); grid-template-rows: minmax(0, 1fr); column-gap: 64px; align-items: center;
+}
+.ex-text {
+  max-width: 480px; visibility: hidden;
+  opacity: calc(var(--te, 0) * (1 - var(--tl, 0)));
+  transform: translateY(calc((1 - var(--te, 0)) * 24px - var(--tl, 0) * 24px));
+}
+.ex-case.is-shown .ex-text { visibility: visible; }
+.ex-text h3 { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; }
+.ex-text p { font-size: 16px; line-height: 1.6; color: #3a3a3c; }
+.ex-text p + p { margin-top: 10px; }
+.ex-box {
+  margin: 0; height: 100%; min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; will-change: transform;
+  transform: translateY(calc((1 - var(--e, 0)) * 108%)) scale(calc(1 - var(--l, 0) * .06));
+  opacity: calc(1 - var(--l, 0));   /* the post before fades away as the next arrives, so posts of different widths never show around each other */
+}
+.ex-box img { display: block; max-height: 100%; height: auto; width: auto; max-width: 100%; object-fit: contain; min-width: 0; border-radius: 14px; cursor: zoom-in; box-shadow: 0 34px 70px -30px rgba(0,0,0,.45); }
+.ex-count { position: absolute; left: var(--gutter); bottom: 20px; z-index: 50; font-family: var(--round); font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+/* the unlocked section: the locked file's old caption line and closing paragraph stay out of view (the context now
+   sits above the panes) */
+.gw-wrap .lock-content .gal-label, .gw-wrap .lock-content .cat-text { display: none; }
+.cat-locked p:not(.kicker-italic) { margin-top: 14px; font-size: 17px; line-height: 1.55; max-width: 68ch; }
+
+/* in the pop-up, the zoom-out cursor shows where a click closes (desktop): an image and the space around it */
+@media (hover: hover) and (pointer: fine) {
+  .lightbox:not(.is-quick) .lb-inner, .lightbox:not(.is-quick) .lb-media, .lightbox:not(.is-quick) .lb-media > img, .lightbox.is-quick { cursor: zoom-out; }
+  .lightbox.is-quick .lb-inner, .lightbox .lb-caption, .lightbox .lb-pdf, .lightbox .lb-media video, .lightbox .lb-media iframe { cursor: auto; }
+  .lightbox .lb-pdf-page { cursor: zoom-in; }
+  .lightbox .lb-pdf-page.is-zoomed { cursor: zoom-out; }
+  .lightbox .lb-btn, .lightbox .lb-caption a { cursor: pointer; }
+}

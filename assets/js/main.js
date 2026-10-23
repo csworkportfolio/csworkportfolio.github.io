@@ -166,7 +166,9 @@
 
   // ---------- Read More shine: lights up as each case row scrolls into view ----------
 
-  const shines = document.querySelectorAll(".shine");
+  // the other buttons (like Open PDF) and the notes' expand mark wear the same shine through their glass,
+  // lit while on screen; the arrows stay plain
+  const shines = document.querySelectorAll(".shine, .btn:not(.shine .btn), .strip-notes .tile");
   if (shines.length) {
     if ("IntersectionObserver" in window) {
       const shineObserver = new IntersectionObserver((entries) => {
@@ -300,7 +302,9 @@
       hold("arrow", 4000);
       const items = [...track.children];
       const x = viewport.scrollLeft;
-      const lefts = items.map((li) => li.offsetLeft - track.offsetLeft);
+      // measured from the track's left padding, so a step lands each piece on the text column's edge
+      const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      const lefts = items.map((li) => li.offsetLeft - track.offsetLeft - pad);
       let to;
       if (dir > 0) to = lefts.find((l) => l > x + 2);
       else to = [...lefts].reverse().find((l) => l < x - 2);
@@ -312,6 +316,18 @@
       glide(Math.max(0, Math.min(to, maxScroll())));
     }
     prev.addEventListener("click", () => step(-1));
+    // the expand button opens the piece most in view, as a tap on it would
+    const openBtn = el.querySelector(".strip-open");
+    if (openBtn) openBtn.addEventListener("click", () => {
+      const v = viewport.getBoundingClientRect();
+      let best = null, most = 0;
+      track.querySelectorAll(".tile-wrap:not([data-clone]) .tile, .tile-wrap .tile").forEach((t) => {
+        const r = t.getBoundingClientRect();
+        const seen = Math.min(r.right, v.right) - Math.max(r.left, v.left);
+        if (seen > most) { most = seen; best = t; }
+      });
+      if (best) best.click();
+    });
     next.addEventListener("click", () => step(1));
 
     if ("IntersectionObserver" in window) {
@@ -583,7 +599,23 @@
 
     const hasCaption = item.title || item.desc || item.link;
     dialog.classList.toggle("no-caption", !hasCaption);
-    if (hasCaption) {
+    dialog.classList.toggle("is-quick", !!item.quick);
+    dialog.classList.add("is-glass");   // every pop-up sits on the dark glass pane
+    if (item.quick) {
+      // a home case's quick view: what the case is, its figures and opening lines, the sample on screen, and
+      // the way into the full case study
+      const q = item.quick;
+      lbCaption.append(el("p", { class: "lb-kicker" }, q.kicker));
+      lbCaption.append(el("h2", {}, q.title));
+      if (q.figures && q.figures.length) {
+        const dl = el("dl", { class: "lb-figs" });
+        q.figures.forEach(([v, d]) => { const box = el("div", {}); box.append(el("dt", {}, d), el("dd", {}, v)); dl.append(box); });
+        lbCaption.append(dl);
+      }
+      if (q.lede) lbCaption.append(el("p", {}, q.lede));
+      if (item.title) lbCaption.append(el("p", { class: "lb-sample" }, `On screen: ${item.title}`));
+      lbCaption.append(el("a", { class: "btn btn-rust is-lit", href: item.link.href, style: q.shine || null }, item.link.label));   // the colours of its Read More
+    } else if (hasCaption) {
       if (item.title) {
         lbCaption.append(el("h2", {}, item.title));
         lbCaption.append(el("p", { class: "lb-by" }, "by Christian Sanchez"));
@@ -599,7 +631,7 @@
         // the PDF already reads in the lightbox, so its button is for keeping a copy
         const pdf = isPdf(item);
         lbCaption.append(el("a", {
-          class: "btn btn-rust", href: item.link.href, download: pdf ? "" : null,
+          class: "btn btn-rust is-lit", href: item.link.href, download: pdf ? "" : null,
           target: page || pdf ? null : "_blank", rel: page || pdf ? null : "noopener",
         }, pdf ? "Download (PDF)" : item.link.label));
       }
@@ -687,8 +719,16 @@
     dialog.addEventListener("close", closed);
     // some browsers skip the close event; watching the open attribute catches every way the box shuts
     new MutationObserver(closed).observe(dialog, { attributes: true, attributeFilter: ["open"] });
+    // Clicking away closes: on a desktop an image closes on any click on it or the space around it (zoom-out
+    // cursor); a PDF or video only on the empty space, since clicks on it scroll or play; the caption, buttons
+    // and arrows never do. The home quick view is a card, so only clicks outside the card close it.
     dialog.addEventListener("click", (e) => {
-      if (e.target === dialog || e.target.classList.contains("lb-inner") || e.target === lbMedia) closeBox();
+      const t = e.target;
+      const quick = dialog.classList.contains("is-quick") && !asPage;
+      if (t === dialog) return closeBox();
+      if (quick) return;
+      if (t.classList.contains("lb-inner") || t === lbMedia) return closeBox();
+      if (!asPage && t.tagName === "IMG" && t.parentElement === lbMedia) closeBox();
     });
     dialog.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") go(1);
@@ -709,7 +749,7 @@
 
   // ---------- home-page slideshows ----------
 
-  const SLIDE_MS = 3500; // Wix: autoplay every 3.5s, 0.5s cross-fade (in CSS)
+  const SLIDE_MS = 2500; // every 2.5s: the sample fades out, then the next fades in (CSS)
 
   function initSlideshow(root, order) {
     const track = root.querySelector(".slides");
@@ -731,18 +771,68 @@
       });
     }
 
+    // the controls under the samples, as on Apple's carousels: a pill of dots where the current one stretches
+    // into a bar that fills while its sample is up, and a pause / play button
+    let ctl = null, dots = [], toggle = null;
+    if (slides.length > 1) {
+      ctl = document.createElement("div");
+      ctl.className = "ss-ctl";
+      ctl.style.setProperty("--ss-ms", `${SLIDE_MS}ms`);
+      const pill = document.createElement("div");
+      pill.className = "ss-dots";
+      dots = slides.map((_, i) => {
+        const d = document.createElement("button");
+        d.type = "button";
+        d.setAttribute("aria-label", `Show sample ${i + 1} of ${slides.length}`);
+        d.addEventListener("click", () => { show(i); schedule(); });
+        pill.appendChild(d);
+        return d;
+      });
+      ctl.appendChild(pill);
+      if (!reduceMotion) {
+        toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "ss-toggle";
+        toggle.setAttribute("aria-label", "Pause slideshow");
+        toggle.addEventListener("click", () => {
+          const paused = pause.has("user");
+          if (paused) release("user"); else hold("user");
+          toggle.classList.toggle("is-paused", !paused);
+          toggle.setAttribute("aria-label", paused ? "Pause slideshow" : "Play slideshow");
+        });
+        ctl.appendChild(toggle);
+      }
+      if (root.closest(".wk-box")) {
+        const ex = document.createElement("button");
+        ex.type = "button";
+        ex.className = "ss-toggle ss-open";
+        ex.setAttribute("aria-label", "Open quick view");
+        ex.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';
+        ex.addEventListener("click", () => root.click());
+        ctl.appendChild(ex);
+      }
+      root.after(ctl);
+    }
+
     function show(i) {
       index = (i + slides.length) % slides.length;
       slides.forEach((li, k) => {
         li.classList.toggle("is-current", k === index);
         li.toggleAttribute("aria-hidden", k !== index);
       });
+      dots.forEach((d, k) => { d.classList.toggle("is-on", k === index); d.setAttribute("aria-current", k === index ? "true" : "false"); });
       syncMedia();
     }
 
     function schedule() {
       clearTimeout(timer);
-      if (reduceMotion || pause.size || slides.length < 2) return;
+      const running = !(reduceMotion || pause.size || slides.length < 2);
+      if (ctl) {
+        // the bar refills from empty each time a sample's time starts; it holds still while paused
+        ctl.classList.toggle("is-held", !running);
+        if (running) { ctl.classList.remove("is-timing"); void ctl.offsetWidth; ctl.classList.add("is-timing"); }
+      }
+      if (!running) return;
       timer = setTimeout(() => { show(index + 1); schedule(); }, SLIDE_MS);
     }
     const hold = (r) => { pause.add(r); schedule(); };
@@ -755,9 +845,6 @@
     root.addEventListener("pointerleave", () => release("hover"));
     root.addEventListener("focusin", () => hold("focus"));
     root.addEventListener("focusout", () => release("focus"));
-
-    root.querySelector(".ss-prev")?.addEventListener("click", () => { hold("user"); show(index - 1); });
-    root.querySelector(".ss-next")?.addEventListener("click", () => { hold("user"); show(index + 1); });
 
     let sx = null;
     root.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; hold("touch"); }, { passive: true });
@@ -858,47 +945,231 @@
   document.querySelectorAll("[data-gallery]").forEach(setupGallery);
   startTicking();
 
+
+  // ---------- home case boxes: a click on the samples opens that case's quick view, at the sample on screen ----------
+  document.querySelectorAll(".wk-case").forEach((c) => {
+    const data = c.querySelector(".wk-quick");
+    const show = c.querySelector(".slideshow");
+    if (!data || !show || !dialog) return;
+    const items = JSON.parse(data.textContent);
+    const title = c.querySelector("h2").textContent;
+    show.setAttribute("role", "button");
+    show.tabIndex = 0;
+    show.setAttribute("aria-label", `Quick view: ${title}`);
+    const go = (byPointer) => {
+      const at = [...show.querySelectorAll(".slide")].findIndex((li) => li.classList.contains("is-current"));
+      open(items, Math.max(0, at), byPointer);
+    };
+    show.addEventListener("click", (e) => go(e.detail > 0));
+    show.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(false); } });
+  });
+
+  // ---------- category strips held in 3D: on a desktop each tile leans toward the pointer and lifts on its
+  // shadow, the nearest most (the long-form notes also drift a little toward it). Phones stay flat. ----------
+  function tiltStrip(strip) {
+    if (!canHover || reduceMotion || !strip.closest(".cat-v2")) return;
+    const notes = strip.classList.contains("strip-notes");
+    let px = 0, py = 0, inside = false, frame = 0;
+    const tiles = () => [...strip.querySelectorAll(".tile")];
+    const step = () => {
+      frame = 0;
+      if (!inside) return;
+      const vw = innerWidth;
+      tiles().forEach((t) => {
+        const r = t.getBoundingClientRect();
+        if (r.right < 0 || r.left > vw) return;
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const dx = Math.max(-1, Math.min(1, (px - cx) / Math.max(r.width, 300)));
+        const dy = Math.max(-1, Math.min(1, (py - cy) / Math.max(r.height, 200)));
+        const near = Math.exp(-Math.hypot(px - cx, py - cy) / 520);
+        t.style.setProperty("--ry", `${(dx * 9 * near).toFixed(2)}deg`);
+        t.style.setProperty("--rx", `${(-dy * 7 * near).toFixed(2)}deg`);
+        t.style.setProperty("--rz", `${(near * 22).toFixed(1)}px`);
+        t.style.setProperty("--lift", near.toFixed(3));
+        if (notes) {
+          t.style.setProperty("--tx", `${(dx * 8 * near).toFixed(1)}px`);
+          t.style.setProperty("--ty", `${(dy * 6 * near).toFixed(1)}px`);
+        }
+      });
+      frame = requestAnimationFrame(step);   // the strip keeps gliding under a still pointer
+    };
+    strip.addEventListener("pointermove", (e) => {
+      // phone widths stay flat even with a mouse (a narrow window): the pieces fill the screen there
+      if (e.pointerType !== "mouse" || innerWidth <= 720) return;
+      px = e.clientX; py = e.clientY; inside = true;
+      if (!frame) frame = requestAnimationFrame(step);
+    });
+    strip.addEventListener("pointerleave", () => {
+      inside = false;
+      tiles().forEach((t) => ["--rx", "--ry", "--rz", "--lift", "--tx", "--ty"].forEach((v) => t.style.removeProperty(v)));
+    });
+  }
+  document.querySelectorAll("[data-gallery]").forEach(tiltStrip);
+
   // ---------- password-locked pages (Ghostwriting) ----------
   // The gallery and text are stored encrypted (tools/lock_ghostwriting.py): PBKDF2-SHA256 turns the password
   // into an AES-GCM key, and only the right password decrypts them. Unlocked once, the page stays open for
   // the rest of the browser session.
 
-  const lock = document.querySelector("[data-lock]");
-  if (lock) {
-    const data = JSON.parse(lock.querySelector(".lock-data").textContent);
+  // ---------- the unlocked ghostwriting posts as a reading scene (desktop): the stage holds under the tab bar
+  // while each post takes its turn, large on the right with its words on the left, then the next slides up
+  // over it. Phones, short windows and reduced motion keep the strip. ----------
+  function readingScene(content) {
+    const data = content.querySelector(".gallery-data");
+    const strip = content.querySelector(".strip");
+    if (!data || !strip || content.querySelector(".ex-scene")) return;
+    const items = JSON.parse(data.textContent);
+    const n = items.length;
+    const HAND = 0.3, HOLD = 1.6;
+    const total = n * (HAND + HOLD) - HAND;
+    const scene = document.createElement("section");
+    scene.className = "ex-scene";
+    scene.setAttribute("aria-label", "Ghostwriting posts");
+    scene.style.setProperty("--units", total.toFixed(2));
+    const stage = document.createElement("div");
+    stage.className = "ex-stage";
+    const inner = document.createElement("div");
+    inner.className = "ex-inner";
+    const count = el("p", { class: "ex-count", "aria-hidden": "true" });
+    const cases = items.map((it, k) => {
+      const art = el("article", { class: "ex-case", style: `--k:${k}` });
+      const text = el("div", { class: "ex-text" });
+      text.append(el("h3", {}, it.title || ""));
+      (it.desc || "").split("\n").filter((t) => t.trim()).forEach((t) => text.append(el("p", {}, t)));
+      const fig = el("figure", { class: "ex-box" });
+      const img = el("img", { src: it.full || it.thumb, alt: it.title || "", width: it.w, height: it.h, loading: "lazy", decoding: "async" });
+      img.addEventListener("click", () => open(items, k, true));
+      fig.append(img);
+      art.append(text, fig);
+      inner.append(art);
+      return art;
+    });
+    inner.append(count);
+    stage.append(inner);
+    scene.append(stage);
+    strip.after(scene);
+    const pillsH = () => { const p = document.querySelector(".pills"); return p ? p.offsetHeight : 0; };
+    const clamp = (v) => Math.min(1, Math.max(0, v));
+    const live = () => {
+      const pin = pillsH();
+      document.documentElement.style.setProperty("--pills-h", `${pin}px`);
+      const on = !reduceMotion && innerWidth > 900 && viewH() - pin >= 620;
+      scene.classList.toggle("is-live", on);
+      content.classList.toggle("ex-on", on);
+    };
+    const move = () => {
+      if (!scene.classList.contains("is-live")) return;
+      const pin = pillsH();
+      const r = scene.getBoundingClientRect();
+      const run = r.height - (viewH() - pin);
+      const u = run > 0 ? Math.max(0, (pin - r.top) / run) * total : 0;
+      let at = 0;
+      cases.forEach((c, k) => {
+        const st = k * (HAND + HOLD);
+        if (u >= st - HAND / 2) at = k;
+        const e = k === 0 ? 1 : clamp((u - (st - HAND)) / HAND);
+        const l = k === n - 1 ? 0 : clamp((u - (st + HOLD)) / HAND);
+        c.style.setProperty("--e", e.toFixed(3));
+        c.style.setProperty("--l", l.toFixed(3));
+        c.style.setProperty("--te", (k === 0 ? 1 : clamp(e * 2 - 1)).toFixed(3));
+        c.style.setProperty("--tl", clamp(l * 2).toFixed(3));
+        c.classList.toggle("is-shown", e > 0 && l < 1);
+      });
+      count.textContent = `${at + 1} / ${n}`;
+    };
+    live(); move();
+    onWidthResize(() => { live(); move(); });
+    window.addEventListener("scroll", () => requestAnimationFrame(move), { passive: true });
+  }
+
+  // The passcode is four glass dots that fill as the digits go in; the fourth digit tries it. On the right code
+  // the empty bubbles pop one after another and the posts rise in where they were. The same lock sits on the
+  // Ghostwriting page and on Social & Writing, and opening either opens both for the session.
+  const KEY = "lock:ghostwriting";
+  const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+  document.querySelectorAll("[data-lock]").forEach((lock) => {
+    // the encrypted posts are a separate file, downloaded only once a code is tried (or the page was unlocked
+    // earlier this session)
+    let data = null;
+    const getData = async () => data || (data = await (await fetch(lock.dataset.src)).json());
     const form = lock.querySelector(".lock-form");
     const input = lock.querySelector(".lock-input");
     const error = lock.querySelector(".lock-error");
-    const content = document.querySelector(".lock-content");
-    const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
-    const KEY = "lock:" + location.pathname;
+    const dots = [...lock.querySelectorAll(".gw-dot")];
+    const bubbles = [...lock.querySelectorAll(".gw-bubble")];
+    let content = lock.nextElementSibling;
+    const host = lock.closest(".wrap");
+    if (host && content && host.contains(content)) host.after(content);   // the posts run the page's full width
+    let busy = false;
 
-    async function unlock(password) {
+    // filled dots for the digits so far, and a blinking cursor in the next empty one, so it reads as a field
+    const paint = () => dots.forEach((d, i) => {
+      d.classList.toggle("is-on", i < input.value.length);
+      d.classList.toggle("is-next", i === input.value.length);
+    });
+    paint();
+
+    async function decrypt(password) {
+      await getData();
       const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
       const key = await crypto.subtle.deriveKey(
         { name: "PBKDF2", hash: "SHA-256", salt: bytes(data.salt), iterations: data.iter },
         base, { name: "AES-GCM", length: 256 }, false, ["decrypt"],
       );
-      const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes(data.iv) }, key, bytes(data.ct));
-      content.innerHTML = new TextDecoder().decode(plain);
-      content.hidden = false;
-      lock.hidden = true;
-      content.querySelectorAll("[data-gallery]").forEach(setupGallery);
-      startTicking();
-      try { sessionStorage.setItem(KEY, password); } catch (e) {}
+      return new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes(data.iv) }, key, bytes(data.ct)));
     }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    function show(html, instant) {
+      content.innerHTML = html;
+      // under a section's own heading, the posts' heading would say the same thing twice
+      if (lock.closest(".gw-wrap")) content.querySelectorAll(".cat-text h2").forEach((h) => h.remove());
+      const open = () => {
+        lock.hidden = true;
+        content.hidden = false;
+        content.classList.add("gw-reveal", "gw-full");
+      // the posts take the panes' height, which follows the screen width (CSS reads these from the lock)
+      ["--gg", "--gn", "--rsum"].forEach((v) => content.style.setProperty(v, lock.style.getPropertyValue(v)));
+        content.querySelectorAll("[data-gallery]").forEach((g) => { setupGallery(g); tiltStrip(g); });
+        startTicking();
+        if (lock.closest(".gw-wrap")) readingScene(content);
+      };
+      if (instant || reduceMotion) { open(); return; }
+      lock.classList.add("is-open");   // the bubbles pop in turn (CSS), then the posts take their place
+      setTimeout(open, 420 + bubbles.length * 110);
+    }
+
+    async function unlock(password, instant) {
+      const html = await decrypt(password);
+      try { sessionStorage.setItem(KEY, password); } catch (e) {}
+      show(html, instant);
+    }
+
+    async function attempt() {
+      if (busy) return;
+      busy = true;
       error.hidden = true;
-      form.querySelector("button").disabled = true;
-      try { await unlock(input.value); } catch (err) { error.hidden = false; input.select(); }
-      form.querySelector("button").disabled = false;
+      try { await unlock(input.value); input.blur(); }
+      catch (err) {
+        error.hidden = false;
+        lock.classList.remove("is-wrong"); void lock.offsetWidth; lock.classList.add("is-wrong");
+        setTimeout(() => { input.value = ""; paint(); }, 450);
+      }
+      busy = false;
+    }
+
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/g, "").slice(0, 4);
+      paint();
+      if (input.value.length === 4) attempt();
     });
+    form.addEventListener("submit", (e) => { e.preventDefault(); attempt(); });
+    // a click anywhere on the dots puts the cursor in the hidden field (and brings up the number pad)
+    lock.querySelector(".gw-pin").addEventListener("click", () => input.focus());
+
     let saved = null;
     try { saved = sessionStorage.getItem(KEY); } catch (e) {}
-    if (saved) unlock(saved).catch(() => {});
-  }
+    if (saved) unlock(saved, true).catch(() => {});
+  });
 
   // ---------- case study scenes (Nike): a stage that holds still while its section scrolls past ----------
   // Each scene section is several screens tall and its stage is sticky; the scroll through the section is
@@ -1009,16 +1280,22 @@
     });
   });
 
-  // home: the case studies as one scene. Each case has a stretch of the section; over the last third of a
-  // stretch the next case's box slides up over the current one, which settles back and dims, and the text
-  // beside it crossfades. The figures count up as their case arrives.
+  // home: the case studies as one scene. The scroll walks through each case: its box slides up over the last,
+  // the words hand over and the figures count up, then the case holds for about a screen and a half (1.5 to 2
+  // seconds at an easy scrolling pace) while its slideshow runs on its own timer. Lengths are in screens.
   document.querySelectorAll('[data-scene="work"]').forEach((scene) => {
     const cases = [...scene.querySelectorAll(".wk-case")];
     const names = [...scene.querySelectorAll(".wk-names button")];
     const shows = cases.map((c) => c.querySelector("[data-slideshow]"));
+    const counts = shows.map((sh) => (sh ? sh.querySelectorAll(".slide").length : 1));
     const n = cases.length;
     const phone = matchMedia("(max-width: 720px)");
-    const EDGE = 0.35;   // the share of a stretch the hand-over takes
+    const HAND = 0.3;   // the box hand-over
+    const HOLD = 1.5;   // how long each case stays put
+    const widths = counts.map(() => HAND + HOLD);
+    const starts = widths.map((_, k) => widths.slice(0, k).reduce((a, b) => a + b, 0));
+    const total = starts[n - 1] + widths[n - 1] - HAND;
+    scene.style.setProperty("--units", total.toFixed(2));
     const clamp = (v) => Math.min(1, Math.max(0, v));
     const ease = (t) => 1 - Math.pow(1 - t, 3);
     const figs = cases.map((c) => [...c.querySelectorAll("[data-count]")].map((dd) => {
@@ -1026,6 +1303,22 @@
       return m ? { dd, to: +m[1].replace(/,/g, ""), rest: m[2], comma: m[1].includes(",") } : null;
     }).filter(Boolean));
     const fmt = new Intl.NumberFormat("en-US");
+    const countTo = (k, t) => figs[k].forEach((f) => {
+      const v = Math.round(f.to * t);
+      f.dd.textContent = (f.comma ? fmt.format(v) : String(v)) + (t >= 1 ? f.rest : f.rest.replace(/\+$/, ""));   // the plus lands with the last figure, as on Nike
+    });
+    // the first case is on screen from the start, so its figures run once, over a second, when they're first seen
+    let firstRun = 0;
+    const runFirst = () => {
+      if (firstRun) return;
+      firstRun = performance.now();
+      const tick = (now) => {
+        const t = clamp((now - firstRun) / 1100);
+        if (isLive()) countTo(0, ease(t));
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
     let on = -1;
     let held = [];
     const isLive = () => scene.classList.contains("is-live");
@@ -1047,24 +1340,34 @@
         setHeld(cases.map(() => false));
       }
     };
+    const unitPx = () => {
+      const run = scene.offsetHeight - (viewH() - pinTop());
+      return run / total;
+    };
     names.forEach((b) => b.addEventListener("click", () => {
       const top = scene.getBoundingClientRect().top + window.scrollY;
-      const run = scene.offsetHeight - (viewH() - pinTop());
-      window.scrollTo({ top: top - pinTop() + run * (+b.dataset.go / (n - 1 || 1)), behavior: "smooth" });
+      window.scrollTo({ top: top - pinTop() + starts[+b.dataset.go] * unitPx(), behavior: "smooth" });
     }));
     live();
     onWidthResize(live);
     phone.addEventListener("change", live);
+    if (isLive() && figs[0].length) {
+      countTo(0, 0);
+      const first = new IntersectionObserver(([en]) => { if (en.isIntersecting) { runFirst(); first.disconnect(); } }, { threshold: 0.6 });
+      first.observe(cases[0].querySelector(".wk-figs"));
+    }
     scenes.push((pin) => {
       if (!isLive()) return;
       const r = scene.getBoundingClientRect();
       const run = r.height - (viewH() - pin);
-      // 0 at the first case, n - 1 at the last; below 0 while the section is still coming up the screen
-      const x = run > 0 ? ((pin - r.top) / run) * (n - 1) : 0;
-      const at = Math.min(n - 1, Math.max(0, Math.round(x)));
+      // screens of scroll into the scene: 0 as it pins, below 0 while it is still coming up the screen
+      const u = run > 0 ? ((pin - r.top) / run) * total : 0;
+      let at = 0;
+      starts.forEach((st, k) => { if (u >= st - HAND / 2) at = k; });
       cases.forEach((c, k) => {
-        const e = k === 0 ? 1 : clamp((x - (k - 1) - (1 - EDGE)) / EDGE);
-        const l = k === n - 1 ? 0 : clamp((x - k - (1 - EDGE)) / EDGE);
+        const st = starts[k];
+        const e = k === 0 ? 1 : clamp((u - (st - HAND)) / HAND);
+        const l = k === n - 1 ? 0 : clamp((u - (st + widths[k] - HAND)) / HAND);
         c.style.setProperty("--e", e.toFixed(3));
         c.style.setProperty("--l", l.toFixed(3));
         // the words hand over in turn (out, then in) so two sets never overlap
@@ -1072,11 +1375,8 @@
         c.style.setProperty("--tl", clamp(l * 2).toFixed(3));
         c.classList.toggle("is-shown", e > 0 && l < 1);
         c.classList.toggle("is-on", k === at);
-        const t = ease(k === 0 ? clamp((x + 0.7) / 0.6) : clamp(e * 2 - 1));
-        figs[k].forEach((f) => {
-          const v = Math.round(f.to * t);
-          f.dd.textContent = (f.comma ? fmt.format(v) : String(v)) + (t >= 1 ? f.rest : f.rest.replace(/\+$/, ""));   // the plus lands with the last figure, as on Nike
-        });
+        // the first case's figures count on their own as they come into view (below)
+        if (k > 0) countTo(k, ease(clamp(e * 2 - 1)));
       });
       if (at !== on) {
         on = at;

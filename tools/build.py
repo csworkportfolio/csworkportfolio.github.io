@@ -288,6 +288,7 @@ def json_script(obj):
 
 CHEVRON_L = '<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>'
 CHEVRON_R = '<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>'
+EXPAND = '<svg viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>'
 STRIP_IDS = itertools.count(1)   # keeps tile caption ids unique across the galleries on a page
 
 
@@ -316,16 +317,21 @@ def strip(items, root, label, opts=None, kind="gallery", hint=False, eager=0):
     cls = "strip strip-videos" if inline else "strip"
     if opts.get("ground"):
         cls += " strip-ground"   # a light band behind the tiles, for white screenshots on the white page
+    if opts.get("notes"):
+        cls += " strip-ground strip-notes"   # long-form pieces as rounded paper notes on the light band
     caption = ""
     if opts.get("label"):
         caption = f'<p class="gal-label{" above" if opts.get("label_pos") == "above" else ""}">{esc(opts["label"])}</p>'
+    # one expand button with the arrows opens the piece in view (strips of pieces that play keep just the arrows)
+    expand = ("" if all(it["type"] in ("vimeo", "youtube", "video") for it in items) else
+              f'\n  <button class="strip-arrow strip-open" type="button" aria-label="View the piece in view larger">{EXPAND}</button>')
     section = f'''
 <section class="{cls}" data-gallery aria-label="{esc(label)}"{data_attrs}{f' style="{style}"' if style else ""}>
   <div class="strip-viewport" tabindex="0">
     <ul class="strip-track">{tiles}</ul>
   </div>
   <button class="strip-arrow strip-prev" type="button" aria-label="Previous item">{CHEVRON_L}</button>
-  <button class="strip-arrow strip-next" type="button" aria-label="Next item">{CHEVRON_R}</button>
+  <button class="strip-arrow strip-next" type="button" aria-label="Next item">{CHEVRON_R}</button>{expand}
   <script type="application/json" class="gallery-data">{data}</script>
 </section>'''
     if hint:
@@ -503,13 +509,8 @@ def slideshow(names, title, root, media, titles=None):
             el = (f'<video muted loop playsinline preload="none" poster="{root}{m["poster"]}" '
                   f'data-src="{root}{m["src"]}" width="{m["w"]}" height="{m["h"]}"{label}></video>')
         slides.append(f'<li class="slide{" is-current" if i == 0 else ""}"{hidden}>{el}</li>')
-    # previous and next, shown on hover and keyboard focus, so every sample can be reached without waiting
-    # (and at all with reduced motion, where the slideshow never advances on its own)
-    arrows = (f'<button class="strip-arrow ss-arrow ss-prev" type="button" aria-label="Previous sample">{CHEVRON_L}</button>'
-              f'<button class="strip-arrow ss-arrow ss-next" type="button" aria-label="Next sample">{CHEVRON_R}</button>'
-              if len(names) > 1 else "")
     return f'''<div class="slideshow" data-slideshow aria-roledescription="carousel" aria-label="Work samples: {esc(title)}">
-      <ul class="slides">{"".join(slides)}</ul>{arrows}
+      <ul class="slides">{"".join(slides)}</ul>
     </div>'''
 
 
@@ -574,6 +575,16 @@ def render_home(page, site, media):
     cases = []
     titles = piece_titles()
     n = len(page["cases"])
+    # each case's quick view: its samples, large, beside a short summary taken from the start of its case study
+    ledes = {c["slug"]: c.get("lede", "") for f in ("cases-1.json", "cases-2.json")
+             for c in json.loads((CONTENT / f).read_text())}
+    def summary(text):
+        out = []
+        for sent in re.split(r"(?<=[.!?])\s+", text.strip()):
+            if "\u2014" in sent or len(out) == 2:
+                break
+            out.append(sent)
+        return " ".join(out)
     for i, c in enumerate(page["cases"]):
         bg = media.get(c["bg"], "bg")
         slides = slideshow(c["slides"], c["title"], root, media, titles)
@@ -584,8 +595,20 @@ def render_home(page, site, media):
             figs = f'\n      <dl class="wk-figs">{cells}</dl>'
         elif c.get("result"):
             figs = f'\n      <p class="case-result">{esc(c["result"])}</p>'
+        quick = []
+        for name in c["slides"]:
+            m = media.get(name)
+            it = {"title": titles.get(name, ""), "link": {"href": f'{c["slug"]}/', "label": "Read the Case Study"},
+                  "quick": {"kicker": c["kicker"], "title": c["title"], "figures": c.get("figures", []),
+                            "lede": summary(ledes.get(c["slug"], "")), "shine": shine}}
+            if m["kind"] == "image":
+                it.update(type="image", thumb=m.get("sm", m["src"]), full=m["src"], w=m["w"], h=m["h"])
+            else:
+                it.update(type=m["kind"], src=m["src"], thumb=m["poster"], w=m["w"], h=m["h"])
+            quick.append(fix_paths(it, root))
         cases.append(f'''
 <article class="wk-case" data-case="{i}" style="--k:{i}">
+  <script type="application/json" class="wk-quick">{json_script(quick)}</script>
   <div class="wk-text">
       <p class="kicker">{esc(c["kicker"])}</p>
       <h2>{esc(c["title"])}</h2>{figs}
@@ -622,25 +645,69 @@ def render_home(page, site, media):
                          '<a class="skip-link" href="#main">Skip to content</a>' + hero, 1)
 
 
+LOCK_IDS = itertools.count(1)
+
+
+def lock_widget(src, shapes, height=470, gap=20, note=True):
+    """The locked ghostwriting posts: a row of empty liquid-glass panes, each the height and shape of the post it
+    hides (shapes are width / height), and a four-dot passcode
+    that fills as the digits go in. The right code decrypts the posts in the browser (main.js) and the
+    bubbles pop open into them. Nothing readable is in the page until then."""
+    n = next(LOCK_IDS)
+    bubbles = "".join(f'<li class="gw-bubble" style="--i:{i};--r:{r}"><span class="gw-shine"></span></li>' for i, r in enumerate(shapes))
+    rmax = max(shapes)
+    rsum = sum(shapes)
+    dots = '<span class="gw-dot"></span>' * 4
+    hint = ('<p class="lock-note">These posts were published under executives\' names, so they\'re locked.<br>'
+            'To open them, enter the last four digits of my phone number, listed at the top of my resume.</p>') if note else ""
+    return f'''
+<div class="gw" data-lock data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
+  <ul class="gw-bubbles" aria-hidden="true" style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>
+  {hint}
+  <form class="lock-form gw-form">
+    <label class="sr-only" for="lock-pw-{n}">Passcode: the last four digits of my phone number</label>
+    <p class="gw-label" aria-hidden="true">Enter passcode</p>
+    <div class="gw-pin">
+      <input id="lock-pw-{n}" class="lock-input gw-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" required>
+      <span class="gw-dots" aria-hidden="true">{dots}</span>
+    </div>
+    <button class="sr-only" type="submit">Unlock</button>
+  </form>
+  <p class="lock-error" role="alert" hidden>That code didn't work. Try again.</p>
+  <noscript><p class="lock-error">These posts need JavaScript to unlock.</p></noscript>
+</div>
+<div class="lock-content" hidden></div>'''
+
+
+def publish_lock(name, root):
+    """The encrypted posts go out as their own file, fetched only when someone enters the passcode, so the page
+    itself stays light. Returns its address from the page."""
+    out = ROOT / "files" / name
+    out.parent.mkdir(exist_ok=True)
+    data = (CONTENT / name).read_bytes()
+    if not out.exists() or out.read_bytes() != data:
+        out.write_bytes(data)
+    return f"{root}files/{name}?v={hashlib.md5(data).hexdigest()[:8]}"
+
+
+def locked_shape():
+    """The posts' shapes for the standalone Ghostwriting page, from the locked block on Social & Writing."""
+    for pg in json.loads((CONTENT / "categories.json").read_text()):
+        for b in pg["blocks"]:
+            if b.get("locked"):
+                return {"shapes": b["shapes"], "height": b.get("height", 470), "gap": b.get("gap", 20)}
+    return {"shapes": [0.5] * 5}
+
+
 def render_locked(page, site, media):
     """A password-locked page (Ghostwriting): the category layout, with its gallery and text stored encrypted
     (tools/lock_ghostwriting.py) and unlocked in the browser by main.js. Linked only from Social & Writing."""
-    lock = (CONTENT / page["lock"]).read_text().strip()
+    lock = publish_lock(page["lock"], "../")
     body = f'''
-<section class="wrap lock" data-lock>
+<section class="wrap lock">
   <h1>{esc(page["heading"])}</h1>
-  <p class="lock-note">These posts were published under executives' names, so this page is password protected.<br>
-  To view it, enter the last four digits of my phone number, listed at the top of my resume.</p>
-  <form class="lock-form">
-    <label class="sr-only" for="lock-pw">Password</label>
-    <input id="lock-pw" class="lock-input" type="password" inputmode="numeric" autocomplete="off" placeholder="Last 4 digits" required>
-    <button class="btn" type="submit">Unlock</button>
-  </form>
-  <p class="lock-error" role="alert" hidden>That password didn't work. Try again.</p>
-  <noscript><p class="lock-error">This page needs JavaScript to unlock.</p></noscript>
-  <script type="application/json" class="lock-data">{lock}</script>
-</section>
-<div class="lock-content" hidden></div>'''
+  {lock_widget(lock, **locked_shape())}
+</section>'''
     page = {**page, "type": "category", "robots": "noindex, nofollow"}
     return layout(page, site, "../", body, media)
 
@@ -659,7 +726,19 @@ def render_category(page, site, media):
             label = f'{prev["heading"]} gallery' if page.get("v2") and prev and "heading" in prev else "Gallery"
             eager = page.get("eager_first", 0) if first_gallery else 0
             first_gallery = False
-            parts.append(strip(items, root, label, b, hint=b.get("hint", True), eager=eager))
+            parts.append(strip(items, root, label, b, eager=eager))   # no hint line: the zoom cursor and the arrows say it
+        elif b.get("locked"):
+            tag = "h1" if first_heading else "h2"
+            first_heading = False
+            lock = publish_lock(b["locked"], root)
+            parts.append(f'''
+<section class="wrap cat-text is-lead cat-locked">
+  <{tag}>{esc(b["heading"])}</{tag}>
+  <p class="kicker-italic">{esc(b["kicker"])}</p>
+  {paragraphs(b.get("body", []))}
+</section>
+<section class="gw-wrap">{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 20))}
+</section>''')
         else:
             tag = "h1" if first_heading else "h2"
             first_heading = False
