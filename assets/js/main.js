@@ -331,7 +331,7 @@
     viewport.addEventListener("touchcancel", () => s.pause.delete("touch"), { passive: true });
     // a pause / play button with the arrows, for strips that move on their own
     const nextBtn = el.querySelector(".strip-next");
-    if (s.speed && nextBtn && el.closest(".cat-v2")) {
+    if (s.speed && nextBtn && el.closest(".cat-v2, .case-v2")) {
       const pb = document.createElement("button");
       pb.type = "button";
       pb.className = "strip-arrow strip-pause";
@@ -750,11 +750,12 @@
 
   // Safari colours its status bar and floating toolbar from the page behind them. While the pop-up is open
   // the page and theme colour turn the pop-up's dark, so both bars match it instead of showing white or a band.
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const themeColor = themeMeta && themeMeta.content;
+  const themeMetas = [...document.querySelectorAll('meta[name="theme-color"]')];
+  const themeColors = themeMetas.map((m) => m.content);
   function tintBars(on) {
     document.documentElement.classList.toggle("lb-tint", on);
-    if (themeMeta) themeMeta.content = on ? "#0e0e0e" : themeColor;
+    const tint = isDark() ? "#0e0e0e" : "#f5f5f7";   // the pop-up's own background in each mode
+    themeMetas.forEach((m, i) => { m.content = on ? tint : themeColors[i]; });
   }
 
   let openedByPointer = false;

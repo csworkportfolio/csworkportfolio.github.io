@@ -603,7 +603,7 @@
       {
         "play": "click",
         "height": 420,
-        "gap": 20,
+        "gap": 50,
         "ground": true,
         "label": "",
         "speed": 10,
@@ -671,7 +671,7 @@
         ]
       },
       {
-        "gap": 10,
+        "gap": 50,
         "speed": 10,
         "label": "",
         "play": "auto",
@@ -720,7 +720,7 @@
         "play": "click",
         "crop": "16/9",
         "height": 378,
-        "gap": 20,
+        "gap": 50,
         "ground": true,
         "label": "",
         "speed": 10,
@@ -793,26 +793,26 @@
       "title": "How I Modernized SOLV Energy's Web Presence and Built Power Apps That Streamlined Internal Workflows",
       "subtitle": "Internal Tools & External Web for SOLV Energy"
     },
-    "lede": "SOLV Energy is a lifecycle partner for utility-scale solar, storage, and energy infrastructure across the United States. With more than 20 GW of solar and storage under management and a fast-growing public profile (Nasdaq: MWH), SOLV Energy needed a digital presence that could keep pace with a company building, operating, and announcing at industry scale. This case study covers how I supported and built that digital presence across web, internal tools, graphic design, and video.",
+    "lede": "SOLV Energy is a lifecycle partner for utility-scale solar, storage and energy infrastructure across the United States, with more than 20 GW of solar and storage under management and a listing on Nasdaq (MWH). A company building and announcing at that scale needs a digital presence that keeps up. This case study covers how I supported and built that presence across web, internal tools, graphic design and video.",
     "blocks": [
       {
         "h": "THE PROBLEM",
         "p": [
-          "A renewable energy company has a harder communications job than most. SOLV Energy's audiences include investors, customers, prospective hires, craft workers, community partners, and thousands of employees in offices and on jobsites across the country. Each audience needs different proof points, different formats, and different channels. Communications systems had not kept pace with that growth. The SOLV Energy website needed steady, accurate updates as new projects, leadership news, and milestones landed. Internal teams needed faster, lighter ways to share approved content to their own networks. Visual storytelling needed to keep up with a project pipeline running nationally and in dozens of states at once."
+          "A renewable energy company has a harder communications job than most. SOLV Energy talks to investors, customers, prospective hires, craft workers, community partners and thousands of employees in offices and on jobsites across the country, and each group needs different proof points, formats and channels. Communications systems hadn't kept pace with that growth. The website needed steady, accurate updates as projects, leadership news and milestones landed. Internal teams needed a faster way to share approved content with their own networks. The visuals had to keep up with a project pipeline running in dozens of states at once."
         ]
       },
       {
         "h": "THE SOLUTION",
         "p": [
-          "I built a digital backbone that handled the day-to-day weight: a continuously updated external website, internal tools that turned approved content into employee-shareable assets, graphic design at the cadence project announcements demanded, and video work that brought the work on the ground into focus. Each piece was designed to scale with the company rather than break under it."
+          "I handled the day-to-day work behind all of it: a continuously updated external website, internal tools that turned approved content into posts employees could share, graphic design at the pace project announcements demanded, and video that showed the work on the ground. I built each piece so it could grow with the company."
         ]
       },
       {
         "h": "Owning the Web Presence and Internal Tooling of a Public Energy Infrastructure Company",
         "p": [
-          "A public company moves fast, and its website has to move with it. I maintained and continuously updated solvenergy.com through WordPress, publishing project announcements, leadership additions, earnings news, and partnership wins as they landed. Updates often went live within hours of internal approval, with formatting, imagery, and SEO considerations dialed in before publish.",
-          "Beyond the external site, I built and launched an Employee Advocacy platform powered by Power Apps. Built to give SOLV Energy teammates one place to find pre-approved social content to share with their own networks, the platform turned a manual, email-based workflow into a self-serve experience. Employees can browse, preview, and share posts directly to their LinkedIn in seconds.",
-          "Together, those efforts kept the company's external presence current while activating the internal community as a force multiplier for visibility, advocacy, and recruiting."
+          "A public company moves fast, and its website has to keep up. I maintained solvenergy.com in WordPress, publishing project announcements, leadership additions, earnings news and partnership wins as they landed. Updates often went live within hours of internal approval, with formatting, imagery and SEO checked before publish.",
+          "I also built and launched an Employee Advocacy platform in Power Apps. It gives SOLV Energy teammates one place to find pre-approved social content to share with their own networks, replacing a manual, email-based workflow. Employees can browse, preview and share posts to LinkedIn in seconds.",
+          "The site stayed current, and employees became a real channel for visibility and recruiting."
         ]
       },
       {
@@ -820,35 +820,41 @@
           {
             "v": "1228250222",
             "title": "SOLV Energy Homepage Hero Walkthrough",
-            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was."
+            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was.",
+            "cap": "I kept solvenergy.com current as project, leadership and earnings news landed."
           },
           {
             "v": "1228250217",
             "title": "Employee Advocacy Power App in Action",
             "desc": "Sharing approved content used to mean digging through emails. I built this Employee Advocacy platform in Power Apps so SOLV Energy teammates have one place to find pre-approved posts, sorted by tags like Impact, Mission, and Project Spotlight.\nEach card previews the post before sharing, and employees can push it straight to their LinkedIn in seconds. The result turned a manual workflow into a self-serve experience that helps with visibility and recruiting.",
-            "tools": "Microsoft Power Apps"
+            "tools": "Microsoft Power Apps",
+            "cap": "I built this Power Apps platform for sharing approved posts to LinkedIn."
           },
           {
             "src": "Screenshot 2026-05-17 at 2.33.37 AM.png",
             "title": "Publishing a News Article Behind the Scenes",
-            "desc": "Here's a look at the publishing side of the job: an article entry with its title, one-sentence extract, background image, and subject and media categories, shown next to a live preview of the SOLV Energy news page.\nEvery announcement went through this kind of setup before going live. I checked formatting, imagery, and categorization in the preview so each story looked right the moment it published."
+            "desc": "Here's a look at the publishing side of the job: an article entry with its title, one-sentence extract, background image, and subject and media categories, shown next to a live preview of the SOLV Energy news page.\nEvery announcement went through this kind of setup before going live. I checked formatting, imagery, and categorization in the preview so each story looked right the moment it published.",
+            "cap": "How I set up and checked each news article before it went live."
           },
           {
             "v": "1228250219",
             "title": "Design, Build, Operate, Optimize Services Page",
-            "desc": "A scroll through one of solvenergy.com's interior pages, opening on crews in hard hats at work in the field and the headline Design. Build. Operate. Optimize. It explains SOLV Energy's end-to-end services for solar, battery storage, and high-voltage infrastructure.\nI kept pages like this accurate and current as the company grew, so customers and investors landing deeper in the site found the same polish as the homepage."
+            "desc": "A scroll through one of solvenergy.com's interior pages, opening on crews in hard hats at work in the field and the headline Design. Build. Operate. Optimize. It explains SOLV Energy's end-to-end services for solar, battery storage, and high-voltage infrastructure.\nI kept pages like this accurate and current as the company grew, so customers and investors landing deeper in the site found the same polish as the homepage.",
+            "cap": "One of the interior pages I kept accurate as the company grew."
           }
         ],
         "gap": 50,
-        "speed": 60,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "speed": 10,
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "restart": true
       },
       {
         "h": "Designing at the Speed of a Public Company's News Cycle",
         "p": [
-          "When SOLV Energy goes public, breaks ground, or sends an executive to a conference, the visuals supporting that moment have to be ready as soon as possible and sometimes on the same day. I produced ongoing graphic design across speaker session cards, kudos and recognition posts, project announcements, and case study teasers, working within and gradually extending SOLV Energy's visual system.",
-          "Design prioritized clean composition, brand-consistent color palettes anchored on SOLV Energy's signature colors, and a headline hierarchy that made each graphic legible at thumbnail scale on social feeds. Every asset shipped quickly without sacrificing the polish an investor-grade or customer-facing audience expects."
+          "When SOLV Energy goes public, breaks ground or sends an executive to a conference, the visuals for that moment have to be ready fast, sometimes the same day. I produced ongoing graphic design across speaker session cards, kudos and recognition posts, project announcements and case study teasers, working within SOLV Energy's visual system and extending it over time.",
+          "I kept compositions clean, built palettes on SOLV Energy's signature colors and set headlines so each graphic still read at thumbnail size in a social feed. Assets shipped quickly and still held up for investors and customers."
         ]
       },
       {
@@ -856,28 +862,34 @@
           {
             "src": "RE Plus.png",
             "title": "RE+ 2025 Event and Speaking Session Graphics",
-            "desc": "For RE+ in Las Vegas, I made a pair of graphics: a bold blue announcement for the event and a darker companion piece listing SOLV Energy's two speaking sessions with Eric Butticaz, Director of Apprenticeship, including times and rooms.\nThe Venetian skyline and SOLV's sunburst mark tie the two together, while the lime accents and clear type keep the session details easy to read at thumbnail size on social."
+            "desc": "For RE+ in Las Vegas, I made a pair of graphics: a bold blue announcement for the event and a darker companion piece listing SOLV Energy's two speaking sessions with Eric Butticaz, Director of Apprenticeship, including times and rooms.\nThe Venetian skyline and SOLV's sunburst mark tie the two together, while the lime accents and clear type keep the session details easy to read at thumbnail size on social.",
+            "cap": "I made the event announcement and speaking session graphics for RE+ in Las Vegas."
           },
           {
             "src": "SOLV Example 1 Transparent.png",
             "title": "Conference Speaker Card and Kudos Post",
-            "desc": "These two cover both sides of SOLV Energy's event presence. On the left, a speaking session card for CFO Chad Plotkin at the 38th Annual ROTH Conference. On the right, a kudos post recognizing Kate for representing the company at the 2026 IECA Annual Conference & Expo.\nBoth are built on the brand's signature blues and sunburst motif, with a headline hierarchy that stays readable even as a small social thumbnail."
+            "desc": "These two cover both sides of SOLV Energy's event presence. On the left, a speaking session card for CFO Chad Plotkin at the 38th Annual ROTH Conference. On the right, a kudos post recognizing Kate for representing the company at the 2026 IECA Annual Conference & Expo.\nBoth are built on the brand's signature blues and sunburst motif, with a headline hierarchy that stays readable even as a small social thumbnail.",
+            "cap": "A speaker card for CFO Chad Plotkin and a kudos post, both designed by me."
           },
           {
             "src": "SOLV Example 2 Transparent.png",
             "title": "Announcement and Case Study Teaser Graphics",
-            "desc": "Not every post needs a face. The left graphic is an \"In Case You Missed It\" announcement about SOLV Energy's O&M scale and largest single-site agreement, set over a field photo of solar panels and wildflowers.\nThe right is a case study teaser that opens with a question about underperforming sites. I let the white space and the sunburst frame do the work, ending with a simple prompt to read the case study."
+            "desc": "Not every post needs a face. The left graphic is an \"In Case You Missed It\" announcement about SOLV Energy's O&M scale and largest single-site agreement, set over a field photo of solar panels and wildflowers.\nThe right is a case study teaser that opens with a question about underperforming sites. I let the white space and the sunburst frame do the work, ending with a simple prompt to read the case study.",
+            "cap": "An announcement and a case study teaser I designed."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Bringing Field Stories and Project Milestones to Life Through Video",
         "p": [
-          "Video is how SOLV Energy makes its work tangible to audiences who will never visit a jobsite. I helped concept, script, and produce multiple social media videos and internal content for project milestones, customer testimonials, and culture moments, with a focus on letting the people doing the work speak for themselves.",
-          "Editing stayed minimal and the people stayed central, with on-site capture, light branding overlay, and pacing tuned for both LinkedIn and longer-form internal use."
+          "Video is how SOLV Energy shows its work to people who will never visit a jobsite. I helped concept, script and produce social videos and internal content for project milestones, customer testimonials and culture moments, and let the people doing the work speak for themselves.",
+          "Editing stayed minimal: on-site footage, a light brand overlay and pacing tuned for LinkedIn and for longer internal pieces."
         ]
       },
       {
@@ -885,34 +897,51 @@
           {
             "v": "1175822607",
             "title": "Good Energy",
-            "desc": "A vertical social video that opens on a sweeping aerial of a SOLV Energy project under construction, with crews, trucks, and structures spread across the site. It's part of the short-form work I helped concept, script, and produce for project milestones and culture moments.\nEditing stayed minimal so the work on the ground carried the story, with light branding and pacing tuned for social feeds."
+            "desc": "A vertical social video that opens on a sweeping aerial of a SOLV Energy project under construction, with crews, trucks, and structures spread across the site. It's part of the short-form work I helped concept, script, and produce for project milestones and culture moments.\nEditing stayed minimal so the work on the ground carried the story, with light branding and pacing tuned for social feeds.",
+            "cap": "A vertical social video I helped concept, script and produce."
           },
           {
             "v": "1RKAiFOCbtE",
             "title": "A Message from SOLV Energy CEO, George Hershman",
-            "desc": "Sometimes the best move is to let leadership talk. In this piece, CEO George Hershman speaks directly to camera in a relaxed interview setting about SOLV Energy and its work.\nI kept the edit simple and the speaker central, matching the approach I used across SOLV's video content: let the people behind the company speak for themselves, with branding that supports the message instead of competing with it."
+            "desc": "Sometimes the best move is to let leadership talk. In this piece, CEO George Hershman speaks directly to camera in a relaxed interview setting about SOLV Energy and its work.\nI kept the edit simple and the speaker central, matching the approach I used across SOLV's video content: let the people behind the company speak for themselves, with branding that supports the message instead of competing with it.",
+            "cap": "An interview with CEO George Hershman that I edited."
           },
           {
             "v": "1175822621",
             "title": "Overview and Impact of Misae Solar",
-            "desc": "This vertical video gives a site overview of the Misae Solar project, starting with a drone shot over rows of panels stretching toward the horizon. It was one of several pieces I helped produce to show audiences what SOLV Energy's projects look like up close.\nI paired on-site footage with light brand overlays and kept the pacing quick enough for LinkedIn while still giving the scale of the site room to land."
+            "desc": "This vertical video gives a site overview of the Misae Solar project, starting with a drone shot over rows of panels stretching toward the horizon. It was one of several pieces I helped produce to show audiences what SOLV Energy's projects look like up close.\nI paired on-site footage with light brand overlays and kept the pacing quick enough for LinkedIn while still giving the scale of the site room to land.",
+            "cap": "A site overview of the Misae Solar project that I helped produce."
           },
           {
             "v": "1175822624",
             "title": "We Power What's Next at SOLV Energy",
-            "desc": "This one opens somewhere unexpected for an energy company: a deep blue night sky full of stars. From there, it builds toward SOLV Energy's line, We Power What's Next, as a culture piece for both social and internal audiences.\nI helped concept and produce it with the same rule I used across SOLV's video work: minimal editing, the people kept central, and pacing that fits LinkedIn and longer-form internal use alike."
+            "desc": "This one opens somewhere unexpected for an energy company: a deep blue night sky full of stars. From there, it builds toward SOLV Energy's line, We Power What's Next, as a culture piece for both social and internal audiences.\nI helped concept and produce it with the same rule I used across SOLV's video work: minimal editing, the people kept central, and pacing that fits LinkedIn and longer-form internal use alike.",
+            "cap": "A culture piece I helped concept and produce."
           }
         ],
-        "gap": 130,
+        "gap": 50,
         "crop": "3/4",
-        "label": "Click Visual to Learn More",
-        "play": "click"
+        "label": "",
+        "play": "click",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       }
     ],
     "next": {
       "slug": "cohesity",
       "label": "Next Case Study: Cohesity"
-    }
+    },
+    "glance": [
+      [
+        "Hours",
+        "From internal approval to live on solvenergy.com"
+      ],
+      [
+        "4",
+        "Channels I worked across: web, internal tools, graphic design and video"
+      ]
+    ]
   },
   {
     "slug": "cohesity",
@@ -926,27 +955,27 @@
           "alt": "Cohesity"
         }
       ],
-      "title": "How I Led Employee Advocacy for 3,000+ Advocates and Cross-Channel Design at Cohesity",
+      "title": "How I Led Employee Advocacy for 3,000 Advocates and Cross-Channel Design at Cohesity",
       "subtitle": "Employee Advocacy and Integrated Creative for an AI-Powered Data Security Leader"
     },
-    "lede": "Cohesity is the leader in AI-powered data security and management, trusted by 70% of the Global 500 across 140+ countries. While the company protects the world's most critical data, its brand and content needed to feel as human as the people behind it. This case study explores how I helped power Cohesity's Champions employee advocacy program and design cohesive creative across PR, blogs, newsletters, and global events.",
+    "lede": "Cohesity is a leader in AI-powered data security and management, trusted by 70% of the Global 500 across 140+ countries. Its brand and content needed to feel as human as the people behind it. This case study covers how I helped run Cohesity's Champions employee advocacy program and designed creative across PR, blogs, newsletters and global events.",
     "blocks": [
       {
         "h": "THE PROBLEM",
         "p": [
-          "Enterprise cybersecurity content has a reputation. It's dense, technical, and written for boardrooms instead of the people who actually share it, read it, and live with the threats it covers. Cohesity had powerful product news, deep customer stories, and real industry credibility, but the social voice and visual presence often felt indistinguishable from the rest of the enterprise software space. Employees weren't sharing content they didn't connect with, and the brand was missing chances to land with both internal advocates and external audiences in a way that felt human, modern, and worth talking about."
+          "Enterprise cybersecurity content tends to be dense, technical and written for boardrooms more than for the people who share it, read it and deal with the threats it covers. Cohesity had strong product news, deep customer stories and real industry credibility, but its social voice and visuals blended in with the rest of enterprise software. Employees weren't sharing content they didn't connect with, and the brand was missing chances to reach both its own advocates and outside audiences."
         ]
       },
       {
         "h": "THE SOLUTION",
         "p": [
-          "I rebuilt how Cohesity showed up. I authored a new brand voice for the Champions employee advocacy program, closer to Duolingo and Figma social than corporate LinkedIn, and operationalized a daily content engine that fed 3,000+ active Champions with posts they actually wanted to share. Alongside the advocacy work, I led original creative design across PR campaigns, blog hero graphics, newsletter design, and global event activations. The result was a Cohesity presence that felt sharper, faster, and more share-worthy across every customer-facing channel."
+          "I wrote a new brand voice for the Champions employee advocacy program, closer to Duolingo and Figma on social than to corporate LinkedIn, and ran a daily content engine that gave 3,000 advocates posts they wanted to share. Alongside the advocacy work, I led original design for PR campaigns, blog hero graphics, newsletters and global event activations."
         ]
       },
       {
         "h": "Reframing Cohesity's Voice for an Employee Advocacy Program That Actually Got Shared",
         "p": [
-          "I rebuilt Cohesity's Employee Advocacy program from the ground up, authoring a new brand voice closer to Duolingo and Figma social than corporate LinkedIn and running a daily content engine for 3,000+ advocates globally. Beyond core post writing, I led the redesign of the program, internal competitions, expanded program reach into international markets, connected advocacy work across multiple departments, and headed an executive advocacy program where I personally wrote and edited posts for the Chief Product and Chief Financial Officers. The result was a sharper, faster Cohesity voice that turned employee voices into one of the company's strongest social channels."
+          "I rebuilt the Employee Advocacy program from the ground up and ran its daily content for 3,000 advocate seats worldwide, across a company of 7,000 employees. Beyond writing the core posts, I led the program's redesign, ran internal competitions, expanded it into international markets and connected advocacy work across several departments. I also headed an executive advocacy program, writing and editing posts myself for the Chief Product Officer and the Chief Financial Officer. Employee posts became one of the company's strongest social channels."
         ]
       },
       {
@@ -954,23 +983,28 @@
           {
             "src": "ezgif.com-video-to-gif-converter-2.gif",
             "title": "Champions Advocacy Hub Trending Posts Feed",
-            "desc": "This is where Cohesity's Champions found content to share each day. The Trending Posts view shows the week's most active posts, from the HPE alliance to the agentic support portal, with a live feed of colleagues sharing alongside.\nI wrote the posts that filled this feed in a voice closer to Duolingo and Figma social than corporate LinkedIn, so 3,000+ advocates actually wanted to post them. Leaderboards and challenges kept the energy up."
+            "desc": "This is where Cohesity's Champions found content to share each day. The Trending Posts view shows the week's most active posts, from the HPE alliance to the agentic support portal, with a live feed of colleagues sharing alongside.\nI wrote the posts that filled this feed in a voice closer to Duolingo and Figma social than corporate LinkedIn, so 3,000 advocates actually wanted to post them. Leaderboards and challenges kept the energy up.",
+            "cap": "I wrote the posts that filled this feed for 3,000 advocates."
           },
           {
             "v": "1228250187",
             "title": "The Empire Strikes Backups Champions Newsletter",
             "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links.",
-            "zoom": 1.04
+            "zoom": 1.04,
+            "cap": "A Star Wars nod I designed for the Champions newsletter."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
         "p": [
-          "Beyond employee advocacy, I supported the creative team across Cohesity's most visible moments, including partnership campaigns with Google Cloud, AWS, NVIDIA, Hewlett-Packard, and Microsoft, blog hero graphics for executive thought leadership, weekly Security Spotlight and Empire Strikes Backups newsletter creative, and event activations. The visual language had to feel modern enough to compete with consumer-grade design while still landing credibility in enterprise cybersecurity."
+          "Beyond employee advocacy, I supported the creative team on Cohesity's most visible moments: partnership campaigns with Google Cloud, AWS, NVIDIA, Hewlett-Packard and Microsoft, blog hero graphics for executive thought leadership, creative for the weekly Security Spotlight and Empire Strikes Backups newsletters, and event activations. The visuals had to look as modern as consumer design and still carry credibility in enterprise cybersecurity."
         ]
       },
       {
@@ -978,22 +1012,45 @@
           {
             "src": "Cohesity Examples TP.png",
             "title": "Webinar, Hiring, and NVIDIA GTC Social Graphics",
-            "desc": "Three posts, three different jobs: a webinar promo on ransomware gang behavior, a bold pink We're Hiring card for a role in São Paulo, and an event graphic for Cohesity at NVIDIA GTC 2026.\nEach one leans on Cohesity's green and magenta palette and tight condensed type, so they read like a set while handling very different messages. The goal was consumer-grade energy that still felt credible in enterprise security."
+            "desc": "Three posts, three different jobs: a webinar promo on ransomware gang behavior, a bold pink We're Hiring card for a role in São Paulo, and an event graphic for Cohesity at NVIDIA GTC 2026.\nEach one leans on Cohesity's green and magenta palette and tight condensed type, so they read like a set while handling very different messages. The goal was consumer-grade energy that still felt credible in enterprise security.",
+            "cap": "A webinar promo, a hiring card and an NVIDIA GTC graphic I designed."
           },
           {
             "src": "Cohesity Examples 2 TP.png",
             "title": "Google Cloud Next, Blog Hero, and Newsletter Creative",
-            "desc": "A mix from Cohesity's busiest channels: a booth promo for Google Cloud Next 26 in Las Vegas, a blog hero announcing that the future of support is here and it's agentic, and a punchy Your backups are next. graphic.\nI kept each piece simple and direct, letting the bright green and big type carry the message so it held up across events, blogs, and weekly Security Spotlight newsletter creative."
+            "desc": "A mix from Cohesity's busiest channels: a booth promo for Google Cloud Next 26 in Las Vegas, a blog hero announcing that the future of support is here and it's agentic, and a punchy Your backups are next. graphic.\nI kept each piece simple and direct, letting the bright green and big type carry the message so it held up across events, blogs, and weekly Security Spotlight newsletter creative.",
+            "cap": "Event, blog and newsletter creative I designed."
           }
         ],
-        "gap": 100,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "gap": 50,
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       }
     ],
     "next": {
       "slug": "healthier-texas",
       "label": "Next Case Study: Healthier Texas"
-    }
+    },
+    "glance": [
+      [
+        "7,000",
+        "Cohesity employees the advocacy program reached"
+      ],
+      [
+        "3,000",
+        "Advocate seats in the Champions program"
+      ],
+      [
+        "5",
+        "Partner campaigns supported: Google Cloud, AWS, NVIDIA, Hewlett-Packard and Microsoft"
+      ],
+      [
+        "70%",
+        "Of the Global 500 trust Cohesity"
+      ]
+    ]
   }
 ]

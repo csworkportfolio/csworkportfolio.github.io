@@ -1339,50 +1339,6 @@
   "boxv": 3,
   "mtime": 1792566631
  },
- "default:Research 4.PNG": {
-  "kind": "image",
-  "files": [
-   "media/research-4-7fc1da-v3.webp"
-  ],
-  "src": "media/research-4-7fc1da-v3.webp",
-  "w": 1220,
-  "h": 650,
-  "boxv": 3,
-  "mtime": 1792566631
- },
- "default:Research 6.PNG": {
-  "kind": "image",
-  "files": [
-   "media/research-6-f65b5c-v3.webp"
-  ],
-  "src": "media/research-6-f65b5c-v3.webp",
-  "w": 1226,
-  "h": 681,
-  "boxv": 3,
-  "mtime": 1792566631
- },
- "default:Research 7.PNG": {
-  "kind": "image",
-  "files": [
-   "media/research-7-e13830-v3.webp"
-  ],
-  "src": "media/research-7-e13830-v3.webp",
-  "w": 1223,
-  "h": 645,
-  "boxv": 3,
-  "mtime": 1792566631
- },
- "default:Research w Button.PNG": {
-  "kind": "image",
-  "files": [
-   "media/research-w-button-b71258-v3.webp"
-  ],
-  "src": "media/research-w-button-b71258-v3.webp",
-  "w": 1219,
-  "h": 638,
-  "boxv": 3,
-  "mtime": 1792566631
- },
  "default:SOLV Example 1 Transparent.png": {
   "kind": "image",
   "files": [
@@ -1922,6 +1878,41 @@
   "boxv": 3,
   "mtime": 1792566631
  },
+ "default:covers/bryan dark.mp4": {
+  "kind": "video",
+  "src": "media/covers-bryan-dark-432a92.mp4",
+  "poster": "media/covers-bryan-dark-432a92-poster.webp",
+  "w": 1094,
+  "h": 646,
+  "files": [
+   "media/covers-bryan-dark-432a92.mp4",
+   "media/covers-bryan-dark-432a92-poster.webp"
+  ],
+  "mtime": 1792751792
+ },
+ "default:covers/bryan light.mp4": {
+  "kind": "video",
+  "src": "media/covers-bryan-light-2fecb1.mp4",
+  "poster": "media/covers-bryan-light-2fecb1-poster.webp",
+  "w": 1094,
+  "h": 646,
+  "files": [
+   "media/covers-bryan-light-2fecb1.mp4",
+   "media/covers-bryan-light-2fecb1-poster.webp"
+  ],
+  "mtime": 1792751792
+ },
+ "default:covers/bryan pop.png": {
+  "kind": "image",
+  "files": [
+   "media/covers-bryan-pop-d8f287-v3.webp"
+  ],
+  "src": "media/covers-bryan-pop-d8f287-v3.webp",
+  "w": 1035,
+  "h": 588,
+  "boxv": 3,
+  "mtime": 1792751796
+ },
  "default:covers/chilis dark.mp4": {
   "kind": "video",
   "src": "media/covers-chilis-dark-f9cbd8.mp4",
@@ -1956,6 +1947,41 @@
   "h": 603,
   "boxv": 3,
   "mtime": 1792745102
+ },
+ "default:covers/chipotle dark.mp4": {
+  "kind": "video",
+  "src": "media/covers-chipotle-dark-fb7b63.mp4",
+  "poster": "media/covers-chipotle-dark-fb7b63-poster.webp",
+  "w": 1114,
+  "h": 646,
+  "files": [
+   "media/covers-chipotle-dark-fb7b63.mp4",
+   "media/covers-chipotle-dark-fb7b63-poster.webp"
+  ],
+  "mtime": 1792751793
+ },
+ "default:covers/chipotle light.mp4": {
+  "kind": "video",
+  "src": "media/covers-chipotle-light-f68ef7.mp4",
+  "poster": "media/covers-chipotle-light-f68ef7-poster.webp",
+  "w": 1114,
+  "h": 646,
+  "files": [
+   "media/covers-chipotle-light-f68ef7.mp4",
+   "media/covers-chipotle-light-f68ef7-poster.webp"
+  ],
+  "mtime": 1792751793
+ },
+ "default:covers/chipotle pop.png": {
+  "kind": "image",
+  "files": [
+   "media/covers-chipotle-pop-e3f9a6-v3.webp"
+  ],
+  "src": "media/covers-chipotle-pop-e3f9a6-v3.webp",
+  "w": 1055,
+  "h": 588,
+  "boxv": 3,
+  "mtime": 1792751797
  },
  "default:covers/mays dark.mp4": {
   "kind": "video",
@@ -2067,6 +2093,76 @@
   "h": 553,
   "boxv": 3,
   "mtime": 1792745104
+ },
+ "default:covers/quicklift dark.mp4": {
+  "kind": "video",
+  "src": "media/covers-quicklift-dark-a2f224.mp4",
+  "poster": "media/covers-quicklift-dark-a2f224-poster.webp",
+  "w": 1104,
+  "h": 650,
+  "files": [
+   "media/covers-quicklift-dark-a2f224.mp4",
+   "media/covers-quicklift-dark-a2f224-poster.webp"
+  ],
+  "mtime": 1792751794
+ },
+ "default:covers/quicklift light.mp4": {
+  "kind": "video",
+  "src": "media/covers-quicklift-light-ba71d3.mp4",
+  "poster": "media/covers-quicklift-light-ba71d3-poster.webp",
+  "w": 1104,
+  "h": 650,
+  "files": [
+   "media/covers-quicklift-light-ba71d3.mp4",
+   "media/covers-quicklift-light-ba71d3-poster.webp"
+  ],
+  "mtime": 1792751794
+ },
+ "default:covers/quicklift pop.png": {
+  "kind": "image",
+  "files": [
+   "media/covers-quicklift-pop-f92059-v3.webp"
+  ],
+  "src": "media/covers-quicklift-pop-f92059-v3.webp",
+  "w": 1045,
+  "h": 594,
+  "boxv": 3,
+  "mtime": 1792751797
+ },
+ "default:covers/robots dark.mp4": {
+  "kind": "video",
+  "src": "media/covers-robots-dark-c74d97.mp4",
+  "poster": "media/covers-robots-dark-c74d97-poster.webp",
+  "w": 992,
+  "h": 646,
+  "files": [
+   "media/covers-robots-dark-c74d97.mp4",
+   "media/covers-robots-dark-c74d97-poster.webp"
+  ],
+  "mtime": 1792751791
+ },
+ "default:covers/robots light.mp4": {
+  "kind": "video",
+  "src": "media/covers-robots-light-57b71d.mp4",
+  "poster": "media/covers-robots-light-57b71d-poster.webp",
+  "w": 992,
+  "h": 646,
+  "files": [
+   "media/covers-robots-light-57b71d.mp4",
+   "media/covers-robots-light-57b71d-poster.webp"
+  ],
+  "mtime": 1792751790
+ },
+ "default:covers/robots pop.png": {
+  "kind": "image",
+  "files": [
+   "media/covers-robots-pop-90c390-v3.webp"
+  ],
+  "src": "media/covers-robots-pop-90c390-v3.webp",
+  "w": 931,
+  "h": 569,
+  "boxv": 3,
+  "mtime": 1792751795
  },
  "default:dark/2_edited dark.png": {
   "kind": "image",

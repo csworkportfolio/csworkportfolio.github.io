@@ -14,29 +14,29 @@
       "title": "How I Designed Campaigns That Grew a Wellness App to 40K Users and Took a Summit to 10K Online",
       "subtitle": "Campaign Design for Public Health & Wellness"
     },
-    "lede": "Healthier Texas (formerly It’s Time Texas) is a statewide public health organization focused on wellness education, digital outreach, and community engagement. My role spanned social campaigns, video content, and visual storytelling across their web and email platforms during a critical phase of digital expansion.",
+    "lede": "Healthier Texas (formerly It's Time Texas) is a statewide public health organization focused on wellness education, digital outreach and community engagement. I worked on social campaigns, video and visual storytelling across their web and email channels during a big push into digital.",
     "blocks": [
       {
         "h": "THE PROBLEM",
         "p": [
-          "Healthier Texas runs statewide wellness campaigns that rely on strong visual communication — but in 2020, everything changed. The pandemic halted in-person events, increased urgency for digital outreach, and created a need to show up with clarity, compassion, and flexibility. The creative team needed design that could adapt quickly across platforms while keeping people—not programs—at the center."
+          "Healthier Texas runs statewide wellness campaigns that depend on strong visuals, and in 2020 everything changed. The pandemic stopped in-person events and made digital outreach urgent. The creative team needed design that could adapt quickly across platforms and keep people at the center of the programs."
         ]
       },
       {
         "h": "THE SOLUTION",
         "p": [
-          "I partnered with Healthier Texas to bring their campaigns to life across digital and physical spaces. From virtual summit branding to campaign videos and wellness app promotions, I created design systems, social content, and storytelling assets that helped inform and engage. Every piece — whether a social graphic or web visual—was made to feel real, human, and actionable, even in uncertain times."
+          "I worked with Healthier Texas to bring their campaigns to life online and in person, from virtual summit branding to campaign videos and wellness app promotions. I built design systems, social content and storytelling assets meant to inform and engage, and made each one feel real and easy to act on."
         ]
       },
       {
         "h": "Engaging Texans in Health and Wellness Amidst a Pandemic",
         "p": [
-          "When the COVID-19 shutdown hit, Healthier Texas (formerly It’s Time Texas) had to reimagine how they showed up for the public — and fast. Within weeks, we launched two digital-first campaigns built to uplift.",
-          "I worked to bring these programs to life visually. For Texans Thrive, I helped shape and visualize the website, turning stories of community resilience into a digital experience grounded in warmth and clarity. For Texas Sweats for Pets, I created a full suite of campaign visuals that included social graphics to email headers to paid ad creative — all designed to motivate movement and drive donations.",
+          "When the COVID-19 shutdown hit, Healthier Texas (formerly It's Time Texas) had to rethink how it showed up for the public, and fast. Within weeks we launched two digital-first campaigns.",
+          "I brought both to life visually. For Texans Thrive, I helped shape and design the website, turning stories of community resilience into a warm, clear digital experience. For Texas Sweats for Pets, I created the full set of campaign visuals, from social graphics and email headers to paid ad creative, all designed to get people moving and drive donations.",
           {
             "quote": "We needed something that felt joyful and human, even at a time when things felt heavy."
           },
-          "Together, these campaigns set the tone for how Healthier Texas would engage through the pandemic — a partner."
+          "Together, these campaigns set the tone for how Healthier Texas would engage people through the pandemic."
         ]
       },
       {
@@ -45,31 +45,37 @@
             "src": "TT.png",
             "title": "Texans Thrive Campaign: Designing a Visual Home for Stories of Resilience",
             "tools": "Adobe Photoshop, WordPress",
-            "desc": "At the start of the pandemic, Healthier Texas launched Texans Thrive, a statewide storytelling campaign created to connect communities through shared experience. I was tasked with designing the visual identity for the site and all campaign graphics.\nI developed a clean, mobile-forward layout anchored by warm photography and user-submitted stories. The goal was to make each story feel personal and immediate—like flipping through a community scrapbook. I also created custom illustrations and call-to-action modules that invited others to share their voices.\nThe campaign helped position Healthier Texas as a supportive, human-centred brand during a critical time, and built new digital connections between the organization and its audience."
+            "desc": "At the start of the pandemic, Healthier Texas launched Texans Thrive, a statewide storytelling campaign created to connect communities through shared experience. I was tasked with designing the visual identity for the site and all campaign graphics.\nI developed a clean, mobile-forward layout anchored by warm photography and user-submitted stories. The goal was to make each story feel personal and immediate, like flipping through a community scrapbook. I also created custom illustrations and call-to-action modules that invited others to share their voices.\nThe campaign presented Healthier Texas as a supportive, human-centred organization during the pandemic and built new digital connections with its audience.",
+            "cap": "I designed the site's visual identity and campaign graphics."
           },
           {
             "src": "TS4P.png",
             "title": "Texas Sweats for Pets: Designing a Campaign that Got Tails Wagging (and People Moving)",
             "tools": "Adobe Illustrator, Adobe Photoshop, Mailchimp, WordPress",
-            "desc": "To re-energize health goals at the start of 2021, Healthier Texas launched Texas Sweats for Pets — a virtual fitness fundraiser encouraging Texans to work out alongside their pets. My role was to lead the visual direction for the campaign and create all key graphic assets.\nI developed a playful visual system that used vibrant illustrations and high-energy type to bring warmth and joy to a fully digital experience. From social posts and email headers to web banners and call-to-action buttons, every asset was designed to feel dynamic and fun while communicating clear ways to participate.\nThis campaign helped strengthen brand recognition and drove strong turnout across web and email, while deepening our partnership with Austin Pets Alive! and increasing awareness around shared public health and animal welfare goals."
+            "desc": "To re-energize health goals at the start of 2021, Healthier Texas launched Texas Sweats for Pets, a virtual fitness fundraiser encouraging Texans to work out alongside their pets. My role was to lead the visual direction for the campaign and create all key graphic assets.\nI developed a playful visual system that used vibrant illustrations and high-energy type to bring warmth and joy to a fully digital experience. From social posts and email headers to web banners and call-to-action buttons, every asset was designed to feel dynamic and fun while communicating clear ways to participate.\nThis campaign helped strengthen brand recognition and drove strong turnout across web and email, while deepening our partnership with Austin Pets Alive! and increasing awareness around shared public health and animal welfare goals.",
+            "cap": "I led the visual direction and created the key graphics."
           },
           {
             "src": "Email TS4P.png",
             "title": "Texas Sweats for Pets: Designing a Campaign that Got Tails Wagging (and People Moving)",
             "tools": "Adobe Illustrator, Adobe Photoshop, Mailchimp, WordPress",
-            "desc": "This campaign helped strengthen brand recognition and drove strong turnout across web and email, while deepening our partnership with Austin Pets Alive! and increasing awareness around shared public health and animal welfare goals."
+            "desc": "This campaign helped strengthen brand recognition and drove strong turnout across web and email, while deepening our partnership with Austin Pets Alive! and increasing awareness around shared public health and animal welfare goals.",
+            "cap": "I led the visual direction and created the key graphics."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Bringing a Statewide Wellness Conference to Life Through Web and Social",
         "p": [
-          "The Healthier Texas Summit was one of the state’s largest public health events, and in 2020, it had to go fully virtual. That shift brought new creative challenges: how do you design a digital space that still feels connected, energizing, and real?",
-          "I led visual design across the Summit experience, from branded banners and speaker promos to a scalable social template system that could flex with every announcement. I leaned into vibrant color and people-first imagery to create a sense of energy, even through a screen. I didn't want to lose the human element just because it wasn’t being held in person this year.",
-          "The result was a visual system that carried through pre-event promotion, livestream assets, and post-event recaps — building consistency and excitement across platforms."
+          "The Healthier Texas Summit was one of the state's largest public health events, and in 2020 it had to go fully virtual. That raised a design question: how do you make a digital event still feel connected and real?",
+          "I led visual design across the Summit, from branded banners and speaker promos to a social template system that flexed with every announcement. I used vibrant color and people-first imagery to bring energy through a screen, because I didn't want to lose the human element just because we weren't in the same room.",
+          "The visual system carried through pre-event promotion, livestream assets and post-event recaps, so the Summit looked consistent everywhere it appeared."
         ]
       },
       {
@@ -78,24 +84,29 @@
             "src": "HTS Speak.png",
             "title": "Healthier Texas Summit Speaker Highlights",
             "tools": "Adobe Photoshop, Illustrator",
-            "desc": "To promote the annual Healthier Texas Summit, I developed a speaker spotlight series that blended vibrant visual identity with a sense of professionalism. The portraits feature high-profile keynote guests like Vice Admiral Jerome M. Adams and Dr. Nadine Gracia, both captured in a bold and clean layout designed to stop the scroll while conveying credibility. The subtle use of gradients and textured overlays offered visual warmth while reinforcing trust, aligning with the summit’s mission of public health equity.\nThis was a powerful way to bring front-and-centre the voices shaping our national dialogue on health."
+            "desc": "To promote the annual Healthier Texas Summit, I developed a speaker spotlight series that blended vibrant visual identity with a sense of professionalism. The portraits feature high-profile keynote guests like Vice Admiral Jerome M. Adams and Dr. Nadine Gracia, both captured in a bold and clean layout designed to stop the scroll while conveying credibility. The subtle use of gradients and textured overlays offered visual warmth while reinforcing trust, aligning with the summit’s mission of public health equity.",
+            "cap": "A speaker spotlight series I designed for the Summit."
           },
           {
             "src": "HTS Speakers.png",
             "title": "Healthier Texas Summit General Campaign",
             "tools": "Adobe Illustrator, Canva, Adobe Photoshop",
-            "desc": "This set of promotional graphics was created for various stages of the Healthier Texas Summit campaign—from calls for proposals to registration pushes. Designed to work across social, web, and email, the graphics balanced strong visual contrast with clear CTAs and consistent branding. Key speaker headshots were placed front and centre to personalise the event, while modern geometric overlays gave the campaign a tech-forward yet approachable tone.\nThe goal was to create something as energetic and impactful as the event itself — while making it effortless for viewers to engage."
+            "desc": "This set of promotional graphics was created for various stages of the Healthier Texas Summit campaign, from calls for proposals to registration pushes. Designed to work across social, web, and email, the graphics balanced strong visual contrast with clear CTAs and consistent branding. Key speaker headshots were placed front and centre to personalise the event, while modern geometric overlays gave the campaign a tech-forward yet approachable tone.\nThe goal was something as energetic as the event itself and easy for viewers to act on.",
+            "cap": "Summit graphics for social, web and email, from proposals to registration."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Branding Work for Healthy Texas Week + General Visual Support",
         "p": [
-          "Before the pandemic shifted timelines, I had developed the logo and early visuals for Healthy Texas Week, a campaign encouraging healthy eating and movement. While the event was eventually cancelled, the identity laid the groundwork for future brand efforts.",
-          "I also created evergreen visual assets for Healthier Texas’s ongoing digital presence: banners, content templates, and social graphics that helped the team stay consistent and responsive."
+          "Before the pandemic changed timelines, I designed the logo and early visuals for Healthy Texas Week, a campaign encouraging healthy eating and movement. The event was eventually cancelled, but the identity laid groundwork for later brand work.",
+          "I also created evergreen assets for Healthier Texas's ongoing digital presence: banners, content templates and social graphics that helped the team stay consistent and respond quickly."
         ]
       },
       {
@@ -104,23 +115,28 @@
             "src": "HTW.png",
             "title": "Healthy Texas Week Logo Design",
             "tools": "Adobe Illustrator",
-            "desc": "Designed to energize a statewide wellness initiative, this logo for 'Healthy Texas Week' combines playful retro typography with a bold blue Texas silhouette to spark visual impact. I created this mark to feel inviting and optimistic — something families and educators could easily rally around. The use of script lettering adds movement and personality, helping the campaign stand out across digital platforms and printed materials. Though the event was ultimately cancelled due to COVID-19, the logo still served as a unifying visual during early campaign rollout."
+            "desc": "Designed to energize a statewide wellness initiative, this logo for 'Healthy Texas Week' combines playful retro typography with a bold blue Texas silhouette to spark visual impact. I created this mark to feel inviting and optimistic, something families and educators could easily rally around. The use of script lettering adds movement and personality, helping the campaign stand out across digital platforms and printed materials. Though the event was ultimately cancelled due to COVID-19, the logo still served as a unifying visual during early campaign rollout.",
+            "cap": "I designed the logo for a campaign later cancelled by COVID-19."
           },
           {
             "src": "Social Banners.png",
             "title": "Digital Banners for Social Awareness Campaigns",
             "tools": "Adobe Illustrator, Adobe Photoshop",
-            "desc": "These social banners were part of two core awareness initiatives: a SNAP-funded campaign promoting community health during the pandemic, and a mobile app called 'Teach Healthier,' offering active brain breaks for kids. I focused on bright, diverse illustrations and clean, legible layouts that could connect with both parents and educators scrolling online. These visuals were used across social media, email newsletters, and website banners to help increase visibility and accessibility of our programs."
+            "desc": "These social banners were part of two core awareness initiatives: a SNAP-funded campaign promoting community health during the pandemic, and a mobile app called 'Teach Healthier,' offering active brain breaks for kids. I focused on bright, diverse illustrations and clean, legible layouts that could connect with both parents and educators scrolling online. These visuals were used across social media, email newsletters, and website banners to help increase visibility and accessibility of our programs.",
+            "cap": "Banners I designed for a SNAP-funded campaign and the Teach Healthier app."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Visual Design for Statewide Health Initiatives",
         "p": [
-          "These two programs brought public health to life at scale. One through playful competition, the other through practical training. For the Community Challenge, a wellness app used by tens of thousands across Texas, I created social, web, and app graphics that encouraged participation while staying accessible and inclusive. For the Regional Workshop Series, I designed digital materials and promotional content to support community leaders and educators."
+          "These two programs brought public health to life at scale, one through friendly competition and the other through practical training. For the Community Challenge, a wellness app used by tens of thousands across Texas, I created social, web and app graphics that encouraged people to take part and stayed accessible. For the Regional Workshop Series, I designed digital materials and promotional content for community leaders and educators."
         ]
       },
       {
@@ -129,56 +145,68 @@
             "src": "cc.png",
             "title": "Community Challenge Web Banner",
             "tools": "Adobe Illustrator, Adobe Photoshop",
-            "desc": "A promotional banner for the Community Challenge, one of Healthier Texas’ most impactful programs. The design I used features vibrant, high-contrast colors and a custom illustrated walking path to reflect momentum and unity. With a wave-like trail of diverse community members, the visual metaphor communicates collective movement toward better health. This design helped drive registrations during peak campaign periods and aligned with the broader brand update efforts across channels."
+            "desc": "A promotional banner for the Community Challenge, one of Healthier Texas’ most impactful programs. The design I used features vibrant, high-contrast colors and a custom illustrated walking path to reflect momentum and unity. With a wave-like trail of diverse community members, the visual metaphor communicates collective movement toward better health. This design helped drive registrations during peak campaign periods and aligned with the broader brand update efforts across channels.",
+            "cap": "A promotional banner I designed for the Community Challenge."
           },
           {
             "src": "Social Media.png",
             "title": "Regional Workshop & Social Media Campaigns",
             "tools": "Adobe Illustrator, Adobe Photoshop",
-            "desc": "This collection of digital graphics supported multiple Healthier Texas initiatives, including the Regional Workshop Series, Texas Walks, and SNAP-funded outreach. My role involved creating social-friendly visuals with clear, accessible layouts and consistent branding. Illustrations were used to help humanize virtual events and draw attention on social feeds. While each graphic had a unique audience or objective, they all reflected a shared mission: bringing Texans together through health-focused action."
+            "desc": "This collection of digital graphics supported multiple Healthier Texas initiatives, including the Regional Workshop Series, Texas Walks, and SNAP-funded outreach. My role involved creating social-friendly visuals with clear, accessible layouts and consistent branding. Illustrations were used to help humanize virtual events and draw attention on social feeds. While each graphic had a unique audience or objective, they all reflected a shared mission: bringing Texans together through health-focused action.",
+            "cap": "Graphics I made for the Regional Workshop Series, Texas Walks and SNAP outreach."
           },
           {
             "src": "Frontline.png",
             "title": "#GivingTuesdayNow Thank-You to Essential Workers",
-            "desc": "When the pandemic put frontline workers under enormous strain, It's Time Texas wanted to pause and simply say thank you. I designed this #GivingTuesdayNow social graphic around a single masked healthcare worker, cropped on an angle so the photo feels candid rather than staged.\nThe message sits in bold, stacked blue bars that echo the brand palette and read instantly in a crowded feed. Keeping the copy short let the image carry the gratitude while the logo stayed quietly in the corner."
+            "desc": "When the pandemic put frontline workers under enormous strain, It's Time Texas wanted to pause and simply say thank you. I designed this #GivingTuesdayNow social graphic around a single masked healthcare worker, cropped on an angle so the photo feels candid rather than staged.\nThe message sits in bold, stacked blue bars that echo the brand palette and read instantly in a crowded feed. Keeping the copy short let the image carry the gratitude while the logo stayed quietly in the corner.",
+            "cap": "A thank-you graphic I designed for frontline workers."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "End-to-End Video Production Featuring Public Leaders and Community Partners",
         "p": [
-          "From interviews with the Mayor of Austin to spotlights on nonprofit partners, I handled video production end-to-end: scripting, filming, editing, and motion. These pieces helped humanize the broader work, offering audiences a direct connection to the people behind the policies and programs."
+          "From interviews with the Mayor of Austin to spotlights on nonprofit partners, I handled video production end to end: scripting, filming, editing and motion. These pieces gave audiences a direct connection to the people behind the programs."
         ]
       },
       {
         "gap": 50,
-        "label": "Click a Video to Watch",
+        "label": "",
         "play": "click",
         "gallery": [
           {
             "v": "nD0pXIu1OO4",
             "title": "Tackling Food Insecurity with Urban Roots",
-            "desc": "This partner spotlight takes viewers out to the farm with Urban Roots, a nonprofit working to fight food insecurity. I wanted the story to come straight from the people doing the work, so the piece is built around an on-site interview set against rows of fresh greens.\nI handled the production end to end, from scripting and filming to editing and motion. The result is a short, grounded film that puts a human face on the partnerships behind Healthier Texas' programs."
+            "desc": "This partner spotlight takes viewers out to the farm with Urban Roots, a nonprofit working to fight food insecurity. I wanted the story to come straight from the people doing the work, so the piece is built around an on-site interview set against rows of fresh greens.\nI handled the production end to end, from scripting and filming to editing and motion. The result is a short, grounded film that puts a human face on the partnerships behind Healthier Texas' programs.",
+            "cap": "A partner spotlight I scripted, filmed and edited."
           },
           {
             "v": "PxXYS6s87G8",
             "title": "2020 Community Challenge with Mayor Steve Adler",
-            "desc": "For the 2020 Community Challenge, I filmed Austin Mayor Steve Adler in his office, surrounded by the city's past Community Challenge trophies. Basketball in hand, he invites Austinites to get moving and help defend the title.\nKeeping it under a minute made it easy to share across social channels. I wanted a public leader's message to feel approachable and playful, so the framing leans on the trophies and props rather than a formal podium address."
+            "desc": "For the 2020 Community Challenge, I filmed Austin Mayor Steve Adler in his office, surrounded by the city's past Community Challenge trophies. Basketball in hand, he invites Austinites to get moving and help defend the title.\nKeeping it under a minute made it easy to share across social channels. I wanted a public leader's message to feel approachable and playful, so the framing leans on the trophies and props rather than a formal podium address.",
+            "cap": "I filmed Austin Mayor Steve Adler for the 2020 Community Challenge."
           },
           {
             "v": "kPqrLVgfQQs",
             "title": "Community Challenge App Walkthrough Video",
-            "desc": "When the Community Challenge moved into a new app, participants needed a clear, friendly guide to getting started. I produced this walkthrough video to introduce the app and show people how to join in.\nThe piece opens on the bright orange Community Challenge branding and keeps that same energy throughout. I focused on pacing and clarity so that first-time users of any comfort level could follow along and feel ready to participate."
+            "desc": "When the Community Challenge moved into a new app, participants needed a clear, friendly guide to getting started. I produced this walkthrough video to introduce the app and show people how to join in.\nThe piece opens on the bright orange Community Challenge branding and keeps that same energy throughout. I focused on pacing and clarity so that first-time users of any comfort level could follow along and feel ready to participate.",
+            "cap": "A walkthrough video I produced for the Community Challenge app."
           }
-        ]
+        ],
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Photography to Capture Real Moments and Mission Impact",
         "p": [
-          "Behind the scenes, I captured photography — mostly for the Healthier Texas Summit and community activations to support social posts, blog content, and newsletters. Whether it was a speaker on stage or a team in motion, the goal was always to reflect the real people moving health forward."
+          "I also shot photography, mostly at the Healthier Texas Summit and community activations, for social posts, blog content and newsletters. Whether it was a speaker on stage or a team in motion, I aimed to show the real people moving health forward."
         ]
       },
       {
@@ -186,32 +214,54 @@
           {
             "src": "C_094.jpg",
             "title": "Healthier Texas Summit: Conversations Between Sessions",
-            "desc": "Some of the best moments at the Healthier Texas Summit happened in the hallways. I caught this exchange between a speaker and an attendee outdoors between sessions, both mid-thought and fully engaged.\nShooting candidly with natural light kept the image warm and unposed. Photos like this gave our social posts and newsletters a real sense of the connections the Summit was built to spark."
+            "desc": "Some of the best moments at the Healthier Texas Summit happened in the hallways. I caught this exchange between a speaker and an attendee outdoors between sessions, both mid-thought and fully engaged.\nShooting candidly with natural light kept the image warm and unposed. Photos like this gave our social posts and newsletters a real sense of the connections the Summit was built to spark.",
+            "cap": "I photographed the Summit for social posts and newsletters."
           },
           {
             "src": "DSC03133.jpg",
             "title": "Breakout Session at the Summit",
-            "desc": "A presenter walks a packed room through a program in one of the Summit's breakout sessions. I framed the shot from the back of the audience so the speaker, the slide and the crowd all read in a single image.\nThe branded \"SHARE!\" sign in the background was a nice bonus, tying the moment back to the event's social push. These wide shots were useful for recap posts and blog content after the event."
+            "desc": "A presenter walks a packed room through a program in one of the Summit's breakout sessions. I framed the shot from the back of the audience so the speaker, the slide and the crowd all read in a single image.\nThe branded \"SHARE!\" sign in the background was a nice bonus, tying the moment back to the event's social push. These wide shots were useful for recap posts and blog content after the event.",
+            "cap": "I photographed a breakout session from the back of the room."
           },
           {
             "src": "P_065.jpg",
             "title": "Attendees Taking Notes in a Workshop",
-            "desc": "This shot focuses on one attendee writing notes during a session, with the rest of the room softly blurred around her. I used a shallow depth of field to pull the eye to the act of learning itself.\nI wanted the Summit photography to feel like it was about the people in the seats, not just the speakers on stage. Images like this helped show that the event was hands-on and worth attending."
+            "desc": "This shot focuses on one attendee writing notes during a session, with the rest of the room softly blurred around her. I used a shallow depth of field to pull the eye to the act of learning itself.\nI wanted the Summit photography to feel like it was about the people in the seats, not just the speakers on stage. Images like this helped show that the event was hands-on and worth attending.",
+            "cap": "I photographed an attendee taking notes during a session."
           },
           {
             "src": "Brochure-Asking-Question-1.jpg",
             "title": "Audience Q&A During a General Session",
-            "desc": "An attendee steps up to the microphone during an audience Q&A in the main ballroom. I picked her out of a full room and kept the crowd around her as soft foreground, so she still reads clearly as one voice among many.\nThis is the kind of moment I looked for most: real participation rather than polished stage shots. The file name suggests it went on to support printed brochure material as well as digital channels."
+            "desc": "An attendee steps up to the microphone during an audience Q&A in the main ballroom. I picked her out of a full room and kept the crowd around her as soft foreground, so she still reads clearly as one voice among many.\nThis is the kind of moment I looked for most: real participation rather than polished stage shots.",
+            "cap": "I photographed an audience Q&A in the main ballroom."
           }
         ],
-        "gap": 10,
-        "play": "auto"
+        "gap": 50,
+        "play": "auto",
+        "label": "",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       }
     ],
     "next": {
       "slug": "partnerships",
       "label": "Next Case Study: Redzone Partnerships"
-    }
+    },
+    "glance": [
+      [
+        "40K",
+        "Users of the wellness app, up from 20K the year before"
+      ],
+      [
+        "10K",
+        "People reached online when the Summit went virtual"
+      ],
+      [
+        "2",
+        "Digital-first campaigns launched within weeks of the 2020 shutdown"
+      ]
+    ]
   },
   {
     "slug": "partnerships",
@@ -238,31 +288,32 @@
         }
       ],
       "title": "How I Brought QAD Redzone’s Biggest Partnerships to Life Across Web, Video, and Social",
-      "subtitle": "Cross-Channel Design for Redzone Partnerships"
+      "subtitle": "Cross-Channel Design for Redzone Partnerships",
+      "logos_in_glance": true
     },
-    "lede": "As Redzone partnered with top-tier brands in the manufacturing and CPG space, I supported their collaborative storytelling through design and video. This case study explores how I helped deliver unified, high-impact creative across web, video, and campaign content.",
+    "lede": "As Redzone partnered with leading brands in manufacturing and consumer goods, I supported the shared storytelling through design and video. This case study covers how I helped deliver consistent creative across web, video and campaign content.",
     "blocks": [
       {
         "h": "THE PROBLEM",
         "p": [
-          "Redzone’s partner collaborations were high-profile but creatively fragmented. Materials across slides, social, and web lacked consistency, making it difficult to present a unified brand narrative—especially when aligning with partners like Apple or Ferrara."
+          "Redzone's partner collaborations were high profile, but the creative was fragmented. Slides, social and web materials didn't match, which made it hard to present one clear story, especially alongside partners like Apple or Ferrara."
         ]
       },
       {
         "h": "THE SOLUTION",
         "p": [
-          "I developed co-branded presentations, social graphics, web features, and video content that told a cohesive visual story. The assets respected each partner’s brand while reinforcing Redzone’s identity across internal and public-facing materials."
+          "I developed co-branded presentations, social graphics, web features and video that told one visual story. The assets respected each partner's brand while keeping Redzone's identity clear in internal and public materials."
         ]
       },
       {
         "h": "Delivering Consistent Visual Storytelling Across Redzone’s Most High-Profile Collaborations",
         "p": [
-          "Redzone’s reach spans hundreds of manufacturing plants, from household brands like Hershey and Tyson to local family-run operations. Every partner deserves to be represented with the same level of care, consistency, and clarity.",
-          "This section highlights the design work I led in collaboration with our most recognizable customers. My goal was always to elevate — not overshadow — their story. That meant building creative that felt personal, on-brand, and fully aligned with each company’s tone, whether it was for a social spotlight, co-branded feature, or event asset.",
+          "Redzone's reach spans hundreds of manufacturing plants, from household brands like Hershey and Tyson to local family-run operations. Every partner deserves the same care, consistency and clarity.",
+          "This section covers the design work I led with our most recognizable customers. My goal was to lift their story without overshadowing it, with creative that felt personal, on brand and in step with each company's tone, whether it was a social spotlight, a co-branded feature or an event asset.",
           {
             "quote": "More than just customers, but community members."
           },
-          "Every project was rooted in a simple but powerful design philosophy: the partner is the hero, Redzone is the enabler. Through thoughtful type choices, smart layout systems, and visual pacing, I created repeatable frameworks that helped Redzone tell big stories with a consistent brand voice — without ever losing the individuality of the teams we were spotlighting."
+          "Every project followed one idea: the partner is the hero and Redzone is the enabler. With careful type choices, layout systems and pacing, I built repeatable frameworks that let Redzone tell big stories in a consistent voice while keeping each team's individuality."
         ]
       },
       {
@@ -271,35 +322,42 @@
             "src": "QRZ Partner.png",
             "title": "Customer Testimonials: Web & Social Graphics",
             "tools": "Adobe Illustrator",
-            "desc": "For this set of branded testimonials, I crafted a cohesive visual style that allowed each customer story to shine while maintaining Redzone’s bold, human-first aesthetic. Whether featured in social media posts or embedded in web placements, each graphic highlights tangible results, like a 34% changeover time reduction or the equivalent of a free plant’s worth of capacity. Quotes from frontline leaders at companies like Nestlé Purina, Post Consumer Brands, and Gorilla Glue were paired with brand-aligned photography and data visuals to underscore impact. My goal was to let the customer voices lead, using layout and color to keep the focus on their results."
+            "desc": "For this set of branded testimonials, I crafted a cohesive visual style that allowed each customer story to shine while maintaining Redzone’s bold, human-first aesthetic. Whether featured in social media posts or embedded in web placements, each graphic highlights tangible results, like a 34% changeover time reduction or the equivalent of a free plant’s worth of capacity. Quotes from frontline leaders at companies like Nestlé Purina, Post Consumer Brands, and Gorilla Glue were paired with brand-aligned photography and data visuals to underscore impact. My goal was to let the customer voices lead, using layout and color to keep the focus on their results.",
+            "cap": "Branded customer testimonials I designed for web and social."
           },
           {
             "src": "Slide 1.png",
             "title": "Apple Presentation: Community Growth Slide",
             "tools": "Adobe Photoshop, Procreate, Keynote",
-            "desc": "This keynote visual was designed to kick off a major manufacturing leadership summit hosted by Apple. I built a minimalist, emotionally resonant slide that paired growth stats with actual frontline workers to reinforce the human impact behind the numbers. I quickly learned working alongside their team, that tuning this with a more stylized illustration concept and shadowing allowed me to tie brand color with cinematic depth of Apple — helping Redzone stand out in a room full of enterprise software presentations.\nThe presentation was delivered by QAD Redzone's Blake Strickland."
+            "desc": "This keynote visual was designed to kick off a major manufacturing leadership summit hosted by Apple. I built a minimalist, emotionally resonant slide that paired growth stats with actual frontline workers to reinforce the human impact behind the numbers. Working alongside Apple's team, I learned that a more stylized illustration concept and shadowing could tie brand color to Apple's cinematic depth, which helped Redzone stand out in a room full of enterprise software presentations.\nThe presentation was delivered by QAD Redzone's Blake Strickland.",
+            "cap": "The opening slide of the summit deck I designed for an Apple-hosted event."
           },
           {
             "src": "Leading the Way.png",
             "title": "Leading the Way: Women’s History Month Campaign",
-            "desc": "To mark Women's History Month and International Women’s Day, I created this graphic to anchor a larger blog and social campaign highlighting the impact of women across Redzone’s customer base. Rather than spotlighting internal employees, we focused on frontline operators and team leads — like Shannon, Mallory, and Mireya, who are driving transformation from the factory floor. I designed this infographic-style piece with a celebratory and empowering tone, pairing each story with their real accomplishments and strong visual presence. The layout was inspired by award spotlights and magazine-style compositions, centering the theme of recognition and visibility."
+            "desc": "To mark Women's History Month and International Women’s Day, I created this graphic to anchor a larger blog and social campaign highlighting the impact of women across Redzone’s customer base. Rather than spotlighting internal employees, we focused on frontline operators and team leads like Shannon, Mallory, and Mireya, who are driving transformation from the factory floor. I designed this infographic-style piece with a celebratory and empowering tone, pairing each story with their real accomplishments and strong visual presence. The layout was inspired by award spotlights and magazine-style compositions, centering the theme of recognition and visibility.",
+            "cap": "The anchor graphic for a Women's History Month blog and social campaign."
           },
           {
             "src": "Slide 2.png",
             "title": "Apple Presentation: Product Feature Flow",
             "tools": "Adobe Photoshop, Procreate, Keynote",
-            "desc": "Created as part of the same Apple-hosted summit deck, this slide walks the viewer through a day in the life of a plant operator using Redzone. Inspired by the gesture-based interface language of Apple’s own marketing, I designed this slide to feel tactile and intentional — placing each feature along the hand’s movement path to mirror real app interaction. It was one of our most memorable slides, connecting software usability with physical intuition."
+            "desc": "Created as part of the same Apple-hosted summit deck, this slide walks the viewer through a day in the life of a plant operator using Redzone. Inspired by the gesture-based interface language of Apple’s own marketing, I designed this slide to feel tactile and intentional, placing each feature along the hand’s movement path to mirror real app interaction. It was one of our most memorable slides, connecting software usability with physical intuition.",
+            "cap": "A feature-flow slide from the same Apple summit deck."
           }
         ],
-        "gap": 10,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "gap": 50,
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Visualizing Redzone’s Reach Across Global Production",
         "p": [
-          "Real people and products moving through the factory floor every day. To tell that story visually, I created two graphics: a 3D vending machine and a top-down conveyor line, each filled with packaging from actual Redzone customers. From PEZ to Carmex, every item on the shelf or belt represents a frontline team, a success story, a culture of progress.",
-          "These visuals were used across global ad placements and social activations, acting as a playful but strategic nod to the real-world impact Redzone powers. It’s design in service of something bigger: recognizing that behind every data point is a snack, a spice jar, or a chocolate bar—and behind those, a person doing their best work."
+          "Real people and products move through the factory floor every day. To show that, I created two graphics, a 3D vending machine and a top-down conveyor line, each filled with packaging from actual Redzone customers. From PEZ to Carmex, every item stands for a frontline team.",
+          "The visuals ran in global ad placements and social activations as a playful nod to the real-world impact Redzone powers. Behind every data point is a snack, a spice jar or a chocolate bar, and behind each of those is a person doing their best work."
         ]
       },
       {
@@ -308,41 +366,49 @@
             "src": "Partner Spotlight.png",
             "title": "Bringing the Brand to Life Through Familiar Forms",
             "tools": "Adobe Photoshop",
-            "desc": "To translate the scale and diversity of Redzone’s customer base into something instantly recognizable, I reimagined the traditional vending machine. But instead of snacks, each slot was filled with product package —everything from Cheesecake Factory's delectable dessert to Tyson chicken strips — designed to match real Redzone customers. Every detail, from the glowing Redzone light to the moving assembly line, was tailored to reflect the modern, tech-forward tone of the brand.\nThis visual became more than a graphic—it served as an activation point across web, social, and event placements. It visually embodies the question: What do all these brands have in common? Redzone. It’s a simple concept with layered meaning: everyday items, backed by extraordinary frontline teams using the same software."
+            "desc": "To translate the scale and diversity of Redzone’s customer base into something instantly recognizable, I reimagined the traditional vending machine. But instead of snacks, each slot was filled with product packaging, everything from Cheesecake Factory's desserts to Tyson chicken strips, designed to match real Redzone customers. Every detail, from the glowing Redzone light to the moving assembly line, was tailored to reflect the modern, tech-forward tone of the brand.\nIt also served as an activation point across web, social, and event placements. It visually embodies the question: What do all these brands have in common? Redzone. It’s a simple concept with layered meaning: everyday items, backed by extraordinary frontline teams using the same software.",
+            "cap": "A vending machine stocked with real customers' packaging, for web, social and events."
           }
         ],
-        "gap": 10,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "gap": 50,
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Transforming Partner Relationships into Scroll-Stopping Video Stories",
         "p": [
-          "Behind every metric is a person. That belief shaped the video content I created for Redzone — shifting the spotlight away from product features and towards the stories of the people using the software every day.",
-          "These weren’t scripted testimonials. They were real moments with real workers — from packaging leads and shift supervisors to maintenance techs — speaking in their own words about what Redzone helped them achieve. I helped concept, script, and shape the visual language of these stories, making sure they felt less like corporate PR and more like short-form stories.",
-          "Many of these narrative-driven stories were captured on-site or in close partnership with our customer success team, ensuring every message aligned with what mattered most to that plant. Some videos went further — spotlighting frontline transformation, generational impact, or personal growth in leadership roles. These weren’t just about what Redzone does — they were about how it feels to use it."
+          "Behind every metric is a person. That idea shaped the video I created for Redzone, which moved the spotlight from product features to the people using the software every day.",
+          "These weren't scripted testimonials. They were real moments with real workers, from packaging leads and shift supervisors to maintenance techs, speaking in their own words about what Redzone helped them achieve. I helped concept, script and shape the visual language so they felt like short stories rather than corporate PR.",
+          "Many were captured on site or with our customer success team, so each message matched what mattered most to that plant. Some went further, spotlighting frontline transformation, generational impact or personal growth in leadership roles."
         ]
       },
       {
-        "gap": 0,
-        "label": "Click a Video to Watch",
+        "gap": 50,
+        "label": "",
         "play": "click",
         "gallery": [
           {
             "v": "1075028930",
             "title": "Stories from the Factory Floor: Episode One",
             "desc": "The first entry in the 'Stories from the Factory Floor' series opens with a quote card and audio waveform introducing a continuous improvement leader at Valentine. It is told in their own words, with Redzone and partner branding sharing the frame.\nI shaped the visual language to feel like a short-form story, not corporate PR: bold red title bar, simple type, and the partner's voice carrying the narrative.",
-            "tools": "Adobe Premiere Pro"
+            "tools": "Adobe Premiere Pro",
+            "cap": "The first episode of a series told in a customer's own words."
           }
-        ]
+        ],
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Supporting Authenticity and Tone by Capturing the Heart of the Frontline",
         "p": [
-          "When it came to photography, my goal was to tell a story in a single frame — to capture pride, momentum, and the humanity behind manufacturing.",
-          "I directed and captured original photography across customer sites and Redzone events, creating a library of images that showcased more than just process — they showed people in their element. Every image reinforced our brand’s shift toward authenticity and emotional resonance.",
-          "These photos supported everything from ad campaigns and customer success stories to web and social use. But more importantly, they helped build Redzone’s visual voice: one that said, “We see you. We’re with you. And your work matters.”",
-          "I wanted to make sure that most of these works highlighted that real change starts with real people. And when you’re building a brand rooted in trust, showing the frontline matters just as much as showing the software."
+          "For photography, I tried to tell a story in a single frame: the pride, momentum and humanity behind manufacturing.",
+          "I directed and shot original photography at customer sites and Redzone events, building a library of images that showed people in their element as well as the process. The images supported the brand's shift toward authenticity.",
+          "They were used in ad campaigns, customer success stories, web and social, and they helped shape Redzone's visual voice: “We see you. We’re with you. And your work matters.”",
+          "Real change starts with real people, and when a brand is built on trust, showing the frontline matters as much as showing the software."
         ]
       },
       {
@@ -350,32 +416,46 @@
           {
             "src": "1683214032733_edited.jpg",
             "title": "Frontline Team Celebrates Going Paperless",
-            "desc": "Hard hats, lab coats and a flurry of tossed paper: a plant team celebrates in the moment, arms raised and smiling. I wanted the frame to feel as loose and joyful as the room did.\nThis is the kind of image that shows real change starting with real people, and it carried that message into customer stories and social posts."
+            "desc": "Hard hats, lab coats and a flurry of tossed paper: a plant team celebrates in the moment, arms raised and smiling. I wanted the frame to feel as loose and joyful as the room did.\nThis is the kind of image that shows real change starting with real people, and it carried that message into customer stories and social posts.",
+            "cap": "I photographed a plant team celebrating going paperless."
           },
           {
             "src": "1697025622812.jfif",
             "title": "Hard Hats Under the Redzone Scoreboard",
-            "desc": "A live Redzone scoreboard hangs above the plant floor while team members in yellow hard hats look on, softly out of focus. Keeping the screen sharp and the people blurred puts the data and its audience in one frame.\nI used depth of field to show the software where it actually lives, on the floor, in front of the people it serves."
+            "desc": "A live Redzone scoreboard hangs above the plant floor while team members in yellow hard hats look on, softly out of focus. Keeping the screen sharp and the people blurred puts the data and its audience in one frame.\nI used depth of field to show the software where it actually lives, on the floor, in front of the people it serves.",
+            "cap": "I photographed a live Redzone scoreboard on the plant floor."
           },
           {
             "src": "1701990351606.jfif",
             "title": "Knowledge-Sharing Session at a Partner Site",
-            "desc": "In a brightly branded room, a presenter shares Redzone University and Knowledge Base highlights with a circle of attendees, with panelists waiting to the side. The wide angle captures the whole room and how engaged it was.\nPhotos like this showed partners as community members, not just customers, learning alongside each other in person."
+            "desc": "In a brightly branded room, a presenter shares Redzone University and Knowledge Base highlights with a circle of attendees, with panelists waiting to the side. The wide angle captures the whole room and how engaged it was.\nPhotos like this showed partners as community members, not just customers, learning alongside each other in person.",
+            "cap": "I photographed a knowledge-sharing session at a partner site."
           },
           {
             "src": "1698869908109.jfif",
             "title": "Plant Tour Gathered Around Live Data",
-            "desc": "A group in hard hats, hairnets and white coats gathers beneath a wall-mounted Redzone screen during a plant tour, every head turned toward the live numbers. I shot from inside the group so the viewer stands with them.\nIt captures the brand promise in one frame: real-time data shared openly on the floor with the people who make the product."
+            "desc": "A group in hard hats, hairnets and white coats gathers beneath a wall-mounted Redzone screen during a plant tour, every head turned toward the live numbers. I shot from inside the group so the viewer stands with them.\nIt captures the brand promise in one frame: real-time data shared openly on the floor with the people who make the product.",
+            "cap": "I photographed a plant tour gathered around live data."
           }
         ],
-        "gap": 30,
-        "play": "auto"
+        "gap": 50,
+        "play": "auto",
+        "label": "",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       }
     ],
     "next": {
       "slug": "freelance",
       "label": "Next Case Study: Freelance Work"
-    }
+    },
+    "glance": [
+      [
+        "Hundreds",
+        "Of manufacturers I worked with through Redzone's partnerships"
+      ]
+    ]
   },
   {
     "slug": "freelance",
@@ -387,26 +467,26 @@
       "title": "How I Explored Brand Identity and Creative Storytelling Through Client and Personal Work",
       "subtitle": "Beyond the Brief"
     },
-    "lede": "This collection brings together freelance work, self-directed creative projects, and visual storytelling developed outside of full-time roles. From real client branding needs to personal campaign experiments, each project reflects a different aspect of my design approach — whether that’s refining layout systems, developing voice, or pushing visual identity in new directions.",
+    "lede": "This collection brings together freelance work, self-directed projects and visual storytelling made outside full-time roles. From real client branding needs to personal campaign experiments, each project shows a different side of how I design, whether that's refining layout systems, developing a voice or pushing a visual identity somewhere new.",
     "blocks": [
       {
         "h": "THE PROBLEM",
         "p": [
-          "Working within structured brand environments often means playing it safe. I wanted space to explore tone, story, and aesthetic choices that don’t always fit traditional formats — while also taking on freelance projects that challenged me to solve real-world problems within tight timelines and diverse industries."
+          "Working inside structured brand environments often means playing it safe. I wanted room to explore tone, story and style that don't fit traditional formats, and to take on freelance projects with real problems, tight timelines and a range of industries."
         ]
       },
       {
         "h": "THE SOLUTION",
         "p": [
-          "I used this space to build scrollable web layouts, fictional campaigns, identity systems, and brand assets from the ground up. Whether creating for clients, testing bold visuals, or designing just for fun, each piece helped sharpen my instincts, grow my creative range, and expand my ability to translate ideas into clear, visual communication."
+          "I used this space to build scrolling web layouts, fictional campaigns, identity systems and brand assets from the ground up. Whether it was for a client, a bold experiment or just for fun, each piece sharpened my instincts and widened my range."
         ]
       },
       {
         "h": "Designing for Real Clients with Practical Brand Challenges",
         "p": [
-          "Outside of in-house roles, I’ve worked with individuals, startups, and causes to craft design that speaks directly to people. Whether it’s helping a new AI brand find its voice through calming, ambient visuals or designing a social campaign to honor a marathon runner's fundraiser for cancer, each freelance project begins the same way: by listening.",
-          "Stories made visual. A concert poster that plays with rhythm and typography. A thumbnail that blends interior style with creator personality. A wellness brand that calms with color. Each graphics made with purpose to resonate.",
-          "Freelance work gives me the space to explore different tones, tools, and ideas. But the goal is always the same: make it feel honest, human, and emotionally in tune."
+          "Outside in-house roles, I've designed for individuals, startups and causes, from a calm, ambient look for a new AI brand concept to a social campaign honoring a marathon runner's fundraiser for cancer. Each project starts the same way: by listening.",
+          "The work ranges from a concert promo that plays with rhythm and type to a video thumbnail that blends interior style with the creator's personality.",
+          "Freelance work gives me room to try different tones, tools and ideas, and the goal stays the same: make it feel honest and human."
         ]
       },
       {
@@ -414,41 +494,47 @@
           {
             "src": "Hushum.png",
             "title": "Hushhum AI: Marketing Materials",
-            "desc": "Hushhum is an AI-powered ambience app designed to help users focus, sleep, and relax through customizable white, pink, and green noise. As a self-initiated concept launch campaign, I created a series of lifestyle-driven social graphics that would immediately communicate the emotional benefit of the app — not just the feature set.\nI leaned into evocative visuals: sun-warmed portraits and fluid shapes that mirror the calming waveforms of ambient sound. Each graphic paired a stylized human moment with a short, lyrical line of copy to invite curiosity and gently explain the product’s key differentiator — the ability to dial into the right kind of noise for your moment.\nThis project balanced expressive storytelling with brand development, helping position Hushhum not as a utility, but as a feeling."
+            "desc": "Hushhum is an AI-powered ambience app designed to help users focus, sleep, and relax through customizable white, pink, and green noise. As a self-initiated concept launch campaign, I created a series of lifestyle-driven social graphics that would immediately communicate the emotional benefit of the app before the feature set.\nI leaned into evocative visuals: sun-warmed portraits and fluid shapes that mirror the calming waveforms of ambient sound. Each graphic paired a stylized human moment with a short, lyrical line of copy to invite curiosity and gently explain the product’s key differentiator: the ability to dial into the right kind of noise for your moment.\nThis project balanced expressive storytelling with brand development, presenting Hushhum as a feeling more than a utility.",
+            "cap": "Self-initiated. Launch social graphics for Hushhum, an AI ambience app."
           },
           {
             "src": "News.png",
             "title": "Daily News Social Template System",
-            "desc": "This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second. A consistent footer with source credits and a \"Follow us on X\" prompt keeps the whole set feeling like one recognisable channel."
+            "desc": "This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second. A consistent footer with source credits and a \"Follow us on X\" prompt keeps the whole set feeling like one recognisable channel.",
+            "cap": "Self-initiated. A square template system for daily news updates."
           },
           {
             "src": "Thumbnail.png",
             "title": "Youtube Thumbnail for Video Series",
             "tools": "Adobe Photoshop, Lightroom",
-            "desc": "This Youtube thumbnail was created as part of a series exploring modern design principles through a lifestyle lens. In this episode, the creator breaks down “Harsh vs. Soft Features” in mid-century modern interiors — from sculpted wood to clean-lined decor. My challenge was to capture that narrative in a single visual frame.\nI built the composition with a layered, editorial feel: warm-toned textures, natural shadows, and a smiling host visually tied to the subject matter. The placement of objects — from the vase to the teak chair — nods to the theme of contrast, while the serif typography lends a tactile, print-like quality that aligns with the aesthetic audience.\nA polished but personality-driven thumbnail that reflects the channel’s growing voice — part expert, part creative guide — while drawing in viewers with clear, story-rich cues."
+            "desc": "This Youtube thumbnail was created as part of a series exploring modern design principles through a lifestyle lens. In this episode, the creator breaks down “Harsh vs. Soft Features” in mid-century modern interiors, from sculpted wood to clean-lined decor. My challenge was to capture that narrative in a single visual frame.\nI built the composition with a layered, editorial feel: warm-toned textures, natural shadows, and a smiling host visually tied to the subject matter. The placement of objects, from the vase to the teak chair, nods to the theme of contrast, while the serif typography lends a tactile, print-like quality that aligns with the aesthetic audience.\nThe result is polished but personal, reflecting the channel’s growing voice (part expert, part creative guide) while drawing viewers in with clear cues.",
+            "cap": "A YouTube thumbnail I designed for a series on mid-century design."
           },
           {
             "src": "LANY.png",
-            "desc": "Promotional piece for indie-pop band LANY’s live performance at Stubb’s BBQ in Austin, TX. The challenge was to capture the band’s sleek, modern aesthetic while injecting the visual energy of a live show announcement — all within the vertical, fast-scrolling world of Instagram Stories.\nThe layered typography gives the illusion of motion and repetition, mimicking the rhythm and buildup of anticipation before a concert. Each line of text bleeds downward with subtle opacity and colour shifts, creating a sense of scale and sound. The hero photo — styled with high contrast and crisp light — plants the viewer eye-level with the band, drawing them into the scene.\nThis was a great opportunity to experiment with music branding in a way that balanced clarity with fan excitement, and pushed Instagram-native design choices to feel bold, scroll-stopping, and rhythmic.",
-            "title": "LANY Live at Stubb's: Instagram Story Promo"
+            "desc": "Promotional piece for indie-pop band LANY’s live performance at Stubb’s BBQ in Austin, TX. The challenge was to capture the band’s sleek, modern aesthetic while injecting the visual energy of a live show announcement, all within the vertical, fast-scrolling world of Instagram Stories.\nThe layered typography gives the illusion of motion and repetition, mimicking the rhythm and buildup of anticipation before a concert. Each line of text bleeds downward with subtle opacity and colour shifts, creating a sense of scale and sound. The hero photo, styled with high contrast and crisp light, plants the viewer eye-level with the band, drawing them into the scene.\nThis was a great opportunity to experiment with music branding in a way that balanced clarity with fan excitement, and pushed Instagram-native design choices to feel bold, scroll-stopping, and rhythmic.",
+            "title": "LANY Live at Stubb's: Instagram Story Promo",
+            "cap": "Freelance. An Instagram Story promo for LANY at Stubb's."
           },
           {
             "src": "John 2.3 (1).gif",
             "title": "Boston Marathon Commission",
             "tools": "Adobe Photoshop, Lightroom, Premiere Pro",
-            "desc": "This animated graphic was created as a freelance project for a client running the Boston Marathon with Team JAF (Joe Andruzzi Foundation), raising donations in memory of his father who passed away from cancer. More than just a race update, this piece served as a celebration of community, resilience, and purpose — honouring the reason behind every mile.\nThe design brings together elements of movement and emotion: a photo from the course, donor milestone messaging, and uplifting motion graphics that nod to the impact beyond the pavement. With over $13,000 raised for families facing cancer, it became a shared moment of gratitude and reflection for all who supported.\nProjects like this remind me of design’s deeper purpose — not to sell or promote, but to connect. To help visualize what it means when one person’s story moves hundreds to action."
+            "desc": "This animated graphic was created as a freelance project for a client running the Boston Marathon with Team JAF (Joe Andruzzi Foundation), raising donations in memory of his father who passed away from cancer. More than just a race update, this piece served as a celebration of community, resilience, and purpose, honouring the reason behind every mile.\nThe design brings together elements of movement and emotion: a photo from the course, donor milestone messaging, and uplifting motion graphics that nod to the impact beyond the pavement. With over $13,000 raised for families facing cancer, it became a shared moment of gratitude and reflection for all who supported.\nProjects like this remind me that design can connect people, showing what it means when one person’s story moves hundreds to action.",
+            "cap": "Freelance. An animated graphic for a Team JAF fundraiser that raised over $13,000."
           }
         ],
-        "gap": 30,
-        "label": "Click Visual to Learn More",
+        "gap": 50,
+        "label": "",
         "play": "auto",
-        "speed": 60,
-        "loop": true
+        "speed": 10,
+        "ground": true,
+        "restart": true
       },
       {
         "h": "Exploring Form, Flow, and Function Through Web Design",
         "p": [
-          "One-page scrolls, mock product sites, and UI-driven layouts designed to test storytelling, visual hierarchy, and user interaction across screen sizes. These pieces weren’t just about how things look — they explored how visuals guide attention, how grids flex on mobile, and how design meets curiosity in the first few scrolls."
+          "One-page scrolls, mock product sites and UI-driven layouts, designed to test storytelling, visual hierarchy and interaction across screen sizes. They explore how visuals guide attention, how grids flex on mobile and what keeps someone scrolling past the first screen."
         ]
       },
       {
@@ -457,23 +543,28 @@
             "src": "Website.png",
             "title": "Fashion E-Commerce Interface",
             "tools": "Figma, Adobe Illustrator",
-            "desc": "This fashion interface was designed to feel bold and energetic, with a heavy emphasis on visual identity and shopability. I leaned into a high-contrast palette and oversized grid structure to prioritise product visibility across both web and mobile. Interactive UI components like real-time colour swatches and review stars were included to simulate a full user experience. The mobile translation preserved the same hierarchy, designed to swipe just as smoothly as it scrolls with a card digital wallet style aesthetic."
+            "desc": "This fashion interface was designed to feel bold and energetic, with a heavy emphasis on visual identity and shopability. I leaned into a high-contrast palette and oversized grid structure to prioritise product visibility across both web and mobile. Interactive UI components like real-time colour swatches and review stars were included to simulate a full user experience. The mobile translation preserved the same hierarchy, designed to swipe just as smoothly as it scrolls with a card digital wallet style aesthetic.",
+            "cap": "Self-initiated. A fashion e-commerce interface for web and mobile."
           },
           {
             "src": "AI.png",
             "title": "AI Product Marketplace Interface",
             "tools": "Figma, Adobe Photoshop",
-            "desc": "This AI product marketplace mockup explores modularity and visual rhythm within a one-page layout. I wanted each tile to feel like a moment: a headline, a feature, a reason to keep scrolling. The futuristic aesthetic and neon-infused colour palette reinforce the product category, while the layout tests how call-to-actions and product discovery can coexist without overwhelming the user like most sites do."
+            "desc": "This AI product marketplace mockup explores modularity and visual rhythm within a one-page layout. I wanted each tile to feel like a moment: a headline, a feature, a reason to keep scrolling. The futuristic aesthetic and neon-infused colour palette reinforce the product category, while the layout tests how call-to-actions and product discovery can coexist without overwhelming the user like most sites do.",
+            "cap": "Self-initiated. A one-page AI product marketplace mockup."
           }
         ],
         "gap": 50,
-        "label": "Click Visual to Learn More",
-        "play": "auto"
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "speed": 10,
+        "restart": true
       },
       {
         "h": "Pushing Visual Identity and Storytelling Beyond the Brief",
         "p": [
-          "This section collects experimental work across editorial layouts, digital ads, product brochures, and visual essays—each designed to simulate real-world communication scenarios. From CPG campaigns to corporate report spreads, these projects explore how to lead with structure, reinforce hierarchy, and pair visuals with utility. Whether interactive or printed, each piece aims to feel intentional, elevated, and built with the reader in mind."
+          "This section collects experimental work across editorial layouts, digital ads, product brochures and visual essays, each built to simulate a real communication scenario. From consumer goods campaigns to report spreads, they test how to lead with structure, reinforce hierarchy and pair visuals with useful information."
         ]
       },
       {
@@ -482,71 +573,86 @@
             "src": "Fall.png",
             "title": "Fall in Style: Editorial Promo",
             "tools": "Adobe Photoshop, Illustrator",
-            "desc": "A promotional concept for a fall fashion campaign, this graphic blends motion-inspired typography with a highly stylized subject image to evoke energy and momentum. The brief I created for myself: capture the feeling of mid-air motion and let the visual lead the storytelling.\nI leaned into large, condensed type and a minimalist palette to anchor the dynamic composition. The floating figure — subtly shadowed for depth—emphasizes the seasonal call-to-action while reinforcing the brand’s editorial tone. The result is a sharp, stylish layout that could live in a print magazine or serve as the key art for a digital ad set."
+            "desc": "A promotional concept for a fall fashion campaign, this graphic blends motion-inspired typography with a highly stylized subject image to evoke energy and momentum. The brief I created for myself: capture the feeling of mid-air motion and let the visual lead the storytelling.\nI leaned into large, condensed type and a minimalist palette to anchor the dynamic composition. The floating figure, subtly shadowed for depth, emphasizes the seasonal call-to-action while reinforcing the brand’s editorial tone. The result is a sharp, stylish layout that could live in a print magazine or serve as the key art for a digital ad set.",
+            "cap": "Self-initiated. A fall fashion promo built around mid-air motion."
           },
           {
             "src": "MERC.png",
             "title": "Mercedes-Benz Print Ad Concept",
             "tools": "Adobe InDesign, Photoshop, Substance 3D",
-            "desc": "This mock full-page ad plays with the tension between mechanical precision and visual minimalism. The headline, “No Adjustments Needed,” became the thematic driver for the layout — evoking a sense of confidence, control, and quality that aligns with the Mercedes-Benz voice.\nThe chrome detail of the car was shown to feel almost sculptural, while the copy area was purposefully narrow to mirror luxury ad conventions. By keeping whitespace abundant and the design restrained, the piece reads like an intentional pause: an invitation to look closer. This layout was as much about restraint as it was about message delivery."
+            "desc": "This mock full-page ad plays with the tension between mechanical precision and visual minimalism. The headline, “No Adjustments Needed,” became the thematic driver for the layout, evoking a sense of confidence, control, and quality that aligns with the Mercedes-Benz voice.\nThe chrome detail of the car was shown to feel almost sculptural, while the copy area was purposefully narrow to mirror luxury ad conventions. By keeping whitespace abundant and the design restrained, the piece reads like an intentional pause: an invitation to look closer. This layout was as much about restraint as it was about message delivery.",
+            "cap": "Concept. A full-page print ad I designed."
           },
           {
             "src": "Mercedes.png",
             "title": "Mercedes-Benz Banner Ad Suite",
             "tools": "Adobe Illustrator, Figma",
-            "desc": "This series of responsive digital banners was designed to explore how consistent tone and branding can carry across screen sizes and ad placements. Each banner maintains a cohesive design system — same palette, typography, and imagery, but is composed to fit distinct horizontal and vertical formats.\nThe repeated use of the 'Spread Your Wings' headline paired with overhead convertible views helps establish an elegant, open aesthetic that aligns with the brand’s premium feel. This was a study in balance: keeping things visually captivating while following best practices for digital ad readability and conversion flow."
+            "desc": "This series of responsive digital banners was designed to explore how consistent tone and branding can carry across screen sizes and ad placements. Each banner maintains a cohesive design system (the same palette, typography and imagery) composed to fit distinct horizontal and vertical formats.\nThe repeated use of the 'Spread Your Wings' headline paired with overhead convertible views helps establish an elegant, open aesthetic that aligns with the brand’s premium feel. This was a study in balance: keeping things visually captivating while following best practices for digital ad readability and conversion flow.",
+            "cap": "Concept. A responsive set of digital banners."
           },
           {
             "src": "Brochure Mockup Transparent_edited_edited.png",
             "title": "Future of Robotics Trifold Brochure",
             "tools": "Adobe InDesign, Illustrator",
-            "desc": "This informational trifold was built as a conceptual brochure on the future of robotics as we know it — a piece that could live at a conference table or be sent in a mailer. The goal was to design something that felt future-forward while keeping complex information digestible and visually structured.\nEach panel was treated like a mini billboard with bold headlines, infographic-style visuals, and staggered content pacing to guide the reader through topics like automation trends, market stats, and industry innovation. The color scheme was intentionally muted to keep it professional, but with enough contrast to keep the visuals engaging."
+            "desc": "This informational trifold was built as a conceptual brochure on the future of robotics as we know it, a piece that could live at a conference table or be sent in a mailer. The goal was to design something that felt future-forward while keeping complex information digestible and visually structured.\nEach panel was treated like a mini billboard with bold headlines, infographic-style visuals, and staggered content pacing to guide the reader through topics like automation trends, market stats, and industry innovation. The color scheme was intentionally muted to keep it professional, but with enough contrast to keep the visuals engaging.",
+            "cap": "Concept. An informational trifold on the future of robotics."
           },
           {
             "src": "Go the Mile.png",
             "title": "Go the Mile: Outdoor Promotional Poster",
             "tools": "Adobe InDesign, Photoshop",
-            "desc": "This promotional poster draws inspiration from outdoor lifestyle brands and editorial photography. I wanted to create something that felt strong, grounded, and aspirational— so I opted for dramatic imagery paired with oversized type that demands attention.\nThe headline, 'Go the Mile,' is treated as both a motivational message and a literal call to explore. The muted palette and texture choices reinforce the natural setting, while the minimal copy allows the image to carry emotional weight. It’s a balance of form and function: a cover that reads both at a distance and up close."
+            "desc": "This promotional poster draws inspiration from outdoor lifestyle brands and editorial photography. I wanted to create something that felt strong, grounded, and aspirational, so I opted for dramatic imagery paired with oversized type that demands attention.\nThe headline, 'Go the Mile,' is treated as both a motivational message and a literal call to explore. The muted palette and texture choices reinforce the natural setting, while the minimal copy allows the image to carry emotional weight. It’s a balance of form and function: a cover that reads both at a distance and up close.",
+            "cap": "Self-initiated. An outdoor poster with oversized type."
           },
           {
             "src": "Pages from MKTG 430.png",
             "tools": "Adobe InDesign, Illustrator",
-            "desc": "This article spread explores a more academic, report-style layout on the topic of digital assistants and emerging AI tools. Designed as part of a advanced marketing project, the layout includes a hierarchy of callouts, subheads, and annotation symbols to guide both quick skimming and deep reading.\nThe image at the top serves as a subtle thematic anchor, depicting circuitry and digital systems without overwhelming the copy. The design challenge here was clarity: using rhythm, typography, and spacing to help complex content feel more approachable — without compromising credibility.",
-            "title": "Assistive Robotics Report: Editorial Page Layout"
+            "desc": "This article spread explores a more academic, report-style layout on the topic of digital assistants and emerging AI tools. Designed as part of a advanced marketing project, the layout includes a hierarchy of callouts, subheads, and annotation symbols to guide both quick skimming and deep reading.\nThe image at the top serves as a subtle thematic anchor, depicting circuitry and digital systems without overwhelming the copy. The design challenge here was clarity: using rhythm, typography, and spacing to help complex content feel more approachable without losing credibility.",
+            "title": "Assistive Robotics Report: Editorial Page Layout",
+            "cap": "A report-style spread from a marketing course project."
           }
         ],
-        "gap": 20,
-        "label": "Click Visual to Learn More",
+        "gap": 50,
+        "label": "",
         "play": "auto",
-        "speed": 60,
-        "loop": true
+        "speed": 10,
+        "ground": true,
+        "restart": true
       },
       {
-        "h": "Foundations in Strategy & Storytelling: Where Research, Insight, and Creative Thinking First Collided...",
+        "h": "Foundations in Strategy and Storytelling at Texas A&M",
         "p": [
-          "During my time at Texas A&M’s Mays Business School, I was introduced to the intersection of business strategy and human behaviour — and quickly found myself captivated by how design could help shape both. These projects marked my earliest experiments in making ideas feel visual, actionable, and grounded in real-world understanding. Each one tackled a different challenge: from reimagining struggling brands to uncovering behavioural insights in food safety, social platforms, or product design.",
-          "The tools were simple. The constraints were tight. But even then, the focus was the same: clarity, resonance, and a user-first mindset. These projects remind me where my creative instincts first shined — and how much can be done with just strategy, storytelling, and some scrappy design."
+          "At Texas A&M's Mays Business School, I was introduced to where business strategy meets human behaviour, and I got hooked on how design could shape both. These projects were my first attempts at making ideas visual and actionable. Each took on a different challenge, from reviving struggling brands to finding behavioural insights in food safety, social platforms and product design.",
+          "The tools were simple and the constraints were tight, but the focus was the same as now: clarity, with the user first. These projects are where my creative instincts started."
         ]
       },
       {
         "gallery": [
           {
-            "src": "Research w Button.PNG",
+            "src": "covers/robots light.mp4",
             "link": {
               "href": "files/mktg-430-study.pdf",
               "label": "Open MKTG 430 Study (PDF)"
             },
             "title": "MKTG 430 Study: Assistive Robots in Elder Care",
-            "desc": "Our team researched how robotics could help address the elderly care crisis, combining survey data with industry analysis.\nThe findings showed that most respondents had little experience with medical robots and preferred more human-like designs. We recommended focusing on tools that support doctors and caregivers, rather than personal companion robots."
+            "desc": "Our team researched how robotics could help address the elderly care crisis, combining survey data with industry analysis.\nThe findings showed that most respondents had little experience with medical robots and preferred more human-like designs. We recommended focusing on tools that support doctors and caregivers, rather than personal companion robots.",
+            "cap": "Texas A&M team study. Opens as a PDF.",
+            "dark": "covers/robots dark.mp4",
+            "pop": "covers/robots pop.png",
+            "bare": true
           },
           {
-            "src": "Research 4.PNG",
+            "src": "covers/bryan light.mp4",
             "link": {
               "href": "files/mktg-466-presentation.pptx",
               "label": "Download MKTG 466 Presentation (PowerPoint)"
             },
             "title": "MKTG 466 Presentation: Strategic City Planning for Bryan",
-            "desc": "This presentation analysed the infrastructure of Bryan, Texas, and how new transportation options could handle growing city traffic.\nThe research pointed to the influx of Texas A&M students as both the city's biggest threat and its biggest opportunity. Our recommendations focused on linking College Station with Bryan's growing downtown."
+            "desc": "This presentation analysed the infrastructure of Bryan, Texas, and how new transportation options could handle growing city traffic.\nThe research pointed to the influx of Texas A&M students as both the city's biggest threat and its biggest opportunity. Our recommendations focused on linking College Station with Bryan's growing downtown.",
+            "cap": "Texas A&M team deck. Downloads as a PowerPoint.",
+            "dark": "covers/bryan dark.mp4",
+            "pop": "covers/bryan pop.png",
+            "bare": true
           },
           {
             "src": "covers/chilis light.mp4",
@@ -558,7 +664,8 @@
               "label": "Open MKTG 327 Study (PDF)"
             },
             "title": "MKTG 327 Study: Digital Campaign for Chili's",
-            "desc": "This study explored how to reinvigorate a plateaued restaurant brand through online and in-store changes, with research and feedback from Chili's Bar & Grill.\nWe found that casual dining had been declining and that each social platform called for a different tone. The plan targeted young families with children through social advertising."
+            "desc": "This study explored how to reinvigorate a plateaued restaurant brand through online and in-store changes, with research and feedback from Chili's Bar & Grill.\nWe found that casual dining had been declining and that each social platform called for a different tone. The plan targeted young families with children through social advertising.",
+            "cap": "Texas A&M team study. Opens as a PDF."
           },
           {
             "src": "covers/mays light.mp4",
@@ -570,7 +677,8 @@
               "label": "Open Social Media Campaign (PDF)"
             },
             "title": "Social Media Campaign: How Universities Communicate",
-            "desc": "Prepared for Mays Business School, this study looked at how universities use social media to share information, including a close look at a peer school's Facebook strategy.\nOur research found that people prefer interpersonal posts, with Facebook skewing older and Instagram younger. We recommended Instagram Stories content, such as a \"day in the life of a business major\" series."
+            "desc": "Prepared for Mays Business School, this study looked at how universities use social media to share information, including a close look at a peer school's Facebook strategy.\nOur research found that people prefer interpersonal posts, with Facebook skewing older and Instagram younger. We recommended Instagram Stories content, such as a \"day in the life of a business major\" series.",
+            "cap": "Texas A&M team study for Mays Business School. Opens as a PDF."
           },
           {
             "src": "covers/pin light.mp4",
@@ -582,38 +690,58 @@
               "label": "Open MKTG 322 Presentation (PDF)"
             },
             "title": "MKTG 322 Presentation: Reviving the Pinterest Brand",
-            "desc": "This presentation looked at how Pinterest could win back users by understanding what today's customers want.\nThe research highlighted food waste among 18 to 34 year olds and the weight people give to friends' recommendations. Our idea was an add-on feature that scans grocery barcodes, tracks expiration dates and suggests recipes before food goes bad."
+            "desc": "This presentation looked at how Pinterest could win back users by understanding what today's customers want.\nThe research highlighted food waste among 18 to 34 year olds and the weight people give to friends' recommendations. Our idea was an add-on feature that scans grocery barcodes, tracks expiration dates and suggests recipes before food goes bad.",
+            "cap": "Texas A&M team deck. Opens as a PDF."
           },
           {
-            "src": "Research 7.PNG",
+            "src": "covers/chipotle light.mp4",
             "link": {
               "href": "files/mktg-323-presentation.pdf",
               "label": "Open MKTG 323 Presentation (PDF)"
             },
             "title": "MKTG 323 Presentation: Chipotle Brand Trust Research",
-            "desc": "This market research project examined how consumer perception of Chipotle shifted after the 2015 E. coli outbreaks.\nThe survey analysis showed that brand loyalty took a hit, but the core customer base largely held steady. We recommended competitive pricing while staying true to food quality and portion sizes, with a clear focus on trust and loyalty."
+            "desc": "This market research project examined how consumer perception of Chipotle shifted after the 2015 E. coli outbreaks.\nThe survey analysis showed that brand loyalty took a hit, but the core customer base largely held steady. We recommended competitive pricing while staying true to food quality and portion sizes, with a clear focus on trust and loyalty.",
+            "cap": "Texas A&M team deck. Opens as a PDF.",
+            "dark": "covers/chipotle dark.mp4",
+            "pop": "covers/chipotle pop.png",
+            "bare": true
           },
           {
-            "src": "Research 6.PNG",
+            "src": "covers/quicklift light.mp4",
             "link": {
               "href": "files/mktg-321-presentation.pdf",
               "label": "Open MKTG 321 Presentation (PDF)"
             },
             "title": "MKTG 321 Presentation: Quick Lift Product Development",
-            "desc": "Working as \"The Five Marketeers,\" our team found an underserved market segment and developed Quick Lift, a new product designed to solve a problem people didn't know they had.\nThe research covered distribution through Amazon and radio's peak listening hours. Our recommendations set out five packaging principles and suggested Snapchat's AR features as a playful way to advertise."
+            "desc": "Working as \"The Five Marketeers,\" our team found an underserved market segment and developed Quick Lift, a new product designed to solve a problem people didn't know they had.\nThe research covered distribution through Amazon and radio's peak listening hours. Our recommendations set out five packaging principles and suggested Snapchat's AR features as a playful way to advertise.",
+            "cap": "Texas A&M team deck. Opens as a PDF.",
+            "dark": "covers/quicklift dark.mp4",
+            "pop": "covers/quicklift pop.png",
+            "bare": true
           }
         ],
         "height": 443,
-        "gap": 30,
-        "speed": 20,
-        "loop": true,
-        "label": "Click to See Full Project",
-        "play": "auto"
+        "gap": 50,
+        "speed": 10,
+        "label": "",
+        "play": "auto",
+        "ground": true,
+        "restart": true
       }
     ],
     "next": {
       "slug": "graphic-design",
       "label": "See All Graphic Design at a Glance"
-    }
+    },
+    "glance": [
+      [
+        "$13,000+",
+        "Raised for families facing cancer by the Boston Marathon fundraiser I designed for"
+      ],
+      [
+        "7",
+        "Texas A&M strategy and research projects"
+      ]
+    ]
   }
 ]

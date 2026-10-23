@@ -387,6 +387,18 @@ def paragraphs(ps):
     return "\n".join(out)
 
 
+def split_top(sel):
+    """Split a selector list at its top-level commas only, so :is(a, b) stays whole."""
+    parts, depth, cur = [], 0, ""
+    for ch in sel:
+        depth += {"(": 1, ")": -1}.get(ch, 0)
+        if ch == "," and depth == 0:
+            parts.append(cur); cur = ""
+        else:
+            cur += ch
+    return parts + [cur]
+
+
 def themed_css():
     """style.css follows the device with @media (prefers-color-scheme) blocks. The site also has a light/dark
     switch, which puts .theme-light or .theme-dark on <html>. Write assets/css/site.css: each such block now
@@ -409,7 +421,7 @@ def themed_css():
             rules = []
             for sel, decl in re.findall(r"([^{}]+)\{([^{}]*)\}", re.sub(r"/\*.*?\*/", "", body, flags=re.S)):
                 sels = []
-                for one in sel.split(","):
+                for one in split_top(sel):
                     one = one.strip()
                     if not one:
                         continue
@@ -869,9 +881,12 @@ def render_category(page, site, media):
     return layout(page, site, root, "\n".join(parts), media)
 
 
-def glance(rows):
-    """The figures under a case study's intro: a large figure and what it counts."""
+def glance(rows, logos=""):
+    """The figures under a case study's intro: a large figure and what it counts. With logos (the partners a
+    figure counts), they follow the figures in a row ending in a "+", for the many more."""
     cells = "".join(f'<div><dt>{esc(d)}</dt><dd>{esc(n)}</dd></div>' for n, d in rows)
+    if logos:
+        cells += f'<div class="glance-logos">{logos}<span class="glance-more">and many more</span></div>'
     return f'<div class="wrap glance-wrap"><dl class="glance">{cells}</dl></div>'
 
 
@@ -1019,14 +1034,14 @@ def render_case(page, site, media):
     parts = [f'''
 <section class="case-hero" style="background-image:url('{root}{bg["src"]}')">
   <div class="wrap case-hero-inner">
-    {f'<div class="case-logos">{logos}</div>' if logos else ""}
+    {f'<div class="case-logos">{logos}</div>' if logos and not hero.get("logos_in_glance") else ""}
     <h1>{esc(hero["title"])}</h1>
     <p class="case-sub">{esc(hero["subtitle"])}</p>
   </div>
 </section>
 <div class="wrap prose lede-wrap"><p class="lede">{esc(page["lede"])}</p></div>''']
     if page.get("glance"):
-        parts.append(glance(page["glance"]))
+        parts.append(glance(page["glance"], logos if hero.get("logos_in_glance") else ""))
     for b in page["blocks"]:
         if "steps" in b:
             parts.append(flow(b, media, root))

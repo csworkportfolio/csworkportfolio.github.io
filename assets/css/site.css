@@ -232,7 +232,7 @@ button { font: inherit; color: inherit; }
   overflow: hidden;
 }
 .home-hero-inner {
-  display: grid; grid-template-columns: minmax(0, 613px) 254px; column-gap: 60px;
+  display: grid; grid-template-columns: minmax(0, 613px) 266px; column-gap: 60px;
   align-items: start; min-height: 274px; padding-top: 0;
 }
 .home-hero-text { padding: 34px 0 20px 43px; }
@@ -259,7 +259,7 @@ button { font: inherit; color: inherit; }
 .page-home .home-portrait, .page-home .home-portrait-float { animation-delay: .1s; animation-duration: .9s; }
 @keyframes hero-in { from { opacity: 0; transform: translateY(10px); } }
 @media (prefers-reduced-motion: reduce) { .page-home .home-hero-text > *, .page-home .home-portrait { animation: none; } }
-.home-portrait { width: 254px; height: auto; align-self: end; }
+.home-portrait { width: 266px; height: auto; align-self: end; }   /* the top of the hair lines up with the top of the greeting's letters */
 
 .case-row {
   position: relative; color: #fff; isolation: isolate;
@@ -335,7 +335,7 @@ button { font: inherit; color: inherit; }
 .prose h2 { font-size: 14px; line-height: 20px; font-weight: 700; margin-bottom: 5px; }
 .prose p { font-size: 18px; line-height: 25px; }
 .prose p + p, .prose blockquote + p, .prose p + blockquote { margin-top: 25px; }
-.prose .lede { font-style: italic; font-size: 16px; line-height: 23px; text-align: justify; color: #000; }
+.prose .lede { font-style: italic; font-size: 16px; line-height: 23px; text-align: justify; color: var(--ink); }
 .prose blockquote {
   margin-left: 0; margin-right: 0; padding-left: 18px; border-left: 3px solid var(--rust);
 }
@@ -1582,19 +1582,19 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 
 /* category strips: Apple's paddle arrows, a pair under the strip on the right, clear of the pictures; shown on
    phones too, faded at an end the strip can't go past */
-.cat-v2 .strip-ground { padding-bottom: 84px; }
-.cat-v2 .strip .strip-arrow {
+:is(.cat-v2, .case-v2) .strip-ground { padding-bottom: 84px; }
+:is(.cat-v2, .case-v2) .strip .strip-arrow {
   display: grid; top: auto !important; bottom: 26px; left: auto; width: 36px; height: 36px;
   background: #e8e8ed; color: #1d1d1f; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
   transition: background-color .2s ease, opacity .2s ease;
 }
-.cat-v2 .strip .strip-arrow:hover { background: #dcdce1; }
-.cat-v2 .strip .strip-arrow svg { width: 17px; height: 17px; stroke-width: 2.6; }
-.cat-v2 .strip .strip-next { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); }
-.cat-v2 .strip .strip-prev { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 48px); }
-.cat-v2 .strip .strip-arrow[hidden] { display: grid; opacity: .4; pointer-events: none; }
-.cat-v2 .strip.is-static .strip-arrow { display: none; }
-@media (max-width: 720px) { .cat-v2 .strip .strip-next { right: var(--gutter); } .cat-v2 .strip .strip-prev { right: calc(var(--gutter) + 48px); } }
+:is(.cat-v2, .case-v2) .strip .strip-arrow:hover { background: #dcdce1; }
+:is(.cat-v2, .case-v2) .strip .strip-arrow svg { width: 17px; height: 17px; stroke-width: 2.6; }
+:is(.cat-v2, .case-v2) .strip .strip-next { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); }
+:is(.cat-v2, .case-v2) .strip .strip-prev { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 48px); }
+:is(.cat-v2, .case-v2) .strip .strip-arrow[hidden] { display: grid; opacity: .4; pointer-events: none; }
+:is(.cat-v2, .case-v2) .strip.is-static .strip-arrow { display: none; }
+@media (max-width: 720px) { :is(.cat-v2, .case-v2) .strip .strip-next { right: var(--gutter); } :is(.cat-v2, .case-v2) .strip .strip-prev { right: calc(var(--gutter) + 48px); } }
 /* the category pop-up is a full viewer, so its glass fills the whole screen; only the home quick view floats as
    a pane */
 @media (min-width: 901px) {
@@ -1610,10 +1610,10 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 .strip .tile-video, .strip .tile:has(.play) { cursor: pointer; }
 
 /* the expand button sits with each strip's arrows (and in the home slideshow controls) rather than on every piece */
-.cat-v2 .strip .strip-open { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
+:is(.cat-v2, .case-v2) .strip .strip-open { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
 .strip-open svg { width: 15px !important; height: 15px !important; }
-@media (max-width: 720px) { .cat-v2 .strip .strip-open { right: calc(var(--gutter) + 96px); } }
-.strip:not(.cat-v2 .strip) .strip-open { display: none; }
+@media (max-width: 720px) { :is(.cat-v2, .case-v2) .strip .strip-open { right: calc(var(--gutter) + 96px); } }
+.strip:not(:is(.cat-v2, .case-v2) .strip) .strip-open { display: none; }
 .ss-open { color: #1d1d1f; }
 .ss-open svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .ss-open::before, .ss-open::after { content: none !important; }
@@ -1690,13 +1690,13 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 .strip-pause.is-paused .i-pause { display: none; }
 .strip-pause.is-paused .i-play { display: block; }
 @media all {
-  .cat-v2 .strip:not(.is-static) .strip-pause { display: grid !important; }
-  .cat-v2 .strip:has(.strip-pause) .strip-pause { right: calc(var(--gutter) + 144px); }
-  .cat-v2 .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(var(--gutter) + 96px); }
+  :is(.cat-v2, .case-v2) .strip:not(.is-static) .strip-pause { display: grid !important; }
+  :is(.cat-v2, .case-v2) .strip:has(.strip-pause) .strip-pause { right: calc(var(--gutter) + 144px); }
+  :is(.cat-v2, .case-v2) .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(var(--gutter) + 96px); }
 }
 @media (min-width: 721px) {
-  .cat-v2 .strip:has(.strip-pause) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 144px); }
-  .cat-v2 .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
+  :is(.cat-v2, .case-v2) .strip:has(.strip-pause) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 144px); }
+  :is(.cat-v2, .case-v2) .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
 }
 
 /* phones: the category strips give the work the room (pieces up to about half the screen tall, wide ones near
@@ -1704,7 +1704,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 @media (max-width: 720px) {
   .cat-v2 { --strip-h: min(410px, 50svh); }
   .cat-v2 .strip-ground { margin-top: 16px; padding-top: 24px; padding-bottom: 72px; }
-  .cat-v2 .strip .strip-arrow { bottom: 20px; }
+  :is(.cat-v2, .case-v2) .strip .strip-arrow { bottom: 20px; }
   .cat-v2 .tile-cap { margin-top: 14px; }
 }
 /* phones: a lot more air between pieces, with each piece at the largest size the screen allows */
@@ -1742,10 +1742,10 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 @media (prefers-reduced-motion: reduce) { .ex-cue::after { animation: none; } }
 
 /* a strip short enough to fit starts on the shared left edge, then glides to the centre and rests (main.js) */
-.cat-v2 .strip.is-static .strip-track { transition: transform 1.4s cubic-bezier(.45,.05,.2,1); }
-.cat-v2 .strip.is-static.is-centred .strip-track { transform: translate3d(var(--centre, 0px), 0, 0) !important; }
-.cat-v2 .strip.is-static .strip-pause, .cat-v2 .strip.is-static .strip-open { display: none !important; }
-.cat-v2 .strip-ground.is-static { padding-bottom: 48px; }
+:is(.cat-v2, .case-v2) .strip.is-static .strip-track { transition: transform 1.4s cubic-bezier(.45,.05,.2,1); }
+:is(.cat-v2, .case-v2) .strip.is-static.is-centred .strip-track { transform: translate3d(var(--centre, 0px), 0, 0) !important; }
+:is(.cat-v2, .case-v2) .strip.is-static .strip-pause, :is(.cat-v2, .case-v2) .strip.is-static .strip-open { display: none !important; }
+:is(.cat-v2, .case-v2) .strip-ground.is-static { padding-bottom: 48px; }
 
 /* side by side (main.js picks it for tall pieces on wide windows): the visual takes about three fifths of the
    pane, the words the rest */
@@ -1787,11 +1787,11 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
   html:not(.theme-light).can-dark .seg-item:hover { color: #fff; }
   html:not(.theme-light).can-dark .seg-item.is-active { color: #fff; }
   html:not(.theme-light).can-dark .pills { background: transparent; }
-  html:not(.theme-light).can-dark .cat-v2 .strip .strip-arrow { background: #2c2c2e; color: #f5f5f7; }
-  html:not(.theme-light).can-dark .cat-v2 .strip .strip-arrow:hover { background: #3a3a3c; }
+  html:not(.theme-light).can-dark :is(.cat-v2, .case-v2) .strip .strip-arrow { background: #2c2c2e; color: #f5f5f7; }
+  html:not(.theme-light).can-dark :is(.cat-v2, .case-v2) .strip .strip-arrow:hover { background: #3a3a3c; }
   html:not(.theme-light).can-dark .strip-arrow { background: var(--tabglass); color: var(--tabink); }
   html:not(.theme-light).can-dark .btn:not(.shine .btn) { color: #1d1d1f; }
-  html:not(.theme-light).can-dark :is(.strip-notes .tile, html:not(.theme-light) .tile.is-note) { background: #fff; }
+  html:not(.theme-light).can-dark :is(.strip-notes .tile, .tile.is-note) { background: #fff; }
   html:not(.theme-light).can-dark .gw-bubble { background: color-mix(in srgb, #2c2c2e 40%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.35), 0 0 0 .5px rgba(255,255,255,.12), 0 34px 60px -32px rgba(0,0,0,.8); }
   html:not(.theme-light).can-dark .gw-bubble::after { background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.18) 50%, rgba(255,255,255,0) 70%) 0 0 / 260% 100%, color-mix(in srgb, #1c1c1e 55%, transparent); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 0 1px rgba(255,255,255,.08); }
   html:not(.theme-light).can-dark .gw-shine { opacity: .35; }
@@ -1823,11 +1823,11 @@ html.theme-dark.can-dark {
   html.theme-dark.can-dark .seg-item:hover { color: #fff; }
   html.theme-dark.can-dark .seg-item.is-active { color: #fff; }
   html.theme-dark.can-dark .pills { background: transparent; }
-  html.theme-dark.can-dark .cat-v2 .strip .strip-arrow { background: #2c2c2e; color: #f5f5f7; }
-  html.theme-dark.can-dark .cat-v2 .strip .strip-arrow:hover { background: #3a3a3c; }
+  html.theme-dark.can-dark :is(.cat-v2, .case-v2) .strip .strip-arrow { background: #2c2c2e; color: #f5f5f7; }
+  html.theme-dark.can-dark :is(.cat-v2, .case-v2) .strip .strip-arrow:hover { background: #3a3a3c; }
   html.theme-dark.can-dark .strip-arrow { background: var(--tabglass); color: var(--tabink); }
   html.theme-dark.can-dark .btn:not(.shine .btn) { color: #1d1d1f; }
-  html.theme-dark.can-dark :is(.strip-notes .tile, html.theme-dark .tile.is-note) { background: #fff; }
+  html.theme-dark.can-dark :is(.strip-notes .tile, .tile.is-note) { background: #fff; }
   html.theme-dark.can-dark .gw-bubble { background: color-mix(in srgb, #2c2c2e 40%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.35), 0 0 0 .5px rgba(255,255,255,.12), 0 34px 60px -32px rgba(0,0,0,.8); }
   html.theme-dark.can-dark .gw-bubble::after { background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.18) 50%, rgba(255,255,255,0) 70%) 0 0 / 260% 100%, color-mix(in srgb, #1c1c1e 55%, transparent); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 0 1px rgba(255,255,255,.08); }
   html.theme-dark.can-dark .gw-shine { opacity: .35; }
@@ -2044,3 +2044,194 @@ html.theme-light .home-hero { background: radial-gradient(ellipse 45% 110% at 82
   html:not(.theme-dark) .home-portrait, html:not(.theme-dark) .home-portrait-float { -webkit-mask-image: none; mask-image: none; }
 }
 html.theme-light .home-portrait, html.theme-light .home-portrait-float { -webkit-mask-image: none; mask-image: none; }
+
+/* ---------- light mode: the pop-up, quick view and full-screen viewer on the site's grey-white ----------
+   In dark mode they keep their dark glass; in light mode they take the light page's #f5f5f7 with dark type. */
+@media (prefers-color-scheme: light) {
+  html:not(.theme-dark) .lightbox { background: color-mix(in srgb, #f5f5f7 97%, transparent); color: #1d1d1f; }
+  html:not(.theme-dark) .lightbox::backdrop, html:not(.theme-dark).lb-tint, html:not(.theme-dark).lb-tint body { background: #f5f5f7; }
+  html:not(.theme-dark) .lightbox.is-glass { color: #1d1d1f; }
+  html:not(.theme-dark) .lightbox.is-glass::backdrop { background: color-mix(in srgb, #f5f5f7 45%, transparent); }
+  html:not(.theme-dark) .lightbox.is-glass .lb-inner, html:not(.theme-dark) .lightbox.is-glass:not(.is-quick) .lb-inner, html:not(.theme-dark) .lightbox.is-stack.is-glass .lb-inner {
+    background: color-mix(in srgb, #f5f5f7 82%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 0 0 1px rgba(0, 0, 0, .05), 0 40px 90px -30px rgba(0, 0, 0, .18);
+  }
+  html:not(.theme-dark) .lb-caption .lb-by, html:not(.theme-dark) .lb-caption .lb-kicker, html:not(.theme-dark) .lb-figs dt, html:not(.theme-dark) .lb-caption .lb-sample { color: #6e6e73; }
+  html:not(.theme-dark) .lb-caption .lb-tools { color: #515154; }
+  html:not(.theme-dark) .lb-caption p { color: #3a3a3c; }
+  html:not(.theme-dark) .lb-figs dd { color: #1d1d1f; }
+  html:not(.theme-dark) .lb-media img, html:not(.theme-dark) .lb-media video { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .08)) drop-shadow(0 14px 18px rgba(0, 0, 0, .12)); }
+  html:not(.theme-dark) .lb-pdf-page { box-shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 10px 24px rgba(0, 0, 0, .08); }
+}
+html.theme-light .lightbox { background: color-mix(in srgb, #f5f5f7 97%, transparent); color: #1d1d1f; }
+  html.theme-light .lightbox::backdrop, html.theme-light.lb-tint, html.theme-light.lb-tint body { background: #f5f5f7; }
+  html.theme-light .lightbox.is-glass { color: #1d1d1f; }
+  html.theme-light .lightbox.is-glass::backdrop { background: color-mix(in srgb, #f5f5f7 45%, transparent); }
+  html.theme-light .lightbox.is-glass .lb-inner, html.theme-light .lightbox.is-glass:not(.is-quick) .lb-inner, html.theme-light .lightbox.is-stack.is-glass .lb-inner {
+    background: color-mix(in srgb, #f5f5f7 82%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 0 0 1px rgba(0, 0, 0, .05), 0 40px 90px -30px rgba(0, 0, 0, .18);
+  }
+  html.theme-light .lb-caption .lb-by, html.theme-light .lb-caption .lb-kicker, html.theme-light .lb-figs dt, html.theme-light .lb-caption .lb-sample { color: #6e6e73; }
+  html.theme-light .lb-caption .lb-tools { color: #515154; }
+  html.theme-light .lb-caption p { color: #3a3a3c; }
+  html.theme-light .lb-figs dd { color: #1d1d1f; }
+  html.theme-light .lb-media img, html.theme-light .lb-media video { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .08)) drop-shadow(0 14px 18px rgba(0, 0, 0, .12)); }
+  html.theme-light .lb-pdf-page { box-shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 10px 24px rgba(0, 0, 0, .08); }
+@media (prefers-color-scheme: light) and (max-width: 900px) {
+  html:not(.theme-dark) .lightbox.is-glass { background: #f5f5f7; }
+}
+@media all and (max-width: 900px) {
+  html.theme-light .lightbox.is-glass { background: #f5f5f7; }
+}
+
+/* ---------- light mode: the Nike campaign timeline on the light page (the phone scene stays dark, a device
+   shown the way devices look best) ---------- */
+@media (prefers-color-scheme: light) {
+  html:not(.theme-dark) .tl-scene { background: #f5f5f7; color: #1d1d1f; }
+  html:not(.theme-dark) .tl-head p { color: #3a3a3c; }
+  html:not(.theme-dark) .tl-months span:not(.tl-now), html:not(.theme-dark) .tl-note { color: #6e6e73; }
+  html:not(.theme-dark) .tl-label { color: #1d1d1f; }
+  html:not(.theme-dark) .tl-label span { color: #6e6e73; }
+  html:not(.theme-dark) a.tl-label:hover strong { color: var(--rust); }
+  html:not(.theme-dark) .tl-scene :focus-visible { outline-color: #1d1d1f; }
+  html:not(.theme-dark) .tl-track { background: #e8e8ed; }
+  html:not(.theme-dark) .tl-bar { background: #d2d2d7; }
+  html:not(.theme-dark) .tl-lane-always .tl-bar i { background: #c7c7cc; }
+  html:not(.theme-dark) .tl-readout span { color: var(--rust); }
+  html:not(.theme-dark) .tl-scene.is-live .tl-now { background: #1d1d1f; }
+  html:not(.theme-dark) .tl-scene.is-live .tl-lane.is-on .tl-label strong { color: #1d1d1f; }
+  html:not(.theme-dark) .tl-scene.is-live .tl-lane:not(.is-on) .tl-label strong { color: #a1a1a6; }
+  html:not(.theme-dark) .tl-lane.tl-lane-always .tl-label strong, html:not(.theme-dark) .tl-scene.is-live .tl-lane.tl-lane-always .tl-label strong { color: #6e6e73; }
+}
+html.theme-light .tl-scene { background: #f5f5f7; color: #1d1d1f; }
+  html.theme-light .tl-head p { color: #3a3a3c; }
+  html.theme-light .tl-months span:not(.tl-now), html.theme-light .tl-note { color: #6e6e73; }
+  html.theme-light .tl-label { color: #1d1d1f; }
+  html.theme-light .tl-label span { color: #6e6e73; }
+  html.theme-light a.tl-label:hover strong { color: var(--rust); }
+  html.theme-light .tl-scene :focus-visible { outline-color: #1d1d1f; }
+  html.theme-light .tl-track { background: #e8e8ed; }
+  html.theme-light .tl-bar { background: #d2d2d7; }
+  html.theme-light .tl-lane-always .tl-bar i { background: #c7c7cc; }
+  html.theme-light .tl-readout span { color: var(--rust); }
+  html.theme-light .tl-scene.is-live .tl-now { background: #1d1d1f; }
+  html.theme-light .tl-scene.is-live .tl-lane.is-on .tl-label strong { color: #1d1d1f; }
+  html.theme-light .tl-scene.is-live .tl-lane:not(.is-on) .tl-label strong { color: #a1a1a6; }
+  html.theme-light .tl-lane.tl-lane-always .tl-label strong, html.theme-light .tl-scene.is-live .tl-lane.tl-lane-always .tl-label strong { color: #6e6e73; }
+@media (prefers-color-scheme: light) and (max-width: 720px) {
+  html:not(.theme-dark) .tl-scene.is-live .tl-readout { background: #f5f5f7; }
+}
+@media all and (max-width: 720px) {
+  html.theme-light .tl-scene.is-live .tl-readout { background: #f5f5f7; }
+}
+
+/* the switch stays pinned top right on desktop, level with the tab bar once the bar sticks to the top (the bar's
+   pill is 40px tall under 18px of padding on most pages, 20px on the home page). Phones keep it in the header,
+   since their tab bar runs the full width; so do tablets, where it runs edge to edge as well. */
+@media (min-width: 960px) {   /* narrower, the tab bar reaches the corner and the pinned switch would cover its last tab */
+  :root[data-os="mac"] .theme-toggle { position: fixed; top: 20px; right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+  :root[data-os="mac"] .page-home .theme-toggle { top: 22px; }
+}
+
+/* ---------- the light/dark switch is lit from inside: a soft moonlight blue in light mode, a warm night light in
+   dark mode (doubled :root so it outranks the per-mode button styles) ---------- */
+.theme-toggle { --glow: 110, 150, 255; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .theme-toggle, html:not(.theme-light) .page-home .theme-toggle { --glow: 255, 168, 80; }
+}
+html.theme-dark.can-dark .theme-toggle, html.theme-dark .page-home .theme-toggle { --glow: 255, 168, 80; }
+:root:root .theme-toggle { background-image: radial-gradient(circle at 50% 50%, rgba(var(--glow), .38), rgba(var(--glow), .1) 70%); box-shadow: inset 0 0 10px 2px rgba(var(--glow), .35), inset 0 .5px 0 rgba(255, 255, 255, .5), 0 0 0 .5px rgba(0, 0, 0, .1); }
+:root:root .theme-toggle svg { filter: drop-shadow(0 0 3px rgba(var(--glow), .7)); }
+:root:root .theme-toggle:hover { background-image: radial-gradient(circle at 50% 50%, rgba(var(--glow), .5), rgba(var(--glow), .16) 70%); }   /* the hover's plain background would otherwise drop the light */
+@media (prefers-color-scheme: light) {
+  :root:not(.theme-dark):root .theme-toggle { color: #2f4fa8; }
+}
+:root.theme-light:root .theme-toggle { color: #2f4fa8; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark.can-dark .theme-toggle, :root:not(.theme-light):root .page-home .theme-toggle { color: #ffd9a0; }
+}
+html.theme-dark.can-dark.can-dark .theme-toggle, :root.theme-dark:root .page-home .theme-toggle { color: #ffd9a0; }
+
+/* phones in dark mode: the chip bar is one frosted band from the header's edge (or the top of the screen once it
+   pins) to its bottom edge, instead of a lighter strip behind the chips inside a darker band */
+@media (prefers-color-scheme: dark) and (max-width: 560px) {
+  html:not(.theme-light).can-dark[data-os="ios"] .pills, :root:not(.theme-light)[data-os="ios"] .page-home .pills {
+    background: color-mix(in srgb, #1c1c1e 86%, transparent);
+    -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+  }
+  html:not(.theme-light).can-dark[data-os="ios"] .seg, :root:not(.theme-light)[data-os="ios"] .page-home .seg { background: none; }
+  :root:not(.theme-light)[data-os="ios"] .page-home .pills { background: color-mix(in srgb, #1c1c1e 86%, #000); }
+}
+@media all and (max-width: 560px) {
+  html.theme-dark.can-dark[data-os="ios"] .pills, :root.theme-dark[data-os="ios"] .page-home .pills {
+    background: color-mix(in srgb, #1c1c1e 86%, transparent);
+    -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+  }
+  html.theme-dark.can-dark[data-os="ios"] .seg, :root.theme-dark[data-os="ios"] .page-home .seg { background: none; }
+  :root.theme-dark[data-os="ios"] .page-home .pills { background: color-mix(in srgb, #1c1c1e 86%, #000); }
+}
+
+/* phones: the case studies' opening paragraph takes the same upright, left-aligned lede as desktop */
+@media (max-width: 720px) {
+  .case-v2 .prose .lede { font-style: normal; text-align: left; font-size: 18px; line-height: 1.45; color: var(--ink); }
+}
+
+/* touch screens wider than a phone (big phones, foldables, tablets): whenever the chip bar runs edge to edge it is
+   one frosted band too, not a lighter strip inside a darker one */
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light)[data-os="ios"] .pills:has(> .seg.is-scrolling) {
+    background: color-mix(in srgb, #1c1c1e 86%, transparent);
+    -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+  }
+  html:not(.theme-light)[data-os="ios"] .page-home .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 86%, #000); }
+  html:not(.theme-light)[data-os="ios"] .pills > .seg.is-scrolling { background: none; }
+}
+html.theme-dark[data-os="ios"] .pills:has(> .seg.is-scrolling) {
+    background: color-mix(in srgb, #1c1c1e 86%, transparent);
+    -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+  }
+  html.theme-dark[data-os="ios"] .page-home .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 86%, #000); }
+  html.theme-dark[data-os="ios"] .pills > .seg.is-scrolling { background: none; }
+
+/* any window too narrow for the six tabs (desktop included): the bar runs edge to edge, so the band behind it is
+   one piece from its top edge to its bottom edge, in both modes */
+html .pills:has(> .seg.is-scrolling) {
+  background: color-mix(in srgb, #f2f2f2 86%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+}
+html .pills > .seg.is-scrolling { background: none; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 86%, transparent); }
+  html:not(.theme-light) .page-home .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 86%, #000); }
+}
+html.theme-dark.can-dark .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 86%, transparent); }
+  html.theme-dark .page-home .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 86%, #000); }
+
+/* partner logos under a figure (Partnerships): a quiet one-tone row, sized by eye, ending in a short note */
+.glance .glance-logos {
+  grid-column: 1 / -1; display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap;
+  align-items: center; gap: 14px 40px; margin-top: 6px;
+}
+.glance-logos img { width: auto; height: 30px; max-width: none; object-fit: contain; opacity: .55;
+  filter: brightness(0) invert(1); }   /* every mark in one soft tone */
+.glance-logos img[alt="Apple"] { height: 30px; }
+/* badges with detail inside (McCormick, Gorilla Glue) go grayscale instead of flat, so they keep their drawing */
+.glance-logos img[alt="McCormick"], .glance-logos img[alt="Partner logo"] { filter: grayscale(1) brightness(1.5) contrast(.9); opacity: .6; }
+.glance-logos img[alt="McCormick"] { height: 32px; }
+.glance-logos img[alt="Ferrara"] { height: 26px; }
+.glance-logos img[alt="Partner logo"] { height: 36px; }   /* the round Gorilla Glue badge reads smaller at the same height */
+.glance-more { font-size: 15px; color: var(--muted); white-space: nowrap; }
+@media (prefers-color-scheme: light) {
+  html:not(.theme-dark) .glance-logos img { filter: brightness(0); opacity: .45; }
+  html:not(.theme-dark) .glance-logos img[alt="McCormick"], html:not(.theme-dark) .glance-logos img[alt="Partner logo"] { filter: grayscale(1) contrast(1.1); opacity: .55; }
+}
+html.theme-light .glance-logos img { filter: brightness(0); opacity: .45; }
+  html.theme-light .glance-logos img[alt="McCormick"], html.theme-light .glance-logos img[alt="Partner logo"] { filter: grayscale(1) contrast(1.1); opacity: .55; }
+@media (max-width: 720px) {
+  .glance .glance-logos { gap: 12px 26px; }
+  .glance-logos img { height: 22px; } .glance-logos img[alt="McCormick"] { height: 24px; }
+  .glance-logos img[alt="Ferrara"] { height: 19px; } .glance-logos img[alt="Partner logo"] { height: 27px; }
+}
+
+/* case studies: a strip without the grey band still leaves room under it for its controls */
+.case-v2 .strip:not(.strip-ground):has(.strip-arrow) { padding-bottom: 72px; }
