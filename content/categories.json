@@ -357,7 +357,8 @@
             "v": "1228250187",
             "title": "The Empire Strikes Backups Champions Newsletter",
             "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links.",
-            "cap": "I designed it so advocates could share the week's best posts in seconds."
+            "cap": "I designed it so advocates could share the week's best posts in seconds.",
+            "zoom": 1.04
           },
           {
             "src": "Newsletter 2_edited.jpg",
@@ -514,137 +515,158 @@
       {
         "gallery": [
           {
-            "src": "ezgif.com-video-to-gif-converter.gif",
+            "src": "dark/ezgif.com-video-to-gif-converter light.mp4",
             "title": "Parts Inventory Webinar Post with Gary",
             "desc": "\"You goat to go\" set the tone for this LinkedIn post promoting a Redzone webinar on the new Parts Inventory feature in the Reliability module. To make a CMMS walkthrough feel inviting, I animated our mascot, Gary the Goat, popping in beside a tablet as the app moves from the dashboard to the parts list.\nThe loop ends on a simple callout, \"Need a part?\", so the feature's value lands even before anyone reads the caption.",
             "tools": "Adobe Photoshop, Illustrator, Premiere Pro",
-            "cap": "QAD Redzone, LinkedIn. I animated Gary for the webinar promo."
+            "cap": "QAD Redzone, LinkedIn. I animated Gary for the webinar promo.",
+            "dark": "dark/ezgif.com-video-to-gif-converter dark.mp4"
           },
           {
-            "src": "IMG_1723.jpg",
+            "src": "light/IMG_1723 light.png",
             "title": "We'll See You in Las Vegas",
             "desc": "Ahead of RE+ 2025 in Las Vegas, I designed this announcement for SOLV Energy's Instagram. Cut-out photos of the Venetian and Palazzo towers sit alongside SOLV crew members in hard hats, all on a bold blue field with the RE+ mark and SOLV's sunburst.\nThe scrapbook-style collage gave a trade-show save-the-date some personality, and the \"Straight Outta Desert Center\" hard hat sticker added a wink for people who know the work.",
-            "cap": "SOLV Energy, Instagram. I designed the RE+ 2025 save-the-date."
+            "cap": "SOLV Energy, Instagram. I designed the RE+ 2025 save-the-date.",
+            "dark": "light/IMG_1723 dark.png"
           },
           {
-            "src": "LeadingtheWay-ezgif.com-optimize.gif",
+            "src": "light/LeadingtheWay-ezgif.com-optimize light.mp4",
             "title": "Leading the Way: Women on the Frontline",
             "desc": "For Women's History Month, I designed this LinkedIn document carousel spotlighting women driving change at Redzone customer sites. Each page pairs a portrait with real accomplishments, like Mireya Jimenez leading digital adoption at Pioneer Frozen Foods, Shannon Bone building a safety and waste committee from scratch, and Mallory Chavez helping her team adopt new tech.\nThe purple, award-style layouts put recognition and visibility at the center.",
-            "cap": "QAD Redzone, LinkedIn. I designed the Women's History Month carousel."
+            "cap": "QAD Redzone, LinkedIn. I designed the Women's History Month carousel.",
+            "dark": "light/LeadingtheWay-ezgif.com-optimize dark.mp4"
           },
           {
-            "src": "Screenshot 2025-02-21 at 4_edited_edited.jpg",
+            "src": "light/Screenshot 2025-02-21 at 4_edited_edited light.png",
             "title": "Healthier Texas Summit: Call for Proposals",
             "desc": "This Facebook post opened the call for proposals for the 2022 Healthier Texas Summit, a collaboration between It's Time Texas and The University of Texas System. I paired a candid photo of an attendee speaking up during a session with the summit lockup and a clear \"Apply Now\" band.\nThe goal was to show the summit as a place where every voice gets the mic, inviting professionals to bring sessions, discussions and workshops of their own.",
             "tools": "Adobe Illustrator, Canva, Adobe Photoshop",
-            "cap": "Healthier Texas, Facebook. I paired an attendee's photo with the summit lockup."
+            "cap": "Healthier Texas, Facebook. I paired an attendee's photo with the summit lockup.",
+            "dark": "light/Screenshot 2025-02-21 at 4_edited_edited dark.png"
           },
           {
-            "src": "OEEInfographic-ezgif.com-optimize.gif",
+            "src": "light/OEEInfographic-ezgif.com-optimize light.mp4",
             "title": "Manufacturing Carousel for Blog",
             "desc": "I designed this LinkedIn carousel to break down Overall Equipment Effectiveness (OEE), one of Redzone's more technical subjects. Frames move from what OEE is (availability x performance x quality) to why it matters, common inefficiencies and the power of real-time data.\nIsometric illustrations of the production line and bold condensed headlines keep the stats-heavy content clean and on brand, turning a dense topic into something easy to swipe through.",
             "tools": "Adobe Photoshop",
-            "cap": "QAD Redzone, LinkedIn. I designed the carousel to explain OEE."
+            "cap": "QAD Redzone, LinkedIn. I designed the carousel to explain OEE.",
+            "dark": "light/OEEInfographic-ezgif.com-optimize dark.mp4"
           },
           {
-            "src": "IMG_0967_edited.jpg",
+            "src": "light/IMG_0967_edited light.png",
             "title": "Texas Sweats for Pets: 3 Ways to Join",
             "desc": "Texas Sweats for Pets was a virtual fitness-a-thon from Healthier Texas, It's Time Texas and Austin Pets Alive! that invited Texans to work out alongside their pets. For launch day, I designed this Instagram graphic laying out three ways to join: buy a ticket, donate $5 for a drawing entry, or start a fundraiser.\nA flat illustration of a walker and pup, paw-print bullets and a \"Starts Today at 6pm!\" badge kept the message warm and easy to act on.",
             "tools": "Adobe Illustrator, Adobe Photoshop",
-            "cap": "Healthier Texas, Instagram. I designed the launch-day graphic."
+            "cap": "Healthier Texas, Instagram. I designed the launch-day graphic.",
+            "dark": "light/IMG_0967_edited dark.png"
           },
           {
-            "src": "TAL-ezgif.com-video-to-gif-converter.gif",
+            "src": "dark/TAL-ezgif.com-video-to-gif-converter light.mp4",
             "title": "History of the Assembly Line Carousel for Blog",
             "desc": "This LinkedIn carousel supported a Redzone blog feature on the history of the assembly line, moving from Ransom Olds and Henry Ford through the age of automation to Industry 4.0. I built each frame with collage and texture inspired by vintage magazines, plus a red-and-cyan offset that nods to old 3D prints.\nThe final slide brings in Gary the Goat in 3D glasses with a \"Book A Demo\" call to action, ending the history lesson on a playful note.",
             "tools": "Adobe Photoshop",
-            "cap": "QAD Redzone, LinkedIn. I built each collage frame for the blog feature."
+            "cap": "QAD Redzone, LinkedIn. I built each collage frame for the blog feature.",
+            "dark": "dark/TAL-ezgif.com-video-to-gif-converter dark.mp4"
           },
           {
-            "src": "IMG_1724.jpg",
+            "src": "light/IMG_1724 light.png",
             "title": "We Power What's Next at RE+",
             "desc": "Event coverage from RE+ 2025 in Las Vegas, posted to SOLV Energy's Facebook page. The collage leads with a wall-sized \"We Power What's Next\" screen towering over attendees, followed by shots of the show floor, a wrapped SOLV display and a gauge graphic carrying the same line.\nThe caption opens with the idea that almost every connection at RE+ starts with two words, and the photos were chosen to prove that point at a glance.",
-            "cap": "SOLV Energy, Facebook."
+            "cap": "SOLV Energy, Facebook.",
+            "dark": "light/IMG_1724 dark.png"
           },
           {
-            "src": "Productivity-ezgif.com-crop.gif",
+            "src": "dark/Productivity-ezgif.com-crop light.mp4",
             "title": "Game Day at the Redzone Booth",
             "desc": "Football season gave this LinkedIn video its playbook. The post opens on sports-style copy about fierce players and unmatched teamwork, then cuts to a Redzone team member at our football-themed trade show booth, ball in hand, walking viewers through the platform.\nThe clip ends on a close-up of the productivity dashboard on a tablet, so the sports metaphor lands on the real product frontline teams use every day.",
-            "cap": "QAD Redzone, LinkedIn video."
+            "cap": "QAD Redzone, LinkedIn video.",
+            "dark": "dark/Productivity-ezgif.com-crop dark.mp4"
           },
           {
             "v": "1228265177",
             "title": "Creating Healthy Habits Instagram Live",
             "desc": "This Instagram Live on the Healthier Texas account was a relaxed conversation about creating healthy habits, filmed at a kitchen table with a mug of coffee in hand. Going live gave followers a real-time, conversational way into the topic instead of a polished ad.\nThe casual setting suited the subject, since building healthy habits is really about small, everyday choices, and a familiar face made that message feel approachable.",
-            "cap": "Healthier Texas, Instagram Live."
+            "cap": "Healthier Texas, Instagram Live.",
+            "zoom": 1.05
           },
           {
-            "src": "Screenshot 2025-02-22 at 2.19_edited.jpg",
+            "src": "dark/Screenshot 2025-02-22 at 2.19_edited light.png",
             "title": "February Work Anniversaries with QAD Redzone",
             "desc": "Each month I designed a branded post celebrating Redzone team members' work anniversaries, and February leaned into Valentine's season with hearts, paper airplanes, a hot air balloon and a pink skyline. Headshots sit in alternating red, navy and white frames so a grid of 19 faces still feels lively.\nThese posts were small morale boosters that reminded people they were valued, and they often sparked congratulations and resharing across the team.",
             "tools": "Adobe Photoshop",
-            "cap": "QAD Redzone, LinkedIn. I designed a new one every month."
+            "cap": "QAD Redzone, LinkedIn. I designed a new one every month.",
+            "dark": "dark/Screenshot 2025-02-22 at 2.19_edited dark.png"
           },
           {
-            "src": "image0_edited.jpg",
+            "src": "light/image0_edited light.png",
             "title": "Supporting Our Frontline Workers",
             "desc": "For #GivingTuesdayNow, this It's Time Texas Instagram carousel thanked nurses, community health workers and essential workers. The caption invited followers to tag someone supporting health and share a story of appreciation.\nThe design pairs a portrait of a masked healthcare worker with bold, stacked type on bright blue bars, kept simple so the gratitude is the first thing people read.",
-            "cap": "Healthier Texas, Instagram. I designed the carousel."
+            "cap": "Healthier Texas, Instagram. I designed the carousel.",
+            "dark": "light/image0_edited dark.png"
           },
           {
-            "src": "Screenshot 2026-10-01 at 12.53.47 AM.jpeg",
+            "src": "dark/Screenshot 2026-10-01 at 12.53.47 AM light.png",
             "title": "Productivity & Turnover",
             "desc": "Tax Day gave this LinkedIn post a timely hook: while everyone was thinking about savings, it made the case for savings on the manufacturing floor. The copy plays on receipts and refunds, then points to Redzone's G2 rating as proof from the community.\nFor the graphic, I set the productivity and turnover stats over a candid photo of a frontline team gathered around a tablet, closing with a bold \"Book a Demo\" button.",
-            "cap": "QAD Redzone, LinkedIn. I set the stats over a candid frontline photo."
+            "cap": "QAD Redzone, LinkedIn. I set the stats over a candid frontline photo.",
+            "dark": "dark/Screenshot 2026-10-01 at 12.53.47 AM dark.png"
           },
           {
-            "src": "ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop.gif",
+            "src": "light/ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop light.mp4",
             "title": "2021 Community Challenge Recap with Mayor Ron Nirenberg",
             "desc": "To build momentum for the 2022 It's Time Texas Community Challenge, this #FlashbackFriday post on Healthier Texas's Facebook revisited San Antonio Mayor Ron Nirenberg accepting the Metro-sized community award for his area at the previous competition.\nA public leader speaking straight to camera from his office made the challenge feel personal, while the branded #CommunityChallenge lower third and registration link turned the throwback into a call to sign up.",
-            "cap": "Healthier Texas, Facebook."
+            "cap": "Healthier Texas, Facebook.",
+            "dark": "light/ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop dark.mp4"
           },
           {
-            "src": "Screenshot 2026-10-01 at 12.31.50 AM.png",
+            "src": "light/Screenshot 2026-10-01 at 12.31.50 AM light.png",
             "title": "Father's Day Letter from Redzone",
             "desc": "For Father's Day, this Redzone LinkedIn post told the story of Francisco, a frontline team member following in the footsteps of his father, who retired after a long career on the Jelly Belly Candy Company factory floor. The story is set as a letter tucked into a red envelope sealed with the Redzone mark.\nThe post simply reads \"With Love, Redzone,\" letting the letter carry the emotion: legacy as pride in work done well.",
-            "cap": "QAD Redzone, LinkedIn."
+            "cap": "QAD Redzone, LinkedIn.",
+            "dark": "light/Screenshot 2026-10-01 at 12.31.50 AM dark.png"
           },
           {
-            "src": "2BoothsAcrosstheUS-ezgif.com-crop.gif",
+            "src": "light/2BoothsAcrosstheUS-ezgif.com-crop light.mp4",
             "title": "Two Different Shows Across the World",
             "desc": "Greetings from FABTECH and PACK EXPO: QAD Redzone took over two cities at once, and this LinkedIn video brought both shows into one post. The booth team tosses a football in front of our football-themed booth before Gary the Goat pops in holding a \"Get Certified\" sign.\nThe goal was to show the energy at both booths and invite manufacturers in Chicago and Las Vegas to stop by or book a demo.",
-            "cap": "QAD Redzone, LinkedIn video."
+            "cap": "QAD Redzone, LinkedIn video.",
+            "dark": "light/2BoothsAcrosstheUS-ezgif.com-crop dark.mp4"
           },
           {
-            "src": "FoodSafetyPodcast-ezgif.com-crop.gif",
+            "src": "dark/FoodSafetyPodcast-ezgif.com-crop light.mp4",
             "title": "Summit Podcast Narration",
             "desc": "This LinkedIn video shares a snippet from the Food Safety Matters podcast, recorded live at the Food Safety Summit with Andrew Lansinger of QAD Redzone. His message about giving frontline team members a voice, a platform and recognition runs as narration over footage from the show floor.\nBurned-in captions make the clip work with the sound off, and cuts between the podcast set and the Redzone booth keep the pace moving.",
-            "cap": "QAD Redzone, LinkedIn video."
+            "cap": "QAD Redzone, LinkedIn video.",
+            "dark": "dark/FoodSafetyPodcast-ezgif.com-crop dark.mp4"
           },
           {
-            "src": "Screenshot 2024-02-12 at 11_edited.jpg",
+            "src": "light/Screenshot 2024-02-12 at 11_edited light.png",
             "title": "2023 QAD Redzone Open Charity Golf Tournament",
             "desc": "Event day for the 2nd Annual QAD Redzone Open Charity Golf Tournament, which the post shares had raised over $70,000 for the Special Operations Warrior Foundation. The collage pairs a tee shot framed by onlookers, an artist live-painting the course, and players warming up on the driving range.\nCommunity events were part of the Redzone story too, and this coverage showed the relationships behind the software away from the plant floor.",
-            "cap": "QAD Redzone, LinkedIn."
+            "cap": "QAD Redzone, LinkedIn.",
+            "dark": "light/Screenshot 2024-02-12 at 11_edited dark.png"
           },
           {
-            "src": "Compliance-ezgif.com-crop.gif",
+            "src": "dark/Compliance-ezgif.com-crop light.mp4",
             "title": "Compliance Workshop Invite",
             "desc": "This LinkedIn post invited QAD Redzone community admins to a Compliance Workshop hosted by Joe Thielen, Customer Success Coach, opening on the line that compliance isn't just about meeting standards, it's about setting them.\nThe short video cuts from frontline conversations on the plant floor to close-ups of the app on a tablet, then resolves into the Redzone logo, keeping the focus on the people who use the tools every day.",
-            "cap": "QAD Redzone, LinkedIn video."
+            "cap": "QAD Redzone, LinkedIn video.",
+            "dark": "dark/Compliance-ezgif.com-crop dark.mp4"
           },
           {
-            "src": "ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop.gif",
+            "src": "dark/ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop light.mp4",
             "title": "2023 Holidays with QAD Redzone",
             "desc": "To close out the year, this LinkedIn post thanked the Redzone community for the stories that inspire our work. The animated card is a tablet-shaped frame wishing everyone a joyful holiday season and a successful 2023, with snowflakes drifting across a Redzone-red background.\nThe loop is short and quiet on purpose: a warm sign-off that fits the feed without competing with the message of thanks.",
-            "cap": "QAD Redzone, LinkedIn."
+            "cap": "QAD Redzone, LinkedIn.",
+            "dark": "dark/ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop dark.mp4"
           },
           {
-            "src": "ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop.gif",
+            "src": "light/ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop light.mp4",
             "title": "2024 New Year's with QAD Redzone",
             "desc": "\"Let's make 2024 the Year of the Connected Worker!\" This LinkedIn post rang in the new year by spotlighting real Redzone customers instead of a generic greeting, linking to a roundup of success stories from around our community.\nI animated a disco-ball \"Happy New Year\" over a lineup of frontline team members, then let red and blue fireworks burst before resolving on the QAD Redzone logo.",
             "tools": "Adobe Photoshop, Illustrator",
-            "cap": "QAD Redzone, LinkedIn. I animated the card."
+            "cap": "QAD Redzone, LinkedIn. I animated the card.",
+            "dark": "light/ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop dark.mp4"
           }
         ],
         "height": 380,
@@ -765,10 +787,11 @@
             "cap": "Cohesity. I edited the 14-second promo."
           },
           {
-            "src": "2_edited.jpg",
+            "src": "dark/2_edited light.png",
             "title": "White Paper: Linkedin InMail Ad",
             "desc": "This sponsored InMail invited new community partners into It's Time Texas' free, confidential health coaching program. Sent from a program director's profile, it reads like a personal note, walking through weekly phone consultations, text and email follow-up, and services in English and Spanish.\nI kept the subject line direct and put a single Learn More button up top, so the ask was clear before anyone scrolled into the details.",
-            "cap": "Healthier Texas, LinkedIn InMail. I wrote it to read like a personal note."
+            "cap": "Healthier Texas, LinkedIn InMail. I wrote it to read like a personal note.",
+            "dark": "dark/2_edited dark.png"
           },
           {
             "src": "Banner Edit.png",
@@ -783,16 +806,18 @@
             "cap": "Healthier Texas, Instagram Stories."
           },
           {
-            "src": "VideoAd-ezgif.com-crop.gif",
+            "src": "light/VideoAd-ezgif.com-crop light.mp4",
             "title": "Book a Demo with QAD Redzone: Linkedin Video Ad",
             "desc": "This LinkedIn video ad turned a Productivity & QA Roadshow at Pearson's Candy Company in St. Paul into a reason to book a demo. The post copy shares how the host and guest plants used Redzone to drive culture change and boost productivity upwards of 22%.\nThe footage moves from operators at work on the candy line to guest speakers telling their story on camera, so the proof comes from the people running the plants.",
-            "cap": "QAD Redzone, LinkedIn. Footage from the Pearson's Candy roadshow."
+            "cap": "QAD Redzone, LinkedIn. Footage from the Pearson's Candy roadshow.",
+            "dark": "light/VideoAd-ezgif.com-crop dark.mp4"
           },
           {
-            "src": "ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop.gif",
+            "src": "dark/ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop light.mp4",
             "title": "Living Healthier Hotline: Facebook Carousel Ad",
             "desc": "I wrote this Facebook carousel for It's Time Texas' Living Healthier hotline, opening on a simple idea: transform your health for yourself, but not by yourself. It promoted free, bilingual, and confidential health coaching.\nEach card pairs a real-life photo with one benefit, from meal planning advice to goal setting and progress tracking, with the hotline number on a bright banner and a Contact Us button on every card.",
-            "cap": "Healthier Texas, Facebook. I wrote the copy."
+            "cap": "Healthier Texas, Facebook. I wrote the copy.",
+            "dark": "dark/ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop dark.mp4"
           },
           {
             "src": "Mobile Ad_edited.jpg",
@@ -801,22 +826,25 @@
             "cap": "QAD Redzone, Food Business News. The mobile version, cut down to the booth number and badge."
           },
           {
-            "src": "Event_edited.jpg",
+            "src": "dark/Event_edited light.png",
             "title": "Responding to the Pandemic: Facebook Event Ad",
             "desc": "A Facebook event ad for Responding to a Pandemic, a free live discussion in the Healthier Texas Summit Series, presented by Blue Cross Blue Shield of Texas. The link headline spells out the angle: how Texas organizations are pivoting.\nThe creative leads with the date and time across the top, then lets a colorful illustration of masked faces carry the topic, with a Get Tickets button closing the loop.",
-            "cap": "Healthier Texas, Facebook."
+            "cap": "Healthier Texas, Facebook.",
+            "dark": "dark/Event_edited dark.png"
           },
           {
-            "src": "Screenshot 2025-02-22 at 3.37_edited.jpg",
+            "src": "light/Screenshot 2025-02-22 at 3.37_edited light.png",
             "title": "Champion Employee Engagement: eBook Download Ad",
             "desc": "Linemen set at the line of scrimmage make the backdrop for this Redzone eBook ad, with Champion Employee Engagement stacked in bold white type over the action. The copy offers five strategies to attract, engage, and retain frontline workers.\nThe football imagery gives a heavy manufacturing topic, the labor shortage, some momentum, and a single Download button is the only next step.",
-            "cap": "QAD Redzone. I ran the eBook download campaign."
+            "cap": "QAD Redzone. I ran the eBook download campaign.",
+            "dark": "light/Screenshot 2025-02-22 at 3.37_edited dark.png"
           },
           {
-            "src": "Video3-ezgif.com-video-to-gif-converter.gif",
+            "src": "dark/Video3-ezgif.com-video-to-gif-converter light.mp4",
             "title": "Healthier Texas Summit Recap: X (Twitter) Ad",
             "desc": "After the Healthier Texas Summit Series wrapped, this X ad gave people a second chance to catch it, pointing to an archive with every session saved. The animated card cycles through session graphics, from Health and Social Justice to Partnering and Collaborating Across Sectors During a Crisis.\nEach card keeps the summit's illustrated look, ending on the Healthier Texas Summit Series logo so the brand gets the last word.",
-            "cap": "Healthier Texas, X."
+            "cap": "Healthier Texas, X.",
+            "dark": "dark/Video3-ezgif.com-video-to-gif-converter dark.mp4"
           }
         ],
         "height": 352,

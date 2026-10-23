@@ -3,6 +3,10 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // pieces with a dark-mode copy (a social video with its app in dark mode): dark-mode visitors get that copy
+  if (document.documentElement.classList.contains("can-dark") && matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.querySelectorAll("video[data-src-dark]").forEach((v) => { v.dataset.src = v.dataset.srcDark; v.poster = v.dataset.posterDark; });
+  }
   // In-app browsers (LinkedIn, Instagram) and mobile Safari change the window height as their toolbars slide,
   // many times per scroll. Layout that reacts to every resize then fights the scroll and the page shudders.
   // So: the viewport height is the small, stable one (100svh), refreshed only when the width changes, and
@@ -168,7 +172,7 @@
 
   // the other buttons (like Open PDF) and the notes' expand mark wear the same shine through their glass,
   // lit while on screen; the arrows stay plain
-  const shines = document.querySelectorAll(".shine, .btn:not(.shine .btn), .strip-notes .tile");
+  const shines = document.querySelectorAll(".shine, .btn:not(.shine .btn), .strip-notes .tile, .tile.is-note");
   if (shines.length) {
     if ("IntersectionObserver" in window) {
       const shineObserver = new IntersectionObserver((entries) => {
@@ -229,10 +233,27 @@
         n.remove();
       });
       el.classList.remove("is-static");
+      el.style.removeProperty("--centre");
+      track.style.transform = "";
       prev.hidden = next.hidden = false;
       s.loop = 0;
-      if (track.scrollWidth <= viewport.clientWidth + 2) {
+      // a short strip whose pieces fit between the page margins sits centred and still, with no arrows
+      const cs = getComputedStyle(track);
+      const pieces = track.scrollWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const gutter = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--gutter")) || 24;
+      if (track.scrollWidth <= viewport.clientWidth + 2 || pieces <= viewport.clientWidth - 2 * gutter) {
+        // it starts on the same left edge as the other strips, then glides once to the centre and rests there
         el.classList.add("is-static");
+        viewport.scrollLeft = 0; s.pos = 0;
+        const shift = (viewport.clientWidth - pieces) / 2 - parseFloat(cs.paddingLeft);
+        el.style.setProperty("--centre", `${shift.toFixed(1)}px`);
+        if (reduceMotion || el.classList.contains("is-centred")) el.classList.add("is-centred");
+        else if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) { setTimeout(() => el.classList.add("is-centred"), 600); io.disconnect(); }
+          }, { threshold: 0.5 });
+          io.observe(el);
+        } else el.classList.add("is-centred");
         return;
       }
       if (s.loops) {
@@ -262,9 +283,7 @@
       }
     }
 
-    // hovering slows the slider to HOVER_SPEED instead of stopping it
-    el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") s.hover = true; });
-    el.addEventListener("pointerleave", () => { s.hover = false; });
+    // as on Apple's galleries, the pointer passing over doesn't change the pace; the pause button does
     el.addEventListener("focusin", (e) => { if (e.target.matches(":focus-visible")) hold("focus"); });   // keyboard focus only; a tapped button shouldn't stop it
     el.addEventListener("focusout", () => s.pause.delete("focus"));
     // a touch that turns out to be the page scrolling up or down lets the strip carry straight on; only a
@@ -376,7 +395,6 @@
     strips.push(s);
   }
 
-  const HOVER_SPEED = 25;  // px/s while the pointer rests on a slider
   let last = 0;
   function tick(t) {
     const dt = last ? Math.min((t - last) / 1000, 0.1) : 0;
@@ -384,7 +402,7 @@
     for (const s of strips) {
       if (!s.speed || s.anim || !s.visible || s.pause.size || lightboxOpen) continue;
       if (s.el.classList.contains("is-static")) continue;
-      const target = s.hover ? Math.min(HOVER_SPEED, s.speed / 2) : s.speed;
+      const target = s.speed;
       s.v = s.v ? s.v + (target - s.v) * Math.min(1, dt * 4) : target;  // ease between paces over about half a second
       s.pos += s.v * dt;
       if (s.loop && s.pos >= s.loop) s.pos -= s.loop;
@@ -438,6 +456,8 @@
       width: `${Math.round(vw * k)}px`, height: `${Math.round(vh * k)}px`,
       left: `${Math.round((tw - vw * k) / 2)}px`, top: `${Math.round((th - vh * k) / 2)}px`,
     });
+    // the player paints white while it starts up; keep it hidden over the poster until the video is running
+    frame.addEventListener("load", () => setTimeout(() => frame.classList.add("is-ready"), 700), { once: true });
     tileEl.appendChild(frame);
     return frame;
   }
@@ -496,6 +516,30 @@
       return `https://player.vimeo.com/video/${item.id}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
     }
     return `https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1&rel=0&modestbranding=1`;
+  }
+
+  // stacked layout (tablets, foldables, squarish windows): give the visual whatever height is left once the words
+  // under it are laid out, so the whole stack fits without scrolling (within sensible limits)
+  // stacked (visual on top, words under it) when that gives the visual more room: any piece wider than tall, or
+  // a window that isn't much wider than tall; tall pieces and documents sit beside their words on wide windows
+  function chooseLayout(item) {
+    const vr = item.vw ? item.vw / item.vh : (item.w && item.h ? item.w / item.h : 1);
+    const wide = innerWidth / innerHeight >= 1.5;
+    const doc = item.type === "image" && isPdf(item);
+    dialog.classList.toggle("is-stack", innerWidth > 900 && innerHeight >= 640 && (!wide || (vr >= 1.1 && !doc)));
+  }
+
+  function fitStacked() {
+    const inner = dialog.querySelector(".lb-inner");
+    if (!inner) return;
+    dialog.style.removeProperty("--lb-fit");
+    if (asPage || getComputedStyle(inner).flexDirection !== "column") return;
+    const cs = getComputedStyle(inner);
+    const room = inner.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)
+      - lbCaption.offsetHeight - parseFloat(cs.rowGap || cs.gap || 0);
+    // the visual keeps at least half the height even when the words are long; they then scroll beneath it
+    const half = (inner.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)) * 0.5;
+    dialog.style.setProperty("--lb-fit", `${Math.floor(Math.max(half, room))}px`);
   }
 
   function sizeFrame() {
@@ -591,8 +635,11 @@
     pages.forEach((p) => io.observe(p));
   }
 
+  const darkPage = () => document.documentElement.classList.contains("can-dark") && matchMedia("(prefers-color-scheme: dark)").matches;
   function render() {
-    const item = current.items[current.index];
+    let item = current.items[current.index];
+    if (item.full_dark && darkPage()) item = { ...item, full: item.full_dark, thumb: item.thumb_dark || item.thumb };
+    if (item.src_dark && darkPage()) item = { ...item, src: item.src_dark, thumb: item.thumb_dark || item.thumb };
     const inner = dialog.querySelector(".lb-inner");
     if (inner) inner.scrollTop = 0;  // each piece starts at its top when the phone layout scrolls
     lbMedia.replaceChildren();
@@ -624,7 +671,8 @@
     const hasCaption = item.title || item.desc || item.link;
     dialog.classList.toggle("no-caption", !hasCaption);
     dialog.classList.toggle("is-quick", !!item.quick);
-    dialog.classList.add("is-glass");   // every pop-up sits on the dark glass pane
+    dialog.classList.toggle("is-glass", !!item.quick);
+    chooseLayout(item);   // the home quick view floats on its glass pane; the rest are solid dark
     if (item.quick) {
       // a home case's quick view: what the case is, its figures and opening lines, the sample on screen, and
       // the way into the full case study
@@ -661,6 +709,7 @@
       }
     }
     dialog.setAttribute("aria-label", label ? `Enlarged view: ${label}` : "Enlarged view");
+    requestAnimationFrame(fitStacked);
   }
 
   // Safari colours its status bar and floating toolbar from the page behind them. While the pop-up is open
@@ -764,7 +813,7 @@
       if (e.key === "ArrowRight") go(1);
       else if (e.key === "ArrowLeft") go(-1);
     });
-    window.addEventListener("resize", () => { if (lightboxOpen) sizeFrame(); });
+    window.addEventListener("resize", () => { if (lightboxOpen) { chooseLayout(current.items[current.index]); sizeFrame(); fitStacked(); } });
 
     // Swipe left/right inside the lightbox on touch screens.
     let sx = null;
@@ -1050,7 +1099,7 @@
     if (!data || !strip || content.querySelector(".ex-scene")) return;
     const items = JSON.parse(data.textContent);
     const n = items.length;
-    const HAND = 0.3, HOLD = 1.6;
+    const HAND = 0.3, HOLD = 0.5;   // the home page's pacing: about 0.8 of a screen of scroll per post
     const total = n * (HAND + HOLD) - HAND;
     const scene = document.createElement("section");
     scene.className = "ex-scene";
@@ -1060,21 +1109,40 @@
     stage.className = "ex-stage";
     const inner = document.createElement("div");
     inner.className = "ex-inner";
-    const count = el("p", { class: "ex-count", "aria-hidden": "true" });
+    // where you are: a bar per post, the current one long and filling as you read on (a click jumps to that post),
+    // and, on the first post only, a cue that scrolling brings the next
+    const rail = el("div", { class: "ex-rail", role: "group", "aria-label": "Posts" });
+    const bars = items.map((it, k) => {
+      const bar = el("button", { type: "button", "aria-label": `Post ${k + 1} of ${n}` });
+      bar.append(el("i", {}));
+      bar.addEventListener("click", () => {
+        const pin = pillsH();
+        const run = scene.offsetHeight - (viewH() - pin);
+        const top = scene.getBoundingClientRect().top + window.scrollY - pin;
+        window.scrollTo({ top: top + run * (k * (HAND + HOLD) + 0.05) / total, behavior: "smooth" });
+      });
+      rail.append(bar);
+      return bar;
+    });
+    const cue = el("p", { class: "ex-cue", "aria-hidden": "true" }, "Scroll for the next post");
+    rail.append(cue);
+    let cueGone = false;
     const cases = items.map((it, k) => {
       const art = el("article", { class: "ex-case", style: `--k:${k}` });
       const text = el("div", { class: "ex-text" });
       text.append(el("h3", {}, it.title || ""));
       (it.desc || "").split("\n").filter((t) => t.trim()).forEach((t) => text.append(el("p", {}, t)));
       const fig = el("figure", { class: "ex-box" });
-      const img = el("img", { src: it.full || it.thumb, alt: it.title || "", width: it.w, height: it.h, loading: "lazy", decoding: "async" });
+      // the tile-sized copy (about twice the height it shows at) decodes far faster than the full one, which the
+      // pop-up still uses
+      const img = el("img", { src: it.thumb || it.full, alt: it.title || "", width: it.w, height: it.h, decoding: "async" });
       img.addEventListener("click", () => open(items, k, true));
       fig.append(img);
       art.append(text, fig);
       inner.append(art);
       return art;
     });
-    inner.append(count);
+    inner.append(rail);
     stage.append(inner);
     scene.append(stage);
     strip.after(scene);
@@ -1094,22 +1162,58 @@
       const run = r.height - (viewH() - pin);
       const u = run > 0 ? Math.max(0, (pin - r.top) / run) * total : 0;
       let at = 0;
+      const STEP = HAND + HOLD;
       cases.forEach((c, k) => {
-        const st = k * (HAND + HOLD);
+        const st = k * STEP;
         if (u >= st - HAND / 2) at = k;
         const e = k === 0 ? 1 : clamp((u - (st - HAND)) / HAND);
         const l = k === n - 1 ? 0 : clamp((u - (st + HOLD)) / HAND);
-        c.style.setProperty("--e", e.toFixed(3));
-        c.style.setProperty("--l", l.toFixed(3));
-        c.style.setProperty("--te", (k === 0 ? 1 : clamp(e * 2 - 1)).toFixed(3));
-        c.style.setProperty("--tl", clamp(l * 2).toFixed(3));
+        // the peeks ease in and out with the scroll itself (no timed transitions to fall behind it): a post rises
+        // into the bottom peek while the one before it arrives, and keeps its top-edge peek until the one after
+        // next takes over
+        const pk = 48 * clamp((u - (st - STEP - HAND)) / HAND);
+        const pt = 30 * (1 - clamp((u - (st + 2 * STEP - HAND)) / HAND));
+        const box = c._box || (c._box = c.querySelector(".ex-box"));
+        const text = c._text || (c._text = c.querySelector(".ex-text"));
+        const y = (1 - e) * (c._drop - pk) - l * (c._rise - pt);
+        box.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+        const te = k === 0 ? 1 : clamp(e * 2 - 1), tl = clamp(l * 2);
+        text.style.opacity = (te * (1 - tl)).toFixed(3);
+        text.style.transform = `translate3d(0, ${((1 - te) * 24 - tl * 24).toFixed(1)}px, 0)`;
         c.classList.toggle("is-shown", e > 0 && l < 1);
       });
-      count.textContent = `${at + 1} / ${n}`;
+      const within = clamp((u - at * (HAND + HOLD)) / (HOLD + HAND));
+      bars.forEach((bar, k) => {
+        bar.classList.toggle("is-on", k === at);
+        bar.classList.toggle("is-done", k < at);
+        bar.style.setProperty("--fill", k < at ? "1" : k === at ? (at === n - 1 ? 1 : within).toFixed(3) : "0");
+        if (k === at) bar.setAttribute("aria-current", "step"); else bar.removeAttribute("aria-current");
+      });
+      if (!cueGone && u > 0.12) { cueGone = true; rail.classList.add("cue-gone"); }
     };
-    live(); move();
-    onWidthResize(() => { live(); move(); });
-    window.addEventListener("scroll", () => requestAnimationFrame(move), { passive: true });
+    // how far each post must drop to sit just below the screen, from where it rests (measured untransformed)
+    const measure = () => {
+      const h = stage.clientHeight;
+      cases.forEach((c) => {
+        const img = c.querySelector(".ex-box img");
+        const top = c.offsetTop + (img ? img.offsetTop : 0);
+        const bottom = top + (img ? img.offsetHeight : 0);
+        c._drop = Math.max(0, h - top) + 8;
+        c._rise = bottom + 8;   // how far up it goes to clear the top of the screen
+      });
+    };
+    live(); measure();
+    // the posts replace the taller locked panes, which can leave the reader partway into the scene; start them at
+    // the first post
+    if (scene.classList.contains("is-live")) {
+      const top = scene.getBoundingClientRect().top + window.scrollY - pillsH();
+      if (window.scrollY > top) window.scrollTo({ top, behavior: "instant" });
+    }
+    move();
+    cases.forEach((c) => { const img = c.querySelector(".ex-box img"); if (img && !img.complete) img.addEventListener("load", () => { measure(); move(); }, { once: true }); });
+    onWidthResize(() => { live(); measure(); move(); });
+    let queued = false;   // one update per frame, however many scroll events arrive in it
+    window.addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; move(); }); } }, { passive: true });
   }
 
   // The locked file was made with the site's older strip markup; once open, the posts are brought in line with
@@ -1346,8 +1450,8 @@
   });
 
   // home: the case studies as one scene. The scroll walks through each case: its box slides up over the last,
-  // the words hand over and the figures count up, then the case holds for about a screen and a half (1.5 to 2
-  // seconds at an easy scrolling pace) while its slideshow runs on its own timer. Lengths are in screens.
+  // the words hand over and the figures count up, then the case holds briefly while its slideshow runs on its
+  // own timer. Lengths are in screens.
   document.querySelectorAll('[data-scene="work"]').forEach((scene) => {
     const cases = [...scene.querySelectorAll(".wk-case")];
     const names = [...scene.querySelectorAll(".wk-names button")];
@@ -1356,7 +1460,7 @@
     const n = cases.length;
     const phone = matchMedia("(max-width: 720px)");
     const HAND = 0.3;   // the box hand-over
-    const HOLD = 1.5;   // how long each case stays put
+    const HOLD = 0.5;   // how long each case stays put (the original pacing: about 0.8 of a screen per case)
     const widths = counts.map(() => HAND + HOLD);
     const starts = widths.map((_, k) => widths.slice(0, k).reduce((a, b) => a + b, 0));
     const total = starts[n - 1] + widths[n - 1] - HAND;

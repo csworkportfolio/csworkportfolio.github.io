@@ -528,24 +528,26 @@
             "desc": "Web banners I designed for paid media and retargeting, pairing a productivity or engagement stat with a real manufacturing team in their plant. The goal was to ground the stat in something tangible, so instead of a cold chart I set the type over candid photographs of our customers.\nThese ran inside the paid campaigns I owned from the brainstorm on. Across that program, six-figure budgets turned into 1M+ ad interactions at twice the industry-average CTR."
           },
           {
-            "src": "LF1T Large trimmed.png",
+            "src": "PDF Preview redzone-case-study-coil-specialist.png",
             "title": "Redzone Case Study: Coil Specialist, Inc.",
             "link": {
               "href": "files/redzone-case-study-coil-specialist.pdf",
               "label": "Read the case study (PDF)"
             },
             "desc": "This Redzone case study follows Coil Specialist, Inc., a component manufacturer that drove productivity up 37% with QAD Redzone. Writing customer stories meant interviewing people about the results they saw on the plant floor, then shaping those conversations into a clear narrative.\nI structured the piece to be found in search and repurposed across web, email and social. The full case study is available here as a PDF.",
-            "cap": "A customer story I interviewed for, wrote, and built as a page on the Redzone site."
+            "cap": "A customer story I interviewed for, wrote, and built as a page on the Redzone site.",
+            "note": true
           },
           {
-            "src": "Long Form 2 2.jpeg",
+            "src": "PDF Preview redzone-case-study-companion-baking.png",
             "title": "Redzone Case Study: Companion Baking Company",
             "link": {
               "href": "files/redzone-case-study-companion-baking.pdf",
               "label": "Read the case study (PDF)"
             },
             "desc": "Companion Baking Company's story centers on enlisting everyone on the team to improve equipment reliability with Redzone. For case studies like this, I interviewed customers about the results they saw on the plant floor and built the narrative around their experience.\nThe headline puts people first, and the piece was structured to be found in search and repurposed across web, email and social. The full case study is available here as a PDF.",
-            "cap": "A customer story I interviewed for, wrote, and built as a page on the Redzone site."
+            "cap": "A customer story I interviewed for, wrote, and built as a page on the Redzone site.",
+            "note": true
           }
         ],
         "restart": true
@@ -956,7 +958,8 @@
           {
             "v": "1228250187",
             "title": "The Empire Strikes Backups Champions Newsletter",
-            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links."
+            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links.",
+            "zoom": 1.04
           }
         ],
         "gap": 50,

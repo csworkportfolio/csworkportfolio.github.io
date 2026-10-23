@@ -394,7 +394,8 @@ button { font: inherit; color: inherit; }
 .strip:has(.tile-cap):not(.strip-ground) .strip-track { padding-left: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); padding-right: var(--gutter); }
 .tile-media { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; transform: scale(var(--zoom, 1)); }
 .tile-player { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
-.tile-preview { position: absolute; border: 0; background: transparent; pointer-events: none; }
+.tile-preview { position: absolute; border: 0; background: transparent; pointer-events: none; opacity: 0; transition: opacity .4s ease; }
+.tile-preview.is-ready { opacity: 1; }
 .tile.is-playing { cursor: default; }
 .tile.is-playing .play { display: none; }
 
@@ -403,7 +404,7 @@ button { font: inherit; color: inherit; }
   display: grid; place-items: center; border-radius: 50%;
 }
 .play svg { width: 22px; height: 22px; fill: currentColor; margin-left: 3px; }
-.tile:has(.tile-preview) .play { opacity: 0; }
+.tile:has(.tile-preview.is-ready) .play { opacity: 0; }
 
 .strip-arrow {
   position: absolute; top: calc(50% - 25px); width: 50px; height: 50px; border-radius: 50%; border: 0;
@@ -937,7 +938,7 @@ main { view-transition-name: page; }
 .scene.sc-still + .prose { margin-top: 130px; }
 .sc-video { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: pointer; overflow: hidden; border-radius: 0; }
 .sc-video img { display: block; width: 100%; height: auto; }
-.sc-video:has(.tile-preview) .play { opacity: 0; }
+.sc-video:has(.tile-preview.is-ready) .play { opacity: 0; }
 .sc-figs { display: grid; width: min(520px, 100%); }
 .sc-figs > figure { grid-area: 1 / 1; width: 100%; opacity: 0; transition: opacity .5s; pointer-events: none; }   /* the hidden pictures never catch a click meant for the visible one */
 .sc-figs:not(.is-js) > figure:first-child, .sc-figs > figure.is-on { pointer-events: auto; }
@@ -1243,8 +1244,8 @@ a.tl-label:hover strong { color: #ff9a66; }
   .cat-v2 .strip .tile-wrap[style*="--cl"] .tile-media { filter: drop-shadow(0 calc(10px + var(--lift, 0) * 14px) calc(12px + var(--lift, 0) * 10px) rgba(0,0,0, calc(.18 + var(--lift, 0) * .14))); }
 }
 /* long-form pieces as rounded paper notes on the light band */
-.strip-notes .tile { border-radius: 16px; background: #fff; }
-.strip-notes .tile-media { border-radius: inherit; }
+:is(.strip-notes .tile, .tile.is-note) { border-radius: 16px; background: #fff; }
+:is(.strip-notes .tile, .tile.is-note)-media { border-radius: inherit; }
 
 /* ---------- locked ghostwriting: liquid-glass bubbles and a four-dot passcode ---------- */
 .gw-wrap { margin-top: 8px; padding: 40px var(--gutter) 48px; background: var(--tabband); }
@@ -1318,7 +1319,7 @@ a.tl-label:hover strong { color: #ff9a66; }
 .lock .gw .gw-bubbles { width: auto; margin-left: 0; }
 .lock .gw { overflow: hidden; } .lock .gw .gw-bubbles { margin-right: 0; }
 /* a small liquid-glass expand mark in each note's top corner, so it reads as something that opens */
-.strip-notes .tile::after {
+:is(.strip-notes .tile, .tile.is-note)::after {
   content: ""; position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; pointer-events: none;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7'/%3E%3C/svg%3E") center / 15px no-repeat,
               color-mix(in srgb, #ffffff 62%, transparent);
@@ -1326,7 +1327,7 @@ a.tl-label:hover strong { color: #ff9a66; }
   box-shadow: inset 0 .5px 0 rgba(255,255,255,.9), 0 0 0 .5px var(--glassline), 0 6px 16px rgba(0,0,0,.18);
   transition: transform .25s var(--ease);
 }
-.strip-notes .tile:hover::after { transform: scale(1.08); }
+:is(.strip-notes .tile, .tile.is-note):hover::after { transform: scale(1.08); }
 
 /* wider than a phone, the panes run edge to edge: their height is whatever lets the five fill the band's
    width (capped), and the posts they open take the same height so each lands where its pane was */
@@ -1339,7 +1340,7 @@ a.tl-label:hover strong { color: #ff9a66; }
    seen through the glass, lit while on screen (main.js) or under the pointer; the arrows stay plain ---------- */
 .btn:not(.shine .btn) { position: relative; }
 .btn:not(.shine .btn) { isolation: isolate; }
-.btn:not(.shine .btn)::before, .strip-notes .tile::before {
+.btn:not(.shine .btn)::before, :is(.strip-notes .tile, .tile.is-note)::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
   background: conic-gradient(from var(--shine), var(--s1, #0a84ff), var(--s2, #bf5af2), var(--s3, #ff375f), var(--s4, #ff9f0a), var(--s1, #0a84ff));
   opacity: 0; transition: opacity .9s ease;
@@ -1350,15 +1351,15 @@ a.tl-label:hover strong { color: #ff9a66; }
 .btn:not(.shine .btn) { overflow: hidden; }
 .btn:not(.shine .btn)::before {
   inset: -10px; border-radius: 0;
-  background: linear-gradient(color-mix(in srgb, #ffffff 46%, transparent), color-mix(in srgb, #ffffff 46%, transparent)),
+  background: linear-gradient(color-mix(in srgb, #ffffff 68%, transparent), color-mix(in srgb, #ffffff 68%, transparent)),
               conic-gradient(from var(--shine), var(--s1, #0a84ff), var(--s2, #bf5af2), var(--s3, #ff375f), var(--s4, #ff9f0a), var(--s1, #0a84ff));
-  filter: blur(9px) saturate(160%);
+  filter: blur(14px) saturate(115%);   /* a tint under frosted glass, as on Read More, never a bright rainbow */
 }
-.btn.is-lit:not(.shine .btn)::before, .btn:not(.shine .btn):hover::before, .strip-notes .tile.is-lit::before { opacity: 1; animation-play-state: running; }
+.btn.is-lit:not(.shine .btn)::before, .btn:not(.shine .btn):hover::before, :is(.strip-notes .tile, .tile.is-note).is-lit::before { opacity: 1; animation-play-state: running; }
 /* the expand mark's shine sits under its glass circle in the note's corner */
-.strip-notes .tile::before { inset: auto; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; z-index: 1; }
-.strip-notes .tile::after { z-index: 2; }
-@media (prefers-reduced-motion: reduce) { .btn::before, .strip-notes .tile::before { animation: none; } }
+:is(.strip-notes .tile, .tile.is-note)::before { inset: auto; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; z-index: 1; }
+:is(.strip-notes .tile, .tile.is-note)::after { z-index: 2; }
+@media (prefers-reduced-motion: reduce) { .btn::before, :is(.strip-notes .tile, .tile.is-note)::before { animation: none; } }
 @media (min-width: 721px) { .gw-bubbles { overflow: visible; padding-bottom: 40px; margin-bottom: 14px; } }
 
 /* the passcode reads as a field: a label, and a blinking cursor in the next empty dot */
@@ -1459,15 +1460,21 @@ a.tl-label:hover strong { color: #ff9a66; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.10), 0 0 0 .5px rgba(0,0,0,.4), 0 40px 90px -30px rgba(0,0,0,.6);
 }
 /* tablets and open foldables: the piece on top, the words under it, in a pane that scrolls if it must */
-@media (min-width: 901px) and (max-width: 1240px) and (orientation: portrait) {
-  .lightbox.is-glass { --lb-room: 100%; }
-  .lightbox.is-glass .lb-inner {
-    margin: 32px 88px; height: calc(100% - 64px); overflow-y: auto; overscroll-behavior: contain;
-    display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 32px; padding: 48px 48px 44px;
+@media (min-width: 901px) {
+  /* stacked: the visual across the full width on top, the words under it at that same width; main.js caps the
+     visual's height so the whole stack fits the screen */
+  .lightbox.is-stack { --lb-room: 100%; }
+  .lightbox.is-stack .lb-inner {
+    overflow-y: auto; overscroll-behavior: contain;
+    display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 28px;
   }
-  .lightbox.is-glass .lb-media { height: auto; width: 100%; flex: none; }
-  .lightbox.is-glass .lb-media img, .lightbox.is-glass .lb-media video { max-height: 58vh; width: auto; max-width: 100%; }
-  .lightbox.is-glass .lb-caption { align-self: center; width: 100%; max-width: 620px; max-height: none; overflow: visible; padding-right: 0; }
+  .lightbox.is-stack.is-glass .lb-inner { margin: 32px 88px; height: calc(100% - 64px); padding: 40px 48px 36px; }
+  .lightbox.is-stack:not(.is-glass) .lb-inner { margin: 0; height: 100%; padding: 64px 96px 40px; }
+  .lightbox.is-stack .lb-media { height: auto; width: 100%; flex: none; max-width: none; }
+  .lightbox.is-stack .lb-media img, .lightbox.is-stack .lb-media video { max-height: var(--lb-fit, 56vh); width: auto; max-width: 100%; }
+  .lightbox.is-stack .lb-pdf { width: 100%; height: var(--lb-fit, 56vh); }
+  .lightbox.is-stack .lb-caption { align-self: stretch; width: 100%; max-width: none;   /* the words use the pane's full width, so they stay short and the visual gets the height */ max-height: none; overflow: visible; padding-right: 0; margin-top: 0; }
+
 }
 @media (max-width: 900px) {
   .lightbox.is-glass { background: #121214; --lb-room: 100%; }
@@ -1499,13 +1506,6 @@ a.tl-label:hover strong { color: #ff9a66; }
     background: color-mix(in srgb, #1c1c1e 62%, transparent);
   }
 }
-@media (min-width: 901px) and (max-width: 1240px) and (orientation: portrait) {
-  /* stacked, so the visual takes the full width rather than leaving room for a caption column beside it */
-  .lightbox.is-glass:not(.is-quick) { --lb-room: 100%; }
-  .lightbox.is-glass:not(.is-quick) .lb-inner { margin: 0; height: 100%; padding: 80px 96px 56px; }
-  .lightbox.is-glass:not(.is-quick) .lb-media img, .lightbox.is-glass:not(.is-quick) .lb-media video { max-height: 62vh; }
-  .lightbox.is-glass:not(.is-quick) .lb-pdf { width: 100%; height: 60vh; }
-}
 
 /* a piece in a strip shows the zoom cursor (it opens larger); videos keep the pointing hand (they play) */
 .strip .tile { cursor: zoom-in; }
@@ -1531,9 +1531,7 @@ a.tl-label:hover strong { color: #ff9a66; }
   display: grid; grid-template-columns: minmax(340px, 1fr) minmax(0, 1.3fr); grid-template-rows: minmax(0, 1fr); column-gap: 64px; align-items: center;
 }
 .ex-text {
-  max-width: 480px; visibility: hidden;
-  opacity: calc(var(--te, 0) * (1 - var(--tl, 0)));
-  transform: translateY(calc((1 - var(--te, 0)) * 24px - var(--tl, 0) * 24px));
+  max-width: 480px; visibility: hidden; will-change: opacity, transform;   /* opacity and position set by main.js */
 }
 .ex-case.is-shown .ex-text { visibility: visible; }
 .ex-text h3 { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; }
@@ -1541,11 +1539,12 @@ a.tl-label:hover strong { color: #ff9a66; }
 .ex-text p + p { margin-top: 10px; }
 .ex-box {
   margin: 0; height: 100%; min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; will-change: transform;
-  transform: translateY(calc((1 - var(--e, 0)) * 108%)) scale(calc(1 - var(--l, 0) * .06));
-  opacity: calc(1 - var(--l, 0));   /* the post before fades away as the next arrives, so posts of different widths never show around each other */
+  /* main.js sets the transform each frame: a waiting post sits just below the screen, the next one peeking up;
+     a post that has been read rises off the top, the one just before keeping its bottom edge in view */
+  backface-visibility: hidden;
 }
+
 .ex-box img { display: block; max-height: 100%; height: auto; width: auto; max-width: 100%; object-fit: contain; min-width: 0; border-radius: 14px; cursor: zoom-in; box-shadow: 0 34px 70px -30px rgba(0,0,0,.45); }
-.ex-count { position: absolute; left: var(--gutter); bottom: 20px; z-index: 50; font-family: var(--round); font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* the unlocked section: the locked file's old caption line and closing paragraph stay out of view (the context now
    sits above the panes) */
 .gw-wrap .lock-content .gal-label, .gw-wrap .lock-content .cat-text { display: none; }
@@ -1585,19 +1584,19 @@ a.tl-label:hover strong { color: #ff9a66; }
   .gw-lock { width: 44px; height: 44px; } .gw-lock svg { width: 19px; height: 19px; }
 }
 
-/* pause / play with each moving strip's arrows: first in the row, so the controls read [pause] [expand] [<] [>]
-   (touch screens, where a gallery can't be slowed by hovering) */
+/* pause / play with each moving strip's arrows, on every device: first in the row, so the controls read
+   [pause] [expand] [<] [>] */
 .strip-pause { display: none !important; }
 .strip-pause svg path { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
 .strip-pause .i-play { display: none; fill: currentColor; stroke: none; }
 .strip-pause.is-paused .i-pause { display: none; }
 .strip-pause.is-paused .i-play { display: block; }
-@media (hover: none) {
+@media all {
   .cat-v2 .strip:not(.is-static) .strip-pause { display: grid !important; }
   .cat-v2 .strip:has(.strip-pause) .strip-pause { right: calc(var(--gutter) + 144px); }
   .cat-v2 .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(var(--gutter) + 96px); }
 }
-@media (hover: none) and (min-width: 721px) {
+@media (min-width: 721px) {
   .cat-v2 .strip:has(.strip-pause) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 144px); }
   .cat-v2 .strip:has(.strip-pause):not(:has(.strip-open)) .strip-pause { right: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px + 96px); }
 }
@@ -1620,4 +1619,139 @@ a.tl-label:hover strong { color: #ff9a66; }
 @media (max-width: 720px) {
   .cat-v2 .strip-track > .tile-wrap:first-child,
   .cat-v2 .strip-track > .tile-wrap:not([data-clone]) + .tile-wrap[data-clone] { margin-right: calc(20px - var(--gap)); }
+}
+/* a button pointing at a case carries that case's own (photo-picked) colours, frosted like its Read More */
+.btn[style*="--s1"]:not(.shine .btn)::before {
+  background: linear-gradient(color-mix(in srgb, #ffffff 40%, transparent), color-mix(in srgb, #ffffff 40%, transparent)),
+              conic-gradient(from var(--shine), var(--s1), var(--s2), var(--s3), var(--s4), var(--s1));
+  filter: blur(8px) saturate(170%);
+}
+
+/* the reading scene's progress rail: a bar per post, the current one long and filling; a cue on the first post */
+.ex-rail { position: absolute; left: var(--gutter); bottom: 22px; z-index: 50; display: flex; align-items: center; gap: 8px; }
+.ex-rail button { position: relative; width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; overflow: hidden;
+  background: rgba(0,0,0,.18); transition: width .45s cubic-bezier(.2,.7,.2,1), background-color .3s; }
+.ex-rail button:hover { background: rgba(0,0,0,.32); }
+.ex-rail button.is-done { background: rgba(0,0,0,.5); }
+.ex-rail button.is-on { width: 40px; background: rgba(0,0,0,.16); }
+.ex-rail button i { position: absolute; inset: 0; background: #1d1d1f; transform-origin: 0 50%; transform: scaleX(var(--fill, 0)); }
+.ex-rail button:not(.is-on) i { display: none; }
+.ex-rail button:focus-visible { outline: 2px solid #007aff; outline-offset: 3px; }
+.ex-cue { margin-left: 10px; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; transition: opacity .5s ease; }
+.ex-cue::after { content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg); animation: ex-nudge 1.6s ease-in-out infinite; }
+@keyframes ex-nudge { 50% { transform: translateY(1px) rotate(45deg); } }
+.ex-rail.cue-gone .ex-cue { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .ex-cue::after { animation: none; } }
+
+/* a strip short enough to fit starts on the shared left edge, then glides to the centre and rests (main.js) */
+.cat-v2 .strip.is-static .strip-track { transition: transform 1.4s cubic-bezier(.45,.05,.2,1); }
+.cat-v2 .strip.is-static.is-centred .strip-track { transform: translate3d(var(--centre, 0px), 0, 0) !important; }
+.cat-v2 .strip.is-static .strip-pause, .cat-v2 .strip.is-static .strip-open { display: none !important; }
+.cat-v2 .strip-ground.is-static { padding-bottom: 48px; }
+
+/* side by side (main.js picks it for tall pieces on wide windows): the visual takes about three fifths of the
+   pane, the words the rest */
+@media (min-width: 901px) {
+  .lightbox.is-glass:not(.is-stack) .lb-inner { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); }
+  .lightbox.is-glass:not(.is-stack) { --lb-room: calc((100vw - 240px - 112px - 56px) * .6); }
+  .lightbox.is-glass:not(.is-stack) .lb-media { justify-self: center; }
+}
+
+/* the home quick view's glass runs edge to edge, like a full viewer, so the work gets the room a floating card
+   took for its margins (the blurred page still shows through) */
+@media (min-width: 901px) {
+  .lightbox.is-glass .lb-inner, .lightbox.is-stack.is-glass .lb-inner {
+    margin: 0; height: 100%; border-radius: 0; box-shadow: none;
+    background: color-mix(in srgb, #1c1c1e 62%, transparent);
+  }
+  .lightbox.is-glass:not(.is-stack) .lb-inner { padding: 56px 96px 40px; }
+  .lightbox.is-stack.is-glass .lb-inner { padding: 64px 96px 40px; }
+  .lightbox.is-glass:not(.is-stack) { --lb-room: calc((100vw - 192px - 56px) * .6); }
+}
+
+/* ================= dark mode =================
+   Every page but the home page follows the device's appearance setting. The work itself is never altered; the
+   page around it goes dark (Apple's dark palette: black page, #1c1c1e bands, light grey text). */
+@media (prefers-color-scheme: dark) {
+  html.can-dark {
+    --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
+    --tabglass: color-mix(in srgb, #2c2c2e 62%, transparent); --tabink: #f5f5f7; --glassline: rgba(255,255,255,.12);
+    --tabshadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+  html.can-dark body { background: #000; color: var(--ink); }
+  /* text */
+  html.can-dark .kicker-italic, html.can-dark .tools, html.can-dark .lock-note { color: #c7c7cc; }
+  html.can-dark .cat-v2 .cat-text .kicker-italic { color: var(--ink); }
+  html.can-dark .tile-cap { color: var(--muted); }
+  html.can-dark .tile-cap strong { color: var(--ink); }
+  html.can-dark .contact-row a { color: var(--ink); }
+  /* the tab bar */
+  html.can-dark .seg { background: color-mix(in srgb, #1c1c1e 86%, transparent); }
+  html.can-dark .seg-item { color: rgba(255,255,255,.72); }
+  html.can-dark .seg-item:hover { color: #fff; }
+  html.can-dark .seg-item.is-active { color: #fff; }
+  html.can-dark .pills { background: transparent; }
+  /* strip controls: Apple's paddles in dark grey */
+  html.can-dark .cat-v2 .strip .strip-arrow { background: #2c2c2e; color: #f5f5f7; }
+  html.can-dark .cat-v2 .strip .strip-arrow:hover { background: #3a3a3c; }
+  html.can-dark .strip-arrow { background: var(--tabglass); color: var(--tabink); }
+  html.can-dark .btn:not(.shine .btn) { color: #1d1d1f; }
+  /* PDF notes keep their paper, but on a dark band */
+  html.can-dark :is(.strip-notes .tile, .tile.is-note) { background: #fff; }
+  /* locked ghostwriting: dark glass panes and dots */
+  html.can-dark .gw-bubble { background: color-mix(in srgb, #2c2c2e 40%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.35), 0 0 0 .5px rgba(255,255,255,.12), 0 34px 60px -32px rgba(0,0,0,.8); }
+  html.can-dark .gw-bubble::after { background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.18) 50%, rgba(255,255,255,0) 70%) 0 0 / 260% 100%, color-mix(in srgb, #1c1c1e 55%, transparent); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 0 1px rgba(255,255,255,.08); }
+  html.can-dark .gw-shine { opacity: .35; }
+  html.can-dark .gw-lock { background: color-mix(in srgb, #2c2c2e 70%, transparent); color: #f5f5f7; }
+  html.can-dark .gw-label { color: var(--muted); }
+  html.can-dark .gw-dot { background: rgba(255,255,255,.1); box-shadow: inset 0 .5px 0 rgba(255,255,255,.4), inset 0 0 0 1px rgba(255,255,255,.22); }
+  html.can-dark .gw-dot.is-on { background: #f5f5f7; }
+  html.can-dark .ex-text p { color: #c7c7cc; }
+  html.can-dark .ex-rail button { background: rgba(255,255,255,.2); }
+  html.can-dark .ex-rail button.is-done { background: rgba(255,255,255,.5); }
+  html.can-dark .ex-rail button.is-on { background: rgba(255,255,255,.18); }
+  html.can-dark .ex-rail button i { background: #f5f5f7; }
+  /* case studies: the reference sheet stays paper; the dots and figures follow the text colour */
+  html.can-dark .ref-page { color: #1d1d1f; }
+  html.can-dark .focus-dots button { background: rgba(255,255,255,.25); }
+}
+/* touch screens: the tab band and its pills in dark too */
+@media (prefers-color-scheme: dark) {
+  html.can-dark[data-os="ios"] .pills { background: color-mix(in srgb, #000 72%, transparent); }
+  html.can-dark[data-os="ios"] .seg-item { color: #f5f5f7; background: color-mix(in srgb, #2c2c2e 75%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.12), 0 0 0 .5px rgba(255,255,255,.1); }
+  html.can-dark[data-os="ios"] .seg-item.is-active { background: #0a84ff; color: #fff; }
+}
+@media (prefers-color-scheme: dark) and (min-width: 561px) {
+  html.can-dark[data-os="ios"] .seg { background: color-mix(in srgb, #1c1c1e 86%, transparent); }
+  html.can-dark[data-os="ios"] .seg-item { background: none; box-shadow: none; color: rgba(255,255,255,.72); }
+  html.can-dark[data-os="ios"] .seg-item.is-active { background: #0a84ff; color: #fff; }
+}
+/* the notes' rounded corners: no white backing to fringe the anti-aliased edge (it showed as a pale rim in dark
+   mode); the preview itself carries the rounding, clipped cleanly */
+:is(.strip-notes .tile, .tile.is-note) { background: transparent !important; -webkit-mask-image: -webkit-radial-gradient(white, black); isolation: isolate; }
+:is(.strip-notes .tile, .tile.is-note) .tile-media { border-radius: 16px; }
+
+/* a playing video preview crops in with its tile's zoom too, so a recording's stray edge stays outside the tile */
+.tile[style*="--zoom"] .tile-preview { transform: scale(var(--zoom)); }
+
+/* a piece with a dark-mode copy: the picture wrapper takes no space of its own */
+.tile-pic { display: contents; }
+
+/* the home page keeps its look in dark mode, except the tab band between the hero and the case scene, which
+   joins the dark around it */
+@media (prefers-color-scheme: dark) {
+  .page-home .pills { background: #0b0b0b; }
+  .page-home .seg { background: color-mix(in srgb, #1c1c1e 92%, transparent); }
+  .page-home .seg-item { color: rgba(255,255,255,.72); }
+  .page-home .seg-item:hover { color: #fff; }
+  .page-home .seg-item.is-active { background: #0a84ff; color: #fff; }
+  :root[data-os="ios"] .page-home .pills { background: #0b0b0b; }
+  :root[data-os="ios"] .page-home .seg-item { color: #f5f5f7; background: color-mix(in srgb, #2c2c2e 75%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.12), 0 0 0 .5px rgba(255,255,255,.1); }
+  :root[data-os="ios"] .page-home .seg-item.is-active { background: #0a84ff; color: #fff; }
+}
+@media (prefers-color-scheme: dark) and (min-width: 561px) {
+  :root[data-os="ios"] .page-home .seg { background: color-mix(in srgb, #1c1c1e 92%, transparent); }
+  :root[data-os="ios"] .page-home .seg-item { background: none; box-shadow: none; color: rgba(255,255,255,.72); }
+  :root[data-os="ios"] .page-home .seg-item.is-active { background: #0a84ff; color: #fff; }
 }

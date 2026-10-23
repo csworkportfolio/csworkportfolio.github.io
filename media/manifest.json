@@ -254,31 +254,6 @@
   "boxv": 1,
   "mtime": 1792566631
  },
- "default:2BoothsAcrosstheUS-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/2boothsacrosstheus-ezgif-com-crop-3b6178.mp4",
-  "poster": "media/2boothsacrosstheus-ezgif-com-crop-3b6178-poster.webp",
-  "w": 756,
-  "h": 852,
-  "files": [
-   "media/2boothsacrosstheus-ezgif-com-crop-3b6178.mp4",
-   "media/2boothsacrosstheus-ezgif-com-crop-3b6178-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:2_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/2-edited-35d706.webp",
-   "media/2-edited-35d706-sm.webp"
-  ],
-  "src": "media/2-edited-35d706.webp",
-  "sm": "media/2-edited-35d706-sm.webp",
-  "w": 1874,
-  "h": 1929,
-  "boxv": 1,
-  "mtime": 1792566631
- },
  "default:AI.png": {
   "kind": "image",
   "files": [
@@ -489,18 +464,6 @@
   ],
   "mtime": 1792566631
  },
- "default:Compliance-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/compliance-ezgif-com-crop-02562e.mp4",
-  "poster": "media/compliance-ezgif-com-crop-02562e-poster.webp",
-  "w": 778,
-  "h": 686,
-  "files": [
-   "media/compliance-ezgif-com-crop-02562e.mp4",
-   "media/compliance-ezgif-com-crop-02562e-poster.webp"
-  ],
-  "mtime": 1792566631
- },
  "default:DSC03133.jpg": {
   "kind": "image",
   "files": [
@@ -542,17 +505,6 @@
   ],
   "mtime": 1792566631
  },
- "default:Event_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/event-edited-e866e0.webp"
-  ],
-  "src": "media/event-edited-e866e0.webp",
-  "w": 559,
-  "h": 557,
-  "boxv": 1,
-  "mtime": 1792566631
- },
  "default:Fall.png": {
   "kind": "image",
   "files": [
@@ -588,18 +540,6 @@
    0.0061,
    0.9988,
    0.9988
-  ],
-  "mtime": 1792566631
- },
- "default:FoodSafetyPodcast-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/foodsafetypodcast-ezgif-com-crop-84f7d7.mp4",
-  "poster": "media/foodsafetypodcast-ezgif-com-crop-84f7d7-poster.webp",
-  "w": 572,
-  "h": 542,
-  "files": [
-   "media/foodsafetypodcast-ezgif-com-crop-84f7d7.mp4",
-   "media/foodsafetypodcast-ezgif-com-crop-84f7d7-poster.webp"
   ],
   "mtime": 1792566631
  },
@@ -761,45 +701,6 @@
   ],
   "mtime": 1792566631
  },
- "default:IMG_0967_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/img-0967-edited-007210.webp",
-   "media/img-0967-edited-007210-sm.webp"
-  ],
-  "src": "media/img-0967-edited-007210.webp",
-  "sm": "media/img-0967-edited-007210-sm.webp",
-  "w": 1319,
-  "h": 1875,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:IMG_1723.jpg": {
-  "kind": "image",
-  "files": [
-   "media/img-1723-99ee13.webp",
-   "media/img-1723-99ee13-sm.webp"
-  ],
-  "src": "media/img-1723-99ee13.webp",
-  "sm": "media/img-1723-99ee13-sm.webp",
-  "w": 1101,
-  "h": 2000,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:IMG_1724.jpg": {
-  "kind": "image",
-  "files": [
-   "media/img-1724-dfdbb1.webp",
-   "media/img-1724-dfdbb1-sm.webp"
-  ],
-  "src": "media/img-1724-dfdbb1.webp",
-  "sm": "media/img-1724-dfdbb1-sm.webp",
-  "w": 1320,
-  "h": 1667,
-  "boxv": 1,
-  "mtime": 1792566631
- },
  "default:IMG_2266.PNG": {
   "kind": "image",
   "files": [
@@ -844,17 +745,6 @@
   ],
   "mtime": 1792566631
  },
- "default:LF1T Large trimmed.png": {
-  "kind": "image",
-  "files": [
-   "media/lf1t-large-trimmed-7db8ac.webp"
-  ],
-  "src": "media/lf1t-large-trimmed-7db8ac.webp",
-  "w": 980,
-  "h": 720,
-  "boxv": 1,
-  "mtime": 1792664742
- },
  "default:Leading the Way.png": {
   "kind": "image",
   "files": [
@@ -872,31 +762,6 @@
    0.9691,
    0.9611
   ],
-  "mtime": 1792566631
- },
- "default:LeadingtheWay-ezgif.com-optimize.gif": {
-  "kind": "loop",
-  "src": "media/leadingtheway-ezgif-com-optimize-41c63a.mp4",
-  "poster": "media/leadingtheway-ezgif-com-optimize-41c63a-poster.webp",
-  "w": 800,
-  "h": 1024,
-  "files": [
-   "media/leadingtheway-ezgif-com-optimize-41c63a.mp4",
-   "media/leadingtheway-ezgif-com-optimize-41c63a-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:Long Form 2 2.jpeg": {
-  "kind": "image",
-  "files": [
-   "media/long-form-2-2-ef6e43.webp",
-   "media/long-form-2-2-ef6e43-sm.webp"
-  ],
-  "src": "media/long-form-2-2-ef6e43.webp",
-  "sm": "media/long-form-2-2-ef6e43-sm.webp",
-  "w": 1957,
-  "h": 1440,
-  "boxv": 1,
   "mtime": 1792566631
  },
  "default:MERC.png": {
@@ -1345,18 +1210,6 @@
   ],
   "mtime": 1792566631
  },
- "default:OEEInfographic-ezgif.com-optimize.gif": {
-  "kind": "loop",
-  "src": "media/oeeinfographic-ezgif-com-optimize-2620f7.mp4",
-  "poster": "media/oeeinfographic-ezgif-com-optimize-2620f7-poster.webp",
-  "w": 800,
-  "h": 1246,
-  "files": [
-   "media/oeeinfographic-ezgif-com-optimize-2620f7.mp4",
-   "media/oeeinfographic-ezgif-com-optimize-2620f7-poster.webp"
-  ],
-  "mtime": 1792566631
- },
  "default:PDF Preview cohesity-google-cloud-hidden-threats.png": {
   "kind": "image",
   "files": [
@@ -1472,18 +1325,6 @@
   "w": 1080,
   "h": 607,
   "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Productivity-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/productivity-ezgif-com-crop-8b9bff.mp4",
-  "poster": "media/productivity-ezgif-com-crop-8b9bff-poster.webp",
-  "w": 776,
-  "h": 688,
-  "files": [
-   "media/productivity-ezgif-com-crop-8b9bff.mp4",
-   "media/productivity-ezgif-com-crop-8b9bff-poster.webp"
-  ],
   "mtime": 1792566631
  },
  "default:QAD Redzone Presents_ Gary the GOAT": {
@@ -1765,30 +1606,6 @@
   ],
   "mtime": 1792566631
  },
- "default:ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/screenrecording2020-08-29at7-35-19pm-ezgif-com-c-5676b3.mp4",
-  "poster": "media/screenrecording2020-08-29at7-35-19pm-ezgif-com-c-5676b3-poster.webp",
-  "w": 496,
-  "h": 516,
-  "files": [
-   "media/screenrecording2020-08-29at7-35-19pm-ezgif-com-c-5676b3.mp4",
-   "media/screenrecording2020-08-29at7-35-19pm-ezgif-com-c-5676b3-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/screenrecording2024-02-13at12-39-22am-ezgif-com--77abb4.mp4",
-  "poster": "media/screenrecording2024-02-13at12-39-22am-ezgif-com--77abb4-poster.webp",
-  "w": 768,
-  "h": 718,
-  "files": [
-   "media/screenrecording2024-02-13at12-39-22am-ezgif-com--77abb4.mp4",
-   "media/screenrecording2024-02-13at12-39-22am-ezgif-com--77abb4-poster.webp"
-  ],
-  "mtime": 1792566631
- },
  "default:ScreenRecording2024-02-13at9.51.07AM-ezgif.com-crop.gif": {
   "kind": "loop",
   "src": "media/screenrecording2024-02-13at9-51-07am-ezgif-com-c-a6aec1.mp4",
@@ -1801,80 +1618,6 @@
   ],
   "mtime": 1792566631
  },
- "default:ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/screenrecording2025-02-21at4-20-38am-ezgif-com-c-b23c29.mp4",
-  "poster": "media/screenrecording2025-02-21at4-20-38am-ezgif-com-c-b23c29-poster.webp",
-  "w": 784,
-  "h": 684,
-  "files": [
-   "media/screenrecording2025-02-21at4-20-38am-ezgif-com-c-b23c29.mp4",
-   "media/screenrecording2025-02-21at4-20-38am-ezgif-com-c-b23c29-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/screenrecording2025-02-22at2-34-37am-ezgif-com-c-faae27.mp4",
-  "poster": "media/screenrecording2025-02-22at2-34-37am-ezgif-com-c-faae27-poster.webp",
-  "w": 764,
-  "h": 636,
-  "files": [
-   "media/screenrecording2025-02-22at2-34-37am-ezgif-com-c-faae27.mp4",
-   "media/screenrecording2025-02-22at2-34-37am-ezgif-com-c-faae27-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:Screenshot 2024-02-12 at 11_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/screenshot-2024-02-12-at-11-edited-160d34.webp",
-   "media/screenshot-2024-02-12-at-11-edited-160d34-sm.webp"
-  ],
-  "src": "media/screenshot-2024-02-12-at-11-edited-160d34.webp",
-  "sm": "media/screenshot-2024-02-12-at-11-edited-160d34-sm.webp",
-  "w": 887,
-  "h": 1172,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Screenshot 2025-02-21 at 4_edited_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/screenshot-2025-02-21-at-4-edited-edited-c7930a.webp"
-  ],
-  "src": "media/screenshot-2025-02-21-at-4-edited-edited-c7930a.webp",
-  "w": 1048,
-  "h": 868,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Screenshot 2025-02-22 at 2.19_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/screenshot-2025-02-22-at-2-19-edited-cedcf1.webp",
-   "media/screenshot-2025-02-22-at-2-19-edited-cedcf1-sm.webp"
-  ],
-  "src": "media/screenshot-2025-02-22-at-2-19-edited-cedcf1.webp",
-  "sm": "media/screenshot-2025-02-22-at-2-19-edited-cedcf1-sm.webp",
-  "w": 926,
-  "h": 1426,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Screenshot 2025-02-22 at 3.37_edited.jpg": {
-  "kind": "image",
-  "files": [
-   "media/screenshot-2025-02-22-at-3-37-edited-d9e2c5.webp",
-   "media/screenshot-2025-02-22-at-3-37-edited-d9e2c5-sm.webp"
-  ],
-  "src": "media/screenshot-2025-02-22-at-3-37-edited-d9e2c5.webp",
-  "sm": "media/screenshot-2025-02-22-at-3-37-edited-d9e2c5-sm.webp",
-  "w": 942,
-  "h": 1175,
-  "boxv": 1,
-  "mtime": 1792566631
- },
  "default:Screenshot 2026-05-17 at 2.33.37 AM.png": {
   "kind": "image",
   "files": [
@@ -1885,32 +1628,6 @@
   "sm": "media/screenshot-2026-05-17-at-2-33-37-am-878ab7-sm.webp",
   "w": 2000,
   "h": 1149,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Screenshot 2026-10-01 at 12.31.50 AM.png": {
-  "kind": "image",
-  "files": [
-   "media/screenshot-2026-10-01-at-12-31-50-am-d2fdd0.webp",
-   "media/screenshot-2026-10-01-at-12-31-50-am-d2fdd0-sm.webp"
-  ],
-  "src": "media/screenshot-2026-10-01-at-12-31-50-am-d2fdd0.webp",
-  "sm": "media/screenshot-2026-10-01-at-12-31-50-am-d2fdd0-sm.webp",
-  "w": 934,
-  "h": 1426,
-  "boxv": 1,
-  "mtime": 1792566631
- },
- "default:Screenshot 2026-10-01 at 12.53.47 AM.jpeg": {
-  "kind": "image",
-  "files": [
-   "media/screenshot-2026-10-01-at-12-53-47-am-f13403.webp",
-   "media/screenshot-2026-10-01-at-12-53-47-am-f13403-sm.webp"
-  ],
-  "src": "media/screenshot-2026-10-01-at-12-53-47-am-f13403.webp",
-  "sm": "media/screenshot-2026-10-01-at-12-53-47-am-f13403-sm.webp",
-  "w": 934,
-  "h": 1698,
   "boxv": 1,
   "mtime": 1792566631
  },
@@ -2006,18 +1723,6 @@
    0.1296,
    0.9143,
    0.8722
-  ],
-  "mtime": 1792566631
- },
- "default:TAL-ezgif.com-video-to-gif-converter.gif": {
-  "kind": "loop",
-  "src": "media/tal-ezgif-com-video-to-gif-converter-40b436.mp4",
-  "poster": "media/tal-ezgif-com-video-to-gif-converter-40b436-poster.webp",
-  "w": 800,
-  "h": 1224,
-  "files": [
-   "media/tal-ezgif-com-video-to-gif-converter-40b436.mp4",
-   "media/tal-ezgif-com-video-to-gif-converter-40b436-poster.webp"
   ],
   "mtime": 1792566631
  },
@@ -2150,30 +1855,6 @@
   "files": [
    "media/video2-ezgif-com-crop-deda2f.mp4",
    "media/video2-ezgif-com-crop-deda2f-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:Video3-ezgif.com-video-to-gif-converter.gif": {
-  "kind": "loop",
-  "src": "media/video3-ezgif-com-video-to-gif-converter-2b92da.mp4",
-  "poster": "media/video3-ezgif-com-video-to-gif-converter-2b92da-poster.webp",
-  "w": 480,
-  "h": 460,
-  "files": [
-   "media/video3-ezgif-com-video-to-gif-converter-2b92da.mp4",
-   "media/video3-ezgif-com-video-to-gif-converter-2b92da-poster.webp"
-  ],
-  "mtime": 1792566631
- },
- "default:VideoAd-ezgif.com-crop.gif": {
-  "kind": "loop",
-  "src": "media/videoad-ezgif-com-crop-4aa82a.mp4",
-  "poster": "media/videoad-ezgif-com-crop-4aa82a-poster.webp",
-  "w": 758,
-  "h": 890,
-  "files": [
-   "media/videoad-ezgif-com-crop-4aa82a.mp4",
-   "media/videoad-ezgif-com-crop-4aa82a-poster.webp"
   ],
   "mtime": 1792566631
  },
@@ -2440,6 +2121,298 @@
   ],
   "mtime": 1792566631
  },
+ "default:dark/2_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-2-edited-dark-b70ed9.webp",
+   "media/dark-2-edited-dark-b70ed9-sm.webp"
+  ],
+  "src": "media/dark-2-edited-dark-b70ed9.webp",
+  "sm": "media/dark-2-edited-dark-b70ed9-sm.webp",
+  "w": 1870,
+  "h": 1929,
+  "boxv": 1,
+  "mtime": 1792732121
+ },
+ "default:dark/2_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-2-edited-light-51d715.webp",
+   "media/dark-2-edited-light-51d715-sm.webp"
+  ],
+  "src": "media/dark-2-edited-light-51d715.webp",
+  "sm": "media/dark-2-edited-light-51d715-sm.webp",
+  "w": 1870,
+  "h": 1929,
+  "boxv": 1,
+  "mtime": 1792732121
+ },
+ "default:dark/Compliance-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-compliance-ezgif-com-crop-dark-df9331.mp4",
+  "poster": "media/dark-compliance-ezgif-com-crop-dark-df9331-poster.webp",
+  "w": 778,
+  "h": 686,
+  "files": [
+   "media/dark-compliance-ezgif-com-crop-dark-df9331.mp4",
+   "media/dark-compliance-ezgif-com-crop-dark-df9331-poster.webp"
+  ],
+  "mtime": 1792734836
+ },
+ "default:dark/Compliance-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/dark-compliance-ezgif-com-crop-light-92f5c7.mp4",
+  "poster": "media/dark-compliance-ezgif-com-crop-light-92f5c7-poster.webp",
+  "w": 778,
+  "h": 686,
+  "files": [
+   "media/dark-compliance-ezgif-com-crop-light-92f5c7.mp4",
+   "media/dark-compliance-ezgif-com-crop-light-92f5c7-poster.webp"
+  ],
+  "mtime": 1792734835
+ },
+ "default:dark/Event_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-event-edited-dark-328f79.webp"
+  ],
+  "src": "media/dark-event-edited-dark-328f79.webp",
+  "w": 559,
+  "h": 557,
+  "boxv": 1,
+  "mtime": 1792732121
+ },
+ "default:dark/Event_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-event-edited-light-0e7882.webp"
+  ],
+  "src": "media/dark-event-edited-light-0e7882.webp",
+  "w": 559,
+  "h": 557,
+  "boxv": 1,
+  "mtime": 1792732121
+ },
+ "default:dark/FoodSafetyPodcast-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-foodsafetypodcast-ezgif-com-crop-dark-44b2f6.mp4",
+  "poster": "media/dark-foodsafetypodcast-ezgif-com-crop-dark-44b2f6-poster.webp",
+  "w": 572,
+  "h": 542,
+  "files": [
+   "media/dark-foodsafetypodcast-ezgif-com-crop-dark-44b2f6.mp4",
+   "media/dark-foodsafetypodcast-ezgif-com-crop-dark-44b2f6-poster.webp"
+  ],
+  "mtime": 1792735556
+ },
+ "default:dark/FoodSafetyPodcast-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/dark-foodsafetypodcast-ezgif-com-crop-light-179e24.mp4",
+  "poster": "media/dark-foodsafetypodcast-ezgif-com-crop-light-179e24-poster.webp",
+  "w": 572,
+  "h": 542,
+  "files": [
+   "media/dark-foodsafetypodcast-ezgif-com-crop-light-179e24.mp4",
+   "media/dark-foodsafetypodcast-ezgif-com-crop-light-179e24-poster.webp"
+  ],
+  "mtime": 1792735555
+ },
+ "default:dark/Productivity-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-productivity-ezgif-com-crop-dark-9b75f5.mp4",
+  "poster": "media/dark-productivity-ezgif-com-crop-dark-9b75f5-poster.webp",
+  "w": 776,
+  "h": 686,
+  "files": [
+   "media/dark-productivity-ezgif-com-crop-dark-9b75f5.mp4",
+   "media/dark-productivity-ezgif-com-crop-dark-9b75f5-poster.webp"
+  ],
+  "mtime": 1792734830
+ },
+ "default:dark/Productivity-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/dark-productivity-ezgif-com-crop-light-626e56.mp4",
+  "poster": "media/dark-productivity-ezgif-com-crop-light-626e56-poster.webp",
+  "w": 776,
+  "h": 686,
+  "files": [
+   "media/dark-productivity-ezgif-com-crop-light-626e56.mp4",
+   "media/dark-productivity-ezgif-com-crop-light-626e56-poster.webp"
+  ],
+  "mtime": 1792734830
+ },
+ "default:dark/ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--c11cd3.mp4",
+  "poster": "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--c11cd3-poster.webp",
+  "w": 496,
+  "h": 448,
+  "files": [
+   "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--c11cd3.mp4",
+   "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--c11cd3-poster.webp"
+  ],
+  "mtime": 1792734841
+ },
+ "default:dark/ScreenRecording2020-08-29at7.35.19PM-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--a5f2fa.mp4",
+  "poster": "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--a5f2fa-poster.webp",
+  "w": 496,
+  "h": 448,
+  "files": [
+   "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--a5f2fa.mp4",
+   "media/dark-screenrecording2020-08-29at7-35-19pm-ezgif--a5f2fa-poster.webp"
+  ],
+  "mtime": 1792734841
+ },
+ "default:dark/ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--a70b84.mp4",
+  "poster": "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--a70b84-poster.webp",
+  "w": 764,
+  "h": 636,
+  "files": [
+   "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--a70b84.mp4",
+   "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--a70b84-poster.webp"
+  ],
+  "mtime": 1792734838
+ },
+ "default:dark/ScreenRecording2025-02-22at2.34.37AM-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--cf47fa.mp4",
+  "poster": "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--cf47fa-poster.webp",
+  "w": 764,
+  "h": 636,
+  "files": [
+   "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--cf47fa.mp4",
+   "media/dark-screenrecording2025-02-22at2-34-37am-ezgif--cf47fa-poster.webp"
+  ],
+  "mtime": 1792734838
+ },
+ "default:dark/Screenshot 2025-02-22 at 2.19_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-screenshot-2025-02-22-at-2-19-edited-dark-2085b6.webp",
+   "media/dark-screenshot-2025-02-22-at-2-19-edited-dark-2085b6-sm.webp"
+  ],
+  "src": "media/dark-screenshot-2025-02-22-at-2-19-edited-dark-2085b6.webp",
+  "sm": "media/dark-screenshot-2025-02-22-at-2-19-edited-dark-2085b6-sm.webp",
+  "w": 926,
+  "h": 1424,
+  "boxv": 1,
+  "mtime": 1792732120
+ },
+ "default:dark/Screenshot 2025-02-22 at 2.19_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-screenshot-2025-02-22-at-2-19-edited-light-97d79f.webp",
+   "media/dark-screenshot-2025-02-22-at-2-19-edited-light-97d79f-sm.webp"
+  ],
+  "src": "media/dark-screenshot-2025-02-22-at-2-19-edited-light-97d79f.webp",
+  "sm": "media/dark-screenshot-2025-02-22-at-2-19-edited-light-97d79f-sm.webp",
+  "w": 926,
+  "h": 1424,
+  "boxv": 1,
+  "mtime": 1792732120
+ },
+ "default:dark/Screenshot 2026-10-01 at 12.53.47 AM dark.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-screenshot-2026-10-01-at-12-53-47-am-dark-050f0a.webp",
+   "media/dark-screenshot-2026-10-01-at-12-53-47-am-dark-050f0a-sm.webp"
+  ],
+  "src": "media/dark-screenshot-2026-10-01-at-12-53-47-am-dark-050f0a.webp",
+  "sm": "media/dark-screenshot-2026-10-01-at-12-53-47-am-dark-050f0a-sm.webp",
+  "w": 933,
+  "h": 1698,
+  "boxv": 1,
+  "mtime": 1792732120
+ },
+ "default:dark/Screenshot 2026-10-01 at 12.53.47 AM light.png": {
+  "kind": "image",
+  "files": [
+   "media/dark-screenshot-2026-10-01-at-12-53-47-am-light-b91bf7.webp",
+   "media/dark-screenshot-2026-10-01-at-12-53-47-am-light-b91bf7-sm.webp"
+  ],
+  "src": "media/dark-screenshot-2026-10-01-at-12-53-47-am-light-b91bf7.webp",
+  "sm": "media/dark-screenshot-2026-10-01-at-12-53-47-am-light-b91bf7-sm.webp",
+  "w": 933,
+  "h": 1698,
+  "boxv": 1,
+  "mtime": 1792732120
+ },
+ "default:dark/TAL-ezgif.com-video-to-gif-converter dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-tal-ezgif-com-video-to-gif-converter-dark-3247f1.mp4",
+  "poster": "media/dark-tal-ezgif-com-video-to-gif-converter-dark-3247f1-poster.webp",
+  "w": 798,
+  "h": 1222,
+  "files": [
+   "media/dark-tal-ezgif-com-video-to-gif-converter-dark-3247f1.mp4",
+   "media/dark-tal-ezgif-com-video-to-gif-converter-dark-3247f1-poster.webp"
+  ],
+  "mtime": 1792734828
+ },
+ "default:dark/TAL-ezgif.com-video-to-gif-converter light.mp4": {
+  "kind": "video",
+  "src": "media/dark-tal-ezgif-com-video-to-gif-converter-light-d38bac.mp4",
+  "poster": "media/dark-tal-ezgif-com-video-to-gif-converter-light-d38bac-poster.webp",
+  "w": 798,
+  "h": 1222,
+  "files": [
+   "media/dark-tal-ezgif-com-video-to-gif-converter-light-d38bac.mp4",
+   "media/dark-tal-ezgif-com-video-to-gif-converter-light-d38bac-poster.webp"
+  ],
+  "mtime": 1792734827
+ },
+ "default:dark/Video3-ezgif.com-video-to-gif-converter dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-video3-ezgif-com-video-to-gif-converter-dar-38ef7b.mp4",
+  "poster": "media/dark-video3-ezgif-com-video-to-gif-converter-dar-38ef7b-poster.webp",
+  "w": 480,
+  "h": 458,
+  "files": [
+   "media/dark-video3-ezgif-com-video-to-gif-converter-dar-38ef7b.mp4",
+   "media/dark-video3-ezgif-com-video-to-gif-converter-dar-38ef7b-poster.webp"
+  ],
+  "mtime": 1792735553
+ },
+ "default:dark/Video3-ezgif.com-video-to-gif-converter light.mp4": {
+  "kind": "video",
+  "src": "media/dark-video3-ezgif-com-video-to-gif-converter-lig-bdb0d3.mp4",
+  "poster": "media/dark-video3-ezgif-com-video-to-gif-converter-lig-bdb0d3-poster.webp",
+  "w": 480,
+  "h": 458,
+  "files": [
+   "media/dark-video3-ezgif-com-video-to-gif-converter-lig-bdb0d3.mp4",
+   "media/dark-video3-ezgif-com-video-to-gif-converter-lig-bdb0d3-poster.webp"
+  ],
+  "mtime": 1792735553
+ },
+ "default:dark/ezgif.com-video-to-gif-converter dark.mp4": {
+  "kind": "video",
+  "src": "media/dark-ezgif-com-video-to-gif-converter-dark-18d4d6.mp4",
+  "poster": "media/dark-ezgif-com-video-to-gif-converter-dark-18d4d6-poster.webp",
+  "w": 926,
+  "h": 1474,
+  "files": [
+   "media/dark-ezgif-com-video-to-gif-converter-dark-18d4d6.mp4",
+   "media/dark-ezgif-com-video-to-gif-converter-dark-18d4d6-poster.webp"
+  ],
+  "mtime": 1792732141
+ },
+ "default:dark/ezgif.com-video-to-gif-converter light.mp4": {
+  "kind": "video",
+  "src": "media/dark-ezgif-com-video-to-gif-converter-light-5dfbb5.mp4",
+  "poster": "media/dark-ezgif-com-video-to-gif-converter-light-5dfbb5-poster.webp",
+  "w": 926,
+  "h": 1474,
+  "files": [
+   "media/dark-ezgif-com-video-to-gif-converter-light-5dfbb5.mp4",
+   "media/dark-ezgif-com-video-to-gif-converter-light-5dfbb5-poster.webp"
+  ],
+  "mtime": 1792732140
+ },
  "default:ezgif.com-video-to-gif-converter-2.gif": {
   "kind": "loop",
   "src": "media/ezgif-com-video-to-gif-converter-2-5213ed.mp4",
@@ -2452,30 +2425,353 @@
   ],
   "mtime": 1792566631
  },
- "default:ezgif.com-video-to-gif-converter.gif": {
-  "kind": "loop",
-  "src": "media/ezgif-com-video-to-gif-converter-85ad12.mp4",
-  "poster": "media/ezgif-com-video-to-gif-converter-85ad12-poster.webp",
-  "w": 928,
-  "h": 1480,
+ "default:light/2BoothsAcrosstheUS-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/light-2boothsacrosstheus-ezgif-com-crop-dark-70a739.mp4",
+  "poster": "media/light-2boothsacrosstheus-ezgif-com-crop-dark-70a739-poster.webp",
+  "w": 756,
+  "h": 854,
   "files": [
-   "media/ezgif-com-video-to-gif-converter-85ad12.mp4",
-   "media/ezgif-com-video-to-gif-converter-85ad12-poster.webp"
+   "media/light-2boothsacrosstheus-ezgif-com-crop-dark-70a739.mp4",
+   "media/light-2boothsacrosstheus-ezgif-com-crop-dark-70a739-poster.webp"
   ],
-  "mtime": 1792566631
+  "mtime": 1792733029
  },
- "default:image0_edited.jpg": {
+ "default:light/2BoothsAcrosstheUS-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/light-2boothsacrosstheus-ezgif-com-crop-light-0baf2a.mp4",
+  "poster": "media/light-2boothsacrosstheus-ezgif-com-crop-light-0baf2a-poster.webp",
+  "w": 756,
+  "h": 854,
+  "files": [
+   "media/light-2boothsacrosstheus-ezgif-com-crop-light-0baf2a.mp4",
+   "media/light-2boothsacrosstheus-ezgif-com-crop-light-0baf2a-poster.webp"
+  ],
+  "mtime": 1792733030
+ },
+ "default:light/IMG_0967_edited dark.png": {
   "kind": "image",
   "files": [
-   "media/image0-edited-25f7c6.webp",
-   "media/image0-edited-25f7c6-sm.webp"
+   "media/light-img-0967-edited-dark-ecacee.webp",
+   "media/light-img-0967-edited-dark-ecacee-sm.webp"
   ],
-  "src": "media/image0-edited-25f7c6.webp",
-  "sm": "media/image0-edited-25f7c6-sm.webp",
+  "src": "media/light-img-0967-edited-dark-ecacee.webp",
+  "sm": "media/light-img-0967-edited-dark-ecacee-sm.webp",
+  "w": 1319,
+  "h": 1875,
+  "boxv": 1,
+  "mtime": 1792733037
+ },
+ "default:light/IMG_0967_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-img-0967-edited-light-82e1e7.webp",
+   "media/light-img-0967-edited-light-82e1e7-sm.webp"
+  ],
+  "src": "media/light-img-0967-edited-light-82e1e7.webp",
+  "sm": "media/light-img-0967-edited-light-82e1e7-sm.webp",
+  "w": 1319,
+  "h": 1875,
+  "boxv": 1,
+  "mtime": 1792733037
+ },
+ "default:light/IMG_1723 dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-img-1723-dark-51e0d7.webp",
+   "media/light-img-1723-dark-51e0d7-sm.webp"
+  ],
+  "src": "media/light-img-1723-dark-51e0d7.webp",
+  "sm": "media/light-img-1723-dark-51e0d7-sm.webp",
+  "w": 1101,
+  "h": 2000,
+  "boxv": 1,
+  "mtime": 1792733039
+ },
+ "default:light/IMG_1723 light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-img-1723-light-eb930e.webp",
+   "media/light-img-1723-light-eb930e-sm.webp"
+  ],
+  "src": "media/light-img-1723-light-eb930e.webp",
+  "sm": "media/light-img-1723-light-eb930e-sm.webp",
+  "w": 1101,
+  "h": 2000,
+  "boxv": 1,
+  "mtime": 1792733039
+ },
+ "default:light/IMG_1724 dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-img-1724-dark-b4759f.webp",
+   "media/light-img-1724-dark-b4759f-sm.webp"
+  ],
+  "src": "media/light-img-1724-dark-b4759f.webp",
+  "sm": "media/light-img-1724-dark-b4759f-sm.webp",
+  "w": 1320,
+  "h": 1663,
+  "boxv": 1,
+  "mtime": 1792733037
+ },
+ "default:light/IMG_1724 light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-img-1724-light-03346c.webp",
+   "media/light-img-1724-light-03346c-sm.webp"
+  ],
+  "src": "media/light-img-1724-light-03346c.webp",
+  "sm": "media/light-img-1724-light-03346c-sm.webp",
+  "w": 1320,
+  "h": 1663,
+  "boxv": 1,
+  "mtime": 1792733037
+ },
+ "default:light/LeadingtheWay-ezgif.com-optimize dark.mp4": {
+  "kind": "video",
+  "src": "media/light-leadingtheway-ezgif-com-optimize-dark-b63497.mp4",
+  "poster": "media/light-leadingtheway-ezgif-com-optimize-dark-b63497-poster.webp",
+  "w": 794,
+  "h": 1022,
+  "files": [
+   "media/light-leadingtheway-ezgif-com-optimize-dark-b63497.mp4",
+   "media/light-leadingtheway-ezgif-com-optimize-dark-b63497-poster.webp"
+  ],
+  "mtime": 1792733022
+ },
+ "default:light/LeadingtheWay-ezgif.com-optimize light.mp4": {
+  "kind": "video",
+  "src": "media/light-leadingtheway-ezgif-com-optimize-light-ccc25a.mp4",
+  "poster": "media/light-leadingtheway-ezgif-com-optimize-light-ccc25a-poster.webp",
+  "w": 794,
+  "h": 1022,
+  "files": [
+   "media/light-leadingtheway-ezgif-com-optimize-light-ccc25a.mp4",
+   "media/light-leadingtheway-ezgif-com-optimize-light-ccc25a-poster.webp"
+  ],
+  "mtime": 1792733023
+ },
+ "default:light/OEEInfographic-ezgif.com-optimize dark.mp4": {
+  "kind": "video",
+  "src": "media/light-oeeinfographic-ezgif-com-optimize-dark-9c1114.mp4",
+  "poster": "media/light-oeeinfographic-ezgif-com-optimize-dark-9c1114-poster.webp",
+  "w": 800,
+  "h": 1244,
+  "files": [
+   "media/light-oeeinfographic-ezgif-com-optimize-dark-9c1114.mp4",
+   "media/light-oeeinfographic-ezgif-com-optimize-dark-9c1114-poster.webp"
+  ],
+  "mtime": 1792733016
+ },
+ "default:light/OEEInfographic-ezgif.com-optimize light.mp4": {
+  "kind": "video",
+  "src": "media/light-oeeinfographic-ezgif-com-optimize-light-fc6d36.mp4",
+  "poster": "media/light-oeeinfographic-ezgif-com-optimize-light-fc6d36-poster.webp",
+  "w": 800,
+  "h": 1244,
+  "files": [
+   "media/light-oeeinfographic-ezgif-com-optimize-light-fc6d36.mp4",
+   "media/light-oeeinfographic-ezgif-com-optimize-light-fc6d36-poster.webp"
+  ],
+  "mtime": 1792733018
+ },
+ "default:light/ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/light-screenrecording2024-02-13at12-39-22am-ezgi-24023b.mp4",
+  "poster": "media/light-screenrecording2024-02-13at12-39-22am-ezgi-24023b-poster.webp",
+  "w": 768,
+  "h": 718,
+  "files": [
+   "media/light-screenrecording2024-02-13at12-39-22am-ezgi-24023b.mp4",
+   "media/light-screenrecording2024-02-13at12-39-22am-ezgi-24023b-poster.webp"
+  ],
+  "mtime": 1792733032
+ },
+ "default:light/ScreenRecording2024-02-13at12.39.22AM-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/light-screenrecording2024-02-13at12-39-22am-ezgi-e7d4bc.mp4",
+  "poster": "media/light-screenrecording2024-02-13at12-39-22am-ezgi-e7d4bc-poster.webp",
+  "w": 768,
+  "h": 718,
+  "files": [
+   "media/light-screenrecording2024-02-13at12-39-22am-ezgi-e7d4bc.mp4",
+   "media/light-screenrecording2024-02-13at12-39-22am-ezgi-e7d4bc-poster.webp"
+  ],
+  "mtime": 1792733033
+ },
+ "default:light/ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/light-screenrecording2025-02-21at4-20-38am-ezgif-aaf7be.mp4",
+  "poster": "media/light-screenrecording2025-02-21at4-20-38am-ezgif-aaf7be-poster.webp",
+  "w": 778,
+  "h": 684,
+  "files": [
+   "media/light-screenrecording2025-02-21at4-20-38am-ezgif-aaf7be.mp4",
+   "media/light-screenrecording2025-02-21at4-20-38am-ezgif-aaf7be-poster.webp"
+  ],
+  "mtime": 1792733026
+ },
+ "default:light/ScreenRecording2025-02-21at4.20.38AM-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/light-screenrecording2025-02-21at4-20-38am-ezgif-5e7b6a.mp4",
+  "poster": "media/light-screenrecording2025-02-21at4-20-38am-ezgif-5e7b6a-poster.webp",
+  "w": 778,
+  "h": 684,
+  "files": [
+   "media/light-screenrecording2025-02-21at4-20-38am-ezgif-5e7b6a.mp4",
+   "media/light-screenrecording2025-02-21at4-20-38am-ezgif-5e7b6a-poster.webp"
+  ],
+  "mtime": 1792733027
+ },
+ "default:light/Screenshot 2024-02-12 at 11_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2024-02-12-at-11-edited-dark-b1b954.webp",
+   "media/light-screenshot-2024-02-12-at-11-edited-dark-b1b954-sm.webp"
+  ],
+  "src": "media/light-screenshot-2024-02-12-at-11-edited-dark-b1b954.webp",
+  "sm": "media/light-screenshot-2024-02-12-at-11-edited-dark-b1b954-sm.webp",
+  "w": 883,
+  "h": 1171,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2024-02-12 at 11_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2024-02-12-at-11-edited-light-df97b3.webp",
+   "media/light-screenshot-2024-02-12-at-11-edited-light-df97b3-sm.webp"
+  ],
+  "src": "media/light-screenshot-2024-02-12-at-11-edited-light-df97b3.webp",
+  "sm": "media/light-screenshot-2024-02-12-at-11-edited-light-df97b3-sm.webp",
+  "w": 883,
+  "h": 1171,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2025-02-21 at 4_edited_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2025-02-21-at-4-edited-edited-d-18d50f.webp"
+  ],
+  "src": "media/light-screenshot-2025-02-21-at-4-edited-edited-d-18d50f.webp",
+  "w": 1048,
+  "h": 868,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2025-02-21 at 4_edited_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2025-02-21-at-4-edited-edited-l-f164a4.webp"
+  ],
+  "src": "media/light-screenshot-2025-02-21-at-4-edited-edited-l-f164a4.webp",
+  "w": 1048,
+  "h": 868,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2025-02-22 at 3.37_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2025-02-22-at-3-37-edited-dark-82d608.webp",
+   "media/light-screenshot-2025-02-22-at-3-37-edited-dark-82d608-sm.webp"
+  ],
+  "src": "media/light-screenshot-2025-02-22-at-3-37-edited-dark-82d608.webp",
+  "sm": "media/light-screenshot-2025-02-22-at-3-37-edited-dark-82d608-sm.webp",
+  "w": 938,
+  "h": 1175,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2025-02-22 at 3.37_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2025-02-22-at-3-37-edited-light-672823.webp",
+   "media/light-screenshot-2025-02-22-at-3-37-edited-light-672823-sm.webp"
+  ],
+  "src": "media/light-screenshot-2025-02-22-at-3-37-edited-light-672823.webp",
+  "sm": "media/light-screenshot-2025-02-22-at-3-37-edited-light-672823-sm.webp",
+  "w": 938,
+  "h": 1175,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2026-10-01 at 12.31.50 AM dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2026-10-01-at-12-31-50-am-dark-72b508.webp",
+   "media/light-screenshot-2026-10-01-at-12-31-50-am-dark-72b508-sm.webp"
+  ],
+  "src": "media/light-screenshot-2026-10-01-at-12-31-50-am-dark-72b508.webp",
+  "sm": "media/light-screenshot-2026-10-01-at-12-31-50-am-dark-72b508-sm.webp",
+  "w": 934,
+  "h": 1426,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/Screenshot 2026-10-01 at 12.31.50 AM light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-screenshot-2026-10-01-at-12-31-50-am-light-3e4c4a.webp",
+   "media/light-screenshot-2026-10-01-at-12-31-50-am-light-3e4c4a-sm.webp"
+  ],
+  "src": "media/light-screenshot-2026-10-01-at-12-31-50-am-light-3e4c4a.webp",
+  "sm": "media/light-screenshot-2026-10-01-at-12-31-50-am-light-3e4c4a-sm.webp",
+  "w": 934,
+  "h": 1426,
+  "boxv": 1,
+  "mtime": 1792733038
+ },
+ "default:light/VideoAd-ezgif.com-crop dark.mp4": {
+  "kind": "video",
+  "src": "media/light-videoad-ezgif-com-crop-dark-080d75.mp4",
+  "poster": "media/light-videoad-ezgif-com-crop-dark-080d75-poster.webp",
+  "w": 758,
+  "h": 886,
+  "files": [
+   "media/light-videoad-ezgif-com-crop-dark-080d75.mp4",
+   "media/light-videoad-ezgif-com-crop-dark-080d75-poster.webp"
+  ],
+  "mtime": 1792733035
+ },
+ "default:light/VideoAd-ezgif.com-crop light.mp4": {
+  "kind": "video",
+  "src": "media/light-videoad-ezgif-com-crop-light-61e2f3.mp4",
+  "poster": "media/light-videoad-ezgif-com-crop-light-61e2f3-poster.webp",
+  "w": 758,
+  "h": 886,
+  "files": [
+   "media/light-videoad-ezgif-com-crop-light-61e2f3.mp4",
+   "media/light-videoad-ezgif-com-crop-light-61e2f3-poster.webp"
+  ],
+  "mtime": 1792733036
+ },
+ "default:light/image0_edited dark.png": {
+  "kind": "image",
+  "files": [
+   "media/light-image0-edited-dark-741611.webp",
+   "media/light-image0-edited-dark-741611-sm.webp"
+  ],
+  "src": "media/light-image0-edited-dark-741611.webp",
+  "sm": "media/light-image0-edited-dark-741611-sm.webp",
   "w": 1265,
   "h": 2000,
   "boxv": 1,
-  "mtime": 1792566631
+  "mtime": 1792733039
+ },
+ "default:light/image0_edited light.png": {
+  "kind": "image",
+  "files": [
+   "media/light-image0-edited-light-d2c215.webp",
+   "media/light-image0-edited-light-d2c215-sm.webp"
+  ],
+  "src": "media/light-image0-edited-light-d2c215.webp",
+  "sm": "media/light-image0-edited-light-d2c215-sm.webp",
+  "w": 1265,
+  "h": 2000,
+  "boxv": 1,
+  "mtime": 1792733039
  },
  "default:nIKE S_edited.png": {
   "kind": "image",

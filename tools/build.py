@@ -201,7 +201,7 @@ def gallery_item(raw, media, site):
     """Normalize a gallery entry from content JSON into data for the page."""
     if isinstance(raw, str):
         raw = {"src": raw}
-    item = {k: raw[k] for k in ("title", "desc", "tools", "link", "cap", "zoom") if k in raw}
+    item = {k: raw[k] for k in ("title", "desc", "tools", "link", "cap", "zoom", "note") if k in raw}
     if "v" in raw:
         vid = raw["v"]
         meta = site["videos"][vid]
@@ -217,8 +217,15 @@ def gallery_item(raw, media, site):
         item.update(type="image", thumb=m.get("sm", m["src"]), full=m["src"], w=m["w"], h=m["h"])
         if m.get("box"):
             item["box"] = m["box"]
+        if raw.get("dark"):
+            # the same piece with its app interface in dark mode, shown to visitors in dark mode
+            md = media.get(raw["dark"])
+            item.update(thumb_dark=md.get("sm", md["src"]), full_dark=md["src"])
     else:
         item.update(type=m["kind"], src=m["src"], thumb=m["poster"], w=m["w"], h=m["h"])
+        if raw.get("dark"):
+            md = media.get(raw["dark"])
+            item.update(src_dark=md["src"], thumb_dark=md["poster"])
         if raw.get("tile_light"):
             # a lighter encode for the strip tile only; the lightbox keeps the full clip
             item["tile_src"] = media.get(name, f"light{raw['tile_light']}")["src"]
@@ -227,7 +234,7 @@ def gallery_item(raw, media, site):
 
 def fix_paths(item, root):
     out = dict(item)
-    for k in ("thumb", "full", "src", "tile_src"):
+    for k in ("thumb", "full", "src", "tile_src", "thumb_dark", "full_dark", "src_dark"):
         if k in out:
             out[k] = root + out[k]
     if "link" in out:
@@ -249,12 +256,16 @@ def tile(item, i, root, crop=None, inline=False, play="hover", gid=0, eager=Fals
         # GIF-loops always play; an uploaded video plays silently only where Wix autoplays it.
         media = (f'<video class="tile-media" muted loop playsinline preload="none" '
                  f'poster="{root}{item["thumb"]}" data-src="{root}{item.get("tile_src", item["src"])}" width="{w}" height="{h}" '
-                 f'aria-hidden="true"></video>')
+                 + (f'data-src-dark="{root}{item["src_dark"]}" data-poster-dark="{root}{item["thumb_dark"]}" ' if item.get("src_dark") else "")
+                 + 'aria-hidden="true"></video>')
     else:
         # the first tiles of a page's first strip load straight away, so it never opens as an empty band
         load = ('eager" fetchpriority="high' if i < 2 else "eager") if eager else "lazy"
         media = (f'<img class="tile-media" src="{root}{item["thumb"]}" width="{w}" height="{h}" '
                  f'alt="{alt}" loading="{load}" decoding="async">')
+        if item.get("thumb_dark"):
+            media = (f'<picture class="tile-pic"><source media="(prefers-color-scheme: dark)" '
+                     f'srcset="{root}{item["thumb_dark"]}">{media}</picture>')
     autoplaying = play == "auto" and item["type"] in ("vimeo", "youtube", "video")
     play_icon = PLAY_ICON if item["type"] in ("vimeo", "youtube", "video") and not autoplaying else ""
     # A video tile takes the video's own shape, so vertical videos sit one gallery
@@ -270,6 +281,8 @@ def tile(item, i, root, crop=None, inline=False, play="hover", gid=0, eager=Fals
     else:
         ratio = w / h
     cls = "tile tile-video" if embed else "tile"
+    if item.get("note"):
+        cls += " is-note"   # a document shown as a paper note with an expand mark, as on Social & Writing
     # a caption under the tile (the piece's title and his part in it), when the gallery has one
     cap, by = "", ""
     if item.get("cap"):
@@ -399,10 +412,13 @@ def layout(page, site, root, body, media, og_image=None):
     og = (f'\n<meta property="og:image" content="{share}">\n<meta property="og:image:width" content="1200">'
           f'\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">'
           f'\n<meta name="twitter:image" content="{share}">')
+    # every page but the home page follows the device's light or dark setting (style.css, html.can-dark)
+    dark_cls = "" if page["type"] == "home" else ' class="can-dark"'
     return f'''<!doctype html>
-<html lang="en">
+<html lang="en"{dark_cls}>
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="{"light" if page["type"] == "home" else "light dark"}">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(page["title"])}</title>
 <meta name="description" content="{esc(desc)}">{robots}
@@ -895,6 +911,16 @@ def phases(b):
             + "</div></div></section>")
 
 
+def case_shine(slug, media):
+    """The colours of a case's Read More on the home page (from its card photo), so a button pointing at that
+    case wears the same shine."""
+    for c in json.loads((CONTENT / "home.json").read_text())["cases"]:
+        if c["slug"] == slug:
+            bg = media.get(c["bg"], "bg")
+            return ";".join(f"--s{k}:{col}" for k, col in enumerate(shine_colors(ROOT / bg["src"]), 1))
+    return ""
+
+
 def render_case(page, site, media):
     root = "../"
     hero = page["hero"]
@@ -947,7 +973,7 @@ def render_case(page, site, media):
     parts.append(f'''
 <nav class="wrap case-nav" aria-label="Case study navigation">
   <a class="case-nav-link" href="{root}">Back to Case Studies</a>
-  <a class="btn btn-rust" href="{root}{nxt["slug"]}/">{esc(nxt["label"])}</a>
+  <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>
 </nav>''')
     page = {**page, "nav_active": "", "description": page.get("description") or page["lede"][:155].rsplit(" ", 1)[0] + "…"}
     if page.get("glance") or any("steps" in b for b in page["blocks"]):
