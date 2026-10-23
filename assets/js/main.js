@@ -1752,8 +1752,23 @@
     const panels = [...scene.querySelectorAll(".sc-panel")];
     const pics = [...figs.querySelectorAll("figure")];
     figs.classList.add("is-js");
+    // phones: each step carries its own picture, under the step's heading, instead of one picture above them all
+    // (the same figure elements move, so a video keeps its click-to-play); wider screens get them back
+    const phoneQ = matchMedia("(max-width: 720px)");
+    const place = () => {
+      const inline = phoneQ.matches;
+      pics.forEach((f, i) => {
+        const panel = panels[i];
+        if (inline && panel) { const h = panel.querySelector("h3"); (h || panel.firstChild) ? (h || panel.firstChild).after(f) : panel.prepend(f); }
+        else if (f.parentElement !== figs) figs.append(f);
+      });
+      scene.classList.toggle("figs-inline", inline);
+    };
+    place();
+    phoneQ.addEventListener("change", place);
     let on = -1;
     scenes.push(() => {
+      if (phoneQ.matches) return;
       const line = viewH() * 0.5;
       let at = 0;
       panels.forEach((p, i) => { if (p.getBoundingClientRect().top < line) at = i; });
