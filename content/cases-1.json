@@ -802,33 +802,77 @@
     "lede": "SOLV Energy is a lifecycle partner for utility-scale solar, storage and energy infrastructure across the United States, with more than 20 GW of solar and storage under management and a listing on Nasdaq (MWH). A company building and announcing at that scale needs a digital presence that keeps up. This case study covers how I supported and built that presence across web, internal tools, graphic design and video.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
+        "h": "A Public Company's News, Kept Current",
+        "id": "setup",
         "p": [
-          "A renewable energy company has a harder communications job than most. SOLV Energy talks to investors, customers, prospective hires, craft workers, community partners and thousands of employees in offices and on jobsites across the country, and each group needs different proof points, formats and channels. Communications systems hadn't kept pace with that growth. The website needed steady, accurate updates as projects, leadership news and milestones landed. Internal teams needed a faster way to share approved content with their own networks. The visuals had to keep up with a project pipeline running in dozens of states at once."
+          "SOLV Energy talks to investors, customers, prospective hires, craft workers, community partners and thousands of employees in offices and on jobsites across the country. As projects, leadership news and earnings landed, the website had to keep up, and the visuals had to match a project pipeline running in dozens of states at once.",
+          "I handled the day-to-day work behind it: solvenergy.com in WordPress, an Employee Advocacy app I built in Power Apps, graphic design and video."
         ]
       },
       {
-        "h": "THE SOLUTION",
+        "h": "From Approval to Live in Hours",
+        "id": "process",
         "p": [
-          "I handled the day-to-day work behind all of it: a continuously updated external website, internal tools that turned approved content into posts employees could share, graphic design at the pace project announcements demanded, and video that showed the work on the ground. I built each piece so it could grow with the company."
+          "A public company's website has to move at the pace of its news. Updates to solvenergy.com often went live within hours of internal approval.",
+          "Here are the three steps and which of them were mine."
+        ],
+        "steps": [
+          {
+            "t": "Approved",
+            "who": "Internal Approval",
+            "title": "The News Is Approved",
+            "d": "Project announcements, leadership additions, earnings news and partnership wins came to me once they were approved internally."
+          },
+          {
+            "t": "Build",
+            "title": "Build It and Check It",
+            "d": "I set up each article in WordPress: the title, a one-sentence extract, the background image, and its subject and media categories. Then I checked formatting, imagery and SEO in the live preview before anything published.",
+            "checks": [
+              "Formatting",
+              "Imagery",
+              "Categories",
+              "SEO"
+            ]
+          },
+          {
+            "t": "Live",
+            "title": "Live Within Hours",
+            "d": "The story went live, often within hours of approval, so the homepage and the news page reflected where the company actually was."
+          }
+        ],
+        "figures": [
+          {
+            "src": "SOLV Example 2 Transparent.png",
+            "alt": "An announcement graphic and a case study teaser for SOLV Energy",
+            "caption": "Announcements like the company's O&M scale and largest single-site agreement, which I also turned into graphics for social."
+          },
+          {
+            "src": "Screenshot 2026-05-17 at 2.33.37 AM.png",
+            "alt": "A news article entry beside a live preview of the SOLV Energy news page",
+            "caption": "An article entry beside the live preview of the news page, where I checked each story before it went up.",
+            "caption_phone": "An article entry beside the live preview."
+          },
+          {
+            "src": "_-9ebe21dc71424e5d94f5f35419c09be5.jpg",
+            "alt": "The solvenergy.com homepage",
+            "caption": "The solvenergy.com homepage, which I kept current as project, leadership and earnings news landed.",
+            "caption_phone": "The solvenergy.com homepage.",
+            "v": "1228250222",
+            "title": "SOLV Energy Homepage Hero Walkthrough",
+            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was."
+          }
         ]
       },
       {
-        "h": "Owning the Web Presence and Internal Tooling of a Public Energy Infrastructure Company",
+        "h": "Employee Sharing, From Email to Self-Serve",
+        "id": "advocacy",
         "p": [
-          "A public company moves fast, and its website has to keep up. I maintained solvenergy.com in WordPress, publishing project announcements, leadership additions, earnings news and partnership wins as they landed. Updates often went live within hours of internal approval, with formatting, imagery and SEO checked before publish.",
-          "I also built and launched an Employee Advocacy platform in Power Apps. It gives SOLV Energy teammates one place to find pre-approved social content to share with their own networks, replacing a manual, email-based workflow. Employees can browse, preview and share posts to LinkedIn in seconds.",
-          "The site stayed current, and employees became a real channel for visibility and recruiting."
+          "Sharing approved content used to mean digging through emails. I built and launched an Employee Advocacy platform in Power Apps that gives SOLV Energy teammates one place to find pre-approved posts, preview them and share them to LinkedIn in seconds.",
+          "Below it are the interior pages I kept accurate as the company grew."
         ]
       },
       {
         "gallery": [
-          {
-            "v": "1228250222",
-            "title": "SOLV Energy Homepage Hero Walkthrough",
-            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was.",
-            "cap": "I kept solvenergy.com current as project, leadership and earnings news landed."
-          },
           {
             "v": "1228250217",
             "title": "Employee Advocacy Power App in Action",
@@ -837,16 +881,22 @@
             "cap": "I built this Power Apps platform for sharing approved posts to LinkedIn."
           },
           {
-            "src": "Screenshot 2026-05-17 at 2.33.37 AM.png",
-            "title": "Publishing a News Article Behind the Scenes",
-            "desc": "Here's a look at the publishing side of the job: an article entry with its title, one-sentence extract, background image, and subject and media categories, shown next to a live preview of the SOLV Energy news page.\nEvery announcement went through this kind of setup before going live. I checked formatting, imagery, and categorization in the preview so each story looked right the moment it published.",
-            "cap": "How I set up and checked each news article before it went live."
-          },
-          {
             "v": "1228250219",
             "title": "Design, Build, Operate, Optimize Services Page",
             "desc": "A scroll through one of solvenergy.com's interior pages, opening on crews in hard hats at work in the field and the headline Design. Build. Operate. Optimize. It explains SOLV Energy's end-to-end services for solar, battery storage, and high-voltage infrastructure.\nI kept pages like this accurate and current as the company grew, so customers and investors landing deeper in the site found the same polish as the homepage.",
             "cap": "One of the interior pages I kept accurate as the company grew."
+          },
+          {
+            "v": "1228250222",
+            "title": "SOLV Energy Homepage Hero Walkthrough",
+            "desc": "This is the front door of solvenergy.com: a wide aerial of a solar field, the SOLV mark, and a hero line that sums up the company in four words, Powering Progress with Proven Execution. I kept the site current as project, leadership, and earnings news landed.\nUpdates often went live within hours of internal approval, with formatting, imagery, and SEO handled before publish so the homepage always reflected where the company actually was.",
+            "cap": "I kept solvenergy.com current as project, leadership and earnings news landed."
+          },
+          {
+            "src": "Screenshot 2026-05-17 at 2.33.37 AM.png",
+            "title": "Publishing a News Article Behind the Scenes",
+            "desc": "Here's a look at the publishing side of the job: an article entry with its title, one-sentence extract, background image, and subject and media categories, shown next to a live preview of the SOLV Energy news page.\nEvery announcement went through this kind of setup before going live. I checked formatting, imagery, and categorization in the preview so each story looked right the moment it published.",
+            "cap": "How I set up and checked each news article before it went live."
           }
         ],
         "gap": 50,
@@ -947,7 +997,10 @@
         "4",
         "Channels I worked across: web, internal tools, graphic design and video"
       ]
-    ]
+    ],
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+    }
   },
   {
     "slug": "cohesity",
@@ -967,48 +1020,82 @@
     "lede": "Cohesity is a leader in AI-powered data security and management, trusted by 70% of the Global 500 across 140+ countries. Its brand and content needed to feel as human as the people behind it. This case study covers how I helped run Cohesity's Champions employee advocacy program and designed creative across PR, blogs, newsletters and global events.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
+        "h": "Good Product News That Nobody Shared",
+        "id": "setup",
         "p": [
-          "Enterprise cybersecurity content tends to be dense, technical and written for boardrooms more than for the people who share it, read it and deal with the threats it covers. Cohesity had strong product news, deep customer stories and real industry credibility, but its social voice and visuals blended in with the rest of enterprise software. Employees weren't sharing content they didn't connect with, and the brand was missing chances to reach both its own advocates and outside audiences."
+          "Enterprise cybersecurity content tends to be dense and written for boardrooms more than for the people who share it. Cohesity had strong product news and real credibility, but its social voice blended in with the rest of enterprise software, and employees weren't sharing posts they didn't connect with.",
+          "I rebuilt the Champions employee advocacy program from the ground up: a new voice, daily posts for 3,000 advocate seats across a company of 7,000, internal competitions, an executive program and an expansion into international markets."
         ]
       },
       {
-        "h": "THE SOLUTION",
+        "h": "How a Post Got Shared",
+        "id": "process",
         "p": [
-          "I wrote a new brand voice for the Champions employee advocacy program, closer to Duolingo and Figma on social than to corporate LinkedIn, and ran a daily content engine that gave 3,000 advocates posts they wanted to share. Alongside the advocacy work, I led original design for PR campaigns, blog hero graphics, newsletters and global event activations."
-        ]
-      },
-      {
-        "h": "Reframing Cohesity's Voice for an Employee Advocacy Program That Actually Got Shared",
-        "p": [
-          "I rebuilt the Employee Advocacy program from the ground up and ran its daily content for 3,000 advocate seats worldwide, across a company of 7,000 employees. Beyond writing the core posts, I led the program's redesign, ran internal competitions, expanded it into international markets and connected advocacy work across several departments. I also headed an executive advocacy program, writing and editing posts myself for the Chief Product Officer and the Chief Financial Officer. Employee posts became one of the company's strongest social channels."
-        ]
-      },
-      {
-        "gallery": [
+          "Every post started as my draft and ended up in the advocates' own feeds.",
+          "Here are the five steps and which of them were mine."
+        ],
+        "steps": [
           {
-            "src": "ezgif.com-video-to-gif-converter-2.gif",
-            "title": "Champions Advocacy Hub Trending Posts Feed",
-            "desc": "This is where Cohesity's Champions found content to share each day. The Trending Posts view shows the week's most active posts, from the HPE alliance to the agentic support portal, with a live feed of colleagues sharing alongside.\nI wrote the posts that filled this feed in a voice closer to Duolingo and Figma social than corporate LinkedIn, so 3,000 advocates actually wanted to post them. Leaderboards and challenges kept the energy up.",
-            "cap": "I wrote the posts that filled this feed for 3,000 advocates."
+            "t": "Write",
+            "title": "Write It in a Voice People Want to Share",
+            "d": "I wrote the daily posts myself, in a voice closer to Duolingo and Figma on social than to corporate LinkedIn, so a launch or a webinar read like something a person would post."
           },
           {
-            "v": "1228250187",
-            "title": "The Empire Strikes Backups Champions Newsletter",
-            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links.",
-            "zoom": 1.04,
-            "cap": "A Star Wars nod I designed for the Champions newsletter."
+            "t": "Hub",
+            "title": "Load It Into the Champions Hub",
+            "d": "Each post went into the Champions hub with its copy and image, ready for advocates to share in a click."
+          },
+          {
+            "t": "Share",
+            "who": "3,000 Advocates",
+            "title": "Advocates Share It",
+            "d": "Advocates shared the posts with their own networks. Leaderboards and the internal competitions I ran kept them coming back, and engagement among the 3,000 advocates reached 70%."
+          },
+          {
+            "t": "Newsletter",
+            "title": "The Week's Best in One Scroll",
+            "d": "The top posts went into the Empire Strikes Backups newsletter I designed, with a Top Content to Share ticker and a Share button on every story, so advocates could share without hunting for links."
+          },
+          {
+            "t": "Executives",
+            "title": "Executives Too",
+            "d": "I also headed an executive advocacy program, writing and editing posts for the Chief Product Officer and the Chief Financial Officer."
           }
         ],
-        "gap": 50,
-        "label": "",
-        "play": "auto",
-        "ground": true,
-        "speed": 10,
-        "restart": true
+        "figures": [
+          {
+            "src": "Cohesity Examples 2 TP.png",
+            "alt": "A Google Cloud Next booth promo, a blog hero and a newsletter graphic for Cohesity",
+            "caption": "Graphics I designed in the same voice: a booth promo for Google Cloud Next, a blog hero and a newsletter graphic.",
+            "caption_phone": "Graphics I designed in the same voice."
+          },
+          {
+            "alt": "A wireframe of the Champions hub: trending posts with share buttons and a leaderboard",
+            "caption": "A wireframe of the Champions hub, redrawn for this page: posts ready to share, with a leaderboard beside them.",
+            "caption_phone": "A wireframe of the Champions hub, redrawn for this page.",
+            "svg": "cohesity-hub-wire.svg"
+          },
+          {
+            "src": "ezgif.com-video-to-gif-converter-2.gif",
+            "alt": "The Champions hub Trending Posts feed",
+            "caption": "The hub's Trending Posts feed, with colleagues sharing alongside."
+          },
+          {
+            "src": "_-3626ef3ef9954711aecb3828c9337944.jpg",
+            "alt": "The Empire Strikes Backups newsletter",
+            "caption": "The Empire Strikes Backups newsletter, a Star Wars nod for a data security company.",
+            "caption_phone": "The Empire Strikes Backups newsletter.",
+            "v": "1228250187",
+            "title": "The Empire Strikes Backups Champions Newsletter",
+            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links."
+          }
+        ]
       },
       {
-        "h": "Pushing Brand Voice and Visuals Through Creative Holiday Content",
+        "statement": "People share posts that sound like a person wrote them."
+      },
+      {
+        "h": "Creative for Cohesity's Biggest Moments",
         "p": [
           "Beyond employee advocacy, I supported the creative team on Cohesity's most visible moments: partnership campaigns with Google Cloud, AWS, NVIDIA, Hewlett-Packard and Microsoft, blog hero graphics for executive thought leadership, creative for the weekly Security Spotlight and Empire Strikes Backups newsletters, and event activations. The visuals had to look as modern as consumer design and still carry credibility in enterprise cybersecurity."
         ]
@@ -1042,21 +1129,25 @@
     },
     "glance": [
       [
-        "7,000",
-        "Cohesity employees the advocacy program reached"
+        "3,000",
+        "Advocate seats in the Champions program I ran"
       ],
       [
-        "3,000",
-        "Advocate seats in the Champions program"
+        "70%",
+        "Engagement among those 3,000 advocates"
+      ],
+      [
+        "7,000",
+        "Employees at Cohesity, the company the program served"
       ],
       [
         "5",
         "Partner campaigns supported: Google Cloud, AWS, NVIDIA, Hewlett-Packard and Microsoft"
-      ],
-      [
-        "70%",
-        "Of the Global 500 trust Cohesity"
       ]
-    ]
+    ],
+    "description": "Christian Sanchez ran Cohesity's Champions employee advocacy program: daily posts for 3,000 advocate seats with 70% engagement, posts for two executives, and design for PR, blogs, newsletters and global events.",
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+    }
   }
 ]

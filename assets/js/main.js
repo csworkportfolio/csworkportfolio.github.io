@@ -252,7 +252,8 @@
     const originals = [...track.children];
     const s = {
       el, viewport, track, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0), v: 0, hover: false,
-      loops: el.hasAttribute("data-loop"), restart: el.hasAttribute("data-restart"), loop: 0, pos: 0, lastSet: -1,
+      // every strip that scrolls ends the same way, site-wide: it rests, breathes out, and comes back from the start
+      loops: false, restart: true, loop: 0, pos: 0, lastSet: -1,
       pause: new Set(), resumeTimer: 0, visible: true, anim: 0,
     };
 
@@ -283,7 +284,9 @@
         // it starts on the same left edge as the other strips, then glides once to the centre and rests there
         el.classList.add("is-static");
         viewport.scrollLeft = 0; s.pos = 0;
-        const shift = (viewport.clientWidth - pieces) / 2 - parseFloat(cs.paddingLeft);
+        // the track may already sit centred by its auto margins (a strip much shorter than the page), so the
+        // shift is measured from where the pieces start now, not from the left edge
+        const shift = (viewport.clientWidth - pieces) / 2 - parseFloat(cs.paddingLeft) - (parseFloat(cs.marginLeft) || 0);
         el.style.setProperty("--centre", `${shift.toFixed(1)}px`);
         if (reduceMotion || el.classList.contains("is-centred")) el.classList.add("is-centred");
         else if ("IntersectionObserver" in window) {
@@ -447,17 +450,17 @@
       const end = s.viewport.scrollWidth - s.viewport.clientWidth;
       if (!s.loop && s.pos >= end) {
         s.pos = end;   // non-looping Wix sliders stop at the end
-        if (s.restart && !s.restarting) {   // ...unless they restart: a pause, a fade out, back to the start, a fade in
+        if (s.restart && !s.restarting) {   // ...then restart: a rest, a slow fade out, back to the start, a slow fade in
           s.restarting = true;
           s.pause.add("restart");
           setTimeout(() => {
             s.el.classList.add("is-fading");
             setTimeout(() => {
-              s.pos = 0; s.viewport.scrollLeft = 0; s.lastSet = 0; s.v = 0; s.track.style.transform = "";
+              s.pos = 0; s.viewport.scrollLeft = 0; s.lastSet = 0; s.v = 0.01; s.track.style.transform = "";
               s.el.classList.remove("is-fading");
-              setTimeout(() => { s.pause.delete("restart"); s.restarting = false; }, 600);
-            }, 500);
-          }, 1500);
+              setTimeout(() => { s.pause.delete("restart"); s.restarting = false; }, 700);
+            }, 950);
+          }, 1400);
         }
       }
       // scrollLeft only moves in whole pixels (Safari rounds it), which judders at slow speeds; the whole
@@ -995,6 +998,21 @@
     }
     document.addEventListener("visibilitychange", () => (document.hidden ? hold("tab") : release("tab")));
 
+    // a crossfading picture is drawn on its own layer, which the switcher's glass can't blur: while the box is
+    // tucked under the switcher (the stacked cases scroll under it) it holds its picture, and runs on once clear
+    const pillsEl = document.querySelector(".pills");
+    if (pillsEl && root.closest(".wk-box")) {
+      let queued = false;
+      const underBar = () => {
+        queued = false;
+        const r = root.getBoundingClientRect(), bar = pillsEl.getBoundingClientRect().bottom;
+        const under = r.top < bar && r.bottom > 0;
+        if (under !== pause.has("bar")) (under ? hold : release)("bar");
+      };
+      addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(underBar); } }, { passive: true });
+      underBar();
+    }
+
     // Stagger the rows so they don't all change at the same moment.
     pause.add("start");
     setTimeout(() => release("start"), (order % 4) * 900);
@@ -1394,6 +1412,16 @@
     document.documentElement.style.setProperty("--pills-h", `${h}px`);
     return h;
   };
+  // measured once up front too: a case study's banner slides up behind the switcher by this much
+  pinTop();
+  addEventListener("resize", pinTop, { passive: true });
+  // on a phone the switcher sits on a frosted band; over a case study's banner photograph it drops the band
+  const caseHero = document.querySelector(".page-case .case-hero");
+  if (caseHero) {
+    const overHero = () => document.documentElement.classList.toggle("over-hero", caseHero.getBoundingClientRect().bottom > (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--pills-h")) || 60));
+    overHero();
+    addEventListener("scroll", overHero, { passive: true });
+  }
   const progress = (el, pin) => {
     const r = el.getBoundingClientRect();
     const run = r.height - (viewH() - pin);
@@ -1548,7 +1576,9 @@
     const shows = cases.map((c) => c.querySelector("[data-slideshow]"));
     const counts = shows.map((sh) => (sh ? sh.querySelectorAll(".slide").length : 1));
     const n = cases.length;
-    const phone = matchMedia("(max-width: 720px)");
+    // the pinned scene needs room for its 360px words column beside a landscape box; narrower windows (phones,
+    // tablets, small laptop windows) get the cases one after another, text above a full-width box
+    const phone = matchMedia("(max-width: 1180px)");
     const HAND = 0.3;   // the box hand-over
     const HOLD = 0.5;   // how long each case stays put (the original pacing: about 0.8 of a screen per case)
     const widths = counts.map(() => HAND + HOLD);

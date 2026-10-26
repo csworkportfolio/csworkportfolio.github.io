@@ -914,7 +914,7 @@ main { view-transition-name: page; }
 
 /* a still walkthrough: a photograph with its caption instead of the phone, riding beside the stages */
 .sc-photo { margin: 0; width: min(520px, 100%); }
-.sc-photo img { display: block; width: 100%; height: auto; max-width: none; }   /* each picture keeps its own shape, nothing is cropped */
+.sc-photo img, .sc-photo video { display: block; width: 100%; height: auto; max-width: none; }   /* each picture keeps its own shape, nothing is cropped */
 .sc-photo figcaption { margin-top: 12px; font-size: 14px; line-height: 1.4; color: var(--muted); }
 .scene.sc-still + .prose { margin-top: 130px; }
 .sc-video { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: pointer; overflow: hidden; border-radius: 0; }
@@ -924,8 +924,10 @@ main { view-transition-name: page; }
 .sc-figs > figure { grid-area: 1 / 1; width: 100%; opacity: 0; transition: opacity .5s; pointer-events: none; }   /* the hidden pictures never catch a click meant for the visible one */
 .sc-figs:not(.is-js) > figure:first-child, .sc-figs > figure.is-on { pointer-events: auto; }
 .sc-figs:not(.is-js) > figure:first-child, .sc-figs > figure.is-on { opacity: 1; }
-.strip-viewport { transition: opacity .5s; }
-.strip.is-fading .strip-viewport { opacity: 0; }
+.strip-viewport { transition: opacity .9s cubic-bezier(.45,.05,.55,.95); }   /* the restart's breath: a slow fade out and in */
+.strip.is-fading .strip-viewport { opacity: 0 !important; }   /* wins over the scroll reveal on the case pages */
+/* once revealed, a case page's strip fades with the same slow breath as everywhere else */
+.js-reveal .case-v2 .strip[data-reveal].is-in > .strip-viewport { transition: opacity .9s cubic-bezier(.45,.05,.55,.95), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: 0s; }
 .scene.sc-still .sc-names { display: flex; }
 
 /* what each stage does to the phone */
@@ -2230,3 +2232,114 @@ html.theme-light .glance-logos img { filter: brightness(0); opacity: .45; }
 html.theme-dark, html.theme-dark body { background: #000; }
   html.theme-dark .page-home { background: #0b0b0b; }
   html.theme-dark::view-transition { background: #000; }
+
+/* between phone and wide desktop the home cases stack too: text above a full-width landscape box (main.js keeps the
+   pinned scene for windows over 1180px) */
+@media (min-width: 721px) and (max-width: 1180px) {
+  .wk-cases { gap: 88px; }
+  .wk-case { grid-template-columns: 1fr; row-gap: 28px; }
+  .wk-text { max-width: 640px; }
+  /* never taller than the screen less the tab bar, so a phone turned sideways still sees the whole box */
+  .wk-box { aspect-ratio: 16 / 10; width: min(100%, calc((100svh - var(--pills-h, 72px) - 32px) * 1.6)); }
+}
+
+/* a slideshow with many pieces in a narrow box: the round buttons never squeeze, and the dot bar shrinks its dots
+   and gaps to fit the space left (Redzone has 15 pieces); the bar never pushes the buttons off the edge */
+.ss-ctl { padding: 0 12px; }
+.ss-toggle { flex: none; }
+.ss-dots { min-width: 0; flex: 0 1 auto; }
+.ss-dots button { flex: 0 1 8px; min-width: 4px; }
+.ss-dots button.is-on { flex: 0 0 26px; }
+@media (max-width: 720px) {
+  .ss-ctl { gap: 8px; }
+  .ss-dots { gap: clamp(3px, 1.4vw, 8px); padding: 0 10px; }
+}
+
+/* case studies: no band of page colour above the banner; the banner runs up behind the switcher, which floats
+   over the photograph (main.js measures the switcher into --pills-h) */
+.page-case .case-hero { margin-top: calc(-1 * var(--pills-h, 80px)); padding-top: var(--pills-h, 80px); }
+@media (max-width: 720px) { .page-case .case-hero { margin-top: calc(-1 * var(--pills-h, 66px)); padding-top: var(--pills-h, 66px); } }
+:root[data-os="ios"].over-hero .page-case .pills { background: transparent !important; -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* the switcher is liquid glass you can see through (apple-design 8g): the capsule and the phone chips take about
+   58% of their colour, blurred and saturated, with a faint bright rim; the current section stays solid blue.
+   Phones keep a frosted band behind the chips once it pins (70% dark, 78% light), never a solid one. */
+.seg:not(.is-scrolling), :root[data-os="ios"] .seg:not(.is-scrolling) {
+  background: color-mix(in srgb, #f2f2f2 58%, transparent);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.7), 0 0 0 .5px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08);
+}
+:root[data-os="ios"] .seg-item:not(.is-active) { background: color-mix(in srgb, #ffffff 58%, transparent); }
+@media (min-width: 561px) { :root[data-os="ios"] .seg-item:not(.is-active) { background: none; } }
+@media (max-width: 560px) { :root[data-os="ios"] .seg:not(.is-scrolling) { background: none; box-shadow: none; } }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .seg:not(.is-scrolling), html:not(.theme-light) .page-home .seg:not(.is-scrolling), html:not(.theme-light).can-dark[data-os="ios"] .seg:not(.is-scrolling), :root:not(.theme-light)[data-os="ios"] .page-home .seg:not(.is-scrolling) {
+    background: color-mix(in srgb, #1c1c1e 58%, transparent);
+    box-shadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px rgba(255,255,255,.08), 0 8px 24px rgba(0,0,0,.3);
+  }
+  html:not(.theme-light).can-dark[data-os="ios"] .seg-item:not(.is-active), :root:not(.theme-light)[data-os="ios"] .page-home .seg-item:not(.is-active) { background: color-mix(in srgb, #2c2c2e 58%, transparent); }
+}
+html.theme-dark.can-dark .seg:not(.is-scrolling), html.theme-dark .page-home .seg:not(.is-scrolling), html.theme-dark.can-dark[data-os="ios"] .seg:not(.is-scrolling), :root.theme-dark[data-os="ios"] .page-home .seg:not(.is-scrolling) {
+    background: color-mix(in srgb, #1c1c1e 58%, transparent);
+    box-shadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px rgba(255,255,255,.08), 0 8px 24px rgba(0,0,0,.3);
+  }
+  html.theme-dark.can-dark[data-os="ios"] .seg-item:not(.is-active), :root.theme-dark[data-os="ios"] .page-home .seg-item:not(.is-active) { background: color-mix(in srgb, #2c2c2e 58%, transparent); }
+@media (prefers-color-scheme: dark) and (min-width: 561px) {
+  html:not(.theme-light).can-dark[data-os="ios"] .seg-item:not(.is-active), :root:not(.theme-light)[data-os="ios"] .page-home .seg-item:not(.is-active) { background: none; }
+}
+@media all and (min-width: 561px) {
+  html.theme-dark.can-dark[data-os="ios"] .seg-item:not(.is-active), :root.theme-dark[data-os="ios"] .page-home .seg-item:not(.is-active) { background: none; }
+}
+@media (prefers-color-scheme: dark) and (max-width: 560px) {
+  html:not(.theme-light).can-dark[data-os="ios"] .seg:not(.is-scrolling), :root:not(.theme-light)[data-os="ios"] .page-home .seg:not(.is-scrolling) { background: none; box-shadow: none; }
+  html:not(.theme-light).can-dark[data-os="ios"] .pills, :root:not(.theme-light)[data-os="ios"] .page-home .pills { background: color-mix(in srgb, #1c1c1e 70%, transparent); }
+}
+@media all and (max-width: 560px) {
+  html.theme-dark.can-dark[data-os="ios"] .seg:not(.is-scrolling), :root.theme-dark[data-os="ios"] .page-home .seg:not(.is-scrolling) { background: none; box-shadow: none; }
+  html.theme-dark.can-dark[data-os="ios"] .pills, :root.theme-dark[data-os="ios"] .page-home .pills { background: color-mix(in srgb, #1c1c1e 70%, transparent); }
+}
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .pills:has(> .seg.is-scrolling), html:not(.theme-light) .page-home .pills:has(> .seg.is-scrolling), html:not(.theme-light)[data-os="ios"] .pills:has(> .seg.is-scrolling), html:not(.theme-light)[data-os="ios"] .page-home .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 70%, transparent); }
+}
+html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-home .pills:has(> .seg.is-scrolling), html.theme-dark[data-os="ios"] .pills:has(> .seg.is-scrolling), html.theme-dark[data-os="ios"] .page-home .pills:has(> .seg.is-scrolling) { background: color-mix(in srgb, #1c1c1e 70%, transparent); }
+@media (prefers-reduced-transparency: reduce) {
+  .seg:not(.is-scrolling) { background: #f2f2f2; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+/* a stronger blur on the floating capsule, so big type passing under it softens instead of competing with the labels */
+.seg:not(.is-scrolling) { -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%); }
+/* the home page's band is clear too once the page is dark around it: only the capsule floats over what scrolls by */
+@media (prefers-color-scheme: dark) and (min-width: 561px) {
+  html:not(.theme-light) .page-home .pills { background: transparent; }
+}
+@media all and (min-width: 561px) {
+  html.theme-dark .page-home .pills { background: transparent; }
+}
+
+/* no band behind the switcher until phone territory: in any desktop window wider than a phone (561px up) the six
+   tabs tighten to stay one floating glass capsule, so the bar never turns into an edge-to-edge strip with a band;
+   720px and under is phone territory (data-os="ios", set in the page head), where the chip bar keeps its frosted band */
+@media (min-width: 721px) and (max-width: 900px) {
+  :root:not([data-os="ios"]) .seg { height: auto; max-width: calc(100% - 2 * var(--gutter)); }
+  /* the six labels are about 471px at this size; the padding shares out what is left between the page margins */
+  :root:not([data-os="ios"]) .seg-item { height: 32px; font-size: 12.5px; padding: 0 clamp(5px, calc((100vw - 2 * var(--gutter) - 494px) / 12), 16px); }
+}
+@media (min-width: 721px) {
+  :root:not([data-os="ios"]) .pills, :root:not([data-os="ios"]) .pills:has(> .seg.is-scrolling) {
+    background: transparent !important; box-shadow: none !important; clip-path: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+}
+/* light home page: the page itself takes the case scene's grey, so with no band behind the switcher there is no
+   white strip between the intro and the work */
+@media (prefers-color-scheme: light) and (min-width: 721px) {
+  html:not(.theme-dark) body.page-home { background: #f5f5f7; }
+}
+@media all and (min-width: 721px) {
+  html.theme-light body.page-home { background: #f5f5f7; }
+}
+/* the home page's old band clipped its strip (clip-path), which also cut the switcher's glass off from the page
+   behind it, so nothing blurred; with no band above phone territory the clip goes too */
+@media (min-width: 721px) { html body.page-home .pills { clip-path: none !important; box-shadow: none !important; } }
+
+/* a walkthrough figure drawn as line work (the Cohesity hub): thin lines in the page's text colour, so it follows
+   light and dark (and the manual switch), drawn at the same weight whatever its size */
+.sc-wire svg { display: block; width: 100%; height: auto; color: var(--ink); opacity: .62; }
+.sc-wire svg * { vector-effect: non-scaling-stroke; }

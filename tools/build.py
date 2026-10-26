@@ -932,13 +932,21 @@ def flow(b, media, root):
         figs = b.get("figures") or [{"src": b["photo"], "alt": b.get("alt", ""), "caption": b.get("caption", "")}]
         parts = []
         for fg in figs:
-            m = media.get(fg["src"])
+            m = None if fg.get("svg") else media.get(fg["src"])
             cap = f'<figcaption>{esc(fg["caption"])}</figcaption>' if fg.get("caption") else ""
             if fg.get("caption_phone"):   # a shorter label on phones, where the step's own text sits right below
                 cap = (f'<figcaption><span class="only-wide">{esc(fg["caption"])}</span>'
                        f'<span class="only-phone">{esc(fg["caption_phone"])}</span></figcaption>')
-            img = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" '
-                   f'alt="{esc(fg.get("alt", ""))}" loading="lazy" decoding="async">')
+            if fg.get("svg"):
+                # a drawing in line work (assets/svg), inline so its lines take the page's text colour in light and dark
+                img = (ROOT / "assets" / "svg" / fg["svg"]).read_text().strip()
+            elif m["kind"] != "image":
+                # a short loop (an old GIF): it plays silently in place, like the picture it stands in for
+                img = (f'<video src="{root}{m["src"]}" poster="{root}{m["poster"]}" width="{m["w"]}" height="{m["h"]}" '
+                       f'muted loop playsinline autoplay preload="none" aria-label="{esc(fg.get("alt", ""))}"></video>')
+            else:
+                img = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" '
+                       f'alt="{esc(fg.get("alt", ""))}" loading="lazy" decoding="async">')
             if fg.get("v"):
                 # a video figure: it plays silently in place once on screen, and a click opens it in the lightbox
                 item = {"type": video_kind(fg["v"]), "id": fg["v"], "vw": 16, "vh": 9, "thumb": root + m.get("sm", m["src"]),
@@ -946,7 +954,7 @@ def flow(b, media, root):
                 img = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{fg["v"]}" data-vw="16" data-vh="9" '
                        f'aria-label="Play video: {esc(fg.get("title", ""))}">{img}{PLAY_ICON}</button>'
                        f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
-            parts.append(f'<figure class="sc-photo">{img}{cap}</figure>')
+            parts.append(f'<figure class="sc-photo{" sc-wire" if fg.get("svg") else ""}">{img}{cap}</figure>')
         figure = f'<div class="sc-figs">{"".join(parts)}</div>' if len(parts) > 1 else parts[0]
         return (f'<section class="scene sc-still" id="{esc(b.get("id", "process"))}" data-scene="flow" style="--n:{n}" aria-label="{esc(b["h"])}">'
                 '<div class="sc-stage"><div class="wrap sc-grid">'

@@ -17,18 +17,6 @@
     "lede": "Healthier Texas (formerly It's Time Texas) is a statewide public health organization focused on wellness education, digital outreach and community engagement. I worked on social campaigns, video and visual storytelling across their web and email channels during a big push into digital.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
-        "p": [
-          "Healthier Texas runs statewide wellness campaigns that depend on strong visuals, and in 2020 everything changed. The pandemic stopped in-person events and made digital outreach urgent. The creative team needed design that could adapt quickly across platforms and keep people at the center of the programs."
-        ]
-      },
-      {
-        "h": "THE SOLUTION",
-        "p": [
-          "I worked with Healthier Texas to bring their campaigns to life online and in person, from virtual summit branding to campaign videos and wellness app promotions. I built design systems, social content and storytelling assets meant to inform and engage, and made each one feel real and easy to act on."
-        ]
-      },
-      {
         "h": "Engaging Texans in Health and Wellness Amidst a Pandemic",
         "p": [
           "When the COVID-19 shutdown hit, Healthier Texas (formerly It's Time Texas) had to rethink how it showed up for the public, and fast. Within weeks we launched two digital-first campaigns.",
@@ -37,7 +25,8 @@
             "quote": "We needed something that felt joyful and human, even at a time when things felt heavy."
           },
           "Together, these campaigns set the tone for how Healthier Texas would engage people through the pandemic."
-        ]
+        ],
+        "id": "setup"
       },
       {
         "gallery": [
@@ -261,7 +250,10 @@
         "2",
         "Digital-first campaigns launched within weeks of the 2020 shutdown"
       ]
-    ]
+    ],
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+    }
   },
   {
     "slug": "partnerships",
@@ -294,26 +286,24 @@
     "lede": "As Redzone partnered with leading brands in manufacturing and consumer goods, I supported the shared storytelling through design and video. This case study covers how I helped deliver consistent creative across web, video and campaign content.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
+        "h": "Hundreds of Plants, One Visual Story",
+        "id": "setup",
         "p": [
-          "Redzone's partner collaborations were high profile, but the creative was fragmented. Slides, social and web materials didn't match, which made it hard to present one clear story, especially alongside partners like Apple or Ferrara."
+          "Redzone's reach spans hundreds of manufacturing plants, from household brands like Hershey and Tyson to local family-run operations. When Redzone worked with them, and with partners like Apple or Ferrara, the slides, social posts and web pages had to tell one story.",
+          "I designed the co-branded presentations, social graphics, web features and video. With type choices, layout systems and pacing, I built repeatable frameworks that kept Redzone's voice consistent while each partner's brand stayed its own."
         ]
       },
       {
-        "h": "THE SOLUTION",
-        "p": [
-          "I developed co-branded presentations, social graphics, web features and video that told one visual story. The assets respected each partner's brand while keeping Redzone's identity clear in internal and public materials."
-        ]
+        "statement": "The partner is the hero. Redzone is the enabler."
       },
       {
-        "h": "Delivering Consistent Visual Storytelling Across Redzone’s Most High-Profile Collaborations",
+        "h": "Testimonials, Campaigns and the Apple Summit Deck",
+        "id": "testimonials",
         "p": [
-          "Redzone's reach spans hundreds of manufacturing plants, from household brands like Hershey and Tyson to local family-run operations. Every partner deserves the same care, consistency and clarity.",
-          "This section covers the design work I led with our most recognizable customers. My goal was to lift their story without overshadowing it, with creative that felt personal, on brand and in step with each company's tone, whether it was a social spotlight, a co-branded feature or an event asset.",
+          "Every partner got the same care, from household names to family-run plants. That meant customer testimonials for web and social, a Women's History Month campaign built around frontline operators, and slides for a manufacturing leadership summit hosted by Apple.",
           {
             "quote": "More than just customers, but community members."
-          },
-          "Every project followed one idea: the partner is the hero and Redzone is the enabler. With careful type choices, layout systems and pacing, I built repeatable frameworks that let Redzone tell big stories in a consistent voice while keeping each team's individuality."
+          }
         ]
       },
       {
@@ -354,7 +344,7 @@
         "restart": true
       },
       {
-        "h": "Visualizing Redzone’s Reach Across Global Production",
+        "h": "A Vending Machine Stocked by Customers",
         "p": [
           "Real people and products move through the factory floor every day. To show that, I created two graphics, a 3D vending machine and a top-down conveyor line, each filled with packaging from actual Redzone customers. From PEZ to Carmex, every item stands for a frontline team.",
           "The visuals ran in global ad placements and social activations as a playful nod to the real-world impact Redzone powers. Behind every data point is a snack, a spice jar or a chocolate bar, and behind each of those is a person doing their best work."
@@ -378,7 +368,7 @@
         "restart": true
       },
       {
-        "h": "Transforming Partner Relationships into Scroll-Stopping Video Stories",
+        "h": "Stories from the Factory Floor",
         "p": [
           "Behind every metric is a person. That idea shaped the video I created for Redzone, which moved the spotlight from product features to the people using the software every day.",
           "These weren't scripted testimonials. They were real moments with real workers, from packaging leads and shift supervisors to maintenance techs, speaking in their own words about what Redzone helped them achieve. I helped concept, script and shape the visual language so they felt like short stories rather than corporate PR.",
@@ -403,12 +393,11 @@
         "restart": true
       },
       {
-        "h": "Supporting Authenticity and Tone by Capturing the Heart of the Frontline",
+        "h": "Photography at Customer Sites",
         "p": [
           "For photography, I tried to tell a story in a single frame: the pride, momentum and humanity behind manufacturing.",
           "I directed and shot original photography at customer sites and Redzone events, building a library of images that showed people in their element as well as the process. The images supported the brand's shift toward authenticity.",
-          "They were used in ad campaigns, customer success stories, web and social, and they helped shape Redzone's visual voice: “We see you. We’re with you. And your work matters.”",
-          "Real change starts with real people, and when a brand is built on trust, showing the frontline matters as much as showing the software."
+          "They were used in ad campaigns, customer success stories, web and social, and they helped shape Redzone's visual voice: “We see you. We’re with you. And your work matters.”"
         ]
       },
       {
@@ -455,7 +444,10 @@
         "Hundreds",
         "Of manufacturers I worked with through Redzone's partnerships"
       ]
-    ]
+    ],
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+    }
   },
   {
     "slug": "freelance",
@@ -470,23 +462,54 @@
     "lede": "This collection brings together freelance work, self-directed projects and visual storytelling made outside full-time roles. From real client branding needs to personal campaign experiments, each project shows a different side of how I design, whether that's refining layout systems, developing a voice or pushing a visual identity somewhere new.",
     "blocks": [
       {
-        "h": "THE PROBLEM",
+        "h": "Work Outside the Day Job",
+        "id": "setup",
         "p": [
-          "Working inside structured brand environments often means playing it safe. I wanted room to explore tone, story and style that don't fit traditional formats, and to take on freelance projects with real problems, tight timelines and a range of industries."
+          "Working inside a structured brand often means playing it safe. Outside full-time roles I took paid commissions with real deadlines, and built concepts of my own to try tones, layouts and identities that wouldn't fit a corporate brief."
         ]
       },
       {
-        "h": "THE SOLUTION",
+        "h": "Paid Client Work",
+        "id": "clients",
         "p": [
-          "I used this space to build scrolling web layouts, fictional campaigns, identity systems and brand assets from the ground up. Whether it was for a client, a bold experiment or just for fun, each piece sharpened my instincts and widened my range."
+          "Two paid commissions: an Instagram Story promo for LANY's show at Stubb's in Austin, and an animated graphic for a runner's Boston Marathon fundraiser with Team JAF (Joe Andruzzi Foundation), which raised over $13,000 for families facing cancer. Alongside them is a YouTube thumbnail for a creator's series on mid-century design."
         ]
       },
       {
-        "h": "Designing for Real Clients with Practical Brand Challenges",
+        "gallery": [
+          {
+            "src": "LANY.png",
+            "desc": "Promotional piece for indie-pop band LANY’s live performance at Stubb’s BBQ in Austin, TX. The challenge was to capture the band’s sleek, modern aesthetic while injecting the visual energy of a live show announcement, all within the vertical, fast-scrolling world of Instagram Stories.\nThe layered typography gives the illusion of motion and repetition, mimicking the rhythm and buildup of anticipation before a concert. Each line of text bleeds downward with subtle opacity and colour shifts, creating a sense of scale and sound. The hero photo, styled with high contrast and crisp light, plants the viewer eye-level with the band, drawing them into the scene.\nThis was a great opportunity to experiment with music branding in a way that balanced clarity with fan excitement, and pushed Instagram-native design choices to feel bold, scroll-stopping, and rhythmic.",
+            "title": "LANY Live at Stubb's: Instagram Story Promo",
+            "cap": "Paid commission. An Instagram Story promo for LANY at Stubb's."
+          },
+          {
+            "src": "John 2.3 (1).gif",
+            "title": "Boston Marathon Commission",
+            "tools": "Adobe Photoshop, Lightroom, Premiere Pro",
+            "desc": "This animated graphic was created as a freelance project for a client running the Boston Marathon with Team JAF (Joe Andruzzi Foundation), raising donations in memory of his father who passed away from cancer. More than just a race update, this piece served as a celebration of community, resilience, and purpose, honouring the reason behind every mile.\nThe design brings together elements of movement and emotion: a photo from the course, donor milestone messaging, and uplifting motion graphics that nod to the impact beyond the pavement. With over $13,000 raised for families facing cancer, it became a shared moment of gratitude and reflection for all who supported.\nProjects like this remind me that design can connect people, showing what it means when one person’s story moves hundreds to action.",
+            "cap": "Paid commission. An animated graphic for a Team JAF fundraiser that raised over $13,000."
+          },
+          {
+            "src": "Thumbnail.png",
+            "title": "Youtube Thumbnail for Video Series",
+            "tools": "Adobe Photoshop, Lightroom",
+            "desc": "This Youtube thumbnail was created as part of a series exploring modern design principles through a lifestyle lens. In this episode, the creator breaks down “Harsh vs. Soft Features” in mid-century modern interiors, from sculpted wood to clean-lined decor. My challenge was to capture that narrative in a single visual frame.\nI built the composition with a layered, editorial feel: warm-toned textures, natural shadows, and a smiling host visually tied to the subject matter. The placement of objects, from the vase to the teak chair, nods to the theme of contrast, while the serif typography lends a tactile, print-like quality that aligns with the aesthetic audience.\nThe result is polished but personal, reflecting the channel’s growing voice (part expert, part creative guide) while drawing viewers in with clear cues.",
+            "cap": "A YouTube thumbnail I designed for a series on mid-century design."
+          }
+        ],
+        "height": 384,
+        "gap": 40,
+        "play": "auto",
+        "speed": 35,
+        "ground": true,
+        "label": ""
+      },
+      {
+        "h": "Self-Initiated Brand and App Concepts",
+        "id": "concepts",
         "p": [
-          "Outside in-house roles, I've designed for individuals, startups and causes, from a calm, ambient look for a new AI brand concept to a social campaign honoring a marathon runner's fundraiser for cancer. Each project starts the same way: by listening.",
-          "The work ranges from a concert promo that plays with rhythm and type to a video thumbnail that blends interior style with the creator's personality.",
-          "Freelance work gives me room to try different tones, tools and ideas, and the goal stays the same: make it feel honest and human."
+          "Concepts I set for myself: launch graphics for Hushhum, an AI ambience app; a template system for daily news posts; and one-page web layouts that test how a grid holds up from desktop to phone."
         ]
       },
       {
@@ -503,42 +526,6 @@
             "desc": "This series of square social graphics was built as a template system for daily news updates across categories like the stock market, the auto industry, real estate and manufacturing. Each category gets its own accent color, carried through a small \"News\" tag and corner brackets.\nI paired full-bleed, high-impact photography with bold condensed headlines so each update reads in a split second. A consistent footer with source credits and a \"Follow us on X\" prompt keeps the whole set feeling like one recognisable channel.",
             "cap": "Self-initiated. A square template system for daily news updates."
           },
-          {
-            "src": "Thumbnail.png",
-            "title": "Youtube Thumbnail for Video Series",
-            "tools": "Adobe Photoshop, Lightroom",
-            "desc": "This Youtube thumbnail was created as part of a series exploring modern design principles through a lifestyle lens. In this episode, the creator breaks down “Harsh vs. Soft Features” in mid-century modern interiors, from sculpted wood to clean-lined decor. My challenge was to capture that narrative in a single visual frame.\nI built the composition with a layered, editorial feel: warm-toned textures, natural shadows, and a smiling host visually tied to the subject matter. The placement of objects, from the vase to the teak chair, nods to the theme of contrast, while the serif typography lends a tactile, print-like quality that aligns with the aesthetic audience.\nThe result is polished but personal, reflecting the channel’s growing voice (part expert, part creative guide) while drawing viewers in with clear cues.",
-            "cap": "A YouTube thumbnail I designed for a series on mid-century design."
-          },
-          {
-            "src": "LANY.png",
-            "desc": "Promotional piece for indie-pop band LANY’s live performance at Stubb’s BBQ in Austin, TX. The challenge was to capture the band’s sleek, modern aesthetic while injecting the visual energy of a live show announcement, all within the vertical, fast-scrolling world of Instagram Stories.\nThe layered typography gives the illusion of motion and repetition, mimicking the rhythm and buildup of anticipation before a concert. Each line of text bleeds downward with subtle opacity and colour shifts, creating a sense of scale and sound. The hero photo, styled with high contrast and crisp light, plants the viewer eye-level with the band, drawing them into the scene.\nThis was a great opportunity to experiment with music branding in a way that balanced clarity with fan excitement, and pushed Instagram-native design choices to feel bold, scroll-stopping, and rhythmic.",
-            "title": "LANY Live at Stubb's: Instagram Story Promo",
-            "cap": "Freelance. An Instagram Story promo for LANY at Stubb's."
-          },
-          {
-            "src": "John 2.3 (1).gif",
-            "title": "Boston Marathon Commission",
-            "tools": "Adobe Photoshop, Lightroom, Premiere Pro",
-            "desc": "This animated graphic was created as a freelance project for a client running the Boston Marathon with Team JAF (Joe Andruzzi Foundation), raising donations in memory of his father who passed away from cancer. More than just a race update, this piece served as a celebration of community, resilience, and purpose, honouring the reason behind every mile.\nThe design brings together elements of movement and emotion: a photo from the course, donor milestone messaging, and uplifting motion graphics that nod to the impact beyond the pavement. With over $13,000 raised for families facing cancer, it became a shared moment of gratitude and reflection for all who supported.\nProjects like this remind me that design can connect people, showing what it means when one person’s story moves hundreds to action.",
-            "cap": "Freelance. An animated graphic for a Team JAF fundraiser that raised over $13,000."
-          }
-        ],
-        "gap": 50,
-        "label": "",
-        "play": "auto",
-        "speed": 10,
-        "ground": true,
-        "restart": true
-      },
-      {
-        "h": "Exploring Form, Flow, and Function Through Web Design",
-        "p": [
-          "One-page scrolls, mock product sites and UI-driven layouts, designed to test storytelling, visual hierarchy and interaction across screen sizes. They explore how visuals guide attention, how grids flex on mobile and what keeps someone scrolling past the first screen."
-        ]
-      },
-      {
-        "gallery": [
           {
             "src": "Website.png",
             "title": "Fashion E-Commerce Interface",
@@ -557,12 +544,12 @@
         "gap": 50,
         "label": "",
         "play": "auto",
+        "speed": 60,
         "ground": true,
-        "speed": 10,
-        "restart": true
+        "loop": true
       },
       {
-        "h": "Pushing Visual Identity and Storytelling Beyond the Brief",
+        "h": "Editorial and Ad Concepts",
         "p": [
           "This section collects experimental work across editorial layouts, digital ads, product brochures and visual essays, each built to simulate a real communication scenario. From consumer goods campaigns to report spreads, they test how to lead with structure, reinforce hierarchy and pair visuals with useful information."
         ]
@@ -615,9 +602,9 @@
         "gap": 50,
         "label": "",
         "play": "auto",
-        "speed": 10,
+        "speed": 60,
         "ground": true,
-        "restart": true
+        "loop": true
       },
       {
         "h": "Foundations in Strategy and Storytelling at Texas A&M",
@@ -720,13 +707,13 @@
             "bare": true
           }
         ],
-        "height": 443,
         "gap": 50,
-        "speed": 10,
         "label": "",
         "play": "auto",
+        "speed": 60,
         "ground": true,
-        "restart": true
+        "height": 443,
+        "loop": true
       }
     ],
     "next": {
@@ -742,6 +729,9 @@
         "7",
         "Texas A&M strategy and research projects"
       ]
-    ]
+    ],
+    "contact": {
+      "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
+    }
   }
 ]

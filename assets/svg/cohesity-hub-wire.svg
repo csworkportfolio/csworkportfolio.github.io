@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="A wireframe of the Champions hub: a trending posts feed with share buttons, and a leaderboard beside it">
+  <g stroke-width="1.4">
+    <!-- window -->
+    <rect x="10" y="10" width="1180" height="780" rx="22"/>
+    <path d="M10 66H1190"/>
+    <circle cx="44" cy="38" r="7"/><circle cx="68" cy="38" r="7"/><circle cx="92" cy="38" r="7"/>
+    <rect x="300" y="26" width="600" height="24" rx="12"/>
+    <!-- sidebar -->
+    <path d="M220 66V790"/>
+    <rect x="40" y="98" width="30" height="30" rx="8"/>
+    <path d="M84 113H178"/>
+    <rect x="34" y="158" width="160" height="36" rx="10"/>
+    <path d="M52 176H138"/><path d="M52 230H150"/><path d="M52 276H130"/><path d="M52 322H156"/><path d="M52 368H122"/>
+    <!-- feed header -->
+    <path d="M258 112H470" stroke-width="2.6"/>
+    <rect x="258" y="144" width="104" height="32" rx="16"/>
+    <rect x="374" y="144" width="88" height="32" rx="16"/>
+    <rect x="474" y="144" width="88" height="32" rx="16"/>
+    <!-- post cards: image, headline, lines, share and preview -->
+    <rect x="258" y="200" width="620" height="170" rx="14"/>
+    <rect x="278" y="220" width="170" height="130" rx="10"/><path d="M278 220L448 350M448 220L278 350"/>
+    <path d="M472 234H760" stroke-width="2.6"/><path d="M472 266H850"/><path d="M472 290H820"/><path d="M472 314H700"/>
+    <rect x="472" y="330" width="150" height="28" rx="14"/><path d="M500 344H594"/>
+    <rect x="634" y="330" width="96" height="28" rx="14"/><path d="M656 344H708"/>
+
+    <rect x="258" y="390" width="620" height="170" rx="14"/>
+    <rect x="278" y="410" width="170" height="130" rx="10"/><path d="M278 410L448 540M448 410L278 540"/>
+    <path d="M472 424H720" stroke-width="2.6"/><path d="M472 456H850"/><path d="M472 480H790"/><path d="M472 504H660"/>
+    <rect x="472" y="520" width="150" height="28" rx="14"/><path d="M500 534H594"/>
+    <rect x="634" y="520" width="96" height="28" rx="14"/><path d="M656 534H708"/>
+
+    <rect x="258" y="580" width="620" height="170" rx="14" stroke-dasharray="6 8"/>
+    <rect x="278" y="600" width="170" height="130" rx="10" stroke-dasharray="6 8"/>
+    <path d="M472 614H690" stroke-dasharray="6 8"/><path d="M472 646H850" stroke-dasharray="6 8"/>
+    <!-- leaderboard -->
+    <path d="M910 66V790"/>
+    <path d="M940 112H1060" stroke-width="2.6"/>
+    <g>
+      <path d="M940 160H948"/><circle cx="980" cy="160" r="14"/><rect x="1006" y="154" width="160" height="12" rx="6"/><path d="M1012 160H1152" stroke-width="5"/>
+      <path d="M940 210H948"/><circle cx="980" cy="210" r="14"/><rect x="1006" y="204" width="160" height="12" rx="6"/><path d="M1012 210H1126" stroke-width="5"/>
+      <path d="M940 260H948"/><circle cx="980" cy="260" r="14"/><rect x="1006" y="254" width="160" height="12" rx="6"/><path d="M1012 260H1102" stroke-width="5"/>
+      <path d="M940 310H948"/><circle cx="980" cy="310" r="14"/><rect x="1006" y="304" width="160" height="12" rx="6"/><path d="M1012 310H1076" stroke-width="5"/>
+      <path d="M940 360H948"/><circle cx="980" cy="360" r="14"/><rect x="1006" y="354" width="160" height="12" rx="6"/><path d="M1012 360H1052" stroke-width="5"/>
+    </g>
+    <!-- challenge -->
+    <path d="M940 430H1040" stroke-width="2.6"/>
+    <rect x="940" y="456" width="226" height="120" rx="14" stroke-dasharray="6 8"/>
+    <path d="M962 486H1110" stroke-width="2.6"/><path d="M962 516H1144"/><path d="M962 540H1080"/>
+  </g>
+</svg>
