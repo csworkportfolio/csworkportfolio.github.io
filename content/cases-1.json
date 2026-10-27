@@ -1055,7 +1055,22 @@
         "height": 360,
         "gap": 40,
         "note": "The executive posts were published under their names, so they're locked.",
-        "aria": "The Cohesity Weekly newsletter and executive posts"
+        "aria": "Champions newsletters, the Champions Hub and executive posts",
+        "open": [
+          {
+            "src": "ezgif.com-video-to-gif-converter-2.gif",
+            "title": "The Champions Hub Trending Posts Feed",
+            "cap": "The hub's Trending Posts feed, with colleagues sharing alongside.",
+            "alt": "The Champions Hub's Trending Posts feed"
+          },
+          {
+            "src": "PDF Preview cohesity-google-cloud-hidden-threats.png",
+            "alt": "Cohesity's Security Spotlight newsletter on LinkedIn: Cohesity and Google Cloud Unite to Tackle Hidden Threats",
+            "title": "Cohesity's Security Spotlight Newsletter on LinkedIn",
+            "desc": "The Cohesity and Google Cloud Unite to Tackle Hidden Threats issue of Security Spotlight, Cohesity's newsletter on LinkedIn. I designed the bold green header that leads into the story of the partnership and Cohesity FortKnox arriving on Google Cloud.",
+            "cap": "A Security Spotlight newsletter on LinkedIn, with a header I designed."
+          }
+        ]
       },
       {
         "statement": "People share posts that sound like a person wrote them."
@@ -1079,11 +1094,6 @@
             "title": "Google Cloud Next, Blog Hero, and Newsletter Creative",
             "desc": "A mix from Cohesity's busiest channels: a booth promo for Google Cloud Next 26 in Las Vegas, a blog hero announcing that the future of support is here and it's agentic, and a \"Your backups are next\" graphic.\nI kept each piece simple and direct, letting the bright green and big type carry the message across events, blogs and the weekly Security Spotlight newsletter.",
             "cap": "Event, blog and newsletter creative I designed."
-          },
-          {
-            "src": "ezgif.com-video-to-gif-converter-2.gif",
-            "title": "The Champions Hub Trending Posts Feed",
-            "cap": "The hub's Trending Posts feed, with colleagues sharing alongside."
           }
         ],
         "gap": 50,

@@ -784,12 +784,14 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     n = next(LOCK_IDS)
     lock_icon = ('<span class="gw-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/>'
                  '<path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>')
-    # "lead": a piece shown in the open before the locked ones (a case study's newsletter), the same height
-    first = f'<li class="gw-bubble gw-lead" style="--i:0;--r:{lead_r:.4f}">{lead}</li>' if lead else ""
-    k = 1 if lead else 0
+    # "lead": pieces shown in the open before the locked ones (a case study's newsletter), the same height;
+    # one piece's html with its ratio in lead_r, or a list of (html, ratio) pairs
+    leads = lead if isinstance(lead, list) else ([(lead, lead_r)] if lead else [])
+    first = "".join(f'<li class="gw-bubble gw-lead" style="--i:{i};--r:{r:.4f}">{h}</li>' for i, (h, r) in enumerate(leads))
+    k = len(leads)
     bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
                               for i, r in enumerate(shapes))
-    shapes = ([lead_r] if lead else []) + list(shapes)
+    shapes = [r for _, r in leads] + list(shapes)
     rmax = max(shapes)
     rsum = sum(shapes)
     dots = '<span class="gw-dot"></span>' * 4
@@ -1119,9 +1121,22 @@ def render_case(page, site, media):
                          f'aria-label="Play video: {esc(lead["title"])}"><img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" '
                          f'height="{m["h"]}" alt="{esc(lead.get("alt", ""))}" loading="lazy" decoding="async"></button>'
                          f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
+            leads = [(lead_html, m["w"] / m["h"])]
+            # "open": more pieces in the open after the lead (a loop or a picture), each opening larger on click
+            for raw in b.get("open", []):
+                it = fix_paths(gallery_item(raw, media, site), root)
+                alt = esc(raw.get("alt", it.get("title", "")))
+                if it["type"] == "image":
+                    inner = (f'<img src="{it["thumb"]}" width="{it["w"]}" height="{it["h"]}" alt="{alt}" '
+                             f'loading="lazy" decoding="async">')
+                else:
+                    inner = (f'<video src="{it["src"]}" poster="{it["thumb"]}" muted loop playsinline autoplay '
+                             f'preload="none" aria-label="{alt}"></video>')
+                leads.append((f'<button class="sc-video" type="button" aria-label="View larger: {esc(it.get("title", ""))}">{inner}</button>'
+                              f'<script type="application/json" class="sc-video-data">{json_script(it)}</script>', it["w"] / it["h"]))
             lock = publish_lock(b["locked_strip"], root)
             parts.append(f'<section class="gw-wrap gw-mixed" style="--gh:{b.get("height", 470)}px" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
-                         f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), lead_html, m["w"] / m["h"])}</section>')
+                         f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), leads)}</section>')
         elif "scene" in b:
             # the words can sit above the scene (h, p), below it (h2, p2), or both
             sid = f' id="{esc(b["id"])}"' if b.get("id") and not b.get("h") else ""

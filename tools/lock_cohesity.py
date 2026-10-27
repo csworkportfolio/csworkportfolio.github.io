@@ -37,6 +37,9 @@ def render_html():
     news = build.gallery_item({k: lead[k] for k in ("v", "title", "desc", "cap") if k in lead}, build.Media([]), site)
     news["thumb"] = "../" + news["thumb"]   # the page sits one folder down; the posts' own images are inlined
     items = [news]
+    media = build.Media([build.ROOT.parent / d for d in ("wix-export", "source-extra", "screens")])
+    for raw in block.get("open", []):   # the pieces shown in the open after the newsletter
+        items.append(build.fix_paths(build.gallery_item(raw, media, site), "../"))
     src = json.loads(PRIVATE.read_text())
     for raw in src["items"]:
         if raw["title"] in POSTS:
@@ -45,10 +48,10 @@ def render_html():
             full, _, _ = data_url(path, 2000, 82)
             items.append({"type": "image", "thumb": thumb, "full": full, "w": w, "h": h,
                           "title": raw["title"], "desc": raw["desc"], "cap": POSTS[raw["title"]]})
-    if len(items) != 1 + len(POSTS):
+    if len(items) != 1 + len(block.get("open", [])) + len(POSTS):
         sys.exit("Couldn't find every Cohesity post in private/ghostwriting.json; check the titles in POSTS.")
     opts = {"height": block.get("height", 470), "gap": block.get("gap", 50), "label": "", "ground": True, "play": "auto"}   # the newsletter loops silently, with no play button
-    return build.strip(items, "", "Newsletter and executive posts", opts), len(items) - 1
+    return build.strip(items, "", "Newsletter and executive posts", opts), len(POSTS)
 
 
 def encrypt(html, pw):
@@ -58,10 +61,22 @@ def encrypt(html, pw):
     OUT.write_text(res.stdout.decode() + "\n")
 
 
+def ask(prompt):
+    """A Mac password window (typing into some terminal panes never reaches a hidden prompt); getpass elsewhere."""
+    if sys.platform == "darwin":
+        script = (f'text returned of (display dialog "{prompt}" default answer "" with hidden answer '
+                  'with title "Lock the Cohesity posts" buttons {"Cancel", "OK"} default button "OK")')
+        res = subprocess.run(["osascript", "-e", script], capture_output=True, text=True)
+        if res.returncode != 0:
+            sys.exit("Cancelled; nothing was changed.")
+        return res.stdout.rstrip("\n")
+    return getpass.getpass(prompt + " ")
+
+
 def main():
     html, n = render_html()
-    pw = getpass.getpass("Passcode (the same one as the Ghostwriting page): ")
-    if getpass.getpass("Again to confirm: ") != pw:
+    pw = ask("Passcode (the same one as the Ghostwriting page):")
+    if ask("Again to confirm:") != pw:
         sys.exit("The passcodes didn't match; nothing was changed.")
     encrypt(html, pw)
     print(f"Locked {n} posts into {OUT.relative_to(ROOT)} ({OUT.stat().st_size // 1024} KB). Now run: python3 tools/build.py")

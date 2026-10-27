@@ -2402,7 +2402,7 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 .gw-bubble.gw-lead { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; animation: none; border-radius: 0; overflow: visible; }
 .gw-bubble.gw-lead::before, .gw-bubble.gw-lead::after { display: none; }
 .gw-lead .sc-video { height: 100%; }
-.gw-lead .sc-video img { width: 100%; height: 100%; object-fit: cover; }
+.gw-lead .sc-video img, .gw-lead .sc-video video { width: 100%; height: 100%; object-fit: cover; }
 .gw.is-open .gw-bubble.gw-lead { animation: gw-pop .5s cubic-bezier(.2,.7,.2,1) forwards; }
 /* locked or open, it follows the short-carousel rules: the strip band's spacing, the first piece on the text
    column's left edge, then one glide to the centre (main.js), like a strip short enough to fit */

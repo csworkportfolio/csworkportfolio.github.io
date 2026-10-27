@@ -1800,7 +1800,7 @@
   // a video figure in a still walkthrough: a silent preview in place, the lightbox player on click
   document.querySelectorAll(".sc-video").forEach((btn) => {
     const item = JSON.parse(btn.parentElement.querySelector(".sc-video-data").textContent);
-    if (autoObserver && !reduceMotion) autoObserver.observe(btn);
+    if (autoObserver && !reduceMotion && btn.dataset.video) autoObserver.observe(btn);
     btn.addEventListener("click", (e) => open([item], 0, e.detail > 0));
   });
 
