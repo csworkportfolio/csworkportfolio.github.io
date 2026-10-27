@@ -356,11 +356,17 @@
       pb.className = "strip-arrow strip-pause";
       pb.setAttribute("aria-label", "Pause gallery");
       pb.innerHTML = '<svg viewBox="0 0 24 24"><path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg>';
+      // it shows Play whenever the strip is held on purpose: by this button, or by a passcode bubble ("ask")
+      s.showPaused = () => {
+        const paused = s.pause.has("user") || s.pause.has("ask");
+        pb.classList.toggle("is-paused", paused);
+        pb.setAttribute("aria-label", paused ? "Play gallery" : "Pause gallery");
+      };
       pb.addEventListener("click", () => {
-        const paused = s.pause.has("user");
-        if (paused) s.pause.delete("user"); else s.pause.add("user");
-        pb.classList.toggle("is-paused", !paused);
-        pb.setAttribute("aria-label", paused ? "Pause gallery" : "Play gallery");
+        // Play also lets go of a bubble's hold (the click closes the bubble too)
+        if (s.pause.has("user") || s.pause.has("ask")) { s.pause.delete("user"); s.pause.delete("ask"); }
+        else s.pause.add("user");
+        s.showPaused();
       });
       nextBtn.after(pb);
     }
@@ -1440,12 +1446,14 @@
       const closeAsk = () => {
         ask.classList.remove("is-in"); ask.hidden = true; resets.forEach((r) => r());
         strip()?.pause.delete("ask");
+        strip()?.showPaused?.();
       };
       const openAsk = () => {
         // centred on the carousel's pieces (left to right across the section, top to bottom on the pictures)
         const row = lock.querySelector(".strip-viewport .tile").getBoundingClientRect(), box = lock.getBoundingClientRect();
         lock.style.setProperty("--ask-y", `${(row.top + row.height / 2 - box.top).toFixed(0)}px`);
         strip()?.pause.add("ask");
+        strip()?.showPaused?.();
         ask.hidden = false;
         requestAnimationFrame(() => ask.classList.add("is-in"));
         input.focus({ preventScroll: true });
