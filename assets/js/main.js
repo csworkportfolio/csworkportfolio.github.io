@@ -1441,12 +1441,10 @@
         ask.classList.remove("is-in"); ask.hidden = true; resets.forEach((r) => r());
         strip()?.pause.delete("ask");
       };
-      const openAsk = (slide) => {
-        // centred on the piece it came from, kept inside the section
-        const pane = slide.closest(".tile").getBoundingClientRect(), box = lock.getBoundingClientRect();
-        const half = Math.min(400, innerWidth - 48) / 2 + 12;
-        lock.style.setProperty("--ask-x", `${Math.max(half, Math.min(box.width - half, pane.left + pane.width / 2 - box.left)).toFixed(0)}px`);
-        lock.style.setProperty("--ask-y", `${(pane.top + pane.height / 2 - box.top).toFixed(0)}px`);
+      const openAsk = () => {
+        // centred on the carousel's pieces (left to right across the section, top to bottom on the pictures)
+        const row = lock.querySelector(".strip-viewport .tile").getBoundingClientRect(), box = lock.getBoundingClientRect();
+        lock.style.setProperty("--ask-y", `${(row.top + row.height / 2 - box.top).toFixed(0)}px`);
         strip()?.pause.add("ask");
         ask.hidden = false;
         requestAnimationFrame(() => ask.classList.add("is-in"));
@@ -1470,14 +1468,14 @@
           x0 = null;
           slide.classList.remove("is-dragging");
           strip()?.pause.delete("slide");
-          if (dx >= max * 0.9) { set(max); slide.classList.add("is-done"); openAsk(slide); }
+          if (dx >= max * 0.9) { set(max); slide.classList.add("is-done"); openAsk(); }
           else set(0);
         };
         knob.addEventListener("pointerup", end);
         knob.addEventListener("pointercancel", end);
         knob.addEventListener("click", (e) => {
           e.stopPropagation();
-          if (e.detail === 0) { max = slide.clientWidth - knob.offsetWidth - 8; set(max); slide.classList.add("is-done"); openAsk(slide); }   // Return or Space
+          if (e.detail === 0) { max = slide.clientWidth - knob.offsetWidth - 8; set(max); slide.classList.add("is-done"); openAsk(); }   // Return or Space
           else if (!slide.classList.contains("is-done") && dx === 0) {
             // a click without a slide: the knob nudges to show which way it goes
             slide.classList.remove("is-nudge"); void slide.offsetWidth; slide.classList.add("is-nudge");

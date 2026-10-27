@@ -2245,8 +2245,8 @@ html .pills > .seg.is-scrolling { background: none; }
 @keyframes gw-nudge { 30% { transform: translateX(22px); } 60% { transform: translateX(-2px); } }
 .gw-slide.is-done .gw-slide-text { opacity: 0; }
 @container (max-width: 130px) { .gw-slide-text { display: none; } }   /* too narrow for the words: the knob and its track say it */
-/* the passcode bubble: liquid glass by the pane it came from (--ask-x), with the note, the dots and the error inside */
-.gw-ask { position: absolute; z-index: 5; left: var(--ask-x, 50%); top: var(--ask-y, 50%); width: min(400px, calc(100vw - 2 * var(--gutter)));
+/* the passcode bubble: liquid glass centred on the carousel, with the note, the dots and the error inside */
+.gw-ask { position: absolute; z-index: 5; left: 50%; top: var(--ask-y, 50%); width: min(400px, calc(100vw - 2 * var(--gutter)));
   padding: 30px 28px 26px; border-radius: 28px; text-align: center;
   background: color-mix(in srgb, var(--paper) 72%, transparent); -webkit-backdrop-filter: blur(28px) saturate(190%); backdrop-filter: blur(28px) saturate(190%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 0 0 .5px rgba(0,0,0,.14), 0 40px 80px -30px rgba(0,0,0,.5);
