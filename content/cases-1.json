@@ -1020,30 +1020,27 @@
     "lede": "Cohesity is a leader in AI-powered data security and management, trusted by 70% of the Global 500 across 140+ countries. Its brand and content needed to feel as human as the people behind it. This case study covers how I helped run Cohesity's Champions employee advocacy program and designed creative across PR, blogs, newsletters and global events.",
     "blocks": [
       {
-        "h": "Good Product News That Nobody Shared",
+        "h": "Great Product News That Nobody Shared",
         "id": "setup",
         "p": [
-          "Enterprise cybersecurity content tends to be dense and written for boardrooms more than for the people who share it. Cohesity had strong product news and real credibility, but its social voice blended in with the rest of enterprise software, and employees weren't sharing posts they didn't connect with.",
-          "I rebuilt the Champions employee advocacy program from the ground up, starting with a new voice."
+          "Enterprise cybersecurity content tends to be dense and written for boardrooms more than for the people who share it. Cohesity had strong product news and real credibility, but its social voice blended in with the rest of enterprise software, and employees weren't sharing posts they didn't connect with. I rebuilt the Champions employee advocacy program from the ground up, starting with a new voice."
         ]
       },
       {
-        "h": "How a Post Got Shared",
         "id": "process",
-        "p": [
-          "Every post started as my draft and ended up in the advocates' own feeds, in their own language."
-        ],
         "scene": "post-journey",
         "kicker": "All from one piece of content.",
         "alt": "The animation follows one post into the agent, which knows the brand guidelines, company goals and product. A version for each language steps out through the Champions Portal and is checked; the Korean version is sent back, rewritten and approved. The versions fill the Champions Hub, then ring a night-time globe as advocates share them to cities around the world.",
         "p2": [
+          "Every post started as my draft and ended up in the advocates' own feeds, in their own language.",
           "I wrote the daily posts myself, in a voice closer to Duolingo and Figma on social than to corporate LinkedIn, so a launch or a webinar read like something a person would post. Each post went into the Champions Hub with its copy and image, ready for advocates to share in a click.",
           "As Champions expanded into international markets, I built an AI agent loaded with Cohesity's style guide and brand guidelines, plus a localization feature inside the Champions Hub. Employees browsed posts in their own language and region and shared them to LinkedIn.",
           "The agent adapted for region as much as for language: less US-centric, with the tone each region expects. Its versions came out about 99% ready. I reviewed them with my team and select Champion advocates, and every fix went back to the agent so it learned. It covered English, Spanish, French, Korean, Japanese, Chinese (Traditional and Simplified), German, Portuguese and more, across 10+ regions.",
           "Advocates shared the posts with their own networks. Leaderboards and the internal competitions I ran kept them coming back.",
           "The top posts went into the Cohesity Weekly newsletter, with a Top Content to Share ticker and a Share button on every story, so advocates could share without hunting for links. For one month I designed it as The Empire Strikes Backups, a Star Wars nod for a data security company.",
           "I also headed an executive advocacy program, writing and editing posts for the Chief Product Officer and the Chief Financial Officer."
-        ]
+        ],
+        "h2": "Great Product News That Everyone Shared"
       },
       {
         "locked_strip": "cohesity-exec.lock.json",

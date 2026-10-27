@@ -1123,8 +1123,11 @@ def render_case(page, site, media):
             parts.append(f'<section class="gw-wrap gw-mixed" style="--gh:{b.get("height", 470)}px" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
                          f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), lead_html, m["w"] / m["h"])}</section>')
         elif "scene" in b:
-            after = f'<div class="wrap prose pj-after">{paragraphs(b["p2"])}</div>' if b.get("p2") else ""
-            parts.append(section_open(b) + "</section>" + scene(b, root) + after)
+            # the words can sit above the scene (h, p), below it (h2, p2), or both
+            sid = f' id="{esc(b["id"])}"' if b.get("id") and not b.get("h") else ""
+            head = f'<h2>{esc(b["h2"])}</h2>' if b.get("h2") else ""
+            after = f'<section class="wrap prose pj-after"{sid}>{head}{paragraphs(b["p2"])}</section>' if b.get("p2") else ""
+            parts.append((section_open(b) + "</section>" if b.get("h") else "") + scene(b, root) + after)
         elif "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
             parts.append(strip(items, root, "Project gallery", b))

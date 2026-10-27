@@ -2348,7 +2348,8 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
    subtitles over the picture (under it on phones) and a pause button ---------- */
 /* full width, but never taller than the window, so the whole picture and its subtitles stay in view */
 .pj { width: min(100%, 160svh); margin: 8px auto 64px; }
-.pj-pin:has(+ .pj-after) .pj { margin-bottom: 32px; }
+.pj-pin { margin-top: 64px; }
+.pj-pin:has(+ .pj-after) .pj { margin-bottom: 48px; }
 .pj-pin + .pj-after { margin-top: 0; }
 /* wide screens: like the scenes on the Nike page, the picture holds still under the tab bar for a stretch
    of scrolling, then lets go and the words carry on */
@@ -2383,6 +2384,7 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
   .pj-toggle { bottom: auto; top: 12px; }
   .pj-pin:has(+ .pj-after) .pj { margin-bottom: 8px; }
+  .pj-pin { margin-top: 32px; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }
   .pj-caption, .pj-caption.is-center { position: static; transform: none; width: auto; padding: 0 var(--gutter); min-height: 4.2em; margin-top: 10px; font-size: 16px; }
