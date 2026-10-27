@@ -1436,6 +1436,22 @@
     // a click anywhere on the dots puts the cursor in the hidden field (and brings up the number pad)
     lock.querySelector(".gw-pin").addEventListener("click", () => input.focus());
 
+    // a row led by open pieces asks for the passcode in a bubble, only once a locked pane is clicked;
+    // the close button, Escape or a click elsewhere puts it away
+    const ask = lock.querySelector(".gw-ask");
+    if (ask) {
+      const closeAsk = () => { ask.classList.remove("is-in"); ask.hidden = true; };
+      lock.querySelectorAll(".gw-open").forEach((b) => b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        ask.hidden = false;
+        requestAnimationFrame(() => ask.classList.add("is-in"));
+        input.focus({ preventScroll: true });
+      }));
+      ask.querySelector(".gw-ask-close").addEventListener("click", closeAsk);
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !ask.hidden) closeAsk(); });
+      document.addEventListener("click", (e) => { if (!ask.hidden && !ask.contains(e.target)) closeAsk(); });
+    }
+
     let saved = null;
     try { saved = sessionStorage.getItem(KEY); } catch (e) {}
     if (saved) unlock(saved, true).catch(() => {});

@@ -797,10 +797,14 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     # "caps": a (title, caption) under each locked pane, as the unlocked strip shows; the glass then clips inside
     # its own layer (gw-pane) so the caption can sit below it
     caps = caps or []
+    # in a row led by open pieces, a locked pane is a button that brings up the passcode bubble (gw-ask)
+    opener = ('<button class="gw-open" type="button" aria-label="Unlock the executive posts">'
+              '<span class="gw-open-label"><span class="hint-mouse">Click to Open</span><span class="hint-touch">Tap to Open</span></span></button>'
+              if leads else "")
     def pane(i, r):
         if i < len(caps) and caps[i]:
             return (f'<li class="gw-bubble" style="--i:{i + k};--r:{r}"><span class="gw-pane" aria-hidden="true">'
-                    f'<span class="gw-shine"></span>{lock_icon}</span>{tile_caption(*caps[i])}</li>')
+                    f'<span class="gw-shine"></span>{lock_icon}</span>{opener}{tile_caption(*caps[i])}</li>')
         return f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
     bubbles = first + "".join(pane(i, r) for i, r in enumerate(shapes))
     shapes = [r for _, r in leads] + list(shapes)
@@ -809,6 +813,11 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     # a row led by open pieces can run wider than the window: the strips' arrows move it (main.js shows them only then)
     arrows = (f'\n  <button class="strip-arrow strip-prev gw-arrow" type="button" aria-label="Previous item" hidden>{CHEVRON_L}</button>'
               f'\n  <button class="strip-arrow strip-next gw-arrow" type="button" aria-label="Next item" hidden>{CHEVRON_R}</button>') if leads else ""
+    # there the note and passcode wait in a bubble that pops up only when a locked pane is clicked
+    ask_open = ('<div class="gw-ask" role="dialog" aria-label="Unlock the executive posts" hidden>'
+                '<button class="gw-ask-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>\n  '
+                if leads else "")
+    ask_close = "\n  </div>" if leads else ""
     dots = '<span class="gw-dot"></span>' * 4
     first_line = note if isinstance(note, str) else "These posts were published under executives' names, so they're locked."
     hint = (f'<p class="lock-note">{esc(first_line)}<br>'
@@ -816,7 +825,7 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     return f'''
 <div class="gw" data-lock{" data-plain" if lead else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
   <ul class="gw-bubbles"{"" if lead else ' aria-hidden="true"'} style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>{arrows}
-  {hint}
+  {ask_open}{hint}
   <form class="lock-form gw-form">
     <label class="sr-only" for="lock-pw-{n}">Passcode: the last four digits of my phone number</label>
     <p class="gw-label" aria-hidden="true">Enter passcode</p>
@@ -826,7 +835,7 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     </div>
     <button class="sr-only" type="submit">Unlock</button>
   </form>
-  <p class="lock-error" role="alert" hidden>That code didn't work. Try again.</p>
+  <p class="lock-error" role="alert" hidden>That code didn't work. Try again.</p>{ask_close}
   <noscript><p class="lock-error">These posts need JavaScript to unlock.</p></noscript>
 </div>
 <div class="lock-content" hidden></div>'''

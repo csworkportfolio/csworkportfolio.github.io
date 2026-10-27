@@ -2225,6 +2225,31 @@ html .pills > .seg.is-scrolling { background: none; }
 .gw-mixed .gw-bubbles.is-wide { overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; overscroll-behavior-x: contain; }
 .gw-mixed .gw-bubbles.is-wide::-webkit-scrollbar { display: none; }
 .gw-arrow { top: var(--arrow-y, 50%); }
+/* a locked pane is a button: "Click to Open" under its lock, and a lift on hover */
+.gw-open { position: absolute; inset: 0; z-index: 3; border: 0; padding: 0; background: none; cursor: pointer; border-radius: inherit; color: var(--ink);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 22px; }
+.gw-open-label { font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--paper) 55%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.6), 0 0 0 .5px rgba(0,0,0,.12); transition: transform .2s ease; }
+.gw-open-label .hint-touch { display: none; }
+@media (hover: none) { .gw-open-label .hint-mouse { display: none; } .gw-open-label .hint-touch { display: inline; } }
+.gw-open:hover .gw-open-label, .gw-open:focus-visible .gw-open-label { transform: scale(1.06); }
+.gw-open:focus-visible { outline: 2px solid #007aff; outline-offset: 4px; }
+/* the passcode bubble: liquid glass over the row, with the note, the dots and the error inside */
+.gw-ask { position: absolute; z-index: 5; left: 50%; top: calc(var(--arrow-y, 120px) + 25px); width: min(440px, calc(100vw - 2 * var(--gutter)));
+  padding: 30px 28px 26px; border-radius: 28px; text-align: center;
+  background: color-mix(in srgb, var(--paper) 72%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 0 0 .5px rgba(0,0,0,.14), 0 40px 80px -30px rgba(0,0,0,.5);
+  transform: translate(-50%, -50%) scale(.92); opacity: 0; transition: transform .35s cubic-bezier(.2,.8,.2,1.15), opacity .2s ease; }
+.gw-ask.is-in { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+.gw-ask[hidden] { display: none; }
+.gw-mixed .gw-ask .lock-note { padding: 0; margin-bottom: 14px; }
+.gw-mixed .gw-ask .gw-form, .gw-mixed .gw-ask .lock-error { padding: 0; }
+.gw-ask-close { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; color: var(--muted); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.gw-ask-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.gw.is-open .gw-ask { display: none; }
+@media (prefers-reduced-motion: reduce) { .gw-ask { transition: none; } }
 /* locked or open, it follows the short-carousel rules: the strip band's spacing, the first piece on the text
    column's left edge, then one glide to the centre (main.js), like a strip short enough to fit */
 .gw-mixed { margin-top: 48px; padding: 40px 0; }

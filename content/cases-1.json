@@ -1034,7 +1034,7 @@
         "p2": [
           "Every post ended up in the advocates' own feeds, in their own language. I wrote new ones daily and found more through social listening, then loaded each into the Champions Hub, ready to share in one click.",
           "To localize them, I built an AI agent with Claude Code, loaded with Cohesity's brand guidelines and product details and connected directly to the Champions Hub. It adapted the tone for each region as well as the language, across 10+ regions, and its versions came out about 99% ready. I reviewed every one with my team and select Champion advocates, and each fix went back to the agent so it learned.",
-          "Leaderboards and the internal competitions I ran kept advocates sharing. The best posts went into the Cohesity Weekly newsletter. I also wrote and edited posts for the Chief Product Officer and Chief Financial Officer."
+          "Leaderboards and the internal competitions I ran kept advocates sharing. The best posts went into the Cohesity Weekly newsletter. I also wrote and edited posts for Cohesity's C-suite and executive team."
         ],
         "h2": "Great Product News That Everyone Shared"
       },
@@ -1075,11 +1075,11 @@
         "caps": [
           [
             "Locked Executive Post",
-            "A post I wrote for Cohesity's Chief Product Officer."
+            "A post I wrote for a Cohesity executive."
           ],
           [
             "Locked Executive Post",
-            "A post I wrote for Cohesity's CFO and COO after Catalyst on Tour in Singapore."
+            "A post I wrote for a Cohesity executive."
           ]
         ]
       },
