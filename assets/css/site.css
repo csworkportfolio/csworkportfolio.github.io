@@ -2343,3 +2343,80 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
    light and dark (and the manual switch), drawn at the same weight whatever its size */
 .sc-wire svg { display: block; width: 100%; height: auto; color: var(--ink); opacity: .62; }
 .sc-wire svg * { vector-effect: non-scaling-stroke; }
+
+/* ---------- an animated scene (the Cohesity post journey): three.js, no background of its own, film-style
+   subtitles over the picture (under it on phones) and a pause button ---------- */
+/* full width, but never taller than the window, so the whole picture and its subtitles stay in view */
+.pj { width: min(100%, 160svh); margin: 8px auto 64px; }
+.pj-pin:has(+ .pj-after) .pj { margin-bottom: 32px; }
+.pj-pin + .pj-after { margin-top: 0; }
+/* wide screens: like the scenes on the Nike page, the picture holds still under the tab bar for a stretch
+   of scrolling, then lets go and the words carry on */
+@media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+  .pj-pin { height: 170svh; }
+  .pj-pin > .pj { position: sticky; top: var(--pills-h, 60px); width: min(100%, calc((100svh - var(--pills-h, 60px)) * 16 / 9)); }
+}
+.pj-stage { position: relative; aspect-ratio: 16 / 9; }
+.pj-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.pj-caption { position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%); width: min(86%, 820px); text-align: center;
+  pointer-events: none; color: var(--ink); font-size: clamp(15px, 1.9vw, 21px); line-height: 1.4; }
+.pj-caption.is-center { top: 50%; bottom: auto; transform: translate(-50%, -50%); width: min(80%, 720px); font-size: clamp(18px, 2.5vw, 28px); }
+.pj-line { display: block; }
+.pj-line.pj-in { animation: pj-in .35s ease; }
+@keyframes pj-in { from { opacity: 0; transform: translateY(6px); } }
+.pj-part { transition: opacity .25s, filter .25s; }
+.pj-kicker { display: none; margin-top: .4em; font-size: 1.5em; font-weight: 600; letter-spacing: -.01em; }
+.pj-caption.is-center .pj-kicker { display: block; }
+.pj-toggle { position: absolute; bottom: 16px; right: var(--gutter); width: 44px; height: 44px; border: 0; border-radius: 50%; display: grid; place-items: center;
+  cursor: pointer; opacity: 0; background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); transition: opacity .2s, background-color .18s; }
+.pj-stage.is-ready .pj-toggle { opacity: 1; }
+.pj-toggle:hover { background: color-mix(in srgb, #ffffff 66%, transparent); }
+.pj-toggle:focus-visible { outline: 2px solid #007aff; outline-offset: 3px; }
+.pj-toggle svg { width: 20px; height: 20px; }
+.pj-toggle .i-pause { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+.pj-toggle .i-play { display: none; fill: currentColor; }
+.pj-toggle.is-paused .i-pause { display: none; }
+.pj-toggle.is-paused .i-play { display: block; }
+@media (max-width: 720px) {
+  /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
+  .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
+  .pj-toggle { bottom: auto; top: 12px; }
+  .pj-pin:has(+ .pj-after) .pj { margin-bottom: 8px; }
+  .pj-caption, .pj-caption.is-center { min-height: 3em; }
+  .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }
+  .pj-caption, .pj-caption.is-center { position: static; transform: none; width: auto; padding: 0 var(--gutter); min-height: 4.2em; margin-top: 10px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .pj-line.pj-in { animation: none; } .pj-part { transition: none; } }
+
+/* a single picture under a section's words, as wide as the text */
+.sec-fig { margin-top: 28px; }
+.sec-fig .sc-photo { width: 100%; }
+
+/* a locked carousel led by an open piece (the Cohesity newsletter): that piece sits plainly on the band at the
+   panes' height, with no glass of its own, and plays when clicked */
+.gw-bubble.gw-lead { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; animation: none; border-radius: 0; overflow: visible; }
+.gw-bubble.gw-lead::before, .gw-bubble.gw-lead::after { display: none; }
+.gw-lead .sc-video { height: 100%; }
+.gw-lead .sc-video img { width: 100%; height: 100%; object-fit: cover; }
+.gw.is-open .gw-bubble.gw-lead { animation: gw-pop .5s cubic-bezier(.2,.7,.2,1) forwards; }
+/* locked or open, it follows the short-carousel rules: the strip band's spacing, the first piece on the text
+   column's left edge, then one glide to the centre (main.js), like a strip short enough to fit */
+.gw-mixed { margin-top: 48px; padding: 40px 0; }
+.gw-mixed .gw-bubbles { position: relative; margin-bottom: 20px; justify-content: flex-start; width: auto;
+  padding-left: calc(max(var(--gutter), (100% - var(--wrap)) / 2) + 9px); padding-right: var(--gutter);
+  transition: transform 1.4s cubic-bezier(.45,.05,.2,1); }
+.gw-mixed .gw-bubbles.is-centred { transform: translate3d(var(--centre, 0px), 0, 0); }
+.gw-mixed .gw-form, .gw-mixed .lock-note, .gw-mixed .lock-error { padding: 0 var(--gutter); }
+.gw-mixed .lock-note { font-size: 14px; margin-bottom: 16px; }
+@media (max-width: 720px) {
+  /* phones: the row swipes sideways, so the locked panes past the newsletter can be reached */
+  .gw-mixed .gw-bubbles { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-right: var(--gutter); }
+  .gw-mixed .gw-bubbles::-webkit-scrollbar { display: none; }
+  .gw-mixed .gw-bubble { scroll-snap-align: center; }
+}
+@media (min-width: 721px) {
+  /* not edge to edge like the Ghostwriting panes: a short carousel keeps its own height, locked and open */
+  .gw-mixed .gw-bubbles { --fit: min(var(--gh), calc(min(86vw, 1100px) / var(--rmax, .6))); justify-content: flex-start; }
+  .gw-mixed .lock-content .strip, .gw-mixed .lock-content.gw-full .strip { --tile-h: var(--gh) !important; }
+}

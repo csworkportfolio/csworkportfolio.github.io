@@ -1331,6 +1331,28 @@
     if (host && content && host.contains(content)) host.after(content);   // the posts run the page's full width
     let busy = false;
 
+    // a locked carousel led by an open piece keeps the short-carousel rule: it starts on the text column's left
+    // edge and, if its panes fit, glides once to the centre when it comes into view
+    const row = lock.hasAttribute("data-plain") && lock.querySelector(".gw-bubbles");
+    if (row) {
+      const centre = () => {
+        const cs = getComputedStyle(row), panes = [...row.children];
+        const width = panes.reduce((w, p) => w + p.offsetWidth, 0) + parseFloat(cs.columnGap || 0) * (panes.length - 1);
+        const room = row.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        // measured from where the first piece sits before any shift (offsetLeft ignores the transform)
+        row.style.setProperty("--centre", width <= room ? `${((row.clientWidth - width) / 2 - panes[0].offsetLeft).toFixed(1)}px` : "0px");
+      };
+      centre();
+      addEventListener("resize", centre, { passive: true });
+      if (reduceMotion || !("IntersectionObserver" in window)) row.classList.add("is-centred");
+      else {
+        const io = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) { setTimeout(() => row.classList.add("is-centred"), 600); io.disconnect(); }
+        }, { threshold: 0.5 });
+        io.observe(row);
+      }
+    }
+
     // filled dots for the digits so far, and a blinking cursor in the next empty one, so it reads as a field
     const paint = () => dots.forEach((d, i) => {
       d.classList.toggle("is-on", i < input.value.length);
@@ -1361,7 +1383,7 @@
       ["--gg", "--gn", "--rsum"].forEach((v) => content.style.setProperty(v, lock.style.getPropertyValue(v)));
         content.querySelectorAll("[data-gallery]").forEach((g) => { setupGallery(g); tiltStrip(g); });
         startTicking();
-        if (lock.closest(".gw-wrap")) readingScene(content);
+        if (lock.closest(".gw-wrap") && !lock.hasAttribute("data-plain")) readingScene(content);
       };
       if (instant || reduceMotion) { open(); return; }
       lock.classList.add("is-open");   // the bubbles pop in turn (CSS), then the posts take their place

@@ -776,7 +776,7 @@ def render_home(page, site, media):
 LOCK_IDS = itertools.count(1)
 
 
-def lock_widget(src, shapes, height=470, gap=20, note=True):
+def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None):
     """The locked ghostwriting posts: a row of empty liquid-glass panes, each the height and shape of the post it
     hides (shapes are width / height), and a four-dot passcode
     that fills as the digits go in. The right code decrypts the posts in the browser (main.js) and the
@@ -784,15 +784,21 @@ def lock_widget(src, shapes, height=470, gap=20, note=True):
     n = next(LOCK_IDS)
     lock_icon = ('<span class="gw-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/>'
                  '<path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>')
-    bubbles = "".join(f'<li class="gw-bubble" style="--i:{i};--r:{r}"><span class="gw-shine"></span>{lock_icon}</li>' for i, r in enumerate(shapes))
+    # "lead": a piece shown in the open before the locked ones (a case study's newsletter), the same height
+    first = f'<li class="gw-bubble gw-lead" style="--i:0;--r:{lead_r:.4f}">{lead}</li>' if lead else ""
+    k = 1 if lead else 0
+    bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
+                              for i, r in enumerate(shapes))
+    shapes = ([lead_r] if lead else []) + list(shapes)
     rmax = max(shapes)
     rsum = sum(shapes)
     dots = '<span class="gw-dot"></span>' * 4
-    hint = ('<p class="lock-note">These posts were published under executives\' names, so they\'re locked.<br>'
+    first_line = note if isinstance(note, str) else "These posts were published under executives' names, so they're locked."
+    hint = (f'<p class="lock-note">{esc(first_line)}<br>'
             'To open them, enter the last four digits of my phone number, listed at the top of my resume.</p>') if note else ""
     return f'''
-<div class="gw" data-lock data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
-  <ul class="gw-bubbles" aria-hidden="true" style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>
+<div class="gw" data-lock{" data-plain" if lead else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
+  <ul class="gw-bubbles"{"" if lead else ' aria-hidden="true"'} style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>
   {hint}
   <form class="lock-form gw-form">
     <label class="sr-only" for="lock-pw-{n}">Passcode: the last four digits of my phone number</label>
@@ -907,6 +913,34 @@ def section_open(b, cls="", tag="section"):
     return f'<{tag} class="wrap prose{cls}"{sid}><h2>{esc(b["h"])}</h2>\n{paragraphs(b.get("p", []))}'
 
 
+def sc_figure(fg, media, root):
+    """One captioned picture (a photo, a loop, an inline line drawing or a click-to-play video), as beside a
+    walkthrough's stages or under a section."""
+    m = None if fg.get("svg") else media.get(fg["src"])
+    cap = f'<figcaption>{esc(fg["caption"])}</figcaption>' if fg.get("caption") else ""
+    if fg.get("caption_phone"):   # a shorter label on phones, where the step's own text sits right below
+        cap = (f'<figcaption><span class="only-wide">{esc(fg["caption"])}</span>'
+               f'<span class="only-phone">{esc(fg["caption_phone"])}</span></figcaption>')
+    if fg.get("svg"):
+        # a drawing in line work (assets/svg), inline so its lines take the page's text colour in light and dark
+        img = (ROOT / "assets" / "svg" / fg["svg"]).read_text().strip()
+    elif m["kind"] != "image":
+        # a short loop (an old GIF): it plays silently in place, like the picture it stands in for
+        img = (f'<video src="{root}{m["src"]}" poster="{root}{m["poster"]}" width="{m["w"]}" height="{m["h"]}" '
+               f'muted loop playsinline autoplay preload="none" aria-label="{esc(fg.get("alt", ""))}"></video>')
+    else:
+        img = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" '
+               f'alt="{esc(fg.get("alt", ""))}" loading="lazy" decoding="async">')
+    if fg.get("v"):
+        # a video figure: it plays silently in place once on screen, and a click opens it in the lightbox
+        item = {"type": video_kind(fg["v"]), "id": fg["v"], "vw": 16, "vh": 9, "thumb": root + m.get("sm", m["src"]),
+                "w": m["w"], "h": m["h"], "title": fg.get("title", ""), "desc": fg.get("desc", "")}
+        img = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{fg["v"]}" data-vw="16" data-vh="9" '
+               f'aria-label="Play video: {esc(fg.get("title", ""))}">{img}{PLAY_ICON}</button>'
+               f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
+    return (f'<figure class="sc-photo{" sc-wire" if fg.get("svg") else ""}">{img}{cap}</figure>')
+
+
 def flow(b, media, root):
     """Request-to-live: a scroll scene. The stage pins under the switcher while the section scrolls past;
     each stage's words take the left side and a real placement, in a phone held in 3D, goes through that
@@ -930,31 +964,7 @@ def flow(b, media, root):
         # a still walkthrough: the scene never pins; a captioned photograph rides beside the stages, and with
         # "figures" (one per stage) the photograph changes as each stage comes into view
         figs = b.get("figures") or [{"src": b["photo"], "alt": b.get("alt", ""), "caption": b.get("caption", "")}]
-        parts = []
-        for fg in figs:
-            m = None if fg.get("svg") else media.get(fg["src"])
-            cap = f'<figcaption>{esc(fg["caption"])}</figcaption>' if fg.get("caption") else ""
-            if fg.get("caption_phone"):   # a shorter label on phones, where the step's own text sits right below
-                cap = (f'<figcaption><span class="only-wide">{esc(fg["caption"])}</span>'
-                       f'<span class="only-phone">{esc(fg["caption_phone"])}</span></figcaption>')
-            if fg.get("svg"):
-                # a drawing in line work (assets/svg), inline so its lines take the page's text colour in light and dark
-                img = (ROOT / "assets" / "svg" / fg["svg"]).read_text().strip()
-            elif m["kind"] != "image":
-                # a short loop (an old GIF): it plays silently in place, like the picture it stands in for
-                img = (f'<video src="{root}{m["src"]}" poster="{root}{m["poster"]}" width="{m["w"]}" height="{m["h"]}" '
-                       f'muted loop playsinline autoplay preload="none" aria-label="{esc(fg.get("alt", ""))}"></video>')
-            else:
-                img = (f'<img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" height="{m["h"]}" '
-                       f'alt="{esc(fg.get("alt", ""))}" loading="lazy" decoding="async">')
-            if fg.get("v"):
-                # a video figure: it plays silently in place once on screen, and a click opens it in the lightbox
-                item = {"type": video_kind(fg["v"]), "id": fg["v"], "vw": 16, "vh": 9, "thumb": root + m.get("sm", m["src"]),
-                        "w": m["w"], "h": m["h"], "title": fg.get("title", ""), "desc": fg.get("desc", "")}
-                img = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{fg["v"]}" data-vw="16" data-vh="9" '
-                       f'aria-label="Play video: {esc(fg.get("title", ""))}">{img}{PLAY_ICON}</button>'
-                       f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
-            parts.append(f'<figure class="sc-photo{" sc-wire" if fg.get("svg") else ""}">{img}{cap}</figure>')
+        parts = [sc_figure(fg, media, root) for fg in figs]
         figure = f'<div class="sc-figs">{"".join(parts)}</div>' if len(parts) > 1 else parts[0]
         return (f'<section class="scene sc-still" id="{esc(b.get("id", "process"))}" data-scene="flow" style="--n:{n}" aria-label="{esc(b["h"])}">'
                 '<div class="sc-stage"><div class="wrap sc-grid">'
@@ -1047,6 +1057,22 @@ def case_shine(slug, media):
     return ""
 
 
+def scene(b, root):
+    """An animated three.js scene under a section (assets/js/<scene>.js), with its subtitles over the picture
+    and a pause button. The script loads three.js only when the scene nears the screen. Screen readers get
+    the description instead of the moving subtitles."""
+    name = b["scene"]
+    return (f'<script src="{root}assets/js/{name}.js?v={asset_version(f"assets/js/{name}.js")}" defer></script>'
+            f'<div class="pj-pin"><figure class="pj">'
+            f'<div class="pj-stage" data-earth="{root}assets/scenes/earth-night.jpg">'
+            f'<canvas aria-hidden="true"></canvas>'
+            f'<div class="pj-caption" aria-hidden="true"><span class="pj-line"></span>'
+            f'<span class="pj-kicker">{esc(b["kicker"])}</span></div>'
+            f'<button class="pj-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button></div>'
+            f'<figcaption class="sr-only">{esc(b["alt"])}</figcaption></figure></div>')
+
+
 def render_case(page, site, media):
     root = "../"
     hero = page["hero"]
@@ -1082,6 +1108,23 @@ def render_case(page, site, media):
                          f'<ol class="ref-list">{items}</ol></div></div></div>')
         elif "statement" in b:
             parts.append(f'<div class="wrap prose statement-wrap"><p class="statement">{esc(b["statement"])}</p></div>')
+        elif b.get("locked_strip"):
+            # a carousel whose first piece is open (a silent loop, so no play button) and the rest locked (an executive's ghostwritten posts):
+            # the encrypted strip (tools/lock_cohesity.py) replaces the row once the passcode is entered
+            lead = b["lead"]
+            m = media.get(lead["src"])
+            item = {"type": video_kind(lead["v"]), "id": lead["v"], "vw": 16, "vh": 9, "thumb": root + m.get("sm", m["src"]),
+                    "w": m["w"], "h": m["h"], "title": lead["title"], "desc": lead.get("desc", "")}
+            lead_html = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{lead["v"]}" data-vw="16" data-vh="9" '
+                         f'aria-label="Play video: {esc(lead["title"])}"><img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" '
+                         f'height="{m["h"]}" alt="{esc(lead.get("alt", ""))}" loading="lazy" decoding="async"></button>'
+                         f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
+            lock = publish_lock(b["locked_strip"], root)
+            parts.append(f'<section class="gw-wrap gw-mixed" style="--gh:{b.get("height", 470)}px" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
+                         f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), lead_html, m["w"] / m["h"])}</section>')
+        elif "scene" in b:
+            after = f'<div class="wrap prose pj-after">{paragraphs(b["p2"])}</div>' if b.get("p2") else ""
+            parts.append(section_open(b) + "</section>" + scene(b, root) + after)
         elif "gallery" in b:
             items = [gallery_item(r, media, site) for r in b["gallery"]]
             parts.append(strip(items, root, "Project gallery", b))
@@ -1090,7 +1133,8 @@ def render_case(page, site, media):
             parts.append(strip(items, root, "Videos", {**b, "height": 378}, kind="videos"))
         else:
             intro = " intro" if b["h"] in ("THE PROBLEM", "THE SOLUTION") else ""
-            parts.append(section_open(b, intro) + "</section>")
+            fig = f'<div class="sec-fig">{sc_figure(b["figure"], media, root)}</div>' if b.get("figure") else ""
+            parts.append(section_open(b, intro) + fig + "</section>")
     if page.get("contact"):
         # the page's ending: one line to the reader and the ways to reach him (from site.json)
         parts.append(f'<section class="wrap prose statement-wrap" id="contact"><p class="statement">{esc(page["contact"]["statement"])}</p>'

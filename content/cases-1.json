@@ -1024,72 +1024,45 @@
         "id": "setup",
         "p": [
           "Enterprise cybersecurity content tends to be dense and written for boardrooms more than for the people who share it. Cohesity had strong product news and real credibility, but its social voice blended in with the rest of enterprise software, and employees weren't sharing posts they didn't connect with.",
-          "I rebuilt the Champions employee advocacy program from the ground up: a new voice, daily posts for 3,000 advocate seats across a company of 7,000, internal competitions, an executive program and an expansion into international markets."
+          "I rebuilt the Champions employee advocacy program from the ground up, starting with a new voice."
         ]
       },
       {
         "h": "How a Post Got Shared",
         "id": "process",
         "p": [
-          "Every post started as my draft and ended up in the advocates' own feeds.",
-          "Here are the five steps and which of them were mine."
+          "Every post started as my draft and ended up in the advocates' own feeds, in their own language."
         ],
-        "steps": [
-          {
-            "t": "Write",
-            "title": "Write It in a Voice People Want to Share",
-            "d": "I wrote the daily posts myself, in a voice closer to Duolingo and Figma on social than to corporate LinkedIn, so a launch or a webinar read like something a person would post."
-          },
-          {
-            "t": "Hub",
-            "title": "Load It Into the Champions Hub",
-            "d": "Each post went into the Champions hub with its copy and image, ready for advocates to share in a click."
-          },
-          {
-            "t": "Share",
-            "who": "3,000 Advocates",
-            "title": "Advocates Share It",
-            "d": "Advocates shared the posts with their own networks. Leaderboards and the internal competitions I ran kept them coming back, and engagement among the 3,000 advocates reached 70%."
-          },
-          {
-            "t": "Newsletter",
-            "title": "The Week's Best in One Scroll",
-            "d": "The top posts went into the Empire Strikes Backups newsletter I designed, with a Top Content to Share ticker and a Share button on every story, so advocates could share without hunting for links."
-          },
-          {
-            "t": "Executives",
-            "title": "Executives Too",
-            "d": "I also headed an executive advocacy program, writing and editing posts for the Chief Product Officer and the Chief Financial Officer."
-          }
-        ],
-        "figures": [
-          {
-            "src": "Cohesity Examples 2 TP.png",
-            "alt": "A Google Cloud Next booth promo, a blog hero and a newsletter graphic for Cohesity",
-            "caption": "Graphics I designed in the same voice: a booth promo for Google Cloud Next, a blog hero and a newsletter graphic.",
-            "caption_phone": "Graphics I designed in the same voice."
-          },
-          {
-            "alt": "A wireframe of the Champions hub: trending posts with share buttons and a leaderboard",
-            "caption": "A wireframe of the Champions hub, redrawn for this page: posts ready to share, with a leaderboard beside them.",
-            "caption_phone": "A wireframe of the Champions hub, redrawn for this page.",
-            "svg": "cohesity-hub-wire.svg"
-          },
-          {
-            "src": "ezgif.com-video-to-gif-converter-2.gif",
-            "alt": "The Champions hub Trending Posts feed",
-            "caption": "The hub's Trending Posts feed, with colleagues sharing alongside."
-          },
-          {
-            "src": "_-3626ef3ef9954711aecb3828c9337944.jpg",
-            "alt": "The Empire Strikes Backups newsletter",
-            "caption": "The Empire Strikes Backups newsletter, a Star Wars nod for a data security company.",
-            "caption_phone": "The Empire Strikes Backups newsletter.",
-            "v": "1228250187",
-            "title": "The Empire Strikes Backups Champions Newsletter",
-            "desc": "A Star Wars nod for a data security company was too good to pass up. The Empire Strikes Backups newsletter opens with a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links."
-          }
+        "scene": "post-journey",
+        "kicker": "All from one piece of content.",
+        "alt": "The animation follows one post into the agent, which knows the brand guidelines, company goals and product. A version for each language steps out through the Champions Portal and is checked; the Korean version is sent back, rewritten and approved. The versions fill the Champions Hub, then ring a night-time globe as advocates share them to cities around the world.",
+        "p2": [
+          "I wrote the daily posts myself, in a voice closer to Duolingo and Figma on social than to corporate LinkedIn, so a launch or a webinar read like something a person would post. Each post went into the Champions Hub with its copy and image, ready for advocates to share in a click.",
+          "As Champions expanded into international markets, I built an AI agent loaded with Cohesity's style guide and brand guidelines, plus a localization feature inside the Champions Hub. Employees browsed posts in their own language and region and shared them to LinkedIn.",
+          "The agent adapted for region as much as for language: less US-centric, with the tone each region expects. Its versions came out about 99% ready. I reviewed them with my team and select Champion advocates, and every fix went back to the agent so it learned. It covered English, Spanish, French, Korean, Japanese, Chinese (Traditional and Simplified), German, Portuguese and more, across 10+ regions.",
+          "Advocates shared the posts with their own networks. Leaderboards and the internal competitions I ran kept them coming back.",
+          "The top posts went into the Cohesity Weekly newsletter, with a Top Content to Share ticker and a Share button on every story, so advocates could share without hunting for links. For one month I designed it as The Empire Strikes Backups, a Star Wars nod for a data security company.",
+          "I also headed an executive advocacy program, writing and editing posts for the Chief Product Officer and the Chief Financial Officer."
         ]
+      },
+      {
+        "locked_strip": "cohesity-exec.lock.json",
+        "lead": {
+          "v": "1228250187",
+          "src": "_-3626ef3ef9954711aecb3828c9337944.jpg",
+          "alt": "The Empire Strikes Backups issue of Cohesity Weekly",
+          "title": "The Empire Strikes Backups Issue of Cohesity Weekly",
+          "desc": "A Star Wars nod for a data security company was too good to pass up. For one month, the Cohesity Weekly newsletter became The Empire Strikes Backups: a glowing green title over a starfield, followed by a Top Content to Share ticker and story cards with one-click Share buttons.\nI designed it to make sharing feel like a game for Champions, pulling the week's best posts into a single scroll so advocates could share in seconds without hunting for links.",
+          "cap": "A Star Wars month I designed for the newsletter."
+        },
+        "shapes": [
+          0.4518,
+          0.5061
+        ],
+        "height": 360,
+        "gap": 40,
+        "note": "The executive posts were published under their names, so they're locked.",
+        "aria": "The Cohesity Weekly newsletter and executive posts"
       },
       {
         "statement": "People share posts that sound like a person wrote them."
@@ -1097,7 +1070,7 @@
       {
         "h": "Creative for Cohesity's Biggest Moments",
         "p": [
-          "Beyond employee advocacy, I supported the creative team on Cohesity's most visible moments: partnership campaigns with Google Cloud, AWS, NVIDIA, Hewlett-Packard and Microsoft, blog hero graphics for executive thought leadership, creative for the weekly Security Spotlight and Empire Strikes Backups newsletters, and event activations. The visuals had to look as modern as consumer design and still carry credibility in enterprise cybersecurity."
+          "Beyond employee advocacy, I supported the creative team on Cohesity's most visible moments: partner campaigns, blog hero graphics for executive thought leadership, creative for the weekly Security Spotlight newsletter and event activations. The visuals had to look as modern as consumer design and still carry credibility in enterprise cybersecurity."
         ]
       },
       {
@@ -1113,6 +1086,11 @@
             "title": "Google Cloud Next, Blog Hero, and Newsletter Creative",
             "desc": "A mix from Cohesity's busiest channels: a booth promo for Google Cloud Next 26 in Las Vegas, a blog hero announcing that the future of support is here and it's agentic, and a punchy Your backups are next. graphic.\nI kept each piece simple and direct, letting the bright green and big type carry the message so it held up across events, blogs, and weekly Security Spotlight newsletter creative.",
             "cap": "Event, blog and newsletter creative I designed."
+          },
+          {
+            "src": "ezgif.com-video-to-gif-converter-2.gif",
+            "title": "The Champions Hub Trending Posts Feed",
+            "cap": "The hub's Trending Posts feed, with colleagues sharing alongside."
           }
         ],
         "gap": 50,
@@ -1130,18 +1108,14 @@
     "glance": [
       [
         "3,000",
-        "Advocate seats in the Champions program I ran"
+        "Employee Advocates in the Champions Portal"
       ],
       [
         "70%",
         "Engagement among those 3,000 advocates"
       ],
       [
-        "7,000",
-        "Employees at Cohesity, the company the program served"
-      ],
-      [
-        "5",
+        "5+",
         "Partner campaigns supported: Google Cloud, AWS, NVIDIA, Hewlett-Packard and Microsoft"
       ]
     ],
