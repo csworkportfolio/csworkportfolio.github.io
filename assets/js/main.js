@@ -1486,6 +1486,11 @@
       ask.querySelector(".gw-ask-close").addEventListener("click", closeAsk);
       document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !ask.hidden) closeAsk(); });
       document.addEventListener("click", (e) => { if (!ask.hidden && !ask.contains(e.target)) closeAsk(); });
+      // scrolled away with the bubble still up (no passcode): it closes, and the carousel carries on
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(([e]) => { if (!e.isIntersecting && !ask.hidden) closeAsk(); }, { threshold: 0 })
+          .observe(lock.querySelector(".strip-viewport"));
+      }
     }
 
     let saved = null;
