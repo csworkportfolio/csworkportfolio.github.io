@@ -790,13 +790,14 @@ SLIDE = ('<span class="gw-slide"><span class="gw-slide-text" aria-hidden="true">
          f'{CHEVRON_R}</button></span>')
 
 
-def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None, row=""):
+def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None, row="", reads=False):
     """The locked ghostwriting posts: a row of empty liquid-glass panes, each the height and shape of the post it
     hides (shapes are width / height), and a four-dot passcode
     that fills as the digits go in. The right code decrypts the posts in the browser (main.js) and the
     bubbles pop open into them. Nothing readable is in the page until then.
     "row": a whole carousel to show instead (open pieces and locked ones, locked_strip_row); its passcode then
-    waits in a bubble that pops up only when a locked piece is slid open."""
+    waits in a bubble that pops up only when a locked piece is slid open. "reads": once unlocked, the posts
+    open as the reading scene (the Ghostwriting posts) rather than staying a carousel."""
     n = next(LOCK_IDS)
     lock_icon = LOCK_ICON
     # "lead": a piece shown in the open before the locked ones, the same height
@@ -819,7 +820,7 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     hint = (f'<p class="lock-note">{esc(first_line)}<br>'
             'To open them, enter the last four digits of my phone number, listed at the top of my resume.</p>') if note else ""
     return f'''
-<div class="gw" data-lock{" data-plain" if lead or row else ""}{" data-row" if row else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
+<div class="gw" data-lock{" data-plain" if lead or (row and not reads) else ""}{" data-row" if row else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
   {ul}
   {ask_open}{hint}
   <form class="lock-form gw-form">
@@ -855,18 +856,31 @@ def locked_strip_opts(b):
             "speed": b.get("speed", 35), "restart": True}
 
 
-def locked_strip_row(b, media, site, root):
-    """The carousel shown while locked: the open pieces as ordinary tiles, then one glass tile per locked post
-    (one per "shapes" entry, all one shape, "locked_r", 4:5 unless set; its caption from "caps") with a Slide to
-    Unlock track. The tiles no longer copy the hidden posts' shapes, so they can be wide enough to slide."""
-    html = strip(locked_strip_items(b, media, site), root, b.get("aria", "Newsletter and executive posts"), locked_strip_opts(b))
-    caps = b.get("caps", [])
+def locked_row(items, count, caps, root, label, opts, r=0.8):
+    """A standard carousel for locked posts: any open pieces as ordinary tiles, then one glass tile per locked
+    post, all one shape (r, 4:5 unless set; they no longer copy the hidden posts' shapes, so they are wide
+    enough to slide), each with its caption (caps, else "Locked Executive Post") and a Slide to Unlock track."""
+    html = strip(items, root, label, opts)
+    def cap(i):
+        return caps[i] if i < len(caps) else ["Locked Executive Post", "A post I wrote for an executive."]
     locked = "".join(
         f'<li class="tile-wrap tile-wrap-locked" style="--r:{r:.4f}"><div class="tile tile-locked gw-bubble">'
-        f'<span class="gw-pane" aria-hidden="true">{LOCK_ICON}</span>{SLIDE}</div>'
-        f'{tile_caption(*caps[i]) if i < len(caps) else ""}</li>'
-        for i, r in enumerate([b.get("locked_r", 0.8)] * len(b["shapes"])))
+        f'<span class="gw-pane" aria-hidden="true">{LOCK_ICON}</span>{SLIDE}</div>{tile_caption(*cap(i))}</li>'
+        for i in range(count))
     return html.replace("</ul>", locked + "</ul>", 1)
+
+
+def locked_strip_row(b, media, site, root):
+    """The Cohesity carousel shown while locked: its open pieces (locked_strip_items), then its locked posts."""
+    return locked_row(locked_strip_items(b, media, site), len(b["shapes"]), b.get("caps", []), root,
+                      b.get("aria", "Newsletter and executive posts"), locked_strip_opts(b), b.get("locked_r", 0.8))
+
+
+def locked_posts_row(b, root):
+    """The Ghostwriting posts while locked (Social & Writing and the Ghostwriting page): locked tiles only, in
+    the standard carousel, moving on its own."""
+    opts = {"height": b.get("row_height", 380), "gap": 50, "label": "", "ground": True, "speed": 35, "restart": True}
+    return locked_row([], len(b["shapes"]), b.get("caps", []), root, "Executive ghostwriting, locked", opts)
 
 
 def publish_lock(name, root):
@@ -881,11 +895,11 @@ def publish_lock(name, root):
 
 
 def locked_shape():
-    """The posts' shapes for the standalone Ghostwriting page, from the locked block on Social & Writing."""
+    """The locked block on Social & Writing, which the standalone Ghostwriting page shows the same way."""
     for pg in json.loads((CONTENT / "categories.json").read_text()):
         for b in pg["blocks"]:
             if b.get("locked"):
-                return {"shapes": b["shapes"], "height": b.get("height", 470), "gap": b.get("gap", 20)}
+                return b
     return {"shapes": [0.5] * 5}
 
 
@@ -896,9 +910,10 @@ def render_locked(page, site, media):
     body = f'''
 <section class="wrap lock">
   <h1>{esc(page["heading"])}</h1>
-  {lock_widget(lock, **locked_shape())}
+  {lock_widget(lock, locked_shape()["shapes"], row=locked_posts_row(locked_shape(), "../"), reads=True)}
 </section>'''
-    page = {**page, "type": "category", "robots": "noindex, nofollow"}
+    # the newer category style, as on Social & Writing: its carousel controls (play/pause, arrows) sit bottom right
+    page = {**page, "type": "category", "robots": "noindex, nofollow", "body_class": "cat-v2"}
     return layout(page, site, "../", body, media)
 
 
@@ -927,7 +942,7 @@ def render_category(page, site, media):
   <p class="kicker-italic">{esc(b["kicker"])}</p>
   {paragraphs(b.get("body", []))}
 </section>
-<section class="gw-wrap">{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 20))}
+<section class="gw-wrap gw-mixed">{lock_widget(lock, b["shapes"], row=locked_posts_row(b, root), reads=True)}
 </section>''')
         else:
             tag = "h1" if first_heading else "h2"

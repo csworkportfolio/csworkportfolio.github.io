@@ -2398,7 +2398,7 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 /* a carousel with locked pieces (data-row) is a standard strip: the open pieces are ordinary tiles, and each
    locked post a glass tile of the post's shape (the panes' glass), with its caption under it like the rest */
 .gw-mixed:has([data-row]) { margin-top: 0; padding: 0; }
-.gw-mixed .gw[data-row] { position: relative; }
+.gw[data-row] { position: relative; }
 .gw[data-row] .strip { text-align: left; }   /* captions start on the piece's left edge, as in every other carousel */
 .tile.tile-locked { flex: none; cursor: default; }
 .strip .tile.tile-locked { cursor: default; }
@@ -2433,8 +2433,8 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
   transform: translate(-50%, -50%) scale(.92); opacity: 0; transition: transform .35s cubic-bezier(.2,.8,.2,1.15), opacity .18s ease; }
 .gw-ask.is-in { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 .gw-ask[hidden] { display: none; }
-.gw-mixed .gw-ask .lock-note { padding: 0 12px; margin-bottom: 14px; }
-.gw-mixed .gw-ask .gw-form, .gw-mixed .gw-ask .lock-error { padding: 0; }
+.gw-ask .lock-note { padding: 0 12px; margin-bottom: 14px; }
+.gw-ask .gw-form, .gw-ask .lock-error { padding: 0; }
 /* round icon button: 32px on the Mac, the 44pt minimum on iOS; 1.03 on hover, 0.96 pressed */
 .gw-ask-close { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; border: 0; cursor: pointer;
   display: grid; place-items: center; color: var(--muted); background: rgba(118,118,128,.12); transition: transform .18s ease; }
