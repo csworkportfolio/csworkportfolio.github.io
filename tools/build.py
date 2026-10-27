@@ -857,14 +857,15 @@ def locked_strip_opts(b):
 
 def locked_strip_row(b, media, site, root):
     """The carousel shown while locked: the open pieces as ordinary tiles, then one glass tile per locked post
-    (its shape from "shapes", its caption from "caps") with a Slide to Unlock track."""
+    (one per "shapes" entry, all one shape, "locked_r", 4:5 unless set; its caption from "caps") with a Slide to
+    Unlock track. The tiles no longer copy the hidden posts' shapes, so they can be wide enough to slide."""
     html = strip(locked_strip_items(b, media, site), root, b.get("aria", "Newsletter and executive posts"), locked_strip_opts(b))
     caps = b.get("caps", [])
     locked = "".join(
         f'<li class="tile-wrap tile-wrap-locked" style="--r:{r:.4f}"><div class="tile tile-locked gw-bubble">'
         f'<span class="gw-pane" aria-hidden="true"><span class="gw-shine"></span>{LOCK_ICON}</span>{SLIDE}</div>'
         f'{tile_caption(*caps[i]) if i < len(caps) else ""}</li>'
-        for i, r in enumerate(b["shapes"]))
+        for i, r in enumerate([b.get("locked_r", 0.8)] * len(b["shapes"])))
     return html.replace("</ul>", locked + "</ul>", 1)
 
 
