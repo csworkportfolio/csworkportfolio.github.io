@@ -2212,6 +2212,10 @@ html .pills > .seg.is-scrolling { background: none; }
 .gw[data-row] { position: relative; }
 .gw[data-row] .strip { text-align: left; }   /* captions start on the piece's left edge, as in every other carousel */
 .tile.tile-locked { flex: none; cursor: default; }
+/* moving with the strip, the glass stays still inside: no live blur (the band behind is one flat colour, so it
+   looks the same) and no glow, float or drifting sheen, which would all be redrawn every frame and judder */
+.tile.tile-locked.gw-bubble, .tile.tile-locked.gw-bubble::after { -webkit-backdrop-filter: none; backdrop-filter: none; animation: none; }
+.tile-locked .gw-slide { -webkit-backdrop-filter: none; backdrop-filter: none; }
 .strip .tile.tile-locked { cursor: default; }
 .gw-pane { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
 /* Slide to Unlock on each locked pane: a glass track along its foot, a round knob that follows the finger or

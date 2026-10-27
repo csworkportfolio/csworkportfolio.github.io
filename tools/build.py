@@ -352,6 +352,8 @@ def strip(items, root, label, opts=None, kind="gallery", hint=False, eager=0):
         return it["w"] / it["h"]
     if items:
         style += f"--rmax:{max(_ratio(it) for it in items):.4f};"
+    elif opts.get("rmax"):
+        style += f"--rmax:{opts['rmax']};"   # pieces added after (locked tiles): the shape to size them by on phones
     data_attrs = (f' data-speed="{opts.get("speed", 0)}" data-play="{opts.get("play", "click" if inline else "hover")}"'
                   + (' data-loop' if opts.get("loop") else "") + (' data-restart' if opts.get("restart") else ""))
     cls = "strip strip-videos" if inline else "strip"
@@ -879,7 +881,9 @@ def locked_strip_row(b, media, site, root):
 def locked_posts_row(b, root):
     """The Ghostwriting posts while locked (Social & Writing and the Ghostwriting page): locked tiles only, in
     the standard carousel, moving on its own."""
-    opts = {"height": b.get("row_height", 380), "gap": 50, "label": "", "ground": True, "speed": 35, "restart": True}
+    # rmax: on narrow screens they size like the carousels around them (about 0.86 of the width over 1.2),
+    # not by their own 4:5 shape, which would make them nearly full-screen
+    opts = {"height": b.get("row_height", 380), "gap": 50, "label": "", "ground": True, "speed": 35, "restart": True, "rmax": 1.2}
     return locked_row([], len(b["shapes"]), b.get("caps", []), root, "Executive ghostwriting, locked", opts)
 
 
