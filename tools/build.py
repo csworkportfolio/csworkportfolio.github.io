@@ -852,7 +852,7 @@ def locked_strip_items(b, media, site):
 def locked_strip_opts(b):
     """A locked_strip block's carousel settings, the standard strip's: captions, controls, scrolling on its own."""
     return {"height": b.get("height", 470), "gap": b.get("gap", 50), "label": "", "ground": True, "play": "auto",
-            "speed": b.get("speed", 10), "restart": True}
+            "speed": b.get("speed", 35), "restart": True}
 
 
 def locked_strip_row(b, media, site, root):

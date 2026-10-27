@@ -366,6 +366,7 @@ button { font: inherit; color: inherit; }
 .tile-cap { margin: 16px var(--cr, 0) 0 var(--cl, 0); font-size: 14px; line-height: 1.4; color: var(--muted); }  /* lines up with the picture, not the file's transparent margin */
 .tile-cap strong { display: block; color: var(--ink); font-weight: 600; }
 .strip:has(.tile-cap) .strip-track { align-items: flex-start; }
+.strip.is-short .strip-track { gap: calc(var(--gap, 10px) * 2); }   /* short strips: pieces twice as far apart (main.js) */
 .strip:has(.tile-cap) .strip-arrow { top: calc(var(--tile-h, var(--strip-h)) / 2 - 25px); }
 /* a light band behind a strip, for white screenshots on the white page; the first tile starts on the text column's edge */
 .strip-ground { margin-top: 48px; padding: 40px 0; background: var(--tabband); }

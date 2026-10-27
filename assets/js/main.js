@@ -244,6 +244,11 @@
     return 3 * x * (1 - x) * (1 - x) * 0.1 + 3 * x * x * (1 - x) + x * x * x;
   };
 
+  // every strip that moves on its own goes at least this fast (px a second), so a short one visibly moves
+  // like the rest instead of seeming to stand still
+  const MIN_SPEED = 35;
+  const stripSpeed = (el) => { const v = Number(el.dataset.speed || 0); return v > 0 ? Math.max(v, MIN_SPEED) : 0; };
+
   function initStrip(el) {
     const viewport = el.querySelector(".strip-viewport");
     const track = el.querySelector(".strip-track");
@@ -251,7 +256,7 @@
     const next = el.querySelector(".strip-next");
     const originals = [...track.children];
     const s = {
-      el, viewport, track, speed: reduceMotion ? 0 : Number(el.dataset.speed || 0), v: 0, hover: false,
+      el, viewport, track, speed: reduceMotion ? 0 : stripSpeed(el), v: 0, hover: false,
       // every strip that scrolls ends the same way, site-wide: it rests, breathes out, and comes back from the start
       loops: false, restart: true, loop: 0, pos: 0, lastSet: -1,
       pause: new Set(), resumeTimer: 0, visible: true, anim: 0,
@@ -272,16 +277,21 @@
         if (autoObserver) n.querySelectorAll(".tile[data-video]").forEach((v) => autoObserver.unobserve(v));
         n.remove();
       });
-      el.classList.remove("is-static");
+      el.classList.remove("is-static", "is-short");
       el.style.removeProperty("--centre");
       track.style.transform = "";
       prev.hidden = next.hidden = false;
       s.loop = 0;
       // a short strip whose pieces fit between the page margins sits centred and still, with no arrows
       const cs = getComputedStyle(track);
-      const pieces = track.scrollWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       const gutter = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--gutter")) || 24;
-      if (track.scrollWidth <= viewport.clientWidth + 2 || pieces <= viewport.clientWidth - 2 * gutter) {
+      const span = () => track.scrollWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const fits = () => track.scrollWidth <= viewport.clientWidth + 2 || span() <= viewport.clientWidth - 2 * gutter;
+      // a short strip (one that fits at its usual spacing) spreads its pieces twice as far apart; if that no longer
+      // fits, it scrolls on its own like the others
+      if (fits()) el.classList.add("is-short");
+      const pieces = span();
+      if (fits()) {
         // it starts on the same left edge as the other strips, then glides once to the centre and rests there
         el.classList.add("is-static");
         viewport.scrollLeft = 0; s.pos = 0;

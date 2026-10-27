@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "assets/css/style.css"
+        ],
+        "createdAt": "2026-10-27T19:56:14.445Z",
+        "reason": "Claude: the Slide to Unlock shimmer Christian asked for (iOS lock-screen gesture); the moving highlight is the classic cue, not decoration"
+      }
+    ]
+  }
+}
