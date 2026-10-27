@@ -2239,7 +2239,8 @@ html .pills > .seg.is-scrolling { background: none; }
 .gw-slide.is-nudge .gw-knob { animation: gw-nudge .6s cubic-bezier(.2,.8,.2,1); }
 @keyframes gw-nudge { 30% { transform: translateX(22px); } 60% { transform: translateX(-2px); } }
 .gw-slide.is-done .gw-slide-text { opacity: 0; }
-@container (max-width: 130px) { .gw-slide-text { display: none; } }   /* too narrow for the words: the knob and its track say it */
+@container (max-width: 130px) { .gw-slide-text { display: none; } }
+:root[data-os="ios"] .gw-slide-text { display: none; }   /* on a phone the knob in its track says slide by itself */   /* too narrow for the words: the knob and its track say it */
 /* the passcode bubble: liquid glass centred on the carousel, with the note, the dots and the error inside */
 .gw-ask { position: absolute; z-index: 5; left: 50%; top: var(--ask-y, 50%); width: min(400px, calc(100vw - 2 * var(--gutter)));
   padding: 30px 28px 26px; border-radius: 28px; text-align: center;
