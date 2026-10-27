@@ -38,8 +38,9 @@ def render_html():
     news["thumb"] = "../" + news["thumb"]   # the page sits one folder down; the posts' own images are inlined
     items = [news]
     media = build.Media([build.ROOT.parent / d for d in ("wix-export", "source-extra", "screens")])
-    for raw in block.get("open", []):   # the pieces shown in the open after the newsletter
-        items.append(build.fix_paths(build.gallery_item(raw, media, site), "../"))
+    for raw in block.get("open", []):   # the pieces shown in the open after the newsletter ("first": before it)
+        it = build.fix_paths(build.gallery_item(raw, media, site), "../")
+        items.insert(items.index(news), it) if raw.get("first") else items.append(it)
     src = json.loads(PRIVATE.read_text())
     for raw in src["items"]:
         if raw["title"] in POSTS:

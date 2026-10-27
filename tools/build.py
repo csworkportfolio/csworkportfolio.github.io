@@ -1122,7 +1122,8 @@ def render_case(page, site, media):
                          f'height="{m["h"]}" alt="{esc(lead.get("alt", ""))}" loading="lazy" decoding="async"></button>'
                          f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
             leads = [(lead_html, m["w"] / m["h"])]
-            # "open": more pieces in the open after the lead (a loop or a picture), each opening larger on click
+            # "open": more pieces in the open after the lead (a loop or a picture), each opening larger on click;
+            # "first": true puts one before the lead
             for raw in b.get("open", []):
                 it = fix_paths(gallery_item(raw, media, site), root)
                 alt = esc(raw.get("alt", it.get("title", "")))
@@ -1132,8 +1133,12 @@ def render_case(page, site, media):
                 else:
                     inner = (f'<video src="{it["src"]}" poster="{it["thumb"]}" muted loop playsinline autoplay '
                              f'preload="none" aria-label="{alt}"></video>')
-                leads.append((f'<button class="sc-video" type="button" aria-label="View larger: {esc(it.get("title", ""))}">{inner}</button>'
-                              f'<script type="application/json" class="sc-video-data">{json_script(it)}</script>', it["w"] / it["h"]))
+                piece = (f'<button class="sc-video" type="button" aria-label="View larger: {esc(it.get("title", ""))}">{inner}</button>'
+                         f'<script type="application/json" class="sc-video-data">{json_script(it)}</script>', it["w"] / it["h"])
+                if raw.get("first"):
+                    leads.insert(sum(1 for r in b["open"][:b["open"].index(raw)] if r.get("first")), piece)
+                else:
+                    leads.append(piece)
             lock = publish_lock(b["locked_strip"], root)
             parts.append(f'<section class="gw-wrap gw-mixed" style="--gh:{b.get("height", 470)}px" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
                          f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), leads)}</section>')

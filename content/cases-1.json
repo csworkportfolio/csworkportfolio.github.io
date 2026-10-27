@@ -1061,7 +1061,8 @@
             "src": "ezgif.com-video-to-gif-converter-2.gif",
             "title": "The Champions Hub Trending Posts Feed",
             "cap": "The hub's Trending Posts feed, with colleagues sharing alongside.",
-            "alt": "The Champions Hub's Trending Posts feed"
+            "alt": "The Champions Hub's Trending Posts feed",
+            "first": true
           },
           {
             "src": "PDF Preview cohesity-google-cloud-hidden-threats.png",
