@@ -1032,13 +1032,9 @@
         "kicker": "All from one piece of content.",
         "alt": "The animation follows one post into the agent, which knows the brand guidelines, company goals and product. A version for each language steps out through the Champions Portal and is checked; the Korean version is sent back, rewritten and approved. The versions fill the Champions Hub, then ring a night-time globe as advocates share them to cities around the world.",
         "p2": [
-          "Every post started as my draft and ended up in the advocates' own feeds, in their own language.",
-          "I wrote the daily posts myself, in a voice closer to Duolingo and Figma on social than to corporate LinkedIn, so a launch or a webinar read like something a person would post. Each post went into the Champions Hub with its copy and image, ready for advocates to share in a click.",
-          "As Champions expanded into international markets, I built an AI agent loaded with Cohesity's style guide and brand guidelines, plus a localization feature inside the Champions Hub. Employees browsed posts in their own language and region and shared them to LinkedIn.",
-          "The agent adapted for region as much as for language: less US-centric, with the tone each region expects. Its versions came out about 99% ready. I reviewed them with my team and select Champion advocates, and every fix went back to the agent so it learned. It covered English, Spanish, French, Korean, Japanese, Chinese (Traditional and Simplified), German, Portuguese and more, across 10+ regions.",
-          "Advocates shared the posts with their own networks. Leaderboards and the internal competitions I ran kept them coming back.",
-          "The top posts went into the Cohesity Weekly newsletter, with a Top Content to Share ticker and a Share button on every story, so advocates could share without hunting for links. For one month I designed it as The Empire Strikes Backups, a Star Wars nod for a data security company.",
-          "I also headed an executive advocacy program, writing and editing posts for the Chief Product Officer and the Chief Financial Officer."
+          "Every post ended up in the advocates' own feeds, in their own language. I wrote new ones daily and found more through social listening, then loaded each into the Champions Hub, ready to share in one click.",
+          "To localize them, I built an AI agent with Claude Code, loaded with Cohesity's brand guidelines and product details and connected directly to the Champions Hub. It adapted the tone for each region as well as the language, across 10+ regions, and its versions came out about 99% ready. I reviewed every one with my team and select Champion advocates, and each fix went back to the agent so it learned.",
+          "Leaderboards and the internal competitions I ran kept advocates sharing. The best posts went into the Cohesity Weekly newsletter. I also wrote and edited posts for the Chief Product Officer and Chief Financial Officer."
         ],
         "h2": "Great Product News That Everyone Shared"
       },
