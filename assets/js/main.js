@@ -1341,7 +1341,25 @@
         const room = row.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         // measured from where the first piece sits before any shift (offsetLeft ignores the transform)
         row.style.setProperty("--centre", width <= room ? `${((row.clientWidth - width) / 2 - panes[0].offsetLeft).toFixed(1)}px` : "0px");
+        const caps = [...row.querySelectorAll(".tile-cap")];   // room under the row for the tallest caption
+        if (caps.length) row.style.setProperty("--caph", `${Math.max(...caps.map((c) => c.offsetHeight + 16))}px`);
+        // too wide for the window: it scrolls, with the arrows level with the pieces' middles
+        row.classList.toggle("is-wide", width > room);
+        lock.style.setProperty("--arrow-y", `${(row.offsetTop + parseFloat(cs.paddingTop) + panes[0].offsetHeight / 2 - 25).toFixed(0)}px`);
+        arrows();
       };
+      const [prev, next] = [lock.querySelector(".gw-arrow.strip-prev"), lock.querySelector(".gw-arrow.strip-next")];
+      const arrows = () => {
+        if (!prev) return;
+        const wide = row.classList.contains("is-wide");
+        prev.hidden = !wide || row.scrollLeft < 4;
+        next.hidden = !wide || row.scrollLeft > row.scrollWidth - row.clientWidth - 4;
+      };
+      if (prev) {
+        prev.addEventListener("click", () => row.scrollBy({ left: -row.clientWidth * 0.7 }));
+        next.addEventListener("click", () => row.scrollBy({ left: row.clientWidth * 0.7 }));
+        row.addEventListener("scroll", arrows, { passive: true });
+      }
       centre();
       addEventListener("resize", centre, { passive: true });
       if (reduceMotion || !("IntersectionObserver" in window)) row.classList.add("is-centred");

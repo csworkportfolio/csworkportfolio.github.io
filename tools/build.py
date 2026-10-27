@@ -776,7 +776,12 @@ def render_home(page, site, media):
 LOCK_IDS = itertools.count(1)
 
 
-def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None):
+def tile_caption(title, cap):
+    """The title and caption under a piece, as a strip shows them (tile-cap)."""
+    return f'<p class="tile-cap"><strong>{esc(title)}</strong><span>{esc(cap)}</span></p>' if cap else ""
+
+
+def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None, caps=None):
     """The locked ghostwriting posts: a row of empty liquid-glass panes, each the height and shape of the post it
     hides (shapes are width / height), and a four-dot passcode
     that fills as the digits go in. The right code decrypts the posts in the browser (main.js) and the
@@ -789,18 +794,28 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     leads = lead if isinstance(lead, list) else ([(lead, lead_r)] if lead else [])
     first = "".join(f'<li class="gw-bubble gw-lead" style="--i:{i};--r:{r:.4f}">{h}</li>' for i, (h, r) in enumerate(leads))
     k = len(leads)
-    bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
-                              for i, r in enumerate(shapes))
+    # "caps": a (title, caption) under each locked pane, as the unlocked strip shows; the glass then clips inside
+    # its own layer (gw-pane) so the caption can sit below it
+    caps = caps or []
+    def pane(i, r):
+        if i < len(caps) and caps[i]:
+            return (f'<li class="gw-bubble" style="--i:{i + k};--r:{r}"><span class="gw-pane" aria-hidden="true">'
+                    f'<span class="gw-shine"></span>{lock_icon}</span>{tile_caption(*caps[i])}</li>')
+        return f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
+    bubbles = first + "".join(pane(i, r) for i, r in enumerate(shapes))
     shapes = [r for _, r in leads] + list(shapes)
     rmax = max(shapes)
     rsum = sum(shapes)
+    # a row led by open pieces can run wider than the window: the strips' arrows move it (main.js shows them only then)
+    arrows = (f'\n  <button class="strip-arrow strip-prev gw-arrow" type="button" aria-label="Previous item" hidden>{CHEVRON_L}</button>'
+              f'\n  <button class="strip-arrow strip-next gw-arrow" type="button" aria-label="Next item" hidden>{CHEVRON_R}</button>') if leads else ""
     dots = '<span class="gw-dot"></span>' * 4
     first_line = note if isinstance(note, str) else "These posts were published under executives' names, so they're locked."
     hint = (f'<p class="lock-note">{esc(first_line)}<br>'
             'To open them, enter the last four digits of my phone number, listed at the top of my resume.</p>') if note else ""
     return f'''
 <div class="gw" data-lock{" data-plain" if lead else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
-  <ul class="gw-bubbles"{"" if lead else ' aria-hidden="true"'} style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>
+  <ul class="gw-bubbles"{"" if lead else ' aria-hidden="true"'} style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>{arrows}
   {hint}
   <form class="lock-form gw-form">
     <label class="sr-only" for="lock-pw-{n}">Passcode: the last four digits of my phone number</label>
@@ -1120,7 +1135,8 @@ def render_case(page, site, media):
             lead_html = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{lead["v"]}" data-vw="16" data-vh="9" '
                          f'aria-label="Play video: {esc(lead["title"])}"><img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" '
                          f'height="{m["h"]}" alt="{esc(lead.get("alt", ""))}" loading="lazy" decoding="async"></button>'
-                         f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>')
+                         f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>'
+                         + tile_caption(lead["title"], lead.get("cap")))
             leads = [(lead_html, m["w"] / m["h"])]
             # "open": more pieces in the open after the lead (a loop or a picture), each opening larger on click;
             # "first": true puts one before the lead
@@ -1134,14 +1150,15 @@ def render_case(page, site, media):
                     inner = (f'<video src="{it["src"]}" poster="{it["thumb"]}" muted loop playsinline autoplay '
                              f'preload="none" aria-label="{alt}"></video>')
                 piece = (f'<button class="sc-video" type="button" aria-label="View larger: {esc(it.get("title", ""))}">{inner}</button>'
-                         f'<script type="application/json" class="sc-video-data">{json_script(it)}</script>', it["w"] / it["h"])
+                         f'<script type="application/json" class="sc-video-data">{json_script(it)}</script>'
+                         + tile_caption(it.get("title", ""), it.get("cap")), it["w"] / it["h"])
                 if raw.get("first"):
                     leads.insert(sum(1 for r in b["open"][:b["open"].index(raw)] if r.get("first")), piece)
                 else:
                     leads.append(piece)
             lock = publish_lock(b["locked_strip"], root)
             parts.append(f'<section class="gw-wrap gw-mixed" style="--gh:{b.get("height", 470)}px" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
-                         f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), leads)}</section>')
+                         f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), leads, caps=b.get("caps"))}</section>')
         elif "scene" in b:
             # the words can sit above the scene (h, p), below it (h2, p2), or both
             sid = f' id="{esc(b["id"])}"' if b.get("id") and not b.get("h") else ""
