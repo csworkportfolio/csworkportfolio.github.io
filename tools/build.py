@@ -802,7 +802,7 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     # "lead": a piece shown in the open before the locked ones, the same height
     first = f'<li class="gw-bubble gw-lead" style="--i:0;--r:{lead_r:.4f}">{lead}</li>' if lead else ""
     k = 1 if lead else 0
-    bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
+    bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true">{lock_icon}</li>'
                               for i, r in enumerate(shapes))
     shapes = ([lead_r] if lead else []) + list(shapes)
     rmax = max(shapes)
@@ -863,7 +863,7 @@ def locked_strip_row(b, media, site, root):
     caps = b.get("caps", [])
     locked = "".join(
         f'<li class="tile-wrap tile-wrap-locked" style="--r:{r:.4f}"><div class="tile tile-locked gw-bubble">'
-        f'<span class="gw-pane" aria-hidden="true"><span class="gw-shine"></span>{LOCK_ICON}</span>{SLIDE}</div>'
+        f'<span class="gw-pane" aria-hidden="true">{LOCK_ICON}</span>{SLIDE}</div>'
         f'{tile_caption(*caps[i]) if i < len(caps) else ""}</li>'
         for i, r in enumerate([b.get("locked_r", 0.8)] * len(b["shapes"])))
     return html.replace("</ul>", locked + "</ul>", 1)
