@@ -2181,7 +2181,7 @@ html .pills > .seg.is-scrolling { background: none; }
 .pj-part { transition: opacity .25s, filter .25s; }
 .pj-kicker { display: none; margin-top: .4em; font-size: 1.5em; font-weight: 600; letter-spacing: -.01em; }
 .pj-caption.is-center .pj-kicker { display: block; }
-.pj-toggle { position: absolute; bottom: 16px; right: var(--gutter); width: 44px; height: 44px; border: 0; border-radius: 50%; display: grid; place-items: center;
+.pj-toggle { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border: 0; border-radius: 50%; display: grid; place-items: center;
   cursor: pointer; opacity: 0; background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);
   -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); transition: opacity .2s, background-color .18s; }
 .pj-stage.is-ready .pj-toggle { opacity: 1; }
@@ -2195,7 +2195,7 @@ html .pills > .seg.is-scrolling { background: none; }
 @media (max-width: 720px) {
   /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
-  .pj-toggle { bottom: auto; top: 12px; }
+  .pj-toggle { top: 12px; right: 12px; }
   .pj-pin { margin: 40px 0; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }
