@@ -2218,6 +2218,7 @@ html .pills > .seg.is-scrolling { background: none; }
    locked post a glass tile of the post's shape (the panes' glass), with its caption under it like the rest */
 .gw-mixed:has([data-row]) { margin-top: 0; padding: 0; }
 .gw-mixed .gw[data-row] { position: relative; }
+.gw[data-row] .strip { text-align: left; }   /* captions start on the piece's left edge, as in every other carousel */
 .tile.tile-locked { flex: none; cursor: default; }
 .strip .tile.tile-locked { cursor: default; }
 .gw-pane { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
