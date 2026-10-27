@@ -2158,14 +2158,17 @@ html .pills > .seg.is-scrolling { background: none; }
    subtitles over the picture (under it on phones) and a pause button ---------- */
 /* full width, but never taller than the window, so the whole picture and its subtitles stay in view */
 .pj { width: min(100%, 160svh); margin: 8px auto 64px; }
-.pj-pin { margin-top: 64px; }
-.pj-pin:has(+ .pj-after) .pj { margin-bottom: 48px; }
+/* the same space above and below, so the picture sits centred between the words around it */
+.pj-pin { margin: 64px 0; }
+.pj-pin > .pj { margin: 0 auto; }
 .pj-pin + .pj-after { margin-top: 0; }
 /* wide screens: like the scenes on the Nike page, the picture holds still under the tab bar for a stretch
    of scrolling, then lets go and the words carry on */
 @media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
   .pj-pin { height: 170svh; }
-  .pj-pin > .pj { position: sticky; top: var(--pills-h, 60px); width: min(100%, calc((100svh - var(--pills-h, 60px)) * 16 / 9)); }
+  /* held in the middle of the window below the tab bar (its height is the smaller of 16:9 of the width and the room left) */
+  .pj-pin > .pj { position: sticky; width: min(100%, calc((100svh - var(--pills-h, 60px)) * 16 / 9));
+    top: calc(var(--pills-h, 60px) + (100svh - var(--pills-h, 60px) - min(100vw * 9 / 16, 100svh - var(--pills-h, 60px))) / 2); }
 }
 .pj-stage { position: relative; aspect-ratio: 16 / 9; }
 .pj-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -2193,8 +2196,7 @@ html .pills > .seg.is-scrolling { background: none; }
   /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
   .pj-toggle { bottom: auto; top: 12px; }
-  .pj-pin:has(+ .pj-after) .pj { margin-bottom: 8px; }
-  .pj-pin { margin-top: 32px; }
+  .pj-pin { margin: 40px 0; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }
   .pj-caption, .pj-caption.is-center { position: static; transform: none; width: auto; padding: 0 var(--gutter); min-height: 4.2em; margin-top: 10px; font-size: 16px; }
