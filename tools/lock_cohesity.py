@@ -33,14 +33,10 @@ def render_html():
     pages = json.loads((build.CONTENT / "cases-1.json").read_text())
     block = next(b for p in pages if p["slug"] == "cohesity" for b in p["blocks"] if b.get("locked_strip"))
     site = json.loads((build.CONTENT / "site.json").read_text())
-    lead = block["lead"]
-    news = build.gallery_item({k: lead[k] for k in ("v", "title", "desc", "cap") if k in lead}, build.Media([]), site)
-    news["thumb"] = "../" + news["thumb"]   # the page sits one folder down; the posts' own images are inlined
-    items = [news]
     media = build.Media([build.ROOT.parent / d for d in ("wix-export", "source-extra", "screens")])
-    for raw in block.get("open", []):   # the pieces shown in the open after the newsletter ("first": before it)
-        it = build.fix_paths(build.gallery_item(raw, media, site), "../")
-        items.insert(items.index(news), it) if raw.get("first") else items.append(it)
+    # the same open pieces, in the same order, as the locked carousel; the page sits one folder down, and the
+    # posts' own images are inlined
+    items = [build.fix_paths(it, "../") for it in build.locked_strip_items(block, media, site)]
     src = json.loads(PRIVATE.read_text())
     for raw in src["items"]:
         if raw["title"] in POSTS:
@@ -51,7 +47,7 @@ def render_html():
                           "title": raw["title"], "desc": raw["desc"], "cap": POSTS[raw["title"]]})
     if len(items) != 1 + len(block.get("open", [])) + len(POSTS):
         sys.exit("Couldn't find every Cohesity post in private/ghostwriting.json; check the titles in POSTS.")
-    opts = {"height": block.get("height", 470), "gap": block.get("gap", 50), "label": "", "ground": True, "play": "auto"}   # the newsletter loops silently, with no play button
+    opts = build.locked_strip_opts(block)
     return build.strip(items, "", "Newsletter and executive posts", opts), len(POSTS)
 
 

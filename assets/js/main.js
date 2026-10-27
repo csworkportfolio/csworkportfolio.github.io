@@ -256,6 +256,7 @@
       loops: false, restart: true, loop: 0, pos: 0, lastSet: -1,
       pause: new Set(), resumeTimer: 0, visible: true, anim: 0,
     };
+    el.strip = s;   // other parts of the page can hold it still (a locked piece's passcode bubble)
 
     const maxScroll = () => viewport.scrollWidth - viewport.clientWidth;
 
@@ -405,7 +406,7 @@
     if (openBtn) openBtn.addEventListener("click", () => {
       const v = viewport.getBoundingClientRect();
       let best = null, most = 0;
-      track.querySelectorAll(".tile-wrap:not([data-clone]) .tile, .tile-wrap .tile").forEach((t) => {
+      track.querySelectorAll(".tile-wrap .tile:not(.tile-locked)").forEach((t) => {
         const r = t.getBoundingClientRect();
         const seen = Math.min(r.right, v.right) - Math.max(r.left, v.left);
         if (seen > most) { most = seen; best = t; }
@@ -1341,25 +1342,7 @@
         const room = row.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         // measured from where the first piece sits before any shift (offsetLeft ignores the transform)
         row.style.setProperty("--centre", width <= room ? `${((row.clientWidth - width) / 2 - panes[0].offsetLeft).toFixed(1)}px` : "0px");
-        const caps = [...row.querySelectorAll(".tile-cap")];   // room under the row for the tallest caption
-        if (caps.length) row.style.setProperty("--caph", `${Math.max(...caps.map((c) => c.offsetHeight + 16))}px`);
-        // too wide for the window: it scrolls, with the arrows level with the pieces' middles
-        row.classList.toggle("is-wide", width > room);
-        lock.style.setProperty("--arrow-y", `${(row.offsetTop + parseFloat(cs.paddingTop) + panes[0].offsetHeight / 2 - 25).toFixed(0)}px`);
-        arrows();
       };
-      const [prev, next] = [lock.querySelector(".gw-arrow.strip-prev"), lock.querySelector(".gw-arrow.strip-next")];
-      const arrows = () => {
-        if (!prev) return;
-        const wide = row.classList.contains("is-wide");
-        prev.hidden = !wide || row.scrollLeft < 4;
-        next.hidden = !wide || row.scrollLeft > row.scrollWidth - row.clientWidth - 4;
-      };
-      if (prev) {
-        prev.addEventListener("click", () => row.scrollBy({ left: -row.clientWidth * 0.7 }));
-        next.addEventListener("click", () => row.scrollBy({ left: row.clientWidth * 0.7 }));
-        row.addEventListener("scroll", arrows, { passive: true });
-      }
       centre();
       addEventListener("resize", centre, { passive: true });
       if (reduceMotion || !("IntersectionObserver" in window)) row.classList.add("is-centred");
@@ -1436,17 +1419,62 @@
     // a click anywhere on the dots puts the cursor in the hidden field (and brings up the number pad)
     lock.querySelector(".gw-pin").addEventListener("click", () => input.focus());
 
-    // a row led by open pieces asks for the passcode in a bubble, only once a locked pane is clicked;
-    // the close button, Escape or a click elsewhere puts it away
+    // a carousel with locked pieces asks for the passcode in a bubble, only once a locked piece's Slide to Unlock
+    // reaches the end (or Return on its knob); the bubble sits over that piece, the carousel holds still while
+    // the knob is held or the bubble is up, and the close button, Escape or a click elsewhere puts it away and
+    // sends the knob back
     const ask = lock.querySelector(".gw-ask");
     if (ask) {
-      const closeAsk = () => { ask.classList.remove("is-in"); ask.hidden = true; };
-      lock.querySelectorAll(".gw-open").forEach((b) => b.addEventListener("click", (e) => {
-        e.stopPropagation();
+      const strip = () => lock.querySelector("[data-gallery]")?.strip;
+      const resets = [];
+      const closeAsk = () => {
+        ask.classList.remove("is-in"); ask.hidden = true; resets.forEach((r) => r());
+        strip()?.pause.delete("ask");
+      };
+      const openAsk = (slide) => {
+        // centred on the piece it came from, kept inside the section
+        const pane = slide.closest(".tile").getBoundingClientRect(), box = lock.getBoundingClientRect();
+        const half = Math.min(400, innerWidth - 48) / 2 + 12;
+        lock.style.setProperty("--ask-x", `${Math.max(half, Math.min(box.width - half, pane.left + pane.width / 2 - box.left)).toFixed(0)}px`);
+        lock.style.setProperty("--ask-y", `${(pane.top + pane.height / 2 - box.top).toFixed(0)}px`);
+        strip()?.pause.add("ask");
         ask.hidden = false;
         requestAnimationFrame(() => ask.classList.add("is-in"));
         input.focus({ preventScroll: true });
-      }));
+      };
+      lock.querySelectorAll(".gw-slide").forEach((slide) => {
+        const knob = slide.querySelector(".gw-knob");
+        let x0 = null, dx = 0, max = 0;
+        const set = (v) => { dx = v; slide.style.setProperty("--dx", `${v}px`); slide.style.setProperty("--p", max ? v / max : 0); };
+        resets.push(() => { slide.classList.remove("is-done"); set(0); });   // the knob glides back when the bubble goes
+        knob.addEventListener("pointerdown", (e) => {
+          e.stopPropagation();
+          x0 = e.clientX - dx; max = slide.clientWidth - knob.offsetWidth - 8;
+          knob.setPointerCapture(e.pointerId);
+          slide.classList.add("is-dragging");
+          strip()?.pause.add("slide");
+        });
+        knob.addEventListener("pointermove", (e) => { if (x0 !== null) set(Math.max(0, Math.min(max, e.clientX - x0))); });
+        const end = () => {
+          if (x0 === null) return;
+          x0 = null;
+          slide.classList.remove("is-dragging");
+          strip()?.pause.delete("slide");
+          if (dx >= max * 0.9) { set(max); slide.classList.add("is-done"); openAsk(slide); }
+          else set(0);
+        };
+        knob.addEventListener("pointerup", end);
+        knob.addEventListener("pointercancel", end);
+        knob.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (e.detail === 0) { max = slide.clientWidth - knob.offsetWidth - 8; set(max); slide.classList.add("is-done"); openAsk(slide); }   // Return or Space
+          else if (!slide.classList.contains("is-done") && dx === 0) {
+            // a click without a slide: the knob nudges to show which way it goes
+            slide.classList.remove("is-nudge"); void slide.offsetWidth; slide.classList.add("is-nudge");
+          }
+        });
+        slide.addEventListener("animationend", () => slide.classList.remove("is-nudge"));
+      });
       ask.querySelector(".gw-ask-close").addEventListener("click", closeAsk);
       document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !ask.hidden) closeAsk(); });
       document.addEventListener("click", (e) => { if (!ask.hidden && !ask.contains(e.target)) closeAsk(); });
@@ -1461,6 +1489,21 @@
   // Each scene section is several screens tall and its stage is sticky; the scroll through the section is
   // the scene's progress, 0 to 1. Nothing captures the wheel. With reduced motion (or no script) the
   // sections stay laid out still.
+
+  // a page with a scene's pause button (Cohesity) lines the light/dark switch up with it: the two round buttons
+  // share one centre line down the right side, whatever the window's width
+  const themeBtn = document.querySelector(".theme-toggle"), scenePause = document.querySelector(".pj-toggle");
+  if (themeBtn && scenePause && "ResizeObserver" in window) {
+    const align = () => {
+      themeBtn.style.right = "";
+      const p = scenePause.getBoundingClientRect(), t = themeBtn.getBoundingClientRect();
+      if (!p.width) return;
+      const shift = (p.left + p.width / 2) - (t.left + t.width / 2);
+      themeBtn.style.right = `${(parseFloat(getComputedStyle(themeBtn).right) - shift).toFixed(1)}px`;
+    };
+    new ResizeObserver(align).observe(scenePause.closest(".pj-stage"));
+    addEventListener("resize", align, { passive: true });
+  }
 
   const pinTop = () => {
     const pills = document.querySelector(".page-case .pills, .page-home .pills");

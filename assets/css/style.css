@@ -2214,42 +2214,64 @@ html .pills > .seg.is-scrolling { background: none; }
 .gw-lead .sc-video { height: 100%; }
 .gw-lead .sc-video img, .gw-lead .sc-video video { width: 100%; height: 100%; object-fit: cover; }
 .gw.is-open .gw-bubble.gw-lead { animation: gw-pop .5s cubic-bezier(.2,.7,.2,1) forwards; }
-/* each piece's title and caption under it, locked or open, as the unlocked strip shows them; the row keeps room
-   for the tallest (--caph, measured in main.js), and a locked pane's glass clips inside its own layer instead */
-.gw-bubble:has(> .tile-cap) { overflow: visible; }
+/* a carousel with locked pieces (data-row) is a standard strip: the open pieces are ordinary tiles, and each
+   locked post a glass tile of the post's shape (the panes' glass), with its caption under it like the rest */
+.gw-mixed:has([data-row]) { margin-top: 0; padding: 0; }
+.gw-mixed .gw[data-row] { position: relative; }
+.tile.tile-locked { flex: none; cursor: default; }
+.strip .tile.tile-locked { cursor: default; }
 .gw-pane { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
-.gw-bubble > .tile-cap { position: absolute; top: 100%; left: 0; right: 0; margin: 16px 0 0; text-align: left; }
-.gw-mixed .gw-bubbles:has(.tile-cap) { padding-bottom: calc(var(--caph, 90px) + 40px); }
-/* wider than the window: the row scrolls sideways (trackpad, or the arrows), like a strip */
-.gw-mixed .gw { position: relative; }
-.gw-mixed .gw-bubbles.is-wide { overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; overscroll-behavior-x: contain; }
-.gw-mixed .gw-bubbles.is-wide::-webkit-scrollbar { display: none; }
-.gw-arrow { top: var(--arrow-y, 50%); }
-/* a locked pane is a button: "Click to Open" under its lock, and a lift on hover */
-.gw-open { position: absolute; inset: 0; z-index: 3; border: 0; padding: 0; background: none; cursor: pointer; border-radius: inherit; color: var(--ink);
-  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 22px; }
-.gw-open-label { font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 55%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  box-shadow: inset 0 .5px 0 rgba(255,255,255,.6), 0 0 0 .5px rgba(0,0,0,.12); transition: transform .2s ease; }
-.gw-open-label .hint-touch { display: none; }
-@media (hover: none) { .gw-open-label .hint-mouse { display: none; } .gw-open-label .hint-touch { display: inline; } }
-.gw-open:hover .gw-open-label, .gw-open:focus-visible .gw-open-label { transform: scale(1.06); }
-.gw-open:focus-visible { outline: 2px solid #007aff; outline-offset: 4px; }
-/* the passcode bubble: liquid glass over the row, with the note, the dots and the error inside */
-.gw-ask { position: absolute; z-index: 5; left: 50%; top: calc(var(--arrow-y, 120px) + 25px); width: min(440px, calc(100vw - 2 * var(--gutter)));
+/* Slide to Unlock on each locked pane: a glass track along its foot, a round knob that follows the finger or
+   pointer (--dx, and --p from 0 to 1 for the words' fade), gliding back unless it reaches the end */
+.gw-slide { position: absolute; z-index: 3; left: 8px; right: 8px; bottom: 10px; container-type: inline-size; height: 44px; border-radius: 999px;
+  display: flex; align-items: center; touch-action: none; user-select: none; -webkit-user-select: none;
+  background: color-mix(in srgb, var(--paper) 45%, transparent); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 .5px 0 rgba(255,255,255,.6), 0 0 0 .5px rgba(0,0,0,.12); }
+.gw-slide-text { position: absolute; inset: 0 6px 0 42px; display: flex; align-items: center; justify-content: center;
+  font-size: min(13px, 8.6cqi); font-weight: 500; white-space: nowrap; color: transparent; opacity: calc(1 - var(--p, 0) * 1.6);
+  background: linear-gradient(90deg, var(--muted) 35%, var(--ink) 50%, var(--muted) 65%) 0 0 / 250% 100%;
+  -webkit-background-clip: text; background-clip: text; animation: gw-shimmer 2.6s linear infinite; }
+@keyframes gw-shimmer { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+.gw-knob { position: relative; flex: none; width: 36px; height: 36px; margin-left: 4px; border-radius: 50%; border: 0; padding: 0; cursor: grab;
+  display: grid; place-items: center; color: #1d1d1f; background: #fff; touch-action: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 .5px 0 rgba(255,255,255,.8);
+  transform: translateX(var(--dx, 0px)); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.gw-knob svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.gw-slide.is-dragging .gw-knob { transition: none; cursor: grabbing; }
+.gw-knob:focus-visible { outline: 3px solid color-mix(in srgb, #007aff 45%, transparent); outline-offset: 2px; }
+.gw-slide.is-nudge .gw-knob { animation: gw-nudge .6s cubic-bezier(.2,.8,.2,1); }
+@keyframes gw-nudge { 30% { transform: translateX(22px); } 60% { transform: translateX(-2px); } }
+.gw-slide.is-done .gw-slide-text { opacity: 0; }
+@container (max-width: 130px) { .gw-slide-text { display: none; } }   /* too narrow for the words: the knob and its track say it */
+/* the passcode bubble: liquid glass by the pane it came from (--ask-x), with the note, the dots and the error inside */
+.gw-ask { position: absolute; z-index: 5; left: var(--ask-x, 50%); top: var(--ask-y, 50%); width: min(400px, calc(100vw - 2 * var(--gutter)));
   padding: 30px 28px 26px; border-radius: 28px; text-align: center;
-  background: color-mix(in srgb, var(--paper) 72%, transparent); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+  background: color-mix(in srgb, var(--paper) 72%, transparent); -webkit-backdrop-filter: blur(28px) saturate(190%); backdrop-filter: blur(28px) saturate(190%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 0 0 .5px rgba(0,0,0,.14), 0 40px 80px -30px rgba(0,0,0,.5);
-  transform: translate(-50%, -50%) scale(.92); opacity: 0; transition: transform .35s cubic-bezier(.2,.8,.2,1.15), opacity .2s ease; }
+  transform: translate(-50%, -50%) scale(.92); opacity: 0; transition: transform .35s cubic-bezier(.2,.8,.2,1.15), opacity .18s ease; }
 .gw-ask.is-in { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 .gw-ask[hidden] { display: none; }
-.gw-mixed .gw-ask .lock-note { padding: 0; margin-bottom: 14px; }
+.gw-mixed .gw-ask .lock-note { padding: 0 12px; margin-bottom: 14px; }
 .gw-mixed .gw-ask .gw-form, .gw-mixed .gw-ask .lock-error { padding: 0; }
-.gw-ask-close { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer;
-  display: grid; place-items: center; color: var(--muted); background: color-mix(in srgb, var(--ink) 8%, transparent); }
-.gw-ask-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+/* round icon button: 32px on the Mac, the 44pt minimum on iOS; 1.03 on hover, 0.96 pressed */
+.gw-ask-close { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; color: var(--muted); background: rgba(118,118,128,.12); transition: transform .18s ease; }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .gw-ask-close { background: rgba(118,118,128,.24); }
+  html.can-dark .gw-ask { background: color-mix(in srgb, #1c1c1e 72%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.3), 0 0 0 .5px rgba(255,255,255,.12), 0 40px 80px -30px rgba(0,0,0,.8); }
+  html.can-dark .gw-slide { background: color-mix(in srgb, #1c1c1e 55%, transparent); box-shadow: inset 0 .5px 0 rgba(255,255,255,.3), 0 0 0 .5px rgba(255,255,255,.12); }
+}
+:root[data-os="ios"] .gw-ask-close { width: 44px; height: 44px; top: 8px; right: 8px; }
+:root[data-os="ios"] .gw-ask { padding-top: 56px; }
+.gw-ask-close:hover { transform: scale(1.03); }
+.gw-ask-close:active { transform: scale(.96); }
+.gw-ask-close svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
 .gw.is-open .gw-ask { display: none; }
-@media (prefers-reduced-motion: reduce) { .gw-ask { transition: none; } }
+@media (prefers-reduced-transparency: reduce) {
+  .gw-ask { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .gw-slide { background: color-mix(in srgb, var(--paper) 92%, var(--ink)); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) { .gw-ask, .gw-knob { transition: none; } .gw-slide-text, .gw-slide.is-nudge .gw-knob { animation: none; } .gw-slide-text { color: var(--muted); } }
 /* locked or open, it follows the short-carousel rules: the strip band's spacing, the first piece on the text
    column's left edge, then one glide to the centre (main.js), like a strip short enough to fit */
 .gw-mixed { margin-top: 48px; padding: 40px 0; }

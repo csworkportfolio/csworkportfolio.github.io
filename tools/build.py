@@ -781,50 +781,46 @@ def tile_caption(title, cap):
     return f'<p class="tile-cap"><strong>{esc(title)}</strong><span>{esc(cap)}</span></p>' if cap else ""
 
 
-def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None, caps=None):
+LOCK_ICON = ('<span class="gw-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/>'
+             '<path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>')
+# a locked piece in a carousel carries a Slide to Unlock track; sliding its knob to the end (or Return on it)
+# brings up the passcode bubble (gw-ask)
+SLIDE = ('<span class="gw-slide"><span class="gw-slide-text" aria-hidden="true">Slide to Unlock</span>'
+         '<button class="gw-knob" type="button" aria-label="Slide to unlock the executive posts">'
+         f'{CHEVRON_R}</button></span>')
+
+
+def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None, row=""):
     """The locked ghostwriting posts: a row of empty liquid-glass panes, each the height and shape of the post it
     hides (shapes are width / height), and a four-dot passcode
     that fills as the digits go in. The right code decrypts the posts in the browser (main.js) and the
-    bubbles pop open into them. Nothing readable is in the page until then."""
+    bubbles pop open into them. Nothing readable is in the page until then.
+    "row": a whole carousel to show instead (open pieces and locked ones, locked_strip_row); its passcode then
+    waits in a bubble that pops up only when a locked piece is slid open."""
     n = next(LOCK_IDS)
-    lock_icon = ('<span class="gw-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/>'
-                 '<path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>')
-    # "lead": pieces shown in the open before the locked ones (a case study's newsletter), the same height;
-    # one piece's html with its ratio in lead_r, or a list of (html, ratio) pairs
-    leads = lead if isinstance(lead, list) else ([(lead, lead_r)] if lead else [])
-    first = "".join(f'<li class="gw-bubble gw-lead" style="--i:{i};--r:{r:.4f}">{h}</li>' for i, (h, r) in enumerate(leads))
-    k = len(leads)
-    # "caps": a (title, caption) under each locked pane, as the unlocked strip shows; the glass then clips inside
-    # its own layer (gw-pane) so the caption can sit below it
-    caps = caps or []
-    # in a row led by open pieces, a locked pane is a button that brings up the passcode bubble (gw-ask)
-    opener = ('<button class="gw-open" type="button" aria-label="Unlock the executive posts">'
-              '<span class="gw-open-label"><span class="hint-mouse">Click to Open</span><span class="hint-touch">Tap to Open</span></span></button>'
-              if leads else "")
-    def pane(i, r):
-        if i < len(caps) and caps[i]:
-            return (f'<li class="gw-bubble" style="--i:{i + k};--r:{r}"><span class="gw-pane" aria-hidden="true">'
-                    f'<span class="gw-shine"></span>{lock_icon}</span>{opener}{tile_caption(*caps[i])}</li>')
-        return f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
-    bubbles = first + "".join(pane(i, r) for i, r in enumerate(shapes))
-    shapes = [r for _, r in leads] + list(shapes)
+    lock_icon = LOCK_ICON
+    # "lead": a piece shown in the open before the locked ones, the same height
+    first = f'<li class="gw-bubble gw-lead" style="--i:0;--r:{lead_r:.4f}">{lead}</li>' if lead else ""
+    k = 1 if lead else 0
+    bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true"><span class="gw-shine"></span>{lock_icon}</li>'
+                              for i, r in enumerate(shapes))
+    shapes = ([lead_r] if lead else []) + list(shapes)
     rmax = max(shapes)
     rsum = sum(shapes)
-    # a row led by open pieces can run wider than the window: the strips' arrows move it (main.js shows them only then)
-    arrows = (f'\n  <button class="strip-arrow strip-prev gw-arrow" type="button" aria-label="Previous item" hidden>{CHEVRON_L}</button>'
-              f'\n  <button class="strip-arrow strip-next gw-arrow" type="button" aria-label="Next item" hidden>{CHEVRON_R}</button>') if leads else ""
-    # there the note and passcode wait in a bubble that pops up only when a locked pane is clicked
+    hide = "" if lead else ' aria-hidden="true"'
+    ul = row or (f'<ul class="gw-bubbles"{hide} '
+                 f'style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>')
     ask_open = ('<div class="gw-ask" role="dialog" aria-label="Unlock the executive posts" hidden>'
                 '<button class="gw-ask-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>\n  '
-                if leads else "")
-    ask_close = "\n  </div>" if leads else ""
+                if row else "")
+    ask_close = "\n  </div>" if row else ""
     dots = '<span class="gw-dot"></span>' * 4
     first_line = note if isinstance(note, str) else "These posts were published under executives' names, so they're locked."
     hint = (f'<p class="lock-note">{esc(first_line)}<br>'
             'To open them, enter the last four digits of my phone number, listed at the top of my resume.</p>') if note else ""
     return f'''
-<div class="gw" data-lock{" data-plain" if lead else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
-  <ul class="gw-bubbles"{"" if lead else ' aria-hidden="true"'} style="--gh:{height}px;--gg:{gap}px;--rmax:{rmax}">{bubbles}</ul>{arrows}
+<div class="gw" data-lock{" data-plain" if lead or row else ""}{" data-row" if row else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
+  {ul}
   {ask_open}{hint}
   <form class="lock-form gw-form">
     <label class="sr-only" for="lock-pw-{n}">Passcode: the last four digits of my phone number</label>
@@ -839,6 +835,37 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
   <noscript><p class="lock-error">These posts need JavaScript to unlock.</p></noscript>
 </div>
 <div class="lock-content" hidden></div>'''
+
+
+def locked_strip_items(b, media, site):
+    """The open pieces of a locked_strip block, in order: the lead (a newsletter loop), then each "open" piece,
+    or before the lead when it says "first". tools/lock_cohesity.py builds the unlocked carousel from the same list."""
+    lead = b["lead"]
+    news = gallery_item({k: lead[k] for k in ("v", "title", "desc", "cap") if k in lead}, media, site)
+    items = [news]
+    for raw in b.get("open", []):
+        it = gallery_item(raw, media, site)
+        items.insert(items.index(news), it) if raw.get("first") else items.append(it)
+    return items
+
+
+def locked_strip_opts(b):
+    """A locked_strip block's carousel settings, the standard strip's: captions, controls, scrolling on its own."""
+    return {"height": b.get("height", 470), "gap": b.get("gap", 50), "label": "", "ground": True, "play": "auto",
+            "speed": b.get("speed", 10), "restart": True}
+
+
+def locked_strip_row(b, media, site, root):
+    """The carousel shown while locked: the open pieces as ordinary tiles, then one glass tile per locked post
+    (its shape from "shapes", its caption from "caps") with a Slide to Unlock track."""
+    html = strip(locked_strip_items(b, media, site), root, b.get("aria", "Newsletter and executive posts"), locked_strip_opts(b))
+    caps = b.get("caps", [])
+    locked = "".join(
+        f'<li class="tile-wrap tile-wrap-locked" style="--r:{r:.4f}"><div class="tile tile-locked gw-bubble">'
+        f'<span class="gw-pane" aria-hidden="true"><span class="gw-shine"></span>{LOCK_ICON}</span>{SLIDE}</div>'
+        f'{tile_caption(*caps[i]) if i < len(caps) else ""}</li>'
+        for i, r in enumerate(b["shapes"]))
+    return html.replace("</ul>", locked + "</ul>", 1)
 
 
 def publish_lock(name, root):
@@ -1135,39 +1162,11 @@ def render_case(page, site, media):
         elif "statement" in b:
             parts.append(f'<div class="wrap prose statement-wrap"><p class="statement">{esc(b["statement"])}</p></div>')
         elif b.get("locked_strip"):
-            # a carousel whose first piece is open (a silent loop, so no play button) and the rest locked (an executive's ghostwritten posts):
-            # the encrypted strip (tools/lock_cohesity.py) replaces the row once the passcode is entered
-            lead = b["lead"]
-            m = media.get(lead["src"])
-            item = {"type": video_kind(lead["v"]), "id": lead["v"], "vw": 16, "vh": 9, "thumb": root + m.get("sm", m["src"]),
-                    "w": m["w"], "h": m["h"], "title": lead["title"], "desc": lead.get("desc", "")}
-            lead_html = (f'<button class="sc-video" type="button" data-video="{item["type"]}:{lead["v"]}" data-vw="16" data-vh="9" '
-                         f'aria-label="Play video: {esc(lead["title"])}"><img src="{root}{m.get("sm", m["src"])}" width="{m["w"]}" '
-                         f'height="{m["h"]}" alt="{esc(lead.get("alt", ""))}" loading="lazy" decoding="async"></button>'
-                         f'<script type="application/json" class="sc-video-data">{json_script(item)}</script>'
-                         + tile_caption(lead["title"], lead.get("cap")))
-            leads = [(lead_html, m["w"] / m["h"])]
-            # "open": more pieces in the open after the lead (a loop or a picture), each opening larger on click;
-            # "first": true puts one before the lead
-            for raw in b.get("open", []):
-                it = fix_paths(gallery_item(raw, media, site), root)
-                alt = esc(raw.get("alt", it.get("title", "")))
-                if it["type"] == "image":
-                    inner = (f'<img src="{it["thumb"]}" width="{it["w"]}" height="{it["h"]}" alt="{alt}" '
-                             f'loading="lazy" decoding="async">')
-                else:
-                    inner = (f'<video src="{it["src"]}" poster="{it["thumb"]}" muted loop playsinline autoplay '
-                             f'preload="none" aria-label="{alt}"></video>')
-                piece = (f'<button class="sc-video" type="button" aria-label="View larger: {esc(it.get("title", ""))}">{inner}</button>'
-                         f'<script type="application/json" class="sc-video-data">{json_script(it)}</script>'
-                         + tile_caption(it.get("title", ""), it.get("cap")), it["w"] / it["h"])
-                if raw.get("first"):
-                    leads.insert(sum(1 for r in b["open"][:b["open"].index(raw)] if r.get("first")), piece)
-                else:
-                    leads.append(piece)
+            # a standard carousel of open pieces and locked ones (an executive's ghostwritten posts): the encrypted
+            # strip (tools/lock_cohesity.py) replaces it once the passcode is entered
             lock = publish_lock(b["locked_strip"], root)
-            parts.append(f'<section class="gw-wrap gw-mixed" style="--gh:{b.get("height", 470)}px" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
-                         f'{lock_widget(lock, b["shapes"], b.get("height", 470), b.get("gap", 50), b.get("note", True), leads, caps=b.get("caps"))}</section>')
+            parts.append(f'<section class="gw-wrap gw-mixed" aria-label="{esc(b.get("aria", "Newsletter and executive posts"))}">'
+                         f'{lock_widget(lock, b["shapes"], note=b.get("note", True), row=locked_strip_row(b, media, site, root))}</section>')
         elif "scene" in b:
             # the words can sit above the scene (h, p), below it (h2, p2), or both
             sid = f' id="{esc(b["id"])}"' if b.get("id") and not b.get("h") else ""
