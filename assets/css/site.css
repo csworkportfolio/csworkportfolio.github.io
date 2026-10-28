@@ -1557,9 +1557,12 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
    the right, on the page itself (the section above steps out meanwhile, so its words aren't there twice) */
 .cat-locked.in-scene { display: none; }
 .ex-solo { display: none; }
-.ex-solo.is-live { display: grid; grid-template-columns: minmax(340px, 1fr) minmax(0, 1.3fr); column-gap: 64px; align-items: center;
-  box-sizing: border-box; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin: 0 auto; padding: 24px var(--gutter);
-  height: min(calc(100svh - var(--pills-h, 60px)), 900px); text-align: left; }
+/* the box holds under the switcher for about half a screen of scrolling (reduced motion: it simply scrolls by) */
+.ex-solo.is-live { display: block; height: calc(100svh - var(--pills-h, 60px) + 50svh); }
+.ex-solo-stage { position: sticky; top: var(--pills-h, 60px); height: calc(100svh - var(--pills-h, 60px));
+  display: grid; grid-template-columns: minmax(340px, 1fr) minmax(0, 1.3fr); column-gap: 64px; align-items: center;
+  box-sizing: border-box; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin: 0 auto; padding: 40px var(--gutter) 48px; text-align: left; }
+@media (prefers-reduced-motion: reduce) { .ex-solo.is-live { height: auto; } .ex-solo-stage { position: static; height: min(calc(100svh - var(--pills-h, 60px)), 900px); } }
 .ex-solo .ex-text { visibility: visible; }
 .ex-solo .ex-box { height: 100%; }
 /* the carousel band is for carousels: once the posts stand in this layout (locked or open), the page shows through */

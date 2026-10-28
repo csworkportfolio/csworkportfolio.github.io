@@ -1305,8 +1305,9 @@
 
   // The locked posts on desktop, laid out like the first post they open on: one glass pane of that post's shape,
   // with Slide to Unlock, on the right, and on the left the section's own words (Social & Writing; that section
-  // steps out of the page meanwhile) or the post's caption (the Ghostwriting page). Nothing scrolls through:
-  // whichever post is slid, the posts open on the first. Phones and short windows keep the carousel.
+  // steps out of the page meanwhile) or the post's caption (the Ghostwriting page). Like the open posts' scene,
+  // the box holds still under the switcher for a stretch of scrolling, then lets go; nothing scrolls through it,
+  // since the posts always open on the first. Phones and short windows keep the carousel.
   function lockedReading(lock) {
     const strip = lock.querySelector(".strip");
     const tile = lock.querySelector(".tile-wrap-locked");
@@ -1324,11 +1325,14 @@
     const pane = el("div", { class: "gw-bubble ex-lock", style: `--r:${(lock.dataset.shapes || "0.5").split(",")[0]}` });
     pane.innerHTML = tile.querySelector(".tile-locked").innerHTML;
     fig.append(pane);
-    solo.append(text, fig);
+    const stage = el("div", { class: "ex-solo-stage" });
+    stage.append(text, fig);
+    solo.append(stage);
     strip.after(solo);
     const live = () => {
       const p = document.querySelector(".pills"), pin = p ? p.offsetHeight : 0;
       const on = innerWidth > 900 && viewH() - pin >= 620;
+      document.documentElement.style.setProperty("--pills-h", `${pin}px`);
       solo.classList.toggle("is-live", on);
       lock.classList.toggle("ex-on", on);
       intro?.classList.toggle("in-scene", on);
