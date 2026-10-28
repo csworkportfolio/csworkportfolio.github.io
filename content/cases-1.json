@@ -352,7 +352,7 @@
         "id": "reference",
         "notes": true,
         "p": [
-          "It started as my own notes from the first weeks: everything that held true across executions, nothing tied to a single brief. Those notes became the authoring reference, with a teammate, and the team adopted it as the onboarding guide for incoming publishers."
+          "Only what held true across executions went in, nothing tied to a single brief."
         ],
         "items": [
           "Deep Links and Callback URLs, and What Breaks Them",
