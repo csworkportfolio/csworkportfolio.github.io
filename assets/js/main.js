@@ -1123,11 +1123,12 @@
 
   // ---------- category strips held in 3D: on a desktop each tile leans toward the pointer and lifts on its
   // shadow, the nearest most (the long-form notes also drift a little toward it). Phones stay flat. ----------
-  function tiltStrip(strip) {
+  // ("pieces": what leans, for other holders; the locked post's pane uses it too)
+  function tiltStrip(strip, pieces = ".tile") {
     if (!canHover || reduceMotion || !strip.closest(".cat-v2")) return;
     const notes = strip.classList.contains("strip-notes");
     let px = 0, py = 0, inside = false, frame = 0;
-    const tiles = () => [...strip.querySelectorAll(".tile")];
+    const tiles = () => [...strip.querySelectorAll(pieces)];
     const step = () => {
       frame = 0;
       if (!inside) return;
@@ -1339,6 +1340,7 @@
     };
     live();
     onWidthResize(live);
+    tiltStrip(stage, ".ex-lock");   // it leans toward the pointer like the posts in the carousels
     return solo;
   }
 
