@@ -487,51 +487,50 @@
   restart.addEventListener("click", () => { clock = 0; userPaused = false; render(clock); update(); });
   document.addEventListener("visibilitychange", update);
 
-  // Phones: the controls wait behind a tab on the picture's right edge. The tab slides them out and tucks them
-  // away again; a tap on the picture tucks them away too. While tucked away they're out of the tab order.
-  const controls = stage.querySelector(".pj-controls"), tab = stage.querySelector(".pj-tab"), phone = matchMedia("(max-width: 720px)");
+  // The controls wait behind a tab on the picture's right edge, like a video tucked off the side of an iPhone
+  // screen. The tab slides them out and tucks them away again; a tap on the picture tucks them away too. While
+  // tucked away they're out of the tab order.
+  const controls = stage.querySelector(".pj-controls"), tab = stage.querySelector(".pj-tab");
   function showControls(on) {
     stage.classList.toggle("show-controls", on);
     tab.setAttribute("aria-expanded", String(on));
     tab.setAttribute("aria-label", on ? "Hide controls" : "Show controls");
-    controls.inert = phone.matches && !on;
+    controls.inert = !on;
   }
   tab.addEventListener("click", () => showControls(!stage.classList.contains("show-controls")));
-  canvas.addEventListener("click", () => { if (phone.matches) showControls(false); });
-  phone.addEventListener?.("change", () => showControls(false));
+  canvas.addEventListener("click", () => showControls(false));
   showControls(false);
 
   // "How I Made This": opens from its button, near the end of the loop (from the closing line through the fade)
-  // and when the reader scrolls to the bottom of the scene. Opening or closing it by hand holds until the
-  // automatic reason changes.
-  const creditBtn = stage.querySelector(".pj-credit-btn"), creditClose = stage.querySelector(".pj-credits-close");
-  let creditEnd = false, creditBottom = false, creditAuto = false, creditUser = null;
-  function showCredit() {
-    const auto = creditEnd || creditBottom;
-    if (auto !== creditAuto) { creditAuto = auto; creditUser = null; }
-    const open = creditUser ?? auto;
-    stage.classList.toggle("show-credits", open);
-    creditBtn?.setAttribute("aria-expanded", String(open));
+  // and when the reader scrolls to the bottom of the scene. Once open it stays open, through the loop starting
+  // over, until it's closed; after the reader closes it, it no longer opens by itself.
+  const creditBtn = stage.querySelector(".pj-credit-btn"), creditClose = stage.querySelector(".pj-credits-close"),
+    credits = stage.querySelector(".pj-credits");
+  let creditOpen = false, creditDismissed = false;
+  function setCredit(on) {
+    creditOpen = on;
+    stage.classList.toggle("show-credits", on);
+    creditBtn.setAttribute("aria-expanded", String(on));
   }
+  const autoCredit = () => { if (creditBtn && !creditOpen && !creditDismissed) setCredit(true); };
+  const dismissCredit = (refocus) => { setCredit(false); creditDismissed = true; if (refocus) creditBtn.focus(); };
   if (creditBtn) {
-    creditBtn.addEventListener("click", () => { creditUser = !stage.classList.contains("show-credits"); showCredit(); });
-    creditClose.addEventListener("click", () => { creditUser = false; showCredit(); creditBtn.focus(); });
-    stage.addEventListener("keydown", (e) => { if (e.key === "Escape" && stage.classList.contains("show-credits")) { creditUser = false; showCredit(); creditBtn.focus(); } });
+    creditBtn.addEventListener("click", () => (creditOpen ? dismissCredit(false) : setCredit(true)));
+    creditClose.addEventListener("click", () => dismissCredit(true));
+    stage.addEventListener("keydown", (e) => { if (e.key === "Escape" && creditOpen) dismissCredit(true); });
+    // the subtitles rise above the note by its height
+    new ResizeObserver(() => stage.style.setProperty("--pj-credits-h", `${credits.offsetHeight}px`)).observe(credits);
     const fig = stage.closest(".pj"), pin = stage.closest(".pj-pin");
     const atBottom = () => {
       const vh = innerHeight, f = fig.getBoundingClientRect(), r = (pin || fig).getBoundingClientRect();
       // held still on wide screens: the last stretch before the picture lets go; otherwise once its bottom is well up the window
-      creditBottom = r.height > f.height + 10 ? r.bottom - f.bottom < (r.height - f.height) * 0.15 && r.bottom > 0 : f.bottom < vh * 0.45 && f.bottom > f.height * 0.4;
-      showCredit();
+      const bottom = r.height > f.height + 10 ? r.bottom - f.bottom < (r.height - f.height) * 0.15 && r.bottom > 0 : f.bottom < vh * 0.45 && f.bottom > f.height * 0.4;
+      if (bottom) autoCredit();
     };
     addEventListener("scroll", atBottom, { passive: true });
-    addEventListener("resize", atBottom, { passive: true });
     atBottom();
   }
-  function creditAtEnd(w) {
-    const end = !!creditBtn && w.b === 5 && (w.tail || w.k > 0.35);
-    if (end !== creditEnd) { creditEnd = end; showCredit(); }
-  }
+  function creditAtEnd(w) { if (w.b === 5 && (w.tail || w.k > 0.35)) autoCredit(); }
   new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; update(); }, { threshold: 0.25 }).observe(stage);
   render(clock);
   stage.classList.add("is-ready");

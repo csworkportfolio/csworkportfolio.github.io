@@ -153,6 +153,7 @@ button { font: inherit; color: inherit; }
   --tabaccent: #0068da;
   --tabshadow: inset 0 .5px 0 rgba(255, 255, 255, .6), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0, 0, 0, .10);
   --tabband: #f6f6f6;
+  --tabfill: color-mix(in srgb, #d1d1d6 78%, transparent);   /* a tab that has to show on the white page (the scene's edge tab) */
 }
 
 /* It travels with the page: it stops just under the pinned header (main.js measures the
@@ -1705,7 +1706,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
   html:not(.theme-light).can-dark {
     --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
     --tabglass: color-mix(in srgb, #2c2c2e 62%, transparent); --tabink: #f5f5f7; --glassline: rgba(255,255,255,.12);
-    --tablens: rgba(255,255,255,.1); --tabaccent: #409cff;
+    --tablens: rgba(255,255,255,.1); --tabaccent: #409cff; --tabfill: color-mix(in srgb, #3a3a3c 78%, transparent);
     --tabshadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0,0,0,.5);
     color-scheme: dark;
   }
@@ -1741,7 +1742,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 html.theme-dark.can-dark {
     --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
     --tabglass: color-mix(in srgb, #2c2c2e 62%, transparent); --tabink: #f5f5f7; --glassline: rgba(255,255,255,.12);
-    --tablens: rgba(255,255,255,.1); --tabaccent: #409cff;
+    --tablens: rgba(255,255,255,.1); --tabaccent: #409cff; --tabfill: color-mix(in srgb, #3a3a3c 78%, transparent);
     --tabshadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0,0,0,.5);
     color-scheme: dark;
   }
@@ -2364,15 +2365,28 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 .pj-part { transition: opacity .25s, filter .25s; }
 .pj-kicker { display: none; margin-top: .4em; font-size: 1.5em; font-weight: 600; letter-spacing: -.01em; }
 .pj-caption.is-center .pj-kicker { display: block; }
-/* the controls (pause, start over, How I Made This): on wider screens one glass pill down the top right corner */
-.pj-controls { position: absolute; top: 16px; right: 16px; display: flex; flex-direction: column; padding: 2px; border-radius: 24px;
-  opacity: 0; background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);
-  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); transition: opacity .2s; }
-.pj-stage.is-ready .pj-controls { opacity: 1; }
-.pj-dock, .pj-drawer { display: contents; }
-.pj-tab { display: none; }
+/* the controls (pause, start over, How I Made This): like a video tucked off the side of an iPhone screen, they
+   wait behind a small tab on the picture's right edge; a tap on the tab slides their pill out beside it, and
+   another tucks it away. Light or dark glass, like every other control on the site */
+.pj-dock { position: absolute; top: 0; left: 0; right: 0; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: flex-end;
+  overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .2s; }
+.pj-stage.is-ready .pj-dock { opacity: 1; }   /* it waits for the scene */
+.pj-drawer { display: flex; align-items: center; gap: 8px; transform: translateX(calc(100% - 26px)); transition: transform .4s cubic-bezier(.32, .72, 0, 1); }
+.pj-stage.show-controls .pj-drawer { transform: translateX(-12px); }
+.pj-tab { display: grid; place-items: center; position: relative; width: 26px; height: 96px; border: 0; padding: 0 0 0 2px; border-radius: 18px 0 0 18px;
+  cursor: pointer; pointer-events: auto; color: color-mix(in srgb, var(--tabink) 55%, transparent); background: var(--tabfill); box-shadow: var(--tabshadow);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: border-radius .4s, color .18s; }
+.pj-tab::before { content: ""; position: absolute; inset: -8px 0 -8px -18px; }   /* a 44pt wide target */
+.pj-tab:hover { color: var(--tabink); }
+.pj-tab svg { width: 14px; height: 30px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s; }
+.pj-stage.show-controls .pj-tab { border-radius: 18px; }
+.pj-stage.show-controls .pj-tab svg { transform: scaleX(-1); }
+.pj-tab:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
+.pj-controls { display: flex; flex-direction: column; padding: 2px; border-radius: 24px; pointer-events: auto;
+  background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); }
 .pj-btn { width: 44px; height: 44px; border: 0; border-radius: 50%; padding: 0; display: grid; place-items: center; cursor: pointer;
-  background: transparent; color: inherit; transition: background-color .18s; }
+  background: transparent; color: inherit; transition: background-color .18s, color .18s; }
 .pj-btn:hover { background: var(--tablens); }
 .pj-btn:focus-visible { outline: 2px solid #007aff; outline-offset: -2px; }
 .pj-btn svg { width: 20px; height: 20px; }
@@ -2383,9 +2397,11 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 .pj-restart svg { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .pj-credit-btn svg { fill: currentColor; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
 .pj-credit-btn circle { stroke: none; }
+/* while the note is open its button stays lit, like a switch that's on */
+.pj-credit-btn[aria-expanded="true"], .pj-credit-btn[aria-expanded="true"]:hover { background: var(--tabaccent); color: #fff; }
 /* "How I Made This": a glass note at the bottom centre of the picture.
    It opens from its button, at the end of the loop, and when the reader scrolls to the bottom of the scene;
-   the subtitles step aside while it is up (the closing line sits in the middle, clear of it) */
+   while it is up the subtitles rise above it (the closing line sits in the middle, clear of it) */
 .pj-credits { position: absolute; left: 50%; bottom: 4%; width: min(86%, 560px); box-sizing: border-box; padding: 14px 48px 16px 20px;
   border-radius: 18px; text-align: left; font-size: 15px; line-height: 1.45; color: var(--tabink);
   background: var(--tabglass); box-shadow: var(--tabshadow);
@@ -2402,9 +2418,8 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 .pj-credits-close:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
 .pj-credits-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
 :root[data-os="ios"] .pj-credits-close { width: 44px; height: 44px; top: 2px; right: 2px; }
-/* (the words fade, not the caption box: the scene sets that box's own fade on every frame) */
-.pj-line { transition: opacity .25s; }
-.pj-stage.show-credits .pj-caption:not(.is-center) .pj-line { opacity: 0; }
+.pj-caption { transition: bottom .3s ease; }
+.pj-stage.show-credits .pj-caption:not(.is-center) { bottom: calc(4% + var(--pj-credits-h, 120px) + 14px); }
 @media (prefers-reduced-transparency: reduce) { .pj-credits, .pj-tab, .pj-controls { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
 @media (prefers-color-scheme: dark) and (prefers-reduced-transparency: reduce) {
   html:not(.theme-light).can-dark :is(.pj-credits, .pj-tab, .pj-controls) { background: #1c1c1e; }
@@ -2415,27 +2430,9 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 @media (max-width: 720px) {
   /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
-  /* phones: like a video tucked off the side of an iPhone screen, the controls wait behind a small dark tab on
-     the picture's right edge; a tap on the tab slides the pill out beside it, and another tucks it away */
-  .pj-dock { position: absolute; top: 0; left: 0; right: 0; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: flex-end;
-    overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .2s; }
-  .pj-stage.is-ready .pj-dock { opacity: 1; }   /* like the pill on wider screens, it waits for the scene */
-  .pj-drawer { display: flex; align-items: center; gap: 6px; transform: translateX(calc(100% - 30px)); transition: transform .35s cubic-bezier(.32, .72, 0, 1); }
-  .pj-stage.show-controls .pj-drawer { transform: translateX(-8px); }
-  .pj-tab { display: grid; place-items: center; position: relative; width: 30px; height: 84px; border: 0; padding: 0; border-radius: 15px 0 0 15px;
-    cursor: pointer; pointer-events: auto; color: color-mix(in srgb, var(--tabink) 60%, transparent); background: var(--tabglass); box-shadow: var(--tabshadow);
-    -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: border-radius .35s; }
-  .pj-tab::before { content: ""; position: absolute; inset: -8px 0 -8px -14px; }   /* a 44pt wide target */
-  .pj-tab svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s; }
-  .pj-stage.show-controls .pj-tab { border-radius: 15px; }
-  .pj-stage.show-controls .pj-tab svg { transform: scaleX(-1); }
-  .pj-tab:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
-  .pj-controls { position: static; opacity: 1; pointer-events: auto; }
-  .pj-btn:hover { background: transparent; }
   /* on a phone the note opens under the subtitles, and they stay */
   .pj-credits { position: static; width: auto; margin: 10px var(--gutter) 0; transform: none; display: none; }
   .pj-stage.show-credits .pj-credits { display: block; transform: none; animation: pj-in .35s ease; }
-  .pj-stage.show-credits .pj-caption:not(.is-center) .pj-line { opacity: 1; }
   .pj-pin { margin: 40px 0; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }
