@@ -1283,9 +1283,18 @@ def demo_localize(b, root):
                 f'{tick}<span class="hb-when">{esc(c.get("when", "3 days ago"))}</span></p>'
                 f'<h4>{esc(c["title"])}</h4>{body}{acts}<span class="hb-sweep"></span></article>')
 
+    # the post's graphic, in the style of Cohesity's own: a visual on top under the wordmark, a condensed
+    # headline whose last line is pink, and a green button; its words change with the region
+    blocks = "".join(f'<rect x="{8 + 9 * (i % 6)}" y="{9 + 9 * (i // 6)}" width="6" height="6" rx="1" fill="#18e05a" opacity="{o}"/>'
+                     for i, o in enumerate((.9, .25, .5, .25, .7, .25, .25, .7, .25, .9, .25, .5, .5, .25, .9, .25, .25, .7, .25, .5, .25, .25, .7, .25)))
+    art_svg = (f'<svg class="hb-guide-art" viewBox="0 0 130 64" aria-hidden="true"><rect width="130" height="64" fill="#06100b"/>'
+               f'<path d="M58 0h72v64H40z" fill="#0b2416"/>{blocks}'
+               '<path d="M96 12l17 6v12c0 11-7.5 18-17 22-9.5-4-17-11-17-22V18z" fill="#06100b" stroke="#18e05a" stroke-width="2.6" stroke-linejoin="round"/>'
+               '<path d="M89 31l5 5 9-10" fill="none" stroke="#18e05a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
     def guide(art):
-        return (f'<span class="hb-guide"><span class="hb-guide-bar"></span><b>{esc(art[0])}</b><b>{esc(art[1])}</b>'
-                f'<b class="is-pink">{esc(art[2])}</b><span class="hb-guide-btn">{esc(art[3])}</span></span>')
+        return (f'<span class="hb-guide">{art_svg}<span class="hb-guide-logo">COHE<span class="hb-s">S</span>ITY</span>'
+                f'<b>{esc(art[0])}</b><b>{esc(art[1])}</b><b class="is-pink">{esc(art[2])}</b><span class="hb-guide-btn">{esc(art[3])}</span></span>')
 
     cards = "".join(card(c, i) for i, c in enumerate(b["feed"]))
     activity = "".join(
@@ -1307,7 +1316,7 @@ def demo_localize(b, root):
     <span class="hb-tile">{hb_icon("trend")}</span>
     <div><p class="hb-h">Trending Posts{hb_icon("chev")}{hb_icon("filter")}{hb_icon("sliders")}</p>
       <p class="hb-sub">Find all the content with the highest activity over the last 7 days.</p></div>
-    <span class="hb-auto"><span class="hb-switch"></span><span>Localize every post<small>{esc(b["auto"]["name"])} \u00b7 {esc(b["auto"]["region"])}</small></span></span>
+    <span class="hb-auto">{hb_icon("translate")}Localize every post<span class="hb-state"><span class="is-off">Off</span><span class="is-on">{esc(b["auto"]["name"])}</span></span></span>
     <span class="hb-search">{hb_icon("search")}Search</span>{tools}
   </header>
   <div class="hb-feed">{cards}</div>

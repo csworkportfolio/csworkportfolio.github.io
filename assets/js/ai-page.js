@@ -94,6 +94,15 @@
       const g = c.querySelector(".hb-guide");
       if (g) art(g, auto ? data.regions.find((r) => r.code === data.auto.code).art : data.art);
     };
+    // the line under the demo says what is happening
+    const note = fig.querySelector(".ai-note");
+    const say = async (t) => {
+      if (!note || note.textContent === t) return;
+      note.classList.add("is-fading");
+      await d.wait(250);
+      note.textContent = t;
+      note.classList.remove("is-fading");
+    };
     let fixes = 1;
     const count = () => { $(".hb-count-v").textContent = fixes; $(".hb-unit").textContent = fixes === 1 ? "fix" : "fixes"; };
     if (still) return;
@@ -105,17 +114,20 @@
         fixes = 0; count(); frame("feed");
         text.lang = "en"; text.textContent = data.post; art($(".hb-photo"), data.art);
         cursor.style.left = "560px"; cursor.style.top = "560px";
-        await d.wait(700);
+        await say("The Champions Hub's Trending Posts, recreated from a screen recording. The post is a generic example.");
+        await d.wait(1400);
         set("is-pointing", true);
         point($(".is-post .hb-share"));
         await d.wait(1100);
+        say("An employee shares a post to LinkedIn.");
         set("is-press", true); await d.wait(250); set("is-press", false);
         set("is-open", true); frame("modal");
         await d.wait(1500);
         for (const [i, r] of data.regions.entries()) {
           // Translate opens the brand agent's regions; pick the next one
           point($(".hb-tr"));
-          await d.wait(i ? 700 : 1000);
+          if (!i) say("Translate opens the brand agent, loaded with the style guide and brand guidelines.");
+          await d.wait(i ? 700 : 1600);
           set("is-menu", true);
           await d.wait(400);
           point(items[i], 0.35);
@@ -125,16 +137,19 @@
           set("is-menu", false); items[i].classList.remove("is-hover");
           $(".hb-lang-v").textContent = r.name; $(".hb-tone").textContent = r.tone; text.lang = r.code.toLowerCase();
           set("is-lang", true); set("is-review", false); set("is-busy", true);
+          say(`The agent rewrites the post for ${r.name} readers. Tone: ${r.tone.toLowerCase()}.`);
           point($(".hb-text"), 0.85, 0.3);
           const m = r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
           await d.type(text, m ? m[1] + m[2] + m[4] : r.text, 22);
           art($(".hb-photo"), r.art);   // the graphic is localized too
+          say(`The graphic is localized into ${r.name} too.`);
           set("is-busy", false);
           if (m) {
             // a Champion's fix, sent back so the agent learns it
             await d.wait(700);
             $(".hb-review-v").textContent = r.review;
             set("is-review", true);
+            say("A Champion advocate asks for a softer ask. The fix goes back to the agent, so it learns.");
             await d.wait(1500);
             text.innerHTML = "";
             const del = document.createElement("del"), ins = document.createElement("ins");
@@ -151,15 +166,18 @@
         await d.wait(1000);
         set("is-send", true); await d.wait(200); set("is-send", false);
         set("is-sent", true); set("is-open", false); frame("feed");
+        say("Shared on LinkedIn, ready for its region.");
         await d.wait(2000);
         set("is-sent", false);
         // or switch the whole feed into one's own language and region, graphics included
         frame("top");
-        point($(".hb-switch"));
+        say("Or an employee switches on Localize every post.");
+        point($(".hb-auto"), 0.8);
         await d.wait(1300);
         set("is-auto", true);
         await d.wait(500);
         frame("feed");
+        say(`The whole feed turns ${data.auto.name}, graphics included.`);
         for (const [i, c] of cards.entries()) {
           c.classList.add("is-sweep");
           await d.wait(260);
