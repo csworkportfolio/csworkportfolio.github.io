@@ -807,6 +807,7 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
     k = 1 if lead else 0
     bubbles = first + "".join(f'<li class="gw-bubble" style="--i:{i + k};--r:{r}" aria-hidden="true">{lock_icon}</li>'
                               for i, r in enumerate(shapes))
+    n_locked = len(shapes)
     shapes = ([lead_r] if lead else []) + list(shapes)
     rmax = max(shapes)
     rsum = sum(shapes)
@@ -818,11 +819,13 @@ def lock_widget(src, shapes, height=470, gap=20, note=True, lead="", lead_r=None
                 if row else "")
     ask_close = "\n  </div>" if row else ""
     dots = '<span class="gw-dot"></span>' * 4
+    # the posts' shapes, for the reading layout the locked posts take on desktop (main.js)
+    shapes_attr = f' data-shapes="{",".join(f"{r:.4f}" for r in shapes[-n_locked:])}"' if reads else ""
     first_line = note if isinstance(note, str) else "These posts were published under executives' names, so they're locked."
     hint = (f'<p class="lock-note">{esc(first_line)}<br>'
             'To open them, enter the last four digits of my phone number, listed at the top of my resume.</p>') if note else ""
     return f'''
-<div class="gw" data-lock{" data-plain" if lead or (row and not reads) else ""}{" data-row" if row else ""} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
+<div class="gw" data-lock{" data-plain" if lead or (row and not reads) else ""}{" data-row" if row else ""}{shapes_attr} data-src="{src}" style="--gg:{gap}px;--gn:{len(shapes) - 1};--rsum:{rsum:.4f}">
   {ul}
   {ask_open}{hint}
   <form class="lock-form gw-form">

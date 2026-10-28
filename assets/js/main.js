@@ -1176,6 +1176,18 @@
     const strip = content.querySelector(".strip");
     if (!data || !strip || content.querySelector(".ex-scene")) return;
     const items = JSON.parse(data.textContent);
+    buildReading(content, strip, items, (it, k) => {
+      // the tile-sized copy (about twice the height it shows at) decodes far faster than the full one, which the
+      // pop-up still uses
+      const img = el("img", { src: it.thumb || it.full, alt: it.title || "", width: it.w, height: it.h, decoding: "async" });
+      img.addEventListener("click", () => open(items, k, true));
+      return img;
+    }, { toStart: true });
+  }
+
+  // The scene itself, for the unlocked posts and for the locked ones (lockedReading): "piece" makes what sits on
+  // the right of each post; "toStart" brings a reader who is already partway down back to the first post.
+  function buildReading(content, strip, items, piece, { toStart = false } = {}) {
     const n = items.length;
     const HAND = 0.3, HOLD = 0.5;   // the home page's pacing: about 0.8 of a screen of scroll per post
     const total = n * (HAND + HOLD) - HAND;
@@ -1211,11 +1223,7 @@
       text.append(el("h3", {}, it.title || ""));
       (it.desc || "").split("\n").filter((t) => t.trim()).forEach((t) => text.append(el("p", {}, t)));
       const fig = el("figure", { class: "ex-box" });
-      // the tile-sized copy (about twice the height it shows at) decodes far faster than the full one, which the
-      // pop-up still uses
-      const img = el("img", { src: it.thumb || it.full, alt: it.title || "", width: it.w, height: it.h, decoding: "async" });
-      img.addEventListener("click", () => open(items, k, true));
-      fig.append(img);
+      fig.append(piece(it, k));
       art.append(text, fig);
       inner.append(art);
       return art;
@@ -1273,7 +1281,7 @@
     const measure = () => {
       const h = stage.clientHeight;
       cases.forEach((c) => {
-        const img = c.querySelector(".ex-box img");
+        const img = c.querySelector(".ex-box > *");
         const top = c.offsetTop + (img ? img.offsetTop : 0);
         const bottom = top + (img ? img.offsetHeight : 0);
         c._drop = Math.max(0, h - top) + 8;
@@ -1283,7 +1291,7 @@
     live(); measure();
     // the posts replace the taller locked panes, which can leave the reader partway into the scene; start them at
     // the first post
-    if (scene.classList.contains("is-live")) {
+    if (toStart && scene.classList.contains("is-live")) {
       const top = scene.getBoundingClientRect().top + window.scrollY - pillsH();
       if (window.scrollY > top) window.scrollTo({ top, behavior: "instant" });
     }
@@ -1292,6 +1300,25 @@
     onWidthResize(() => { live(); measure(); move(); });
     let queued = false;   // one update per frame, however many scroll events arrive in it
     window.addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; move(); }); } }, { passive: true });
+    return scene;
+  }
+
+  // The locked posts laid out the way they open (desktop): each one a glass pane of the post's own shape, with
+  // Slide to Unlock, on the right, and its caption on the left. Phones and short windows keep the carousel.
+  function lockedReading(lock) {
+    const strip = lock.querySelector(".strip");
+    const tiles = [...lock.querySelectorAll(".tile-wrap-locked")];
+    if (!strip || !tiles.length) return null;
+    const shapes = (lock.dataset.shapes || "").split(",").map(Number);
+    const items = tiles.map((li) => ({
+      title: li.querySelector(".tile-cap strong")?.textContent || "",
+      desc: li.querySelector(".tile-cap span")?.textContent || "",
+    }));
+    return buildReading(lock, strip, items, (it, k) => {
+      const pane = el("div", { class: "gw-bubble ex-lock", style: `--r:${shapes[k] || 0.5}` });
+      pane.innerHTML = tiles[k].querySelector(".tile-locked").innerHTML;
+      return pane;
+    });
   }
 
   // The locked file was made with the site's older strip markup; once open, the posts are brought in line with
@@ -1347,6 +1374,8 @@
     const host = lock.closest(".wrap");
     if (host && content && host.contains(content)) host.after(content);   // the posts run the page's full width
     let busy = false;
+    // the Ghostwriting posts, still locked, in the layout they open into
+    const lockedScene = lock.hasAttribute("data-row") && !lock.hasAttribute("data-plain") ? lockedReading(lock) : null;
 
     // a locked carousel led by an open piece keeps the short-carousel rule: it starts on the text column's left
     // edge and, if its panes fit, glides once to the centre when it comes into view
@@ -1448,10 +1477,21 @@
         strip()?.pause.delete("ask");
         strip()?.showPaused?.();
       };
-      const openAsk = () => {
-        // centred on the carousel's pieces (left to right across the section, top to bottom on the pictures)
-        const row = lock.querySelector(".strip-viewport .tile").getBoundingClientRect(), box = lock.getBoundingClientRect();
-        lock.style.setProperty("--ask-y", `${(row.top + row.height / 2 - box.top).toFixed(0)}px`);
+      let askScroll = 0;
+      const openAsk = (slide) => {
+        const pane = slide?.closest(".ex-lock");
+        ask.classList.toggle("is-fixed", !!pane);
+        if (pane) {
+          // in the reading layout: over the pane itself, held to the window like the scene
+          const r = pane.getBoundingClientRect();
+          ask.style.setProperty("--ask-x", `${(r.left + r.width / 2).toFixed(0)}px`);
+          ask.style.setProperty("--ask-y", `${(r.top + r.height / 2).toFixed(0)}px`);
+          askScroll = scrollY;
+        } else {
+          // centred on the carousel's pieces (left to right across the section, top to bottom on the pictures)
+          const row = lock.querySelector(".strip-viewport .tile").getBoundingClientRect(), box = lock.getBoundingClientRect();
+          lock.style.setProperty("--ask-y", `${(row.top + row.height / 2 - box.top).toFixed(0)}px`);
+        }
         strip()?.pause.add("ask");
         strip()?.showPaused?.();
         ask.hidden = false;
@@ -1476,14 +1516,14 @@
           x0 = null;
           slide.classList.remove("is-dragging");
           strip()?.pause.delete("slide");
-          if (dx >= max * 0.9) { set(max); slide.classList.add("is-done"); openAsk(); }
+          if (dx >= max * 0.9) { set(max); slide.classList.add("is-done"); openAsk(slide); }
           else set(0);
         };
         knob.addEventListener("pointerup", end);
         knob.addEventListener("pointercancel", end);
         knob.addEventListener("click", (e) => {
           e.stopPropagation();
-          if (e.detail === 0) { max = slide.clientWidth - knob.offsetWidth - 8; set(max); slide.classList.add("is-done"); openAsk(); }   // Return or Space
+          if (e.detail === 0) { max = slide.clientWidth - knob.offsetWidth - 8; set(max); slide.classList.add("is-done"); openAsk(slide); }   // Return or Space
           else if (!slide.classList.contains("is-done") && dx === 0) {
             // a click without a slide: the knob nudges to show which way it goes
             slide.classList.remove("is-nudge"); void slide.offsetWidth; slide.classList.add("is-nudge");
@@ -1496,9 +1536,11 @@
       document.addEventListener("click", (e) => { if (!ask.hidden && !ask.contains(e.target)) closeAsk(); });
       // scrolled away with the bubble still up (no passcode): it closes, and the carousel carries on
       if ("IntersectionObserver" in window) {
-        new IntersectionObserver(([e]) => { if (!e.isIntersecting && !ask.hidden) closeAsk(); }, { threshold: 0 })
+        new IntersectionObserver(([e]) => { if (!e.isIntersecting && !ask.hidden && !ask.classList.contains("is-fixed")) closeAsk(); }, { threshold: 0 })
           .observe(lock.querySelector(".strip-viewport"));
       }
+      // in the reading layout the scroll moves the posts on, so scrolling on puts the bubble away too
+      if (lockedScene) addEventListener("scroll", () => { if (!ask.hidden && ask.classList.contains("is-fixed") && Math.abs(scrollY - askScroll) > 80) closeAsk(); }, { passive: true });
     }
 
     let saved = null;

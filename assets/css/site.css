@@ -1552,7 +1552,16 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 
 /* ---------- the unlocked ghostwriting posts as a reading scene (desktop; main.js sets .is-live) ---------- */
 .ex-scene { display: none; }
-.lock-content.ex-on .strip { display: none; }
+.lock-content.ex-on .strip, .gw.ex-on .strip { display: none; }
+/* the locked posts in the same layout: a glass pane of each post's shape, as tall as a post would stand, still
+   (no live blur, float or glow while the scroll carries it, as in the carousel) */
+.gw .ex-scene { text-align: left; }
+.ex-box:has(.ex-lock) { container-type: size; }
+.ex-lock { height: min(100cqh, 720px, calc(100cqw / var(--r))); width: auto; aspect-ratio: var(--r);
+  -webkit-backdrop-filter: none; backdrop-filter: none; animation: none; cursor: default; }
+.ex-lock::before, .ex-lock::after { animation: none; }
+.ex-lock .gw-slide { -webkit-backdrop-filter: none; backdrop-filter: none; left: 14px; right: 14px; bottom: 16px; }
+.gw.ex-on .gw-ask.is-fixed { position: fixed; left: var(--ask-x); top: var(--ask-y); z-index: 60; }
 .ex-scene.is-live { display: block; height: calc(var(--units, 8) * 100vh + 100vh); height: calc(var(--units, 8) * 100svh + 100svh); margin: 0 calc(-1 * var(--gutter)); }
 .ex-stage { position: sticky; top: var(--pills-h, 60px); height: calc(100vh - var(--pills-h, 60px)); height: calc(100svh - var(--pills-h, 60px)); overflow: hidden; }
 .ex-inner { position: relative; height: 100%; max-width: 1180px; margin: 0 auto; }
@@ -1564,6 +1573,10 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
   max-width: 480px; visibility: hidden; will-change: opacity, transform;   /* opacity and position set by main.js */
 }
 .ex-case.is-shown .ex-text { visibility: visible; }
+/* each post's layer covers the whole stage; only its words and its picture take the pointer, so the post in view
+   can be clicked (or slid) through the layers of the ones waiting above it */
+.ex-case { pointer-events: none; }
+.ex-case > * { pointer-events: auto; }
 .ex-text h3 { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; }
 .ex-text p { font-size: 16px; line-height: 1.6; color: #3a3a3c; }
 .ex-text p + p { margin-top: 10px; }
