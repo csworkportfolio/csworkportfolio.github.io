@@ -1004,11 +1004,14 @@ a.tl-label:hover strong { color: #ff9a66; }
 .ph-topics { margin-top: 40px !important; max-width: 640px; }
 /* the reference, drawn as the document: a page with its contents on a light band, after the words about it */
 .ph-scene + .ph-notes { margin-top: 110px; }
-.ref-figure { margin-top: 36px; }   /* the band runs edge to edge, like the gallery bands */
-.ref-band { background: var(--tabband); padding: 64px var(--gutter); display: flex; justify-content: center; perspective: 1400px; }
+/* the band runs edge to edge, like the gallery bands; the words sit on it beside the page */
+.ref-band { background: var(--tabband); padding: 80px 0; perspective: 1400px; }
+.ref-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 72px; align-items: center; }
+.ref-words { margin-top: 0; padding-left: 9px; }   /* on the same left edge as the headings above */
+.ref-words p + p { margin-top: 16px; }
 /* the page is a sheet held in 3D: it tilts a little toward the pointer (main.js) and floats on a soft shadow */
 .ref-page {
-  background: #fff; width: min(560px, 100%); padding: 40px 44px 44px;
+  background: #fff; width: 100%; padding: 40px 44px 44px;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(var(--rz, 0px));
   transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s;
   box-shadow: 0 40px 70px -40px rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.05);
@@ -1020,9 +1023,13 @@ a.tl-label:hover strong { color: #ff9a66; }
 .ref-list { list-style: none; counter-reset: ref; margin: 8px 0 0; padding: 0; }
 .ref-list li { display: flex; gap: 14px; padding: 7px 0; font-size: 15px; line-height: 1.4; }
 .ref-list li::before { counter-increment: ref; content: counter(ref); flex: none; width: 1.6em; font-family: var(--round); color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 900px) {
+  .ref-split { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .ref-split .ref-page { max-width: 560px; justify-self: center; }
+}
 @media (max-width: 720px) {
   .ph-scene + .ph-notes { margin-top: 64px; }
-  .ref-band { padding: 24px var(--gutter); }
+  .ref-band { padding: 40px 0 24px; }
   .ref-page { padding: 24px 22px 28px; }
 }
 

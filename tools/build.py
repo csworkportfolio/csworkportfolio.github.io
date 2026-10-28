@@ -1207,13 +1207,15 @@ def render_case(page, site, media):
         elif "phases" in b:
             parts.append(phases(b))
         elif b.get("notes"):
-            # a reference's table of contents, as a two-column list in a tinted band
-            # drawn as the document itself: a page with its contents, on a light band beside the words
+            # a reference drawn as the document itself: the words and a page with its contents, side by side on a
+            # light band (stacked on phones)
             items = "".join(f"<li>{esc(t)}</li>" for t in b["items"])
-            parts.append(section_open(b, " ph-notes") + paragraphs(b.get("p2", [])) + "</section>"
-                         f'<div class="ref-figure"><div class="ref-band"><div class="ref-page" role="img" aria-label="The contents of the authoring reference">'
+            sid = f' id="{esc(b["id"])}"' if b.get("id") else ""
+            parts.append(f'<section class="ref-figure ph-notes"{sid}><div class="ref-band"><div class="wrap ref-split">'
+                         f'<div class="prose ref-words"><h2>{esc(b["h"])}</h2>\n{paragraphs(b.get("p", []) + b.get("p2", []))}</div>'
+                         f'<div class="ref-page" role="img" aria-label="The contents of the authoring reference">'
                          f'<p class="ref-title">{esc(b.get("doc_title", "Authoring reference"))}</p><p class="ref-sub">Contents</p>'
-                         f'<ol class="ref-list">{items}</ol></div></div></div>')
+                         f'<ol class="ref-list">{items}</ol></div></div></div></section>')
         elif "statement" in b:
             parts.append(f'<div class="wrap prose statement-wrap"><p class="statement">{esc(b["statement"])}</p></div>')
         elif b.get("locked_strip"):
