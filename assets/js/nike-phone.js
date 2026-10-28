@@ -444,7 +444,7 @@ function start(THREE) {
   // words (casting a soft shadow on them), behind the tab bar, the switcher and these controls. The phone stays
   // the same size and in the same place, by shifting the lens's centre to where it stood
   const stageEl = scene.querySelector(".sc-stage");
-  let full = false, fullW = 0, fullH = 0, centreK = 0;
+  let full = false, fullW = 0, fullH = 0, centreK = 0, spinClose = 0;
   function setFull(on) {
     if (on === full) return;
     full = on;
@@ -559,17 +559,24 @@ function start(THREE) {
       const fit = (W * 1.3 / 2) / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(camera.aspect, 1.6));
       camera.position.set(target.x * zk, target.y * zk, camBase + (target.z + fit - camBase) * zk);
       camera.lookAt(lookAt.set(target.x * zk, target.y * zk, target.z * zk));
-    } else if (spinK > 0.002) {   // the turntable's camera drifts in and out, its aim wandering up and down the phone
-      const fy = (Math.sin(now / 2300) * 0.3 + Math.sin(now / 3700 + 2) * 0.14) * spinK;
-      const near = (0.5 + 0.5 * Math.sin(now / 3100 + 0.7)) * spinK;
-      camera.position.set(0, fy * 0.5, camBase * (1 - 0.22 * near));
+    } else if (spinK > 0.002) {
+      // the turntable's camera wanders: sometimes as close as the zoom's close-up, sometimes further back than the
+      // resting view, its aim drifting up and down the phone (more so when close). Three slow waves of unrelated
+      // lengths make the wander feel random without ever jumping
+      const w = 0.5 + 0.5 * (Math.sin(now / 2900) * 0.5 + Math.sin(now / 4700 + 1.7) * 0.3 + Math.sin(now / 7300 + 4.1) * 0.2);
+      const nearness = ease(clamp((0.5 - w) * 2 + 0.5)), close = nearness * spinK;   // 0 far back, 1 at the close-up (stretched, so both ends come round often)
+      const fit = (W * 1.3 / 2) / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(camera.aspect, 1.6));
+      const far = camBase * 1.22, z = far + (fit - far) * nearness;
+      const fy = (Math.sin(now / 2300) * 0.3 + Math.sin(now / 3700 + 2) * 0.14) * spinK * (0.6 + 1.2 * close);
+      camera.position.set(0, fy * 0.5, camBase + (z - camBase) * spinK);
       camera.lookAt(lookAt.set(0, fy, 0));
+      spinClose = close;
     } else if (camera.position.z !== camBase || camera.position.x !== 0 || camera.position.y !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
     // out over the page during the shows; back in its column after
     const showing = zk > 0 || zf > 0 || spinK > 0.01;
     setFull(showing);
-    centreK = zk;
-    flag("n3-zooming", zk > 0.02);   // the close-up passes over the placement switcher too
+    centreK = Math.max(zk, spinK > 0.002 ? spinClose : 0);
+    flag("n3-zooming", zk > 0.02 || spinK > 0.02);   // the close-up and the turntable pass over the placement switcher too
     if (full) fullFrame();
     const sk = Math.max(zk, spinK);
     cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
