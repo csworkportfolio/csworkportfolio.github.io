@@ -1455,38 +1455,96 @@ def demo_board(b, root):
     return ai_figure(b, "Illustration: an editorial calendar in Monday.com whose Generate button runs a Zapier workflow with Claude", inner)
 
 
+def tc(sec, fps=30):
+    """Seconds as Premiere's timecode, HH:MM:SS:FF."""
+    f = int(round(sec * fps))
+    return f"{f // (3600 * fps):02d}:{f // (60 * fps) % 60:02d}:{f // fps % 60:02d}:{f % fps:02d}"
+
+
 def demo_cut(b, root):
-    """The Mars Men PSA on an editing timeline: the finished video, the transcript of every take with the cut
-    lines struck through, and the six raw takes above the 43-second cut, with a playhead that follows the video."""
+    """The Mars Men PSA in a copy of Adobe Premiere Pro (drawn at 1280 by 720 and scaled to fit; a phone gets a
+    narrower layout): the transcript of every take in the Text panel with the cut lines struck, the vertical video
+    in the Program monitor, the six takes in the Project panel, and the 43-second cut on the timeline, whose
+    playhead, timecode and highlighted line follow the video."""
+    ico = lambda n: hb_icon(n, "hb-i pr-i")
     hues = {t["id"]: i for i, t in enumerate(b["takes"])}
+    dur = b["duration"]
+
     def line(l):
         at = f' data-at="{l["at"][0]}" data-to="{l["at"][1]}"' if l.get("at") else ""
         return f'<span class="ct-line{"" if l["keep"] else " is-cut"}"{at}>{esc(l["t"])}</span>'
 
-    lines = "".join(
-        f'<li class="ct-take h{hues[t["id"]]}"><span class="ct-chip">{esc(t["id"])}</span><p>'
-        + " ".join(line(l) for l in t["lines"])
-        + ('<span class="ct-pick">The hook</span>' if t["id"] == "Hook 1" else "") + "</p></li>"
-        for t in b["takes"])
-    raw_total = sum(t["len"] for t in b["takes"])
-    raw = "".join(f'<span class="ct-clip h{hues[t["id"]]}{" is-out" if t["id"] == "Hook 2" else ""}" style="flex-grow:{t["len"]}">{esc(t["id"])}</span>'
-                  for t in b["takes"])
-    final = "".join(f'<span class="ct-clip h{hues[s["take"]]}" style="flex-grow:{s["to"] - s["from"]:.2f}">{esc(s["take"])}</span>'
+    clock = 0.0
+    blocks = []
+    for t in b["takes"]:
+        blocks.append(f'<li class="pr-block"><span class="pr-who">••• {esc(t["id"])}</span>'
+                      f'<span class="pr-tc">{tc(clock)} - {tc(clock + t["len"])}</span><p>'
+                      + " ".join(line(l) for l in t["lines"])
+                      + ('<span class="ct-pick">The hook</span>' if t["id"] == "Hook 1" else "") + "</p></li>")
+        clock += t["len"]
+    raw_total = clock
+    takes = "".join(f'<li class="pr-file"><i class="pr-chip h{hues[t["id"]]}"></i><span class="pr-fico"></span>{esc(t["id"])}.MOV'
+                    f'<em>{tc(t["len"])[3:]}</em></li>' for t in b["takes"])
+    bins = "".join(f'<li class="pr-bin"><i></i>{ico("chev")}<span class="pr-folder"></span>{n}</li>'
+                   for n in ("001 SEQUENCES", "002 RAW TAKES", "003 CAPTIONS", "004 MUSIC"))
+    ticks = "".join(f'<span style="left:{s / dur * 100:.3f}%">{tc(s)}</span>' for s in range(0, int(dur) + 1, 10))
+    clips = "".join(f'<span class="pr-clip ct-clip h{hues[s["take"]]}" style="left:{s["from"] / dur * 100:.3f}%;width:{(s["to"] - s["from"]) / dur * 100:.3f}%">'
+                    f'<b>{esc(s["take"])}.MOV</b></span>' for s in b["final"])
+    audio = "".join(f'<span class="pr-clip pr-aclip ct-clip" style="left:{s["from"] / dur * 100:.3f}%;width:{(s["to"] - s["from"]) / dur * 100:.3f}%"></span>'
                     for s in b["final"])
-    inner = f'''
-<div class="ct-grid">
-  <div class="ct-phone">
-    <video class="ct-video" src="{root}assets/ai/marsmen.mp4?v={asset_version("assets/ai/marsmen.mp4")}" poster="{root}assets/ai/marsmen.jpg" muted loop playsinline preload="metadata" aria-label="Mars Men PSA, the finished cut, muted with captions"></video>
-  </div>
-  {ai_window("Transcript  ·  6 takes", f'<ol class="ct-script">{lines}</ol>', " ct-doc")}
-</div>
-<div class="ct-tracks">
-  <p class="ai-label">Raw takes <span>{int(raw_total // 60)}:{int(raw_total % 60):02d}</span></p>
-  <div class="ct-track ct-raw">{raw}</div>
-  <p class="ai-label">Final cut <span>0:{int(b["duration"]):02d}</span></p>
-  <div class="ct-track ct-final">{final}<span class="ct-head" aria-hidden="true"></span></div>
-</div>'''
-    return ai_figure(b, "The Mars Men PSA: its transcript and editing timeline", inner)
+    caps = "".join(f'<span class="pr-cap" style="left:{l["at"][0] / dur * 100:.3f}%;width:{(l["at"][1] - l["at"][0]) / dur * 100:.3f}%">{esc(l["t"])}</span>'
+                   for t in b["takes"] for l in t["lines"] if l.get("at"))
+    track = lambda name, inner, cls="": (f'<div class="pr-track{cls}"><span class="pr-th"><b>{name}</b>{ico("bell") if False else ""}'
+                                          f'<i class="pr-lock"></i></span><div class="pr-lane">{inner}</div></div>')
+    tools = "".join(ico(n) for n in ("play", "sliders", "search", "edit", "people"))
+    src = f'{root}assets/ai/marsmen.mp4?v={asset_version("assets/ai/marsmen.mp4")}'
+    canvas = f'''
+<div class="pr-view"><div class="pr" lang="en">
+  <header class="pr-top" aria-hidden="true"><span class="pr-dots"><i></i><i></i><i></i></span>{ico("play")}
+    <span class="pr-ws">Import</span><span class="pr-ws is-on">Edit</span><span class="pr-ws">Export</span>
+    <span class="pr-name">MarsMen_PSA - Edited</span></header>
+  <section class="pr-panel pr-text" aria-label="Transcript of the six takes">
+    <p class="pr-ph" aria-hidden="true">Text<i class="pr-menu"></i></p>
+    <p class="pr-tabs" aria-hidden="true"><span class="is-on">Transcript</span><span>Captions</span><span>Graphics</span><em>MarsMen_Takes</em></p>
+    <p class="pr-search" aria-hidden="true"><span>{ico("search")}Search</span>{ico("filter")}{ico("sliders")}{ico("edit")}</p>
+    <ol class="ct-script pr-script">{"".join(blocks)}</ol>
+  </section>
+  <section class="pr-panel pr-mon">
+    <p class="pr-ptabs" aria-hidden="true"><span>Source: Body 1.MOV</span><span class="is-on">Program: Mars Men PSA<i class="pr-menu"></i></span></p>
+    <div class="pr-screen"><video class="ct-video pr-video" src="{src}" poster="{root}assets/ai/marsmen.jpg" muted loop playsinline preload="metadata"
+      aria-label="Mars Men PSA, the finished cut, muted with captions"></video></div>
+    <p class="pr-mbar" aria-hidden="true"><b class="pr-tc-now">{tc(0)}</b><span class="pr-sel">Fit{ico("chev")}</span>
+      <span class="pr-sel">Full{ico("chev")}</span><em>{tc(dur)}</em></p>
+    <p class="pr-scrub" aria-hidden="true"><i class="pr-scrub-head"></i></p>
+    <p class="pr-transport" aria-hidden="true"><i class="t-mark"></i><i class="t-in"></i><i class="t-out"></i><i class="t-back"></i><i class="t-play"></i><i class="t-fwd"></i><i class="t-lift"></i><i class="t-cam"></i></p>
+  </section>
+  <section class="pr-panel pr-proj" aria-hidden="true">
+    <p class="pr-ptabs"><span>Markers</span><span class="is-on">Project: MarsMen_PSA<i class="pr-menu"></i></span></p>
+    <p class="pr-path"><span class="pr-folder"></span>MarsMen_PSA.prproj</p>
+    <p class="pr-psearch">{ico("search")}<em>1 of 10 items</em></p>
+    <p class="pr-cols"><span>Name</span><span>Media Duration</span></p>
+    <ul>{bins}{takes}</ul>
+    <p class="pr-foot">6 takes · {int(raw_total // 60)}:{int(raw_total % 60):02d} of footage</p>
+  </section>
+  <section class="pr-panel pr-tl" aria-hidden="true">
+    <nav class="pr-tools">{tools}</nav>
+    <div class="pr-seq">
+      <p class="pr-stab">× Mars Men PSA<i class="pr-menu"></i></p>
+      <p class="pr-shead"><b class="pr-tc-now">{tc(0)}</b><span class="pr-ruler">{ticks}</span></p>
+      <div class="pr-tracks">
+        {track("C1", caps, " is-cap")}
+        {track("V2", "")}
+        {track("V1", clips, " is-v1")}
+        {track("A1", audio, " is-a1")}
+        {track("A2", "")}
+        <span class="pr-head ct-head"></span>
+      </div>
+    </div>
+    <div class="pr-meter"><i></i><i></i></div>
+  </section>
+</div></div>'''
+    inner = ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window")
+    return ai_figure(b, "The Mars Men PSA in Premiere Pro: its transcript, the vertical cut and the timeline", inner)
 
 
 def demo_fan(b):

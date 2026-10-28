@@ -518,14 +518,31 @@
     wire(d, () => run(0));
   }
 
-  // ---------- 3. the Mars Men cut ----------
+  // ---------- 3. the Mars Men cut, in a copy of Premiere Pro ----------
   function cut(fig) {
     const d = demo(fig);
-    const video = fig.querySelector(".ct-video");
-    const head = fig.querySelector(".ct-head"), script = fig.querySelector(".ct-script");
-    const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
-    const clips = [...fig.querySelectorAll(".ct-final .ct-clip")];
     const data = parse(fig);
+    const view = fig.querySelector(".pr-view"), pr = fig.querySelector(".pr");
+    const video = fig.querySelector(".ct-video");
+    const head = fig.querySelector(".pr-head"), scrub = fig.querySelector(".pr-scrub-head"), script = fig.querySelector(".ct-script");
+    const clocks = [...fig.querySelectorAll(".pr-tc-now")];
+    const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
+    const clips = [...fig.querySelectorAll(".is-v1 .pr-clip")], audio = [...fig.querySelectorAll(".is-a1 .pr-clip")];
+    // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760
+    const frame = () => {
+      const w = view.clientWidth, mobile = w < 640;
+      pr.classList.toggle("is-mobile", mobile);
+      fig.classList.toggle("is-mobile", mobile);
+      const s = w / (mobile ? 420 : 1280);
+      view.style.setProperty("--pr-s", s);
+      view.style.height = (mobile ? 760 : 720) * s + "px";
+    };
+    new ResizeObserver(frame).observe(view);
+    frame();
+    const tc = (sec) => {
+      const f = Math.round(sec * 30), p = (n) => String(n).padStart(2, "0");
+      return `00:${p(Math.floor(f / 1800) % 60)}:${p(Math.floor(f / 30) % 60)}:${p(f % 30)}`;
+    };
     // the transcript and the cut build once, the first time the demo comes into view
     fig.classList.add("is-fresh");
     async function loop() {
@@ -535,25 +552,28 @@
       fig.classList.add("is-picked");
       await d.wait(600);
       fig.classList.add("is-cutdone");
-      for (const c of clips) { c.classList.add("is-on"); await d.wait(260); }
+      for (const [i, c] of clips.entries()) { c.classList.add("is-on"); audio[i].classList.add("is-on"); await d.wait(260); }
       fig.classList.remove("is-fresh");
     }
     function follow() {
-      const t = video.currentTime;
-      head.style.left = (t / data.duration) * 100 + "%";
+      const t = video.currentTime, p = Math.min(1, t / data.duration);
+      head.style.setProperty("--p", p);
+      scrub.style.setProperty("--p", p);
+      clocks.forEach((c) => { c.textContent = tc(t); });
       keep.forEach((el) => {
         const now = t >= +el.dataset.at && t < +el.dataset.to;
         if (now && !el.classList.contains("is-now")) {
           // keep the spoken line in view inside the transcript's own scroll, never moving the page
           const box = script.getBoundingClientRect(), r = el.getBoundingClientRect();
-          if (r.top < box.top || r.bottom > box.bottom) script.scrollTo({ top: script.scrollTop + r.top - box.top - 12, behavior: "smooth" });
+          if (r.top < box.top || r.bottom > box.bottom) script.scrollTo({ top: script.scrollTop + (r.top - box.top) / (box.height / script.clientHeight) - 12, behavior: "smooth" });
         }
         el.classList.toggle("is-now", now);
       });
-      data.final.forEach((s, i) => clips[i].classList.toggle("is-now", t >= s.from && t < s.to));
+      data.final.forEach((s, i) => { const on = t >= s.from && t < s.to; clips[i].classList.toggle("is-now", on); audio[i].classList.toggle("is-now", on); });
       if (!video.paused) requestAnimationFrame(follow);
     }
-    video.addEventListener("play", () => requestAnimationFrame(follow));
+    video.addEventListener("play", () => { view.classList.add("is-playing"); requestAnimationFrame(follow); });
+    video.addEventListener("pause", () => view.classList.remove("is-playing"));
     video.addEventListener("seeked", follow);
     if (still) { fig.classList.remove("is-fresh"); video.controls = true; return; }
     wire(d, loop, {
