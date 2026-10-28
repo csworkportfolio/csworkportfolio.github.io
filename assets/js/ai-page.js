@@ -47,48 +47,91 @@
 
   const parse = (fig) => JSON.parse(fig.querySelector(".ai-data").textContent);
 
-  // ---------- 1. the localization agent ----------
+  // ---------- 1. the localization agent, in a copy of the Champions Hub ----------
   function localize(fig) {
     const data = parse(fig), d = demo(fig);
     const $ = (s) => fig.querySelector(s);
-    const text = $(".loc-text"), review = $(".loc-review"), status = $(".loc-status"), count = $(".loc-count");
-    const tabs = [...fig.querySelectorAll(".loc-tab")];
-    let fixes = 0;
-    const setCount = () => { count.textContent = fixes; $(".loc-unit").textContent = fixes === 1 ? "fix" : "fixes"; };
+    const view = $(".hb-view"), hub = $(".hb"), cursor = $(".hb-cursor"), text = $(".hb-t");
+    const items = [...fig.querySelectorAll(".hb-menu li[data-code]")];
+    const set = (cls, on) => hub.classList.toggle(cls, on);
+    // the Hub is drawn at 1280 by 708; on a narrow screen it is shown larger and framed on the part in use
+    let s = 1, narrow = false;
+    const frame = () => {
+      const w = view.clientWidth;
+      narrow = w < 640;
+      s = narrow ? w / 470 : w / 1280;
+      view.style.setProperty("--hb-s", s);
+      view.style.setProperty("--hb-x", narrow ? (hub.classList.contains("is-open") ? 405 : 100) : 0);
+    };
+    new ResizeObserver(frame).observe(view);
+    // the cursor's point, in the Hub's own 1280 by 708 pixels
+    const point = (el, dx = 0.5, dy = 0.5) => {
+      const h = hub.getBoundingClientRect(), r = el.getBoundingClientRect();
+      cursor.style.left = (r.left - h.left + r.width * dx) / s - 4 + "px";
+      cursor.style.top = (r.top - h.top + r.height * dy) / s - 2 + "px";
+    };
+    const show = (r) => {
+      $(".hb-lang-v").textContent = r.name;
+      $(".hb-tone").textContent = r.tone;
+      text.lang = r.code.toLowerCase();
+    };
+    let fixes = 1;
+    const count = () => { $(".hb-count-v").textContent = fixes; $(".hb-unit").textContent = fixes === 1 ? "fix" : "fixes"; };
+    if (still) return;
     async function loop() {
       for (;;) {
-        fixes = 0; setCount();
+        // the feed, then the share window on the post, in English
+        ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy"].forEach((c) => set(c, false));
+        fixes = 0; count(); frame();
+        text.lang = "en"; text.textContent = data.post;
+        cursor.style.left = "560px"; cursor.style.top = "560px";
+        await d.wait(700);
+        set("is-pointing", true);
+        point($(".is-post .hb-share"));
+        await d.wait(1100);
+        set("is-press", true); await d.wait(250); set("is-press", false);
+        set("is-open", true); frame();
+        await d.wait(1300);
         for (const [i, r] of data.regions.entries()) {
-          tabs.forEach((t, k) => t.classList.toggle("is-on", k === i));
-          $(".loc-name").textContent = r.name;
-          $(".loc-code").textContent = r.code;
-          $(".loc-tone-v").textContent = r.tone;
-          text.lang = r.code.toLowerCase();
-          review.classList.remove("is-on");
-          fig.classList.add("is-busy"); fig.classList.remove("is-ready");
-          status.textContent = "Rewriting for " + r.name;
+          // Translate opens the brand agent's regions; pick the next one
+          point($(".hb-tr"));
+          await d.wait(i ? 700 : 1000);
+          set("is-menu", true);
+          await d.wait(400);
+          point(items[i], 0.35);
+          await d.wait(650);
+          items.forEach((li, k) => li.classList.toggle("is-hover", k === i));
+          await d.wait(300);
+          set("is-menu", false); items[i].classList.remove("is-hover");
+          show(r); set("is-lang", true); set("is-review", false); set("is-busy", true);
+          point($(".hb-text"), 0.85, 0.3);
           const m = r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
-          await d.type(text, m ? m[1] + m[2] + m[4] : r.text);
-          fig.classList.remove("is-busy");
+          await d.type(text, m ? m[1] + m[2] + m[4] : r.text, 22);
+          set("is-busy", false);
           if (m) {
-            status.textContent = "In review";
-            await d.wait(900);
-            $(".loc-review-v").textContent = r.review;
-            review.classList.add("is-on");
+            // a Champion's fix, sent back so the agent learns it
+            await d.wait(700);
+            $(".hb-review-v").textContent = r.review;
+            set("is-review", true);
             await d.wait(1500);
             text.innerHTML = "";
             const del = document.createElement("del"), ins = document.createElement("ins");
             del.textContent = m[2]; ins.textContent = m[3];
             text.append(m[1], del, " ", ins, m[4]);
-            fixes += 1; setCount();
-            status.textContent = "Fix sent back to the agent";
-            await d.wait(2200);
+            fixes += 1; count();
+            await d.wait(2400);
+            set("is-review", false);
           }
-          fig.classList.add("is-ready");
-          status.textContent = "Ready to share";
-          await d.wait(m ? 1800 : 1500);
+          await d.wait(m ? 600 : 1400);
         }
-        await d.wait(1200);
+        // share it
+        point($(".hb-b.is-blue"));
+        await d.wait(1000);
+        set("is-send", true); await d.wait(200); set("is-send", false);
+        set("is-sent", true); set("is-open", false); set("is-pointing", false); frame();
+        await d.wait(2200);
+        set("is-sent", false);
+        await d.wait(800);
       }
     }
     wire(d, loop);
@@ -307,7 +350,7 @@
   for (const fig of document.querySelectorAll(".ai-demo[data-demo]")) {
     const k = kinds[fig.dataset.demo];
     if (!k) continue;
-    if (still && !["cut", "tools", "meta"].includes(fig.dataset.demo)) continue;
+    if (still && !["localize", "cut", "tools", "meta"].includes(fig.dataset.demo)) continue;
     k(fig);
   }
 })();

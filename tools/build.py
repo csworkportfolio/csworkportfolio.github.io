@@ -1218,36 +1218,134 @@ def ai_figure(b, label, inner, pause=True):
             f'<div class="ai-stage">{inner}{AI_PAUSE if pause else ""}</div>{note}</figure>')
 
 
-def demo_localize(b):
-    """The Champions Hub with the localization agent: its knowledge on the left, the English post and one
-    region's version in the middle, the regions along the foot. Drawn on the Korean version after review."""
-    srcs = "".join(f'<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z M14 3v4h4"/></svg>{esc(s)}'
-                   f'<span class="loc-ok">Loaded</span></li>' for s in b["sources"])
+HB_ICONS = {   # line icons for the Hub copy, drawn on a 24 grid
+    "swap": "M7 4 3 8l4 4M3 8h14M17 12l4 4-4 4M21 16H7",
+    "play": "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
+    "board": "M6 7h12v13H6zM9 4h12v13",
+    "cup": "M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3M12 14v4M8 20h8",
+    "badge": "M12 3l2.5 2 3.2-.2.6 3.1 2.6 1.9-1.4 2.9 1 3.1-2.9 1.3-1.1 3-3.2-.5L12 21l-2.4-2.1-3.2.5-1.1-3-2.9-1.3 1-3.1L2 9.8l2.6-1.9.6-3.1 3.2.2zM8.5 12l2.5 2.5 4.5-5",
+    "people": "M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 21 21M8 9a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0M6.5 15c1-2 7-2 8 0",
+    "cal": "M4 6h16v14H4zM4 10h16M8 3v5M16 3v5",
+    "admin": "M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3zM5 3 3 5l3 3 2-2z",
+    "trend": "M3 17l6-6 4 4 8-8M15 7h6v6",
+    "filter": "M4 5h16l-6 7v6l-4 2v-8z",
+    "sliders": "M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4",
+    "search": "M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 21 21",
+    "edit": "M4 20h4L19 9l-4-4L4 16zM4 4h8M4 4v8",
+    "adduser": "M9 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM2 20c1-4 13-4 14 0M19 8v6M16 11h6",
+    "bell": "M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20h4",
+    "help": "M9 9a3 3 0 1 1 4 2.8c-.7.3-1 1-1 1.7V15M12 18v.5",
+    "like": "M7 10v10H4V10zM7 10l4-7c2 0 2.5 1.5 2 3l-1 4h6a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 16.8 20H7",
+    "star": "M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z",
+    "share": "M14 4h6v6M20 4l-8 8M18 14v6H4V6h6",
+    "plus": "M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 8v8M8 12h8",
+    "chev": "M6 9l6 6 6-6",
+    "close": "M5 5l14 14M19 5 5 19",
+    "addimg": "M4 6h11M4 6v14h16v-9M8 16l3-4 3 3 2-2 4 3M18 3v6M15 6h6",
+    "translate": "M3 5h10M8 3v2M5 5c1 4 4 7 7 8M11 5c-1 4-4 7-7 8M13 21l4-10 4 10M14.5 18h5",
+}
+
+
+def hb_icon(name, cls="hb-i"):
+    return f'<svg class="{cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="{HB_ICONS[name]}"/></svg>'
+
+
+def demo_localize(b, root):
+    """The localization agent inside a copy of the real Champions Hub (from Christian's screen recording, drawn
+    at its 1280 by 708 desktop size and scaled to fit): the Trending Posts feed, and the LinkedIn Share window
+    whose Translate link opens the agent's regions. Drawn on the Korean version after a Champion's review."""
+    img = lambda n: f"{root}assets/ai/hub/{n}.jpg"
     ko = next(r for r in b["regions"] if r.get("review"))
     before, old, new, after = re.match(r"(.*)\[(.*)\|(.*)\](.*)", ko["text"]).groups()
-    tabs = "".join(f'<li class="loc-tab{" is-on" if r is ko else ""}" data-code="{esc(r["code"])}">{esc(r["code"])}</li>'
-                   for r in b["regions"])
-    inner = ai_window("Champions Hub  ·  Localization agent", f'''
-<div class="loc-grid">
-  <div class="loc-side">
-    <p class="ai-label">Agent knowledge</p><ul class="loc-sources">{srcs}</ul>
-    <p class="ai-label">Learned from reviews</p>
-    <p class="loc-learned"><span class="loc-count">1</span> <span class="loc-unit">fix</span></p>
-  </div>
-  <div class="loc-main">
-    <div class="loc-post loc-src"><span class="loc-pill">EN · United States</span><p lang="en">{esc(b["post"])}</p></div>
-    <div class="loc-flow" aria-hidden="true"><span class="loc-agent">{AI_SPARK}Agent</span></div>
-    <div class="loc-post loc-out">
-      <div class="loc-head"><span class="loc-pill is-out"><span class="loc-code">{esc(ko["code"])}</span> · <span class="loc-name">{esc(ko["name"])}</span></span>
-        <span class="loc-tone">Tone: <span class="loc-tone-v">{esc(ko["tone"])}</span></span></div>
-      <p class="loc-text" lang="ko">{esc(before)}<del>{esc(old)}</del> <ins>{esc(new)}</ins>{esc(after)}</p>
-      <p class="loc-review is-on"><span class="loc-avatar" aria-hidden="true">CA</span><span>Champion advocate: <span class="loc-review-v">{esc(ko["review"])}</span>. Sent back to the agent.</span></p>
-      <div class="loc-foot"><span class="loc-status">Ready to share</span><span class="loc-share" aria-hidden="true">Share</span></div>
+    rail = "".join(f'<li class="hb-nav{c}">{hb_icon(i)}<span>{t}</span>{s}</li>' for i, t, c, s in (
+        ("play", "Play", " is-on", ""), ("board", "Leaderboards", "", ""),
+        ("cup", "May Challeng…", " is-challenge", "<small>It’s time to get sta…</small>"),
+        ("badge", "My badges", "", ""), ("people", "People directory", "", ""), ("cal", "Calendar", "", ""),
+        ("admin", "Admin", "", "")))
+    tools = "".join(f'<span class="hb-round">{hb_icon(i)}</span>' for i in ("edit", "adduser", "bell", "help"))
+    tick = '<span class="hb-tick"></span>'
+
+    def card(thumb, tag, title, body="", when="3 days ago", src="Content for Sharing", tall=False, extra="", likes=4, cls=""):
+        acts = (f'<div class="hb-acts">{hb_icon("like")}<b>{likes}</b>{hb_icon("star")}'
+                f'<span class="hb-share">{hb_icon("share")}</span><span class="hb-more">…</span></div>')
+        body = f'<p class="hb-body">{esc(body)}</p>' if body else ""
+        return (f'<article class="hb-card{" is-tall" if tall else ""}{cls}"><div class="hb-thumb">{thumb}'
+                f'<span class="hb-tag">{esc(tag)}</span>{hb_icon("plus", "hb-i hb-plus")}{extra}</div>'
+                f'<p class="hb-src"><span class="hb-src-i">{hb_icon("share")}</span>{esc(src)}{tick}<span class="hb-when">{esc(when)}</span></p>'
+                f'<h4>{esc(title)}</h4>{body}{acts}</article>')
+
+    def pic(n):
+        return f'<span class="hb-blur" style="background-image:url({img(n)})"></span><img src="{img(n)}" alt="" loading="lazy">'
+
+    arrows = '<span class="hb-arr is-l"></span><span class="hb-arr is-r"></span>'
+    guide = ('<span class="hb-guide"><span class="hb-guide-bar"></span><b>A quick guide to</b><b>keeping your</b>'
+             '<b class="is-pink">data safe</b><span class="hb-guide-btn">Read the guide</span></span>')
+    cards = "".join((
+        card(guide, "Blog", b["title"], b["post"], "2 days ago", likes=3, cls=" is-post"),
+        card(pic("hpe"), "Event", "Catch Cohesity at HPE Discover",
+             "Cohesity and HPE are bringing modern data security and management across data, cloud, and beyond to "
+             "HPE Discover, built for what’s next. Schedule a meeting in advance to talk through your resilience strategy."),
+        card(pic("risk"), "Partner", "Cohesity DPSM, Powered by Cyera", when="6 days ago", likes=5, tall=True,
+             extra='<span class="hb-count">7/8</span>' + arrows),
+        card(pic("office") + '<span class="hb-playbtn"></span>', "Cohesity News", "Cohesity: The Goal of Identity Resilience",
+             src="Cohesity", when="5 days ago"),
+        card(pic("maryland"), "Customer Case Study", "Maryland Department of IT safeguards critical files with Cohesity on Cisco UCS",
+             when="4 days ago"),
+        card(pic("cohhpe"), "Cohesity News", "Cohesity Expands Strategic Alliance with HPE", src="Cohesity", when="4 days ago",
+             tall=True, extra='<span class="hb-count">3/3</span>' + arrows),
+    ))
+    activity = "".join(
+        f'<li><span class="hb-face"></span><p><b>{n} Champions</b> shared</p>'
+        f'<span class="hb-ua-pic"><img src="{img("ua" + str(i + 1))}" alt="" loading="lazy"></span></li>'
+        for i, n in enumerate((12, 24, 14, 26)))
+    langs = "".join(f'<li data-code="{esc(r["code"])}"{" class=is-on" if r is ko else ""}><b>{esc(r["code"])}</b>{esc(r["name"])}</li>'
+                    for r in b["regions"])
+    srcs = " · ".join(esc(s) for s in b["sources"])
+    hub = f'''
+<div class="hb-view"><div class="hb is-open is-lang is-review" lang="en" aria-hidden="true">
+  <nav class="hb-rail">
+    <svg class="hb-logo" viewBox="0 0 32 32"><path d="M24 8.5c-1.8-2-4.6-3.2-8-3.2-5 0-8.3 2.6-8.3 6.2 0 7.6 16.6 3.4 16.6 10.6 0 3.6-3.5 6.1-8.4 6.1-3.6 0-6.6-1.4-8.4-3.6"/></svg>
+    {hb_icon("swap", "hb-i hb-swap")}
+    <span class="hb-me"><img src="{img("me")}" alt=""><span>My account</span></span>
+    <ul>{rail}</ul>
+  </nav>
+  <header class="hb-top">
+    <span class="hb-tile">{hb_icon("trend")}</span>
+    <div><p class="hb-h">Trending Posts{hb_icon("chev")}{hb_icon("filter")}{hb_icon("sliders")}</p>
+      <p class="hb-sub">Find all the content with the highest activity over the last 7 days.</p></div>
+    <span class="hb-search">{hb_icon("search")}Search</span>{tools}
+  </header>
+  <div class="hb-feed">{cards}</div>
+  <aside class="hb-ua"><p class="hb-ua-h">User Activity<span>»</span></p><ul>{activity}</ul></aside>
+  <div class="hb-dim"></div>
+  <div class="hb-modal">
+    <p class="hb-mh"><span class="hb-in">in</span>Share{hb_icon("close", "hb-i hb-x")}</p>
+    <div class="hb-mb">
+      <p class="hb-row"><span>My comment</span>
+        <span class="hb-lang"><span class="hb-lang-v">{esc(ko["name"])}</span> · Tone: <span class="hb-tone">{esc(ko["tone"])}</span></span>
+        <span class="hb-tr">{hb_icon("translate")}Translate</span></p>
+      <div class="hb-menu">
+        <p class="hb-menu-h">{AI_SPARK}<span>Localize with the brand agent<small>{srcs}</small></span></p>
+        <ul>{langs}<li class="hb-menu-more">+ more regions</li></ul>
+      </div>
+      <div class="hb-text">
+        <p class="hb-t" lang="ko">{esc(before)}<del>{esc(old)}</del> <ins>{esc(new)}</ins>{esc(after)}</p>
+        <p class="hb-hash">{esc(b["tags"])}</p>
+        <p class="hb-busy">{AI_SPARK}<span class="hb-busy-v">Localizing</span></p>
+        <p class="hb-review"><span class="hb-ca">CA</span><span><b>Champion advocate</b> <span class="hb-review-v">{esc(ko["review"])}</span></span></p>
+      </div>
+      <p class="hb-tags">Click on a tag to add it to your post: <span>@Cohesity</span> <span>#Cohesity</span></p>
+      <p class="hb-photos-h">You can select photos</p>
+      <div class="hb-photos"><span class="hb-photo">{guide}<i>1</i></span><span class="hb-addimg">{hb_icon("addimg")}</span></div>
+      <div class="hb-btns"><span class="hb-learned">{AI_SPARK}<span class="hb-count-v">1</span> <span class="hb-unit">fix</span> learned</span>
+        <span class="hb-b is-brown">Schedule</span><span class="hb-b is-brown">Share next</span><span class="hb-b is-blue">Share now</span></div>
     </div>
   </div>
-</div>
-<ul class="loc-tabs" aria-label="Regions">{tabs}<li class="loc-more">+ more</li></ul>''')
-    return ai_figure(b, "Illustration: the localization agent in the Champions Hub", inner)
+  <p class="hb-toast">Shared on LinkedIn</p>
+  <svg class="hb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
+</div></div>'''
+    inner = ai_window("Champions Hub  ·  Trending Posts", hub, " hb-window")
+    return ai_figure(b, "Illustration: the localization agent in a copy of the Champions Hub", inner)
 
 
 def demo_board(b):
@@ -1385,9 +1483,9 @@ def ai_block(b, root):
     kind = b.get("demo")
     if not kind:
         return words
-    fig = {"localize": demo_localize, "board": demo_board, "fan": demo_fan, "geo": demo_geo}.get(kind)
-    if kind in ("cut", "tools", "meta"):
-        return words + {"cut": demo_cut, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
+    fig = {"board": demo_board, "fan": demo_fan, "geo": demo_geo}.get(kind)
+    if kind in ("localize", "cut", "tools", "meta"):
+        return words + {"localize": demo_localize, "cut": demo_cut, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
     return words + fig(b)
 
 

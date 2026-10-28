@@ -11,6 +11,12 @@ MARKUP = HOME / "Developer/Toolbox/markup-ai"
 REMARK = HOME / "Developer/Toolbox/mods/remark/demo"
 HEARD = HOME / "Developer/Projects/Transcript AI"
 JOBS = HOME / "Developer/Projects/Job Search AI/app/icons"
+PORTFOLIO = ROOT.parent
+HUB = PORTFOLIO / "wix-export/ezgif.com-video-to-gif-converter-2.gif"   # the Champions Hub screen recording
+# the post images around the shared post in the Hub replica, cut from the recording's first frame (x0, y0, x1, y1)
+HUB_CROPS = {"hpe": (481, 180, 611, 341), "risk": (752, 190, 935, 414), "office": (179, 528, 317, 706),
+             "maryland": (481, 528, 611, 706), "cohhpe": (752, 535, 935, 706), "ua1": (1051, 153, 1233, 252),
+             "ua2": (1051, 299, 1233, 398), "ua3": (1051, 445, 1233, 544), "ua4": (1051, 591, 1233, 690)}
 
 W, H = 960, 600          # the tool cards' screens (16:10)
 HOLD, FADE = 3.2, 0.6    # seconds each screen holds, and the cross-fade between screens
@@ -50,6 +56,12 @@ def main():
                        MARKUP / "shelf-preview.png"])
     ff("-i", HEARD / "Release Tools/GitHub Social Preview.png", "-vf", f"scale={W}:-2", "-q:v", 3, OUT / "heardhum.jpg")
     ff("-i", JOBS / "icon-512.png", "-vf", "scale=240:-2", OUT / "job-search-ai.png")
+    (OUT / "hub").mkdir(exist_ok=True)
+    for name, (x0, y0, x1, y1) in HUB_CROPS.items():
+        ff("-ss", 0.2, "-i", HUB, "-frames:v", 1, "-vf", f"crop={x1 - x0}:{y1 - y0}:{x0}:{y0},scale=iw*2:ih*2:flags=lanczos",
+           "-q:v", 2, OUT / f"hub/{name}.jpg")
+    ff("-i", PORTFOLIO / "source-extra/Updated Portrait Color avatar.jpg", "-vf", "scale=96:96:force_original_aspect_ratio=increase,crop=96:96",
+       "-q:v", 3, OUT / "hub/me.jpg")
     for f in sorted(OUT.iterdir()):
         print(f"{f.name}: {f.stat().st_size / 1e3:.0f} KB")
 
