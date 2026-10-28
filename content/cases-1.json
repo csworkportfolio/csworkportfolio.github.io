@@ -9,13 +9,13 @@
       "title": "How I Shipped What Millions of Nike Customers See First",
       "subtitle": "Digital Content Manager (Contract) | Nike App and Nike.com"
     },
-    "lede": "From June to August 2026 I was a Digital Content Manager at Nike on a planned three-month contract. I published campaign content and app notifications to Nike.com and the Nike app, reaching as many as 20M customers per activation, verified delivery after each send, and co-developed the authoring reference the team now uses to onboard publishers. Every placement starts as a decision someone made upstream. Getting it live, correct, and on time was my job.",
+    "lede": "From June to August 2026 I was a Digital Content Manager at Nike on a planned three-month contract. I published campaign content and app notifications to Nike.com and the Nike app, reaching as many as 20M customers per activation, verified delivery after each send, and co-developed the authoring reference the team now uses to onboard publishers. Other teams decided what each placement should be. My job was getting it live, correct, and on time.",
     "blocks": [
       {
         "h": "More Requests Than One Calendar Can Hold",
         "p": [
           "Requests reach Nike's publishing team from marketing partners across the business, and one campaign can touch an app shopping surface, a landing page, a product grid, a notification, and the routing between them.",
-          "Some arrive incomplete: assets missing, timing that collides with work already scheduled, or a request the platform cannot support. With as many as 20 million people on the other end of one activation, delivery decides whether a campaign reaches anyone at all."
+          "Some arrive incomplete: assets missing, timing that collides with work already scheduled, or a request the platform cannot support. With as many as 20 million people on the other end of one activation, those problems had to be caught before anything was scheduled."
         ]
       },
       {
@@ -119,7 +119,7 @@
         "h": "Three Campaigns at Once",
         "id": "campaigns",
         "p": [
-          "I joined with the World Cup already near its end and posted updates against live match results; Back to School needed athlete stories and full shopping surfaces; the U.S. Open needed its tennis shop live for the tournament. Smaller campaigns ran alongside these three."
+          "I joined with the World Cup already near its end and posted updates against live match results. Back to School needed athlete stories and full shopping surfaces, and the U.S. Open needed its tennis shop live for the tournament. Smaller campaigns ran alongside these three."
         ],
         "range": [
           "2026-06-01",
@@ -159,8 +159,8 @@
       {
         "h": "Building the Placements People See First",
         "p": [
-          "A featured placement is often the first thing someone sees when they open Nike.com or the app. It has to read at a glance, on a phone, with the sound off.",
-          "I ran mine from request to live: placing the imagery and copy from the brief, building the placement, previewing it on a device, and routing it into its campaign."
+          "A featured placement is often the first thing someone sees when they open Nike.com or the app, often on a phone.",
+          "These are some of the ones I built and took live."
         ],
         "id": "placements"
       },
@@ -175,8 +175,8 @@
           {
             "v": "1228250189",
             "title": "Back in Style Back to School App Story",
-            "desc": "An app story inviting students to find looks for school, sport, and everything in between.\nStories like this are usually met on a phone with the sound off, so I checked on a device that the message carried without it.",
-            "cap": "Stories like this are usually met on a phone with the sound off, so I checked on a device that the message carried without it."
+            "desc": "An app story inviting students to find looks for school, sport, and everything in between.\nPeople usually see stories like this on a phone with the sound off, so I checked on a device that the message worked without it.",
+            "cap": "People usually see stories like this on a phone with the sound off, so I checked on a device that the message worked without it."
           },
           {
             "v": "1228251265",
@@ -187,7 +187,7 @@
           {
             "v": "1228250188",
             "title": "ACG Zegama Hike App Feature",
-            "desc": "An app feature for the ACG Zegama Hike, a trail shoe from Nike's All Conditions Gear line.\nI built it from the supplied video and copy, then checked it on a real phone so the motion, type, and navigation held up together. A desktop preview would have hidden how the story plays on a phone.",
+            "desc": "An app feature for the ACG Zegama Hike, a trail shoe from Nike's All Conditions Gear line.\nI built it from the supplied video and copy, then checked it on a real phone so the motion, type, and navigation held up together.",
             "cap": "I built it from the supplied video and copy, then checked it on a real phone so the motion, type, and navigation held up together."
           },
           {
@@ -209,8 +209,8 @@
       {
         "h": "Athlete Stories, Timed to the Season",
         "p": [
-          "Some of the highest-stakes placements I built were around named athletes. For Back to School, I paired the photography of incoming UCLA midfielder Mia Corona and USC tight end Mark Bowman with their copy and routed each story into the gear from the shoot.",
-          "Names, imagery, and timing had to be exactly right, because the season set the day and the day did not move."
+          "Some of the placements I built centered on named athletes. For Back to School, I paired the photography of incoming UCLA midfielder Mia Corona and USC tight end Mark Bowman with their copy and routed each story into the gear from the shoot.",
+          "The names and imagery had to be right, and each story had to go live on the date the season set."
         ],
         "id": "athletes"
       },
@@ -219,7 +219,7 @@
           {
             "src": "Nike 4.png",
             "title": "Gear for a Great Year Back to School Carousel",
-            "desc": "Nike.com's Back to School carousel, with athletes from USC Basketball and Ohio State Football routing into the Women's, Kids, and Men's shops.\nI built the carousel and routed each athlete tile into its shop. Talent-led tiles carry extra weight, so every name and destination had to be exactly right for the season's publishing window.",
+            "desc": "Nike.com's Back to School carousel, with athletes from USC Basketball and Ohio State Football routing into the Women's, Kids, and Men's shops.\nI built the carousel and routed each athlete tile into its shop. I checked every athlete's name and destination before the season's publishing window.",
             "cap": "I built the carousel and routed each athlete tile into its shop."
           },
           {
@@ -266,7 +266,7 @@
         "h": "Full Shopping Surfaces",
         "p": [
           "Beyond single placements, I built complete shopping experiences: the hero, the category navigation, the product grid, and the routing that connects them. Where a surface carried SEO metadata and taxonomy tags, I set those in the CMS too.",
-          "An August promotional shop shows what that takes. Six category entry points, each with its own imagery and menu routing, sit on one surface with the featured carousel and product grids. I built the pieces one at a time and assembled them in order, and the surface only worked once every piece led to the right place."
+          "One August promotional shop had six category entry points, each with its own imagery and menu routing, on one surface with the featured carousel and product grids. I built the pieces one at a time, assembled them in order, and checked that each one led to the right place."
         ],
         "id": "shops"
       },
@@ -278,7 +278,7 @@
           {
             "src": "nIKE S_edited.png",
             "title": "Tennis Slam Product Grid on Nike.com",
-            "desc": "The Tennis Slam product grid on Nike.com, with its category filters.\nProduct grids are where a campaign turns into a purchase. I set up the grid and its filters so the collection loaded the right products and every tile opened a working product page.",
+            "desc": "The Tennis Slam product grid on Nike.com, with its category filters.\nI set up the grid and its filters so the collection loaded the right products and every tile opened a working product page.",
             "cap": "I set up the grid and its filters so the collection loaded the right products and every tile opened a working product page."
           },
           {
@@ -334,7 +334,7 @@
           },
           {
             "t": "QA",
-            "d": "Checked other publishers' builds against Figma, copy, alt text, and links, the fastest way to learn what breaks."
+            "d": "Checked other publishers' builds against Figma, copy, alt text, and links, which taught me what usually breaks."
           },
           {
             "t": "Publish",
@@ -345,7 +345,7 @@
             "d": "Co-developed the authoring reference and trained the publishers who stayed on."
           }
         ],
-        "topics": "The reference covers platform constraints, accessibility standards, QA routing, scheduling rules, and how modules differ on mobile and desktop. The team adopted it as the onboarding guide for incoming publishers, which is the clearest sign it worked."
+        "topics": "The reference covers platform constraints, accessibility standards, QA routing, scheduling rules, and how modules differ on mobile and desktop. The team adopted it as the onboarding guide for incoming publishers."
       },
       {
         "h": "The Reference, Section by Section",
@@ -371,7 +371,7 @@
           "Incident Reporting"
         ],
         "p2": [
-          "Its fourteen sections, in plain terms and with the tool names left out, are below. Two habits from the last of them that I still keep: preview on a device before QA, every time, and copy and paste copy, never retype it."
+          "Its fourteen sections, in plain terms and with the tool names left out, are below. Two habits from Working Habits Worth Keeping that I still follow: preview on a device before QA, every time, and copy and paste copy, never retype it."
         ],
         "doc_title": "Nike App Authoring Reference"
       }
