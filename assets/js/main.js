@@ -57,6 +57,31 @@
   let lastW = window.innerWidth;
   const widthWatchers = [];
   const onWidthResize = (fn) => widthWatchers.push(fn);
+
+  // The 3D scenes' side controls (Cohesity, Nike, and any scene after them) follow one rule: their pill is out while
+  // the scene is on screen but not yet held in place, so a reader scrolling toward it sees what it offers, and
+  // tucks away a second after the scene locks in, coming down from above or up from below. "Held" means the sticky
+  // stage is pinned inside its taller container; a scene with no room to pin (phones) counts as held once it is
+  // fully in view. show(true | false) puts the pill out or away; lockIn() tucks it after the second.
+  window.sceneControlsPeek = (container, sticky, show, lockIn) => {
+    let state = "";
+    const check = () => {
+      const c = container.getBoundingClientRect(), st = sticky.getBoundingClientRect(), vh = viewH();
+      if (!st.height) return;
+      const visible = c.bottom > 0 && c.top < vh;
+      const held = c.height > st.height + 4 ? st.top - c.top > 1 && c.bottom - st.bottom > 1 : st.top >= 0 && st.bottom <= vh;
+      const next = !visible ? "away" : held ? "held" : "near";
+      if (next === state) return;
+      const prev = state; state = next;
+      if (next === "near") show(true);
+      else if (next === "held" && prev) lockIn();
+    };
+    let queued = false;
+    const soon = () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; check(); }); } };
+    addEventListener("scroll", soon, { passive: true });
+    addEventListener("resize", soon, { passive: true });
+    check();
+  };
   window.addEventListener("resize", () => {
     if (window.innerWidth === lastW) return;
     lastW = window.innerWidth;

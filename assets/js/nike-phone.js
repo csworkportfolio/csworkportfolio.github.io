@@ -371,26 +371,28 @@ function start(THREE) {
   visual.append(dock, note);
   const tab = dock.querySelector(".n3-tab"), pill = dock.querySelector(".n3-controls"), infoBtn = dock.querySelector('[data-act="info"]');
   let tuckTimer = 0, overPill = false;
-  function showControls(on) {
+  function showControls(on, stay) {
     clearTimeout(tuckTimer);
     if (!on && pill.contains(document.activeElement)) tab.focus({ preventScroll: true });
     dock.classList.toggle("is-out", on);
     tab.setAttribute("aria-expanded", String(on));
     pill.inert = !on;
-    if (on) tuckLater();
+    if (on && !stay) tuckLater();
   }
-  function tuckLater() {
+  function tuckLater(ms = 3500) {
     clearTimeout(tuckTimer);
-    if (!overPill && !pill.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), 3500);
+    if (!overPill && !pill.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), ms);
   }
   tab.addEventListener("click", () => showControls(true));
   pill.addEventListener("pointerenter", () => { overPill = true; clearTimeout(tuckTimer); });
   pill.addEventListener("pointerleave", () => { overPill = false; tuckLater(); });
-  pill.addEventListener("click", tuckLater);
+  pill.addEventListener("click", () => tuckLater());
   pill.addEventListener("focusin", () => setTimeout(() => { if (pill.querySelector(":focus-visible")) clearTimeout(tuckTimer); }));
-  pill.addEventListener("focusout", () => setTimeout(tuckLater));
+  pill.addEventListener("focusout", () => setTimeout(() => tuckLater()));
   document.addEventListener("pointerdown", (e) => { if (dock.classList.contains("is-out") && !dock.contains(e.target)) showControls(false); });
   showControls(false);
+  // out while the reader scrolls toward the scene, tucked a second after it locks in (main.js, shared by every 3D scene)
+  window.sceneControlsPeek?.(scene, scene.querySelector(".sc-stage"), (on) => showControls(on, true), () => tuckLater(1000));
   // the note: opens and closes from its button, which stays lit while it's open
   const setNote = (on) => { scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on)); };
   infoBtn.addEventListener("click", () => setNote(!scene.classList.contains("n3-noting")));

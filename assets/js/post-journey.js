@@ -493,27 +493,29 @@
   // While tucked away they're out of the tab order.
   const controls = stage.querySelector(".pj-controls"), tab = stage.querySelector(".pj-tab"), dock = stage.querySelector(".pj-dock");
   let tuckTimer = 0, overControls = false;
-  function showControls(on) {
+  function showControls(on, stay) {
     clearTimeout(tuckTimer);
     if (!on && controls.contains(document.activeElement)) tab.focus({ preventScroll: true });
     stage.classList.toggle("show-controls", on);
     tab.setAttribute("aria-expanded", String(on));
     controls.inert = !on;
-    if (on) tuckLater();
+    if (on && !stay) tuckLater();
   }
-  function tuckLater() {
+  function tuckLater(ms = 3500) {
     clearTimeout(tuckTimer);
-    if (!overControls && !controls.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), 3500);
+    if (!overControls && !controls.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), ms);
   }
   tab.addEventListener("click", () => showControls(true));
   controls.addEventListener("pointerenter", () => { overControls = true; clearTimeout(tuckTimer); });
   controls.addEventListener("pointerleave", () => { overControls = false; tuckLater(); });
-  controls.addEventListener("click", tuckLater);
+  controls.addEventListener("click", () => tuckLater());
   controls.addEventListener("focusin", () => setTimeout(() => { if (controls.querySelector(":focus-visible")) clearTimeout(tuckTimer); }));
-  controls.addEventListener("focusout", () => setTimeout(tuckLater));
+  controls.addEventListener("focusout", () => setTimeout(() => tuckLater()));
   document.addEventListener("pointerdown", (e) => { if (stage.classList.contains("show-controls") && !dock.contains(e.target)) showControls(false); });
   stage.addEventListener("keydown", (e) => { if (e.key === "Escape" && stage.classList.contains("show-controls")) showControls(false); });
   showControls(false);
+  // out while the reader scrolls toward the scene, tucked a second after it locks in (main.js, shared by every 3D scene)
+  window.sceneControlsPeek?.(stage.closest(".pj-pin") || stage.closest(".pj"), stage.closest(".pj"), (on) => showControls(on, true), () => tuckLater(1000));
 
   // "How I Made This": opens from its button, near the end of the loop (from the closing line through the fade)
   // and when the reader scrolls to the bottom of the scene. Once open it stays open, through the loop starting
