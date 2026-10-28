@@ -105,10 +105,9 @@ function start(THREE) {
   const slices = [];
   for (let i = 0; i < cuts.length - 1; i++) {
     const t = cuts[i], b = cuts[i + 1], h = (b - t) * SH;
-    const geo = new THREE.PlaneGeometry(SW, h);
-    const uv = geo.attributes.uv;
-    for (let k = 0; k < uv.count; k++) uv.setY(k, 1 - t - (1 - uv.getY(k)) * (b - t));
-    const m = new THREE.Mesh(geo, sliceMat);
+    // each slice keeps the screen's own rounded corners where it has them: the top one at the top, the last at the bottom
+    const rTop = i === 0 ? SR : 0.0001, rBottom = i === cuts.length - 2 ? SR : 0.0001;
+    const m = shapeMesh(SW, h, rTop, sliceMat, 0, rBottom, 1 - b, 1 - t);
     m.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
     m.userData.away = [new THREE.Vector3(-0.09, 0.1, 0.12), new THREE.Vector3(0.14, -0.015, 0.26), new THREE.Vector3(-0.045, -0.075, 0.4)][i] || new THREE.Vector3();
     m.visible = false; phone.add(m); slices.push(m);
@@ -225,6 +224,13 @@ function start(THREE) {
     const g = screenCanvas.getContext("2d"), w = screenCanvas.width, h = screenCanvas.height;
     g.fillStyle = "#000"; g.fillRect(0, 0, w, h);
     g.drawImage(shots.src, 0, -roll * h, w, h);
+    // in light mode the placement's caption band (black, white words) turns white with black words, as the app
+    // shows it in light mode: the band is inverted in place
+    if (!dark && cuts.length > 3) {
+      g.globalCompositeOperation = "difference"; g.fillStyle = "#fff";
+      g.fillRect(0, (cuts[1] - roll) * h, w, (cuts[2] - cuts[1]) * h);
+      g.globalCompositeOperation = "source-over";
+    }
     if (shots.next && roll > 0) g.drawImage(shots.next, 0, (1 - roll) * h, w, h);
     screenTex.needsUpdate = true;
   }
@@ -240,6 +246,7 @@ function start(THREE) {
     if (d === dark) return;
     dark = d;
     notes.forEach(({ n, c, tex }) => { drawNote(c, n, d); tex.needsUpdate = true; });
+    rollDrawn = -1;   // the screen redraws in the other mode (its caption band follows it)
     glassBanner.color.set(d ? 0xd8d8de : 0xffffff);
     renderer.toneMappingExposure = d ? 0.95 : 1.1;
     key.intensity = d ? 1.1 : 1.6;
