@@ -483,7 +483,7 @@ function start(THREE) {
   const midOf = (a, b) => SH / 2 - (a + b) / 2 * SH;   // the screen height at the middle of a stretch of the placement
   // the close-up: one full turn that ends facing straight on, then the camera moves in close to the top of the screen
   // and slowly travels down it so the words can be read, then pulls back
-  const Z_SPIN = 1600, Z_IN = 1200, Z_PAN = 24000, Z_OUT = 1200, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
+  const Z_SPIN = 1600, Z_IN = 1200, Z_PAN = 24000, Z_OUT = 1800, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
   // it starts with the phone's top edge at the middle of the window and ends with its bottom edge there
   const PAN_TOP = H / 2, PAN_BOTTOM = -H / 2;
   const lookAt = new THREE.Vector3(), aim = new THREE.Vector3();
@@ -646,8 +646,9 @@ function start(THREE) {
       const target = phone.localToWorld(aim.set(sway, shotY, front));
       // straight on, close enough to read, with both sides of the phone still in the frame
       const fit = (W * 1.3 / 2) / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(camera.aspect, 1.6));
+      // the camera slides without turning, so the phone glides in and back out along one smooth line
       camera.position.set(target.x * zk, target.y * zk, camBase + (target.z + fit - camBase) * zk);
-      camera.lookAt(lookAt.set(target.x * zk, target.y * zk, target.z * zk));
+      camera.lookAt(lookAt.set(target.x * zk, target.y * zk, camera.position.z - 1));
     } else if (spinK > 0.002) {
       // the turntable's camera wanders: sometimes as close as the zoom's close-up, sometimes further back than the
       // resting view, its aim drifting up and down the phone (more so when close). Three slow waves of unrelated
