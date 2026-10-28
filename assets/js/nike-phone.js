@@ -285,8 +285,8 @@ function start(THREE) {
   // the pose of each step: turn (y), tilt (x), drop (into the gray lane), gray, and what's on the screen
   function pose(p) {
     const at = Math.min(N - 1, Math.floor(p * N)), k = p * N - at;
-    const o = { ry: -0.42, rx: 0.1, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
-    if (at === 1) { o.ry = -0.42 + 0.22 * ease(k); o.rx = 0.1 - 0.04 * ease(k); }
+    const o = { ry: -0.58, rx: 0.14, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
+    if (at === 1) { o.ry = -0.58 + 0.38 * ease(k); o.rx = 0.14 - 0.08 * ease(k); }
     if (at === 2) {   // the device check: the phone lifts and turns all the way round, then a line of light runs down it
       o.ry = -0.2 + ease(clamp(k / 0.6)) * Math.PI * 2; o.rx = 0.06; o.y = 0.05 * Math.sin(Math.PI * clamp(k / 0.6));
       // the glow slowly appears round the whole edge, pulses, and fades away before the step ends
@@ -453,7 +453,7 @@ function start(THREE) {
 
   // ---------- the loop: only while the pinned layout is on and the scene is on screen ----------
   let onScreen = false, raf = 0, last = performance.now();
-  const cur = { ry: -0.42, rx: 0.1, y: 0, s: 1, gray: 0, mine: 1 };
+  const cur = { ry: -0.58, rx: 0.14, y: 0, s: 1, gray: 0, mine: 1 };
   const live = () => scene.classList.contains("is-live");
   function frame(now) {
     raf = 0;
