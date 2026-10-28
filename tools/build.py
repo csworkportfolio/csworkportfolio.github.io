@@ -1257,11 +1257,12 @@ def demo_localize(b, root):
     img = lambda n: f"{root}assets/ai/hub/{n}.jpg"
     ko = next(r for r in b["regions"] if r.get("review"))
     before, old, new, after = re.match(r"(.*)\[(.*)\|(.*)\](.*)", ko["text"]).groups()
-    rail = "".join(f'<li class="hb-nav{c}">{hb_icon(i)}<span>{t}</span>{s}</li>' for i, t, c, s in (
-        ("play", "Play", " is-on", ""), ("board", "Leaderboards", "", ""),
-        ("cup", "May Challeng…", " is-challenge", "<small>It’s time to get sta…</small>"),
-        ("badge", "My badges", "", ""), ("people", "People directory", "", ""), ("cal", "Calendar", "", ""),
-        ("admin", "Admin", "", "")))
+    # each menu item, with the shorter title the phone's tab bar uses
+    rail = "".join(f'<li class="hb-nav{c}">{hb_icon(i)}<span class="hb-d">{t}</span><span class="hb-m">{m}</span>{s}</li>' for i, t, m, c, s in (
+        ("play", "Play", "Play", " is-on", ""), ("board", "Leaderboards", "Leaderboards", "", ""),
+        ("cup", "May Challeng\u2026", "Challenge", " is-challenge", "<small>It\u2019s time to get sta\u2026</small>"),
+        ("badge", "My badges", "My Badges", "", ""), ("people", "People directory", "Directory", "", ""), ("cal", "Calendar", "Calendar", "", ""),
+        ("admin", "Admin", "Admin", "", "")))
     tools = "".join(f'<span class="hb-round">{hb_icon(i)}</span>' for i in ("edit", "adduser", "bell", "help"))
     tick = '<span class="hb-tick"></span>'
 

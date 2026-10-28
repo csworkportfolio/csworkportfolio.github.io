@@ -3022,6 +3022,8 @@ html.ai-locked { overflow: hidden; }
 .hb.is-mobile .hb-toast { z-index: 4; bottom: 76px; }
 .hb.is-mobile .hb-cursor { z-index: 5; }
 .hb.is-mobile .hb-b { padding: 0 12px; }
+.hb-m, .hb.is-mobile .hb-d { display: none; }
+.hb.is-mobile .hb-m { display: inline; }
 .hb-touch { display: none; }
 .hb.is-mobile .hb-cursor { display: none; }
 .hb.is-mobile .hb-touch { display: block; position: absolute; z-index: 6; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; pointer-events: none; opacity: 0;
