@@ -2594,10 +2594,11 @@ html .pills > .seg.is-scrolling { background: none; }
 .hb-view:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; }
 .ai-localize.is-full .hb-view { cursor: zoom-out; }
 .ai-localize.is-full .ai-stage { position: fixed; inset: 0; z-index: 10000; margin: 0; border-radius: 0; padding: 24px 24px 64px; display: grid; place-items: center; align-content: center;
-  background: #050508; }
+  background: var(--paper); }
 .ai-localize.is-full .hb-window { width: min(100%, calc((100vh - 170px) * 1280 / 708)); }
-.ai-localize.is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: #e8e8ed; }
+.ai-localize.is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: var(--muted); }
 html.ai-locked { overflow: hidden; }
+html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has its own controls in that corner */
 .hb-view { position: relative; overflow: hidden; height: calc(708px * var(--hb-s, .6)); }
 .hb { position: absolute; left: 0; top: 0; width: 1280px; height: 708px; overflow: hidden; background: var(--hb-bg); color: var(--hb-ink);
   font: 400 12px/1.3 "Source Sans 3", "Source Sans Pro", -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -2788,9 +2789,9 @@ html.ai-locked { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .hb-views button { transition: none; } }
 /* Mobile on a wide screen: the desktop window steps away (its frame stays, so nothing around it moves) and the
    phone screen stands on its own, with the window's rounded corners and shadow */
-.hb-window, .hb-window .ai-bar { transition: background-color .3s, box-shadow .3s, opacity .3s; }
+.hb-window { transition: background-color .3s, box-shadow .3s; }
 .ai-localize.is-device .hb-window { background: transparent; box-shadow: none; }
-.ai-localize.is-device .hb-window .ai-bar { opacity: 0; border-color: transparent; }
+.ai-localize.is-device .hb-window .ai-bar { display: none; }
 .ai-localize.is-device .hb { border-radius: calc(14px / var(--hb-s)); box-shadow: var(--ai-shadow); }
 /* on a phone the window's title bar goes too: the Hub's own green bar is the top */
 .ai-localize.is-mobile .hb-window .ai-bar { display: none; }
@@ -2805,7 +2806,7 @@ html.ai-locked { overflow: hidden; }
 .hb-chapters button.is-on .hb-ch-t { color: var(--ink); font-weight: 600; }
 .hb-chapters button:hover .hb-ch-t { color: var(--ink); }
 .hb-chapters button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 4px; border-radius: 4px; }
-.ai-localize.is-full .hb-chapters { width: min(100%, calc((100vh - 170px) * 1280 / 708)); --muted: #a1a1a6; --ink: #f5f5f7; }
+.ai-localize.is-full .hb-chapters { width: min(100%, calc((100vh - 170px) * 1280 / 708)); }
 .ai-localize.is-full.is-mobile .hb-chapters { width: min(100%, calc((100vh - 170px) * 390 / 760)); }
 @media (max-width: 720px) { .hb-chapters { gap: 4px; } .hb-chapters button { font-size: 10.5px; line-height: 1.2; } .hb-ch-t { white-space: normal; } }
 

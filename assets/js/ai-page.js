@@ -72,8 +72,9 @@
       fig.classList.toggle("is-mobile", mobile && !device);
       fig.classList.toggle("is-device", device);
       if (mobile) {
-        const h = device ? 708 * w / 1280 : 760 * w / 390;
-        const s = device ? h * 0.9 / 760 : w / 390;
+        // in the window's place the phone also takes the title bar's 36px, so the window keeps its size
+        const h = device ? 708 * w / 1280 + 36 : 760 * w / 390;
+        const s = device ? h * 0.96 / 760 : w / 390;
         view.style.height = h + "px";
         for (const [k, v] of [["--hb-s", s], ["--hb-k", s], ["--hb-tx", device ? (w - 390 * s) / 2 : 0], ["--hb-ty", device ? (h - 760 * s) / 2 : 0]])
           view.style.setProperty(k, v);
