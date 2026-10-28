@@ -42,11 +42,10 @@ function start(THREE) {
   canvas.className = "ph3d";
   canvas.setAttribute("aria-hidden", "true");
   visual.append(canvas);
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, stencil: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.localClippingEnabled = true;   // the pieces' shadows are clipped to the screen
   const world = new THREE.Scene();
   world.environment = new THREE.PMREMGenerator(renderer).fromScene(studio(THREE), 0.04).texture;
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
@@ -100,7 +99,9 @@ function start(THREE) {
 
   // front: black glass, the screen, a clear layer that catches the room, the island
   const front = D / 2 + 0.0015;
-  phone.add(shapeMesh(W - 0.022, H - 0.022, R - 0.011, new THREE.MeshPhysicalMaterial({ color: 0x050505, roughness: 0.12 }), front));
+  // the black front glass also marks its rounded shape in the stencil, so the pieces' shadows fall only on it
+  phone.add(shapeMesh(W - 0.022, H - 0.022, R - 0.011, new THREE.MeshPhysicalMaterial({ color: 0x050505, roughness: 0.12,
+    stencilWrite: true, stencilRef: 1, stencilZPass: THREE.ReplaceStencilOp }), front));
   const SW = W - 0.036, SH = SW * 2868 / 1320, SR = 0.112;
   const screenCanvas = document.createElement("canvas"); screenCanvas.width = 660; screenCanvas.height = 1434;
   const screenTex = new THREE.CanvasTexture(screenCanvas); screenTex.colorSpace = THREE.SRGBColorSpace; screenTex.anisotropy = 8;
@@ -129,9 +130,6 @@ function start(THREE) {
     g.fillStyle = "#000"; g.beginPath(); g.roundRect(40 - 1000, 40, 176, 176, 24); g.fill();
     return new THREE.CanvasTexture(c);
   })();
-  // the screen's four edges, in the phone's own space (moved into the world each frame): the shadows stay on it
-  const screenEdges = [[-1, 0], [1, 0], [0, -1], [0, 1]].map(([x, y]) => new THREE.Plane(new THREE.Vector3(x, y, 0), x ? SW / 2 : SH / 2));
-  const shadowClip = screenEdges.map((pl) => pl.clone());
   for (let i = 0; i < cuts.length - 1; i++) {
     const t = cuts[i], b = cuts[i + 1], h = (b - t) * SH;
     // each slice keeps the screen's own rounded corners where it has them: the top one at the top, the last at the bottom
@@ -148,7 +146,8 @@ function start(THREE) {
     card.userData.away = [new THREE.Vector3(-0.16, 0.2, 0.22), new THREE.Vector3(0.36, -0.01, 0.42), new THREE.Vector3(-0.27, -0.02, 0.62)][i] || new THREE.Vector3();
     card.visible = false; phone.add(card); slices.push(card);
     // its shadow on the screen below, so it reads as floating: soft, larger and further off the higher it is
-    const shade = new THREE.Mesh(new THREE.PlaneGeometry(SW * 1.3, h * 1.3 + 0.08), new THREE.MeshBasicMaterial({ map: softShadow, transparent: true, opacity: 0, depthWrite: false, clippingPlanes: shadowClip }));
+    const shade = new THREE.Mesh(new THREE.PlaneGeometry(SW * 1.3, h * 1.3 + 0.08), new THREE.MeshBasicMaterial({ map: softShadow, transparent: true, opacity: 0, depthWrite: false,
+      stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc, stencilFail: THREE.KeepStencilOp, stencilZPass: THREE.KeepStencilOp }));
     shade.visible = false; phone.add(shade); card.userData.shade = shade;
   }
 
@@ -524,8 +523,6 @@ function start(THREE) {
     // the brief's slices, or the whole screen
     const apart = o.apart;
     screen.visible = apart < 0.002;
-    phone.updateMatrixWorld();
-    screenEdges.forEach((pl, i) => shadowClip[i].copy(pl).applyMatrix4(phone.matrixWorld));
     slices.forEach((m) => {
       m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart);
       // the shadow lies on the screen under the piece, pushed down and to the right by the light as it rises
