@@ -131,7 +131,7 @@ function start(THREE) {
     card.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
     // further out toward the reader, each a step nearer than the last (the bottom one lifts as it comes, so it
     // clears the switcher under the phone)
-    card.userData.away = [new THREE.Vector3(-0.07, 0.07, 0.22), new THREE.Vector3(0.1, -0.01, 0.42), new THREE.Vector3(-0.035, 0.1, 0.62)][i] || new THREE.Vector3();
+    card.userData.away = [new THREE.Vector3(-0.07, 0.07, 0.22), new THREE.Vector3(0.24, -0.01, 0.42), new THREE.Vector3(-0.16, 0.04, 0.62)][i] || new THREE.Vector3();
     card.visible = false; phone.add(card); slices.push(card);
   }
 
@@ -239,7 +239,7 @@ function start(THREE) {
   const loadImg = (url) => new Promise((ok) => { if (!url) return ok(null); const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = url; });
   function useSet(i) {
     const s = sets[i] || sets[0];
-    Promise.all([loadImg(s.src), loadImg(s.next)]).then(([a, b]) => { shots = { src: a, next: b }; rollDrawn = -1; });
+    Promise.all([loadImg(s.src), loadImg(s.next)]).then(([a, b]) => { shots = { src: a, next: b }; rollDrawn = -1; kick(); });
   }
   function drawScreen(roll) {
     if (!shots.src || Math.abs(roll - rollDrawn) < 0.001) return;
@@ -254,6 +254,7 @@ function start(THREE) {
   scene.querySelectorAll(".sc-switch button").forEach((b) => b.addEventListener("click", () => useSet(+b.dataset.set)));
 
   // ---------- light and dark: the page's setting, or the switch in the header ----------
+  let wake = () => {};
   const root = document.documentElement, systemDark = matchMedia("(prefers-color-scheme: dark)");
   const isDark = () => root.classList.contains("can-dark") && (root.classList.contains("theme-dark") || (!root.classList.contains("theme-light") && systemDark.matches));
   let dark = null;
@@ -261,6 +262,7 @@ function start(THREE) {
     const d = isDark();
     if (d === dark) return;
     dark = d;
+    wake();   // (kick, once the loop is set up)
     notes.forEach(({ n, c, tex }) => { drawNote(c, n, d); tex.needsUpdate = true; });
     glassBanner.color.set(d ? 0xd8d8de : 0xffffff);
     renderer.toneMappingExposure = d ? 0.95 : 1.1;
@@ -455,8 +457,8 @@ function start(THREE) {
   const live = () => scene.classList.contains("is-live");
   function frame(now) {
     raf = 0;
-    if (!onScreen || !live()) { scene.classList.remove("has-3d"); return; }
-    scene.classList.add("has-3d");
+    if (!onScreen || !live()) { flag("has-3d", false); return; }
+    flag("has-3d", true);
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     const o = pose(progress());
     const f = 1 - Math.exp(-dt * 7);   // follows the scroll closely, without judder
@@ -473,6 +475,7 @@ function start(THREE) {
     }
     const lf = Math.min(1, dt * 4);
     look.x += ((drag ? 0 : lookAim.x) - look.x) * lf; look.y += ((drag ? 0 : lookAim.y) - look.y) * lf;
+    if (Math.abs(look.x - lookAim.x) + Math.abs(look.y - lookAim.y) < 0.002 && !drag) { look.x = lookAim.x; look.y = lookAim.y; }
     // the turntable: its speed wanders between slow and fast; off, it settles to the nearest full turn
     spinK += ((spinning ? 1 : 0) - spinK) * Math.min(1, dt * 2.2);
     if (spinning) spinAngle += (0.3 + 1.3 * Math.pow(0.5 + 0.5 * Math.sin(now / 1700) * Math.sin(now / 2900 + 1.3), 2)) * dt;
@@ -491,12 +494,12 @@ function start(THREE) {
         shotY = PAN_TOP + (PAN_BOTTOM - PAN_TOP) * ease(clamp((ti - Z_IN * 0.6) / Z_PAN));
       }
     }
-    const lx = look.y * 0.14 * (1 - zf), ly = look.x * 0.28 * (1 - zf);   // the lean toward the pointer (none during the zoom)
+    const lx = look.y * 0.06 * (1 - zf), ly = look.x * 0.13 * (1 - zf);   // a slight lean toward the pointer from the step's pose (none during the zoom)
     const wob = spinK * 0.1 * Math.sin(now / 2600);                          // the turntable tips a little as it turns
     const hero = ease(spinK);
     rig.rotation.set(0.3 * hero, 0, -0.32 * hero);                            // the hero angle: leaning back, tilted to one side
     phone.rotation.set(cur.rx + off.x + lx + wob + (0 - cur.rx - off.x) * zf, cur.ry + off.y + ly + spinAngle + zturn + (0 - cur.ry - off.y) * zf, 0);   // straight on, to read
-    phone.position.y = cur.y + Math.sin(now / 900) * 0.012;
+    phone.position.y = cur.y;
     phone.scale.setScalar(cur.s);
     // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
     tinted.forEach(([m, c]) => m.color.copy(c).lerp(GRAPHITE, cur.gray));
@@ -543,16 +546,34 @@ function start(THREE) {
     const showing = zk > 0 || zf > 0 || spinK > 0.01;
     setFull(showing);
     centreK = zk;
-    scene.classList.toggle("n3-zooming", zk > 0.02);   // the close-up passes over the placement switcher too
+    flag("n3-zooming", zk > 0.02);   // the close-up passes over the placement switcher too
     if (full) fullFrame();
     const sk = Math.max(zk, spinK);
     cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
     // the tab sits on the window's right edge, level with the phone
     const fr = flat.getBoundingClientRect(); dock.style.top = `${fr.top + fr.height / 2}px`;
     renderer.render(world, camera);
+    // rest when nothing moves: once the phone has settled (no scroll, pointer, drag, show, glow or banner still
+    // moving) the loop stops, and the next scroll, pointer move, click or resize wakes it
+    const sig = [phone.rotation.x, phone.rotation.y, phone.position.y, phone.scale.x, cur.gray, look.x, look.y, off.x, off.y, apart, o.roll,
+      ...notes.map((n) => n.k), island.material.opacity, camera.position.z];
+    const moved = sig.some((v, i) => Math.abs(v - (lastSig[i] ?? 1e9)) > 3e-4);
+    lastSig = sig;
+    const busy = drag || spinning || spinK > 0.002 || zoomAt >= 0 || siri.visible || Math.abs(vel.x) + Math.abs(vel.y) > 1e-5;
+    still = moved || busy ? 0 : still + 1;
+    if (still > 20) { raf = 0; return; }
     raf = requestAnimationFrame(frame);
   }
-  const kick = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+  let lastSig = [], still = 0;
+  // classes are only written when they change: any write wakes the loop (it watches the section's classes)
+  function flag(c, on) { if (scene.classList.contains(c) !== on) scene.classList.toggle(c, on); }
+  wake = () => kick();
+  const kick = () => { still = 0; if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+  addEventListener("scroll", () => { if (onScreen) kick(); }, { passive: true });
+  addEventListener("resize", () => { if (onScreen) kick(); }, { passive: true });
+  scene.addEventListener("pointermove", kick, { passive: true });
+  scene.addEventListener("pointerleave", kick);
+  scene.addEventListener("click", kick);
   new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (onScreen) kick(); }, { threshold: 0 }).observe(scene);
   new MutationObserver(kick).observe(scene, { attributes: true, attributeFilter: ["class"] });
 }
