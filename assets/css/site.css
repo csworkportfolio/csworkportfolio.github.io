@@ -2341,7 +2341,7 @@ html.theme-light .glance-logos img { filter: brightness(0); opacity: .45; }
   .sc-bars span:not(.is-cur) i { display: none; }
   .sc-step-name { min-height: 1.4em; margin: 10px 0 0; font-size: 15px; color: var(--ink); }
   .sc-step-name strong { font-weight: 600; }
-  .sc-step-name span { margin-left: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .sc-step-name span { margin-right: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }   /* whose step, then the step */
   .sc-step-name span.is-me { color: var(--rust); }
   /* the 3D phone stands in for the flat one: the demo's sizing never changes its place (that redrew the 3D view, a flash) */
   .scene.n3-phone.has-3d.is-demo .ph { width: min(210px, 56vw); transform: none; transition: none; }

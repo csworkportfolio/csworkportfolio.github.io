@@ -1715,7 +1715,7 @@
           last = at; scene.dataset.stage = String(at);
           const name = names[at] ? names[at].textContent : "";
           stepName.innerHTML = "";
-          stepName.append(el("strong", {}, name), el("span", { class: names[at] && names[at].classList.contains("is-me") ? "is-me" : "" }, owners[at] || ""));
+          stepName.append(el("span", { class: names[at] && names[at].classList.contains("is-me") ? "is-me" : "" }, owners[at] || ""), el("strong", {}, name));
         }
         step.classList.add("is-on");
         [...bars.children].forEach((b, i) => { b.style.setProperty("--f", i === at ? local.toFixed(3) : 0); b.classList.toggle("is-cur", i === at); b.classList.toggle("is-done", i < at); });
