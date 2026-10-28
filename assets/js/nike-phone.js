@@ -390,17 +390,17 @@ function start(THREE) {
   // the shows: a full turn, and a commercial push-in on the cameras
   // spin is a switch: on, the phone keeps turning like a showroom turntable, speeding up and slowing down, while the
   // camera drifts in and out over different parts of it; off, it settles back. The zoom is a commercial pass down the
-  // screen: close shots from the top of the placement to its nav bar, each drifting down, then a pull back out
+  // screen: one turn to face the reader, then a slow close-up from the top of the placement down to its nav bar
   let spinning = false, spinK = 0, spinAngle = 0, zoomAt = -1;
   const spinBtn = dock.querySelector('[data-act="spin"]');
   const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) zoomAt = -1; kick(); };
   spinBtn.addEventListener("click", () => setSpin(!spinning));
   dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { setSpin(false); zoomAt = performance.now(); kick(); });
   const midOf = (a, b) => SH / 2 - (a + b) / 2 * SH;   // the screen height at the middle of a stretch of the placement
-  const SHOTS = cuts.length > 3
-    ? [SH / 2 - 0.2, midOf(cuts[0], cuts[1]) - 0.08, midOf(cuts[1], cuts[2]), -SH / 2 + 0.16]
-    : [SH / 2 - 0.2, 0.2, -0.2, -SH / 2 + 0.16];
-  const Z_IN = 700, Z_SHOT = 1700, Z_OUT = 900, ZOOM_MS = Z_IN + SHOTS.length * Z_SHOT + Z_OUT;
+  // the close-up: one full turn that ends facing straight on, then the camera moves in close to the top of the screen
+  // and slowly travels down it so the words can be read, then pulls back
+  const Z_SPIN = 1500, Z_IN = 900, Z_PAN = 9000, Z_OUT = 1000, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
+  const PAN_TOP = SH / 2 - 0.2, PAN_BOTTOM = -SH / 2 + 0.2;
   const lookAt = new THREE.Vector3(), aim = new THREE.Vector3();
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
@@ -476,24 +476,25 @@ function start(THREE) {
     spinK += ((spinning ? 1 : 0) - spinK) * Math.min(1, dt * 2.2);
     if (spinning) spinAngle += (0.3 + 1.3 * Math.pow(0.5 + 0.5 * Math.sin(now / 1700) * Math.sin(now / 2900 + 1.3), 2)) * dt;
     else spinAngle += (Math.round(spinAngle / (Math.PI * 2)) * Math.PI * 2 - spinAngle) * Math.min(1, dt * 2.5);
-    // the commercial pass: in, a few close shots down the screen, out
-    let zk = 0, shotY = SHOTS[0], sway = 0;
+    // the close-up: a turn to face the reader (zf), then in close (zk), down the screen, and out
+    let zk = 0, zf = 0, zturn = 0, shotY = PAN_TOP, sway = 0;
     if (zoomAt >= 0) {
       const t = now - zoomAt;
       if (t >= ZOOM_MS) zoomAt = -1;
       else {
-        zk = t < Z_IN ? ease(t / Z_IN) : t > ZOOM_MS - Z_OUT ? 1 - ease((t - (ZOOM_MS - Z_OUT)) / Z_OUT) : 1;
-        const st = clamp(t - Z_IN, 0, SHOTS.length * Z_SHOT - 1), i = Math.floor(st / Z_SHOT), local = (st - i * Z_SHOT) / Z_SHOT;
-        const from = SHOTS[Math.max(0, i - 1)];
-        shotY = from + (SHOTS[i] - from) * ease(clamp(local / 0.28)) - local * 0.07;   // a quick move to the next shot, then a slow drift down
-        sway = Math.sin((i + local) * 1.9) * 0.07;
+        zturn = ease(clamp(t / Z_SPIN)) * Math.PI * 2;
+        zf = t > ZOOM_MS - Z_OUT ? 1 - ease((t - (ZOOM_MS - Z_OUT)) / Z_OUT) : ease(clamp(t / Z_SPIN));
+        const ti = t - Z_SPIN;
+        zk = ti <= 0 ? 0 : ti < Z_IN ? ease(ti / Z_IN) : t > ZOOM_MS - Z_OUT ? 1 - ease((t - (ZOOM_MS - Z_OUT)) / Z_OUT) : 1;
+        // starts at the top and glides steadily down, easing at both ends
+        shotY = PAN_TOP + (PAN_BOTTOM - PAN_TOP) * ease(clamp((ti - Z_IN * 0.6) / Z_PAN));
       }
     }
-    const lx = look.y * 0.14 * (1 - zk), ly = look.x * 0.28 * (1 - zk);   // the lean toward the pointer (none during the zoom)
+    const lx = look.y * 0.14 * (1 - zf), ly = look.x * 0.28 * (1 - zf);   // the lean toward the pointer (none during the zoom)
     const wob = spinK * 0.1 * Math.sin(now / 2600);                          // the turntable tips a little as it turns
     const hero = ease(spinK);
     rig.rotation.set(0.3 * hero, 0, -0.32 * hero);                            // the hero angle: leaning back, tilted to one side
-    phone.rotation.set(cur.rx + off.x + lx + wob + (0.04 - cur.rx - off.x) * zk, cur.ry + off.y + ly + spinAngle + (-0.22 - cur.ry - off.y) * zk, 0);
+    phone.rotation.set(cur.rx + off.x + lx + wob + (0 - cur.rx - off.x) * zf, cur.ry + off.y + ly + spinAngle + zturn + (0 - cur.ry - off.y) * zf, 0);   // straight on, to read
     phone.position.y = cur.y + Math.sin(now / 900) * 0.012;
     phone.scale.setScalar(cur.s);
     // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
@@ -527,7 +528,7 @@ function start(THREE) {
     if (zk > 0) {   // close on the screen, a little to one side, looking at the shot's point on it
       phone.updateMatrixWorld();
       const target = phone.localToWorld(aim.set(sway, shotY, front));
-      camera.position.set(target.x * zk + 0.34 * zk, target.y * zk + 0.06 * zk, camBase + (target.z + 1.05 - camBase) * zk);   // angled, so the screen's edge reads
+      camera.position.set(target.x * zk, target.y * zk, camBase + (target.z + 1.05 - camBase) * zk);   // straight on, close enough to read
       camera.lookAt(lookAt.set(target.x * zk, target.y * zk, target.z * zk));
     } else if (spinK > 0.002) {   // the turntable's camera drifts in and out, its aim wandering up and down the phone
       const fy = (Math.sin(now / 2300) * 0.3 + Math.sin(now / 3700 + 2) * 0.14) * spinK;
@@ -536,7 +537,7 @@ function start(THREE) {
       camera.lookAt(lookAt.set(0, fy, 0));
     } else if (camera.position.z !== camBase || camera.position.x !== 0 || camera.position.y !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
     // out over the page during the shows; back in its column after
-    const showing = zk > 0 || spinK > 0.01;
+    const showing = zk > 0 || zf > 0 || spinK > 0.01;
     setFull(showing);
     if (full) fullFrame();
     const sk = Math.max(zk, spinK);
