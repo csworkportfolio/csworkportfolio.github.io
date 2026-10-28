@@ -122,8 +122,11 @@ function start(THREE) {
   // a soft dark rounded shape, blurred, shared by the slices' shadows
   const softShadow = (() => {
     const c = document.createElement("canvas"); c.width = 256; c.height = 256;
-    const g = c.getContext("2d"); g.filter = "blur(18px)"; g.fillStyle = "rgba(0,0,0,1)";
-    g.beginPath(); g.roundRect(40, 40, 176, 176, 24); g.fill();
+    // the blur comes from a canvas shadow, which every browser draws (Safari ignores canvas filters): the shape
+    // itself sits off the canvas and only its blurred shadow lands on it
+    const g = c.getContext("2d");
+    g.shadowColor = "rgba(0,0,0,1)"; g.shadowBlur = 36; g.shadowOffsetX = 1000;
+    g.fillStyle = "#000"; g.beginPath(); g.roundRect(40 - 1000, 40, 176, 176, 24); g.fill();
     return new THREE.CanvasTexture(c);
   })();
   // the screen's four edges, in the phone's own space (moved into the world each frame): the shadows stay on it
