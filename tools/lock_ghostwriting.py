@@ -45,6 +45,18 @@ def data_url(path, max_h, quality):
     return "data:image/webp;base64," + base64.b64encode(buf.getvalue()).decode(), im.width, im.height
 
 
+def ask(prompt, title="Lock the Ghostwriting posts"):
+    """A Mac password window (typing into some terminal panes never reaches a hidden prompt); getpass elsewhere."""
+    if sys.platform == "darwin":
+        script = (f'text returned of (display dialog "{prompt}" default answer "" with hidden answer '
+                  f'with title "{title}" buttons {{"Cancel", "OK"}} default button "OK")')
+        res = subprocess.run(["osascript", "-e", script], capture_output=True, text=True)
+        if res.returncode != 0:
+            sys.exit("Cancelled; nothing was changed.")
+        return res.stdout.rstrip("\n")
+    return getpass.getpass(prompt + " ")
+
+
 def main():
     src = json.loads(PRIVATE.read_text())
     items = []
@@ -61,13 +73,12 @@ def main():
   {build.paragraphs(src["body"])}
 </section>'''
 
-    pw = getpass.getpass("Password for the Ghostwriting page: ")
-    if len(pw) < 10 and input(
-            "A short password (like 4 digits) keeps casual visitors out, but someone determined could download the\n"
-            "locked file and try every combination in minutes. Use it anyway? [y/N] ").strip().lower() != "y":
-        sys.exit("Nothing was changed.")
-    if getpass.getpass("Again to confirm: ") != pw:
-        sys.exit("The passwords didn't match; nothing was changed.")
+    pw = ask("Passcode for the Ghostwriting posts:")
+    if ask("Again to confirm:") != pw:
+        sys.exit("The passcodes didn't match; nothing was changed.")
+    if len(pw) < 10:
+        print("Note: a short passcode (like 4 digits) keeps casual visitors out, but someone determined could download "
+              "the locked file and try every combination in minutes.")
     res = subprocess.run(["node", str(ROOT / "tools" / "encrypt.mjs")],
                          input=json.dumps({"password": pw, "plaintext": html}).encode(),
                          capture_output=True, check=True)

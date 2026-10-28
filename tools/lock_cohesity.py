@@ -10,7 +10,6 @@ committed. Run it again whenever those posts change:
 
 then rebuild with python3 tools/build.py. The passcode is asked for twice and never stored.
 """
-import getpass
 import json
 import subprocess
 import sys
@@ -18,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build  # noqa: E402  (reuses the site's carousel markup)
-from lock_ghostwriting import PRIVATE, data_url, find  # noqa: E402
+from lock_ghostwriting import PRIVATE, ask as ask_window, data_url, find  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "content" / "cohesity-exec.lock.json"
@@ -58,20 +57,9 @@ def encrypt(html, pw):
     OUT.write_text(res.stdout.decode() + "\n")
 
 
-def ask(prompt):
-    """A Mac password window (typing into some terminal panes never reaches a hidden prompt); getpass elsewhere."""
-    if sys.platform == "darwin":
-        script = (f'text returned of (display dialog "{prompt}" default answer "" with hidden answer '
-                  'with title "Lock the Cohesity posts" buttons {"Cancel", "OK"} default button "OK")')
-        res = subprocess.run(["osascript", "-e", script], capture_output=True, text=True)
-        if res.returncode != 0:
-            sys.exit("Cancelled; nothing was changed.")
-        return res.stdout.rstrip("\n")
-    return getpass.getpass(prompt + " ")
-
-
 def main():
     html, n = render_html()
+    ask = lambda prompt: ask_window(prompt, "Lock the Cohesity posts")
     pw = ask("Passcode (the same one as the Ghostwriting page):")
     if ask("Again to confirm:") != pw:
         sys.exit("The passcodes didn't match; nothing was changed.")
