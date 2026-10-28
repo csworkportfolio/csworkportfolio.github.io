@@ -2546,8 +2546,8 @@ html .pills > .seg.is-scrolling { background: none; }
 .ai-demo { margin: 40px auto 0; }
 .ai-stage { position: relative; background: var(--tabband); border-radius: 28px; padding: 44px; }
 .ai-note { margin-top: 12px; padding-left: 9px; font-size: 13px; line-height: 1.4; color: var(--muted); }
-:is(.ai-localize, .ai-board) .ai-note { padding-left: 0; text-align: center; min-height: 2.8em; transition: opacity .25s; }
-:is(.ai-localize, .ai-board) .ai-note.is-fading { opacity: 0; }
+:is(.ai-localize, .ai-board, .ai-cut) .ai-note { padding-left: 0; text-align: center; min-height: 2.8em; transition: opacity .25s; }
+:is(.ai-localize, .ai-board, .ai-cut) .ai-note.is-fading { opacity: 0; }
 .ai-label { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ai-sub); }
 .ai-label span { margin-left: 6px; font-family: var(--round); letter-spacing: 0; color: var(--ink); }
 .ai-spark { width: 14px; height: 14px; flex: none; fill: currentColor; }
@@ -2955,22 +2955,23 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .mb-battery .s3 { background: #a25ddc; } .mb-battery .s4 { background: #00c875; }
 
 
-/* the window's browser tabs: the open one follows the screen */
+/* the window's browser tabs, as Safari sets them: equal widths across the bar, each title centered with its icon,
+   the open one a softly raised rounded tile; the open one follows the screen */
 .mb-bar { gap: 14px; }
-.mbt-row { display: flex; align-items: flex-end; gap: 4px; align-self: stretch; min-width: 0; }
-.mbt { display: flex; align-items: center; gap: 7px; max-width: 240px; padding: 0 12px; margin-top: 6px; border-radius: 8px 8px 0 0; font-size: 12px; color: var(--mb-sub);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background-color .3s, color .3s; }
-.mbt .mb-logo { transform: scale(.7); margin: 0 -2px; }
+.mbt-row { flex: 1; display: flex; gap: 6px; align-self: center; min-width: 0; height: 26px; padding: 0 2px; }
+.mbt { flex: 1 1 0; display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 0; padding: 0 12px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--mb-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: background-color .3s, color .3s, box-shadow .3s; }
+.mbt .mb-logo { flex: none; transform: scale(.7); margin: 0 -2px; }
 .mbt-z { flex: none; width: 10px; height: 3px; margin-top: 6px; background: #ff4f00; }
-.mb-bar { background: #dde1ee; }
-.mb-window .mbt.is-mb { background: var(--mb-shell); color: var(--mb-ink); }
-.ai-board.is-zap .mbt.is-mb { background: none; color: var(--mb-sub); }
-.ai-board.is-zap .mbt.is-zp { background: #fff; color: #2d2e2e; }
+.mbt.is-mb, .ai-board.is-zap .mbt.is-zp { background: rgba(255, 255, 255, .72); color: var(--mb-ink); box-shadow: 0 0 0 .5px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .06); }
+.ai-board.is-zap .mbt.is-mb { background: none; color: var(--mb-sub); box-shadow: none; }
+.mb-bar { background: #e3e5ec; }
 @media (prefers-color-scheme: dark) {
-  .mb-bar { background: #10122a; }
-  .ai-board.is-zap .mbt.is-zp { background: #232323; color: #f2f2f2; }
+  .mb-bar { background: #1d1e24; }
+  .mbt.is-mb, .ai-board.is-zap .mbt.is-zp { background: rgba(255, 255, 255, .13); color: #f2f2f2; box-shadow: 0 0 0 .5px rgba(255, 255, 255, .12); }
 }
-@media (max-width: 720px) { .mbt { max-width: 150px; font-size: 11px; } }
+@media (max-width: 720px) { .mbt { font-size: 11px; padding: 0 8px; } }
 .mb-toast { position: absolute; left: 50%; bottom: 22px; z-index: 3; display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 6px;
   background: #323338; color: #fff; font-size: 13px; transform: translate(-50%, 12px); opacity: 0; transition: opacity .3s, transform .4s var(--ease); }
 .mb.is-toast .mb-toast { opacity: 1; transform: translate(-50%, 0); }

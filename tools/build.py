@@ -1554,7 +1554,10 @@ def demo_cut(b, root):
     sound = ('<button class="ai-btn ai-sound" type="button" aria-pressed="false" aria-label="Turn sound on">'
              '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>'
              '<path class="i-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="i-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>')
-    inner = ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window") + sound
+    chapters = "".join(f'<button type="button" style="--p:0" data-from="{c["from"]}" data-to="{c["to"]}"><span class="hb-fill"></span>'
+                       f'<span class="hb-ch-t">{esc(c["label"])}</span></button>' for c in b["chapters"])
+    inner = (ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window") + sound
+             + f'<nav class="hb-chapters" aria-label="Skip to a part of the video">{chapters}</nav>')
     return ai_figure(b, "The Mars Men PSA in Premiere Pro: its transcript, the vertical cut and the timeline", inner)
 
 

@@ -569,9 +569,32 @@
         }
         el.classList.toggle("is-now", now);
       });
+      chapter(t);
       data.final.forEach((s, i) => { const on = t >= s.from && t < s.to; clips[i].classList.toggle("is-now", on); audio[i].classList.toggle("is-now", on); });
       if (!video.paused) requestAnimationFrame(follow);
     }
+    // the chapters under the video: each fills as it plays, a tap jumps the video there, and the line under it says
+    // how AI helped with that part
+    const bars = [...fig.querySelectorAll(".hb-chapters button")], note = fig.querySelector(".ai-note");
+    let said = -1;
+    function chapter(t) {
+      const n = Math.max(0, data.chapters.findIndex((c) => t >= c.from && t < c.to));
+      bars.forEach((b, i) => {
+        const c = data.chapters[i];
+        b.classList.toggle("is-on", i === n);
+        b.style.setProperty("--p", i < n ? 1 : i > n ? 0 : Math.min(1, (t - c.from) / (c.to - c.from)));
+      });
+      if (n !== said && note) {
+        said = n;
+        note.classList.add("is-fading");
+        setTimeout(() => { note.textContent = data.chapters[n].say; note.classList.remove("is-fading"); }, 250);
+      }
+    }
+    bars.forEach((b, i) => b.addEventListener("click", () => {
+      video.currentTime = data.chapters[i].from + 0.01;
+      d.resume && d.resume();
+      follow();
+    }));
     video.addEventListener("play", () => { view.classList.add("is-playing"); requestAnimationFrame(follow); });
     video.addEventListener("pause", () => view.classList.remove("is-playing"));
     video.addEventListener("seeked", follow);

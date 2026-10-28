@@ -1,6 +1,7 @@
 """Rebuilds the Mars Men PSA for the AI page (assets/ai/marsmen.mp4) on the finished video's own timeline, without its
 burned-in captions: his edit, his soundtrack (voice, music and sound effects, used as he mixed it), every B-roll shot
-(the explosion included) with its old caption painted out (OpenCV inpainting), and his talking shots taken clean
+(the explosion included), from the clean Pexels originals where he found them (source-extra/pexels) and otherwise
+from the finished video with its old caption painted out (OpenCV inpainting), and his talking shots taken clean
 from the raw takes with punch-in zooms that change every second or so. tools/marsmen-shots.json lists the shots:
 where each sits on the timeline and which take and second it came from (matched by sound).
 
@@ -52,6 +53,7 @@ PHRASE = {"top": 2, "stack": 4, "sub": 3}
 BUILD = {"stack"}
 ORANGE = (255, 86, 0)   # Mars Men's brand orange
 FINISHED = CLIPS.parent / "Mars Men Video.mov"   # the finished video: its timeline, soundtrack and B-roll
+PEXELS = ROOT.parent / "source-extra/pexels"   # the clean B-roll originals from Pexels, named by their Pexels id
 # two looks: "wes" (Futura, after Wes Anderson's type) and "mars" (Mars Men's own: Fold Grotesque, white with the
 # key word in brand orange, subtitles as white labels on black). Fold Grotesque comes with the brand assets and is
 # not kept in this repo: pass its folder with --fonts.
@@ -229,6 +231,16 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     n, total = 0, int(round(shots[-1]["to"] * FPS))
     for s in shots:
         f0, f1 = int(round(s["from"] * FPS)), int(round(s["to"] * FPS))
+        if "pexels" in s:
+            # the clean original, cropped to the edit's framing: a 9:16 window `zoom` times into the frame
+            px = s["pexels"]
+            z = px["zoom"]
+            vf = (f"crop=min(iw\\,ih/{z}*9/16):ih/{z}:min(iw-min(iw\\,ih/{z}*9/16)\\,iw*{px['x']}):min(ih-ih/{z}\\,ih*{px['y']}),"
+                  f"scale={W}:{H},fps={FPS},setsar=1")
+            run("ffmpeg", "-v", "error", "-y", "-ss", f"{px['at']:.3f}", "-i", PEXELS / f"{px['id']}.mp4", "-frames:v", f1 - f0,
+                "-vf", vf, "-an", "-c:v", "libx264", "-crf", 14, "-pix_fmt", "yuv420p", tmp / f"p{n:03d}.mp4")
+            n += 1
+            continue
         if "broll" in s:
             run("ffmpeg", "-v", "error", "-y", "-ss", f"{f0 / FPS:.4f}", "-i", FINISHED, "-frames:v", f1 - f0,
                 "-vf", f"scale={W}:{H},fps={FPS},setsar=1", "-an", "-c:v", "libx264", "-crf", 14, "-pix_fmt", "yuv420p", tmp / f"p{n:03d}.mp4")
@@ -255,6 +267,9 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
         if "broll" not in s:
             continue
         x0, y0, x1, y1 = s["box"]
+        if "pexels" in s:   # a clean original: nothing to paint out, the new caption goes where the old one was
+            windows.append((s["from"], s["to"], (y0 + y1) / 4 / H))
+            continue
         f0, f1 = int(round(s["from"] * FPS)), int(round(s["to"] * FPS))
         for k in range(f0, f1):
             path = tmp / "frames" / f"{k + 1:05d}.png"

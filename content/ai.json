@@ -527,6 +527,32 @@
             "from": 41.13,
             "to": 43.43
           }
+        ],
+        "chapters": [
+          {
+            "label": "The Hook",
+            "from": 0,
+            "to": 2.0,
+            "say": "AI transcribed all six takes, so I could read the shoot instead of scrubbing it, and it helped me pick the shortest hook."
+          },
+          {
+            "label": "Text-Based Cut",
+            "from": 2.0,
+            "to": 17.23,
+            "say": "I cut the video by editing the transcript. Strike a line and it drops out of the timeline."
+          },
+          {
+            "label": "B-Roll",
+            "from": 17.23,
+            "to": 25.1,
+            "say": "For this page I rebuilt it by directing Claude Code: clean Pexels originals in place of the old captioned B-roll, and the iPhone HDR color fixed."
+          },
+          {
+            "label": "Captions",
+            "from": 25.1,
+            "to": 43.43,
+            "say": "AI finds me in every frame, so the big captions sit behind me, and each word lands as I say it."
+          }
         ]
       },
       {
