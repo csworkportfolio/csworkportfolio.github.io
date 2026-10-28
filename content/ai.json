@@ -237,36 +237,36 @@
           "At QAD Redzone and Cohesity I used AI across the editorial workflow: building the content calendar in Monday.com, writing briefs and first drafts that I then edited, setting up A/B tests, localizing content, and turning our guidelines into do's and don'ts docs the whole team could follow."
         ],
         "demo": "board",
-        "note": "An illustration of the workflow. The rows are examples.",
+        "note": "A copy of a Monday.com board, made for this page. The rows are examples.",
         "rows": [
           {
             "item": "Product launch post",
             "channel": "LinkedIn",
-            "date": "Mon",
+            "date": "Nov 3",
             "ai": "Brief drafted"
           },
           {
             "item": "Customer story",
             "channel": "Blog",
-            "date": "Tue",
+            "date": "Nov 4",
             "ai": "First draft"
           },
           {
             "item": "Event recap",
             "channel": "Newsletter",
-            "date": "Wed",
+            "date": "Nov 5",
             "ai": "A/B subject lines"
           },
           {
             "item": "Weekly roundup",
             "channel": "Email",
-            "date": "Thu",
+            "date": "Nov 6",
             "ai": "Localized"
           },
           {
             "item": "Behind the scenes",
             "channel": "Instagram",
-            "date": "Fri",
+            "date": "Nov 7",
             "ai": "Captions"
           }
         ],

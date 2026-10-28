@@ -1355,23 +1355,68 @@ def demo_localize(b, root):
     return ai_figure(b, "Illustration: the localization agent in a copy of the Champions Hub", inner)
 
 
-def demo_board(b):
-    """The editorial calendar as a Monday.com-style board, beside the do's and don'ts it lives by."""
+def demo_board(b, root):
+    """The editorial calendar in a copy of a Monday.com work management board (drawn at 1200 by 640 and scaled
+    to fit; a phone gets the narrower mobile layout): the board's statuses move along while the AI column fills,
+    then the cursor opens the do's and don'ts doc from the sidebar."""
+    ico = lambda n: hb_icon(n, "hb-i mb-i")
     last = len(b["statuses"]) - 1
+    me = f'<img class="mb-face" src="{root}assets/ai/hub/me.jpg" alt="">'
+    head = ("<span></span><span>Item</span><span>Person</span><span>Status</span><span>Channel</span><span>Date</span>"
+            f'<span class="mb-aih">{AI_SPARK}AI Assist</span>')
     rows = "".join(
-        f'<tr><td class="bd-item">{esc(r["item"])}</td>'
-        f'<td><span class="bd-status s{min(i + 1, last)}">{esc(b["statuses"][min(i + 1, last)])}</span></td>'
-        f'<td class="bd-dim">{esc(r["channel"])}</td><td class="bd-dim">{esc(r["date"])}</td>'
-        f'<td><span class="bd-ai is-on">{AI_SPARK}{esc(r["ai"])}</span></td></tr>' for i, r in enumerate(b["rows"]))
-    table = (f'<div class="bd-scroll"><table class="bd-table"><caption class="bd-group">This week</caption>'
-             f'<thead><tr><th>Item</th><th>Status</th><th>Channel</th><th>Date</th><th>AI assist</th></tr></thead>'
-             f'<tbody>{rows}</tbody></table></div>')
-    li = lambda xs: "".join(f"<li>{esc(x)}</li>" for x in xs)
-    rules = (f'<div class="bd-rules"><p class="ai-label">Do</p><ul class="bd-do">{li(b["dos"])}</ul>'
-             f'<p class="ai-label">Don&#39;t</p><ul class="bd-dont">{li(b["donts"])}</ul></div>')
-    doc = ai_window("Do's and don'ts", rules, " bd-doc")
-    inner = f'<div class="bd-grid">{ai_window("Editorial calendar", table)}{doc}</div>'
-    return ai_figure(b, "Illustration: an editorial calendar board and a do's and don'ts doc", inner)
+        f'<div class="mb-row" data-i="{i}"><span class="mb-check"></span><span class="mb-item">{esc(r["item"])}</span>'
+        f'<span class="mb-person">{me}</span>'
+        f'<span class="mb-status s{min(i + 1, last)}">{esc(b["statuses"][min(i + 1, last)])}</span>'
+        f'<span class="mb-dim">{esc(r["channel"])}</span><span class="mb-dim">{esc(r["date"])}</span>'
+        f'<span class="mb-ai is-on">{AI_SPARK}<span class="mb-ai-v">{esc(r["ai"])}</span></span></div>' for i, r in enumerate(b["rows"]))
+    held = [min(i + 1, last) for i in range(len(b["rows"]))]
+    battery = "".join(f'<i class="s{k}" style="--n:{held.count(k) * 5 / len(held)}"></i>' for k in range(len(b["statuses"])))
+    side = "".join(f'<li class="mb-nav{c}">{ico(i)}<span>{esc(t)}</span></li>' for i, t, c in (
+        ("board", "Editorial Calendar", " is-on is-board"), ("board", "Content Briefs", ""), ("board", "Campaigns", ""),
+        ("edit", "Do's and Don'ts", " is-doc")))
+    li = lambda xs, cls: "".join(f'<li class="{cls}">{esc(x)}</li>' for x in xs)
+    canvas = f'''
+<div class="mb-view"><div class="mb" lang="en" aria-hidden="true">
+  <header class="mb-top">
+    <span class="mb-logo"><i></i><i></i><i></i></span><b>monday</b><span class="mb-product">work management</span>
+    <span class="mb-top-r">{ico("bell")}{ico("search")}{ico("help")}{me}</span>
+  </header>
+  <nav class="mb-side">
+    <p class="mb-side-row">{ico("play")}Home</p>
+    <p class="mb-side-row">{ico("cal")}My work</p>
+    <p class="mb-ws"><span class="mb-ws-i">M</span>Marketing{ico("chev")}</p>
+    <ul>{side}</ul>
+  </nav>
+  <main class="mb-main">
+    <section class="mb-board">
+      <div class="mb-title"><h4>Editorial Calendar</h4>{ico("chev")}
+        <span class="mb-title-r"><span class="mb-ghost">Integrate</span><span class="mb-ghost">Automate</span><span class="mb-invite">Invite / 1</span></span></div>
+      <div class="mb-tabs"><span class="is-on">Main table</span><span>Calendar</span><span class="mb-plus">+</span></div>
+      <div class="mb-tools"><span class="mb-new">New item<i></i></span>
+        <span>{ico("search")}Search</span><span>{ico("people")}Person</span><span>{ico("filter")}Filter</span><span>{ico("sliders")}Sort</span></div>
+      <p class="mb-group">{ico("chev")}This week<small>{len(b["rows"])} items</small></p>
+      <div class="mb-table">
+        <div class="mb-row mb-head">{head}</div>{rows}
+        <div class="mb-row mb-add"><span class="mb-check"></span><span>+ Add item</span></div>
+        <div class="mb-row mb-sum"><span></span><span></span><span></span><span class="mb-battery">{battery}</span></div>
+      </div>
+      <p class="mb-group is-next">{ico("chev")}Next week<small>4 items</small></p>
+    </section>
+    <section class="mb-doc">
+      <p class="mb-crumb">Marketing &nbsp;/&nbsp; Do's and Don'ts</p>
+      <h4>Do's and Don'ts</h4>
+      <p class="mb-docai">{AI_SPARK}Drafted with AI from our brand guidelines</p>
+      <div class="mb-cols">
+        <div class="mb-col is-do"><p>Do</p><ul>{li(b["dos"], "mb-rule")}</ul></div>
+        <div class="mb-col is-dont"><p>Don't</p><ul>{li(b["donts"], "mb-rule")}</ul></div>
+      </div>
+    </section>
+  </main>
+  <svg class="mb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
+</div></div>'''
+    inner = ai_window("monday.com  ·  Editorial Calendar", canvas, " mb-window")
+    return ai_figure(b, "Illustration: an editorial calendar board in Monday.com and a do's and don'ts doc", inner)
 
 
 def demo_cut(b, root):
@@ -1490,9 +1535,9 @@ def ai_block(b, root):
     kind = b.get("demo")
     if not kind:
         return words
-    fig = {"board": demo_board, "fan": demo_fan, "geo": demo_geo}.get(kind)
-    if kind in ("localize", "cut", "tools", "meta"):
-        return words + {"localize": demo_localize, "cut": demo_cut, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
+    fig = {"fan": demo_fan, "geo": demo_geo}.get(kind)
+    if kind in ("localize", "board", "cut", "tools", "meta"):
+        return words + {"localize": demo_localize, "board": demo_board, "cut": demo_cut, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
     return words + fig(b)
 
 

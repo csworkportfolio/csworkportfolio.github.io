@@ -321,32 +321,87 @@
     wire(d, () => run(0));
   }
 
-  // ---------- 2. the editorial board ----------
+  // ---------- 2. the editorial board, in a copy of Monday.com ----------
   function board(fig) {
     const data = parse(fig), d = demo(fig);
-    const rows = [...fig.querySelectorAll(".bd-table tbody tr")];
+    const $ = (s) => fig.querySelector(s);
+    const view = $(".mb-view"), mb = $(".mb"), cursor = $(".mb-cursor");
+    const rows = [...fig.querySelectorAll(".mb-row[data-i]")];
+    const cells = [...fig.querySelectorAll(".mb-battery i")];
+    const rules = [...fig.querySelectorAll(".mb-rule")];
     const top = data.statuses.length - 1;
-    const pill = (row, s) => {
-      const el = row.querySelector(".bd-status");
-      el.className = "bd-status s" + s; el.textContent = data.statuses[s];
+    const set = (cls, on) => mb.classList.toggle(cls, on);
+    // drawn at 1200 by 640 and scaled to the window; a phone gets the mobile layout, drawn at 420 by 700
+    let mobile = false;
+    const frame = () => {
+      const w = view.clientWidth;
+      mobile = w < 640;
+      mb.classList.toggle("is-mobile", mobile);
+      fig.classList.toggle("is-mobile", mobile);
+      const s = w / (mobile ? 420 : 1200);
+      view.style.setProperty("--mb-s", s);
+      view.style.height = (mobile ? 700 : 640) * s + "px";
     };
-    const rules = [...fig.querySelectorAll(".bd-rules li")];
+    new ResizeObserver(frame).observe(view);
+    frame();
+    if (still) return;
+    const touch = document.createElement("span");
+    touch.className = "mb-touch";
+    mb.append(touch);
+    const point = (el, dx = 0.5, dy = 0.5) => {
+      let x = 0, y = 0;
+      for (let e = el; e && e !== mb; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+      x += el.offsetWidth * dx; y += el.offsetHeight * dy;
+      cursor.style.left = x - 4 + "px"; cursor.style.top = y - 2 + "px";
+      touch.style.left = x + "px"; touch.style.top = y + "px";
+    };
+    const tap = () => { if (mobile) { touch.classList.remove("is-tap"); void touch.offsetWidth; touch.classList.add("is-tap"); } };
+    const status = (row, k) => { const el = row.querySelector(".mb-status"); el.className = "mb-status s" + k; el.textContent = data.statuses[k]; };
+    const tally = () => {
+      const n = data.statuses.map((_, k) => rows.filter((r) => r.querySelector(".mb-status").classList.contains("s" + k)).length);
+      cells.forEach((c, k) => c.style.setProperty("--n", n[k] * 5 / rows.length));
+    };
     async function loop() {
       for (;;) {
-        rows.forEach((r) => { pill(r, 0); r.querySelector(".bd-ai").classList.remove("is-on"); });
+        // every item starts as an idea, with nothing from AI yet
+        set("is-doc", false);
+        rows.forEach((r) => { status(r, 0); r.querySelector(".mb-ai").classList.remove("is-on", "is-busy"); });
         rules.forEach((li) => li.classList.remove("is-on"));
-        await d.wait(700);
-        for (const li of rules) { li.classList.add("is-on"); await d.wait(160); }
-        for (let step = 1; step <= top; step++) {
+        tally();
+        set("is-pointing", !mobile);
+        cursor.style.left = "700px"; cursor.style.top = "560px";
+        await d.wait(900);
+        // AI writes each item's first step, and the item moves on to Brief
+        for (const r of rows) {
+          const ai = r.querySelector(".mb-ai");
+          point(ai, 0.3);
+          ai.classList.add("is-busy");
+          await d.wait(650);
+          ai.classList.remove("is-busy"); ai.classList.add("is-on");
+          tap(); status(r, 1); tally();
+          await d.wait(350);
+        }
+        // then the work moves along the statuses
+        for (let step = 2; step <= top; step++) {
           for (const [i, r] of rows.entries()) {
             if (Math.min(i + 1, top) < step) continue;
-            pill(r, step);
-            if (step === 1) r.querySelector(".bd-ai").classList.add("is-on");
-            await d.wait(420);
+            point(r.querySelector(".mb-status"));
+            await d.wait(380);
+            tap(); status(r, step); tally();
+            await d.wait(120);
           }
-          await d.wait(500);
+          await d.wait(400);
         }
+        await d.wait(1600);
+        // open the do's and don'ts from the sidebar (a phone has no sidebar: the doc just opens)
+        if (!mobile) { point($(".mb-nav.is-doc"), 0.4); await d.wait(1100); }
+        $(".mb-nav.is-board").classList.remove("is-on"); $(".mb-nav.is-doc").classList.add("is-on");
+        set("is-doc", true);
+        cursor.style.left = "1000px"; cursor.style.top = "600px";
+        await d.wait(700);
+        for (const li of rules) { li.classList.add("is-on"); await d.wait(260); }
         await d.wait(4200);
+        $(".mb-nav.is-doc").classList.remove("is-on"); $(".mb-nav.is-board").classList.add("is-on");
       }
     }
     wire(d, loop);
@@ -534,7 +589,7 @@
   for (const fig of document.querySelectorAll(".ai-demo[data-demo]")) {
     const k = kinds[fig.dataset.demo];
     if (!k) continue;
-    if (still && !["localize", "cut", "tools", "meta"].includes(fig.dataset.demo)) continue;
+    if (still && !["localize", "board", "cut", "tools", "meta"].includes(fig.dataset.demo)) continue;
     k(fig);
   }
 })();
