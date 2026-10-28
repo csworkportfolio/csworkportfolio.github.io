@@ -1031,9 +1031,9 @@
         "scene": "post-journey",
         "kicker": "All from one piece of content.",
         "credit": {
-          "title": "How I Made This",
-          "text": "I storyboarded the six steps and wrote the captions, then built the animation by directing Claude Code, an AI coding agent, to write the three.js code. I reviewed every pass and refined the motion and timing until it told the story the way I'd pitch it.",
-          "links": {"Claude Code": "https://claude.com/claude-code", "three.js": "https://threejs.org"}
+          "title": "How I Made This Animation",
+          "text": "I storyboarded six steps and captions of the employee advocacy journey I developed, then built the animation by directing Claude Code. Every pass was refined until the motion and timing told the story the way I'd pitch it.",
+          "links": {"Claude Code": "https://claude.com/claude-code"}
         },
         "alt": "The animation follows one post into the agent, which knows the brand guidelines, company goals and product. A version for each language steps out through the Champions Portal and is checked; the Korean version is sent back, rewritten and approved. The versions fill the Champions Hub, then ring a night-time globe as advocates share them to cities around the world.",
         "p2": [
