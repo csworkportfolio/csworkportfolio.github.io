@@ -1715,7 +1715,10 @@
           last = at; scene.dataset.stage = String(at);
           const name = names[at] ? names[at].textContent : "";
           stepName.innerHTML = "";
-          stepName.append(el("span", { class: names[at] && names[at].classList.contains("is-me") ? "is-me" : "" }, owners[at] || ""), el("strong", {}, name));
+          // the reader's own steps say so first; a handoff's name already says whose it was (QA Sign-Off, Legal Review)
+          const mine = names[at] && names[at].classList.contains("is-me");
+          if (mine) stepName.append(el("span", { class: "is-me" }, owners[at] || ""));
+          stepName.append(el("strong", {}, name));
         }
         step.classList.add("is-on");
         [...bars.children].forEach((b, i) => { b.style.setProperty("--f", i === at ? local.toFixed(3) : 0); b.classList.toggle("is-cur", i === at); b.classList.toggle("is-done", i < at); });
