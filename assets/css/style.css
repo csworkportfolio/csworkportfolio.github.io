@@ -2181,16 +2181,16 @@ html .pills > .seg.is-scrolling { background: none; }
 .pj-dock { position: absolute; top: 0; left: 0; right: 0; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: flex-end;
   overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .2s; }
 .pj-stage.is-ready .pj-dock { opacity: 1; }   /* it waits for the scene */
-.pj-drawer { display: flex; align-items: center; gap: 8px; transform: translateX(calc(100% - 26px)); transition: transform .4s cubic-bezier(.32, .72, 0, 1); }
+.pj-drawer { display: flex; align-items: center; gap: 8px; transform: translateX(calc(100% - 26px)); transition: transform .45s cubic-bezier(.32, .72, 0, 1); }
 .pj-stage.show-controls .pj-drawer { transform: translateX(-12px); }
 .pj-tab { display: grid; place-items: center; position: relative; width: 26px; height: 96px; border: 0; padding: 0 0 0 2px; border-radius: 18px 0 0 18px;
   cursor: pointer; pointer-events: auto; color: color-mix(in srgb, var(--tabink) 55%, transparent); background: var(--tabfill); box-shadow: var(--tabshadow);
-  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: border-radius .4s, color .18s; }
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: opacity .25s, color .18s; }
 .pj-tab::before { content: ""; position: absolute; inset: -8px 0 -8px -18px; }   /* a 44pt wide target */
 .pj-tab:hover { color: var(--tabink); }
-.pj-tab svg { width: 14px; height: 30px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s; }
-.pj-stage.show-controls .pj-tab { border-radius: 18px; }
-.pj-stage.show-controls .pj-tab svg { transform: scaleX(-1); }
+.pj-tab svg { width: 14px; height: 30px; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+/* out: the tab steps aside and the pill rests by the edge; it tucks back on its own */
+.pj-stage.show-controls .pj-tab { opacity: 0; pointer-events: none; }
 .pj-tab:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
 .pj-controls { display: flex; flex-direction: column; padding: 2px; border-radius: 24px; pointer-events: auto;
   background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);

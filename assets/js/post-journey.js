@@ -488,17 +488,31 @@
   document.addEventListener("visibilitychange", update);
 
   // The controls wait behind a tab on the picture's right edge, like a video tucked off the side of an iPhone
-  // screen. The tab slides them out and tucks them away again; a tap on the picture tucks them away too. While
-  // tucked away they're out of the tab order.
-  const controls = stage.querySelector(".pj-controls"), tab = stage.querySelector(".pj-tab");
+  // screen. The tab slides them out; they tuck back to the edge on their own a few seconds after the last use
+  // (not while the pointer or keyboard focus is on them), on a click or tap anywhere else, or on Escape.
+  // While tucked away they're out of the tab order.
+  const controls = stage.querySelector(".pj-controls"), tab = stage.querySelector(".pj-tab"), dock = stage.querySelector(".pj-dock");
+  let tuckTimer = 0, overControls = false;
   function showControls(on) {
+    clearTimeout(tuckTimer);
+    if (!on && controls.contains(document.activeElement)) tab.focus({ preventScroll: true });
     stage.classList.toggle("show-controls", on);
     tab.setAttribute("aria-expanded", String(on));
-    tab.setAttribute("aria-label", on ? "Hide controls" : "Show controls");
     controls.inert = !on;
+    if (on) tuckLater();
   }
-  tab.addEventListener("click", () => showControls(!stage.classList.contains("show-controls")));
-  canvas.addEventListener("click", () => showControls(false));
+  function tuckLater() {
+    clearTimeout(tuckTimer);
+    if (!overControls && !controls.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), 3500);
+  }
+  tab.addEventListener("click", () => showControls(true));
+  controls.addEventListener("pointerenter", () => { overControls = true; clearTimeout(tuckTimer); });
+  controls.addEventListener("pointerleave", () => { overControls = false; tuckLater(); });
+  controls.addEventListener("click", tuckLater);
+  controls.addEventListener("focusin", () => setTimeout(() => { if (controls.querySelector(":focus-visible")) clearTimeout(tuckTimer); }));
+  controls.addEventListener("focusout", () => setTimeout(tuckLater));
+  document.addEventListener("pointerdown", (e) => { if (stage.classList.contains("show-controls") && !dock.contains(e.target)) showControls(false); });
+  stage.addEventListener("keydown", (e) => { if (e.key === "Escape" && stage.classList.contains("show-controls")) showControls(false); });
   showControls(false);
 
   // "How I Made This": opens from its button, near the end of the loop (from the closing line through the fade)
