@@ -1344,7 +1344,10 @@ def demo_localize(b, root):
   <p class="hb-toast">Shared on LinkedIn</p>
   <svg class="hb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
 </div></div>'''
-    inner = ai_window("Champions Hub  ·  Trending Posts", hub, " hb-window")
+    chapters = "".join(f'<button type="button" style="--p:0"><span class="hb-fill"></span><span class="hb-ch-t">{esc(c)}</span></button>'
+                       for c in b["chapters"])
+    inner = (ai_window("Champions Hub  ·  Trending Posts", hub, " hb-window")
+             + f'<nav class="hb-chapters" aria-label="Skip to a part of the demo">{chapters}</nav>')
     return ai_figure(b, "Illustration: the localization agent in a copy of the Champions Hub", inner)
 
 

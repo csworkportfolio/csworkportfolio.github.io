@@ -42,6 +42,7 @@
       if (d.running && !d.seen) { d.seen = true; loop(); }
     };
     btn && btn.addEventListener("click", () => { d.paused = !d.paused; set(); });
+    d.resume = () => { if (d.paused) { d.paused = false; set(); } };
     new IntersectionObserver(([e]) => { d.visible = e.isIntersecting; set(); }, { threshold: 0.3 }).observe(d.fig);
   }
 
@@ -53,23 +54,35 @@
     const $ = (s) => fig.querySelector(s);
     const view = $(".hb-view"), hub = $(".hb"), cursor = $(".hb-cursor"), text = $(".hb-t");
     const items = [...fig.querySelectorAll(".hb-menu li[data-code]")];
-    const cards = [...fig.querySelectorAll(".hb-card")];
+    const cards = [...fig.querySelectorAll(".hb-card")], feed = $(".hb-feed");
     const set = (cls, on) => hub.classList.toggle(cls, on);
     // the Hub is drawn at 1280 by 708 and filmed like a camera: scaled to the window, leaning in on the Share
     // window when it opens; on a narrow screen it is shown larger and framed on the part in use
     const FOCUS = { feed: [335, 354], modal: [640, 290], top: [830, 354] };
     let focus = "feed";
+    // on a phone the Hub switches to its mobile layout, one post wide (drawn at 390 by 760)
+    let mobile = false;
     const frame = (f = focus) => {
       focus = f;
-      const w = view.clientWidth, narrow = w < 640;
-      const s = narrow ? w / 470 : w / 1280, h = 708 * (narrow ? w / 470 : s);
-      const k = s * (!narrow && f === "modal" ? 1.22 : 1);
+      const w = view.clientWidth;
+      mobile = w < 640;
+      hub.classList.toggle("is-mobile", mobile);
+      fig.classList.toggle("is-mobile", mobile);
+      if (mobile) {
+        const s = w / 390;
+        view.style.height = 760 * s + "px";
+        for (const [k, v] of [["--hb-s", s], ["--hb-k", s], ["--hb-tx", 0], ["--hb-ty", 0]]) view.style.setProperty(k, v);
+        return;
+      }
+      const s = w / 1280, h = 708 * s;
+      const k = s * (f === "modal" ? 1.22 : 1);
       const [cx, cy] = FOCUS[f];
       const clamp = (v, lo) => Math.min(0, Math.max(lo, v));
-      view.style.setProperty("--hb-s", narrow ? w / 470 : s);
+      view.style.height = h + "px";
+      view.style.setProperty("--hb-s", s);
       view.style.setProperty("--hb-k", k);
       view.style.setProperty("--hb-tx", clamp(w / 2 - cx * k, w - 1280 * k));
-      view.style.setProperty("--hb-ty", narrow ? 0 : clamp(h / 2 - cy * k, h - 708 * k));
+      view.style.setProperty("--hb-ty", clamp(h / 2 - cy * k, h - 708 * k));
     };
     new ResizeObserver(() => frame()).observe(view);
     // a click (or Enter) opens the Hub larger, over the page; another click, Esc or the backdrop closes it
@@ -119,101 +132,167 @@
     };
     let fixes = 1;
     const count = () => { $(".hb-count-v").textContent = fixes; $(".hb-unit").textContent = fixes === 1 ? "fix" : "fixes"; };
-    if (still) return;
-    async function loop() {
-      for (;;) {
-        // the feed in English, then the share window on the post
-        ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy", "is-auto", "is-preview"].forEach((c) => set(c, false));
-        cards.forEach((c, i) => word(c, english[i], false));
-        fixes = 0; count(); frame("feed");
-        text.lang = "en"; text.textContent = data.post; $(".hb-hash").textContent = data.tags; art($(".hb-photo"), data.art);
+    const bar = fig.querySelector(".hb-chapters");
+    if (still) { if (bar) bar.hidden = true; return; }
+    // the demo runs in chapters; the bar under it shows where it is and jumps to any chapter
+    const steps = [...bar.querySelectorAll("button")];
+    const review = data.regions.find((r) => r.review);
+    const plain = data.regions.filter((r) => r !== review);   // the Korean version, the one a Champion fixed, comes last
+    let gen = 0;
+    const STOP = Symbol("stop");
+    const w = async (ms) => { const g = gen; await d.wait(ms); if (g !== gen) throw STOP; };
+    const tp = async (el, s, speed = 22) => {
+      el.textContent = "";
+      for (const ch of s) { el.textContent += ch; await w(ch.charCodeAt(0) > 0x2e80 ? speed * 2.2 : speed); }
+    };
+    const mark = (n, p = 0) => steps.forEach((b, i) => {
+      b.classList.toggle("is-on", i === n);
+      b.classList.toggle("is-done", i < n);
+      b.style.setProperty("--p", i === n ? p : i < n ? 1 : 0);
+      if (i === n) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+    });
+    const parts = (r) => r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
+    const showRegion = (r, fixed) => {
+      $(".hb-lang-v").textContent = r.name; $(".hb-tone").textContent = r.tone; text.lang = r.code.toLowerCase();
+      $(".hb-hash").textContent = r.tags; art($(".hb-photo"), r.art);
+      const m = parts(r);
+      if (!m) { text.textContent = r.text; return; }
+      if (!fixed) { text.textContent = m[1] + m[2] + m[4]; return; }
+      text.innerHTML = "";
+      const del = document.createElement("del"), ins = document.createElement("ins");
+      del.textContent = m[2]; ins.textContent = m[3];
+      text.append(m[1], del, " ", ins, m[4]);
+    };
+    const reset = () => {
+      ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy", "is-auto", "is-preview", "is-send"].forEach((c) => set(c, false));
+      items.forEach((li) => li.classList.remove("is-hover"));
+      cards.forEach((c, i) => word(c, english[i], false));
+      feed.style.transform = "";
+      fixes = 0; count(); frame("feed");
+      text.lang = "en"; text.textContent = data.post; $(".hb-hash").textContent = data.tags; art($(".hb-photo"), data.art);
+    };
+    const open = () => { set("is-open", true); set("is-pointing", true); frame("modal"); };
+
+    // one language: pick it under Translate, watch the post and its graphic change
+    async function region(r, n, p0, p1) {
+      const k = data.regions.indexOf(r);
+      point($(".hb-tr"));
+      await w(700);
+      set("is-menu", true);
+      await w(400);
+      point(items[k], 0.35);
+      await w(650);
+      items.forEach((li, j) => li.classList.toggle("is-hover", j === k));
+      await w(300);
+      set("is-menu", false); items[k].classList.remove("is-hover");
+      $(".hb-lang-v").textContent = r.name; $(".hb-tone").textContent = r.tone; text.lang = r.code.toLowerCase();
+      set("is-lang", true); set("is-review", false); set("is-busy", true);
+      say(`It rewrites the post for ${r.name} readers, in a ${r.tone.toLowerCase()} tone.`);
+      point($(".hb-text"), 0.85, 0.3);
+      const m = parts(r);
+      await tp(text, m ? m[1] + m[2] + m[4] : r.text);
+      $(".hb-hash").textContent = r.tags;   // the brand tag stays; the topic tag is the one people search there
+      art($(".hb-photo"), r.art);           // the graphic is localized too
+      set("is-busy", false);
+      mark(n, (p0 + p1) / 2);
+      // open the photo to show its words changed with the post
+      art($(".hb-preview .hb-guide"), r.art);
+      $(".hb-preview-v").textContent = r.name;
+      point($(".hb-photo"));
+      await w(800);
+      set("is-preview", true);
+      say(`The words on the graphic change to ${r.name} too.`);
+      await w(2000);
+      set("is-preview", false);
+      await w(600);
+      mark(n, p1);
+    }
+
+    const chapters = [
+      async (jumped) => {   // share a post
+        reset();
         cursor.style.left = "560px"; cursor.style.top = "560px";
         await say("This is a copy of the Champions Hub, rebuilt from a screen recording. The post is a made-up example.");
-        await d.wait(1400);
+        await w(jumped ? 900 : 1400);
         set("is-pointing", true);
         point($(".is-post .hb-share"));
-        await d.wait(1100);
+        await w(1100);
         say("An employee clicks Share to post it on LinkedIn.");
-        set("is-press", true); await d.wait(250); set("is-press", false);
-        set("is-open", true); frame("modal");
-        await d.wait(1500);
-        for (const [i, r] of data.regions.entries()) {
-          // Translate opens the brand agent's regions; pick the next one
-          point($(".hb-tr"));
-          if (!i) say("Translate opens the brand agent. It knows our style guide and brand guidelines.");
-          await d.wait(i ? 700 : 1600);
-          set("is-menu", true);
-          await d.wait(400);
-          point(items[i], 0.35);
-          await d.wait(650);
-          items.forEach((li, k) => li.classList.toggle("is-hover", k === i));
-          await d.wait(300);
-          set("is-menu", false); items[i].classList.remove("is-hover");
-          $(".hb-lang-v").textContent = r.name; $(".hb-tone").textContent = r.tone; text.lang = r.code.toLowerCase();
-          set("is-lang", true); set("is-review", false); set("is-busy", true);
-          say(`It rewrites the post for ${r.name} readers, in a ${r.tone.toLowerCase()} tone.`);
-          point($(".hb-text"), 0.85, 0.3);
-          const m = r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
-          await d.type(text, m ? m[1] + m[2] + m[4] : r.text, 22);
-          $(".hb-hash").textContent = r.tags;   // the brand tag stays; the topic tag is the one people search there
-          art($(".hb-photo"), r.art);   // the graphic is localized too
-          set("is-busy", false);
-          // open the photo to show its words changed with the post
-          art($(".hb-preview .hb-guide"), r.art);
-          $(".hb-preview-v").textContent = r.name;
-          point($(".hb-photo"));
-          await d.wait(800);
-          set("is-preview", true);
-          say(`The words on the graphic change to ${r.name} too.`);
-          await d.wait(2000);
-          set("is-preview", false);
-          await d.wait(300);
-          if (m) {
-            // a Champion's fix, sent back so the agent learns it
-            await d.wait(700);
-            $(".hb-review-v").textContent = r.review;
-            set("is-review", true);
-            say("A Champion Advocate makes the ending a little softer. The fix goes back to the agent so it learns.");
-            await d.wait(1500);
-            text.innerHTML = "";
-            const del = document.createElement("del"), ins = document.createElement("ins");
-            del.textContent = m[2]; ins.textContent = m[3];
-            text.append(m[1], del, " ", ins, m[4]);
-            fixes += 1; count();
-            await d.wait(2400);
-            set("is-review", false);
-          }
-          await d.wait(m ? 600 : 1400);
-        }
-        // share it
+        set("is-press", true); await w(250); set("is-press", false);
+        open();
+        mark(0, 1);
+        await w(1500);
+      },
+      async (jumped) => {   // localize into each region
+        if (jumped) { reset(); open(); await w(900); }
+        say("Translate opens the brand agent. It knows our style guide and brand guidelines.");
+        point($(".hb-tr"));
+        await w(1200);
+        for (const [i, r] of plain.entries()) await region(r, 1, i / plain.length, (i + 1) / plain.length);
+      },
+      async (jumped) => {   // the Korean version, and a Champion's fix
+        if (jumped) { reset(); open(); const last = plain[plain.length - 1]; showRegion(last); set("is-lang", true); await w(900); }
+        await region(review, 2, 0, 0.5);
+        $(".hb-review-v").textContent = review.review;
+        set("is-review", true);
+        say("A Champion Advocate makes the ending a little softer. The fix goes back to the agent so it learns.");
+        await w(1500);
+        showRegion(review, true);
+        fixes += 1; count();
+        mark(2, 1);
+        await w(2400);
+        set("is-review", false);
+        await w(600);
+      },
+      async (jumped) => {   // send it
+        if (jumped) { reset(); open(); showRegion(review, true); set("is-lang", true); fixes = 1; count(); }
+        say("With the fix in, the Korean version is ready to send.");
+        await w(jumped ? 1200 : 600);
         point($(".hb-b.is-blue"));
-        await d.wait(1000);
-        set("is-send", true); await d.wait(200); set("is-send", false);
+        await w(1000);
+        set("is-send", true); await w(200); set("is-send", false);
         set("is-sent", true); set("is-open", false); frame("feed");
         say("Then it goes out on LinkedIn.");
-        await d.wait(2000);
+        mark(3, 1);
+        await w(2000);
         set("is-sent", false);
-        // or switch the whole feed into one's own language and region, graphics included
+      },
+      async (jumped) => {   // or the whole feed, in one's own language and region
+        if (jumped) { reset(); set("is-pointing", true); await w(600); }
         frame("top");
         say("Employees can also switch on Localize Every Post.");
         point($(".hb-auto"), 0.8);
-        await d.wait(1300);
+        await w(1300);
         set("is-auto", true);
-        await d.wait(500);
+        await w(500);
         frame("feed");
         say(`Now the whole feed reads in ${data.auto.name}.`);
         for (const [i, c] of cards.entries()) {
+          if (mobile) { feed.style.transform = `translateY(${-c.offsetTop}px)`; await w(700); }   // scroll the one-wide feed to each post
           c.classList.add("is-sweep");
-          await d.wait(260);
+          await w(260);
           word(c, english[i], true);
-          await d.wait(140);
+          await w(140);
           c.classList.remove("is-sweep");
+          mark(4, (i + 1) / cards.length);
         }
         set("is-pointing", false);
-        await d.wait(4200);
-      }
+        await w(4200);
+      },
+    ];
+    async function run(from) {
+      const g = ++gen;
+      let jumped = from > 0;
+      try {
+        for (let n = from; ; n = (n + 1) % chapters.length) {
+          mark(n, 0);
+          await chapters[n](jumped);
+          jumped = false;
+        }
+      } catch (e) { if (e !== STOP || g === gen) throw e; }
     }
-    wire(d, loop);
+    steps.forEach((b, n) => b.addEventListener("click", (e) => { e.stopPropagation(); d.resume(); run(n); }));
+    wire(d, () => run(0));
   }
 
   // ---------- 2. the editorial board ----------
