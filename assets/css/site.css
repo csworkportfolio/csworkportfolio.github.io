@@ -751,7 +751,14 @@ main { view-transition-name: page; }
 .sc-checks li { position: relative; padding-left: 26px; font-size: 16px; line-height: 1.4; }
 .sc-checks li::before { content: ""; position: absolute; left: 2px; top: .45em; width: 12px; height: 7px; border: solid var(--rust); border-width: 0 0 2.5px 2.5px; transform: rotate(-45deg); }
 
-.sc-visual { display: flex; flex-direction: column; align-items: center; perspective: 1400px; }
+.sc-visual { position: relative; display: flex; flex-direction: column; align-items: center; perspective: 1400px; }
+/* the phone in 3D (assets/js/nike-phone.js): on the pinned desktop layout it takes the flat phone's place, which
+   keeps its room in the column (so the switcher and the count stay put) but steps out of sight */
+.ph3d { position: absolute; display: none; z-index: 1; cursor: grab; }
+.ph3d.is-dragging { cursor: grabbing; }
+.scene.is-live.has-3d .ph3d { display: block; }
+.scene.is-live.has-3d .ph { visibility: hidden; }
+.scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
 /* the still layout on a desktop (reduced motion, no script, or a window too short to pin): the phone rides
    beside the stages instead of sitting in the middle of a tall column */
 @media (min-width: 721px) {

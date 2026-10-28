@@ -1075,7 +1075,13 @@ def flow(b, media, root):
              '<span class="ph-stamp"><svg viewBox="0 0 48 48"><path d="M14 25l7 7 13-15"/></svg>QA approved</span>'
              '<span class="ph-chip">Scheduled for its publish window</span>'
              '<span class="ph-live">Live</span></div></figure>')
-    return (f'<section class="scene" id="{esc(b.get("id", "process"))}" data-scene="flow" style="--n:{n}" aria-label="{esc(b["h"])}">'
+    # "phone3d": the phone in three.js (assets/js/nike-phone.js) on the pinned desktop layout; the flat phone above
+    # stays for everything else. three.js comes through an import map and loads only when the section nears.
+    p3d = ""
+    if b.get("phone3d"):
+        p3d = ('<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js"}}</script>'
+               f'<script type="module" src="{root}assets/js/nike-phone.js?v={asset_version("assets/js/nike-phone.js")}"></script>')
+    return (p3d + f'<section class="scene" id="{esc(b.get("id", "process"))}" data-scene="flow"{" data-phone3d" if b.get("phone3d") else ""} style="--n:{n}" aria-label="{esc(b["h"])}">'
             '<div class="sc-stage"><div class="wrap sc-grid">'
             f'<div class="sc-text"><h2>{esc(b["h"])}</h2>{paragraphs(b.get("p", []))}'
             f'<ol class="sc-names">{names}</ol><div class="sc-panels">{"".join(panels)}</div></div>'
