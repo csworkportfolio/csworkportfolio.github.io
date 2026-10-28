@@ -53,45 +53,65 @@
     const $ = (s) => fig.querySelector(s);
     const view = $(".hb-view"), hub = $(".hb"), cursor = $(".hb-cursor"), text = $(".hb-t");
     const items = [...fig.querySelectorAll(".hb-menu li[data-code]")];
+    const cards = [...fig.querySelectorAll(".hb-card")];
     const set = (cls, on) => hub.classList.toggle(cls, on);
-    // the Hub is drawn at 1280 by 708; on a narrow screen it is shown larger and framed on the part in use
-    let s = 1, narrow = false;
-    const frame = () => {
-      const w = view.clientWidth;
-      narrow = w < 640;
-      s = narrow ? w / 470 : w / 1280;
-      view.style.setProperty("--hb-s", s);
-      view.style.setProperty("--hb-x", narrow ? (hub.classList.contains("is-open") ? 405 : 100) : 0);
+    // the Hub is drawn at 1280 by 708 and filmed like a camera: scaled to the window, leaning in on the Share
+    // window when it opens; on a narrow screen it is shown larger and framed on the part in use
+    const FOCUS = { feed: [335, 354], modal: [640, 290], top: [830, 354] };
+    let focus = "feed";
+    const frame = (f = focus) => {
+      focus = f;
+      const w = view.clientWidth, narrow = w < 640;
+      const s = narrow ? w / 470 : w / 1280, h = 708 * (narrow ? w / 470 : s);
+      const k = s * (!narrow && f === "modal" ? 1.22 : 1);
+      const [cx, cy] = FOCUS[f];
+      const clamp = (v, lo) => Math.min(0, Math.max(lo, v));
+      view.style.setProperty("--hb-s", narrow ? w / 470 : s);
+      view.style.setProperty("--hb-k", k);
+      view.style.setProperty("--hb-tx", clamp(w / 2 - cx * k, w - 1280 * k));
+      view.style.setProperty("--hb-ty", narrow ? 0 : clamp(h / 2 - cy * k, h - 708 * k));
     };
-    new ResizeObserver(frame).observe(view);
+    new ResizeObserver(() => frame()).observe(view);
+    frame(hub.classList.contains("is-open") ? "modal" : "feed");
     // the cursor's point, in the Hub's own 1280 by 708 pixels
     const point = (el, dx = 0.5, dy = 0.5) => {
-      const h = hub.getBoundingClientRect(), r = el.getBoundingClientRect();
-      cursor.style.left = (r.left - h.left + r.width * dx) / s - 4 + "px";
-      cursor.style.top = (r.top - h.top + r.height * dy) / s - 2 + "px";
+      let x = 0, y = 0;
+      for (let e = el; e && e !== hub; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+      cursor.style.left = x + el.offsetWidth * dx - 4 + "px";
+      cursor.style.top = y + el.offsetHeight * dy - 2 + "px";
     };
-    const show = (r) => {
-      $(".hb-lang-v").textContent = r.name;
-      $(".hb-tone").textContent = r.tone;
-      text.lang = r.code.toLowerCase();
+    const art = (el, lines) => el.querySelectorAll("b, .hb-guide-btn").forEach((n, i) => { n.textContent = lines[i]; });
+    // each card's English, to come back to
+    const english = cards.map((c) => ({ h: c.querySelector("h4").textContent, p: c.querySelector(".hb-body")?.textContent,
+      src: c.querySelector(".hb-src-v").textContent, when: c.querySelector(".hb-when").textContent }));
+    const word = (c, en, auto) => {
+      const q = (s) => c.querySelector(s), t = auto ? data.auto.cards[+c.dataset.i] : null;
+      q("h4").textContent = t ? t.title : en.h;
+      if (q(".hb-body")) q(".hb-body").textContent = t && t.body ? t.body : en.p;
+      q(".hb-src-v").textContent = auto ? data.auto.src[en.src] || en.src : en.src;
+      q(".hb-when").textContent = auto ? data.auto.when[en.when] || en.when : en.when;
+      c.lang = auto ? "ja" : "en";
+      const g = c.querySelector(".hb-guide");
+      if (g) art(g, auto ? data.regions.find((r) => r.code === data.auto.code).art : data.art);
     };
     let fixes = 1;
     const count = () => { $(".hb-count-v").textContent = fixes; $(".hb-unit").textContent = fixes === 1 ? "fix" : "fixes"; };
     if (still) return;
     async function loop() {
       for (;;) {
-        // the feed, then the share window on the post, in English
-        ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy"].forEach((c) => set(c, false));
-        fixes = 0; count(); frame();
-        text.lang = "en"; text.textContent = data.post;
+        // the feed in English, then the share window on the post
+        ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy", "is-auto"].forEach((c) => set(c, false));
+        cards.forEach((c, i) => word(c, english[i], false));
+        fixes = 0; count(); frame("feed");
+        text.lang = "en"; text.textContent = data.post; art($(".hb-photo"), data.art);
         cursor.style.left = "560px"; cursor.style.top = "560px";
         await d.wait(700);
         set("is-pointing", true);
         point($(".is-post .hb-share"));
         await d.wait(1100);
         set("is-press", true); await d.wait(250); set("is-press", false);
-        set("is-open", true); frame();
-        await d.wait(1300);
+        set("is-open", true); frame("modal");
+        await d.wait(1500);
         for (const [i, r] of data.regions.entries()) {
           // Translate opens the brand agent's regions; pick the next one
           point($(".hb-tr"));
@@ -103,10 +123,12 @@
           items.forEach((li, k) => li.classList.toggle("is-hover", k === i));
           await d.wait(300);
           set("is-menu", false); items[i].classList.remove("is-hover");
-          show(r); set("is-lang", true); set("is-review", false); set("is-busy", true);
+          $(".hb-lang-v").textContent = r.name; $(".hb-tone").textContent = r.tone; text.lang = r.code.toLowerCase();
+          set("is-lang", true); set("is-review", false); set("is-busy", true);
           point($(".hb-text"), 0.85, 0.3);
           const m = r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
           await d.type(text, m ? m[1] + m[2] + m[4] : r.text, 22);
+          art($(".hb-photo"), r.art);   // the graphic is localized too
           set("is-busy", false);
           if (m) {
             // a Champion's fix, sent back so the agent learns it
@@ -128,10 +150,25 @@
         point($(".hb-b.is-blue"));
         await d.wait(1000);
         set("is-send", true); await d.wait(200); set("is-send", false);
-        set("is-sent", true); set("is-open", false); set("is-pointing", false); frame();
-        await d.wait(2200);
+        set("is-sent", true); set("is-open", false); frame("feed");
+        await d.wait(2000);
         set("is-sent", false);
-        await d.wait(800);
+        // or switch the whole feed into one's own language and region, graphics included
+        frame("top");
+        point($(".hb-switch"));
+        await d.wait(1300);
+        set("is-auto", true);
+        await d.wait(500);
+        frame("feed");
+        for (const [i, c] of cards.entries()) {
+          c.classList.add("is-sweep");
+          await d.wait(260);
+          word(c, english[i], true);
+          await d.wait(140);
+          c.classList.remove("is-sweep");
+        }
+        set("is-pointing", false);
+        await d.wait(4200);
       }
     }
     wire(d, loop);

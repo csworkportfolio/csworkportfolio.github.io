@@ -1265,35 +1265,29 @@ def demo_localize(b, root):
     tools = "".join(f'<span class="hb-round">{hb_icon(i)}</span>' for i in ("edit", "adduser", "bell", "help"))
     tick = '<span class="hb-tick"></span>'
 
-    def card(thumb, tag, title, body="", when="3 days ago", src="Content for Sharing", tall=False, extra="", likes=4, cls=""):
-        acts = (f'<div class="hb-acts">{hb_icon("like")}<b>{likes}</b>{hb_icon("star")}'
-                f'<span class="hb-share">{hb_icon("share")}</span><span class="hb-more">…</span></div>')
-        body = f'<p class="hb-body">{esc(body)}</p>' if body else ""
-        return (f'<article class="hb-card{" is-tall" if tall else ""}{cls}"><div class="hb-thumb">{thumb}'
-                f'<span class="hb-tag">{esc(tag)}</span>{hb_icon("plus", "hb-i hb-plus")}{extra}</div>'
-                f'<p class="hb-src"><span class="hb-src-i">{hb_icon("share")}</span>{esc(src)}{tick}<span class="hb-when">{esc(when)}</span></p>'
-                f'<h4>{esc(title)}</h4>{body}{acts}</article>')
+    def card(c, i):
+        if c.get("post"):
+            thumb = guide(b["art"])
+        else:
+            thumb = (f'<span class="hb-blur" style="background-image:url({img(c["img"])})"></span>'
+                     f'<img src="{img(c["img"])}" alt="" loading="lazy">' + ('<span class="hb-playbtn"></span>' if c.get("video") else ""))
+        if c.get("count"):
+            thumb += f'<span class="hb-count">{esc(c["count"])}</span><span class="hb-arr is-l"></span><span class="hb-arr is-r"></span>'
+        acts = (f'<div class="hb-acts">{hb_icon("like")}<b>{c.get("likes", 4)}</b>{hb_icon("star")}'
+                f'<span class="hb-share">{hb_icon("share")}</span><span class="hb-more">\u2026</span></div>')
+        body = f'<p class="hb-body">{esc(c["body"])}</p>' if c.get("body") else ""
+        cls = (" is-tall" if c.get("tall") else "") + (" is-post" if c.get("post") else "")
+        return (f'<article class="hb-card{cls}" data-i="{i}"><div class="hb-thumb">{thumb}'
+                f'<span class="hb-tag">{esc(c["tag"])}</span>{hb_icon("plus", "hb-i hb-plus")}</div>'
+                f'<p class="hb-src"><span class="hb-src-i">{hb_icon("share")}</span><span class="hb-src-v">{esc(c.get("src", "Content for Sharing"))}</span>'
+                f'{tick}<span class="hb-when">{esc(c.get("when", "3 days ago"))}</span></p>'
+                f'<h4>{esc(c["title"])}</h4>{body}{acts}<span class="hb-sweep"></span></article>')
 
-    def pic(n):
-        return f'<span class="hb-blur" style="background-image:url({img(n)})"></span><img src="{img(n)}" alt="" loading="lazy">'
+    def guide(art):
+        return (f'<span class="hb-guide"><span class="hb-guide-bar"></span><b>{esc(art[0])}</b><b>{esc(art[1])}</b>'
+                f'<b class="is-pink">{esc(art[2])}</b><span class="hb-guide-btn">{esc(art[3])}</span></span>')
 
-    arrows = '<span class="hb-arr is-l"></span><span class="hb-arr is-r"></span>'
-    guide = ('<span class="hb-guide"><span class="hb-guide-bar"></span><b>A quick guide to</b><b>keeping your</b>'
-             '<b class="is-pink">data safe</b><span class="hb-guide-btn">Read the guide</span></span>')
-    cards = "".join((
-        card(guide, "Blog", b["title"], b["post"], "2 days ago", likes=3, cls=" is-post"),
-        card(pic("hpe"), "Event", "Catch Cohesity at HPE Discover",
-             "Cohesity and HPE are bringing modern data security and management across data, cloud, and beyond to "
-             "HPE Discover, built for what’s next. Schedule a meeting in advance to talk through your resilience strategy."),
-        card(pic("risk"), "Partner", "Cohesity DPSM, Powered by Cyera", when="6 days ago", likes=5, tall=True,
-             extra='<span class="hb-count">7/8</span>' + arrows),
-        card(pic("office") + '<span class="hb-playbtn"></span>', "Cohesity News", "Cohesity: The Goal of Identity Resilience",
-             src="Cohesity", when="5 days ago"),
-        card(pic("maryland"), "Customer Case Study", "Maryland Department of IT safeguards critical files with Cohesity on Cisco UCS",
-             when="4 days ago"),
-        card(pic("cohhpe"), "Cohesity News", "Cohesity Expands Strategic Alliance with HPE", src="Cohesity", when="4 days ago",
-             tall=True, extra='<span class="hb-count">3/3</span>' + arrows),
-    ))
+    cards = "".join(card(c, i) for i, c in enumerate(b["feed"]))
     activity = "".join(
         f'<li><span class="hb-face"></span><p><b>{n} Champions</b> shared</p>'
         f'<span class="hb-ua-pic"><img src="{img("ua" + str(i + 1))}" alt="" loading="lazy"></span></li>'
@@ -1313,6 +1307,7 @@ def demo_localize(b, root):
     <span class="hb-tile">{hb_icon("trend")}</span>
     <div><p class="hb-h">Trending Posts{hb_icon("chev")}{hb_icon("filter")}{hb_icon("sliders")}</p>
       <p class="hb-sub">Find all the content with the highest activity over the last 7 days.</p></div>
+    <span class="hb-auto"><span class="hb-switch"></span><span>Localize every post<small>{esc(b["auto"]["name"])} \u00b7 {esc(b["auto"]["region"])}</small></span></span>
     <span class="hb-search">{hb_icon("search")}Search</span>{tools}
   </header>
   <div class="hb-feed">{cards}</div>
@@ -1336,7 +1331,7 @@ def demo_localize(b, root):
       </div>
       <p class="hb-tags">Click on a tag to add it to your post: <span>@Cohesity</span> <span>#Cohesity</span></p>
       <p class="hb-photos-h">You can select photos</p>
-      <div class="hb-photos"><span class="hb-photo">{guide}<i>1</i></span><span class="hb-addimg">{hb_icon("addimg")}</span></div>
+      <div class="hb-photos"><span class="hb-photo">{guide(ko["art"])}<i>1</i></span><span class="hb-addimg">{hb_icon("addimg")}</span></div>
       <div class="hb-btns"><span class="hb-learned">{AI_SPARK}<span class="hb-count-v">1</span> <span class="hb-unit">fix</span> learned</span>
         <span class="hb-b is-brown">Schedule</span><span class="hb-b is-brown">Share next</span><span class="hb-b is-blue">Share now</span></div>
     </div>

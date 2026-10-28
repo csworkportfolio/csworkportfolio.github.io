@@ -16,7 +16,7 @@
         "id": "localize",
         "h": "One Post, Ready for 10+ Regions",
         "p": [
-          "At Cohesity I built an AI agent with Claude Code, loaded it with our style guide and brand guidelines, and built a localization feature into the Champions Hub. Employees browsed posts in their own language and region and shared them to LinkedIn.",
+          "At Cohesity I built an AI agent with Claude Code, loaded it with our style guide and brand guidelines, and built a localization feature into the Champions Hub. Employees could localize one post as they shared it to LinkedIn, or switch on the whole feed and browse every post in their own language and region, graphics included.",
           "The agent adapted the region as much as the language: less US-centric, with the tone set for each place. Its versions came out about 99% ready. I reviewed them with my team and select Champion advocates, and every fix went back to the agent so it learned."
         ],
         "demo": "localize",
@@ -37,46 +37,180 @@
             "code": "ES",
             "name": "Spanish",
             "tone": "Warm, direct",
-            "text": "Nuevo esta semana: una guía rápida para mantener tus datos seguros. Vale la pena leerla y compartirla."
+            "text": "Nuevo esta semana: una guía rápida para mantener tus datos seguros. Vale la pena leerla y compartirla.",
+            "art": [
+              "Guía rápida para",
+              "mantener tus",
+              "datos seguros",
+              "Lee la guía"
+            ]
           },
           {
             "code": "FR",
             "name": "French",
             "tone": "Polished, concise",
-            "text": "Nouveau cette semaine : un guide rapide pour protéger vos données. À lire et à partager."
+            "text": "Nouveau cette semaine : un guide rapide pour protéger vos données. À lire et à partager.",
+            "art": [
+              "Le guide rapide",
+              "pour protéger",
+              "vos données",
+              "Lire le guide"
+            ]
           },
           {
             "code": "DE",
             "name": "German",
             "tone": "Clear, formal",
-            "text": "Neu diese Woche: ein kurzer Leitfaden, wie Sie Ihre Daten schützen. Lesen und teilen lohnt sich."
+            "text": "Neu diese Woche: ein kurzer Leitfaden, wie Sie Ihre Daten schützen. Lesen und teilen lohnt sich.",
+            "art": [
+              "Kurzer Leitfaden:",
+              "So schützen Sie",
+              "Ihre Daten",
+              "Zum Leitfaden"
+            ]
           },
           {
             "code": "JA",
             "name": "Japanese",
             "tone": "Polite, team first",
-            "text": "今週の新着：データを安全に守るためのクイックガイド。ぜひご一読のうえ、シェアしてください。"
+            "text": "今週の新着：データを安全に守るためのクイックガイド。ぜひご一読のうえ、シェアしてください。",
+            "art": [
+              "データを",
+              "安全に守る",
+              "クイックガイド",
+              "ガイドを読む"
+            ]
           },
           {
             "code": "KO",
             "name": "Korean",
             "tone": "Respectful",
             "text": "이번 주 새 소식: 데이터를 안전하게 지키는 간단한 가이드. 읽어 보시고 [공유하세요|공유해 주세요].",
-            "review": "Softer ask for this audience"
+            "review": "Softer ask for this audience",
+            "art": [
+              "데이터를",
+              "안전하게 지키는",
+              "간단한 가이드",
+              "가이드 읽기"
+            ]
           },
           {
             "code": "ZH",
             "name": "Chinese (Traditional)",
             "tone": "Formal",
-            "text": "本週新內容：保護資料安全的快速指南，值得一讀，也歡迎分享。"
+            "text": "本週新內容：保護資料安全的快速指南，值得一讀，也歡迎分享。",
+            "art": [
+              "保護資料",
+              "安全的",
+              "快速指南",
+              "閱讀指南"
+            ]
           },
           {
             "code": "PT",
             "name": "Portuguese",
             "tone": "Friendly",
-            "text": "Novidade da semana: um guia rápido para manter seus dados seguros. Vale a leitura e o compartilhamento."
+            "text": "Novidade da semana: um guia rápido para manter seus dados seguros. Vale a leitura e o compartilhamento.",
+            "art": [
+              "Guia rápido para",
+              "manter seus",
+              "dados seguros",
+              "Leia o guia"
+            ]
           }
-        ]
+        ],
+        "art": [
+          "A quick guide to",
+          "keeping your",
+          "data safe",
+          "Read the guide"
+        ],
+        "feed": [
+          {
+            "post": true,
+            "tag": "Blog",
+            "title": "A quick guide to keeping your data safe",
+            "body": "New this week: a quick guide to keeping your data safe. Worth a read and a share.",
+            "when": "2 days ago",
+            "likes": 3
+          },
+          {
+            "img": "hpe",
+            "tag": "Event",
+            "title": "Catch Cohesity at HPE Discover",
+            "body": "Cohesity and HPE are bringing modern data security and management across data, cloud, and beyond to HPE Discover, built for what’s next. Schedule a meeting in advance to talk through your resilience strategy."
+          },
+          {
+            "img": "risk",
+            "tag": "Partner",
+            "title": "Cohesity DPSM, Powered by Cyera",
+            "when": "6 days ago",
+            "likes": 5,
+            "tall": true,
+            "count": "7/8"
+          },
+          {
+            "img": "office",
+            "video": true,
+            "tag": "Cohesity News",
+            "title": "Cohesity: The Goal of Identity Resilience",
+            "src": "Cohesity",
+            "when": "5 days ago"
+          },
+          {
+            "img": "maryland",
+            "tag": "Customer Case Study",
+            "title": "Maryland Department of IT safeguards critical files with Cohesity on Cisco UCS",
+            "when": "4 days ago"
+          },
+          {
+            "img": "cohhpe",
+            "tag": "Cohesity News",
+            "title": "Cohesity Expands Strategic Alliance with HPE",
+            "src": "Cohesity",
+            "when": "4 days ago",
+            "tall": true,
+            "count": "3/3"
+          }
+        ],
+        "auto": {
+          "code": "JA",
+          "name": "Japanese",
+          "region": "Japan",
+          "src": {
+            "Content for Sharing": "シェア用コンテンツ",
+            "Cohesity": "Cohesity"
+          },
+          "when": {
+            "2 days ago": "2日前",
+            "3 days ago": "3日前",
+            "4 days ago": "4日前",
+            "5 days ago": "5日前",
+            "6 days ago": "6日前"
+          },
+          "cards": [
+            {
+              "title": "データを安全に守るためのクイックガイド",
+              "body": "今週の新着：データを安全に守るためのクイックガイド。ぜひご一読のうえ、シェアしてください。"
+            },
+            {
+              "title": "HPE DiscoverでCohesityに会いましょう",
+              "body": "CohesityとHPEは、データ、クラウド、そしてその先まで、最新のデータセキュリティと管理をHPE Discoverでご紹介します。レジリエンス戦略についてお話しできるよう、事前にミーティングをご予約ください。"
+            },
+            {
+              "title": "Cyera搭載のCohesity DPSM"
+            },
+            {
+              "title": "Cohesity：アイデンティティ・レジリエンスの目標"
+            },
+            {
+              "title": "メリーランド州IT局、Cisco UCS上のCohesityで重要ファイルを保護"
+            },
+            {
+              "title": "Cohesity、HPEとの戦略的提携を拡大"
+            }
+          ]
+        }
       },
       {
         "id": "editorial",
