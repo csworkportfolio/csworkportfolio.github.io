@@ -330,7 +330,7 @@
     const cells = [...fig.querySelectorAll(".mb-battery i")];
     const steps = [...fig.querySelectorAll(".zp-step")];
     const top = data.statuses.length - 1;
-    const set = (cls, on) => mb.classList.toggle(cls, on);
+    const set = (cls, on) => { mb.classList.toggle(cls, on); if (cls === "is-zap") fig.classList.toggle("is-zap", on); };
     // each screen is drawn at 1200 by 640 and scaled to the window; a phone gets the mobile layouts, drawn at 420 by 700
     let mobile = false;
     // filmed like the Hub: on a wide screen the view leans in on the part in use (the Generate column, then

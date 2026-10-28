@@ -1450,7 +1450,12 @@ def demo_board(b, root):
               f'<svg class="mb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg></div></div>')
     chapters = "".join(f'<button type="button" style="--p:0"><span class="hb-fill"></span><span class="hb-ch-t">{esc(c)}</span></button>'
                        for c in b["chapters"])
-    inner = (ai_window("monday.com  ·  Editorial Calendar", canvas, " mb-window")
+    # the window's bar holds a browser tab for each app; the one on screen is the open tab
+    tabs = (f'<span class="mbt is-mb">{MB_LOGO}monday.com \u00b7 Editorial Calendar</span>'
+            f'<span class="mbt is-zp"><i class="mbt-z"></i>Zapier \u00b7 {esc(b["zap"]["name"])}</span>')
+    window = (f'<div class="ai-window mb-window"><div class="ai-bar mb-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
+              f'<span class="mbt-row">{tabs}</span></div>{canvas}</div>')
+    inner = (window
              + f'<nav class="hb-chapters" aria-label="Skip to a part of the demo">{chapters}</nav>')
     return ai_figure(b, "Illustration: an editorial calendar in Monday.com whose Generate button runs a Zapier workflow with Claude", inner)
 
