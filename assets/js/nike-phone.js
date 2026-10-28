@@ -56,7 +56,10 @@ function start(THREE) {
   // ---------- the phone (modeled on a current pro phone, burgundy, Christian's CS mark on the back) ----------
   const W = 0.76, H = 1.62, D = 0.088, R = 0.125;
   const BURGUNDY = new THREE.Color(0x4d1822), GRAPHITE = new THREE.Color(0x9a9aa0);   // the handoffs' gray, light enough to read as gray
-  const phone = new THREE.Group(); world.add(phone);
+  // the phone sits in a rig: the turntable tips the rig to a hero angle (leaning back and to one side) and the
+  // phone turns about its own long axis inside it
+  const rig = new THREE.Group(); world.add(rig);
+  const phone = new THREE.Group(); rig.add(phone);
   const roundedRect = (w, h, r, rb = r) => {
     const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
     s.moveTo(x + rb, y); s.lineTo(x + w - rb, y); s.quadraticCurveTo(x + w, y, x + w, y + rb);
@@ -336,7 +339,7 @@ function start(THREE) {
   dock.innerHTML = '<div class="n3-drawer"><button class="n3-tab" type="button" aria-label="Show phone controls" aria-expanded="false">'
     + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5L8.5 12l6 6.5"/></svg></button>'
     + '<div class="n3-controls" role="group" aria-label="Phone controls">'
-    + `<button class="n3-btn" type="button" data-act="spin" aria-label="Spin the phone">${ICON.spin}</button>`
+    + `<button class="n3-btn" type="button" data-act="spin" aria-label="Spin the phone" aria-pressed="false">${ICON.spin}</button>`
     + `<button class="n3-btn" type="button" data-act="zoom" aria-label="Zoom in close">${ICON.zoom}</button>`
     + `<button class="n3-btn" type="button" data-act="info" aria-label="How This Phone Was Made" aria-expanded="false" aria-controls="n3-note">${ICON.info}</button>`
     + '</div></div>';
@@ -378,11 +381,20 @@ function start(THREE) {
     if (dock.classList.contains("is-out")) showControls(false);
   });
   // the shows: a full turn, and a commercial push-in on the cameras
-  let spinAt = -1, zoomAt = -1;
-  dock.querySelector('[data-act="spin"]').addEventListener("click", () => { spinAt = performance.now(); kick(); });
-  dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { zoomAt = performance.now(); kick(); });
-  const SPIN_MS = 1900, ZOOM_MS = 5600;
-  const lensSpot = new THREE.Vector3(0.15, H / 2 - 0.26, -D / 2 - 0.03), lookAt = new THREE.Vector3();
+  // spin is a switch: on, the phone keeps turning like a showroom turntable, speeding up and slowing down, while the
+  // camera drifts in and out over different parts of it; off, it settles back. The zoom is a commercial pass down the
+  // screen: close shots from the top of the placement to its nav bar, each drifting down, then a pull back out
+  let spinning = false, spinK = 0, spinAngle = 0, zoomAt = -1;
+  const spinBtn = dock.querySelector('[data-act="spin"]');
+  const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) zoomAt = -1; kick(); };
+  spinBtn.addEventListener("click", () => setSpin(!spinning));
+  dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { setSpin(false); zoomAt = performance.now(); kick(); });
+  const midOf = (a, b) => SH / 2 - (a + b) / 2 * SH;   // the screen height at the middle of a stretch of the placement
+  const SHOTS = cuts.length > 3
+    ? [SH / 2 - 0.2, midOf(cuts[0], cuts[1]) - 0.08, midOf(cuts[1], cuts[2]), -SH / 2 + 0.16]
+    : [SH / 2 - 0.2, 0.2, -0.2, -SH / 2 + 0.16];
+  const Z_IN = 700, Z_SHOT = 1700, Z_OUT = 900, ZOOM_MS = Z_IN + SHOTS.length * Z_SHOT + Z_OUT;
+  const lookAt = new THREE.Vector3(), aim = new THREE.Vector3();
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
   function size() {
@@ -429,19 +441,30 @@ function start(THREE) {
         off.x += (0 - off.x) * Math.min(1, dt * 3.5); off.y += (turns * Math.PI * 2 - off.y) * Math.min(1, dt * 3.5);
       }
     }
-    // the shows: a spin adds one full turn; the zoom turns the phone to its back while the camera pushes in on the
-    // lenses, holds with a slow drift, and pulls back
-    let spin = 0, zk = 0, drift = 0;
     const lf = Math.min(1, dt * 4);
     look.x += ((drag ? 0 : lookAim.x) - look.x) * lf; look.y += ((drag ? 0 : lookAim.y) - look.y) * lf;
-    if (spinAt >= 0) { const t = (now - spinAt) / SPIN_MS; if (t >= 1) spinAt = -1; else spin = ease(t) * Math.PI * 2; }
+    // the turntable: its speed wanders between slow and fast; off, it settles to the nearest full turn
+    spinK += ((spinning ? 1 : 0) - spinK) * Math.min(1, dt * 2.2);
+    if (spinning) spinAngle += (0.3 + 1.3 * Math.pow(0.5 + 0.5 * Math.sin(now / 1700) * Math.sin(now / 2900 + 1.3), 2)) * dt;
+    else spinAngle += (Math.round(spinAngle / (Math.PI * 2)) * Math.PI * 2 - spinAngle) * Math.min(1, dt * 2.5);
+    // the commercial pass: in, a few close shots down the screen, out
+    let zk = 0, shotY = SHOTS[0], sway = 0;
     if (zoomAt >= 0) {
-      const t = (now - zoomAt) / ZOOM_MS;
-      if (t >= 1) zoomAt = -1;
-      else { zk = t < 0.3 ? ease(t / 0.3) : t < 0.72 ? 1 : 1 - ease((t - 0.72) / 0.28); drift = Math.sin(t * Math.PI * 2) * 0.06; }
+      const t = now - zoomAt;
+      if (t >= ZOOM_MS) zoomAt = -1;
+      else {
+        zk = t < Z_IN ? ease(t / Z_IN) : t > ZOOM_MS - Z_OUT ? 1 - ease((t - (ZOOM_MS - Z_OUT)) / Z_OUT) : 1;
+        const st = clamp(t - Z_IN, 0, SHOTS.length * Z_SHOT - 1), i = Math.floor(st / Z_SHOT), local = (st - i * Z_SHOT) / Z_SHOT;
+        const from = SHOTS[Math.max(0, i - 1)];
+        shotY = from + (SHOTS[i] - from) * ease(clamp(local / 0.28)) - local * 0.07;   // a quick move to the next shot, then a slow drift down
+        sway = Math.sin((i + local) * 1.9) * 0.07;
+      }
     }
     const lx = look.y * 0.14 * (1 - zk), ly = look.x * 0.28 * (1 - zk);   // the lean toward the pointer (none during the zoom)
-    phone.rotation.set(cur.rx + off.x + lx - 0.12 * zk, cur.ry + off.y + ly + spin + (Math.PI + 0.35 - cur.ry - off.y) * zk, 0);
+    const wob = spinK * 0.1 * Math.sin(now / 2600);                          // the turntable tips a little as it turns
+    const hero = ease(spinK);
+    rig.rotation.set(0.3 * hero, 0, -0.32 * hero);                            // the hero angle: leaning back, tilted to one side
+    phone.rotation.set(cur.rx + off.x + lx + wob + (0.04 - cur.rx - off.x) * zk, cur.ry + off.y + ly + spinAngle + (-0.22 - cur.ry - off.y) * zk, 0);
     phone.position.y = cur.y + Math.sin(now / 900) * 0.012;
     phone.scale.setScalar(cur.s);
     // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
@@ -472,13 +495,19 @@ function start(THREE) {
       nt.group.scale.setScalar(0.94 + 0.06 * k);
       nt.words.material.opacity = k; nt.tint.material.color.set(dark ? 0x1c1c1e : 0xffffff); nt.tint.material.opacity = k * (dark ? 0.6 : 0.8);   // enough tint that the glass reads as a solid banner (whiter by day)
     });
-    if (zk > 0) {
+    if (zk > 0) {   // close on the screen, a little to one side, looking at the shot's point on it
       phone.updateMatrixWorld();
-      const target = phone.localToWorld(lensSpot.clone());
-      camera.position.set(target.x * zk + drift, target.y * zk + 0.05 * zk, camBase + (1.25 - camBase) * zk);   // close enough to fill the frame with the three lenses
-      lookAt.set(target.x * zk, target.y * zk, 0);
-      camera.lookAt(lookAt);
-    } else if (camera.position.z !== camBase || camera.position.x !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
+      const target = phone.localToWorld(aim.set(sway, shotY, front));
+      camera.position.set(target.x * zk + 0.34 * zk, target.y * zk + 0.06 * zk, camBase + (target.z + 1.05 - camBase) * zk);   // angled, so the screen's edge reads
+      camera.lookAt(lookAt.set(target.x * zk, target.y * zk, target.z * zk));
+    } else if (spinK > 0.002) {   // the turntable's camera drifts in and out, its aim wandering up and down the phone
+      const fy = (Math.sin(now / 2300) * 0.3 + Math.sin(now / 3700 + 2) * 0.14) * spinK;
+      const near = (0.5 + 0.5 * Math.sin(now / 3100 + 0.7)) * spinK;
+      camera.position.set(0, fy * 0.5, camBase * (1 - 0.22 * near));
+      camera.lookAt(lookAt.set(0, fy, 0));
+    } else if (camera.position.z !== camBase || camera.position.x !== 0 || camera.position.y !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
+    // during the shows the canvas fades out at its sides, so a close-up never spreads over the words beside it
+    scene.classList.toggle("n3-showing", zk > 0 || spinK > 0.01);
     renderer.render(world, camera);
     raf = requestAnimationFrame(frame);
   }
