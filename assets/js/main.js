@@ -1511,14 +1511,14 @@
   // the scene's progress, 0 to 1. Nothing captures the wheel. With reduced motion (or no script) the
   // sections stay laid out still.
 
-  // a page with a scene's pause button (Cohesity) lines the light/dark switch up with it: the two round buttons
+  // a page with a scene's controls (Cohesity) lines the light/dark switch up with them: the switch and the pill
   // share one centre line down the right side, whatever the window's width
-  const themeBtn = document.querySelector(".theme-toggle"), scenePause = document.querySelector(".pj-toggle:not(.pj-restart)");
+  const themeBtn = document.querySelector(".theme-toggle"), scenePause = document.querySelector(".pj-controls");
   if (themeBtn && scenePause && "ResizeObserver" in window) {
     const align = () => {
       themeBtn.style.right = "";
       const p = scenePause.getBoundingClientRect(), t = themeBtn.getBoundingClientRect();
-      if (!p.width) return;
+      if (!p.width || matchMedia("(max-width: 720px)").matches) return;   // on phones the controls sit over the picture
       const shift = (p.left + p.width / 2) - (t.left + t.width / 2);
       themeBtn.style.right = `${(parseFloat(getComputedStyle(themeBtn).right) - shift).toFixed(1)}px`;
     };

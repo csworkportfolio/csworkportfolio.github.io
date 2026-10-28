@@ -2173,25 +2173,65 @@ html .pills > .seg.is-scrolling { background: none; }
 .pj-part { transition: opacity .25s, filter .25s; }
 .pj-kicker { display: none; margin-top: .4em; font-size: 1.5em; font-weight: 600; letter-spacing: -.01em; }
 .pj-caption.is-center .pj-kicker { display: block; }
-.pj-toggle { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border: 0; border-radius: 50%; display: grid; place-items: center;
-  cursor: pointer; opacity: 0; background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);
-  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); transition: opacity .2s, background-color .18s; }
-.pj-stage.is-ready .pj-toggle { opacity: 1; }
-.pj-toggle:hover { background: color-mix(in srgb, #ffffff 66%, transparent); }
-.pj-toggle:focus-visible { outline: 2px solid #007aff; outline-offset: 3px; }
-.pj-toggle svg { width: 20px; height: 20px; }
+/* the controls (pause, start over, How I Made This): on wider screens one glass pill down the top right corner */
+.pj-controls { position: absolute; top: 16px; right: 16px; display: flex; flex-direction: column; padding: 2px; border-radius: 24px;
+  opacity: 0; background: var(--tabglass); color: var(--tabink); box-shadow: var(--tabshadow);
+  -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); transition: opacity .2s; }
+.pj-stage.is-ready .pj-controls { opacity: 1; }
+.pj-btn { width: 44px; height: 44px; border: 0; border-radius: 50%; padding: 0; display: grid; place-items: center; cursor: pointer;
+  background: transparent; color: inherit; transition: background-color .18s; }
+.pj-btn:hover { background: var(--tablens); }
+.pj-btn:focus-visible { outline: 2px solid #007aff; outline-offset: -2px; }
+.pj-btn svg { width: 20px; height: 20px; }
 .pj-toggle .i-pause { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
 .pj-toggle .i-play { display: none; fill: currentColor; }
 .pj-toggle.is-paused .i-pause { display: none; }
 .pj-toggle.is-paused .i-play { display: block; }
-/* start over sits under pause, the same round glass button */
-.pj-restart { top: 68px; }
 .pj-restart svg { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.pj-credit-btn svg { fill: currentColor; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.pj-credit-btn circle { stroke: none; }
+/* "How I Made This": a glass note at the bottom centre of the picture.
+   It opens from its button, at the end of the loop, and when the reader scrolls to the bottom of the scene;
+   the subtitles step aside while it is up (the closing line sits in the middle, clear of it) */
+.pj-credits { position: absolute; left: 50%; bottom: 4%; width: min(86%, 560px); box-sizing: border-box; padding: 14px 48px 16px 20px;
+  border-radius: 18px; text-align: left; font-size: 15px; line-height: 1.45; color: var(--tabink);
+  background: var(--tabglass); box-shadow: var(--tabshadow);
+  -webkit-backdrop-filter: blur(20px) saturate(190%); backdrop-filter: blur(20px) saturate(190%);
+  opacity: 0; visibility: hidden; transform: translate(-50%, 8px); transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s; }
+.pj-stage.show-credits .pj-credits { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .3s ease, transform .3s ease; }
+.pj-credits p { margin: 0; }
+.pj-credits .pj-credits-title { margin-bottom: 4px; font-size: 13px; font-weight: 600; letter-spacing: .01em; opacity: .6; }
+.pj-credits a { color: var(--tabaccent); text-decoration: none; }
+.pj-credits a:hover { text-decoration: underline; }
+.pj-credits-close { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; border-radius: 50%; padding: 0;
+  display: grid; place-items: center; cursor: pointer; background: transparent; color: inherit; opacity: .6; }
+.pj-credits-close:hover { opacity: 1; background: var(--tablens); }
+.pj-credits-close:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
+.pj-credits-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+:root[data-os="ios"] .pj-credits-close { width: 44px; height: 44px; top: 2px; right: 2px; }
+.pj-caption { transition: opacity .25s; }
+.pj-stage.show-credits .pj-caption:not(.is-center) { opacity: 0; }
+@media (prefers-reduced-transparency: reduce) { .pj-credits { background: var(--bg, #fff); -webkit-backdrop-filter: none; backdrop-filter: none; } }
 @media (max-width: 720px) {
   /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
-  .pj-toggle { top: 12px; right: 12px; }
-  .pj-restart { top: 64px; }
+  /* phones: like a floating video on iPhone, the controls stay out of the way until the picture is tapped, then
+     sit in a row across its middle on a light dim (start over, play or pause, How I Made This), and fade again
+     a few seconds later while it plays; while paused they stay */
+  .pj-controls { top: 0; left: 0; right: 0; aspect-ratio: 16 / 9; flex-direction: row; justify-content: center; align-items: center;
+    gap: 28px; padding: 0; border-radius: 0; color: #fff; background: rgba(0, 0, 0, .32); box-shadow: none;
+    -webkit-backdrop-filter: none; backdrop-filter: none; pointer-events: none; }
+  .pj-stage.is-ready .pj-controls { opacity: 0; }
+  .pj-stage.is-ready.show-controls .pj-controls { opacity: 1; pointer-events: auto; }
+  .pj-restart { order: -1; }
+  .pj-btn:hover { background: transparent; }
+  .pj-btn svg { width: 24px; height: 24px; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .35)); }
+  .pj-toggle svg { width: 34px; height: 34px; }
+  .pj-toggle { width: 56px; height: 56px; }
+  /* on a phone the note opens under the subtitles, and they stay */
+  .pj-credits { position: static; width: auto; margin: 10px var(--gutter) 0; transform: none; display: none; }
+  .pj-stage.show-credits .pj-credits { display: block; transform: none; animation: pj-in .35s ease; }
+  .pj-stage.show-credits .pj-caption:not(.is-center) { opacity: 1; }
   .pj-pin { margin: 40px 0; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }

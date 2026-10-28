@@ -1130,21 +1130,42 @@ def case_shine(slug, media):
     return ""
 
 
+def scene_credit(b):
+    """The scene's "How I Made This" note: its button (the third control, after pause and start over) and the note,
+    which opens at the bottom of the picture (post-journey.js also opens it at the end of the loop and when the
+    reader scrolls to the bottom of the scene). Named tools in the text link to their sites."""
+    c = b.get("credit")
+    if not c:
+        return "", ""
+    text = esc(c["text"])
+    for name, url in c.get("links", {}).items():
+        text = text.replace(esc(name), f'<a href="{esc(url)}" target="_blank" rel="noopener">{esc(name)}</a>', 1)
+    button = (f'<button class="pj-btn pj-credit-btn" type="button" aria-label="{esc(c["title"])}" aria-expanded="false" '
+              f'aria-controls="pj-credits"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6.8" r="1.5"/>'
+              f'<path d="M12 11v7.5"/></svg></button>')
+    return button, (f'<aside class="pj-credits" id="pj-credits" aria-label="{esc(c["title"])}">'
+            f'<button class="pj-credits-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<path d="M7 7l10 10M17 7L7 17"/></svg></button>'
+            f'<p class="pj-credits-title">{esc(c["title"])}</p><p>{text}</p></aside>')
+
+
 def scene(b, root):
     """An animated three.js scene under a section (assets/js/<scene>.js), with its subtitles over the picture
-    and pause and start over buttons. The script loads three.js only when the scene nears the screen. Screen readers get
+    and its controls (pause, start over, How I Made This). The script loads three.js only when the scene nears the screen. Screen readers get
     the description instead of the moving subtitles."""
     name = b["scene"]
+    credit_btn, credit = scene_credit(b)
     return (f'<script src="{root}assets/js/{name}.js?v={asset_version(f"assets/js/{name}.js")}" defer></script>'
             f'<div class="pj-pin"><figure class="pj">'
             f'<div class="pj-stage" data-earth="{root}assets/scenes/earth-night.jpg">'
             f'<canvas aria-hidden="true"></canvas>'
             f'<div class="pj-caption" aria-hidden="true"><span class="pj-line"></span>'
             f'<span class="pj-kicker">{esc(b["kicker"])}</span></div>'
-            f'<button class="pj-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<div class="pj-controls">'
+            f'<button class="pj-btn pj-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
             f'<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>'
-            f'<button class="pj-toggle pj-restart" type="button" aria-label="Start over"><svg viewBox="0 0 24 24" aria-hidden="true">'
-            f'<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4"/></svg></button></div>'
+            f'<button class="pj-btn pj-restart" type="button" aria-label="Start over"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4"/></svg></button>{credit_btn}</div>{credit}</div>'
             f'<figcaption class="sr-only">{esc(b["alt"])}</figcaption></figure></div>')
 
 

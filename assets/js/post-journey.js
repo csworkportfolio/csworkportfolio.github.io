@@ -449,6 +449,7 @@
     });
 
     renderer.render(scene, cam);
+    creditAtEnd(w);
   }
 
   // ---------- Sizing, theme, playback ----------
@@ -466,7 +467,7 @@
 
   // Plays only while on screen and not paused. With Reduce Motion on it waits on the Champions Hub, full, until Play.
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const toggle = stage.querySelector(".pj-toggle:not(.pj-restart)"), restart = stage.querySelector(".pj-restart");
+  const toggle = stage.querySelector(".pj-toggle"), restart = stage.querySelector(".pj-restart");
   let userPaused = reduce, onScreen = false, playing = false, raf = 0, last = 0;
   let clock = reduce ? starts[3] + BEATS[3].hold * 0.9 : 0;
   function frame(now) {
@@ -485,6 +486,52 @@
   // Start over goes back to the first step and plays from there
   restart.addEventListener("click", () => { clock = 0; userPaused = false; render(clock); update(); });
   document.addEventListener("visibilitychange", update);
+
+  // Phones: the controls show on a tap of the picture and fade three seconds later while it plays (they stay
+  // while paused, or while one of them has keyboard focus). A tap on the dim around them hides them again.
+  const controls = stage.querySelector(".pj-controls"), phone = matchMedia("(max-width: 720px)");
+  let hideTimer = 0;
+  function showControls(on) {
+    clearTimeout(hideTimer);
+    stage.classList.toggle("show-controls", on);
+    if (on && !userPaused && !controls.contains(document.activeElement)) hideTimer = setTimeout(() => showControls(false), 3000);
+  }
+  canvas.addEventListener("click", () => { if (phone.matches) showControls(true); });
+  controls.addEventListener("click", (e) => { if (!phone.matches) return; showControls(e.target === controls ? false : true); });
+  controls.addEventListener("focusin", () => { if (phone.matches) showControls(true); });
+  controls.addEventListener("focusout", () => { if (phone.matches) showControls(true); });
+
+  // "How I Made This": opens from its button, near the end of the loop (from the closing line through the fade)
+  // and when the reader scrolls to the bottom of the scene. Opening or closing it by hand holds until the
+  // automatic reason changes.
+  const creditBtn = stage.querySelector(".pj-credit-btn"), creditClose = stage.querySelector(".pj-credits-close");
+  let creditEnd = false, creditBottom = false, creditAuto = false, creditUser = null;
+  function showCredit() {
+    const auto = creditEnd || creditBottom;
+    if (auto !== creditAuto) { creditAuto = auto; creditUser = null; }
+    const open = creditUser ?? auto;
+    stage.classList.toggle("show-credits", open);
+    creditBtn?.setAttribute("aria-expanded", String(open));
+  }
+  if (creditBtn) {
+    creditBtn.addEventListener("click", () => { creditUser = !stage.classList.contains("show-credits"); showCredit(); });
+    creditClose.addEventListener("click", () => { creditUser = false; showCredit(); creditBtn.focus(); });
+    stage.addEventListener("keydown", (e) => { if (e.key === "Escape" && stage.classList.contains("show-credits")) { creditUser = false; showCredit(); creditBtn.focus(); } });
+    const fig = stage.closest(".pj"), pin = stage.closest(".pj-pin");
+    const atBottom = () => {
+      const vh = innerHeight, f = fig.getBoundingClientRect(), r = (pin || fig).getBoundingClientRect();
+      // held still on wide screens: the last stretch before the picture lets go; otherwise once its bottom is well up the window
+      creditBottom = r.height > f.height + 10 ? r.bottom - f.bottom < (r.height - f.height) * 0.15 && r.bottom > 0 : f.bottom < vh * 0.45 && f.bottom > f.height * 0.4;
+      showCredit();
+    };
+    addEventListener("scroll", atBottom, { passive: true });
+    addEventListener("resize", atBottom, { passive: true });
+    atBottom();
+  }
+  function creditAtEnd(w) {
+    const end = !!creditBtn && w.b === 5 && (w.tail || w.k > 0.35);
+    if (end !== creditEnd) { creditEnd = end; showCredit(); }
+  }
   new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; update(); }, { threshold: 0.25 }).observe(stage);
   render(clock);
   stage.classList.add("is-ready");
