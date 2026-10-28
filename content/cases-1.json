@@ -121,7 +121,8 @@
           {
             "name": "ACG Hike",
             "video": "assets/video/nike-acg-hike-app.mp4",
-            "poster": "assets/video/nike-acg-hike-app.webp"
+            "poster": "assets/video/nike-acg-hike-app.webp",
+            "sound": true
           }
         ]
       },

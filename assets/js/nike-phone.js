@@ -261,12 +261,52 @@ function start(THREE) {
   // a placement recorded as a video plays on the screen once it is whole (its still poster shows while the brief's
   // pieces are apart); only the chosen one loads, it is silent, and it plays only while the scene is on screen
   const clip = Object.assign(document.createElement("video"), { muted: true, loop: true, playsInline: true, preload: "auto" });
-  clip.setAttribute("muted", ""); clip.setAttribute("playsinline", "");
+  clip.setAttribute("muted", ""); clip.setAttribute("playsinline", ""); clip.className = "n3-clip";
   let clipOn = false, clipTime = -1;
+  // a placement with sound (ACG) gets a sound control beside the switcher: a speaker button and a volume bar that
+  // starts halfway. It starts muted (browsers only play sound after the reader asks for it); the button or the bar
+  // turns it on
+  const sound = document.createElement("span");
+  sound.className = "n3-sound"; sound.hidden = true;
+  sound.innerHTML = '<button type="button" class="n3-sound-btn" aria-label="Turn sound on" aria-pressed="false">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>'
+    + '<path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>'
+    + '<input type="range" class="n3-volume" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">';
+  const soundBtn = sound.querySelector(".n3-sound-btn"), volume = sound.querySelector(".n3-volume");
+  let wantSound = false;
+  const paintSound = () => {
+    soundBtn.setAttribute("aria-pressed", String(wantSound));
+    soundBtn.setAttribute("aria-label", wantSound ? "Turn sound off" : "Turn sound on");
+    sound.classList.toggle("is-on", wantSound);
+    sound.style.setProperty("--v", volume.value);
+    clip.muted = !wantSound; clip.volume = +volume.value;
+  };
+  soundBtn.addEventListener("click", () => { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); });
+  volume.addEventListener("input", () => { wantSound = +volume.value > 0; paintSound(); });
+  paintSound();
+  // it sits inside the switcher, right after the placement it belongs to
+  function placeSound() {
+    const i = sets.findIndex((x) => x.sound), btn = scene.querySelectorAll(".sc-switch button[data-set]")[i];
+    if (btn && sound.previousElementSibling !== btn) btn.after(sound);
+    fitSwitch();
+  }
+  // with the sound control in it the switcher grows; it shifts left as far as it needs to stay clear of the window's
+  // edge and the controls tab there
+  function fitSwitch() {
+    const sw = scene.querySelector(".sc-switch");
+    if (!sw) return;
+    sw.style.left = "";
+    const over = sw.getBoundingClientRect().right - (innerWidth - 40);
+    if (over > 0 && scene.classList.contains("has-3d")) { sw.style.position = "relative"; sw.style.left = `${-Math.ceil(over)}px`; }
+  }
+  addEventListener("resize", fitSwitch, { passive: true });
   const loadImg = (url) => new Promise((ok) => { if (!url) return ok(null); const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = url; });
   function useSet(i) {
     const s = sets[i] || sets[0];
     clipOn = !!s.video; clipTime = -1;
+    sound.hidden = !s.sound;
+    if (!s.sound) { wantSound = false; paintSound(); }
+    placeSound();
     if (clipOn) { if (!clip.src.endsWith(s.video)) clip.src = s.video; clip.currentTime = 0; } else { clip.pause(); clip.removeAttribute("src"); clip.load(); }
     Promise.all([loadImg(s.src), loadImg(s.next)]).then(([a, b]) => { shots = { src: a, next: b }; rollDrawn = -1; kick(); });
   }
@@ -289,7 +329,7 @@ function start(THREE) {
     screenTex.needsUpdate = true;
   }
   useSet(0);
-  scene.querySelectorAll(".sc-switch button").forEach((b) => b.addEventListener("click", () => useSet(+b.dataset.set)));
+  scene.querySelectorAll(".sc-switch button[data-set]").forEach((b) => b.addEventListener("click", () => useSet(+b.dataset.set)));
 
   // ---------- light and dark: the page's setting, or the switch in the header ----------
   let wake = () => {};
@@ -573,11 +613,12 @@ function start(THREE) {
     });
     // the video plays only while the screen is whole and on screen, and never rolls on to a next screen
     const whole = apart < 0.002;
-    if (clipOn) { if (whole && onScreen && !document.hidden) { if (clip.paused) clip.play().catch(() => {}); } else if (!clip.paused) clip.pause(); }
+    // (it holds still during the zoom's close-up, so the screen isn't moving under a moving camera; the spin leaves it playing)
+    if (clipOn) { if (whole && onScreen && !document.hidden && zoomAt < 0) { if (clip.paused) clip.play().catch(() => {}); } else if (!clip.paused) clip.pause(); }
     drawScreen(clipOn ? 0 : o.roll, whole);
     // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
-    island.material.opacity = ik; island.scale.set(0.5 + 0.5 * ease(ik), 0.6 + 0.4 * ease(ik), 1); island.visible = ik > 0.01;
+    island.material.opacity = ik * (clipOn ? 0 : 1);   // a recorded placement shows the island it was recorded with island.scale.set(0.5 + 0.5 * ease(ik), 0.6 + 0.4 * ease(ik), 1); island.visible = ik > 0.01 && !clipOn;
     island.position.copy(islandHome); if (pieces[0]) island.position.addScaledVector(pieces[0].userData.away, apart);   // it rides in on the top piece
     const u = siri.material.uniforms;
     u.uOpacity.value += (o.glow * (0.72 + 0.28 * Math.sin(now / 420)) - u.uOpacity.value) * Math.min(1, dt * 6);   // breathing
@@ -636,7 +677,7 @@ function start(THREE) {
   }
   let lastSig = [], still = 0, lastDraw = 0;
   // classes are only written when they change: any write wakes the loop (it watches the section's classes)
-  function flag(c, on) { if (scene.classList.contains(c) !== on) scene.classList.toggle(c, on); }
+  function flag(c, on) { if (scene.classList.contains(c) !== on) { scene.classList.toggle(c, on); if (c === "has-3d") fitSwitch(); } }
   wake = () => kick();
   const kick = () => { still = 0; if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
   addEventListener("scroll", () => { if (onScreen) kick(); }, { passive: true });

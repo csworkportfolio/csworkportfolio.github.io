@@ -862,6 +862,24 @@ main { view-transition-name: page; }
 .sc-switch button { white-space: nowrap; padding: 0 14px; height: 32px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 13px; font-weight: 500; color: var(--tabink); cursor: pointer; transition: background-color .18s, color .18s; }
 .sc-switch button.is-on { background: #007aff; color: #fff; }
 /* four placements on a phone: a little tighter, so they stay on one line */
+/* the sound control of a placement with sound (ACG), inside the switcher after its name: a speaker and a volume bar
+   that starts halfway; only on the 3D phone, which is the one that plays it */
+.n3-sound { display: none; }
+.scene.has-3d .n3-sound:not([hidden]) { display: inline-flex; align-items: center; gap: 4px; padding: 0 10px 0 2px; }
+.n3-sound-btn { width: 32px; height: 32px; border: 0; border-radius: 50%; padding: 0; display: grid; place-items: center; cursor: pointer;
+  background: none; color: var(--tabink); transition: background-color .18s; }
+.n3-sound-btn:hover { background: var(--tablens); }
+.n3-sound-btn:focus-visible { outline: 2px solid #007aff; outline-offset: -2px; }
+.n3-sound-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.n3-sound-btn .spk { fill: currentColor; }
+.n3-sound .on, .n3-sound.is-on .off { display: none; }
+.n3-sound.is-on .on { display: inline; }
+.n3-volume { -webkit-appearance: none; appearance: none; width: 72px; height: 4px; border-radius: 2px; cursor: pointer;
+  background: linear-gradient(90deg, #007aff calc(var(--v, .5) * 100%), color-mix(in srgb, var(--tabink) 22%, transparent) 0); }
+.n3-sound:not(.is-on) .n3-volume { background: linear-gradient(90deg, color-mix(in srgb, var(--tabink) 45%, transparent) calc(var(--v, .5) * 100%), color-mix(in srgb, var(--tabink) 22%, transparent) 0); }
+.n3-volume::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
+.n3-volume::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
+.n3-volume:focus-visible { outline: 2px solid #007aff; outline-offset: 4px; }
 @media (max-width: 720px) {
   .sc-switch button { padding: 0 10px; font-size: 12.5px; flex: none; }
   /* never wider than the screen: past that it swipes inside itself, like the tab bar */
