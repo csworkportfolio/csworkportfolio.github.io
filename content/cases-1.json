@@ -112,6 +112,16 @@
             "name": "Mia Corona",
             "phone": "Nike Spotlight 2.PNG",
             "next": "Nike Spotlgiht.PNG"
+          },
+          {
+            "name": "Back to School",
+            "video": "assets/video/nike-back-to-school-app.mp4",
+            "poster": "assets/video/nike-back-to-school-app.webp"
+          },
+          {
+            "name": "ACG Hike",
+            "video": "assets/video/nike-acg-hike-app.mp4",
+            "poster": "assets/video/nike-acg-hike-app.webp"
           }
         ]
       },

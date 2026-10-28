@@ -252,12 +252,28 @@ function start(THREE) {
 
   // ---------- the screen: this set's placement, rolling to the next screen once it's live ----------
   let shots = { src: null, next: null }, rollDrawn = -1;
+  // a placement recorded as a video plays on the screen once it is whole (its still poster shows while the brief's
+  // pieces are apart); only the chosen one loads, it is silent, and it plays only while the scene is on screen
+  const clip = Object.assign(document.createElement("video"), { muted: true, loop: true, playsInline: true, preload: "auto" });
+  clip.setAttribute("muted", ""); clip.setAttribute("playsinline", "");
+  let clipOn = false, clipTime = -1;
   const loadImg = (url) => new Promise((ok) => { if (!url) return ok(null); const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = url; });
   function useSet(i) {
     const s = sets[i] || sets[0];
+    clipOn = !!s.video; clipTime = -1;
+    if (clipOn) { if (!clip.src.endsWith(s.video)) clip.src = s.video; clip.currentTime = 0; } else { clip.pause(); clip.removeAttribute("src"); clip.load(); }
     Promise.all([loadImg(s.src), loadImg(s.next)]).then(([a, b]) => { shots = { src: a, next: b }; rollDrawn = -1; kick(); });
   }
-  function drawScreen(roll) {
+  function drawScreen(roll, whole) {
+    // the video's newest frame, when it is playing and the screen is whole
+    const live = clipOn && whole && clip.readyState >= 2;
+    if (live && clip.currentTime !== clipTime) {
+      clipTime = clip.currentTime;
+      screenCanvas.getContext("2d").drawImage(clip, 0, 0, screenCanvas.width, screenCanvas.height);
+      screenTex.needsUpdate = true; rollDrawn = -2;
+      return;
+    }
+    if (live) return;
     if (!shots.src || Math.abs(roll - rollDrawn) < 0.001) return;
     rollDrawn = roll;
     const g = screenCanvas.getContext("2d"), w = screenCanvas.width, h = screenCanvas.height;
@@ -547,7 +563,10 @@ function start(THREE) {
       sh.scale.setScalar(1 + lift * 0.5);
       sh.material.opacity = Math.min(0.85, 0.5 + lift * 0.6) * Math.min(1, apart * 4);
     });
-    drawScreen(o.roll);
+    // the video plays only while the screen is whole and on screen, and never rolls on to a next screen
+    const whole = apart < 0.002;
+    if (clipOn) { if (whole && onScreen && !document.hidden) { if (clip.paused) clip.play().catch(() => {}); } else if (!clip.paused) clip.pause(); }
+    drawScreen(clipOn ? 0 : o.roll, whole);
     // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
     island.material.opacity = ik; island.scale.set(0.5 + 0.5 * ease(ik), 0.6 + 0.4 * ease(ik), 1); island.visible = ik > 0.01;
@@ -603,7 +622,7 @@ function start(THREE) {
       ...notes.map((n) => n.k), island.material.opacity, camera.position.z];
     const moved = sig.some((v, i) => Math.abs(v - (lastSig[i] ?? 1e9)) > 3e-4);
     lastSig = sig;
-    const busy = drag || spinning || spinK > 0.002 || zoomAt >= 0 || siri.visible || Math.abs(vel.x) + Math.abs(vel.y) > 1e-5;
+    const busy = drag || (clipOn && !clip.paused) || spinning || spinK > 0.002 || zoomAt >= 0 || siri.visible || Math.abs(vel.x) + Math.abs(vel.y) > 1e-5;
     still = moved || busy ? 0 : still + 1;
     raf = requestAnimationFrame(frame);
   }

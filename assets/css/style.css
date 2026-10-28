@@ -845,8 +845,15 @@ main { view-transition-name: page; }
   display: inline-flex; gap: 2px; padding: 3px; margin-top: 52px; border-radius: 999px;   /* clear of the tilted phone's bottom edge */
   background: var(--tabglass); -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); box-shadow: var(--tabshadow);
 }
-.sc-switch button { padding: 0 16px; height: 32px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 13px; font-weight: 500; color: var(--tabink); cursor: pointer; transition: background-color .18s, color .18s; }
+.sc-switch button { white-space: nowrap; padding: 0 14px; height: 32px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 13px; font-weight: 500; color: var(--tabink); cursor: pointer; transition: background-color .18s, color .18s; }
 .sc-switch button.is-on { background: #007aff; color: #fff; }
+/* four placements on a phone: a little tighter, so they stay on one line */
+@media (max-width: 720px) {
+  .sc-switch button { padding: 0 10px; font-size: 12.5px; flex: none; }
+  /* never wider than the screen: past that it swipes inside itself, like the tab bar */
+  .sc-switch { max-width: calc(100vw - 2 * var(--gutter) - 52px); box-sizing: border-box;   /* room for the play button beside it */ overflow-x: auto; scrollbar-width: none; }
+  .sc-switch::-webkit-scrollbar { display: none; }
+}
 .ph-island {
   position: absolute; left: 50%; top: calc(var(--phw, 300px) * .03); width: calc(var(--phw, 300px) * .32); height: calc(var(--phw, 300px) * .09);
   transform: translateX(-50%) translateZ(1px); border-radius: 999px; background: #000;

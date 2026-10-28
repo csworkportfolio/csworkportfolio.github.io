@@ -1060,7 +1060,11 @@ def flow(b, media, root):
     nxt = media.get(b["next"]) if b.get("next") else None
     next_img = f'<img class="ph-next" src="{root}{nxt["src"]}" alt="" loading="lazy">' if nxt else ""
     # "sets": other placements the reader can switch the phone to (the same cuts apply: Nike's story template)
-    sets = [{"name": s_["name"], "src": root + media.get(s_["phone"])["src"], "next": root + media.get(s_["next"])["src"]} for s_ in b.get("sets", [])]
+    # a set can also be a placement's screen recording ("video", with a still "poster"), which the 3D phone plays;
+    # the flat phone shows its poster
+    sets = [{"name": s_["name"], "src": root + s_["poster"], "next": root + s_["poster"], "video": root + s_["video"]} if s_.get("video")
+            else {"name": s_["name"], "src": root + media.get(s_["phone"])["src"], "next": root + media.get(s_["next"])["src"]}
+            for s_ in b.get("sets", [])]
     switch = ""
     if len(sets) > 1:
         on_cls = ' class="is-on"'
