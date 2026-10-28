@@ -1355,41 +1355,44 @@ def demo_localize(b, root):
     return ai_figure(b, "Illustration: the localization agent in a copy of the Champions Hub", inner)
 
 
+MB_LOGO = '<span class="mb-logo"><i></i><i></i><i></i></span>'
+CLAUDE_MARK = ('<svg class="zp-claude" viewBox="0 0 24 24" aria-hidden="true">'
+               + "".join(f'<path d="M12 12 12 3.2" transform="rotate({a} 12 12)"/>' for a in range(0, 360, 30)) + "</svg>")
+ZAP_MARK = ('<svg class="zp-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg>')
+
+
 def demo_board(b, root):
-    """The editorial calendar in a copy of a Monday.com work management board (drawn at 1200 by 640 and scaled
-    to fit; a phone gets the narrower mobile layout): the board's statuses move along while the AI column fills,
-    then the cursor opens the do's and don'ts doc from the sidebar."""
+    """The editorial calendar in a copy of Monday.com work management, and the Zapier workflow behind its Generate
+    button (each drawn at 1200 by 640 and scaled to fit; a phone gets narrower mobile layouts). Clicking Generate
+    slides the board away to the zap: Monday's button starts it, Claude writes with instructions built from the
+    do's and don'ts, and the result goes back into the board."""
     ico = lambda n: hb_icon(n, "hb-i mb-i")
     last = len(b["statuses"]) - 1
     me = f'<img class="mb-face" src="{root}assets/ai/hub/me.jpg" alt="">'
     head = ("<span></span><span>Item</span><span>Person</span><span>Status</span><span>Channel</span><span>Date</span>"
-            f'<span class="mb-aih">{AI_SPARK}AI Assist</span>')
+            f'<span>AI Output</span><span>Generate</span>')
     rows = "".join(
         f'<div class="mb-row" data-i="{i}"><span class="mb-check"></span><span class="mb-item">{esc(r["item"])}</span>'
         f'<span class="mb-person">{me}</span>'
         f'<span class="mb-status s{min(i + 1, last)}">{esc(b["statuses"][min(i + 1, last)])}</span>'
         f'<span class="mb-dim">{esc(r["channel"])}</span><span class="mb-dim">{esc(r["date"])}</span>'
-        f'<span class="mb-ai is-on">{AI_SPARK}<span class="mb-ai-v">{esc(r["ai"])}</span></span></div>' for i, r in enumerate(b["rows"]))
+        f'<span class="mb-ai is-on"><span class="mb-ai-v">{esc(r["ai"])}</span></span>'
+        f'<span class="mb-gen"><span class="mb-btn">{AI_SPARK}Generate</span></span></div>' for i, r in enumerate(b["rows"]))
     held = [min(i + 1, last) for i in range(len(b["rows"]))]
     battery = "".join(f'<i class="s{k}" style="--n:{held.count(k) * 5 / len(held)}"></i>' for k in range(len(b["statuses"])))
-    side = "".join(f'<li class="mb-nav{c}">{ico(i)}<span>{esc(t)}</span></li>' for i, t, c in (
-        ("board", "Editorial Calendar", " is-on is-board"), ("board", "Content Briefs", ""), ("board", "Campaigns", ""),
-        ("edit", "Do's and Don'ts", " is-doc")))
-    li = lambda xs, cls: "".join(f'<li class="{cls}">{esc(x)}</li>' for x in xs)
-    canvas = f'''
-<div class="mb-view"><div class="mb" lang="en" aria-hidden="true">
-  <header class="mb-top">
-    <span class="mb-logo"><i></i><i></i><i></i></span><b>monday</b><span class="mb-product">work management</span>
-    <span class="mb-top-r">{ico("bell")}{ico("search")}{ico("help")}{me}</span>
-  </header>
-  <nav class="mb-side">
-    <p class="mb-side-row">{ico("play")}Home</p>
-    <p class="mb-side-row">{ico("cal")}My work</p>
-    <p class="mb-ws"><span class="mb-ws-i">M</span>Marketing{ico("chev")}</p>
-    <ul>{side}</ul>
-  </nav>
-  <main class="mb-main">
-    <section class="mb-board">
+    side = "".join(f'<li class="mb-nav{c}">{ico("board")}<span>{esc(t)}</span></li>' for t, c in (
+        ("Editorial Calendar", " is-on"), ("Content Briefs", ""), ("Campaigns", "")))
+    monday = f'''
+  <div class="mb-pane">
+    <header class="mb-top">{MB_LOGO}<b>monday</b><span class="mb-product">work management</span>
+      <span class="mb-top-r">{ico("bell")}{ico("search")}{ico("help")}{me}</span></header>
+    <nav class="mb-side">
+      <p class="mb-side-row">{ico("play")}Home</p>
+      <p class="mb-side-row">{ico("cal")}My work</p>
+      <p class="mb-ws"><span class="mb-ws-i">M</span>Marketing{ico("chev")}</p>
+      <ul>{side}</ul>
+    </nav>
+    <main class="mb-main">
       <div class="mb-title"><h4>Editorial Calendar</h4>{ico("chev")}
         <span class="mb-title-r"><span class="mb-ghost">Integrate</span><span class="mb-ghost">Automate</span><span class="mb-invite">Invite / 1</span></span></div>
       <div class="mb-tabs"><span class="is-on">Main table</span><span>Calendar</span><span class="mb-plus">+</span></div>
@@ -1402,21 +1405,51 @@ def demo_board(b, root):
         <div class="mb-row mb-sum"><span></span><span></span><span></span><span class="mb-battery">{battery}</span></div>
       </div>
       <p class="mb-group is-next">{ico("chev")}Next week<small>4 items</small></p>
-    </section>
-    <section class="mb-doc">
-      <p class="mb-crumb">Marketing &nbsp;/&nbsp; Do's and Don'ts</p>
-      <h4>Do's and Don'ts</h4>
-      <p class="mb-docai">{AI_SPARK}Drafted with AI from our brand guidelines</p>
-      <div class="mb-cols">
-        <div class="mb-col is-do"><p>Do</p><ul>{li(b["dos"], "mb-rule")}</ul></div>
-        <div class="mb-col is-dont"><p>Don't</p><ul>{li(b["donts"], "mb-rule")}</ul></div>
-      </div>
-    </section>
-  </main>
-  <svg class="mb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
-</div></div>'''
+    </main>
+    <p class="mb-toast">{ZAP_MARK}Zap ran: {esc(b["zap"]["name"])}</p>
+  </div>'''
+
+    z = b["zap"]
+    def step(n, mark, kind, title, sub, cls=""):
+        return (f'<div class="zp-step{cls}" data-n="{n}"><span class="zp-app">{mark}</span>'
+                f'<span class="zp-step-t"><small>{kind}</small><b>{n}. {esc(title)}</b><em>{esc(sub)}</em></span>'
+                f'<span class="zp-state"></span></div>')
+    mday = f'<span class="zp-mday">{MB_LOGO}</span>'
+    steps = (step(1, mday, "Trigger", "Button Clicked in monday.com", "Editorial Calendar · Generate column")
+             + '<span class="zp-link"><i>+</i></span>'
+             + step(2, CLAUDE_MARK, "Action", "Send Message in Claude", "Instructions from our do's and don'ts", " is-sel")
+             + '<span class="zp-link"><i>+</i></span>'
+             + step(3, mday, "Action", "Update Item in monday.com", "AI Output, then Status to Brief"))
+    li = lambda xs, mark: "".join(f"<li><b>{mark}</b>{esc(x)}</li>" for x in xs)
+    pill = lambda t: f'<span class="zp-pill">{mday}{esc(t)}</span>'
+    msg = " ".join(pill(t) if i % 2 else esc(t) for i, t in enumerate(z["message"]))
+    zapier = f'''
+  <div class="zp-pane">
+    <header class="zp-top"><span class="zp-logo"><i></i>zapier</span><span class="zp-name">{esc(z["name"])}{ico("edit")}</span>
+      <span class="zp-top-r"><span class="zp-saved">Saved</span><span class="zp-pub">Publish</span></span></header>
+    <nav class="zp-rail">{ico("play")}{ico("sliders")}{ico("cal")}{ico("help")}</nav>
+    <div class="zp-canvas">
+      <div class="zp-steps">{steps}</div>
+      <aside class="zp-panel">
+        <p class="zp-ph">{CLAUDE_MARK}<b>2. Send Message</b><span>Claude</span></p>
+        <p class="zp-tabs"><span>Setup</span><span class="is-on">Configure</span><span>Test</span></p>
+        <div class="zp-fields">
+          <p class="zp-label">Model</p><p class="zp-input">Claude{ico("chev")}</p>
+          <p class="zp-label">Instructions</p>
+          <div class="zp-area"><p>{esc(z["intro"])}</p><p class="zp-sub">Do</p><ul>{li(b["dos"], "+")}</ul>
+            <p class="zp-sub">Don't</p><ul>{li(b["donts"], "–")}</ul></div>
+          <p class="zp-label">Knowledge</p>
+          <p class="zp-files"><span class="zp-file">{ico("edit")}{esc(z["file"])}<small>uploaded</small></span><span class="zp-upload">+ Upload</span></p>
+          <p class="zp-label">User Message</p><p class="zp-input zp-msg">{msg}</p>
+        </div>
+        <p class="zp-out"><span class="zp-out-busy">Claude is writing…</span><span class="zp-out-v"></span></p>
+      </aside>
+    </div>
+  </div>'''
+    canvas = (f'<div class="mb-view"><div class="mb" lang="en" aria-hidden="true"><div class="mb-track">{monday}{zapier}</div>'
+              f'<svg class="mb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg></div></div>')
     inner = ai_window("monday.com  ·  Editorial Calendar", canvas, " mb-window")
-    return ai_figure(b, "Illustration: an editorial calendar board in Monday.com and a do's and don'ts doc", inner)
+    return ai_figure(b, "Illustration: an editorial calendar in Monday.com whose Generate button runs a Zapier workflow with Claude", inner)
 
 
 def demo_cut(b, root):

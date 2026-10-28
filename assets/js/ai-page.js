@@ -321,17 +321,17 @@
     wire(d, () => run(0));
   }
 
-  // ---------- 2. the editorial board, in a copy of Monday.com ----------
+  // ---------- 2. the editorial board in Monday.com, and the Zapier workflow behind its Generate button ----------
   function board(fig) {
     const data = parse(fig), d = demo(fig);
     const $ = (s) => fig.querySelector(s);
     const view = $(".mb-view"), mb = $(".mb"), cursor = $(".mb-cursor");
     const rows = [...fig.querySelectorAll(".mb-row[data-i]")];
     const cells = [...fig.querySelectorAll(".mb-battery i")];
-    const rules = [...fig.querySelectorAll(".mb-rule")];
+    const steps = [...fig.querySelectorAll(".zp-step")];
     const top = data.statuses.length - 1;
     const set = (cls, on) => mb.classList.toggle(cls, on);
-    // drawn at 1200 by 640 and scaled to the window; a phone gets the mobile layout, drawn at 420 by 700
+    // each screen is drawn at 1200 by 640 and scaled to the window; a phone gets the mobile layouts, drawn at 420 by 700
     let mobile = false;
     const frame = () => {
       const w = view.clientWidth;
@@ -348,9 +348,11 @@
     const touch = document.createElement("span");
     touch.className = "mb-touch";
     mb.append(touch);
+    // the cursor's point in the canvas: the track slides, so on the zap the point moves by a screen's width
     const point = (el, dx = 0.5, dy = 0.5) => {
       let x = 0, y = 0;
       for (let e = el; e && e !== mb; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
+      if (mb.classList.contains("is-zap")) x -= mobile ? 420 : 1200;
       x += el.offsetWidth * dx; y += el.offsetHeight * dy;
       cursor.style.left = x - 4 + "px"; cursor.style.top = y - 2 + "px";
       touch.style.left = x + "px"; touch.style.top = y + "px";
@@ -361,25 +363,58 @@
       const n = data.statuses.map((_, k) => rows.filter((r) => r.querySelector(".mb-status").classList.contains("s" + k)).length);
       cells.forEach((c, k) => c.style.setProperty("--n", n[k] * 5 / rows.length));
     };
+    const press = async (r) => {
+      point(r.querySelector(".mb-btn"));
+      await d.wait(800);
+      tap(); r.classList.add("is-press"); await d.wait(180); r.classList.remove("is-press");
+    };
+    const fill = (r, i) => { const ai = r.querySelector(".mb-ai"); ai.classList.remove("is-busy"); ai.classList.add("is-on"); status(r, 1); tally(); };
     async function loop() {
       for (;;) {
-        // every item starts as an idea, with nothing from AI yet
-        set("is-doc", false);
+        // every item starts as an idea, with no AI output yet
+        ["is-zap", "is-writing", "is-toast"].forEach((c) => set(c, false));
         rows.forEach((r) => { status(r, 0); r.querySelector(".mb-ai").classList.remove("is-on", "is-busy"); });
-        rules.forEach((li) => li.classList.remove("is-on"));
+        steps.forEach((s) => s.classList.remove("is-run", "is-ok"));
+        $(".zp-out-v").textContent = "";
         tally();
         set("is-pointing", !mobile);
-        cursor.style.left = "700px"; cursor.style.top = "560px";
+        cursor.style.left = "760px"; cursor.style.top = "560px";
         await d.wait(900);
-        // AI writes each item's first step, and the item moves on to Brief
-        for (const r of rows) {
-          const ai = r.querySelector(".mb-ai");
-          point(ai, 0.3);
-          ai.classList.add("is-busy");
-          await d.wait(650);
-          ai.classList.remove("is-busy"); ai.classList.add("is-on");
-          tap(); status(r, 1); tally();
-          await d.wait(350);
+        // Generate on the first item: the board slides away to the zap behind the button, which runs step by step
+        await press(rows[0]);
+        rows[0].querySelector(".mb-ai").classList.add("is-busy");
+        await d.wait(300);
+        set("is-zap", true);
+        await d.wait(1100);
+        point(steps[0], 0.9);
+        steps[0].classList.add("is-run"); await d.wait(700);
+        steps[0].classList.replace("is-run", "is-ok");
+        point(steps[1], 0.9);
+        steps[1].classList.add("is-run"); set("is-writing", true);
+        await d.wait(600);
+        point($(".zp-area"), 0.7, 0.4);   // Claude works from the do's and don'ts
+        await d.wait(2000);
+        set("is-writing", false); steps[1].classList.replace("is-run", "is-ok");
+        $(".zp-out-v").textContent = data.rows[0].ai;
+        await d.wait(900);
+        point(steps[2], 0.9);
+        steps[2].classList.add("is-run"); await d.wait(800);
+        steps[2].classList.replace("is-run", "is-ok");
+        await d.wait(1600);
+        // back on the board, the result is in
+        set("is-zap", false);
+        await d.wait(900);
+        fill(rows[0], 0);
+        await d.wait(900);
+        // the same zap for the other items, each a click away
+        for (const [i, r] of rows.slice(1).entries()) {
+          await press(r);
+          r.querySelector(".mb-ai").classList.add("is-busy");
+          set("is-toast", true);
+          await d.wait(1100);
+          fill(r, i + 1);
+          set("is-toast", false);
+          await d.wait(250);
         }
         // then the work moves along the statuses
         for (let step = 2; step <= top; step++) {
@@ -392,16 +427,8 @@
           }
           await d.wait(400);
         }
-        await d.wait(1600);
-        // open the do's and don'ts from the sidebar (a phone has no sidebar: the doc just opens)
-        if (!mobile) { point($(".mb-nav.is-doc"), 0.4); await d.wait(1100); }
-        $(".mb-nav.is-board").classList.remove("is-on"); $(".mb-nav.is-doc").classList.add("is-on");
-        set("is-doc", true);
-        cursor.style.left = "1000px"; cursor.style.top = "600px";
-        await d.wait(700);
-        for (const li of rules) { li.classList.add("is-on"); await d.wait(260); }
+        set("is-pointing", false);
         await d.wait(4200);
-        $(".mb-nav.is-doc").classList.remove("is-on"); $(".mb-nav.is-board").classList.add("is-on");
       }
     }
     wire(d, loop);
