@@ -282,11 +282,14 @@ function start(THREE) {
     return run > 0 ? clamp((pin() - r.top) / run) : 0;
   };
 
+  // the opening pose (Brief): turned to the left, tipped back a little, its top rolled up to the right
+  const START = { ry: -0.5, rx: 0.12, rz: 0.21 };
   // the pose of each step: turn (y), tilt (x), drop (into the gray lane), gray, and what's on the screen
   function pose(p) {
     const at = Math.min(N - 1, Math.floor(p * N)), k = p * N - at;
-    const o = { ry: -0.58, rx: 0.14, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
-    if (at === 1) { o.ry = -0.58 + 0.38 * ease(k); o.rx = 0.14 - 0.08 * ease(k); }
+    const o = { ry: START.ry, rx: START.rx, rz: START.rz, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
+    if (at === 1) { o.ry = START.ry + (-0.2 - START.ry) * ease(k); o.rx = START.rx + (0.06 - START.rx) * ease(k); o.rz = START.rz * (1 - ease(k)); }
+    if (at > 1) o.rz = 0;
     if (at === 2) {   // the device check: the phone lifts and turns all the way round, then a line of light runs down it
       o.ry = -0.2 + ease(clamp(k / 0.6)) * Math.PI * 2; o.rx = 0.06; o.y = 0.05 * Math.sin(Math.PI * clamp(k / 0.6));
       // the glow slowly appears round the whole edge, pulses, and fades away before the step ends
@@ -325,15 +328,7 @@ function start(THREE) {
     vel = { x: dy * 0.006, y: dx * 0.009 };
   });
   const release = () => { if (!drag) return; drag = null; visual.classList.remove("is-dragging"); idle = performance.now(); };
-  // the phone leans a little toward the pointer while it's over the section (mouse only), and settles back after
-  const look = { x: 0, y: 0 }, lookAim = { x: 0, y: 0 };
-  scene.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "mouse") return;
-    const r = canvas.getBoundingClientRect();
-    lookAim.x = clamp(((e.clientX - (r.left + r.width / 2)) / (r.width / 2)), -1, 1);
-    lookAim.y = clamp(((e.clientY - (r.top + r.height / 2)) / (r.height / 2)), -1, 1);
-  });
-  scene.addEventListener("pointerleave", () => { lookAim.x = 0; lookAim.y = 0; });
+  const look = { x: 0, y: 0 };
   visual.addEventListener("pointerup", release); visual.addEventListener("pointercancel", release);
 
   // ---------- the side controls: like the Cohesity animation's, a tab on the column's right edge slides out a pill
@@ -453,7 +448,7 @@ function start(THREE) {
 
   // ---------- the loop: only while the pinned layout is on and the scene is on screen ----------
   let onScreen = false, raf = 0, last = performance.now();
-  const cur = { ry: -0.58, rx: 0.14, y: 0, s: 1, gray: 0, mine: 1 };
+  const cur = { ry: START.ry, rx: START.rx, rz: START.rz, y: 0, s: 1, gray: 0, mine: 1 };
   const live = () => scene.classList.contains("is-live");
   function frame(now) {
     raf = 0;
@@ -465,7 +460,7 @@ function start(THREE) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     const o = pose(progress());
     const f = 1 - Math.exp(-dt * 7);   // follows the scroll closely, without judder
-    for (const k of ["rx", "y", "s", "gray", "mine"]) cur[k] += (o[k] - cur[k]) * f;
+    for (const k of ["rx", "rz", "y", "s", "gray", "mine"]) cur[k] += (o[k] - cur[k]) * f;
     // the turn takes the short way to each step's pose (the device check's full turn doesn't unwind afterwards)
     const ry = o.ry + Math.round((cur.ry - o.ry) / (Math.PI * 2)) * Math.PI * 2;
     cur.ry += (ry - cur.ry) * f;
@@ -476,9 +471,6 @@ function start(THREE) {
         off.x += (0 - off.x) * Math.min(1, dt * 3.5); off.y += (turns * Math.PI * 2 - off.y) * Math.min(1, dt * 3.5);
       }
     }
-    const lf = Math.min(1, dt * 4);
-    look.x += ((drag ? 0 : lookAim.x) - look.x) * lf; look.y += ((drag ? 0 : lookAim.y) - look.y) * lf;
-    if (Math.abs(look.x - lookAim.x) + Math.abs(look.y - lookAim.y) < 0.002 && !drag) { look.x = lookAim.x; look.y = lookAim.y; }
     // the turntable: its speed wanders between slow and fast; off, it settles to the nearest full turn
     spinK += ((spinning ? 1 : 0) - spinK) * Math.min(1, dt * 2.2);
     if (spinning) spinAngle += (0.3 + 1.3 * Math.pow(0.5 + 0.5 * Math.sin(now / 1700) * Math.sin(now / 2900 + 1.3), 2)) * dt;
@@ -497,11 +489,11 @@ function start(THREE) {
         shotY = PAN_TOP + (PAN_BOTTOM - PAN_TOP) * ease(clamp((ti - Z_IN * 0.6) / Z_PAN));
       }
     }
-    const lx = look.y * 0.06 * (1 - zf), ly = look.x * 0.13 * (1 - zf);   // a slight lean toward the pointer from the step's pose (none during the zoom)
+    const lx = 0, ly = 0;
     const wob = spinK * 0.1 * Math.sin(now / 2600);                          // the turntable tips a little as it turns
     const hero = ease(spinK);
     rig.rotation.set(0.3 * hero, 0, -0.32 * hero);                            // the hero angle: leaning back, tilted to one side
-    phone.rotation.set(cur.rx + off.x + lx + wob + (0 - cur.rx - off.x) * zf, cur.ry + off.y + ly + spinAngle + zturn + (0 - cur.ry - off.y) * zf, 0);   // straight on, to read
+    phone.rotation.set(cur.rx + off.x + lx + wob + (0 - cur.rx - off.x) * zf, cur.ry + off.y + ly + spinAngle + zturn + (0 - cur.ry - off.y) * zf, cur.rz * (1 - zf));   // straight on, to read
     phone.position.y = cur.y + Math.sin(now / 900) * 0.012;   // the slow float
     phone.scale.setScalar(cur.s);
     // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
