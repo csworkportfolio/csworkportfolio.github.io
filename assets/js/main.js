@@ -1690,7 +1690,7 @@
         cancelAnimationFrame(raf); raf = 0; last = -1;
         // reset in one step: without this the next screen (shown at Verify) lingers below the phone while it fades out
         ph.classList.add("is-reset");
-        scene.classList.remove("is-demo", "is-whole"); scene.removeAttribute("data-stage");
+        scene.classList.remove("is-demo", "is-whole"); scene.removeAttribute("data-stage"); scene.removeAttribute("data-demo");
         requestAnimationFrame(() => requestAnimationFrame(() => ph.classList.remove("is-reset")));
         ["--apart", "--scan"].forEach((v) => ph.style.removeProperty(v));
         play.classList.remove("is-on"); play.setAttribute("aria-label", "Play the steps"); step.textContent = "";
@@ -1711,6 +1711,7 @@
         ph.style.setProperty("--apart", (apart * apart).toFixed(3));
         scene.classList.toggle("is-whole", apart === 0);
         ph.style.setProperty("--scan", at === 2 ? Math.min(1, local * 1.15).toFixed(3) : "0");
+        scene.dataset.demo = p.toFixed(4);   // the 3D phone (nike-phone.js) follows the same progress on phones
         raf = requestAnimationFrame(frame);
       };
       play.addEventListener("click", () => {

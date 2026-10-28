@@ -758,7 +758,7 @@ main { view-transition-name: page; }
 .scene.is-live.has-3d .sc-visual { cursor: grab; }
 .scene.is-live.has-3d .sc-visual.is-dragging { cursor: grabbing; }
 .scene.is-live.has-3d .sc-visual button { cursor: pointer; }
-.scene.is-live.has-3d .ph3d { display: block; }
+.scene.is-live.has-3d .ph3d, .scene.n3-phone.has-3d .ph3d { display: block; }
 /* during the spin and zoom the canvas covers the window, in front of the words and behind the switchers (the tab bar
    sits outside the stage; the switcher and the side controls sit above it in the stage) */
 .scene.is-live.has-3d .ph3d.ph3d-full { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; }
@@ -774,7 +774,7 @@ main { view-transition-name: page; }
 .scene.is-live[data-phone3d][data-stage="6"] :is(.ph3d:not(.ph3d-full), .sc-switch, .sc-count) { translate: 0 calc(-1 * var(--n3-lift, 50px)); }
 .scene.has-3d.n3-zooming .sc-switch { z-index: -1; }   /* the close-up covers the placement switcher; the tab bar and controls stay on top */
 .scene.is-live.has-3d.n3-zooming .sc-count { opacity: 0; }   /* and the reach count steps out of the way */   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
-.scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
+.scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph *, .scene.n3-phone.has-3d .ph, .scene.n3-phone.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
 /* its side controls (nike-phone.js), as on the Cohesity animation: a tab on the column's right edge slides out a pill
    (spin, zoom, how it was made) that tucks back on its own; light or dark glass like every control on the site */
@@ -2312,6 +2312,18 @@ html.theme-light .glance-logos img { filter: brightness(0); opacity: .45; }
   .sc-play.is-on .i-play { display: none; }
   .sc-play.is-on .i-stop { display: block; }
   .sc-row { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 52px; }
+  /* the play button, with the sound button of a placement with sound (ACG) under it */
+  .n3-side { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .n3-mute-m { display: inline-grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+    color: var(--tabink); background: var(--tabglass); box-shadow: var(--tabshadow);
+    -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%); }
+  .n3-mute-m[hidden] { display: none; }
+  .n3-mute-m svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .n3-mute-m .spk { fill: currentColor; stroke: none; }
+  .n3-mute-m .on, .n3-mute-m.is-on .off { display: none; }
+  .n3-mute-m.is-on .on { display: inline; }
+  .scene.n3-phone .n3-sound { display: none !important; }   /* on phones the sound button is the one under play */
+  .scene.n3-phone.has-3d .ph { margin-top: 56px; }   /* room above for the 3D phone's opening tilt */
   .sc-row .sc-switch { margin-top: 0; }
   .sc-step { min-height: 1.4em; margin: 12px 0 0; font-size: 15px; color: var(--muted); text-align: center; }
   .scene.is-demo .ph { transition: transform .9s cubic-bezier(.2,.7,.2,1); }

@@ -12,11 +12,11 @@ const webgl = (() => { try { return !!document.createElement("canvas").getContex
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (scene && visual && flat && webgl && !reduce) {
-  // phone widths never pin, so they never download three.js; a window widened later still gets it
-  const narrow = matchMedia("(max-width: 720px)");
+  // on phones the scene doesn't pin: the 3D phone stands in the column and the play button runs it through the
+  // steps (main.js shares the demo's progress); at rest it shows the brief, apart
   let started = false;
   const begin = () => {
-    if (started || narrow.matches) return;
+    if (started) return;
     started = true;
     const near = new IntersectionObserver((entries) => {
       if (!entries.some((e) => e.isIntersecting)) return;
@@ -26,7 +26,6 @@ if (scene && visual && flat && webgl && !reduce) {
     near.observe(scene);
   };
   begin();
-  narrow.addEventListener?.("change", begin);
 }
 
 function start(THREE) {
@@ -275,13 +274,23 @@ function start(THREE) {
   const soundName = soundPill ? soundPill.textContent : "";
   if (soundPill) soundPill.prepend(sound);
   let wantSound = false, curSet = 0;
+  // on phones the sound button sits under the play button instead, shown while the placement with sound is chosen
+  const muteM = document.createElement("button");
+  muteM.type = "button"; muteM.className = "n3-mute-m"; muteM.hidden = true;
+  muteM.innerHTML = sound.innerHTML;
+  muteM.addEventListener("click", () => { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); });
+  const playBtn = scene.querySelector(".sc-play");
+  if (playBtn) { const side = document.createElement("div"); side.className = "n3-side"; playBtn.before(side); side.append(playBtn, muteM); }
   const paintSound = () => {
+    muteM.hidden = curSet !== soundIdx;
+    muteM.classList.toggle("is-on", wantSound);
+    muteM.setAttribute("aria-label", wantSound ? "Turn sound off" : "Turn sound on");
     sound.classList.toggle("is-on", wantSound);
     clip.muted = !wantSound;
     if (soundPill) soundPill.setAttribute("aria-label", curSet === soundIdx ? `${soundName}, sound ${wantSound ? "on" : "off"}. Press again to turn it ${wantSound ? "off" : "on"}.` : soundName);
   };
   function pickSet(i) {
-    if (i === curSet && i === soundIdx) { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); return; }
+    if (i === curSet && i === soundIdx && !phoneMode.matches) { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); return; }
     useSet(i);
   }
   const loadImg = (url) => new Promise((ok) => { if (!url) return ok(null); const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = url; });
@@ -337,7 +346,9 @@ function start(THREE) {
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const ease = (t) => (t = clamp(t), t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const pin = () => parseFloat(getComputedStyle(root).getPropertyValue("--pills-h")) || 0;
+  const phoneMode = matchMedia("(max-width: 720px)");
   const progress = () => {
+    if (phoneMode.matches) return +(scene.dataset.demo || 0);   // the play button's progress, or the brief at rest
     const r = scene.getBoundingClientRect(), run = r.height - (innerHeight - pin());
     return run > 0 ? clamp((pin() - r.top) / run) : 0;
   };
@@ -482,9 +493,12 @@ function start(THREE) {
     if (!f.width) return;
     // the canvas is this many phones tall, and reaches past the column on both sides, so the brief's slices, the
     // full turn and a phone spun by hand are never cut off; it is centred on the flat phone's place
-    const h = f.height * ROOM, w = v.width * (1 + 2 * SIDE);
     const cx = f.left + f.width / 2 - v.left;
-    Object.assign(canvas.style, { left: `${cx - w / 2}px`, top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
+    // on a phone the canvas spans the screen's width exactly (wider would make the page scroll sideways)
+    const h = f.height * ROOM, w = phoneMode.matches ? innerWidth : v.width * (1 + 2 * SIDE);
+    const left = phoneMode.matches ? -v.left : cx - w / 2;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, phoneMode.matches ? 1.5 : 2));
+    Object.assign(canvas.style, { left: `${left}px`, top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.fov = FOV;
@@ -526,7 +540,9 @@ function start(THREE) {
   // ---------- the loop: only while the pinned layout is on and the scene is on screen ----------
   let onScreen = false, raf = 0, last = performance.now();
   const cur = { ry: START.ry, rx: START.rx, rz: START.rz, y: 0, s: 1, gray: 0, mine: 1 };
-  const live = () => scene.classList.contains("is-live");
+  const live = () => scene.classList.contains("is-live") || phoneMode.matches;
+  phoneMode.addEventListener?.("change", () => { scene.classList.toggle("n3-phone", phoneMode.matches); size(); kick(); });
+  scene.classList.toggle("n3-phone", phoneMode.matches);
   function frame(now) {
     raf = 0;
     // settled, only the float is moving: it draws at 30 frames a second instead of 60
@@ -586,6 +602,8 @@ function start(THREE) {
     (clipOn ? slices : wholeCards).forEach((m) => { m.visible = false; m.userData.shade.visible = false; });
     pieces.forEach((m) => {
       m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart);
+      // on phones they spread less, so they stay on the narrow screen and clear of the words above
+      if (phoneMode.matches) { m.position.x -= m.userData.away.x * apart * 0.7; m.position.y -= m.userData.away.y * apart * 0.7; m.position.z -= m.userData.away.z * apart * 0.35; }
       // the shadow lies on the screen under the piece, pushed down and to the right by the light as it rises
       const sh = m.userData.shade, lift = m.userData.away.z * apart;
       sh.visible = m.visible && lift > 0.005;
@@ -679,7 +697,7 @@ function start(THREE) {
   scene.addEventListener("pointerleave", kick);
   scene.addEventListener("click", kick);
   new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (onScreen) kick(); }, { threshold: 0 }).observe(scene);
-  new MutationObserver(kick).observe(scene, { attributes: true, attributeFilter: ["class"] });
+  new MutationObserver(kick).observe(scene, { attributes: true, attributeFilter: ["class", "data-demo"] });
 }
 
 // a small studio for the reflections: a dim room with soft light panels (like three.js's RoomEnvironment)
