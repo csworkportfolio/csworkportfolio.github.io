@@ -1293,7 +1293,7 @@ def demo_localize(b, root):
                '<path d="M89 31l5 5 9-10" fill="none" stroke="#18e05a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
     def guide(art):
-        return (f'<span class="hb-guide">{art_svg}<span class="hb-guide-logo">COHE<span class="hb-s">S</span>ITY</span>'
+        return (f'<span class="hb-guide">{art_svg}<span class="hb-guide-logo"><img src="{root}assets/ai/hub/cohesity-wordmark.png" alt=""></span>'
                 f'<b>{esc(art[0])}</b><b>{esc(art[1])}</b><b class="is-pink">{esc(art[2])}</b><span class="hb-guide-btn">{esc(art[3])}</span></span>')
 
     cards = "".join(card(c, i) for i, c in enumerate(b["feed"]))
@@ -1307,7 +1307,7 @@ def demo_localize(b, root):
     hub = f'''
 <div class="hb-view"><div class="hb is-open is-lang is-review" lang="en" aria-hidden="true">
   <nav class="hb-rail">
-    <svg class="hb-logo" viewBox="0 0 32 32"><path d="M24 8.5c-1.8-2-4.6-3.2-8-3.2-5 0-8.3 2.6-8.3 6.2 0 7.6 16.6 3.4 16.6 10.6 0 3.6-3.5 6.1-8.4 6.1-3.6 0-6.6-1.4-8.4-3.6"/></svg>
+    <img class="hb-logo" src="{root}assets/ai/hub/cohesity-s.png" alt="">
     {hb_icon("swap", "hb-i hb-swap")}
     <span class="hb-me"><img src="{img("me")}" alt=""><span>My account</span></span>
     <ul>{rail}</ul>
