@@ -65,13 +65,18 @@
     const frame = (f = focus) => {
       focus = f;
       const w = view.clientWidth;
-      mobile = w < 640;
+      // a wide screen can still ask for the phone layout (the switcher above): it stands as a phone inside the same window
+      const device = fig.dataset.view === "mobile" && w >= 640;
+      mobile = w < 640 || device;
       hub.classList.toggle("is-mobile", mobile);
-      fig.classList.toggle("is-mobile", mobile);
+      fig.classList.toggle("is-mobile", mobile && !device);
+      fig.classList.toggle("is-device", device);
       if (mobile) {
-        const s = w / 390;
-        view.style.height = 760 * s + "px";
-        for (const [k, v] of [["--hb-s", s], ["--hb-k", s], ["--hb-tx", 0], ["--hb-ty", 0]]) view.style.setProperty(k, v);
+        const h = device ? 708 * w / 1280 : 760 * w / 390;
+        const s = device ? h * 0.9 / 760 : w / 390;
+        view.style.height = h + "px";
+        for (const [k, v] of [["--hb-s", s], ["--hb-k", s], ["--hb-tx", device ? (w - 390 * s) / 2 : 0], ["--hb-ty", device ? (h - 760 * s) / 2 : 0]])
+          view.style.setProperty(k, v);
         return;
       }
       const s = w / 1280, h = 708 * s;
@@ -290,11 +295,13 @@
         await w(4200);
       },
     ];
+    let cur = 0;
     async function run(from) {
       const g = ++gen;
       let jumped = from > 0;
       try {
         for (let n = from; ; n = (n + 1) % chapters.length) {
+          cur = n;
           mark(n, 0);
           await chapters[n](jumped);
           jumped = false;
@@ -302,6 +309,14 @@
       } catch (e) { if (e !== STOP || g === gen) throw e; }
     }
     steps.forEach((b, n) => b.addEventListener("click", (e) => { e.stopPropagation(); d.resume(); run(n); }));
+    // Desktop or Mobile: redraw the Hub that way and play the current chapter again
+    const views = [...fig.querySelectorAll(".hb-views button")];
+    views.forEach((b) => b.addEventListener("click", () => {
+      fig.dataset.view = b.dataset.view;
+      views.forEach((v) => v.setAttribute("aria-pressed", String(v === b)));
+      reset(); frame("feed");
+      if (d.seen) run(cur);
+    }));
     wire(d, () => run(0));
   }
 

@@ -1347,7 +1347,10 @@ def demo_localize(b, root):
 </div></div>'''
     chapters = "".join(f'<button type="button" style="--p:0"><span class="hb-fill"></span><span class="hb-ch-t">{esc(c)}</span></button>'
                        for c in b["chapters"])
-    inner = (ai_window("Champions Hub  ·  Trending Posts", hub, " hb-window")
+    views = "".join(f'<button type="button" data-view="{v.lower()}" aria-pressed="{str(i == 0).lower()}">{esc(v)}</button>'
+                    for i, v in enumerate(b["views"]))
+    inner = (f'<div class="hb-views" role="group" aria-label="Show the Hub on">{views}</div>'
+             + ai_window("Champions Hub  ·  Trending Posts", hub, " hb-window")
              + f'<nav class="hb-chapters" aria-label="Skip to a part of the demo">{chapters}</nav>')
     return ai_figure(b, "Illustration: the localization agent in a copy of the Champions Hub", inner)
 
