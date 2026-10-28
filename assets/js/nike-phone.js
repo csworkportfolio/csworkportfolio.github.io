@@ -46,6 +46,7 @@ function start(THREE) {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.localClippingEnabled = true;   // the pieces' shadows are clipped to the screen
   const world = new THREE.Scene();
   world.environment = new THREE.PMREMGenerator(renderer).fromScene(studio(THREE), 0.04).texture;
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
@@ -118,6 +119,16 @@ function start(THREE) {
   const sliceEdge = new THREE.MeshBasicMaterial({ color: 0xaeaeb2, transparent: true, opacity: 0.2, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
   const slices = [];
   const EDGE = 0.006;
+  // a soft dark rounded shape, blurred, shared by the slices' shadows
+  const softShadow = (() => {
+    const c = document.createElement("canvas"); c.width = 256; c.height = 256;
+    const g = c.getContext("2d"); g.filter = "blur(18px)"; g.fillStyle = "rgba(0,0,0,1)";
+    g.beginPath(); g.roundRect(40, 40, 176, 176, 24); g.fill();
+    return new THREE.CanvasTexture(c);
+  })();
+  // the screen's four edges, in the phone's own space (moved into the world each frame): the shadows stay on it
+  const screenEdges = [[-1, 0], [1, 0], [0, -1], [0, 1]].map(([x, y]) => new THREE.Plane(new THREE.Vector3(x, y, 0), x ? SW / 2 : SH / 2));
+  const shadowClip = screenEdges.map((pl) => pl.clone());
   for (let i = 0; i < cuts.length - 1; i++) {
     const t = cuts[i], b = cuts[i + 1], h = (b - t) * SH;
     // each slice keeps the screen's own rounded corners where it has them: the top one at the top, the last at the bottom
@@ -133,6 +144,9 @@ function start(THREE) {
     // clears the switcher under the phone)
     card.userData.away = [new THREE.Vector3(-0.16, 0.2, 0.22), new THREE.Vector3(0.36, -0.01, 0.42), new THREE.Vector3(-0.27, -0.02, 0.62)][i] || new THREE.Vector3();
     card.visible = false; phone.add(card); slices.push(card);
+    // its shadow on the screen below, so it reads as floating: soft, larger and further off the higher it is
+    const shade = new THREE.Mesh(new THREE.PlaneGeometry(SW * 1.3, h * 1.3 + 0.08), new THREE.MeshBasicMaterial({ map: softShadow, transparent: true, opacity: 0, depthWrite: false, clippingPlanes: shadowClip }));
+    shade.visible = false; phone.add(shade); card.userData.shade = shade;
   }
 
   // sides: buttons and antenna lines
@@ -507,7 +521,17 @@ function start(THREE) {
     // the brief's slices, or the whole screen
     const apart = o.apart;
     screen.visible = apart < 0.002;
-    slices.forEach((m) => { m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart); });
+    phone.updateMatrixWorld();
+    screenEdges.forEach((pl, i) => shadowClip[i].copy(pl).applyMatrix4(phone.matrixWorld));
+    slices.forEach((m) => {
+      m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart);
+      // the shadow lies on the screen under the piece, pushed down and to the right by the light as it rises
+      const sh = m.userData.shade, lift = m.userData.away.z * apart;
+      sh.visible = m.visible && lift > 0.005;
+      sh.position.set(m.position.x + lift * 0.18, m.position.y - lift * 0.22, front + 0.0026);   // over the glass's reflection
+      sh.scale.setScalar(1 + lift * 0.5);
+      sh.material.opacity = Math.min(0.85, 0.5 + lift * 0.6) * Math.min(1, apart * 4);
+    });
     drawScreen(o.roll);
     // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
