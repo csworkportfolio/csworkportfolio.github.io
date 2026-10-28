@@ -101,9 +101,9 @@ function start(THREE) {
   island.position.set(0, SH / 2 - 0.068, front + 0.0011); phone.add(island);
 
   // the brief: the screen in its three slices (the story template's sections), apart and then together
-  const sliceMat = new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false });
-  const sliceBack = new THREE.MeshPhysicalMaterial({ color: 0x1c1c1e, roughness: 0.25, metalness: 0.2, clearcoat: 1 });
-  const sliceEdge = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.55, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
+  // both sides show the picture, so from behind a slice reads as a pane of glass (the picture mirrored)
+  const sliceMat = new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false, side: THREE.DoubleSide });
+  const sliceEdge = new THREE.MeshBasicMaterial({ color: 0xaeaeb2, transparent: true, opacity: 0.65, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
   const slices = [];
   const EDGE = 0.006;
   for (let i = 0; i < cuts.length - 1; i++) {
@@ -111,9 +111,8 @@ function start(THREE) {
     // each slice keeps the screen's own rounded corners where it has them: the top one at the top, the last at the bottom
     const rTop = i === 0 ? SR : 0.0001, rBottom = i === cuts.length - 2 ? SR : 0.0001;
     const card = new THREE.Group();
-    card.add(shapeMesh(SW, h, rTop, sliceMat, 0.0004, rBottom, 1 - b, 1 - t));
-    const backFace = shapeMesh(SW, h, rTop, sliceBack, -0.0004, rBottom); backFace.rotation.y = Math.PI; card.add(backFace);   // seen from behind
-    // the bright edge, so a black slice never disappears into the black phone or page
+    card.add(shapeMesh(SW, h, rTop, sliceMat, 0, rBottom, 1 - b, 1 - t));
+    // a soft gray edge, so a black slice never disappears into the black phone or page
     const ring = roundedRect(SW + EDGE, h + EDGE, rTop + EDGE / 2, rBottom + EDGE / 2);
     ring.holes.push(roundedRect(SW, h, rTop, rBottom));
     card.add(new THREE.Mesh(new THREE.ShapeGeometry(ring, 32), sliceEdge));
