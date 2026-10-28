@@ -59,6 +59,13 @@ function start(THREE) {
   // the phone sits in a rig: the turntable tips the rig to a hero angle (leaning back and to one side) and the
   // phone turns about its own long axis inside it
   const rig = new THREE.Group(); world.add(rig);
+  // the soft shadow it casts on the page while it's out over the words (a blurred dark shape behind it)
+  const shadowCanvas = document.createElement("canvas"); shadowCanvas.width = shadowCanvas.height = 256;
+  { const g = shadowCanvas.getContext("2d"), gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+    gr.addColorStop(0, "rgba(0,0,0,.55)"); gr.addColorStop(0.55, "rgba(0,0,0,.22)"); gr.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = gr; g.fillRect(0, 0, 256, 256); }
+  const cast = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 2.6), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(shadowCanvas), transparent: true, opacity: 0, depthWrite: false }));
+  cast.position.set(0.16, -0.22, -0.9); cast.visible = false; world.add(cast);
   const phone = new THREE.Group(); rig.add(phone);
   const roundedRect = (w, h, r, rb = r) => {
     const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
@@ -397,25 +404,47 @@ function start(THREE) {
   const lookAt = new THREE.Vector3(), aim = new THREE.Vector3();
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
+  const FOV = 28, ROOM = 1.75, SIDE = 0.4;
   function size() {
+    if (full) return;   // the shows size themselves (fullFrame)
     const v = visual.getBoundingClientRect(), f = flat.getBoundingClientRect();
     if (!f.width) return;
     // the canvas is this many phones tall, and reaches past the column on both sides, so the brief's slices, the
     // full turn and a phone spun by hand are never cut off; it is centred on the flat phone's place
-    const ROOM = 1.75, SIDE = 0.4;
     const h = f.height * ROOM, w = v.width * (1 + 2 * SIDE);
     const cx = f.left + f.width / 2 - v.left;
     Object.assign(canvas.style, { left: `${cx - w / 2}px`, top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camBase = (H * ROOM / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    camera.fov = FOV;
+    camBase = (H * ROOM / 2) / Math.tan(THREE.MathUtils.degToRad(FOV / 2));
     camera.position.set(0, 0, camBase);
     camera.updateProjectionMatrix();
-    dock.style.top = `${f.top - v.top + f.height / 2}px`;
     note.style.top = `${f.top - v.top + f.height * 0.6}px`;
     note.style.left = `${cx}px`;
   }
   let camBase = 5;
+  // the shows (spin, zoom) step the phone out over the whole page: the canvas covers the window, in front of the
+  // words (casting a soft shadow on them), behind the tab bar, the switcher and these controls. The phone stays
+  // the same size and in the same place, by shifting the lens's centre to where it stood
+  const stageEl = scene.querySelector(".sc-stage");
+  let full = false, fullW = 0, fullH = 0;
+  function setFull(on) {
+    if (on === full) return;
+    full = on;
+    if (on) { canvas.removeAttribute("style"); canvas.classList.add("ph3d-full"); stageEl.append(canvas); fullW = fullH = 0; }
+    else { canvas.classList.remove("ph3d-full"); visual.append(canvas); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); size(); }
+  }
+  function fullFrame() {
+    const f = flat.getBoundingClientRect(), W = innerWidth, Hv = innerHeight;
+    if (W !== fullW || Hv !== fullH) { fullW = W; fullH = Hv; renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); renderer.setSize(W, Hv, false); }
+    camera.aspect = W / Hv;
+    camera.fov = 2 * THREE.MathUtils.radToDeg(Math.atan((H * ROOM * Hv / (f.height * ROOM)) / 2 / camBase));
+    camera.updateProjectionMatrix();
+    const e = camera.projectionMatrix.elements;
+    e[8] = -(2 * (f.left + f.width / 2) / W - 1); e[9] = -(1 - 2 * (f.top + f.height / 2) / Hv);
+    camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+  }
   new ResizeObserver(size).observe(visual);
   size();
 
@@ -506,8 +535,14 @@ function start(THREE) {
       camera.position.set(0, fy * 0.5, camBase * (1 - 0.22 * near));
       camera.lookAt(lookAt.set(0, fy, 0));
     } else if (camera.position.z !== camBase || camera.position.x !== 0 || camera.position.y !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
-    // during the shows the canvas fades out at its sides, so a close-up never spreads over the words beside it
-    scene.classList.toggle("n3-showing", zk > 0 || spinK > 0.01);
+    // out over the page during the shows; back in its column after
+    const showing = zk > 0 || spinK > 0.01;
+    setFull(showing);
+    if (full) fullFrame();
+    const sk = Math.max(zk, spinK);
+    cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
+    // the tab sits on the window's right edge, level with the phone
+    const fr = flat.getBoundingClientRect(); dock.style.top = `${fr.top + fr.height / 2}px`;
     renderer.render(world, camera);
     raf = requestAnimationFrame(frame);
   }

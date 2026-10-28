@@ -759,15 +759,16 @@ main { view-transition-name: page; }
 .scene.is-live.has-3d .sc-visual.is-dragging { cursor: grabbing; }
 .scene.is-live.has-3d .sc-visual button { cursor: pointer; }
 .scene.is-live.has-3d .ph3d { display: block; }
-/* during the spin and zoom shows the canvas fades out where it reaches past the phone's column (the column is the
-   middle 56% of it: nike-phone.js sizes it 1.8 columns wide) */
-.scene.n3-showing .ph3d { -webkit-mask-image: linear-gradient(90deg, transparent 18%, #000 27%, #000 73%, transparent 82%); mask-image: linear-gradient(90deg, transparent 18%, #000 27%, #000 73%, transparent 82%); }
+/* during the spin and zoom the canvas covers the window, in front of the words and behind the switchers (the tab bar
+   sits outside the stage; the switcher and the side controls sit above it in the stage) */
+.scene.is-live.has-3d .ph3d.ph3d-full { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; }
+.scene.has-3d .sc-visual { perspective: none; }   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
 .scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
 /* its side controls (nike-phone.js), as on the Cohesity animation: a tab on the column's right edge slides out a pill
    (spin, zoom, how it was made) that tucks back on its own; light or dark glass like every control on the site */
 .n3-dock, .n3-note { display: none; }
-.scene.is-live.has-3d .n3-dock { display: flex; position: absolute; right: 0; z-index: 3; transform: translateY(-50%); overflow: hidden; pointer-events: none; padding: 8px 0 8px 12px; }
+.scene.is-live.has-3d .n3-dock { display: flex; position: fixed; right: 0; z-index: 3; transform: translateY(-50%); overflow: hidden; pointer-events: none; padding: 8px 0 8px 12px; }
 .n3-drawer { display: flex; align-items: center; gap: 8px; transform: translateX(calc(100% - 26px)); transition: transform .45s cubic-bezier(.32, .72, 0, 1); }
 .n3-dock.is-out .n3-drawer { transform: translateX(-4px); }
 .n3-tab { display: grid; place-items: center; position: relative; width: 26px; height: 96px; border: 0; padding: 0 0 0 2px; border-radius: 18px 0 0 18px;
