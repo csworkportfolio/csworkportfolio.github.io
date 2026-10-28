@@ -2802,6 +2802,10 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .ai-localize.is-device .hb-window { background: transparent; box-shadow: none; }
 .ai-localize.is-device .hb-window .ai-bar { display: none; }
 .ai-localize.is-device .hb { border-radius: calc(14px / var(--hb-s)); box-shadow: var(--ai-shadow); }
+.hb-back { display: none; pointer-events: none; transition: none; }
+.ai-localize.is-device .hb-back { display: block; transform: translate(calc(var(--hb-bx, 0) * 1px), calc(var(--hb-by, 0) * 1px)) scale(var(--hb-bs, .5));
+  border-radius: calc(12px / var(--hb-bs, .5)); box-shadow: var(--ai-shadow); }
+.ai-localize.is-device .hb:not(.hb-back) { z-index: 1; box-shadow: 0 0 0 calc(1px / var(--hb-s)) rgba(0, 0, 0, .12), 0 30px 70px -20px rgba(0, 0, 0, .45); }
 /* on a phone the window's title bar goes too: the Hub's own green bar is the top */
 .ai-localize.is-mobile .hb-window .ai-bar { display: none; }
 
@@ -3202,6 +3206,32 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .pr-view.is-playing .pr-meter i { animation: pr-level .45s ease-in-out infinite alternate; }
 .pr-view.is-playing .pr-meter i:last-child { animation-duration: .38s; }
 @keyframes pr-level { from { --lv: 30%; background-size: 100% 34%; } to { background-size: 100% 72%; } }
+
+/* the Claude panel, where the Project panel was */
+.pr-claude { left: 970px; top: 38px; width: 306px; height: 452px; display: flex; flex-direction: column; }
+.pr-claude .pr-ptabs .is-on { display: inline-flex; align-items: center; gap: 6px; }
+.pr-claude .zp-claude { width: 14px; height: 14px; }
+.cl-chat { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 6px 12px !important; }
+.cl-msg { display: flex; gap: 8px; font-size: 11.5px; line-height: 1.4; transition: opacity .4s, transform .4s var(--ease); }
+.cl-msg.is-me { justify-content: flex-end; }
+.cl-msg.is-me > div { max-width: 86%; padding: 8px 10px; border-radius: 12px; background: #2f2f2f; color: #ececec; }
+.cl-msg.is-ai > div { flex: 1; color: #e2e2e2; }
+.cl-who { flex: none; display: grid; place-items: center; width: 20px; height: 20px; }
+.cl-who .zp-claude { width: 16px; height: 16px; }
+.cl-msg ul { margin: 6px 0 0 !important; padding-left: 16px !important; list-style: disc !important; }
+.cl-msg li { margin-top: 2px; }
+.cl-msg li::marker { color: #d97757; }
+.cl-links { list-style: none !important; padding-left: 0 !important; }
+.cl-links li { display: grid; padding: 6px 8px; border: 1px solid #3a3a3a; border-radius: 8px; }
+.cl-links li span { font-size: 10.5px; color: #9a9a9a; }
+.cl-file { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; padding: 4px 8px; border-radius: 6px; background: #3a3a3a; font-size: 11px; }
+.cl-file i { width: 10px; height: 12px; border: 1.5px solid #bdbdbd; border-radius: 1.5px; }
+.cl-input { display: flex; align-items: center; margin: 0 10px 10px; padding: 9px 12px; border: 1px solid #3a3a3a; border-radius: 10px; font-size: 12px; color: #8a8a8a; }
+.cl-input i { margin-left: auto; width: 18px; height: 18px; border-radius: 5px; background: #d97757; }
+.cl-msg.is-later { display: none; }
+.cl-msg { animation: cl-in .4s var(--ease); }
+@keyframes cl-in { from { opacity: 0; transform: translateY(6px); } }
+.pr.is-mobile .pr-claude { display: none; }
 
 /* the first time it comes into view, the transcript reads in, the cuts strike through and the cut assembles */
 .ai-cut.is-fresh .pr-block { opacity: .25; transition: opacity .6s; }

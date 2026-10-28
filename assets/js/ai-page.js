@@ -72,12 +72,19 @@
       fig.classList.toggle("is-mobile", mobile && !device);
       fig.classList.toggle("is-device", device);
       if (mobile) {
-        // in the window's place the phone also takes the title bar's 36px, so the window keeps its size
+        // Mobile on a wide screen: the desktop Hub stays behind, still, and the phone screen overlaps its lower right
+        // corner, like Apple's device line-ups (screens only, no device frames); the window keeps its size
         const h = device ? 708 * w / 1280 + 36 : 760 * w / 390;
-        const s = device ? h * 0.96 / 760 : w / 390;
+        const s = device ? h * 0.9 / 760 : w / 390;
         view.style.height = h + "px";
-        for (const [k, v] of [["--hb-s", s], ["--hb-k", s], ["--hb-tx", device ? (w - 390 * s) / 2 : 0], ["--hb-ty", device ? (h - 760 * s) / 2 : 0]])
-          view.style.setProperty(k, v);
+        const tx = device ? w - 390 * s - w * 0.035 : 0, ty = device ? h - 760 * s - h * 0.02 : 0;
+        for (const [k, v] of [["--hb-s", s], ["--hb-k", s], ["--hb-tx", tx], ["--hb-ty", ty]]) view.style.setProperty(k, v);
+        if (device) {
+          const bs = (w * 0.86) / 1280;
+          view.style.setProperty("--hb-bs", bs);
+          view.style.setProperty("--hb-bx", w * 0.025);
+          view.style.setProperty("--hb-by", (h - 708 * bs) / 2 - h * 0.04);
+        }
         return;
       }
       const s = w / 1280, h = 708 * s;
@@ -90,6 +97,11 @@
       view.style.setProperty("--hb-tx", clamp(w / 2 - cx * k, w - 1280 * k));
       view.style.setProperty("--hb-ty", clamp(h / 2 - cy * k, h - 708 * k));
     };
+    // the still desktop Hub that stands behind the phone in the Mobile view
+    const back = hub.cloneNode(true);
+    back.className = "hb hb-back";
+    back.querySelectorAll(".hb-cursor, .hb-modal, .hb-dim, .hb-toast, .hb-preview").forEach((el) => el.remove());
+    view.insertBefore(back, hub);
     new ResizeObserver(() => frame()).observe(view);
     // a click (or Enter) opens the Hub larger, over the page; another click, Esc or the backdrop closes it
     view.tabIndex = 0;
@@ -577,6 +589,7 @@
     // how AI helped with that part
     const bars = [...fig.querySelectorAll(".hb-chapters button")], note = fig.querySelector(".ai-note");
     let said = -1;
+    const msgs = [...fig.querySelectorAll(".cl-msg")];
     function chapter(t) {
       const n = Math.max(0, data.chapters.findIndex((c) => t >= c.from && t < c.to));
       bars.forEach((b, i) => {
@@ -584,6 +597,7 @@
         b.classList.toggle("is-on", i === n);
         b.style.setProperty("--p", i < n ? 1 : i > n ? 0 : Math.min(1, (t - c.from) / (c.to - c.from)));
       });
+      msgs.forEach((m) => m.classList.toggle("is-later", +m.dataset.ch > n));
       if (n !== said && note) {
         said = n;
         note.classList.add("is-fading");

@@ -5,7 +5,9 @@ from the finished video with its old caption painted out (OpenCV inpainting), an
 from the raw takes with punch-in zooms that change every second or so. tools/marsmen-shots.json lists the shots:
 where each sits on the timeline and which take and second it came from (matched by sound).
 
-New captions follow Wes Anderson's type, Futura, centered: mustard or white words set behind him (the "content
+New captions are always big and bold, in Mars Men's type and colors (Fold Grotesque Heavy, white with the key word
+in brand orange; the font comes with the brand assets and is passed with --fonts). An earlier look ("wes") followed
+Wes Anderson's type, Futura, centered: mustard or white words set behind him (the "content
 aware" style, cut out of every frame with Apple's Vision person segmentation, tools/person_mask.swift) and a small
 yellow film subtitle; over B-roll, the caption sits where the old one was. Most pop in a word or two at a time;
 the big lines (the white stacks) build one word at a time and hold. A phrase set behind him shrinks to stay above
@@ -48,9 +50,11 @@ PUNCH = 1.2
 FRAMES = [(1.0, .5, .12), (1.3, .5, .1), (1.12, .4, .12), (1.45, .5, .08), (1.06, .6, .12), (1.36, .44, .1), (1.18, .56, .12)]
 # each line's caption style: "top" mustard Futura behind his head, "stack" white Futura words stacked behind his
 # head, "sub" a small yellow film subtitle; and the most words a phrase of that style holds
-STYLES = ["top", "sub", "stack", "sub", "top", "stack", "sub", "top", "stack", "top"]
-PHRASE = {"top": 2, "stack": 4, "sub": 3}
-BUILD = {"stack"}
+STYLES = ["top", "stack", "stack", "top", "stack", "top", "stack", "top", "stack", "top"]   # always big; "sub" is kept for reference
+PHRASE = {"top": 2, "stack": 5, "sub": 3}
+BUILD = {"stack", "thirds"}
+SNAP = 0.45   # how far ahead of a cut to B-roll a phrase may start and still wait for the cut
+THIRDS = {"own your results": "thirds"}   # phrases set a word to each third of the screen, top to bottom
 ORANGE = (255, 86, 0)   # Mars Men's brand orange
 FINISHED = CLIPS.parent / "Mars Men Video.mov"   # the finished video: its timeline, soundtrack and B-roll
 PEXELS = ROOT.parent / "source-extra/pexels"   # the clean B-roll originals from Pexels, named by their Pexels id
@@ -71,11 +75,13 @@ def run(*a):
 
 
 def pops(words):
-    """One or two words at a time (short words pair up), breaking after punctuation."""
+    """One or two words at a time (short words pair up), breaking after punctuation, never inside a TOGETHER pair."""
     out, cur = [], []
-    for w in words:
+    for i, w in enumerate(words):
         cur.append(w)
-        if len(cur) == 2 or w[2][-1] in ",.?!" or len(w[2]) > 4:
+        nxt = words[i + 1] if i + 1 < len(words) else None
+        pair = nxt is not None and (bare(w), bare(nxt)) in TOGETHER
+        if not pair and (len(cur) >= 2 or w[2][-1] in ",.?!" or len(w[2]) > 4):
             out.append(cur)
             cur = []
     if cur:
@@ -83,12 +89,22 @@ def pops(words):
     return out
 
 
+# word pairs a caption never splits, even if the phrase runs a word long
+TOGETHER = {("seed", "oils"), ("sleep", "tracker"), ("low", "testosterone"), ("jobs", "we"), ("our", "lives"), ("own", "potential")}
+
+
+def bare(w):
+    return w[2].lower().rstrip(",.?!")
+
+
 def phrases(words, most):
-    """A line's words in phrases of up to `most` words, breaking after punctuation."""
+    """A line's words in phrases of up to `most` words, breaking after punctuation, never inside a TOGETHER pair."""
     out, cur = [], []
-    for w in words:
+    for i, w in enumerate(words):
         cur.append(w)
-        if len(cur) == most or w[2][-1] in ",.?!":
+        nxt = words[i + 1] if i + 1 < len(words) else None
+        pair = nxt is not None and (bare(w), bare(nxt)) in TOGETHER
+        if (len(cur) >= most and not pair) or w[2][-1] in ",.?!":
             out.append(cur)
             cur = []
     if cur:
@@ -151,6 +167,21 @@ def text_layer(full, shown, pop, style, room=None, at=None):
             d.text((x, y), c, font=f, fill=fill, anchor="lt")
             x += f.getlength(c) + gap
     behind = True
+    if style == "top" and fit(" ".join(full), W * 0.9, 200, hp, hi, T["track"]) < 140:
+        style = "stack"   # one line would come out small in a wide face: stack the words big instead
+    if style == "thirds":
+        # one word to each third of the screen, top to bottom, each stretched to fill its third, in front of him
+        for i, w in enumerate(full[:shown]):
+            f = font(*T["head"], 400) if T["accent"] else font(FUTURA, 4, 400)
+            box = f.getbbox(w)
+            im = Image.new("RGBA", (box[2] - box[0] + 8, box[3] - box[1] + 8))
+            ImageDraw.Draw(im).text((4 - box[0], 4 - box[1]), w, font=f, fill=(T["accent"] if T["accent"] and i == len(full) - 1 else T["stack"]) + (255,))
+            third = H / 3
+            sc = pop if i == shown - 1 else 1
+            tw, th = int(W * 0.94 * sc), int(third * 0.9 * sc)
+            im = im.resize((tw, th), Image.LANCZOS)
+            layer.alpha_composite(im, (int((W - tw) / 2), int(third * i + (third - th) / 2)))
+        return soft_shadow(layer, 8, 0.6), False
     if style == "stack":
         # big words, one a line, each as wide as it can be, behind him
         sizes = [min(fit(w, W * 0.88, 210, hp, hi, T["track"]), 170) for w in full]
@@ -158,9 +189,16 @@ def text_layer(full, shown, pop, style, room=None, at=None):
         total = sum(sizes) * 0.9
         k = min(1.0, H * 0.46 / total)
         if room is not None:
-            k = min(k, (room - y0 + sizes[-1] * 0.25) / total)   # at most the foot of the last word behind his head
-            if max(sizes) * k < 64:
-                k, behind = min(1.0, H * 0.46 / total), False
+            k = min(k, (room - y0 + sizes[-1] * 0.25) / total)
+            if max(sizes) * k < 110:
+                behind = False
+        if room is None or not behind:
+            # in front of him: the words get the full height of the frame, larger, centered top to bottom
+            behind = False
+            sizes = [min(fit(w, W * 0.92, 300, hp, hi, T["track"]), 250) for w in full]
+            total = sum(sizes) * 0.9
+            k = min(1.0, H * 0.86 / total)
+            y0 = (H - total * k) / 2
         y = y0
         for i, w in enumerate(full):
             size = int(sizes[i] * k)
@@ -176,7 +214,7 @@ def text_layer(full, shown, pop, style, room=None, at=None):
         size, y, fill = fit(line, W * 0.9, 200, path, index, T["track"]), H * 0.05, T["top"]
         if room is not None and size * 0.95 > room - y + size * 0.25:
             size = int(max(0, room - y) / 0.7)
-            if size < 56:
+            if size < 110:   # too small behind him: in front of him at full size instead
                 size, behind = fit(line, W * 0.9, 200, path, index, T["track"]), False
     else:
         # a subtitle, low and centered: small Futura in the Anderson look, a white label on black in the brand look
@@ -217,7 +255,7 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     if theme == "mars":
         T["head"] = (str(Path(fonts) / T["head"][0]), 0)
         T["sub"] = (str(Path(fonts) / T["sub"][0]), 0)
-    out = ROOT / "assets/ai/marsmen.mp4" if theme == "wes" else ROOT.parent / f"previews/marsmen-{theme}.mp4"
+    out = ROOT / "assets/ai/marsmen.mp4" if theme == "mars" else ROOT.parent / f"previews/marsmen-{theme}.mp4"
     words = json.loads((ROOT / "tools/marsmen-words.json").read_text())
     shots = json.loads((ROOT / "tools/marsmen-shots.json").read_text())
     tmp = Path(tempfile.mkdtemp())
@@ -300,10 +338,24 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     for i in sorted(lines, key=lambda i: lines[i][0][0]):
         style = STYLES[i]
         build = style in BUILD
+        # words said just before a cut to or from B-roll wait for the cut, so a phrase starts whole on the new shot
+        cuts_ = [w[0] for w in windows] + [w[1] for w in windows]
+        moved = []
+        for x in lines[i]:
+            e = next((e for e in cuts_ if 0 < e - x[0] <= SNAP and any(y[0] >= e for y in lines[i])), None)
+            moved.append((e, e, *x[2:]) if e is not None else x)
+        lines[i] = moved
         groups = phrases(lines[i], PHRASE[style]) if build else pops(lines[i])
+        starts = [w[0] for w in windows]
         for ph in groups:
             times = [x[0] for x in ph] if build else [ph[0][0]] * len(ph)
-            caps.append({"start": ph[0][0], "times": times, "words": [x[2] for x in ph], "style": style})
+            # a phrase that would begin just before a cut to B-roll waits for the cut, so it lands on the new shot
+            snap = next((e for e in starts if 0 < e - times[0] <= SNAP), None)
+            if snap is not None:
+                times = [max(t, snap) for t in times]
+            words_ = [x[2] for x in ph]
+            key = " ".join(w.lower().rstrip(",.?!") for w in words_)
+            caps.append({"start": times[0], "times": times, "words": words_, "style": THIRDS.get(key, style)})
     caps.sort(key=lambda c: c["start"])
     end = shots[-1]["to"]
     for k, c in enumerate(caps):
@@ -320,7 +372,12 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
         cap = next((c for c in caps if c["start"] <= t < c["end"]), None)
         if cap:
             cut_away = next((wd for wd in windows if wd[0] <= t < wd[1]), None)
-            if not cut_away and cap["style"] in BEHIND and "room" not in cap:
+            # over B-roll a phrase keeps its own style and place (so nothing restarts or shows twice), in front of the
+            # shot; only the small subtitles move to where the old caption sat
+            front = cut_away is not None and cap["style"] != "sub"
+            if front:
+                cut_away = None
+            if not cut_away and not front and cap["style"] in BEHIND and "room" not in cap:
                 # where his head is when the phrase first shows decides how big it can be behind him
                 cap["room"] = head_top(Image.open(tmp / "masks" / f.name))
             shown = sum(1 for x in cap["times"] if x <= t)
@@ -330,13 +387,15 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
                 layer, behind = text_layer(cap["words"], shown, pop, "sub", at=cut_away[2])
             else:
                 layer, behind = text_layer(cap["words"], shown, pop, cap["style"], cap.get("room"))
+                if front and behind:
+                    layer, behind = soft_shadow(layer, 6, 0.55), False
             if behind:
                 mask = Image.open(tmp / "masks" / f.name).convert("L").filter(ImageFilter.GaussianBlur(1.2))
                 frame = Image.composite(frame, Image.alpha_composite(frame, layer), mask)
             else:
                 frame = Image.alpha_composite(frame, layer)
         enc.stdin.write(np.asarray(frame.convert("RGB")).tobytes())
-        if n == int(2.2 * FPS) and theme == "wes":
+        if n == int(2.2 * FPS) and theme == "mars":
             frame.convert("RGB").save(ROOT / "assets/ai/marsmen.jpg", quality=85)
     enc.stdin.close()
     enc.wait()
@@ -358,4 +417,4 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     fonts = args[args.index("--fonts") + 1] if "--fonts" in args else None
     rest = [a for a in args if a != "--fonts" and a != fonts]
-    main(rest[0], rest[1], rest[2] if len(rest) > 2 else "wes", fonts)
+    main(rest[0], rest[1], rest[2] if len(rest) > 2 else "mars", fonts)

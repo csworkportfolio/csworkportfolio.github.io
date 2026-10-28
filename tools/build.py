@@ -1504,6 +1504,20 @@ def demo_cut(b, root):
     track = lambda name, inner, cls="": (f'<div class="pr-track{cls}"><span class="pr-th"><b>{name}</b>{ico("bell") if False else ""}'
                                           f'<i class="pr-lock"></i></span><div class="pr-lane">{inner}</div></div>')
     tools = "".join(ico(n) for n in ("play", "sliders", "search", "edit", "people"))
+    # the chat with Claude in the right panel: his transcript and Claude's cuts, then the B-roll search; each message
+    # shows from the chapter it belongs to
+    def msg(m):
+        extra = ""
+        if m.get("file"):
+            extra += f'<span class="cl-file"><i></i>{esc(m["file"])}</span>'
+        if m.get("cuts"):
+            extra += "<ul>" + "".join(f"<li>{esc(c)}</li>" for c in m["cuts"]) + "</ul>"
+        if m.get("links"):
+            extra += '<ul class="cl-links">' + "".join(f"<li><span>pexels.com</span>{esc(c)}</li>" for c in m["links"]) + "</ul>"
+        return (f'<li class="cl-msg is-{m["who"]}" data-ch="{m["ch"]}">'
+                + (f'<span class="cl-who">{CLAUDE_MARK}</span>' if m["who"] == "ai" else "")
+                + f'<div><p>{esc(m["text"])}</p>{extra}</div></li>')
+    chat = "".join(msg(m) for m in b["claude"])
     src = f'{root}assets/ai/marsmen.mp4?v={asset_version("assets/ai/marsmen.mp4")}'
     canvas = f'''
 <div class="pr-view"><div class="pr" lang="en">
@@ -1525,13 +1539,10 @@ def demo_cut(b, root):
     <p class="pr-scrub" aria-hidden="true"><i class="pr-scrub-head"></i></p>
     <p class="pr-transport" aria-hidden="true"><i class="t-mark"></i><i class="t-in"></i><i class="t-out"></i><i class="t-back"></i><i class="t-play"></i><i class="t-fwd"></i><i class="t-lift"></i><i class="t-cam"></i></p>
   </section>
-  <section class="pr-panel pr-proj" aria-hidden="true">
-    <p class="pr-ptabs"><span>Markers</span><span class="is-on">Project: MarsMen_PSA<i class="pr-menu"></i></span></p>
-    <p class="pr-path"><span class="pr-folder"></span>MarsMen_PSA.prproj</p>
-    <p class="pr-psearch">{ico("search")}<em>1 of 10 items</em></p>
-    <p class="pr-cols"><span>Name</span><span>Media Duration</span></p>
-    <ul>{bins}{takes}</ul>
-    <p class="pr-foot">6 takes · {int(raw_total // 60)}:{int(raw_total % 60):02d} of footage</p>
+  <section class="pr-panel pr-claude" aria-label="The chat with Claude about the cut">
+    <p class="pr-ptabs" aria-hidden="true"><span class="is-on">{CLAUDE_MARK}Claude</span><span>Project: MarsMen_PSA</span></p>
+    <ol class="cl-chat">{chat}</ol>
+    <p class="cl-input" aria-hidden="true">Reply to Claude\u2026<i></i></p>
   </section>
   <section class="pr-panel pr-tl" aria-hidden="true">
     <nav class="pr-tools">{tools}</nav>
