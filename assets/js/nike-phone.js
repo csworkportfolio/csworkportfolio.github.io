@@ -659,7 +659,18 @@ function start(THREE) {
   }
   let lastSig = [], still = 0, lastDraw = 0;
   // classes are only written when they change: any write wakes the loop (it watches the section's classes)
-  function flag(c, on) { if (scene.classList.contains(c) !== on) scene.classList.toggle(c, on); }
+  function flag(c, on) { if (scene.classList.contains(c) !== on) { scene.classList.toggle(c, on); if (c === "has-3d") fitSwitch(); } }
+  // in a narrower window the four placements can run past the window's edge: the switcher shifts left just as far as
+  // it needs to stay clear of the edge and the controls tab there
+  function fitSwitch() {
+    const sw = scene.querySelector(".sc-switch");
+    if (!sw) return;
+    sw.style.left = "";
+    if (!scene.classList.contains("has-3d")) return;
+    const over = sw.getBoundingClientRect().right - (innerWidth - 40);
+    if (over > 0) { sw.style.position = "relative"; sw.style.left = `${-Math.ceil(over)}px`; }
+  }
+  addEventListener("resize", fitSwitch, { passive: true });
   wake = () => kick();
   const kick = () => { still = 0; if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
   addEventListener("scroll", () => { if (onScreen) kick(); }, { passive: true });
