@@ -97,8 +97,10 @@ function start(THREE) {
   const screen = shapeMesh(SW, SH, SR, screenMat, front + 0.0008); phone.add(screen);
   phone.add(shapeMesh(W - 0.022, H - 0.022, R - 0.011,
     new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.05, roughness: 0.02, clearcoat: 1, envMapIntensity: 2.4, depthWrite: false }), front + 0.002));
-  const island = new THREE.Mesh(slab(roundedRect(0.2, 0.058, 0.029), 0.0005, 0.0005), new THREE.MeshBasicMaterial({ color: 0x000000 }));
-  island.position.set(0, SH / 2 - 0.068, front + 0.0011); phone.add(island);
+  // the island sits above the slices' resting place, and grows in as they come together (main loop)
+  const island = new THREE.Mesh(slab(roundedRect(0.2, 0.058, 0.029), 0.0005, 0.0005), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true }));
+  island.position.set(0, SH / 2 - 0.068, front + 0.0018); phone.add(island);
+  const islandHome = island.position.clone();
 
   // the brief: the screen in its three slices (the story template's sections), apart and then together
   // both sides show the picture, so from behind a slice reads as a pane of glass (the picture mirrored)
@@ -169,9 +171,10 @@ function start(THREE) {
   const dot = (r, x, y) => { const m = new THREE.Mesh(new THREE.CircleGeometry(r, 24), new THREE.MeshPhysicalMaterial({ color: 0x050505, roughness: 0.2, clearcoat: 1 })); m.rotation.y = Math.PI; m.position.set(x, y, zp - 0.0005); phone.add(m); };
   dot(0.006, -0.236, PT - 0.265); dot(0.034, -0.232, PT - 0.37);
 
-  // the device check: a line of light runs down the screen
-  const scan = new THREE.Mesh(new THREE.PlaneGeometry(SW, 0.05), new THREE.MeshBasicMaterial({ map: glowTexture(THREE), color: 0xff6a55, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
-  scan.position.z = front + 0.003; scan.visible = false; phone.add(scan);
+  // the device check: an Apple Intelligence glow, the soft blue, purple, pink and orange light that runs round
+  // the screen's edge, starting at the bottom and going all the way round
+  const siri = siriGlow(THREE, roundedRect, SW, SH, SR);
+  siri.position.z = front + 0.0016; siri.visible = false; phone.add(siri);
 
   // ---------- notifications in Liquid Glass: real glass that bends and blurs the placement behind it ----------
   const NOTES = [
@@ -269,11 +272,11 @@ function start(THREE) {
   // the pose of each step: turn (y), tilt (x), drop (into the gray lane), gray, and what's on the screen
   function pose(p) {
     const at = Math.min(N - 1, Math.floor(p * N)), k = p * N - at;
-    const o = { ry: -0.42, rx: 0.1, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), scan: -1, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
+    const o = { ry: -0.42, rx: 0.1, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), sweep: 0, glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
     if (at === 1) { o.ry = -0.42 + 0.22 * ease(k); o.rx = 0.1 - 0.04 * ease(k); }
     if (at === 2) {   // the device check: the phone lifts and turns all the way round, then a line of light runs down it
       o.ry = -0.2 + ease(clamp(k / 0.6)) * Math.PI * 2; o.rx = 0.06; o.y = 0.05 * Math.sin(Math.PI * clamp(k / 0.6));
-      o.scan = k > 0.6 ? (k - 0.6) / 0.4 : -1;
+      o.glow = k > 0.56 ? 1 : 0; o.sweep = clamp((k - 0.6) / 0.32);
     }
     if (at === 3 || at === 4) {   // out of his hands: lower, smaller, gray; the sign-offs arrive
       const d = at === 3 ? ease(clamp(k / 0.35)) : 1;
@@ -363,7 +366,15 @@ function start(THREE) {
     screen.visible = apart < 0.002;
     slices.forEach((m) => { m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart); });
     drawScreen(o.roll);
-    scan.visible = o.scan >= 0; if (scan.visible) scan.position.y = SH / 2 - o.scan * SH;
+    // the island grows in as the slices close; the glow fades in, sweeps round, and fades when the step is done
+    const ik = clamp(1 - apart * 3);
+    island.material.opacity = ik; island.scale.set(0.5 + 0.5 * ease(ik), 0.6 + 0.4 * ease(ik), 1); island.visible = ik > 0.01;
+    island.position.copy(islandHome); if (slices[0]) island.position.addScaledVector(slices[0].userData.away, apart);   // it rides in on the top slice
+    const u = siri.material.uniforms;
+    u.uOpacity.value += (o.glow - u.uOpacity.value) * Math.min(1, dt * 6);
+    u.uProg.value += (o.sweep - u.uProg.value) * Math.min(1, dt * 10);
+    u.uTime.value = now / 1000;
+    siri.visible = u.uOpacity.value > 0.01;
     // the notifications drop in (and leave) like iOS banners
     notes.forEach((nt, i) => {
       nt.k += (o.notes[i] - nt.k) * Math.min(1, dt * 9);
@@ -395,11 +406,41 @@ function studio(THREE) {
   return room;
 }
 
-// a soft line of light (for the device check's scan)
-function glowTexture(THREE) {
-  const c = document.createElement("canvas"); c.width = 8; c.height = 64;
-  const g = c.getContext("2d"), grad = g.createLinearGradient(0, 0, 0, 64);
-  grad.addColorStop(0, "rgba(255,255,255,0)"); grad.addColorStop(0.5, "rgba(255,255,255,1)"); grad.addColorStop(1, "rgba(255,255,255,0)");
-  g.fillStyle = grad; g.fillRect(0, 0, 8, 64);
-  return new THREE.CanvasTexture(c);
+// the Apple Intelligence edge glow: a band just inside the screen's rounded edge, brightest at the edge and fading
+// inward, its colors flowing round; uProg reveals it from the bottom centre all the way round (0 to 1)
+function siriGlow(THREE, roundedRect, w, h, r) {
+  const BAND = 0.07, N = 360;
+  const outer = roundedRect(w, h, r).getSpacedPoints(N), inner = roundedRect(w - 2 * BAND, h - 2 * BAND, Math.max(0.001, r - BAND)).getSpacedPoints(N);
+  // the paths start at the bottom-left corner; shift so the glow starts at the bottom centre
+  const per = 2 * (w + h) - 8 * r + 2 * Math.PI * r, shift = (w / 2 - r) / per;
+  const pos = [], edge = [], tt = [], idx = [];
+  for (let i = 0; i <= N; i++) {
+    const t = ((i / N - shift) % 1 + 1) % 1;
+    pos.push(outer[i].x, outer[i].y, 0, inner[i].x, inner[i].y, 0);
+    edge.push(1, 0); tt.push(t, t);
+    if (i < N) { const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute("edge", new THREE.Float32BufferAttribute(edge, 1));
+  geo.setAttribute("tpos", new THREE.Float32BufferAttribute(tt, 1));
+  geo.setIndex(idx);
+  const mat = new THREE.ShaderMaterial({
+    uniforms: { uProg: { value: 0 }, uTime: { value: 0 }, uOpacity: { value: 0 } },
+    vertexShader: `attribute float edge; attribute float tpos; varying float vEdge; varying float vT;
+      void main() { vEdge = edge; vT = tpos; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+    fragmentShader: `uniform float uProg; uniform float uTime; uniform float uOpacity; varying float vEdge; varying float vT;
+      vec3 pal(float x) {   // blue, purple, pink, orange, round again
+        x = fract(x) * 4.0;
+        vec3 c0 = vec3(0.03, 0.58, 1.0), c1 = vec3(0.79, 0.35, 0.87), c2 = vec3(1.0, 0.18, 0.33), c3 = vec3(1.0, 0.56, 0.02);
+        if (x < 1.0) return mix(c0, c1, x); if (x < 2.0) return mix(c1, c2, x - 1.0); if (x < 3.0) return mix(c2, c3, x - 2.0); return mix(c3, c0, x - 3.0);
+      }
+      void main() {
+        float shown = uProg >= 0.999 ? 1.0 : clamp((uProg - vT) / 0.05, 0.0, 1.0);   // a soft leading edge as it travels
+        float a = pow(vEdge, 2.2) * shown * uOpacity;
+        gl_FragColor = vec4(pal(vT * 1.5 - uTime * 0.25), a);
+      }`,
+    transparent: true, depthWrite: false, side: THREE.DoubleSide, toneMapped: false,
+  });
+  return new THREE.Mesh(geo, mat);
 }
