@@ -805,11 +805,16 @@ main { view-transition-name: page; }
 /* the note: a glass card over the lower part of the phone */
 .scene.is-live.has-3d.n3-noting .n3-note { display: block; }
 /* it opens just left of the controls pill, level with it, on firmer glass than the controls so the words read clearly */
-.n3-note { position: absolute; z-index: 3; right: 68px; width: min(340px, calc(100% - 88px)); transform: translateY(-50%); box-sizing: border-box; padding: 14px 48px 16px 20px;
+.n3-note { position: absolute; z-index: 3; right: 68px; width: min(340px, calc(100% - 88px)); transform: translateY(-50%); box-sizing: border-box; padding: 14px 48px 22px 20px;
   border-radius: 18px; text-align: left; font-size: 15px; line-height: 1.45; color: var(--tabink); background: var(--noteglass); box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.18);
   -webkit-backdrop-filter: blur(20px) saturate(190%); backdrop-filter: blur(20px) saturate(190%); animation: n3-in .3s ease; }
 @keyframes n3-in { from { opacity: 0; transform: translate(8px, -50%); } }
 .n3-note p { margin: 0; }
+.n3-note-time { position: absolute; left: 20px; right: 20px; bottom: 7px; height: 3px; border-radius: 2px; background: var(--tablens); overflow: hidden; }
+.n3-note-time::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: currentColor; opacity: .35; transform-origin: 0 50%; animation: n3-drain 10s linear forwards; }
+.n3-note.is-held .n3-note-time::after { animation-play-state: paused; }
+@keyframes n3-drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .n3-note-time { display: none; } }
 .n3-note .n3-note-title { margin-bottom: 4px; font-size: 13px; font-weight: 600; letter-spacing: .01em; opacity: .6; }
 .n3-note-close { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; border-radius: 50%; padding: 0;
   display: grid; place-items: center; cursor: pointer; background: transparent; color: inherit; opacity: .6; }

@@ -431,7 +431,8 @@ function start(THREE) {
   note.className = "n3-note"; note.id = "n3-note"; note.setAttribute("aria-label", "How This Phone Was Made");
   note.innerHTML = '<button class="n3-note-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button>'
     + '<p class="n3-note-title">How This Phone Was Made</p>'
-    + "<p>Directing Claude Code, I storyboarded the journey from request to live, then built the phone and every step in three.js, refining the details against real phone photography until they held up.</p>";
+    + "<p>Directing Claude Code, I storyboarded the journey from request to live, then built the phone and every step in three.js, refining the details against real phone photography until they held up.</p>"
+    + '<span class="n3-note-time" aria-hidden="true"></span>';
   // the tab lives in the pinned stage, which spans the window, so it scrolls with the page instead of being moved after it
   const stage = scene.querySelector(".sc-stage") || visual;
   stage.append(dock, note);
@@ -460,7 +461,24 @@ function start(THREE) {
   // out while the reader scrolls toward the scene, tucked a few seconds after it locks in (main.js, shared by every 3D scene)
   window.sceneControlsPeek?.(scene, scene.querySelector(".sc-stage"), (on) => showControls(on, true), () => tuckLater(4500));
   // the note: opens beside the controls from its button, which stays lit while it's open; the controls stay out with it
-  const setNote = (on) => { scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on)); if (on) showControls(true, true); else tuckLater(); };
+  // it closes itself after 10 seconds, shown by a thin bar draining along its foot; the time stands still while the
+  // pointer or keyboard focus is on it
+  const NOTE_MS = 10000;
+  let noteTimer = 0, noteLeft = 0, noteFrom = 0;
+  const noteRun = () => { clearTimeout(noteTimer); noteFrom = performance.now(); noteTimer = setTimeout(() => setNote(false), noteLeft); note.classList.remove("is-held"); };
+  const noteHold = () => { if (!scene.classList.contains("n3-noting") || note.classList.contains("is-held")) return; clearTimeout(noteTimer); noteLeft -= performance.now() - noteFrom; note.classList.add("is-held"); };
+  note.addEventListener("pointerenter", noteHold);
+  note.addEventListener("pointerleave", () => { if (!note.contains(document.activeElement) && scene.classList.contains("n3-noting")) noteRun(); });
+  note.addEventListener("focusin", noteHold);
+  note.addEventListener("focusout", (e) => { if (!note.contains(e.relatedTarget) && !note.matches(":hover") && scene.classList.contains("n3-noting")) noteRun(); });
+  const setNote = (on) => {
+    scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on));
+    clearTimeout(noteTimer);
+    if (on) {
+      noteLeft = NOTE_MS;   // (the bar starts full again: the note was hidden, which restarts its drain)
+      noteRun(); showControls(true, true);
+    } else tuckLater();
+  };
   infoBtn.addEventListener("click", () => setNote(!scene.classList.contains("n3-noting")));
   note.querySelector(".n3-note-close").addEventListener("click", () => setNote(false));
   document.addEventListener("keydown", (e) => {
