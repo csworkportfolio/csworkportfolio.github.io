@@ -1556,6 +1556,16 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 /* the locked posts in the same layout: a glass pane of each post's shape, as tall as a post would stand, still
    (no live blur, float or glow while the scroll carries it, as in the carousel) */
 .gw .ex-scene { text-align: left; }
+/* Social & Writing: the section's heading and words hold on the left while the locked posts pass on the right
+   (the section itself steps out of the page meanwhile, so the scroll runs straight from the carousel above
+   into the box) */
+.cat-locked.in-scene { display: none; }
+.gw .ex-scene.is-live { margin: 0; }   /* this section has no side padding to reach back over */
+.gw .ex-inner { max-width: calc(var(--wrap) + 2 * var(--gutter)); }   /* the page's own column: one left edge */
+.ex-intro-case { z-index: 0; }
+.ex-text.ex-intro { padding: 0; max-width: 460px; }
+.ex-text.ex-intro p:not(.kicker-italic) { font-size: 16px; line-height: 1.55; color: var(--muted); }
+.ex-text.ex-intro .kicker-italic { font-size: 19px; }
 .ex-box:has(.ex-lock) { container-type: size; }
 .ex-lock { height: min(100cqh, 720px, calc(100cqw / var(--r))); width: auto; aspect-ratio: var(--r);
   -webkit-backdrop-filter: none; backdrop-filter: none; animation: none; cursor: default; }

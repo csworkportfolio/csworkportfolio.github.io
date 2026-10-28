@@ -1186,8 +1186,10 @@
   }
 
   // The scene itself, for the unlocked posts and for the locked ones (lockedReading): "piece" makes what sits on
-  // the right of each post; "toStart" brings a reader who is already partway down back to the first post.
-  function buildReading(content, strip, items, piece, { toStart = false } = {}) {
+  // the right of each post; "toStart" brings a reader who is already partway down back to the first post;
+  // "intro" is a section's words to hold on the left the whole way instead of each post's own (that section
+  // steps out of the page while the scene runs); "peek" shows the next and last posts' edges.
+  function buildReading(content, strip, items, piece, { toStart = false, intro = null, peek = true } = {}) {
     const n = items.length;
     const HAND = 0.3, HOLD = 0.5;   // the home page's pacing: about 0.8 of a screen of scroll per post
     const total = n * (HAND + HOLD) - HAND;
@@ -1228,6 +1230,13 @@
       inner.append(art);
       return art;
     });
+    if (intro) {
+      const side = el("div", { class: "ex-case ex-intro-case is-shown" });
+      const text = el("div", { class: "ex-text ex-intro cat-text" });
+      text.append(...[...intro.children].map((c) => c.cloneNode(true)));
+      side.append(text);
+      inner.append(side);
+    }
     inner.append(rail);
     stage.append(inner);
     scene.append(stage);
@@ -1240,6 +1249,7 @@
       const on = !reduceMotion && innerWidth > 900 && viewH() - pin >= 620;
       scene.classList.toggle("is-live", on);
       content.classList.toggle("ex-on", on);
+      intro?.classList.toggle("in-scene", on);
     };
     const move = () => {
       if (!scene.classList.contains("is-live")) return;
@@ -1257,8 +1267,8 @@
         // the peeks ease in and out with the scroll itself (no timed transitions to fall behind it): a post rises
         // into the bottom peek while the one before it arrives, and keeps its top-edge peek until the one after
         // next takes over
-        const pk = 48 * clamp((u - (st - STEP - HAND)) / HAND);
-        const pt = 30 * (1 - clamp((u - (st + 2 * STEP - HAND)) / HAND));
+        const pk = peek ? 48 * clamp((u - (st - STEP - HAND)) / HAND) : 0;
+        const pt = peek ? 30 * (1 - clamp((u - (st + 2 * STEP - HAND)) / HAND)) : 0;
         const box = c._box || (c._box = c.querySelector(".ex-box"));
         const text = c._text || (c._text = c.querySelector(".ex-text"));
         const y = (1 - e) * (c._drop - pk) - l * (c._rise - pt);
@@ -1310,7 +1320,11 @@
     const tiles = [...lock.querySelectorAll(".tile-wrap-locked")];
     if (!strip || !tiles.length) return null;
     const shapes = (lock.dataset.shapes || "").split(",").map(Number);
-    const items = tiles.map((li) => ({
+    // on Social & Writing the section's own words hold on the left while the posts pass; where there are none
+    // (the Ghostwriting page), each post keeps its caption
+    const prev = lock.closest(".gw-wrap")?.previousElementSibling;
+    const intro = prev?.classList.contains("cat-locked") ? prev : null;
+    const items = tiles.map((li) => intro ? {} : ({
       title: li.querySelector(".tile-cap strong")?.textContent || "",
       desc: li.querySelector(".tile-cap span")?.textContent || "",
     }));
@@ -1318,7 +1332,7 @@
       const pane = el("div", { class: "gw-bubble ex-lock", style: `--r:${shapes[k] || 0.5}` });
       pane.innerHTML = tiles[k].querySelector(".tile-locked").innerHTML;
       return pane;
-    });
+    }, { intro, peek: false });
   }
 
   // The locked file was made with the site's older strip markup; once open, the posts are brought in line with
@@ -1554,7 +1568,8 @@
   // sections stay laid out still.
 
   const pinTop = () => {
-    const pills = document.querySelector(".page-case .pills, .page-home .pills");
+    // (category pages too: their reading scenes pin just under the switcher)
+    const pills = document.querySelector(".page-case .pills, .page-home .pills, .page-category .pills");
     const h = pills ? pills.offsetHeight : 0;
     document.documentElement.style.setProperty("--pills-h", `${h}px`);
     return h;
