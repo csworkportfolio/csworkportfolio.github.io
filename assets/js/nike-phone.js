@@ -131,7 +131,7 @@ function start(THREE) {
     card.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
     // further out toward the reader, each a step nearer than the last (the bottom one lifts as it comes, so it
     // clears the switcher under the phone)
-    card.userData.away = [new THREE.Vector3(-0.07, 0.07, 0.22), new THREE.Vector3(0.24, -0.01, 0.42), new THREE.Vector3(-0.16, 0.04, 0.62)][i] || new THREE.Vector3();
+    card.userData.away = [new THREE.Vector3(-0.16, 0.2, 0.22), new THREE.Vector3(0.36, -0.01, 0.42), new THREE.Vector3(-0.27, -0.02, 0.62)][i] || new THREE.Vector3();
     card.visible = false; phone.add(card); slices.push(card);
   }
 
