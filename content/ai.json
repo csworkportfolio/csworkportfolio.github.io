@@ -1,0 +1,456 @@
+[
+  {
+    "type": "case",
+    "slug": "ai",
+    "robots": "noindex, nofollow",
+    "title": "AI in My Workflow | Christian Sanchez",
+    "description": "How Christian Sanchez, a digital marketer, uses AI across localization, editorial planning, video, repurposing, GEO and AEO, and the tools he builds with Claude Code.",
+    "hero": {
+      "title": "AI in My Workflow",
+      "subtitle": "Localization, editorial planning, video, repurposing, GEO and AEO, and the tools I build with Claude Code",
+      "logos": []
+    },
+    "lede": "I'm a digital marketer, and AI is part of how I work every day. I use it for the slow, repetitive parts so I have more time for the ideas, and I check everything it makes before it goes out. These are the places it shows up, from posts localized for 10+ regions to apps I built for myself.",
+    "blocks": [
+      {
+        "id": "localize",
+        "h": "One Post, Ready for 10+ Regions",
+        "p": [
+          "At Cohesity I built an AI agent with Claude Code, loaded it with our style guide and brand guidelines, and built a localization feature into the Champions Hub. Employees browsed posts in their own language and region and shared them to LinkedIn.",
+          "The agent adapted the region as much as the language: less US-centric, with the tone set for each place. Its versions came out about 99% ready. I reviewed them with my team and select Champion advocates, and every fix went back to the agent so it learned."
+        ],
+        "demo": "localize",
+        "note": "Recreated for this page. The post is a generic example.",
+        "link": {
+          "label": "See the 3D version on the Cohesity page",
+          "href": "cohesity/#setup"
+        },
+        "sources": [
+          "Style guide",
+          "Brand guidelines"
+        ],
+        "post": "New this week: a quick guide to keeping your data safe. Worth a read and a share.",
+        "regions": [
+          {
+            "code": "ES",
+            "name": "Spanish",
+            "tone": "Warm, direct",
+            "text": "Nuevo esta semana: una guía rápida para mantener tus datos seguros. Vale la pena leerla y compartirla."
+          },
+          {
+            "code": "FR",
+            "name": "French",
+            "tone": "Polished, concise",
+            "text": "Nouveau cette semaine : un guide rapide pour protéger vos données. À lire et à partager."
+          },
+          {
+            "code": "DE",
+            "name": "German",
+            "tone": "Clear, formal",
+            "text": "Neu diese Woche: ein kurzer Leitfaden, wie Sie Ihre Daten schützen. Lesen und teilen lohnt sich."
+          },
+          {
+            "code": "JA",
+            "name": "Japanese",
+            "tone": "Polite, team first",
+            "text": "今週の新着：データを安全に守るためのクイックガイド。ぜひご一読のうえ、シェアしてください。"
+          },
+          {
+            "code": "KO",
+            "name": "Korean",
+            "tone": "Respectful",
+            "text": "이번 주 새 소식: 데이터를 안전하게 지키는 간단한 가이드. 읽어 보시고 [공유하세요|공유해 주세요].",
+            "review": "Softer ask for this audience"
+          },
+          {
+            "code": "ZH",
+            "name": "Chinese (Traditional)",
+            "tone": "Formal",
+            "text": "本週新內容：保護資料安全的快速指南，值得一讀，也歡迎分享。"
+          },
+          {
+            "code": "PT",
+            "name": "Portuguese",
+            "tone": "Friendly",
+            "text": "Novidade da semana: um guia rápido para manter seus dados seguros. Vale a leitura e o compartilhamento."
+          }
+        ]
+      },
+      {
+        "id": "editorial",
+        "h": "From Calendar to Do's and Don'ts",
+        "p": [
+          "At QAD Redzone and Cohesity I used AI across the editorial workflow: building the content calendar in Monday.com, writing briefs and first drafts that I then edited, setting up A/B tests, localizing content, and turning our guidelines into do's and don'ts docs the whole team could follow."
+        ],
+        "demo": "board",
+        "note": "An illustration of the workflow. The rows are examples.",
+        "rows": [
+          {
+            "item": "Product launch post",
+            "channel": "LinkedIn",
+            "date": "Mon",
+            "ai": "Brief drafted"
+          },
+          {
+            "item": "Customer story",
+            "channel": "Blog",
+            "date": "Tue",
+            "ai": "First draft"
+          },
+          {
+            "item": "Event recap",
+            "channel": "Newsletter",
+            "date": "Wed",
+            "ai": "A/B subject lines"
+          },
+          {
+            "item": "Weekly roundup",
+            "channel": "Email",
+            "date": "Thu",
+            "ai": "Localized"
+          },
+          {
+            "item": "Behind the scenes",
+            "channel": "Instagram",
+            "date": "Fri",
+            "ai": "Captions"
+          }
+        ],
+        "statuses": [
+          "Idea",
+          "Brief",
+          "Draft",
+          "Review",
+          "Scheduled"
+        ],
+        "dos": [
+          "Lead with the person, then the product",
+          "One idea per post",
+          "Write the way people talk"
+        ],
+        "donts": [
+          "Internal acronyms",
+          "Claims we can't back up",
+          "Walls of hashtags"
+        ]
+      },
+      {
+        "id": "video",
+        "h": "93 Seconds of Takes, Cut to 43",
+        "p": [
+          "The Mars Men PSA was a project for a job interview. I had six takes: two hooks, three body takes and a call to action. AI transcribed every take, so I could read the shoot instead of scrubbing through it, and it helped me pick the hook. Then I cut the video by editing the transcript, and AI made the captions for sound-off viewing.",
+          "The short hook won. The \"You weren't built to be average\" take moved up to sit right behind it, and lines that repeated a point came out."
+        ],
+        "demo": "cut",
+        "note": "Recut for this page from the raw takes, with captions set behind the speaker. The transcript is from the real takes, and the playhead and highlighted line follow the video.",
+        "duration": 43.26,
+        "takes": [
+          {
+            "id": "Hook 1",
+            "len": 3.4,
+            "lines": [
+              {
+                "t": "F#%& biohacking, bro.",
+                "keep": true,
+                "at": [
+                  0,
+                  1.95
+                ]
+              }
+            ]
+          },
+          {
+            "id": "Hook 2",
+            "len": 12.3,
+            "lines": [
+              {
+                "t": "Forget all the biohacking trends. You don't need another cold plunge, red light therapy, or magic mushroom coffee.",
+                "keep": false
+              }
+            ]
+          },
+          {
+            "id": "Body 1",
+            "len": 14.2,
+            "lines": [
+              {
+                "t": "Low testosterone isn't about seed oils or your sleep tracker, and it's definitely not your underwear.",
+                "keep": true,
+                "at": [
+                  8.55,
+                  14.37
+                ]
+              },
+              {
+                "t": "Most guys are blaming everything but the problem.",
+                "keep": true,
+                "at": [
+                  14.37,
+                  17.4
+                ]
+              }
+            ]
+          },
+          {
+            "id": "Body 2",
+            "len": 16.6,
+            "lines": [
+              {
+                "t": "The truth? Most men today are running from the real work.",
+                "keep": false
+              },
+              {
+                "t": "We're out of alignment, stuck in jobs we hate, scrolling our lives away, and wondering why our energy and drive are gone.",
+                "keep": true,
+                "at": [
+                  17.4,
+                  24.71
+                ]
+              }
+            ]
+          },
+          {
+            "id": "Body 3",
+            "len": 15.9,
+            "lines": [
+              {
+                "t": "You weren't built to be average. You're not here to be tired, soft, or overlooked. You're built to stand out,",
+                "keep": true,
+                "at": [
+                  1.95,
+                  8.55
+                ]
+              },
+              {
+                "t": "to lead, to walk into any room and command respect. Nailed it.",
+                "keep": false
+              }
+            ]
+          },
+          {
+            "id": "CTA",
+            "len": 31.3,
+            "lines": [
+              {
+                "t": "Stop chasing hacks and dodging your own potential. When you fix your foundation, your hormones, your habits, your mindset, everything else falls into place.",
+                "keep": true,
+                "at": [
+                  24.71,
+                  33.71
+                ]
+              },
+              {
+                "t": "You want to feel like a man again?",
+                "keep": false
+              },
+              {
+                "t": "Start living like one. Own your routine. Own your health. Own your results.",
+                "keep": true,
+                "at": [
+                  33.71,
+                  38.11
+                ]
+              },
+              {
+                "t": "Push yourself. Get aligned with your purpose. You're not broken, okay?",
+                "keep": false
+              },
+              {
+                "t": "You're just not living up to the standard you were made for. Let's get after it.",
+                "keep": true,
+                "at": [
+                  38.11,
+                  43.26
+                ]
+              }
+            ]
+          }
+        ],
+        "final": [
+          {
+            "take": "Hook 1",
+            "from": 0,
+            "to": 1.95
+          },
+          {
+            "take": "Body 3",
+            "from": 1.95,
+            "to": 8.55
+          },
+          {
+            "take": "Body 1",
+            "from": 8.55,
+            "to": 17.4
+          },
+          {
+            "take": "Body 2",
+            "from": 17.4,
+            "to": 24.71
+          },
+          {
+            "take": "CTA",
+            "from": 24.71,
+            "to": 43.26
+          }
+        ]
+      },
+      {
+        "id": "repurpose",
+        "h": "One Episode, Five Pieces",
+        "p": [
+          "A demonstration on a public episode of Cohesity's Resilience Universe podcast: CEO Sanjay Poonen with Kevin Mandia, 26 minutes. AI reads the transcript and marks the moments that stand on their own. Each one is then cut for where it will run, in the shape and length that place expects.",
+          "I made this for this page. It isn't work I did for Cohesity."
+        ],
+        "demo": "fan",
+        "episode": {
+          "title": "Resilience Universe with Sanjay Poonen | Kevin Mandia",
+          "length": 1555,
+          "href": "https://www.youtube.com/watch?v=ouVaNJjI_fA"
+        },
+        "outputs": [
+          {
+            "at": 587,
+            "kind": "LinkedIn clip",
+            "shape": "1:1",
+            "spec": "Square, 45 seconds, captions on",
+            "where": "LinkedIn feed",
+            "topic": "Resilience or prevention: which comes first?"
+          },
+          {
+            "at": 628,
+            "kind": "Quote card",
+            "shape": "4:5",
+            "spec": "One line, the speaker's name",
+            "where": "LinkedIn, Instagram",
+            "quote": "Offense is going to force defense to be autonomous.",
+            "by": "Kevin Mandia"
+          },
+          {
+            "at": 705,
+            "kind": "Newsletter blurb",
+            "shape": "text",
+            "spec": "Three sentences and a link",
+            "where": "Weekly newsletter",
+            "topic": "Assume breach: why identity is the first thing to protect"
+          },
+          {
+            "at": 1035,
+            "kind": "Blog post",
+            "shape": "doc",
+            "spec": "An outline in three sections",
+            "where": "Company blog",
+            "topic": "Three waves of threat intelligence",
+            "outline": [
+              "Signatures: tell us what we missed",
+              "Breach response: only one victim",
+              "AI: create the new attack first"
+            ]
+          },
+          {
+            "at": 1148,
+            "kind": "Short vertical",
+            "shape": "9:16",
+            "spec": "Vertical, 20 seconds, one idea",
+            "where": "Shorts, Reels",
+            "topic": "An agent does in 5 minutes what takes a person 5 days"
+          }
+        ]
+      },
+      {
+        "id": "geo",
+        "h": "Written for Search Engines and AI Answers",
+        "p": [
+          "People type keywords into Google. They ask ChatGPT a question. GEO and AEO, generative and answer engine optimization, mean writing for both.",
+          "At QAD Redzone in 2024 I organized our FAQs and blogs so search engines and AI answers could find them. At Nike I wrote alt text and product tags for both kinds of search: for someone who knows exactly what they want, and for someone who only knows roughly."
+        ],
+        "demo": "geo",
+        "note": "An illustration. The product is a generic example.",
+        "search": "blue running shoe men",
+        "ask": "What's a good blue running shoe if I'm just starting out?",
+        "results": [
+          "Men's Running Shoe, Blue",
+          "Blue Road Runner, Men's",
+          "Lightweight Trainer, Blue"
+        ],
+        "answer": "For a first pair, look for a cushioned, lightweight road shoe. This blue trainer is built for beginners and daily miles.",
+        "fields": [
+          [
+            "Alt text",
+            "A blue lightweight running shoe, side view, cushioned white sole"
+          ],
+          [
+            "Tags",
+            "running, road, beginner, cushioned, blue"
+          ],
+          [
+            "FAQ",
+            "Is it good for beginners? Yes, it's built for daily miles."
+          ]
+        ]
+      },
+      {
+        "id": "tools",
+        "h": "Tools I Built With Claude Code",
+        "p": [
+          "In the evenings I build my own apps with Claude Code. I direct the work in plain English, test every build, and decide how each one looks and behaves. These are the ones I use every day."
+        ],
+        "demo": "tools",
+        "tools": [
+          {
+            "name": "heardhum",
+            "line": "A Mac menu bar app that records calls and saves timed transcripts with speaker labels, all on your Mac.",
+            "img": "heardhum.jpg",
+            "href": "https://github.com/chrishtean/heardhum/releases/latest",
+            "cta": "Download for Mac"
+          },
+          {
+            "name": "Budget AI",
+            "line": "A budgeting app that runs on your own computer, with a review inbox, budgets that understand bills, and a Home Screen widget.",
+            "video": "budget-ai.mp4",
+            "img": "budget-ai.jpg"
+          },
+          {
+            "name": "Job Search AI",
+            "line": "A job search system that runs in your own Claude: it finds roles that fit, tailors a resume and cover letter for each, and tracks every application.",
+            "icon": "job-search-ai.png"
+          },
+          {
+            "name": "Markup AI",
+            "line": "Comment threads on top of any app, answered by Claude. I mark up a design, and the change comes back in place.",
+            "video": "markup-ai.mp4",
+            "img": "markup-ai.jpg"
+          }
+        ]
+      },
+      {
+        "id": "site",
+        "h": "This Site, Directed With Claude Code",
+        "p": [
+          "I rebuilt this portfolio from Wix as a fast static site with Claude Code. I directed the 3D phone on the Nike page and the animation on the Cohesity page the same way: I set the story, the look and the timing, and reviewed each version until it felt right."
+        ],
+        "links": [
+          {
+            "label": "See the Nike 3D phone",
+            "href": "nike/"
+          },
+          {
+            "label": "See the Cohesity animation",
+            "href": "cohesity/"
+          }
+        ],
+        "demo": "meta",
+        "note": "A live copy of this page, running inside this page.",
+        "address": "csworkportfolio.github.io/ai/",
+        "chips": [
+          "This is the page you're reading.",
+          "Moved off Wix and rebuilt with Claude Code.",
+          "You are here."
+        ]
+      }
+    ],
+    "next": {
+      "slug": "cohesity",
+      "label": "Cohesity Case Study"
+    }
+  }
+]

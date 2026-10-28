@@ -1195,6 +1195,227 @@ def scene(b, root):
             f'<figcaption class="sr-only">{esc(b["alt"])}</figcaption></figure></div>')
 
 
+# ---------- the AI page's demos (content/ai.json, assets/js/ai-page.js) ----------
+# Each demo is drawn here in its finished state, so it reads without script and with Reduce Motion on;
+# ai-page.js then plays it while it is on screen. Its data rides along as JSON for the script.
+
+AI_PAUSE = ('<button class="ai-btn ai-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            '<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>')
+AI_SPARK = ('<svg class="ai-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7'
+            '-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z"/></svg>')
+
+
+def ai_window(title, inner, cls=""):
+    return (f'<div class="ai-window{cls}"><div class="ai-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
+            f'<span class="ai-title">{esc(title)}</span></div>{inner}</div>')
+
+
+def ai_figure(b, label, inner, pause=True):
+    data = {k: v for k, v in b.items() if k not in ("h", "p", "id", "note", "link", "demo")}
+    note = f'<figcaption class="ai-note">{esc(b["note"])}</figcaption>' if b.get("note") else ""
+    return (f'<figure class="wrap ai-demo ai-{b["demo"]}" data-demo="{b["demo"]}" aria-label="{esc(label)}">'
+            f'<script type="application/json" class="ai-data">{json_script(data)}</script>'
+            f'<div class="ai-stage">{inner}{AI_PAUSE if pause else ""}</div>{note}</figure>')
+
+
+def demo_localize(b):
+    """The Champions Hub with the localization agent: its knowledge on the left, the English post and one
+    region's version in the middle, the regions along the foot. Drawn on the Korean version after review."""
+    srcs = "".join(f'<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z M14 3v4h4"/></svg>{esc(s)}'
+                   f'<span class="loc-ok">Loaded</span></li>' for s in b["sources"])
+    ko = next(r for r in b["regions"] if r.get("review"))
+    before, old, new, after = re.match(r"(.*)\[(.*)\|(.*)\](.*)", ko["text"]).groups()
+    tabs = "".join(f'<li class="loc-tab{" is-on" if r is ko else ""}" data-code="{esc(r["code"])}">{esc(r["code"])}</li>'
+                   for r in b["regions"])
+    inner = ai_window("Champions Hub  ·  Localization agent", f'''
+<div class="loc-grid">
+  <div class="loc-side">
+    <p class="ai-label">Agent knowledge</p><ul class="loc-sources">{srcs}</ul>
+    <p class="ai-label">Learned from reviews</p>
+    <p class="loc-learned"><span class="loc-count">1</span> <span class="loc-unit">fix</span></p>
+  </div>
+  <div class="loc-main">
+    <div class="loc-post loc-src"><span class="loc-pill">EN · United States</span><p lang="en">{esc(b["post"])}</p></div>
+    <div class="loc-flow" aria-hidden="true"><span class="loc-agent">{AI_SPARK}Agent</span></div>
+    <div class="loc-post loc-out">
+      <div class="loc-head"><span class="loc-pill is-out"><span class="loc-code">{esc(ko["code"])}</span> · <span class="loc-name">{esc(ko["name"])}</span></span>
+        <span class="loc-tone">Tone: <span class="loc-tone-v">{esc(ko["tone"])}</span></span></div>
+      <p class="loc-text" lang="ko">{esc(before)}<del>{esc(old)}</del> <ins>{esc(new)}</ins>{esc(after)}</p>
+      <p class="loc-review is-on"><span class="loc-avatar" aria-hidden="true">CA</span><span>Champion advocate: <span class="loc-review-v">{esc(ko["review"])}</span>. Sent back to the agent.</span></p>
+      <div class="loc-foot"><span class="loc-status">Ready to share</span><span class="loc-share" aria-hidden="true">Share</span></div>
+    </div>
+  </div>
+</div>
+<ul class="loc-tabs" aria-label="Regions">{tabs}<li class="loc-more">+ more</li></ul>''')
+    return ai_figure(b, "Illustration: the localization agent in the Champions Hub", inner)
+
+
+def demo_board(b):
+    """The editorial calendar as a Monday.com-style board, beside the do's and don'ts it lives by."""
+    last = len(b["statuses"]) - 1
+    rows = "".join(
+        f'<tr><td class="bd-item">{esc(r["item"])}</td>'
+        f'<td><span class="bd-status s{min(i + 1, last)}">{esc(b["statuses"][min(i + 1, last)])}</span></td>'
+        f'<td class="bd-dim">{esc(r["channel"])}</td><td class="bd-dim">{esc(r["date"])}</td>'
+        f'<td><span class="bd-ai is-on">{AI_SPARK}{esc(r["ai"])}</span></td></tr>' for i, r in enumerate(b["rows"]))
+    table = (f'<div class="bd-scroll"><table class="bd-table"><caption class="bd-group">This week</caption>'
+             f'<thead><tr><th>Item</th><th>Status</th><th>Channel</th><th>Date</th><th>AI assist</th></tr></thead>'
+             f'<tbody>{rows}</tbody></table></div>')
+    li = lambda xs: "".join(f"<li>{esc(x)}</li>" for x in xs)
+    rules = (f'<div class="bd-rules"><p class="ai-label">Do</p><ul class="bd-do">{li(b["dos"])}</ul>'
+             f'<p class="ai-label">Don&#39;t</p><ul class="bd-dont">{li(b["donts"])}</ul></div>')
+    doc = ai_window("Do's and don'ts", rules, " bd-doc")
+    inner = f'<div class="bd-grid">{ai_window("Editorial calendar", table)}{doc}</div>'
+    return ai_figure(b, "Illustration: an editorial calendar board and a do's and don'ts doc", inner)
+
+
+def demo_cut(b, root):
+    """The Mars Men PSA on an editing timeline: the finished video, the transcript of every take with the cut
+    lines struck through, and the six raw takes above the 43-second cut, with a playhead that follows the video."""
+    hues = {t["id"]: i for i, t in enumerate(b["takes"])}
+    def line(l):
+        at = f' data-at="{l["at"][0]}" data-to="{l["at"][1]}"' if l.get("at") else ""
+        return f'<span class="ct-line{"" if l["keep"] else " is-cut"}"{at}>{esc(l["t"])}</span>'
+
+    lines = "".join(
+        f'<li class="ct-take h{hues[t["id"]]}"><span class="ct-chip">{esc(t["id"])}</span><p>'
+        + " ".join(line(l) for l in t["lines"])
+        + ('<span class="ct-pick">The hook</span>' if t["id"] == "Hook 1" else "") + "</p></li>"
+        for t in b["takes"])
+    raw_total = sum(t["len"] for t in b["takes"])
+    raw = "".join(f'<span class="ct-clip h{hues[t["id"]]}{" is-out" if t["id"] == "Hook 2" else ""}" style="flex-grow:{t["len"]}">{esc(t["id"])}</span>'
+                  for t in b["takes"])
+    final = "".join(f'<span class="ct-clip h{hues[s["take"]]}" style="flex-grow:{s["to"] - s["from"]:.2f}">{esc(s["take"])}</span>'
+                    for s in b["final"])
+    inner = f'''
+<div class="ct-grid">
+  <div class="ct-phone">
+    <video class="ct-video" src="{root}assets/ai/marsmen.mp4?v={asset_version("assets/ai/marsmen.mp4")}" poster="{root}assets/ai/marsmen.jpg" muted loop playsinline preload="metadata" aria-label="Mars Men PSA, the finished cut, muted with captions"></video>
+  </div>
+  {ai_window("Transcript  ·  6 takes", f'<ol class="ct-script">{lines}</ol>', " ct-doc")}
+</div>
+<div class="ct-tracks">
+  <p class="ai-label">Raw takes <span>{int(raw_total // 60)}:{int(raw_total % 60):02d}</span></p>
+  <div class="ct-track ct-raw">{raw}</div>
+  <p class="ai-label">Final cut <span>0:{int(b["duration"]):02d}</span></p>
+  <div class="ct-track ct-final">{final}<span class="ct-head" aria-hidden="true"></span></div>
+</div>'''
+    return ai_figure(b, "The Mars Men PSA: its transcript and editing timeline", inner)
+
+
+def demo_fan(b):
+    """One podcast episode as a waveform with five moments marked, and the five pieces cut from them."""
+    ep = b["episode"]
+    mm = lambda s: f"{s // 60}:{s % 60:02d}"
+    marks = "".join(f'<span class="fn-mark" style="left:{o["at"] / ep["length"] * 100:.2f}%"><span>{i + 1}</span></span>'
+                    for i, o in enumerate(b["outputs"]))
+    cards = []
+    for i, o in enumerate(b["outputs"]):
+        if o.get("quote"):
+            art = f'<blockquote class="fn-quote"><p>“{esc(o["quote"])}”</p><cite>{esc(o["by"])}</cite></blockquote>'
+        elif o.get("outline"):
+            art = f'<p class="fn-doc-t">{esc(o["topic"])}</p><ol class="fn-outline">{"".join(f"<li>{esc(x)}</li>" for x in o["outline"])}</ol>'
+        elif o["shape"] == "text":
+            art = f'<p class="fn-doc-t">{esc(o["topic"])}</p><span class="fn-lines" aria-hidden="true"><i></i><i></i><i></i></span><span class="fn-link">Listen to the episode</span>'
+        else:
+            art = (f'<span class="fn-frame" aria-hidden="true"><span class="fn-wave"><i></i><i></i><i></i><i></i><i></i></span></span>'
+                   f'<span class="fn-cap">{esc(o["topic"])}</span>')
+        cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><div class="fn-art">{art}</div>'
+                     f'<p class="fn-kind"><span class="fn-num">{i + 1}</span>{esc(o["kind"])}<span class="fn-at">{mm(o["at"])}</span></p>'
+                     f'<p class="fn-spec">{esc(o["spec"])}</p><p class="fn-where">{esc(o["where"])}</p></li>')
+    head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'
+            f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the episode</a></div>'
+            f'<div class="fn-wavebar" aria-hidden="true"><canvas class="fn-canvas"></canvas>{marks}</div>'
+            f'<p class="fn-ep-len"><span>0:00</span><span>{mm(ep["length"])}</span></p></div>')
+    return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>')
+
+
+def demo_geo(b):
+    """The same need typed as a search and asked as a question, and the product page fields both of them read."""
+    res = "".join(f'<li><span class="geo-thumb" aria-hidden="true"></span>{esc(r)}</li>' for r in b["results"])
+    fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(k)}</span><span>{esc(v)}</span></li>' for k, v in b["fields"]) + "</ul>"
+    search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
+                       f'<span class="geo-typed" data-text="{esc(b["search"])}">{esc(b["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
+    ask = ai_window("AI assistant", f'<div class="geo-in geo-ask"><span class="geo-typed" data-text="{esc(b["ask"])}">{esc(b["ask"])}</span></div>'
+                    f'<p class="geo-answer">{AI_SPARK}<span>{esc(b["answer"])}</span></p><p class="geo-cite">From the product page</p>', " geo-pane")
+    inner = (f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A question</p>{search}{ask}</div>'
+             f'<div class="geo-src">{ai_window("Product page: what both of them read", fields)}</div>')
+    return ai_figure(b, "Illustration: one product found by a keyword search and by an AI answer", inner)
+
+
+def demo_tools(b, root):
+    cards = []
+    for t in b["tools"]:
+        v = lambda f: f'{root}assets/ai/{f}?v={asset_version("assets/ai/" + f)}'
+        if t.get("video"):
+            screen = (f'<video class="tl-video" src="{v(t["video"])}" poster="{v(t["img"])}" muted loop playsinline preload="none" '
+                      f'aria-label="{esc(t["name"])}, a short tour of its screens"></video>')
+        elif t.get("img"):
+            screen = f'<img src="{v(t["img"])}" alt="{esc(t["name"])}" loading="lazy">'
+        else:
+            screen = f'<span class="tl-icon"><img src="{v(t["icon"])}" alt="" loading="lazy"></span><span class="tl-soon-n">Screen recording coming soon</span>'
+        cta = (f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a>' if t.get("href")
+               else '<span class="tl-cta is-soon">Coming soon</span>')
+        cards.append(f'<li class="tl-card"><div class="tl-screen{"" if t.get("video") or t.get("img") else " is-empty"}">{screen}</div>'
+                     f'<div class="tl-body"><h3>{esc(t["name"])}</h3><p>{esc(t["line"])}</p>{cta}</div></li>')
+    return f'<div class="wrap ai-demo ai-tools" data-demo="tools"><ul class="tl-grid">{"".join(cards)}</ul></div>'
+
+
+def demo_meta(b, root):
+    """The site inside itself: a browser window that zooms out from this page, holding a live copy of it (an
+    iframe at desktop size, scaled down) that a cursor scrolls through and back to this very section, where the
+    copy shows the window again. ai-page.js stops the copies two deep."""
+    chips = "".join(f'<span class="mt-chip">{esc(c)}</span>' for c in b["chips"])
+    inner = (f'<div class="mt-zoom"><div class="ai-window mt-win"><div class="ai-bar mt-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
+             f'<span class="mt-url">{esc(b["address"])}</span></div><div class="mt-view">'
+             f'<iframe class="mt-frame" title="This page, inside itself" tabindex="-1" loading="lazy" data-src="{root}ai/?frame=1#site"></iframe>'
+             f'<svg class="mt-cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>'
+             f'<span class="mt-here" aria-hidden="true">You are here</span></div></div></div><div class="mt-chips" aria-hidden="true">{chips}</div>')
+    return ai_figure(b, "This page, shown inside itself", inner)
+
+
+def ai_block(b, root):
+    """A section of the AI page: its words, then its demo."""
+    links = ""
+    if b.get("link"):
+        links = f'<p class="ai-links"><a href="{root}{esc(b["link"]["href"])}">{esc(b["link"]["label"])}</a></p>'
+    if b.get("links"):
+        links = '<p class="ai-links">' + "".join(f'<a href="{root}{esc(l["href"])}">{esc(l["label"])}</a>' for l in b["links"]) + "</p>"
+    words = section_open(b, " ai-sec") + links + "</section>"
+    kind = b.get("demo")
+    if not kind:
+        return words
+    fig = {"localize": demo_localize, "board": demo_board, "fan": demo_fan, "geo": demo_geo}.get(kind)
+    if kind in ("cut", "tools", "meta"):
+        return words + {"cut": demo_cut, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
+    return words + fig(b)
+
+
+def render_ai(page, site, media):
+    """The hidden AI page (content/ai.json): a case study's frame (banner, hero, lede, sections, the way on),
+    with a demo under most sections. Not in the switcher and kept out of search (robots)."""
+    root = "../"
+    hero = page["hero"]
+    parts = [f'''<script src="{root}assets/js/ai-page.js?v={asset_version("assets/js/ai-page.js")}" defer></script>
+<section class="case-hero ai-hero">
+  <div class="ai-hero-glow" aria-hidden="true"></div>
+  <div class="wrap case-hero-inner">
+    <h1>{esc(hero["title"])}</h1>
+    <p class="case-sub">{esc(hero["subtitle"])}</p>
+  </div>
+</section>
+<div class="wrap prose lede-wrap"><p class="lede">{esc(page["lede"])}</p></div>''']
+    parts += [ai_block(b, root) for b in page["blocks"]]
+    nxt = page["next"]
+    parts.append(f'''
+<nav class="wrap case-nav" aria-label="Case study navigation">
+  <a class="case-nav-link" href="{root}">Back to Case Studies</a>
+  <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>
+</nav>''')
+    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 ai-page"}   # no switcher item is lit
+    return layout(page, site, root, "\n".join(parts), media)
+
+
 def render_case(page, site, media):
     root = "../"
     hero = page["hero"]
@@ -1285,6 +1506,8 @@ def main():
     site["home"] = pages[0]  # the category pages reuse its intro
     for f in ("categories.json", "cases-1.json", "cases-2.json"):
         pages += json.loads((CONTENT / f).read_text())
+    # the AI page: built like a case study, linked from nowhere yet (it isn't in site.json's nav)
+    pages += [{**p, "type": "ai"} for p in json.loads((CONTENT / "ai.json").read_text())]
     if (CONTENT / "ghostwriting.lock.json").exists():
         pages.append({"type": "locked", "slug": "ghostwriting", "lock": "ghostwriting.lock.json",
                       "nav_active": "social-writing", "heading": "Executive Ghostwriting",
@@ -1293,7 +1516,8 @@ def main():
 
     for page in pages:
         print(f"page /{page['slug']}")
-        render = {"home": render_home, "category": render_category, "case": render_case, "locked": render_locked}[page["type"]]
+        render = {"home": render_home, "category": render_category, "case": render_case, "locked": render_locked,
+                  "ai": render_ai}[page["type"]]
         out = render(page, site, media)
         dest = ROOT / page["slug"] / "index.html" if page["slug"] else ROOT / "index.html"
         dest.parent.mkdir(exist_ok=True)
