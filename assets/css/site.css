@@ -1038,7 +1038,7 @@ a.tl-label:hover strong { color: #ff9a66; }
 }
 @media (max-width: 720px) {
   .ph-scene + .ph-notes { margin-top: 64px; }
-  .ref-band { padding: 40px 0 24px; }
+  .ref-band { padding: 40px 0; }
   .ref-words { padding-left: 0; }   /* phones drop the 9px inset, like .prose */
   .ref-split .ref-page { margin-left: 0; width: 100%; }
   .ref-page { padding: 24px 22px 28px; }
