@@ -1534,23 +1534,28 @@ a.tl-label:hover strong { color: #ff9a66; }
 /* ---------- the unlocked ghostwriting posts as a reading scene (desktop; main.js sets .is-live) ---------- */
 .ex-scene { display: none; }
 .lock-content.ex-on .strip, .gw.ex-on .strip { display: none; }
-/* the locked posts in the same layout: a glass pane of each post's shape, as tall as a post would stand, still
-   (no live blur, float or glow while the scroll carries it, as in the carousel) */
-.gw .ex-scene { text-align: left; }
-/* Social & Writing: the section's heading and words hold on the left while the locked posts pass on the right
-   (the section itself steps out of the page meanwhile, so the scroll runs straight from the carousel above
-   into the box) */
+/* the locked posts on desktop (main.js lockedReading): the section's words on the left and one locked pane on
+   the right, on the page itself (the section above steps out meanwhile, so its words aren't there twice) */
 .cat-locked.in-scene { display: none; }
-.gw .ex-scene.is-live { margin: 0; }   /* this section has no side padding to reach back over */
-.gw .ex-inner { max-width: calc(var(--wrap) + 2 * var(--gutter)); }   /* the page's own column: one left edge */
-.ex-intro-case { z-index: 0; }
+.ex-solo { display: none; }
+.ex-solo.is-live { display: grid; grid-template-columns: minmax(340px, 1fr) minmax(0, 1.3fr); column-gap: 64px; align-items: center;
+  box-sizing: border-box; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin: 0 auto; padding: 24px var(--gutter);
+  height: min(calc(100svh - var(--pills-h, 60px)), 900px); text-align: left; }
+.ex-solo .ex-text { visibility: visible; }
+.ex-solo .ex-box { height: 100%; }
+/* the carousel band is for carousels: once the posts stand in this layout (locked or open), the page shows through */
+.gw-wrap:has(> .gw.ex-on, > .lock-content.ex-on) { background: none; }
 .ex-text.ex-intro { padding: 0; max-width: 460px; }
 .ex-text.ex-intro p:not(.kicker-italic) { font-size: 16px; line-height: 1.55; color: var(--muted); }
 .ex-text.ex-intro .kicker-italic { font-size: 19px; }
+/* the locked pane: the post's shape, as tall as a post would stand, and still (no live blur, float or glow) */
 .ex-box:has(.ex-lock) { container-type: size; }
 .ex-lock { height: min(100cqh, 720px, calc(100cqw / var(--r))); width: auto; aspect-ratio: var(--r);
   -webkit-backdrop-filter: none; backdrop-filter: none; animation: none; cursor: default; }
 .ex-lock::before, .ex-lock::after { animation: none; }
+/* on the white page (no band behind it) the light pane takes a soft gray fill so its edge shows; dark mode keeps
+   its own dark glass */
+.ex-lock { background: #f2f2f4; }
 .ex-lock .gw-slide { -webkit-backdrop-filter: none; backdrop-filter: none; left: 14px; right: 14px; bottom: 16px; }
 .gw.ex-on .gw-ask.is-fixed { position: fixed; left: var(--ask-x); top: var(--ask-y); z-index: 60; }
 .ex-scene.is-live { display: block; height: calc(var(--units, 8) * 100vh + 100vh); height: calc(var(--units, 8) * 100svh + 100svh); margin: 0 calc(-1 * var(--gutter)); }

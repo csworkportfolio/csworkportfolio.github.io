@@ -1185,11 +1185,9 @@
     }, { toStart: true });
   }
 
-  // The scene itself, for the unlocked posts and for the locked ones (lockedReading): "piece" makes what sits on
-  // the right of each post; "toStart" brings a reader who is already partway down back to the first post;
-  // "intro" is a section's words to hold on the left the whole way instead of each post's own (that section
-  // steps out of the page while the scene runs); "peek" shows the next and last posts' edges.
-  function buildReading(content, strip, items, piece, { toStart = false, intro = null, peek = true } = {}) {
+  // The scene itself: "piece" makes what sits on the right of each post; "toStart" brings a reader who is
+  // already partway down back to the first post.
+  function buildReading(content, strip, items, piece, { toStart = false } = {}) {
     const n = items.length;
     const HAND = 0.3, HOLD = 0.5;   // the home page's pacing: about 0.8 of a screen of scroll per post
     const total = n * (HAND + HOLD) - HAND;
@@ -1230,13 +1228,6 @@
       inner.append(art);
       return art;
     });
-    if (intro) {
-      const side = el("div", { class: "ex-case ex-intro-case is-shown" });
-      const text = el("div", { class: "ex-text ex-intro cat-text" });
-      text.append(...[...intro.children].map((c) => c.cloneNode(true)));
-      side.append(text);
-      inner.append(side);
-    }
     inner.append(rail);
     stage.append(inner);
     scene.append(stage);
@@ -1249,7 +1240,6 @@
       const on = !reduceMotion && innerWidth > 900 && viewH() - pin >= 620;
       scene.classList.toggle("is-live", on);
       content.classList.toggle("ex-on", on);
-      intro?.classList.toggle("in-scene", on);
     };
     const move = () => {
       if (!scene.classList.contains("is-live")) return;
@@ -1267,8 +1257,8 @@
         // the peeks ease in and out with the scroll itself (no timed transitions to fall behind it): a post rises
         // into the bottom peek while the one before it arrives, and keeps its top-edge peek until the one after
         // next takes over
-        const pk = peek ? 48 * clamp((u - (st - STEP - HAND)) / HAND) : 0;
-        const pt = peek ? 30 * (1 - clamp((u - (st + 2 * STEP - HAND)) / HAND)) : 0;
+        const pk = 48 * clamp((u - (st - STEP - HAND)) / HAND);
+        const pt = 30 * (1 - clamp((u - (st + 2 * STEP - HAND)) / HAND));
         const box = c._box || (c._box = c.querySelector(".ex-box"));
         const text = c._text || (c._text = c.querySelector(".ex-text"));
         const y = (1 - e) * (c._drop - pk) - l * (c._rise - pt);
@@ -1313,26 +1303,39 @@
     return scene;
   }
 
-  // The locked posts laid out the way they open (desktop): each one a glass pane of the post's own shape, with
-  // Slide to Unlock, on the right, and its caption on the left. Phones and short windows keep the carousel.
+  // The locked posts on desktop, laid out like the first post they open on: one glass pane of that post's shape,
+  // with Slide to Unlock, on the right, and on the left the section's own words (Social & Writing; that section
+  // steps out of the page meanwhile) or the post's caption (the Ghostwriting page). Nothing scrolls through:
+  // whichever post is slid, the posts open on the first. Phones and short windows keep the carousel.
   function lockedReading(lock) {
     const strip = lock.querySelector(".strip");
-    const tiles = [...lock.querySelectorAll(".tile-wrap-locked")];
-    if (!strip || !tiles.length) return null;
-    const shapes = (lock.dataset.shapes || "").split(",").map(Number);
-    // on Social & Writing the section's own words hold on the left while the posts pass; where there are none
-    // (the Ghostwriting page), each post keeps its caption
+    const tile = lock.querySelector(".tile-wrap-locked");
+    if (!strip || !tile) return null;
     const prev = lock.closest(".gw-wrap")?.previousElementSibling;
     const intro = prev?.classList.contains("cat-locked") ? prev : null;
-    const items = tiles.map((li) => intro ? {} : ({
-      title: li.querySelector(".tile-cap strong")?.textContent || "",
-      desc: li.querySelector(".tile-cap span")?.textContent || "",
-    }));
-    return buildReading(lock, strip, items, (it, k) => {
-      const pane = el("div", { class: "gw-bubble ex-lock", style: `--r:${shapes[k] || 0.5}` });
-      pane.innerHTML = tiles[k].querySelector(".tile-locked").innerHTML;
-      return pane;
-    }, { intro, peek: false });
+    const solo = el("section", { class: "ex-solo", "aria-label": "Executive ghostwriting, locked" });
+    const text = el("div", { class: "ex-text ex-intro cat-text" });
+    if (intro) text.append(...[...intro.children].map((c) => c.cloneNode(true)));
+    else {
+      text.append(el("h3", {}, tile.querySelector(".tile-cap strong")?.textContent || ""));
+      text.append(el("p", {}, tile.querySelector(".tile-cap span")?.textContent || ""));
+    }
+    const fig = el("figure", { class: "ex-box" });
+    const pane = el("div", { class: "gw-bubble ex-lock", style: `--r:${(lock.dataset.shapes || "0.5").split(",")[0]}` });
+    pane.innerHTML = tile.querySelector(".tile-locked").innerHTML;
+    fig.append(pane);
+    solo.append(text, fig);
+    strip.after(solo);
+    const live = () => {
+      const p = document.querySelector(".pills"), pin = p ? p.offsetHeight : 0;
+      const on = innerWidth > 900 && viewH() - pin >= 620;
+      solo.classList.toggle("is-live", on);
+      lock.classList.toggle("ex-on", on);
+      intro?.classList.toggle("in-scene", on);
+    };
+    live();
+    onWidthResize(live);
+    return solo;
   }
 
   // The locked file was made with the site's older strip markup; once open, the posts are brought in line with
