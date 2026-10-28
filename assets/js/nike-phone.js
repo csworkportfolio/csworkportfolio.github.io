@@ -283,7 +283,7 @@ function start(THREE) {
   };
 
   // the opening pose (Brief): turned to the left, tipped back a little, its top rolled up to the right
-  const START = { ry: -0.5, rx: 0.12, rz: 0.21 };
+  const START = { ry: -0.55, rx: 0.1, rz: 0.13 };
   // the pose of each step: turn (y), tilt (x), drop (into the gray lane), gray, and what's on the screen
   function pose(p) {
     const at = Math.min(N - 1, Math.floor(p * N)), k = p * N - at;
@@ -310,6 +310,7 @@ function start(THREE) {
       const clear = clamp(k / 0.2);
       o.ry = -0.22 + 0.12 * ease(k); o.rx = 0.04; o.notes = [1 - clear, 1 - clear, 1 - clear, clamp((k - 0.55) / 0.2)];
       o.roll = ease(clamp((k - 0.15) / 0.4));
+      o.y = 0.075 * ease(clamp((k - 0.4) / 0.3));   // lifts as the reach count comes in, with the switcher
     }
     return o;
   }

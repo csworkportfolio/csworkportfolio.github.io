@@ -759,6 +759,9 @@ main { view-transition-name: page; }
 /* the count (shown only at Verify) hangs under the switcher without taking room, so the phone column centres on the
    phone and its switcher, level with the words beside it */
 .scene.is-live[data-phone3d] .sc-count { position: absolute; top: 100%; left: 28%; right: 0; margin-top: 6px; }
+/* at Verify the phone and its switcher lift together so the count has room under them */
+.scene.is-live[data-phone3d] .sc-switch { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.scene.is-live[data-phone3d][data-stage="6"] .sc-switch { transform: translateY(-30px); }
 .scene.has-3d.n3-zooming .sc-switch { z-index: 0; }   /* the close-up covers the placement switcher; the tab bar and controls stay on top */   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
 .scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
