@@ -483,8 +483,9 @@ function start(THREE) {
   const midOf = (a, b) => SH / 2 - (a + b) / 2 * SH;   // the screen height at the middle of a stretch of the placement
   // the close-up: one full turn that ends facing straight on, then the camera moves in close to the top of the screen
   // and slowly travels down it so the words can be read, then pulls back
-  const Z_SPIN = 1600, Z_IN = 1200, Z_PAN = 16000, Z_OUT = 1200, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
-  const PAN_TOP = SH / 2 - 0.3, PAN_BOTTOM = -SH / 2 + 0.3;
+  const Z_SPIN = 1600, Z_IN = 1200, Z_PAN = 24000, Z_OUT = 1200, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
+  // it starts with the phone's top edge at the middle of the window and ends with its bottom edge there
+  const PAN_TOP = H / 2, PAN_BOTTOM = -H / 2;
   const lookAt = new THREE.Vector3(), aim = new THREE.Vector3();
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
