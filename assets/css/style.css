@@ -2778,8 +2778,6 @@ html.ai-locked { overflow: hidden; }
 @media (prefers-color-scheme: dark) { .hb-views { --seg: #636366; } }
 .ai-localize.is-full .hb-views { --ink: #f5f5f7; --seg: #636366; margin-bottom: 12px; }
 .ai-localize.is-device .hb-view { background: var(--hb-thumb); }
-.ai-localize.is-device .hb { border-radius: 46px; box-shadow: 0 0 0 9px var(--hb-bezel, #1d1d1f), 0 24px 60px rgba(0, 0, 0, .35); }
-@media (prefers-color-scheme: dark) { .ai-localize.is-device .hb { --hb-bezel: #48484a; } }
 
 /* the chapters under the Hub: each fills as it plays; tap one to jump there */
 .hb-chapters { display: flex; gap: 6px; margin-top: 16px; }
