@@ -1161,11 +1161,14 @@ def scene(b, root):
             f'<canvas aria-hidden="true"></canvas>'
             f'<div class="pj-caption" aria-hidden="true"><span class="pj-line"></span>'
             f'<span class="pj-kicker">{esc(b["kicker"])}</span></div>'
+            f'<div class="pj-dock"><div class="pj-drawer">'
+            f'<button class="pj-tab" type="button" aria-label="Show controls" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<path d="M14.5 5.5L8.5 12l6 6.5"/></svg></button>'
             f'<div class="pj-controls">'
             f'<button class="pj-btn pj-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
             f'<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>'
             f'<button class="pj-btn pj-restart" type="button" aria-label="Start over"><svg viewBox="0 0 24 24" aria-hidden="true">'
-            f'<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4"/></svg></button>{credit_btn}</div>{credit}</div>'
+            f'<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4"/></svg></button>{credit_btn}</div></div></div>{credit}</div>'
             f'<figcaption class="sr-only">{esc(b["alt"])}</figcaption></figure></div>')
 
 

@@ -487,19 +487,19 @@
   restart.addEventListener("click", () => { clock = 0; userPaused = false; render(clock); update(); });
   document.addEventListener("visibilitychange", update);
 
-  // Phones: the controls show on a tap of the picture and fade three seconds later while it plays (they stay
-  // while paused, or while one of them has keyboard focus). A tap on the dim around them hides them again.
-  const controls = stage.querySelector(".pj-controls"), phone = matchMedia("(max-width: 720px)");
-  let hideTimer = 0;
+  // Phones: the controls wait behind a tab on the picture's right edge. The tab slides them out and tucks them
+  // away again; a tap on the picture tucks them away too. While tucked away they're out of the tab order.
+  const controls = stage.querySelector(".pj-controls"), tab = stage.querySelector(".pj-tab"), phone = matchMedia("(max-width: 720px)");
   function showControls(on) {
-    clearTimeout(hideTimer);
     stage.classList.toggle("show-controls", on);
-    if (on && !userPaused && !controls.contains(document.activeElement)) hideTimer = setTimeout(() => showControls(false), 3000);
+    tab.setAttribute("aria-expanded", String(on));
+    tab.setAttribute("aria-label", on ? "Hide controls" : "Show controls");
+    controls.inert = phone.matches && !on;
   }
-  canvas.addEventListener("click", () => { if (phone.matches) showControls(true); });
-  controls.addEventListener("click", (e) => { if (!phone.matches) return; showControls(e.target === controls ? false : true); });
-  controls.addEventListener("focusin", () => { if (phone.matches) showControls(true); });
-  controls.addEventListener("focusout", () => { if (phone.matches) showControls(true); });
+  tab.addEventListener("click", () => showControls(!stage.classList.contains("show-controls")));
+  canvas.addEventListener("click", () => { if (phone.matches) showControls(false); });
+  phone.addEventListener?.("change", () => showControls(false));
+  showControls(false);
 
   // "How I Made This": opens from its button, near the end of the loop (from the closing line through the fade)
   // and when the reader scrolls to the bottom of the scene. Opening or closing it by hand holds until the
