@@ -1287,7 +1287,7 @@ def main():
         pages += json.loads((CONTENT / f).read_text())
     if (CONTENT / "ghostwriting.lock.json").exists():
         pages.append({"type": "locked", "slug": "ghostwriting", "lock": "ghostwriting.lock.json",
-                      "nav_active": "organic-social", "heading": "Executive Ghostwriting",
+                      "nav_active": "social-writing", "heading": "Executive Ghostwriting",
                       "title": "Christian's Executive Ghostwriting",
                       "description": "Executive ghostwriting samples (password protected)."})
 
