@@ -1,9 +1,10 @@
 """Recuts the Mars Men PSA for the AI page (assets/ai/marsmen.mp4) from the raw takes, which have no subtitles:
 the same lines in the same order as the finished video, jump cut at the pauses into short shots that each zoom
 or shift a little (the TikTok-style punch-ins of the original edit, and more of them), with captions styled after
-Wes Anderson's type: Futura for the titles and subtitles, a slab serif for title cards, centered, in mustard, white
-and dusty pink. Some sit behind the speaker (the "content aware" style), cut out of every frame with Apple's
-Vision person segmentation (tools/person_mask.swift).
+Wes Anderson's type, Futura, centered: mustard or white words set behind the speaker (the "content aware" style,
+cut out of every frame with Apple's Vision person segmentation, tools/person_mask.swift) and a small yellow film
+subtitle. Most captions pop in a word or two at a time; the big lines (the white stacks) build one word at a time
+as he says it and hold the whole phrase until the next one.
 
 The takes are iPhone HDR (HLG, BT.2020). They go through Apple's own tone mapping first (tools/hdr_to_sdr.swift),
 or they come out washed out. The word timings (tools/marsmen-words.json) came from Whisper, run on this Mac.
@@ -41,8 +42,10 @@ PIECES = [("Hook 1", 0, 2), ("Body 3", 0, 19), ("Body 1", 0, 15), ("Body 1", 16,
 SHOT = 1.5
 FRAMES = [(1.0, .5, .12), (1.3, .5, .1), (1.12, .4, .12), (1.45, .5, .08), (1.06, .6, .12), (1.36, .44, .1), (1.18, .56, .12)]
 # each line's caption style: "top" mustard Futura behind his head, "stack" white Futura words stacked behind his
-# head, "sub" a small yellow film subtitle, "card" a dusty pink slab serif title card between two rules
-STYLES = ["top", "sub", "card", "stack", "sub", "top", "card", "sub", "stack", "top"]
+# head, "sub" a small yellow film subtitle; and the most words a phrase of that style holds
+STYLES = ["top", "sub", "stack", "sub", "top", "stack", "sub", "top", "stack", "top"]
+PHRASE = {"top": 2, "stack": 4, "sub": 3}
+BUILD = {"stack"}   # the styles whose phrases build a word at a time; the rest pop in a word or two at once
 BEHIND = {"top", "stack"}
 
 
@@ -50,18 +53,30 @@ def run(*a):
     subprocess.run([str(x) for x in a], check=True)
 
 
-def caption_groups(words):
-    """One or two words at a time (short words pair up), breaking after punctuation, each up until the next
-    group starts."""
-    groups, cur = [], []
+def pops(words):
+    """One or two words at a time (short words pair up), breaking after punctuation."""
+    out, cur = [], []
     for w in words:
         cur.append(w)
         if len(cur) == 2 or w[2][-1] in ",.?!" or len(w[2]) > 4:
-            groups.append(cur)
+            out.append(cur)
             cur = []
     if cur:
-        groups.append(cur)
-    return groups
+        out.append(cur)
+    return out
+
+
+def phrases(words, most):
+    """A line's words in phrases of up to `most` words, breaking after punctuation."""
+    out, cur = [], []
+    for w in words:
+        cur.append(w)
+        if len(cur) == most or w[2][-1] in ",.?!":
+            out.append(cur)
+            cur = []
+    if cur:
+        out.append(cur)
+    return out
 
 
 def font(path, index, size):
@@ -98,38 +113,46 @@ def soft_shadow(layer, blur=6, alpha=0.5):
     return out
 
 
-def text_layer(text, pop, style):
-    """One caption, centered, in its line's style, landing with a small pop."""
-    text = text.upper().rstrip(",.?!")
+def text_layer(full, shown, pop, style):
+    """One phrase, centered, with its first `shown` words on screen. Every word is set where it sits in the whole
+    phrase, so nothing shifts as words arrive; the newest lands with a small pop."""
+    full = [w.upper().rstrip(",.?!") for w in full]
     layer = Image.new("RGBA", (W, H))
     d = ImageDraw.Draw(layer)
-    if style == "top":
-        # mustard Futura Bold, a little open, as large as fits; main() puts him back in front of it
-        size = int(fit(text, W * 0.9, 200, track=0.04) * pop)
-        spaced(d, W / 2, H * 0.05, text, font(FUTURA, 2, size), size * 0.04, YELLOW + (255,))
-        return layer
+    def word(x, y, w, f, size, gap, fill, newest):
+        if newest and pop != 1:
+            f = font(FUTURA, 2, int(size * pop))
+            x -= (spaced_width(w, f, gap) - spaced_width(w, font(FUTURA, 2, size), gap)) / 2
+        for c in w:
+            d.text((x, y), c, font=f, fill=fill, anchor="lt")
+            x += f.getlength(c) + gap
     if style == "stack":
-        # white Futura Bold, one word a line, each as wide as it can be, also behind him
+        # white Futura Bold, one word a line, each as wide as it can be, behind him
+        sizes = [min(fit(w, W * 0.88, 210, track=0.03), 170) for w in full]
+        total = sum(sizes) * 0.9
+        k = min(1.0, H * 0.46 / total)   # four big words still clear his chin
         y = H * 0.035
-        for w in text.split():
-            size = int(min(fit(w, W * 0.88, 210, track=0.03), 180) * pop)
-            spaced(d, W / 2, y, w, font(FUTURA, 2, size), size * 0.03, WHITE + (255,))
+        for i, w in enumerate(full):
+            size = int(sizes[i] * k)
+            f, gap = font(FUTURA, 2, size), size * 0.03
+            if i < shown:
+                word(W / 2 - spaced_width(w, f, gap) / 2, y, w, f, size, gap, WHITE + (255,), i == shown - 1)
             y += size * 0.9
         return layer
-    if style == "sub":
-        # a film subtitle: small yellow Futura Bold, low and centered, the way his narrators are subtitled
-        size = int(min(fit(text, W * 0.86, 52, track=0.06), 52) * pop)
-        spaced(d, W / 2, H * 0.83, text, font(FUTURA, 2, size), size * 0.06, YELLOW + (255,))
-        return soft_shadow(layer, 4, 0.6)
-    # "card": a title card in dusty pink slab serif, widely spaced, between two thin rules, set on his dark jacket
-    size = int(min(fit(text, W * 0.66, 54, path=SLAB, index=2, track=0.14), 54) * pop)
-    f = font(SLAB, 2, size)
-    y = H * 0.5
-    spaced(d, W / 2, y, text, f, size * 0.14, PINK + (255,))
-    half = min(W * 0.42, spaced_width(text, f, size * 0.14) / 2 + size * 0.6)
-    for ry in (y - size * 0.45, y + size * 1.25):
-        d.line([(W / 2 - half, ry), (W / 2 + half, ry)], fill=PINK + (255,), width=max(2, size // 20))
-    return soft_shadow(layer, 5, 0.7)
+    line = " ".join(full)
+    if style == "top":
+        # mustard Futura Bold, a little open, as large as the whole phrase fits on one line, behind him
+        size, y, fill, track = fit(line, W * 0.9, 200, track=0.04), H * 0.05, YELLOW, 0.04
+    else:
+        # a film subtitle: small yellow Futura Bold, low and centered
+        size, y, fill, track = min(fit(line, W * 0.86, 52, track=0.06), 52), H * 0.83, YELLOW, 0.06
+    f, gap = font(FUTURA, 2, size), size * track
+    x = W / 2 - spaced_width(line, f, gap) / 2
+    for i, w in enumerate(full):
+        if i < shown:
+            word(x, y, w, f, size, gap, fill + (255,), i == shown - 1)
+        x += spaced_width(w + " ", f, gap) + gap
+    return layer if style == "top" else soft_shadow(layer, 4, 0.6)
 
 
 def main(mask_tool, sdr_tool):
@@ -139,7 +162,7 @@ def main(mask_tool, sdr_tool):
     for take, name in FILES.items():   # tone-map each HDR take to standard video once
         sdr[take] = tmp / f"{take}.mov"
         run(sdr_tool, CLIPS / name, sdr[take])
-    cut, caps, t0, n = [], [], 0.0, 0
+    cut, timed, t0, n = [], [], 0.0, 0
     for i, (take, a, b) in enumerate(PIECES):
         ws = words[take]
         # split the line at its pauses into short shots: a shot ends after about SHOT seconds, or at a pause,
@@ -162,13 +185,25 @@ def main(mask_tool, sdr_tool):
             fade = f"afade=t=in:d=0.012,afade=t=out:st={max(0.0, end - start - 0.012):.3f}:d=0.012"
             run("ffmpeg", "-v", "error", "-y", "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", sdr[take], "-vn", "-af", fade,
                 "-ar", 48000, "-ac", 2, "-c:a", "pcm_s16le", tmp / f"a{n:03d}.wav")
-            for g in caption_groups(ws[first:last + 1]):
-                caps.append([t0 + max(0.0, g[0][0] - start), " ".join(w[2] for w in g).replace("Fuck", "F#%&"), STYLES[i]])
+            # each word's time on the cut, for the captions
+            for w in ws[first:last + 1]:
+                timed.append((i, t0 + max(0.0, w[0] - start), w[2].replace("Fuck", "F#%&")))
             t0 += end - start
             n += 1
         cut.append({"take": take, "from": round(piece_from, 2), "to": round(t0, 2)})
-    for i in range(len(caps)):
-        caps[i].append(caps[i + 1][0] if i + 1 < len(caps) else t0)   # [start, text, style, end]
+    # the captions: each line's words in phrases; a phrase builds a word at a time and holds until the next
+    caps = []
+    for i in range(len(PIECES)):
+        mine = [(t, w, w) for k, t, w in timed if k == i]
+        style = STYLES[i]
+        build = style in BUILD
+        groups = phrases([(t, t, w) for t, w, _ in mine], PHRASE[style]) if build else pops([(t, t, w) for t, w, _ in mine])
+        for ph in groups:
+            # a popping caption shows all its words at once: every word takes the phrase's first time
+            times = [x[0] for x in ph] if build else [ph[0][0]] * len(ph)
+            caps.append({"start": ph[0][0], "times": times, "words": [x[2] for x in ph], "style": style})
+    for k, c in enumerate(caps):
+        c["end"] = caps[k + 1]["start"] if k + 1 < len(caps) else t0
     (tmp / "list.txt").write_text("".join(f"file 'p{i:03d}.mp4'\n" for i in range(n)))
     (tmp / "alist.txt").write_text("".join(f"file 'a{i:03d}.wav'\n" for i in range(n)))
     run("ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", 0, "-i", tmp / "alist.txt", "-c", "copy", tmp / "voice.wav")
@@ -185,12 +220,13 @@ def main(mask_tool, sdr_tool):
     for n, f in enumerate(frames):
         t = n / FPS
         frame = Image.open(f).convert("RGBA")
-        cap = next((c for c in caps if c[0] <= t < c[3]), None)
+        cap = next((c for c in caps if c["start"] <= t < c["end"]), None)
         if cap:
-            age = t - cap[0]
-            pop = 1.12 - 0.12 * min(1, age / 0.12)   # each caption lands with a small pop
-            layer = text_layer(cap[1], pop, cap[2])
-            if cap[2] in BEHIND:
+            shown = sum(1 for x in cap["times"] if x <= t)
+            age = t - cap["times"][shown - 1]
+            pop = 1.12 - 0.12 * min(1, age / 0.12)   # each word lands with a small pop
+            layer = text_layer(cap["words"], shown, pop, cap["style"])
+            if cap["style"] in BEHIND:
                 mask = Image.open(tmp / "masks" / f.name).convert("L").filter(ImageFilter.GaussianBlur(1.2))
                 frame = Image.composite(frame, Image.alpha_composite(frame, layer), mask)
             else:
