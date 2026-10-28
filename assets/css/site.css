@@ -762,7 +762,8 @@ main { view-transition-name: page; }
 /* during the spin and zoom the canvas covers the window, in front of the words and behind the switchers (the tab bar
    sits outside the stage; the switcher and the side controls sit above it in the stage) */
 .scene.is-live.has-3d .ph3d.ph3d-full { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; }
-.scene.has-3d .sc-visual { perspective: none; }   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
+.scene.has-3d .sc-visual { perspective: none; }
+.scene.has-3d.n3-zooming .sc-switch { z-index: 0; }   /* the close-up covers the placement switcher; the tab bar and controls stay on top */   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
 .scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
 /* its side controls (nike-phone.js), as on the Cohesity animation: a tab on the column's right edge slides out a pill

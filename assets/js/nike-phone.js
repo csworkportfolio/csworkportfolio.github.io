@@ -543,6 +543,7 @@ function start(THREE) {
     const showing = zk > 0 || zf > 0 || spinK > 0.01;
     setFull(showing);
     centreK = zk;
+    scene.classList.toggle("n3-zooming", zk > 0.02);   // the close-up passes over the placement switcher too
     if (full) fullFrame();
     const sk = Math.max(zk, spinK);
     cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
