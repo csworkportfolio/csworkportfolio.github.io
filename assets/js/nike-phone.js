@@ -391,8 +391,8 @@ function start(THREE) {
   pill.addEventListener("focusout", () => setTimeout(() => tuckLater()));
   document.addEventListener("pointerdown", (e) => { if (dock.classList.contains("is-out") && !dock.contains(e.target)) showControls(false); });
   showControls(false);
-  // out while the reader scrolls toward the scene, tucked a second after it locks in (main.js, shared by every 3D scene)
-  window.sceneControlsPeek?.(scene, scene.querySelector(".sc-stage"), (on) => showControls(on, true), () => tuckLater(1000));
+  // out while the reader scrolls toward the scene, tucked a few seconds after it locks in (main.js, shared by every 3D scene)
+  window.sceneControlsPeek?.(scene, scene.querySelector(".sc-stage"), (on) => showControls(on, true), () => tuckLater(4500));
   // the note: opens and closes from its button, which stays lit while it's open
   const setNote = (on) => { scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on)); };
   infoBtn.addEventListener("click", () => setNote(!scene.classList.contains("n3-noting")));
@@ -410,7 +410,19 @@ function start(THREE) {
   const spinBtn = dock.querySelector('[data-act="spin"]');
   const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) zoomAt = -1; kick(); };
   spinBtn.addEventListener("click", () => setSpin(!spinning));
-  dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { setSpin(false); zoomAt = performance.now(); kick(); });
+  dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { setSpin(false); zoomAt = performance.now(); showScroll = scrollY; kick(); });
+  // a little scrolling, or a click or tap anywhere outside the controls, ends a show: the spin eases back, and the
+  // close-up skips ahead to its pull-back
+  let showScroll = 0;
+  spinBtn.addEventListener("click", () => { showScroll = scrollY; });
+  function endShow() {
+    if (spinning) setSpin(false);
+    const now = performance.now();
+    if (zoomAt >= 0 && now - zoomAt < ZOOM_MS - Z_OUT) { zoomAt = now - (ZOOM_MS - Z_OUT); kick(); }
+  }
+  const showing = () => spinning || zoomAt >= 0;
+  addEventListener("scroll", () => { if (showing() && Math.abs(scrollY - showScroll) > 40) endShow(); }, { passive: true });
+  document.addEventListener("pointerdown", (e) => { if (showing() && !dock.contains(e.target) && !note.contains(e.target)) endShow(); });
   const midOf = (a, b) => SH / 2 - (a + b) / 2 * SH;   // the screen height at the middle of a stretch of the placement
   // the close-up: one full turn that ends facing straight on, then the camera moves in close to the top of the screen
   // and slowly travels down it so the words can be read, then pulls back

@@ -514,8 +514,8 @@
   document.addEventListener("pointerdown", (e) => { if (stage.classList.contains("show-controls") && !dock.contains(e.target)) showControls(false); });
   stage.addEventListener("keydown", (e) => { if (e.key === "Escape" && stage.classList.contains("show-controls")) showControls(false); });
   showControls(false);
-  // out while the reader scrolls toward the scene, tucked a second after it locks in (main.js, shared by every 3D scene)
-  window.sceneControlsPeek?.(stage.closest(".pj-pin") || stage.closest(".pj"), stage.closest(".pj"), (on) => showControls(on, true), () => tuckLater(1000));
+  // out while the reader scrolls toward the scene, tucked a few seconds after it locks in (main.js, shared by every 3D scene)
+  window.sceneControlsPeek?.(stage.closest(".pj-pin") || stage.closest(".pj"), stage.closest(".pj"), (on) => showControls(on, true), () => tuckLater(4500));
 
   // "How I Made This": opens from its button, near the end of the loop (from the closing line through the fade)
   // and when the reader scrolls to the bottom of the scene. Once open it stays open, through the loop starting

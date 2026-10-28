@@ -60,9 +60,9 @@
 
   // The 3D scenes' side controls (Cohesity, Nike, and any scene after them) follow one rule: their pill is out while
   // the scene is on screen but not yet held in place, so a reader scrolling toward it sees what it offers, and
-  // tucks away a second after the scene locks in, coming down from above or up from below. "Held" means the sticky
+  // tucks away a few seconds (4.5) after the scene locks in, coming down from above or up from below. "Held" means the sticky
   // stage is pinned inside its taller container; a scene with no room to pin (phones) counts as held once it is
-  // fully in view. show(true | false) puts the pill out or away; lockIn() tucks it after the second.
+  // fully in view. show(true | false) puts the pill out or away; lockIn() tucks it after the pause.
   window.sceneControlsPeek = (container, sticky, show, lockIn) => {
     let state = "";
     const check = () => {
