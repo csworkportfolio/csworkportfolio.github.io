@@ -1,15 +1,13 @@
 """Recuts the Mars Men PSA for the AI page (assets/ai/marsmen.mp4) from the raw takes, which have no subtitles:
-the same lines in the same order as the finished video, a punch-in zoom on every other cut (the TikTok-style
-zooms of the original edit), and captions whose style changes from shot to shot to keep the eye moving: big
-yellow words set behind the speaker (the "content aware" style), a lower third with the key word in yellow,
-big white words stacked behind his head, and black-on-yellow word boxes.
+the same lines in the same order as the finished video, jump cut at the pauses into short shots that each zoom
+or shift a little (the TikTok-style punch-ins of the original edit, and more of them), with captions styled after
+Wes Anderson's type: Futura for the titles and subtitles, a slab serif for title cards, centered, in mustard, white
+and dusty pink. Some sit behind the speaker (the "content aware" style), cut out of every frame with Apple's
+Vision person segmentation (tools/person_mask.swift).
 
 The takes are iPhone HDR (HLG, BT.2020). They go through Apple's own tone mapping first (tools/hdr_to_sdr.swift),
-or they come out washed out.
-
-The word timings (tools/marsmen-words.json) came from Whisper, run on this Mac. The speaker is cut out of every
-frame with Apple's Vision person segmentation (tools/person_mask.swift), so each caption sits between the
-background and him. Prints the new timings for content/ai.json.
+or they come out washed out. The word timings (tools/marsmen-words.json) came from Whisper, run on this Mac.
+Prints the new timings for content/ai.json.
 
 Run with Python that has Pillow and numpy (the ppt-master venv):
     swiftc -O tools/person_mask.swift -o /tmp/person_mask
@@ -29,17 +27,22 @@ ROOT = Path(__file__).resolve().parent.parent
 CLIPS = Path.home() / "Library/Mobile Documents/com~apple~CloudDocs/Downloads/Archive/Misc/Mars Men Video/Hook Body CTA Clips"
 FILES = {"Hook 1": "Hook 1.MOV", "Body 1": "Body 1.mov", "Body 2": "Body 2.mov", "Body 3": "Body 3.mov", "CTA": "CTA.mov"}
 W, H, FPS = 540, 960, 30
-FONT = "/System/Library/Fonts/Supplemental/Futura.ttc"   # index 4: Futura Condensed ExtraBold
-YELLOW = (255, 206, 58)
+FUTURA = "/System/Library/Fonts/Supplemental/Futura.ttc"     # 0 Medium, 1 Medium Italic, 2 Bold, 4 Condensed ExtraBold
+SLAB = "/System/Library/Fonts/Supplemental/Rockwell.ttc"      # 2 Bold: a slab serif, near the Archer of his credits
+YELLOW = (242, 193, 46)    # mustard
+PINK = (244, 168, 190)     # dusty pink
+WHITE = (255, 255, 255)
 
 # the finished cut, as (take, first word, last word) of the raw takes
 PIECES = [("Hook 1", 0, 2), ("Body 3", 0, 19), ("Body 1", 0, 15), ("Body 1", 16, 23), ("Body 2", 11, 32),
           ("CTA", 0, 7), ("CTA", 8, 23), ("CTA", 32, 35), ("CTA", 36, 44), ("CTA", 56, 71)]
-ZOOMS = [1.0, 1.22, 1.0, 1.18, 1.0, 1.2, 1.0, 1.24, 1.0, 1.16]   # punch in on every other cut
-FOCUS_Y = 0.12   # zoom in from near the top, so his head stays under the captions
-# each shot's caption style: "top" one big yellow line behind his head, "stack" big white words stacked behind
-# his head, "low" a lower third in front, "box" black words on yellow boxes in the middle
-STYLES = ["top", "low", "box", "stack", "low", "top", "box", "low", "stack", "top"]
+# the jump cuts: each line splits at its pauses into shots of about this long, and each shot takes the next
+# zoom and framing in turn (scale, then where the crop sits across and down the frame)
+SHOT = 1.5
+FRAMES = [(1.0, .5, .12), (1.3, .5, .1), (1.12, .4, .12), (1.45, .5, .08), (1.06, .6, .12), (1.36, .44, .1), (1.18, .56, .12)]
+# each line's caption style: "top" mustard Futura behind his head, "stack" white Futura words stacked behind his
+# head, "sub" a small yellow film subtitle, "card" a dusty pink slab serif title card between two rules
+STYLES = ["top", "sub", "card", "stack", "sub", "top", "card", "sub", "stack", "top"]
 BEHIND = {"top", "stack"}
 
 
@@ -61,57 +64,72 @@ def caption_groups(words):
     return groups
 
 
-def fit(text, width, start, low=40, index=4):
+def font(path, index, size):
+    return ImageFont.truetype(path, size, index=index)
+
+
+def fit(text, width, start, path=FUTURA, index=2, track=0.0, low=24):
     size = start
-    while size > low and ImageFont.truetype(FONT, size, index=index).getlength(text) > width:
+    while size > low and spaced_width(text, font(path, index, size), size * track) > width:
         size -= 4
     return size
 
 
+def spaced_width(text, f, gap):
+    return sum(f.getlength(c) for c in text) + gap * (len(text) - 1)
+
+
+def spaced(d, cx, y, text, f, gap, fill):
+    """Letter-spaced text centered on cx: Anderson's titles are set a little open."""
+    x = cx - spaced_width(text, f, gap) / 2
+    for c in text:
+        d.text((x, y), c, font=f, fill=fill, anchor="lt")
+        x += f.getlength(c) + gap
+
+
+def soft_shadow(layer, blur=6, alpha=0.5):
+    """A soft shadow under what is drawn on the layer (no hard outline), so light type reads on the snow."""
+    a = layer.getchannel("A").filter(ImageFilter.GaussianBlur(blur)).point(lambda v: int(v * alpha))
+    shade = Image.new("RGBA", layer.size, (20, 16, 12, 0))
+    shade.putalpha(a)
+    out = Image.new("RGBA", layer.size)
+    out.alpha_composite(shade, (2, 3))
+    out.alpha_composite(layer)
+    return out
+
+
 def text_layer(text, pop, style):
-    """One caption in the shot's style, upper case in Futura Condensed ExtraBold, landing with a small pop."""
+    """One caption, centered, in its line's style, landing with a small pop."""
     text = text.upper().rstrip(",.?!")
     layer = Image.new("RGBA", (W, H))
     d = ImageDraw.Draw(layer)
     if style == "top":
-        # as large as fits on one line, yellow, set behind him (main() puts him back in front)
-        size = int(fit(text, W * 0.92, 260) * pop)
-        font = ImageFont.truetype(FONT, size, index=4)
-        d.text((W / 2, H * 0.055), text, font=font, fill=YELLOW + (255,), anchor="mt")
-    elif style == "stack":
-        # one word a line, white, each as wide as it can be, also behind him
+        # mustard Futura Bold, a little open, as large as fits; main() puts him back in front of it
+        size = int(fit(text, W * 0.9, 200, track=0.04) * pop)
+        spaced(d, W / 2, H * 0.05, text, font(FUTURA, 2, size), size * 0.04, YELLOW + (255,))
+        return layer
+    if style == "stack":
+        # white Futura Bold, one word a line, each as wide as it can be, also behind him
         y = H * 0.035
         for w in text.split():
-            size = int(min(fit(w, W * 0.9, 240), 200) * pop)
-            font = ImageFont.truetype(FONT, size, index=4)
-            d.text((W / 2, y), w, font=font, fill=(255, 255, 255, 255), anchor="mt")
-            y += size * 0.86
-    elif style == "low":
-        # a lower third in front of him: white with a black edge, the longest word in yellow
-        words = text.split()
-        key = max(words, key=len)
-        size = int(min(fit(text, W * 0.86, 120), 104) * pop)
-        font = ImageFont.truetype(FONT, size, index=4)
-        gap = font.getlength(" ")
-        x = W / 2 - font.getlength(" ".join(words)) / 2
-        for w in words:
-            d.text((x, H * 0.70), w, font=font, fill=(YELLOW if w == key else (255, 255, 255)) + (255,),
-                   stroke_width=max(4, size // 14), stroke_fill=(0, 0, 0, 255), anchor="lt")
-            x += font.getlength(w) + gap
-    else:
-        # word boxes: black words on yellow, stacked in the middle, a little tilted
-        words = text.split()
-        size = int(min(fit(max(words, key=len), W * 0.7, 150), 130) * pop)
-        font = ImageFont.truetype(FONT, size, index=4)
-        y = H * 0.50 - len(words) * size * 0.55
-        for k, w in enumerate(words):
-            tw = font.getlength(w)
-            box = Image.new("RGBA", (int(tw + size * 0.5), int(size * 1.08)), YELLOW + (255,))
-            ImageDraw.Draw(box).text((box.width / 2, box.height * 0.53), w, font=font, fill=(17, 17, 17, 255), anchor="mm")
-            box = box.rotate((-3 if k % 2 else 3), expand=True, resample=Image.BICUBIC)
-            layer.alpha_composite(box, (int(W / 2 - box.width / 2), int(y)))
-            y += size * 1.12
-    return layer
+            size = int(min(fit(w, W * 0.88, 210, track=0.03), 180) * pop)
+            spaced(d, W / 2, y, w, font(FUTURA, 2, size), size * 0.03, WHITE + (255,))
+            y += size * 0.9
+        return layer
+    if style == "sub":
+        # a film subtitle: small yellow Futura Bold, low and centered, the way his narrators are subtitled
+        size = int(min(fit(text, W * 0.86, 52, track=0.06), 52) * pop)
+        spaced(d, W / 2, H * 0.83, text, font(FUTURA, 2, size), size * 0.06, YELLOW + (255,))
+        return soft_shadow(layer, 4, 0.6)
+    # "card": a title card in dusty pink slab serif, widely spaced, between two thin rules, set on his dark jacket
+    size = int(min(fit(text, W * 0.66, 54, path=SLAB, index=2, track=0.14), 54) * pop)
+    f = font(SLAB, 2, size)
+    y = H * 0.5
+    spaced(d, W / 2, y, text, f, size * 0.14, PINK + (255,))
+    half = min(W * 0.42, spaced_width(text, f, size * 0.14) / 2 + size * 0.6)
+    for ry in (y - size * 0.45, y + size * 1.25):
+        d.line([(W / 2 - half, ry), (W / 2 + half, ry)], fill=PINK + (255,), width=max(2, size // 20))
+    return soft_shadow(layer, 5, 0.7)
 
 
 def main(mask_tool, sdr_tool):
@@ -121,22 +139,39 @@ def main(mask_tool, sdr_tool):
     for take, name in FILES.items():   # tone-map each HDR take to standard video once
         sdr[take] = tmp / f"{take}.mov"
         run(sdr_tool, CLIPS / name, sdr[take])
-    cut, caps, t0 = [], [], 0.0
+    cut, caps, t0, n = [], [], 0.0, 0
     for i, (take, a, b) in enumerate(PIECES):
         ws = words[take]
-        start = max(0.0, ws[a][0] - 0.06)
-        end = min(ws[b][1] + 0.08, ws[b + 1][0] - 0.02) if b + 1 < len(ws) else ws[b][1] + 0.25
-        z = ZOOMS[i]
-        vf = (f"scale=1080:1920,crop=iw/{z}:ih/{z}:(iw-iw/{z})/2:(ih-ih/{z})*{FOCUS_Y},scale={W}:{H},fps={FPS},setsar=1")
-        run("ffmpeg", "-v", "error", "-y", "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", sdr[take], "-vf", vf,
-            "-an", "-c:v", "libx264", "-crf", 14, "-pix_fmt", "yuv420p", tmp / f"p{i:02d}.mp4")
-        for g in caption_groups(ws[a:b + 1]):
-            caps.append([t0 + g[0][0] - start, " ".join(w[2] for w in g).replace("Fuck", "F#%&"), STYLES[i]])
-        cut.append({"take": take, "from": round(t0, 2), "to": round(t0 + end - start, 2)})
-        t0 += end - start
+        # split the line at its pauses into short shots: a shot ends after about SHOT seconds, or at a pause,
+        # and the pause itself is cut out
+        shots, cur = [], [a]
+        for k in range(a, b):
+            gap = ws[k + 1][0] - ws[k][1]
+            if gap > 0.32 or ws[k][1] - ws[cur[0]][0] >= SHOT:
+                cur.append(k); shots.append(cur); cur = [k + 1]
+        cur.append(b); shots.append(cur)
+        piece_from = t0
+        for first, last in shots:
+            start = max(0.0, ws[first][0] - 0.05, ws[first - 1][1] + 0.01 if first > 0 else 0.0)
+            end = min(ws[last][1] + 0.07, ws[last + 1][0] - 0.02) if last + 1 < len(ws) else ws[last][1] + 0.25
+            z, fx, fy = FRAMES[n % len(FRAMES)]
+            vf = (f"scale=1080:1920,crop=iw/{z}:ih/{z}:(iw-iw/{z})*{fx}:(ih-ih/{z})*{fy},scale={W}:{H},fps={FPS},setsar=1")
+            run("ffmpeg", "-v", "error", "-y", "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", sdr[take], "-vf", vf,
+                "-an", "-c:v", "libx264", "-crf", 14, "-pix_fmt", "yuv420p", tmp / f"p{n:03d}.mp4")
+            # the same stretch of his voice, faded in and out over a few milliseconds so the jump cuts don't click
+            fade = f"afade=t=in:d=0.012,afade=t=out:st={max(0.0, end - start - 0.012):.3f}:d=0.012"
+            run("ffmpeg", "-v", "error", "-y", "-ss", f"{start:.3f}", "-to", f"{end:.3f}", "-i", sdr[take], "-vn", "-af", fade,
+                "-ar", 48000, "-ac", 2, "-c:a", "pcm_s16le", tmp / f"a{n:03d}.wav")
+            for g in caption_groups(ws[first:last + 1]):
+                caps.append([t0 + max(0.0, g[0][0] - start), " ".join(w[2] for w in g).replace("Fuck", "F#%&"), STYLES[i]])
+            t0 += end - start
+            n += 1
+        cut.append({"take": take, "from": round(piece_from, 2), "to": round(t0, 2)})
     for i in range(len(caps)):
         caps[i].append(caps[i + 1][0] if i + 1 < len(caps) else t0)   # [start, text, style, end]
-    (tmp / "list.txt").write_text("".join(f"file 'p{i:02d}.mp4'\n" for i in range(len(PIECES))))
+    (tmp / "list.txt").write_text("".join(f"file 'p{i:03d}.mp4'\n" for i in range(n)))
+    (tmp / "alist.txt").write_text("".join(f"file 'a{i:03d}.wav'\n" for i in range(n)))
+    run("ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", 0, "-i", tmp / "alist.txt", "-c", "copy", tmp / "voice.wav")
     run("ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", 0, "-i", tmp / "list.txt", "-c", "copy", tmp / "cut.mp4")
     (tmp / "frames").mkdir()
     run("ffmpeg", "-v", "error", "-y", "-i", tmp / "cut.mp4", tmp / "frames/%05d.png")
@@ -144,7 +179,8 @@ def main(mask_tool, sdr_tool):
 
     frames = sorted((tmp / "frames").iterdir())
     enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-                            "-i", "-", "-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p",
+                            "-i", "-", "-i", str(tmp / "voice.wav"), "-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p",
+                            "-c:a", "aac", "-b:a", "128k", "-shortest",
                             "-movflags", "+faststart", str(ROOT / "assets/ai/marsmen.mp4")], stdin=subprocess.PIPE)
     for n, f in enumerate(frames):
         t = n / FPS

@@ -575,6 +575,13 @@
     video.addEventListener("play", () => { view.classList.add("is-playing"); requestAnimationFrame(follow); });
     video.addEventListener("pause", () => view.classList.remove("is-playing"));
     video.addEventListener("seeked", follow);
+    // the sound button: his voice on or off (the video starts muted, as browsers ask)
+    const sound = fig.querySelector(".ai-sound");
+    sound && sound.addEventListener("click", () => {
+      video.muted = !video.muted;
+      sound.setAttribute("aria-pressed", String(!video.muted));
+      sound.setAttribute("aria-label", video.muted ? "Turn sound on" : "Turn sound off");
+    });
     if (still) { fig.classList.remove("is-fresh"); video.controls = true; return; }
     wire(d, loop, {
       change(on) {

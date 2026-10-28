@@ -1548,7 +1548,11 @@ def demo_cut(b, root):
     <div class="pr-meter"><i></i><i></i></div>
   </section>
 </div></div>'''
-    inner = ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window")
+    # sound: the video starts muted (browsers only play sound after a click); this turns his voice on
+    sound = ('<button class="ai-btn ai-sound" type="button" aria-pressed="false" aria-label="Turn sound on">'
+             '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>'
+             '<path class="i-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="i-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>')
+    inner = ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window") + sound
     return ai_figure(b, "The Mars Men PSA in Premiere Pro: its transcript, the vertical cut and the timeline", inner)
 
 
