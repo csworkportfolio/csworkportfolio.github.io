@@ -893,7 +893,7 @@ main { view-transition-name: page; }
 /* the tags on the phone wear the site's glass, a touch whiter because they sit on photographs */
 .scene.is-live .ph-stamp, .scene.is-demo .ph-stamp {
   display: flex; align-items: center; gap: 8px; position: absolute; left: 50%; top: 30%; padding: 10px 16px 10px 10px; border-radius: 999px;
-  background: rgba(255,255,255,.78); color: var(--tabink); font-size: 15px; font-weight: 600; white-space: nowrap;
+  background: rgba(255,255,255,.78); color: #1d1d1f; font-size: 15px; font-weight: 600; white-space: nowrap;
   -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
   box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.28); opacity: 0; transform: translate3d(-50%, 0, 80px) scale(1.6); transition: opacity .3s, transform .5s cubic-bezier(.3,1.5,.5,1);
 }
@@ -904,7 +904,7 @@ main { view-transition-name: page; }
   opacity: 0; transform: translate3d(-50%, -14px, 70px); transition: opacity .3s, transform .5s cubic-bezier(.2,.7,.2,1);
 }
 .scene.is-live .ph-chip, .scene.is-live .ph-live, .scene.is-demo .ph-chip, .scene.is-demo .ph-live {
-  background: rgba(255,255,255,.78); color: var(--tabink);
+  background: rgba(255,255,255,.78); color: #1d1d1f;   /* always white glass on the photographs, so always dark words */
   -webkit-backdrop-filter: blur(14px) saturate(190%); backdrop-filter: blur(14px) saturate(190%);
   box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.28);
 }
