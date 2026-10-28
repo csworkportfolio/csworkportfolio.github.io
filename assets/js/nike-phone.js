@@ -303,7 +303,7 @@ function start(THREE) {
   let drag = null, off = { x: 0, y: 0 }, vel = { x: 0, y: 0 }, idle = 0;
   visual.addEventListener("pointerdown", (e) => {
     if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;   // touch scrolls the page
-    if (!scene.classList.contains("has-3d") || e.target.closest("button, a, .sc-count")) return;
+    if (!scene.classList.contains("has-3d") || e.target.closest("button, a, .sc-count, .n3-note, .n3-dock")) return;
     drag = { x: e.clientX, y: e.clientY }; visual.setPointerCapture(e.pointerId); visual.classList.add("is-dragging"); vel = { x: 0, y: 0 };
   });
   visual.addEventListener("pointermove", (e) => {
@@ -313,7 +313,76 @@ function start(THREE) {
     vel = { x: dy * 0.006, y: dx * 0.009 };
   });
   const release = () => { if (!drag) return; drag = null; visual.classList.remove("is-dragging"); idle = performance.now(); };
+  // the phone leans a little toward the pointer while it's over the section (mouse only), and settles back after
+  const look = { x: 0, y: 0 }, lookAim = { x: 0, y: 0 };
+  scene.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    const r = canvas.getBoundingClientRect();
+    lookAim.x = clamp(((e.clientX - (r.left + r.width / 2)) / (r.width / 2)), -1, 1);
+    lookAim.y = clamp(((e.clientY - (r.top + r.height / 2)) / (r.height / 2)), -1, 1);
+  });
+  scene.addEventListener("pointerleave", () => { lookAim.x = 0; lookAim.y = 0; });
   visual.addEventListener("pointerup", release); visual.addEventListener("pointercancel", release);
+
+  // ---------- the side controls: like the Cohesity animation's, a tab on the column's right edge slides out a pill
+  // (spin, zoom in, how it was made); it tucks back on its own, on a click elsewhere, or on Escape ----------
+  const ICON = {
+    spin: '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M15.5 6.6l2.6 1.9-2.9 1.4"/><path d="M12 3v18" opacity=".45"/></svg>',
+    zoom: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.3 15.3L20 20M10.5 7.8v5.4M7.8 10.5h5.4"/></svg>',
+    info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6.8" r="1.5" class="dot"/><path d="M12 11v7.5"/></svg>',
+  };
+  const dock = document.createElement("div");
+  dock.className = "n3-dock";
+  dock.innerHTML = '<div class="n3-drawer"><button class="n3-tab" type="button" aria-label="Show phone controls" aria-expanded="false">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5L8.5 12l6 6.5"/></svg></button>'
+    + '<div class="n3-controls" role="group" aria-label="Phone controls">'
+    + `<button class="n3-btn" type="button" data-act="spin" aria-label="Spin the phone">${ICON.spin}</button>`
+    + `<button class="n3-btn" type="button" data-act="zoom" aria-label="Zoom in close">${ICON.zoom}</button>`
+    + `<button class="n3-btn" type="button" data-act="info" aria-label="How This Phone Was Made" aria-expanded="false" aria-controls="n3-note">${ICON.info}</button>`
+    + '</div></div>';
+  const note = document.createElement("aside");
+  note.className = "n3-note"; note.id = "n3-note"; note.setAttribute("aria-label", "How This Phone Was Made");
+  note.innerHTML = '<button class="n3-note-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button>'
+    + '<p class="n3-note-title">How This Phone Was Made</p>'
+    + "<p>Directing Claude Code, I storyboarded the journey from request to live, then built the phone and every step in three.js, refining the details against real phone photography until they held up.</p>";
+  visual.append(dock, note);
+  const tab = dock.querySelector(".n3-tab"), pill = dock.querySelector(".n3-controls"), infoBtn = dock.querySelector('[data-act="info"]');
+  let tuckTimer = 0, overPill = false;
+  function showControls(on) {
+    clearTimeout(tuckTimer);
+    if (!on && pill.contains(document.activeElement)) tab.focus({ preventScroll: true });
+    dock.classList.toggle("is-out", on);
+    tab.setAttribute("aria-expanded", String(on));
+    pill.inert = !on;
+    if (on) tuckLater();
+  }
+  function tuckLater() {
+    clearTimeout(tuckTimer);
+    if (!overPill && !pill.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), 3500);
+  }
+  tab.addEventListener("click", () => showControls(true));
+  pill.addEventListener("pointerenter", () => { overPill = true; clearTimeout(tuckTimer); });
+  pill.addEventListener("pointerleave", () => { overPill = false; tuckLater(); });
+  pill.addEventListener("click", tuckLater);
+  pill.addEventListener("focusin", () => setTimeout(() => { if (pill.querySelector(":focus-visible")) clearTimeout(tuckTimer); }));
+  pill.addEventListener("focusout", () => setTimeout(tuckLater));
+  document.addEventListener("pointerdown", (e) => { if (dock.classList.contains("is-out") && !dock.contains(e.target)) showControls(false); });
+  showControls(false);
+  // the note: opens and closes from its button, which stays lit while it's open
+  const setNote = (on) => { scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on)); };
+  infoBtn.addEventListener("click", () => setNote(!scene.classList.contains("n3-noting")));
+  note.querySelector(".n3-note-close").addEventListener("click", () => setNote(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    if (scene.classList.contains("n3-noting")) setNote(false);
+    if (dock.classList.contains("is-out")) showControls(false);
+  });
+  // the shows: a full turn, and a commercial push-in on the cameras
+  let spinAt = -1, zoomAt = -1;
+  dock.querySelector('[data-act="spin"]').addEventListener("click", () => { spinAt = performance.now(); kick(); });
+  dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { zoomAt = performance.now(); kick(); });
+  const SPIN_MS = 1900, ZOOM_MS = 5600;
+  const lensSpot = new THREE.Vector3(0.15, H / 2 - 0.26, -D / 2 - 0.03), lookAt = new THREE.Vector3();
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
   function size() {
@@ -327,9 +396,14 @@ function start(THREE) {
     Object.assign(canvas.style, { left: `${cx - w / 2}px`, top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camera.position.set(0, 0, (H * ROOM / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+    camBase = (H * ROOM / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    camera.position.set(0, 0, camBase);
     camera.updateProjectionMatrix();
+    dock.style.top = `${f.top - v.top + f.height / 2}px`;
+    note.style.top = `${f.top - v.top + f.height * 0.6}px`;
+    note.style.left = `${cx}px`;
   }
+  let camBase = 5;
   new ResizeObserver(size).observe(visual);
   size();
 
@@ -355,7 +429,19 @@ function start(THREE) {
         off.x += (0 - off.x) * Math.min(1, dt * 3.5); off.y += (turns * Math.PI * 2 - off.y) * Math.min(1, dt * 3.5);
       }
     }
-    phone.rotation.set(cur.rx + off.x, cur.ry + off.y, 0);
+    // the shows: a spin adds one full turn; the zoom turns the phone to its back while the camera pushes in on the
+    // lenses, holds with a slow drift, and pulls back
+    let spin = 0, zk = 0, drift = 0;
+    const lf = Math.min(1, dt * 4);
+    look.x += ((drag ? 0 : lookAim.x) - look.x) * lf; look.y += ((drag ? 0 : lookAim.y) - look.y) * lf;
+    if (spinAt >= 0) { const t = (now - spinAt) / SPIN_MS; if (t >= 1) spinAt = -1; else spin = ease(t) * Math.PI * 2; }
+    if (zoomAt >= 0) {
+      const t = (now - zoomAt) / ZOOM_MS;
+      if (t >= 1) zoomAt = -1;
+      else { zk = t < 0.3 ? ease(t / 0.3) : t < 0.72 ? 1 : 1 - ease((t - 0.72) / 0.28); drift = Math.sin(t * Math.PI * 2) * 0.06; }
+    }
+    const lx = look.y * 0.14 * (1 - zk), ly = look.x * 0.28 * (1 - zk);   // the lean toward the pointer (none during the zoom)
+    phone.rotation.set(cur.rx + off.x + lx - 0.12 * zk, cur.ry + off.y + ly + spin + (Math.PI + 0.35 - cur.ry - off.y) * zk, 0);
     phone.position.y = cur.y + Math.sin(now / 900) * 0.012;
     phone.scale.setScalar(cur.s);
     // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
@@ -386,6 +472,13 @@ function start(THREE) {
       nt.group.scale.setScalar(0.94 + 0.06 * k);
       nt.words.material.opacity = k; nt.tint.material.color.set(dark ? 0x1c1c1e : 0xffffff); nt.tint.material.opacity = k * (dark ? 0.6 : 0.8);   // enough tint that the glass reads as a solid banner (whiter by day)
     });
+    if (zk > 0) {
+      phone.updateMatrixWorld();
+      const target = phone.localToWorld(lensSpot.clone());
+      camera.position.set(target.x * zk + drift, target.y * zk + 0.05 * zk, camBase + (1.25 - camBase) * zk);   // close enough to fill the frame with the three lenses
+      lookAt.set(target.x * zk, target.y * zk, 0);
+      camera.lookAt(lookAt);
+    } else if (camera.position.z !== camBase || camera.position.x !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
     renderer.render(world, camera);
     raf = requestAnimationFrame(frame);
   }
