@@ -130,10 +130,10 @@ function start(THREE) {
     g.fillStyle = "#000"; g.beginPath(); g.roundRect(40 - 1000, 40, 176, 176, 24); g.fill();
     return new THREE.CanvasTexture(c);
   })();
-  for (let i = 0; i < cuts.length - 1; i++) {
-    const t = cuts[i], b = cuts[i + 1], h = (b - t) * SH;
-    // each slice keeps the screen's own rounded corners where it has them: the top one at the top, the last at the bottom
-    const rTop = i === 0 ? SR : 0.0001, rBottom = i === cuts.length - 2 ? SR : 0.0001;
+  // a floating piece of the screen, from t to b (0 top, 1 bottom), with its edge and its shadow; "away" is where it
+  // floats to, apart from the phone
+  function makeCard(t, b, rTop, rBottom, away, list) {
+    const h = (b - t) * SH;
     const card = new THREE.Group();
     card.add(shapeMesh(SW, h, rTop, sliceMat, 0, rBottom, 1 - b, 1 - t));
     // a soft gray edge, so a black slice never disappears into the black phone or page
@@ -141,15 +141,21 @@ function start(THREE) {
     ring.holes.push(roundedRect(SW, h, rTop, rBottom));
     card.add(new THREE.Mesh(new THREE.ShapeGeometry(ring, 32), sliceEdge));
     card.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
-    // further out toward the reader, each a step nearer than the last (the bottom one lifts as it comes, so it
-    // clears the switcher under the phone)
-    card.userData.away = [new THREE.Vector3(-0.16, 0.2, 0.22), new THREE.Vector3(0.36, -0.01, 0.42), new THREE.Vector3(-0.27, -0.02, 0.62)][i] || new THREE.Vector3();
-    card.visible = false; phone.add(card); slices.push(card);
+    card.userData.away = away;
+    card.visible = false; phone.add(card); list.push(card);
     // its shadow on the screen below, so it reads as floating: soft, larger and further off the higher it is
     const shade = new THREE.Mesh(new THREE.PlaneGeometry(SW * 1.3, h * 1.3 + 0.08), new THREE.MeshBasicMaterial({ map: softShadow, transparent: true, opacity: 0, depthWrite: false,
       stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc, stencilFail: THREE.KeepStencilOp, stencilZPass: THREE.KeepStencilOp }));
     shade.visible = false; phone.add(shade); card.userData.shade = shade;
   }
+  // the story-template placements (screenshots) come apart in their three sections, each further out toward the
+  // reader than the last (the bottom one lifts as it comes, so it clears the switcher under the phone)
+  const AWAY = [new THREE.Vector3(-0.16, 0.2, 0.22), new THREE.Vector3(0.36, -0.01, 0.42), new THREE.Vector3(-0.27, -0.02, 0.62)];
+  for (let i = 0; i < cuts.length - 1; i++)
+    makeCard(cuts[i], cuts[i + 1], i === 0 ? SR : 0.0001, i === cuts.length - 2 ? SR : 0.0001, AWAY[i] || new THREE.Vector3(), slices);
+  // a recorded placement (a video) floats whole in front of the phone instead, until it is pulled in
+  const wholeCards = [];
+  makeCard(0, 1, SR, SR, new THREE.Vector3(-0.12, 0.08, 0.5), wholeCards);
 
   // sides: buttons and antenna lines
   const btn = (x, y, h) => { const b = new THREE.Mesh(rbox(0.012, h, 0.032), metal); b.position.set(x, y, 0); phone.add(b); };
@@ -554,7 +560,9 @@ function start(THREE) {
     // a show (spin, zoom) first gathers the brief's pieces into the screen, and lets them float back out after
     const apart = o.apart * (1 - ease(Math.max(zf, spinK)));
     screen.visible = apart < 0.002;
-    slices.forEach((m) => {
+    const pieces = clipOn ? wholeCards : slices;
+    (clipOn ? slices : wholeCards).forEach((m) => { m.visible = false; m.userData.shade.visible = false; });
+    pieces.forEach((m) => {
       m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart);
       // the shadow lies on the screen under the piece, pushed down and to the right by the light as it rises
       const sh = m.userData.shade, lift = m.userData.away.z * apart;
@@ -570,7 +578,7 @@ function start(THREE) {
     // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
     island.material.opacity = ik; island.scale.set(0.5 + 0.5 * ease(ik), 0.6 + 0.4 * ease(ik), 1); island.visible = ik > 0.01;
-    island.position.copy(islandHome); if (slices[0]) island.position.addScaledVector(slices[0].userData.away, apart);   // it rides in on the top slice
+    island.position.copy(islandHome); if (pieces[0]) island.position.addScaledVector(pieces[0].userData.away, apart);   // it rides in on the top piece
     const u = siri.material.uniforms;
     u.uOpacity.value += (o.glow * (0.72 + 0.28 * Math.sin(now / 420)) - u.uOpacity.value) * Math.min(1, dt * 6);   // breathing
     u.uProg.value = 1;
