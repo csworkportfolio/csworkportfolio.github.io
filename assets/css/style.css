@@ -150,6 +150,7 @@ button { font: inherit; color: inherit; }
   --tabshadow: inset 0 .5px 0 rgba(255, 255, 255, .6), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0, 0, 0, .10);
   --tabband: #f6f6f6;
   --tabfill: color-mix(in srgb, #d1d1d6 78%, transparent);   /* a tab that has to show on the white page (the scene's edge tab) */
+  --noteglass: color-mix(in srgb, #ffffff 80%, transparent);   /* a panel of words over the phone: firmer than the controls */
 }
 
 /* It travels with the page: it stops just under the pinned header (main.js measures the
@@ -793,10 +794,11 @@ main { view-transition-name: page; }
 .n3-btn:is([aria-expanded="true"], [aria-pressed="true"]), .n3-btn:is([aria-expanded="true"], [aria-pressed="true"]):hover { background: var(--tabaccent); color: #fff; }   /* on: lit */
 /* the note: a glass card over the lower part of the phone */
 .scene.is-live.has-3d.n3-noting .n3-note { display: block; }
-.n3-note { position: absolute; z-index: 3; width: min(340px, 92%); transform: translateX(-50%); box-sizing: border-box; padding: 14px 48px 16px 20px;
-  border-radius: 18px; text-align: left; font-size: 15px; line-height: 1.45; color: var(--tabink); background: var(--tabglass); box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.18);
+/* it opens just left of the controls pill, level with it, on firmer glass than the controls so the words read clearly */
+.n3-note { position: absolute; z-index: 3; right: 68px; width: min(340px, calc(100% - 88px)); transform: translateY(-50%); box-sizing: border-box; padding: 14px 48px 16px 20px;
+  border-radius: 18px; text-align: left; font-size: 15px; line-height: 1.45; color: var(--tabink); background: var(--noteglass); box-shadow: var(--tabshadow), 0 18px 40px rgba(0,0,0,.18);
   -webkit-backdrop-filter: blur(20px) saturate(190%); backdrop-filter: blur(20px) saturate(190%); animation: n3-in .3s ease; }
-@keyframes n3-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+@keyframes n3-in { from { opacity: 0; transform: translate(8px, -50%); } }
 .n3-note p { margin: 0; }
 .n3-note .n3-note-title { margin-bottom: 4px; font-size: 13px; font-weight: 600; letter-spacing: .01em; opacity: .6; }
 .n3-note-close { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; border-radius: 50%; padding: 0;
@@ -1817,6 +1819,7 @@ a.tl-label:hover strong { color: #ff9a66; }
     --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
     --tabglass: color-mix(in srgb, #2c2c2e 62%, transparent); --tabink: #f5f5f7; --glassline: rgba(255,255,255,.12);
     --tablens: rgba(255,255,255,.1); --tabaccent: #409cff; --tabfill: color-mix(in srgb, #3a3a3c 78%, transparent);
+    --noteglass: color-mix(in srgb, #2c2c2e 86%, transparent);
     --tabshadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0,0,0,.5);
     color-scheme: dark;
   }

@@ -427,7 +427,7 @@ function start(THREE) {
     + "<p>Directing Claude Code, I storyboarded the journey from request to live, then built the phone and every step in three.js, refining the details against real phone photography until they held up.</p>";
   // the tab lives in the pinned stage, which spans the window, so it scrolls with the page instead of being moved after it
   const stage = scene.querySelector(".sc-stage") || visual;
-  visual.append(note); stage.append(dock);
+  stage.append(dock, note);
   const tab = dock.querySelector(".n3-tab"), pill = dock.querySelector(".n3-controls"), infoBtn = dock.querySelector('[data-act="info"]');
   let tuckTimer = 0, overPill = false;
   function showControls(on, stay) {
@@ -440,7 +440,7 @@ function start(THREE) {
   }
   function tuckLater(ms = 3500) {
     clearTimeout(tuckTimer);
-    if (!overPill && !pill.querySelector(":focus-visible")) tuckTimer = setTimeout(() => showControls(false), ms);
+    if (!overPill && !pill.querySelector(":focus-visible") && !scene.classList.contains("n3-noting")) tuckTimer = setTimeout(() => showControls(false), ms);
   }
   tab.addEventListener("click", () => showControls(true));
   pill.addEventListener("pointerenter", () => { overPill = true; clearTimeout(tuckTimer); });
@@ -448,12 +448,12 @@ function start(THREE) {
   pill.addEventListener("click", () => tuckLater());
   pill.addEventListener("focusin", () => setTimeout(() => { if (pill.querySelector(":focus-visible")) clearTimeout(tuckTimer); }));
   pill.addEventListener("focusout", () => setTimeout(() => tuckLater()));
-  document.addEventListener("pointerdown", (e) => { if (dock.classList.contains("is-out") && !dock.contains(e.target)) showControls(false); });
+  document.addEventListener("pointerdown", (e) => { if (dock.classList.contains("is-out") && !dock.contains(e.target) && !note.contains(e.target)) showControls(false); });
   showControls(false);
   // out while the reader scrolls toward the scene, tucked a few seconds after it locks in (main.js, shared by every 3D scene)
   window.sceneControlsPeek?.(scene, scene.querySelector(".sc-stage"), (on) => showControls(on, true), () => tuckLater(4500));
-  // the note: opens and closes from its button, which stays lit while it's open
-  const setNote = (on) => { scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on)); };
+  // the note: opens beside the controls from its button, which stays lit while it's open; the controls stay out with it
+  const setNote = (on) => { scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on)); if (on) showControls(true, true); else tuckLater(); };
   infoBtn.addEventListener("click", () => setNote(!scene.classList.contains("n3-noting")));
   note.querySelector(".n3-note-close").addEventListener("click", () => setNote(false));
   document.addEventListener("keydown", (e) => {
@@ -510,11 +510,9 @@ function start(THREE) {
     camBase = (H * ROOM / 2) / Math.tan(THREE.MathUtils.degToRad(FOV / 2));
     camera.position.set(0, 0, camBase);
     camera.updateProjectionMatrix();
-    note.style.top = `${f.top - v.top + f.height * 0.6}px`;
     // at Verify the phone, switcher and count rise together by half the count's height, so the three centre as one
     const cnt = scene.querySelector(".sc-count");
     if (cnt) scene.style.setProperty("--n3-lift", `${Math.round((cnt.offsetHeight + 28) / 2)}px`);
-    note.style.left = `${cx}px`;
   }
   let camBase = 5;
   // the shows (spin, zoom) step the phone out over the whole page: the canvas covers the window, in front of the
@@ -680,7 +678,7 @@ function start(THREE) {
     cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
     // the tab sits on the window's right edge, level with the phone
     const fr = flat.getBoundingClientRect(), dockTop = `${Math.round(fr.top - stage.getBoundingClientRect().top + fr.height / 2)}px`;
-    if (dock.style.top !== dockTop) dock.style.top = dockTop;
+    if (dock.style.top !== dockTop) dock.style.top = note.style.top = dockTop;
     renderer.render(world, camera);
     // once the phone has settled (no scroll, pointer, drag, show, glow or banner moving) only the float runs, at half
     // the frame rate; the next scroll, pointer move, click or resize brings it back to full
