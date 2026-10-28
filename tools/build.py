@@ -1132,7 +1132,7 @@ def case_shine(slug, media):
 
 def scene(b, root):
     """An animated three.js scene under a section (assets/js/<scene>.js), with its subtitles over the picture
-    and a pause button. The script loads three.js only when the scene nears the screen. Screen readers get
+    and pause and start over buttons. The script loads three.js only when the scene nears the screen. Screen readers get
     the description instead of the moving subtitles."""
     name = b["scene"]
     return (f'<script src="{root}assets/js/{name}.js?v={asset_version(f"assets/js/{name}.js")}" defer></script>'
@@ -1142,7 +1142,9 @@ def scene(b, root):
             f'<div class="pj-caption" aria-hidden="true"><span class="pj-line"></span>'
             f'<span class="pj-kicker">{esc(b["kicker"])}</span></div>'
             f'<button class="pj-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
-            f'<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button></div>'
+            f'<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>'
+            f'<button class="pj-toggle pj-restart" type="button" aria-label="Start over"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4"/></svg></button></div>'
             f'<figcaption class="sr-only">{esc(b["alt"])}</figcaption></figure></div>')
 
 

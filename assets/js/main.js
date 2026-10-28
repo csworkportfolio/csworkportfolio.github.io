@@ -1513,7 +1513,7 @@
 
   // a page with a scene's pause button (Cohesity) lines the light/dark switch up with it: the two round buttons
   // share one centre line down the right side, whatever the window's width
-  const themeBtn = document.querySelector(".theme-toggle"), scenePause = document.querySelector(".pj-toggle");
+  const themeBtn = document.querySelector(".theme-toggle"), scenePause = document.querySelector(".pj-toggle:not(.pj-restart)");
   if (themeBtn && scenePause && "ResizeObserver" in window) {
     const align = () => {
       themeBtn.style.right = "";

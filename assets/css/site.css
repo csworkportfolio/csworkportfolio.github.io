@@ -2373,10 +2373,14 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 .pj-toggle .i-play { display: none; fill: currentColor; }
 .pj-toggle.is-paused .i-pause { display: none; }
 .pj-toggle.is-paused .i-play { display: block; }
+/* start over sits under pause, the same round glass button */
+.pj-restart { top: 68px; }
+.pj-restart svg { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 720px) {
   /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
   .pj-toggle { top: 12px; right: 12px; }
+  .pj-restart { top: 64px; }
   .pj-pin { margin: 40px 0; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }

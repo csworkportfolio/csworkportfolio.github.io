@@ -466,7 +466,7 @@
 
   // Plays only while on screen and not paused. With Reduce Motion on it waits on the Champions Hub, full, until Play.
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const toggle = stage.querySelector(".pj-toggle");
+  const toggle = stage.querySelector(".pj-toggle:not(.pj-restart)"), restart = stage.querySelector(".pj-restart");
   let userPaused = reduce, onScreen = false, playing = false, raf = 0, last = 0;
   let clock = reduce ? starts[3] + BEATS[3].hold * 0.9 : 0;
   function frame(now) {
@@ -482,6 +482,8 @@
     if (go) { last = performance.now(); raf = requestAnimationFrame(frame); } else cancelAnimationFrame(raf);
   }
   toggle.addEventListener("click", () => { userPaused = !userPaused; update(); });
+  // Start over goes back to the first step and plays from there
+  restart.addEventListener("click", () => { clock = 0; userPaused = false; render(clock); update(); });
   document.addEventListener("visibilitychange", update);
   new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; update(); }, { threshold: 0.25 }).observe(stage);
   render(clock);
