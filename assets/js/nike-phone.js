@@ -263,26 +263,22 @@ function start(THREE) {
   const clip = Object.assign(document.createElement("video"), { muted: true, loop: true, playsInline: true, preload: "auto" });
   clip.setAttribute("muted", ""); clip.setAttribute("playsinline", ""); clip.className = "n3-clip";
   let clipOn = false, clipTime = -1;
-  // a placement with sound (ACG) gets a sound control beside the switcher: a speaker button and a volume bar that
-  // starts halfway. It starts muted (browsers only play sound after the reader asks for it); the button or the bar
-  // turns it on
+  // a placement with sound (ACG) gets a mute button in the switcher. It starts muted (browsers only play sound
+  // after the reader asks for it); the button turns it on and off
   const sound = document.createElement("span");
   sound.className = "n3-sound"; sound.hidden = true;
   sound.innerHTML = '<button type="button" class="n3-sound-btn" aria-label="Turn sound on" aria-pressed="false">'
     + '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>'
-    + '<path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>'
-    + '<input type="range" class="n3-volume" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">';
-  const soundBtn = sound.querySelector(".n3-sound-btn"), volume = sound.querySelector(".n3-volume");
+    + '<path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>';
+  const soundBtn = sound.querySelector(".n3-sound-btn");
   let wantSound = false;
   const paintSound = () => {
     soundBtn.setAttribute("aria-pressed", String(wantSound));
     soundBtn.setAttribute("aria-label", wantSound ? "Turn sound off" : "Turn sound on");
     sound.classList.toggle("is-on", wantSound);
-    sound.style.setProperty("--v", volume.value);
-    clip.muted = !wantSound; clip.volume = +volume.value;
+    clip.muted = !wantSound;
   };
   soundBtn.addEventListener("click", () => { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); });
-  volume.addEventListener("input", () => { wantSound = +volume.value > 0; paintSound(); });
   paintSound();
   // it sits inside the switcher, right after the placement it belongs to
   function placeSound() {
