@@ -383,7 +383,7 @@ function start(THREE) {
       nt.group.visible = k > 0.02;
       nt.group.position.y = nt.n.y + (1 - k) * 0.12;
       nt.group.scale.setScalar(0.94 + 0.06 * k);
-      nt.words.material.opacity = k; nt.tint.material.color.set(dark ? 0x1c1c1e : 0xffffff); nt.tint.material.opacity = k * (dark ? 0.45 : 0.42);
+      nt.words.material.opacity = k; nt.tint.material.color.set(dark ? 0x1c1c1e : 0xffffff); nt.tint.material.opacity = k * 0.6;   // enough tint that the glass reads as a solid banner
     });
     renderer.render(world, camera);
     raf = requestAnimationFrame(frame);

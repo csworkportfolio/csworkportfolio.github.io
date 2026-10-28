@@ -759,7 +759,7 @@ main { view-transition-name: page; }
 .scene.is-live.has-3d .sc-visual.is-dragging { cursor: grabbing; }
 .scene.is-live.has-3d .sc-visual button { cursor: pointer; }
 .scene.is-live.has-3d .ph3d { display: block; }
-.scene.is-live.has-3d .ph { visibility: hidden; }
+.scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
 /* the still layout on a desktop (reduced motion, no script, or a window too short to pin): the phone rides
    beside the stages instead of sitting in the middle of a tall column */
