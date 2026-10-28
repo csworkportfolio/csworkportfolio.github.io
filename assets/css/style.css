@@ -852,7 +852,9 @@ main { view-transition-name: page; }
    the pill keeps its width; only on the 3D phone, which is the one that plays it */
 .n3-sound { display: none; }
 .scene.has-3d .n3-sound { display: inline-grid; place-items: center; width: 20px; height: 20px; margin: 0 6px 0 -7px; border-radius: 50%;
-  vertical-align: -5px; background: var(--tablens); }
+  background: var(--tablens); }
+/* the pill with the speaker lines its name up on the same middle as the others */
+.scene.has-3d .sc-switch button:has(.n3-sound) { display: inline-flex; align-items: center; }
 .scene.has-3d .sc-switch button.is-on .n3-sound { background: rgba(255,255,255,.24); }
 .n3-sound svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .n3-sound .spk { fill: currentColor; stroke: none; }
