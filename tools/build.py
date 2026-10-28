@@ -1495,6 +1495,8 @@ def demo_cut(b, root):
     ticks = "".join(f'<span style="left:{s / dur * 100:.3f}%">{tc(s)}</span>' for s in range(0, int(dur) + 1, 10))
     clips = "".join(f'<span class="pr-clip ct-clip h{hues[s["take"]]}" style="left:{s["from"] / dur * 100:.3f}%;width:{(s["to"] - s["from"]) / dur * 100:.3f}%">'
                     f'<b>{esc(s["take"])}.MOV</b></span>' for s in b["final"])
+    broll = "".join(f'<span class="pr-clip pr-bclip" style="left:{c["from"] / dur * 100:.3f}%;width:{(c["to"] - c["from"]) / dur * 100:.3f}%">'
+                    f'<b>{esc(c["name"])}</b></span>' for c in b.get("broll", []))
     audio = "".join(f'<span class="pr-clip pr-aclip ct-clip" style="left:{s["from"] / dur * 100:.3f}%;width:{(s["to"] - s["from"]) / dur * 100:.3f}%"></span>'
                     for s in b["final"])
     caps = "".join(f'<span class="pr-cap" style="left:{l["at"][0] / dur * 100:.3f}%;width:{(l["at"][1] - l["at"][0]) / dur * 100:.3f}%">{esc(l["t"])}</span>'
@@ -1538,7 +1540,7 @@ def demo_cut(b, root):
       <p class="pr-shead"><b class="pr-tc-now">{tc(0)}</b><span class="pr-ruler">{ticks}</span></p>
       <div class="pr-tracks">
         {track("C1", caps, " is-cap")}
-        {track("V2", "")}
+        {track("V2", broll, " is-v2")}
         {track("V1", clips, " is-v1")}
         {track("A1", audio, " is-a1")}
         {track("A2", "")}

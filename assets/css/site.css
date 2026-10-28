@@ -3396,7 +3396,9 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 .pr-track { display: grid; grid-template-columns: 120px minmax(0, 1fr); height: 28px; border-bottom: 1px solid #262626; }
 .pr-track.is-v1, .pr-track.is-a1 { height: 42px; }
 .pr-track.is-cap { height: 26px; }
-.pr:not(.is-mobile) .pr-track:is(:nth-child(2), :nth-child(5)) { display: none; }   /* the empty V2 and A2: a thinner timeline */
+.pr:not(.is-mobile) .pr-track:nth-child(5) { display: none; }   /* the empty A2: a thinner timeline */
+.pr-track.is-v2 { height: 30px; }
+.pr-bclip { --take: #d98aa5; }   /* the B-roll, on V2 above his takes */
 .pr-th { display: flex; align-items: center; gap: 10px; padding: 0 10px; background: #1b1b1b; border-right: 1px solid #111; }
 .pr-th b { display: grid; place-items: center; width: 28px; height: 20px; border-radius: 2px; font-size: 11px; font-weight: 500; color: #c9c9c9; }
 .is-v1 .pr-th b, .is-a1 .pr-th b { background: #2b5797; color: #fff; }
@@ -3432,7 +3434,7 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 /* a phone: the monitor and the transcript side by side, the timeline under them */
 .pr.is-mobile { width: 420px; height: 760px; }
 .pr.is-mobile .pr-ws, .pr.is-mobile .pr-proj, .pr.is-mobile .pr-tools, .pr.is-mobile .pr-meter, .pr.is-mobile .pr-search, .pr.is-mobile .pr-tabs em,
-.pr.is-mobile .pr-ptabs span:not(.is-on), .pr.is-mobile .pr-sel, .pr.is-mobile .pr-transport, .pr.is-mobile .pr-mbar em, .pr.is-mobile .pr-track:is(:nth-child(2), :nth-child(5)) { display: none; }
+.pr.is-mobile .pr-ptabs span:not(.is-on), .pr.is-mobile .pr-sel, .pr.is-mobile .pr-transport, .pr.is-mobile .pr-mbar em, .pr.is-mobile .pr-track:nth-child(5) { display: none; }
 .pr.is-mobile .pr-name { font-size: 11px; }
 .pr.is-mobile .pr-mon { left: 4px; top: 38px; width: 200px; height: 412px; }
 .pr.is-mobile .pr-text { left: 208px; top: 38px; width: 208px; height: 412px; }

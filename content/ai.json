@@ -309,14 +309,14 @@
       },
       {
         "id": "video",
-        "h": "93 Seconds of Takes, Cut to 42",
+        "h": "93 Seconds of Takes, Cut to 43",
         "p": [
           "The Mars Men PSA was a project for a job interview. I had six takes: two hooks, three body takes and a call to action. AI transcribed every take, so I could read the shoot instead of scrubbing through it, and it helped me pick the hook. Then I cut the video by editing the transcript, and AI made the captions for sound-off viewing.",
           "The short hook won. The \"You weren't built to be average\" take moved up to sit right behind it, and lines that repeated a point came out."
         ],
         "demo": "cut",
-        "note": "Recut for this page from the raw takes, with the color corrected and captions that change style from shot to shot. The transcript is from the real takes, and the playhead and highlighted line follow the video.",
-        "duration": 41.84,
+        "note": "Rebuilt for this page on the finished edit's own timeline and soundtrack, from the clean raw takes, with the color corrected, the B-roll's old captions painted out and new captions on top. The transcript is from the real takes, and the playhead and highlighted line follow the video.",
+        "duration": 43.43,
         "takes": [
           {
             "id": "Hook 1",
@@ -326,8 +326,8 @@
                 "t": "F#%& biohacking, bro.",
                 "keep": true,
                 "at": [
-                  0.0,
-                  1.94
+                  0.55,
+                  1.51
                 ]
               }
             ]
@@ -350,16 +350,16 @@
                 "t": "Low testosterone isn't about seed oils or your sleep tracker, and it's definitely not your underwear.",
                 "keep": true,
                 "at": [
-                  8.33,
-                  14.04
+                  8.61,
+                  13.69
                 ]
               },
               {
                 "t": "Most guys are blaming everything but the problem.",
                 "keep": true,
                 "at": [
-                  14.04,
-                  17.03
+                  14.09,
+                  16.81
                 ]
               }
             ]
@@ -376,7 +376,7 @@
                 "t": "We're out of alignment, stuck in jobs we hate, scrolling our lives away, and wondering why our energy and drive are gone.",
                 "keep": true,
                 "at": [
-                  17.03,
+                  17.38,
                   24.04
                 ]
               }
@@ -390,8 +390,8 @@
                 "t": "You weren't built to be average. You're not here to be tired, soft, or overlooked. You're built to stand out,",
                 "keep": true,
                 "at": [
-                  1.94,
-                  8.33
+                  2.25,
+                  8.17
                 ]
               },
               {
@@ -408,8 +408,8 @@
                 "t": "Stop chasing hacks and dodging your own potential. When you fix your foundation, your hormones, your habits, your mindset, everything else falls into place.",
                 "keep": true,
                 "at": [
-                  24.04,
-                  32.43
+                  24.14,
+                  33.2
                 ]
               },
               {
@@ -420,8 +420,8 @@
                 "t": "Start living like one. Own your routine. Own your health. Own your results.",
                 "keep": true,
                 "at": [
-                  32.43,
-                  36.76
+                  33.56,
+                  38.03
                 ]
               },
               {
@@ -432,8 +432,8 @@
                 "t": "You're just not living up to the standard you were made for. Let's get after it.",
                 "keep": true,
                 "at": [
-                  36.76,
-                  41.84
+                  38.51,
+                  42.97
                 ]
               }
             ]
@@ -443,27 +443,89 @@
           {
             "take": "Hook 1",
             "from": 0.0,
-            "to": 1.94
+            "to": 2.0
           },
           {
             "take": "Body 3",
-            "from": 1.94,
-            "to": 8.33
+            "from": 2.0,
+            "to": 8.43
           },
           {
             "take": "Body 1",
-            "from": 8.33,
-            "to": 17.03
+            "from": 8.43,
+            "to": 17.23
           },
           {
             "take": "Body 2",
-            "from": 17.03,
-            "to": 24.04
+            "from": 17.23,
+            "to": 23.83
           },
           {
             "take": "CTA",
-            "from": 24.04,
-            "to": 41.84
+            "from": 23.83,
+            "to": 43.43
+          }
+        ],
+        "broll": [
+          {
+            "name": "Seed oils",
+            "from": 10.2,
+            "to": 10.9
+          },
+          {
+            "name": "Sleep tracker",
+            "from": 10.9,
+            "to": 12.87
+          },
+          {
+            "name": "Hands",
+            "from": 17.23,
+            "to": 18.2
+          },
+          {
+            "name": "Office",
+            "from": 18.2,
+            "to": 20.1
+          },
+          {
+            "name": "Scrolling",
+            "from": 20.1,
+            "to": 21.6
+          },
+          {
+            "name": "Portrait",
+            "from": 21.6,
+            "to": 23.83
+          },
+          {
+            "name": "Explosion",
+            "from": 23.83,
+            "to": 24.63
+          },
+          {
+            "name": "Explosion key",
+            "from": 24.63,
+            "to": 25.1
+          },
+          {
+            "name": "Trophy",
+            "from": 32.87,
+            "to": 33.93
+          },
+          {
+            "name": "Routine",
+            "from": 35.53,
+            "to": 36.53
+          },
+          {
+            "name": "Health",
+            "from": 36.53,
+            "to": 37.5
+          },
+          {
+            "name": "After it",
+            "from": 41.13,
+            "to": 43.43
           }
         ]
       },
