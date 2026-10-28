@@ -1032,8 +1032,7 @@
         "kicker": "All from one piece of content.",
         "credit": {
           "title": "How I Made This Animation",
-          "text": "I storyboarded six steps and captions of the employee advocacy journey I developed, then built the animation by directing Claude Code. Every pass was refined until the motion and timing told the story the way I'd pitch it.",
-          "links": {"Claude Code": "https://claude.com/claude-code"}
+          "text": "I storyboarded six steps and captions of the employee advocacy journey I developed, then built the animation by directing Claude Code. Every pass was refined until the motion and timing told the story the way I'd pitch it."
         },
         "alt": "The animation follows one post into the agent, which knows the brand guidelines, company goals and product. A version for each language steps out through the Champions Portal and is checked; the Korean version is sent back, rewritten and approved. The versions fill the Champions Hub, then ring a night-time globe as advocates share them to cities around the world.",
         "p2": [
