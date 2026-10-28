@@ -1434,7 +1434,7 @@ def demo_board(b, root):
         <p class="zp-ph">{CLAUDE_MARK}<b>2. Send Message</b><span>Claude</span></p>
         <p class="zp-tabs"><span>Setup</span><span class="is-on">Configure</span><span>Test</span></p>
         <div class="zp-fields">
-          <p class="zp-label">Model</p><p class="zp-input">Claude{ico("chev")}</p>
+          <p class="zp-label">Model</p><p class="zp-input">{esc(z["model"])}{ico("chev")}</p>
           <p class="zp-label">Instructions</p>
           <div class="zp-area"><p>{esc(z["intro"])}</p><p class="zp-sub">Do</p><ul>{li(b["dos"], "+")}</ul>
             <p class="zp-sub">Don't</p><ul>{li(b["donts"], "–")}</ul></div>

@@ -2546,8 +2546,8 @@ html .pills > .seg.is-scrolling { background: none; }
 .ai-demo { margin: 40px auto 0; }
 .ai-stage { position: relative; background: var(--tabband); border-radius: 28px; padding: 44px; }
 .ai-note { margin-top: 12px; padding-left: 9px; font-size: 13px; line-height: 1.4; color: var(--muted); }
-.ai-localize .ai-note { padding-left: 0; text-align: center; min-height: 2.8em; transition: opacity .25s; }
-.ai-localize .ai-note.is-fading { opacity: 0; }
+:is(.ai-localize, .ai-board) .ai-note { padding-left: 0; text-align: center; min-height: 2.8em; transition: opacity .25s; }
+:is(.ai-localize, .ai-board) .ai-note.is-fading { opacity: 0; }
 .ai-label { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ai-sub); }
 .ai-label span { margin-left: 6px; font-family: var(--round); letter-spacing: 0; color: var(--ink); }
 .ai-spark { width: 14px; height: 14px; flex: none; fill: currentColor; }
@@ -2592,11 +2592,13 @@ html .pills > .seg.is-scrolling { background: none; }
 .hb-window .ai-title { color: var(--hb-muted); }
 .hb-view { cursor: zoom-in; }
 .hb-view:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; }
-.ai-localize.is-full .hb-view { cursor: zoom-out; }
-.ai-localize.is-full .ai-stage { position: fixed; inset: 0; z-index: 10000; margin: 0; border-radius: 0; padding: 24px 24px 64px; display: grid; place-items: center; align-content: center;
+.mb-view { cursor: zoom-in; }
+.mb-view:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; }
+:is(.ai-localize, .ai-board).is-full :is(.hb-view, .mb-view) { cursor: zoom-out; }
+:is(.ai-localize, .ai-board).is-full .ai-stage { position: fixed; inset: 0; z-index: 10000; margin: 0; border-radius: 0; padding: 24px 24px 64px; display: grid; place-items: center; align-content: center;
   background: var(--paper); }
 .ai-localize.is-full .hb-window { width: min(100%, calc((100vh - 170px) * 1280 / 708)); }
-.ai-localize.is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: var(--muted); }
+:is(.ai-localize, .ai-board).is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: var(--muted); }
 html.ai-locked { overflow: hidden; }
 html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has its own controls in that corner */
 .hb-view { position: relative; overflow: hidden; height: calc(708px * var(--hb-s, .6)); }
@@ -2807,6 +2809,8 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .hb-chapters button:hover .hb-ch-t { color: var(--ink); }
 .hb-chapters button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 4px; border-radius: 4px; }
 .ai-localize.is-full .hb-chapters { width: min(100%, calc((100vh - 170px) * 1280 / 708)); }
+.ai-board.is-full :is(.mb-window, .hb-chapters) { width: min(100%, calc((100vh - 170px) * 1200 / 640)); }
+.ai-board.is-full.is-mobile :is(.mb-window, .hb-chapters) { width: min(100%, calc((100vh - 170px) * 420 / 700)); }
 .ai-localize.is-full.is-mobile .hb-chapters { width: min(100%, calc((100vh - 170px) * 390 / 760)); }
 @media (max-width: 720px) { .hb-chapters { gap: 4px; } .hb-chapters button { font-size: 10.5px; line-height: 1.2; } .hb-ch-t { white-space: normal; } }
 
@@ -2862,7 +2866,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .mb-window .ai-title { color: var(--mb-sub); }
 .mb-view { position: relative; overflow: hidden; height: calc(640px * var(--mb-s, .6)); }
 .mb { position: absolute; left: 0; top: 0; width: 1200px; height: 640px; overflow: hidden; background: var(--mb-shell); color: var(--mb-ink);
-  font: 400 14px/1.3 "Figtree", "Poppins", -apple-system, "Helvetica Neue", Arial, sans-serif; transform-origin: 0 0; transform: scale(var(--mb-s, .6)); }
+  font: 400 14px/1.3 "Figtree", "Poppins", -apple-system, "Helvetica Neue", Arial, sans-serif; transform-origin: 0 0; transform: translate(calc(var(--mb-tx, 0) * 1px), calc(var(--mb-ty, 0) * 1px)) scale(var(--mb-k, var(--mb-s, .6))); transition: transform 1s var(--ease); }
 .mb-track { display: flex; width: 2400px; height: 100%; transition: transform .8s var(--ease); }
 .mb.is-zap .mb-track { transform: translateX(-1200px); }
 .mb-pane, .zp-pane { position: relative; flex: none; width: 1200px; height: 100%; overflow: hidden; }
@@ -3046,7 +3050,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
   background: rgba(150, 150, 160, .45); box-shadow: 0 0 0 2px rgba(255, 255, 255, .8), 0 2px 10px rgba(0, 0, 0, .25); }
 .mb.is-mobile .mb-touch.is-tap { animation: hb-tap .65s var(--ease) forwards; }
 .ai-board.is-mobile .mb-window .ai-bar { display: none; }
-@media (prefers-reduced-motion: reduce) { .mb-cursor, .mb-track { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .mb, .mb-cursor, .mb-track { transition: none; } }
 
 /* 3. the Mars Men cut */
 .ct-grid { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; }

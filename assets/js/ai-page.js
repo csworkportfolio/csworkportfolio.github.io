@@ -333,17 +333,41 @@
     const set = (cls, on) => mb.classList.toggle(cls, on);
     // each screen is drawn at 1200 by 640 and scaled to the window; a phone gets the mobile layouts, drawn at 420 by 700
     let mobile = false;
-    const frame = () => {
+    // filmed like the Hub: on a wide screen the view leans in on the part in use (the Generate column, then
+    // Claude's instructions) and eases back out; a phone shows the whole screen
+    const FOCUS = { gen: [1060, 300, 1.3], claude: [880, 330, 1.22] };
+    let focus = "all";
+    const frame = (f = focus) => {
+      focus = f;
       const w = view.clientWidth;
       mobile = w < 640;
       mb.classList.toggle("is-mobile", mobile);
       fig.classList.toggle("is-mobile", mobile);
-      const s = w / (mobile ? 420 : 1200);
+      const s = w / (mobile ? 420 : 1200), h = (mobile ? 700 : 640) * s;
       view.style.setProperty("--mb-s", s);
-      view.style.height = (mobile ? 700 : 640) * s + "px";
+      view.style.height = h + "px";
+      const [cx, cy, z] = (!mobile && FOCUS[f]) || [0, 0, 1];
+      const k = s * z, clamp = (v, lo) => Math.min(0, Math.max(lo, v));
+      view.style.setProperty("--mb-k", k);
+      view.style.setProperty("--mb-tx", z === 1 ? 0 : clamp(w / 2 - cx * k, w - 1200 * k));
+      view.style.setProperty("--mb-ty", z === 1 ? 0 : clamp(h / 2 - cy * k, h - 640 * k));
     };
-    new ResizeObserver(frame).observe(view);
+    new ResizeObserver(() => frame()).observe(view);
     frame();
+    // a click (or Enter) opens it larger, over the page; another click, Esc or the backdrop closes it
+    view.tabIndex = 0;
+    view.setAttribute("role", "button");
+    const full = (on) => {
+      fig.classList.toggle("is-full", on);
+      document.documentElement.classList.toggle("ai-locked", on);
+      view.setAttribute("aria-label", on ? "Close the larger view" : "Open the Monday.com demo larger");
+      requestAnimationFrame(() => frame());
+    };
+    full(false);
+    view.addEventListener("click", () => full(!fig.classList.contains("is-full")));
+    view.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); full(!fig.classList.contains("is-full")); } });
+    fig.querySelector(".ai-stage").addEventListener("click", (e) => { if (e.target === e.currentTarget && fig.classList.contains("is-full")) full(false); });
+    addEventListener("keydown", (e) => { if (e.key === "Escape" && fig.classList.contains("is-full")) full(false); });
     if (still) { const bar = $(".hb-chapters"); if (bar) bar.hidden = true; return; }
     const touch = document.createElement("span");
     touch.className = "mb-touch";
@@ -368,6 +392,15 @@
     let gen = 0;
     const STOP = Symbol("stop");
     const w = async (ms) => { const g = gen; await d.wait(ms); if (g !== gen) throw STOP; };
+    // the line under the demo says what is happening
+    const note = fig.querySelector(".ai-note");
+    const say = async (s) => {
+      if (!note || note.textContent === s) return;
+      note.classList.add("is-fading");
+      await d.wait(250);
+      note.textContent = s;
+      note.classList.remove("is-fading");
+    };
     const mark = (n, p = 0) => bars.forEach((b, i) => {
       b.classList.toggle("is-on", i === n);
       b.classList.toggle("is-done", i < n);
@@ -387,12 +420,16 @@
       $(".zp-out-v").textContent = "";
       tally();
       set("is-pointing", !mobile);
+      frame("all");
     };
     const chapters = [
       async () => {   // every item starts as an idea; Generate on the first one
         reset();
         cursor.style.left = "760px"; cursor.style.top = "560px";
-        await w(900);
+        say("This is a copy of Monday.com and Zapier, rebuilt for this page. The rows are made-up examples.");
+        await w(1600);
+        say("Each item has a Generate button. Clicking it starts a Zapier workflow.");
+        frame("gen");
         await press(rows[0]);
         rows[0].querySelector(".mb-ai").classList.add("is-busy");
         mark(0, 1);
@@ -400,33 +437,44 @@
       },
       async (jumped) => {   // the board slides away to the zap behind the button, which runs step by step
         if (jumped) { reset(); rows[0].querySelector(".mb-ai").classList.add("is-busy"); await w(400); }
+        frame("all");
         set("is-zap", true);
-        await w(1100);
+        say("Behind the button is a zap with three steps.");
+        await w(1300);
         point(steps[0], 0.9);
-        steps[0].classList.add("is-run"); await w(700);
+        say("First, it picks up the click in Monday.");
+        steps[0].classList.add("is-run"); await w(1100);
         steps[0].classList.replace("is-run", "is-ok");
         mark(1, .2);
         point(steps[1], 0.9);
         steps[1].classList.add("is-run"); set("is-writing", true);
+        say("Then it sends the item to Claude, with our do's and don'ts as the instructions.");
         await w(600);
         point($(".zp-area"), 0.7, 0.4);   // Claude works from the do's and don'ts
+        frame("claude");
         await w(2000);
         set("is-writing", false); steps[1].classList.replace("is-run", "is-ok");
         $(".zp-out-v").textContent = data.rows[0].ai;
+        say("Claude writes the brief.");
         mark(1, .6);
         await w(900);
         point(steps[2], 0.9);
-        steps[2].classList.add("is-run"); await w(800);
+        frame("all");
+        say("Last, it puts the result back in the board.");
+        steps[2].classList.add("is-run"); await w(1100);
         steps[2].classList.replace("is-run", "is-ok");
         await w(1600);
         set("is-zap", false);   // back on the board, the result is in
         await w(900);
         fill(rows[0]);
+        say("Back in Monday, the brief is in the row, ready for me to edit.");
         mark(1, 1);
+        await w(900);
         await w(900);
       },
       async (jumped) => {   // the same zap for the other items, each a click away
         if (jumped) { reset(); fill(rows[0]); await w(500); }
+        say("Every other item works the same way, one click each.");
         for (const [i, r] of rows.slice(1).entries()) {
           await press(r);
           r.querySelector(".mb-ai").classList.add("is-busy");
@@ -440,6 +488,7 @@
       },
       async (jumped) => {   // then the work moves along the statuses
         if (jumped) { reset(); rows.forEach(fill); await w(500); }
+        say("Then each item moves along the board until it's scheduled.");
         for (let step = 2; step <= top; step++) {
           for (const r of rows.slice(step - 1)) {
             point(r.querySelector(".mb-status"));

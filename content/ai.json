@@ -238,7 +238,7 @@
           "I set up the calendar to do some of the work itself. Each item had a Generate button. Clicking it ran a Zapier workflow that sent the item to Claude, with instructions built from our do's and don'ts, and wrote the result back into the board for me to edit."
         ],
         "demo": "board",
-        "note": "A copy of Monday.com and Zapier, made for this page. The rows are examples.",
+        "note": "Every item generated and moving along. This is a copy of Monday.com and Zapier, rebuilt for this page, and the rows are made-up examples.",
         "rows": [
           {
             "item": "Product launch post",
@@ -297,7 +297,8 @@
             "Item Name",
             "on",
             "Channel"
-          ]
+          ],
+          "model": "Claude Sonnet 4"
         },
         "chapters": [
           "Click Generate",
