@@ -2786,7 +2786,14 @@ html.ai-locked { overflow: hidden; }
 :root[data-os="ios"] .hb-views button { height: 38px; padding: 0 16px; font-size: 15px; }
 @media (max-width: 720px) { .hb-views { display: none; } }
 @media (prefers-reduced-motion: reduce) { .hb-views button { transition: none; } }
-.ai-localize.is-device .hb-view { background: var(--hb-thumb); }
+/* Mobile on a wide screen: the desktop window steps away (its frame stays, so nothing around it moves) and the
+   phone screen stands on its own, with the window's rounded corners and shadow */
+.hb-window, .hb-window .ai-bar { transition: background-color .3s, box-shadow .3s, opacity .3s; }
+.ai-localize.is-device .hb-window { background: transparent; box-shadow: none; }
+.ai-localize.is-device .hb-window .ai-bar { opacity: 0; border-color: transparent; }
+.ai-localize.is-device .hb { border-radius: calc(14px / var(--hb-s)); box-shadow: var(--ai-shadow); }
+/* on a phone the window's title bar goes too: the Hub's own green bar is the top */
+.ai-localize.is-mobile .hb-window .ai-bar { display: none; }
 
 /* the chapters under the Hub: each fills as it plays; tap one to jump there */
 .hb-chapters { display: flex; gap: 6px; margin-top: 16px; }
