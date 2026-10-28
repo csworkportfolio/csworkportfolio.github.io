@@ -282,8 +282,8 @@ function start(THREE) {
     return run > 0 ? clamp((pin() - r.top) / run) : 0;
   };
 
-  // the opening pose (Brief): turned to the left, tipped back a little, its top rolled up to the right
-  const START = { ry: -0.55, rx: 0.1, rz: 0.13 };
+  // the opening pose (Brief): turned to the left with its top tipped back, as if lifted from the bottom left corner
+  const START = { ry: -0.56, rx: -0.25, rz: 0.02 };
   // the pose of each step: turn (y), tilt (x), drop (into the gray lane), gray, and what's on the screen
   function pose(p) {
     const at = Math.min(N - 1, Math.floor(p * N)), k = p * N - at;
@@ -310,7 +310,6 @@ function start(THREE) {
       const clear = clamp(k / 0.2);
       o.ry = -0.22 + 0.12 * ease(k); o.rx = 0.04; o.notes = [1 - clear, 1 - clear, 1 - clear, clamp((k - 0.55) / 0.2)];
       o.roll = ease(clamp((k - 0.15) / 0.4));
-      o.y = 0.075 * ease(clamp((k - 0.4) / 0.3));   // lifts as the reach count comes in, with the switcher
     }
     return o;
   }
@@ -419,6 +418,9 @@ function start(THREE) {
     camera.position.set(0, 0, camBase);
     camera.updateProjectionMatrix();
     note.style.top = `${f.top - v.top + f.height * 0.6}px`;
+    // at Verify the phone, switcher and count rise together by half the count's height, so the three centre as one
+    const cnt = scene.querySelector(".sc-count");
+    if (cnt) scene.style.setProperty("--n3-lift", `${Math.round((cnt.offsetHeight + 28) / 2)}px`);
     note.style.left = `${cx}px`;
   }
   let camBase = 5;
