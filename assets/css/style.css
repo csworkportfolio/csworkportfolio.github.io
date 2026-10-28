@@ -847,25 +847,26 @@ main { view-transition-name: page; }
 }
 .sc-switch button { white-space: nowrap; padding: 0 14px; height: 32px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 13px; font-weight: 500; color: var(--tabink); cursor: pointer; transition: background-color .18s, color .18s; }
 .sc-switch button.is-on { background: #007aff; color: #fff; }
-/* four placements on a phone: a little tighter, so they stay on one line */
 /* the sound of a placement with sound (ACG): a small speaker in a circle at the start of its own pill, always there so
    the pill keeps its width; only on the 3D phone, which is the one that plays it */
 .n3-sound { display: none; }
 .scene.has-3d .n3-sound { display: inline-grid; place-items: center; width: 20px; height: 20px; margin: 0 6px 0 -7px; border-radius: 50%;
   background: var(--tablens); }
+.scene.has-3d .sc-switch button.is-on .n3-sound { background: rgba(255,255,255,.24); }
 /* the pill with the speaker lines its name up on the same middle as the others */
 .scene.has-3d .sc-switch button:has(.n3-sound) { display: inline-flex; align-items: center; }
-.scene.has-3d .sc-switch button.is-on .n3-sound { background: rgba(255,255,255,.24); }
 .n3-sound svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .n3-sound .spk { fill: currentColor; stroke: none; }
 .n3-sound .on, .n3-sound.is-on .off { display: none; }
 .n3-sound.is-on .on { display: inline; }
-@media (max-width: 720px) {
-  .sc-switch button { padding: 0 10px; font-size: 12.5px; flex: none; }
-  /* never wider than the screen: past that it swipes inside itself, like the tab bar */
-  .sc-switch { max-width: calc(100vw - 2 * var(--gutter) - 52px); box-sizing: border-box;   /* room for the play button beside it */ overflow-x: auto; scrollbar-width: none; }
-  .sc-switch::-webkit-scrollbar { display: none; }
+/* below a full desktop width (and on phones) the four placements sit in one panel of two rows, grouped by kind (the
+   two Spotlight stories, then the two app videos), so all of them show and the panel centres under the phone */
+@media (max-width: 1300px) {
+  .sc-switch { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 19px; }
+  .sc-switch button { justify-content: center; }
+  .scene.has-3d .sc-switch button:has(.n3-sound) { justify-content: center; }
 }
+@media (max-width: 720px) { .sc-switch button { padding: 0 12px; font-size: 13px; } }
 .ph-island {
   position: absolute; left: 50%; top: calc(var(--phw, 300px) * .03); width: calc(var(--phw, 300px) * .32); height: calc(var(--phw, 300px) * .09);
   transform: translateX(-50%) translateZ(1px); border-radius: 999px; background: #000;
