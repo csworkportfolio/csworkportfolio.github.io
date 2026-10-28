@@ -827,6 +827,9 @@ main { view-transition-name: page; }
   .scene:not(.is-live) .sc-visual { position: sticky; top: calc(var(--pills-h, 80px) + 24px); }
 }
 .ph { margin: 0; width: min(300px, 70%); aspect-ratio: 921 / 2000; position: relative; transform-style: preserve-3d; }
+/* the 3D phone's stand-in (Reduce Motion, no WebGL): a still of it, cropped to the phone, over the box the 3D phone
+   fills (a touch taller, for the turn and its edge) */
+.ph.ph-still > img { position: absolute; left: 50%; top: 50%; height: 106%; width: auto; max-width: none; transform: translate(-50%, -50%); pointer-events: none; }
 /* the frame: a titanium ring with a lit edge, the island, the action, volume and side keys; everything is
    sized from the phone's width (--phw, set by main.js), so it holds at any size */
 .ph-body {

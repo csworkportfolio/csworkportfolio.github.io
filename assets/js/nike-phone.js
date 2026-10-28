@@ -31,10 +31,8 @@ if (scene && visual && flat && webgl && !reduce) {
 function start(THREE) {
   // ---------- the placements: the screens each set shows (the switcher under the phone picks one) ----------
   const setsEl = scene.querySelector(".sc-sets");
-  const sets = setsEl ? JSON.parse(setsEl.textContent)
-    : [{ src: flat.querySelector(".ph-layer img")?.src, next: flat.querySelector(".ph-next")?.src }];
-  const cuts = [...flat.querySelectorAll(".ph-layer")].map((l) => parseFloat(l.style.top) / 100);
-  cuts.push(1);
+  const sets = JSON.parse(setsEl.textContent);
+  const cuts = JSON.parse(flat.dataset.cuts || "[0,1]");   // where the story template's sections split (build.py)
 
   // ---------- renderer, camera, studio light ----------
   const canvas = document.createElement("canvas");
@@ -45,6 +43,10 @@ function start(THREE) {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  // tools/make-phone-stills: with #n3-still in the address, the scene hands over a frame as a picture
+  let stillMode = false;   // while making stills, a recorded placement holds on its first frame
+  if (location.hash === "#n3-still") window.n3Capture = (i) => { stillMode = true; if (i != null) useSet(i); return new Promise((ok) => setTimeout(() => { renderer.render(world, camera); ok(canvas.toDataURL("image/png")); }, 1500)); };
+  let lowPower = false;   // set once if the graphics can't keep up (lowerQuality)
   const world = new THREE.Scene();
   world.environment = new THREE.PMREMGenerator(renderer).fromScene(studio(THREE), 0.04).texture;
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
@@ -497,7 +499,7 @@ function start(THREE) {
     // on a phone the canvas spans the screen's width exactly (wider would make the page scroll sideways)
     const h = f.height * ROOM, w = phoneMode.matches ? innerWidth : v.width * (1 + 2 * SIDE);
     const left = phoneMode.matches ? -v.left : cx - w / 2;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, phoneMode.matches ? 1.5 : 2));
+    renderer.setPixelRatio(lowPower ? 1 : Math.min(devicePixelRatio, phoneMode.matches ? 1.5 : 2));
     Object.assign(canvas.style, { left: `${left}px`, top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
@@ -521,11 +523,11 @@ function start(THREE) {
     if (on === full) return;
     full = on;
     if (on) { canvas.removeAttribute("style"); canvas.classList.add("ph3d-full"); stageEl.append(canvas); fullW = fullH = 0; }
-    else { canvas.classList.remove("ph3d-full"); visual.append(canvas); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); size(); }
+    else { canvas.classList.remove("ph3d-full"); visual.append(canvas); size(); }
   }
   function fullFrame() {
     const f = flat.getBoundingClientRect(), W = innerWidth, Hv = innerHeight;
-    if (W !== fullW || Hv !== fullH) { fullW = W; fullH = Hv; renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); renderer.setSize(W, Hv, false); }
+    if (W !== fullW || Hv !== fullH) { fullW = W; fullH = Hv; renderer.setPixelRatio(lowPower ? 1 : Math.min(devicePixelRatio, 1.5)); renderer.setSize(W, Hv, false); }
     camera.aspect = W / Hv;
     camera.fov = 2 * THREE.MathUtils.radToDeg(Math.atan((H * ROOM * Hv / (f.height * ROOM)) / 2 / camBase));
     camera.updateProjectionMatrix();
@@ -550,7 +552,12 @@ function start(THREE) {
     lastDraw = now;
     if (!onScreen || !live()) { flag("has-3d", false); return; }
     flag("has-3d", true);
-    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const gap = now - last;
+    const dt = Math.min(0.05, gap / 1000); last = now;
+    // a safety net for slower graphics: if the scene can't keep up (frames slower than about 45 a second over a
+    // couple of seconds of drawing), it drops to plain sharpness and frosted banners instead of real glass, once
+    // (measured only while animating at full rate: the settled float runs at 30 on purpose)
+    if (!lowPower && still <= 20 && gap < 1000) { slowSum += gap; slowN++; if (slowN >= 45) { if (slowSum / slowN > 22) lowerQuality(); slowSum = 0; slowN = 0; } }
     const o = pose(progress());
     const f = 1 - Math.exp(-dt * 7);   // follows the scroll closely, without judder
     for (const k of ["rx", "rz", "y", "s", "gray", "mine"]) cur[k] += (o[k] - cur[k]) * f;
@@ -613,7 +620,7 @@ function start(THREE) {
     // the video plays only while the screen is whole and on screen, and never rolls on to a next screen
     const whole = apart < 0.002;
     // (it holds still during the zoom's close-up, so the screen isn't moving under a moving camera; the spin leaves it playing)
-    if (clipOn) { if (whole && onScreen && !document.hidden && zoomAt < 0) { if (clip.paused) clip.play().catch(() => {}); } else if (!clip.paused) clip.pause(); }
+    if (clipOn) { if (whole && onScreen && !document.hidden && zoomAt < 0 && !stillMode) { if (clip.paused) clip.play().catch(() => {}); } else if (!clip.paused) clip.pause(); }
     drawScreen(clipOn ? 0 : o.roll, whole);
     // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
@@ -631,7 +638,7 @@ function start(THREE) {
       nt.group.visible = k > 0.02;
       nt.group.position.y = nt.n.y + (1 - k) * 0.12;
       nt.group.scale.setScalar(0.94 + 0.06 * k);
-      nt.words.material.opacity = k; nt.tint.material.color.set(dark ? 0x1c1c1e : 0xffffff); nt.tint.material.opacity = k * (dark ? 0.6 : 0.8);   // enough tint that the glass reads as a solid banner (whiter by day)
+      nt.words.material.opacity = k; nt.tint.material.color.set(dark ? 0x1c1c1e : 0xffffff); nt.tint.material.opacity = k * (lowPower ? 0.92 : dark ? 0.6 : 0.8);   // enough tint that the glass reads as a solid banner (whiter by day)
     });
     if (zk > 0) {   // close on the screen, a little to one side, looking at the shot's point on it
       phone.updateMatrixWorld();
@@ -680,7 +687,14 @@ function start(THREE) {
     still = moved || busy ? 0 : still + 1;
     raf = requestAnimationFrame(frame);
   }
-  let lastSig = [], still = 0, lastDraw = 0;
+  let lastSig = [], still = 0, lastDraw = 0, slowSum = 0, slowN = 0;
+  function lowerQuality() {
+    lowPower = true;
+    scene.dataset.lite = "";   // marks the lighter mode (handy when checking a slow device)
+    renderer.setPixelRatio(1);
+    glassBanner.transmission = 0; glassBanner.opacity = 0; glassBanner.transparent = true; glassBanner.needsUpdate = true;   // the banners' tint carries them
+    if (full) { fullW = fullH = 0; } else size();
+  }
   // how far the visible group's middle sits off the canvas's middle, in world units at the phone's depth: the phone's
   // body corners and every visible piece's corners, projected
   const _p = new THREE.Vector3();

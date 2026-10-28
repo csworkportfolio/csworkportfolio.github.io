@@ -1668,6 +1668,7 @@
       sw.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
         const set = sets[+b.dataset.set];
         ph.querySelectorAll(".ph-layer img").forEach((img) => { img.src = set.src; });
+        const still = ph.querySelector(":scope > img"); if (still && set.still) still.src = set.still;   // the 3D phone's stand-in
         const nx = ph.querySelector(".ph-next"); if (nx) nx.src = set.next;
         sw.querySelectorAll("button").forEach((x) => x.classList.toggle("is-on", x === b));
       }));

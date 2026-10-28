@@ -1065,22 +1065,32 @@ def flow(b, media, root):
     sets = [{"name": s_["name"], "src": root + s_["poster"], "next": root + s_["poster"], "video": root + s_["video"], "sound": bool(s_.get("sound"))} if s_.get("video")
             else {"name": s_["name"], "src": root + media.get(s_["phone"])["src"], "next": root + media.get(s_["next"])["src"]}
             for s_ in b.get("sets", [])]
+    # "phone3d": a still of the 3D phone for each placement (tools/make_phone_stills.cjs) stands in wherever the 3D
+    # phone can't run (Reduce Motion, no WebGL); it replaces the drawn phone
+    if b.get("phone3d"):
+        for i, s_ in enumerate(b.get("sets", [])):
+            sets[i]["still"] = f"{root}assets/phone/nike-{i}.webp?v={asset_version(f'assets/phone/nike-{i}.webp')}" if (ROOT / f"assets/phone/nike-{i}.webp").exists() else ""
     switch = ""
     if len(sets) > 1:
         on_cls = ' class="is-on"'
         btns = "".join(f'<button type="button" data-set="{i}"{on_cls if i == 0 else ""}>{esc(s_["name"])}</button>' for i, s_ in enumerate(sets))
         switch = (f'<div class="sc-switch" role="group" aria-label="Choose the placement shown">{btns}</div>'
                   f'<script type="application/json" class="sc-sets">{json_script(sets)}</script>')
-    phone = (f'<figure class="ph" aria-hidden="true"><div class="ph-body">'
-             f'<div class="ph-screen"><div class="ph-roll">{"".join(layers)}{next_img}</div></div>'
-             '<span class="ph-island"></span><span class="ph-key ph-key-action"></span><span class="ph-key ph-key-up"></span>'
-             '<span class="ph-key ph-key-down"></span><span class="ph-key ph-key-side"></span>'
-             '<span class="ph-halo"></span><span class="ph-glow"></span><span class="ph-copybox"></span>'
-             '<span class="ph-stamp"><svg viewBox="0 0 48 48"><path d="M14 25l7 7 13-15"/></svg>QA approved</span>'
-             '<span class="ph-chip">Scheduled for its publish window</span>'
-             '<span class="ph-live">Live</span></div></figure>')
-    # "phone3d": the phone in three.js (assets/js/nike-phone.js) on the pinned desktop layout; the flat phone above
-    # stays for everything else. three.js comes through an import map and loads only when the section nears.
+    if b.get("phone3d"):
+        first = sets[0].get("still", "") if sets else ""
+        phone = (f'<figure class="ph ph-still" aria-hidden="true" data-cuts="{json_script(cuts)}">'
+                 + (f'<img src="{first}" alt="" decoding="async">' if first else "") + '</figure>')
+    else:
+      phone = (f'<figure class="ph" aria-hidden="true"><div class="ph-body">'
+               f'<div class="ph-screen"><div class="ph-roll">{"".join(layers)}{next_img}</div></div>'
+               '<span class="ph-island"></span><span class="ph-key ph-key-action"></span><span class="ph-key ph-key-up"></span>'
+               '<span class="ph-key ph-key-down"></span><span class="ph-key ph-key-side"></span>'
+               '<span class="ph-halo"></span><span class="ph-glow"></span><span class="ph-copybox"></span>'
+               '<span class="ph-stamp"><svg viewBox="0 0 48 48"><path d="M14 25l7 7 13-15"/></svg>QA approved</span>'
+               '<span class="ph-chip">Scheduled for its publish window</span>'
+               '<span class="ph-live">Live</span></div></figure>')
+    # "phone3d": the phone in three.js (assets/js/nike-phone.js); where it can't run, the still above stands in.
+    # three.js comes through an import map and loads only when the section nears.
     p3d = ""
     if b.get("phone3d"):
         p3d = ('<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js"}}</script>'
