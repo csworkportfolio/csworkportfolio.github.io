@@ -473,15 +473,22 @@ function start(THREE) {
   // camera drifts in and out over different parts of it; off, it settles back. The zoom is a commercial pass down the
   // screen: one turn to face the reader, then a slow close-up from the top of the placement down to its nav bar
   let spinning = false, spinK = 0, spinAngle = 0, zoomAt = -1;
+  // a close-up stopped early glides back from exactly where it was (zoomOut holds that pose); zNow is the latest pose
+  let zoomOut = null, zNow = { zk: 0, zf: 0, zturn: 0, shotY: 0 };
   const spinBtn = dock.querySelector('[data-act="spin"]');
-  const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) { zoomAt = -1; zoomBtn.setAttribute("aria-pressed", "false"); } kick(); };
+  const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) stopZoom(); kick(); };
   spinBtn.addEventListener("click", () => setSpin(!spinning));
   // the zoom is a switch too: pressed again mid-show, it pulls straight back out
   const zoomBtn = dock.querySelector('[data-act="zoom"]');
   zoomBtn.setAttribute("aria-pressed", "false");
-  const zoomIn = () => zoomAt >= 0 && performance.now() - zoomAt < ZOOM_MS - Z_OUT;
+  const zoomIn = () => zoomAt >= 0 && !zoomOut && performance.now() - zoomAt < ZOOM_MS - Z_OUT;
+  function stopZoom() {
+    if (zoomIn()) { zoomOut = { at: performance.now(), ...zNow }; kick(); }
+    zoomBtn.setAttribute("aria-pressed", "false");
+  }
   zoomBtn.addEventListener("click", () => {
-    if (zoomIn()) { endShow(); return; }
+    if (zoomIn()) { stopZoom(); return; }
+    if (zoomOut) return;   // already gliding back
     setSpin(false); zoomAt = performance.now(); showScroll = scrollY; zoomBtn.setAttribute("aria-pressed", "true"); kick();
   });
   // a little scrolling, or a click or tap anywhere outside the controls, ends a show: the spin eases back, and the
@@ -490,9 +497,7 @@ function start(THREE) {
   spinBtn.addEventListener("click", () => { showScroll = scrollY; });
   function endShow() {
     if (spinning) setSpin(false);
-    const now = performance.now();
-    if (zoomAt >= 0 && now - zoomAt < ZOOM_MS - Z_OUT) { zoomAt = now - (ZOOM_MS - Z_OUT); kick(); }
-    zoomBtn.setAttribute("aria-pressed", "false");
+    stopZoom();
   }
   const showing = () => spinning || zoomAt >= 0;
   addEventListener("scroll", () => { if (showing() && Math.abs(scrollY - showScroll) > 40) endShow(); }, { passive: true });
@@ -593,7 +598,12 @@ function start(THREE) {
     else spinAngle += (Math.round(spinAngle / (Math.PI * 2)) * Math.PI * 2 - spinAngle) * Math.min(1, dt * 2.5);
     // the close-up: a turn to face the reader (zf), then in close (zk), down the screen, and out
     let zk = 0, zf = 0, zturn = 0, shotY = PAN_TOP, sway = 0;
-    if (zoomAt >= 0) {
+    if (zoomOut) {
+      // stopped early: every part eases back together from the pose it had, the turn to the nearest full turn
+      const k = ease(clamp((now - zoomOut.at) / Z_OUT)), o = zoomOut;
+      if (k >= 1) { zoomOut = null; zoomAt = -1; }
+      else { zk = o.zk * (1 - k); zf = o.zf * (1 - k); shotY = o.shotY; zturn = o.zturn + (Math.round(o.zturn / (Math.PI * 2)) * Math.PI * 2 - o.zturn) * k; }
+    } else if (zoomAt >= 0) {
       const t = now - zoomAt;
       if (t >= ZOOM_MS) { zoomAt = -1; zoomBtn.setAttribute("aria-pressed", "false"); }
       else {
@@ -605,6 +615,7 @@ function start(THREE) {
         shotY = PAN_TOP + (PAN_BOTTOM - PAN_TOP) * ease(clamp((ti - Z_IN * 0.6) / Z_PAN));
       }
     }
+    zNow = { zk, zf, zturn, shotY };
     const lx = 0, ly = 0;
     const wob = spinK * 0.1 * Math.sin(now / 2600);                          // the turntable tips a little as it turns
     const hero = ease(spinK);
