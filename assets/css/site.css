@@ -2807,7 +2807,7 @@ html.theme-dark .hb-window { --hb-bg: #050508; --hb-card: #101213; --hb-thumb: #
 .ai-localize.is-full .hb-view { cursor: zoom-out; }
 .ai-localize.is-full .ai-stage { position: fixed; inset: 0; z-index: 10000; margin: 0; border-radius: 0; padding: 24px 24px 64px; display: grid; place-items: center; align-content: center;
   background: #050508; }
-.ai-localize.is-full .hb-window { width: min(100%, calc((100vh - 214px) * 1280 / 708)); }
+.ai-localize.is-full .hb-window { width: min(100%, calc((100vh - 170px) * 1280 / 708)); }
 .ai-localize.is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: #e8e8ed; }
 html.ai-locked { overflow: hidden; }
 .hb-view { position: relative; overflow: hidden; height: calc(708px * var(--hb-s, .6)); }
@@ -2980,18 +2980,27 @@ html.ai-locked { overflow: hidden; }
 .hb.is-pointing .hb-cursor { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .hb, .hb-cursor { transition: none; } }
 
-/* Desktop or Mobile, above the Hub (wide screens only; a phone already shows the mobile layout) */
-.hb-views { --seg: #fff; display: flex; width: max-content; margin: 0 auto 16px; padding: 2px; border-radius: 9px; background: color-mix(in srgb, var(--ink) 9%, transparent); }
-.hb-views button { min-width: 92px; height: 28px; padding: 0 14px; border: 0; border-radius: 7px; background: none; cursor: pointer;
-  font-family: inherit; font-size: 13px; font-weight: 500; color: var(--ink); transition: background-color .2s, box-shadow .2s; }
-.hb-views button[aria-pressed="true"] { background: var(--seg); box-shadow: 0 1px 3px rgba(0, 0, 0, .14), 0 0 0 .5px rgba(0, 0, 0, .06); font-weight: 600; }
-.hb-views button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 2px; }
-@media (max-width: 720px) { .hb-views { display: none; } }
+/* Desktop or Mobile: the site's glass switcher in small, beside the pause button (wide screens only; a phone
+   already shows the mobile layout) */
+.hb-views { position: absolute; top: 14px; right: 54px; z-index: 2; display: flex; gap: 2px; height: 32px; padding: 2px; box-sizing: border-box; border-radius: 999px;
+  background: var(--tabglass); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--tabshadow); }
+.hb-views button { height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: none; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; font-weight: 500; line-height: 1; color: rgba(0, 0, 0, .7); transition: background-color .18s, color .18s, box-shadow .18s; }
+.hb-views button:hover { color: #000; }
+.hb-views button[aria-pressed="true"] { background: #007aff; color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .15); }
+.hb-views button:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: -2px; }
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light) .hb-views { --seg: #636366; }
+  html:not(.theme-light) .hb-views button { color: rgba(255, 255, 255, .72); }
+  html:not(.theme-light) .hb-views button:hover { color: #fff; }
+  html:not(.theme-light) .hb-views button[aria-pressed="true"] { background: #0a84ff; color: #fff; }
 }
-html.theme-dark .hb-views { --seg: #636366; }
-.ai-localize.is-full .hb-views { --ink: #f5f5f7; --seg: #636366; margin-bottom: 12px; }
+html.theme-dark .hb-views button { color: rgba(255, 255, 255, .72); }
+  html.theme-dark .hb-views button:hover { color: #fff; }
+  html.theme-dark .hb-views button[aria-pressed="true"] { background: #0a84ff; color: #fff; }
+:root[data-os="ios"] .hb-views { top: 8px; right: 60px; height: 44px; padding: 3px; }
+:root[data-os="ios"] .hb-views button { height: 38px; padding: 0 16px; font-size: 15px; }
+@media (max-width: 720px) { .hb-views { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hb-views button { transition: none; } }
 .ai-localize.is-device .hb-view { background: var(--hb-thumb); }
 
 /* the chapters under the Hub: each fills as it plays; tap one to jump there */
@@ -3004,8 +3013,8 @@ html.theme-dark .hb-views { --seg: #636366; }
 .hb-chapters button.is-on .hb-ch-t { color: var(--ink); font-weight: 600; }
 .hb-chapters button:hover .hb-ch-t { color: var(--ink); }
 .hb-chapters button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 4px; border-radius: 4px; }
-.ai-localize.is-full .hb-chapters { width: min(100%, calc((100vh - 214px) * 1280 / 708)); --muted: #a1a1a6; --ink: #f5f5f7; }
-.ai-localize.is-full.is-mobile .hb-chapters { width: min(100%, calc((100vh - 214px) * 390 / 760)); }
+.ai-localize.is-full .hb-chapters { width: min(100%, calc((100vh - 170px) * 1280 / 708)); --muted: #a1a1a6; --ink: #f5f5f7; }
+.ai-localize.is-full.is-mobile .hb-chapters { width: min(100%, calc((100vh - 170px) * 390 / 760)); }
 @media (max-width: 720px) { .hb-chapters { gap: 4px; } .hb-chapters button { font-size: 10.5px; line-height: 1.2; } .hb-ch-t { white-space: normal; } }
 
 /* the Hub's mobile layout: one post wide, the menu as a tab bar along the foot */
@@ -3044,7 +3053,7 @@ html.theme-dark .hb-views { --seg: #636366; }
   background: rgba(150, 150, 160, .45); box-shadow: 0 0 0 2px rgba(255, 255, 255, .8), 0 2px 10px rgba(0, 0, 0, .25); }
 .hb.is-mobile .hb-touch.is-tap { animation: hb-tap .65s var(--ease) forwards; }
 @keyframes hb-tap { 0% { opacity: 0; transform: scale(.5); } 20% { opacity: 1; transform: scale(.8); } 100% { opacity: 0; transform: scale(1.5); } }
-.ai-localize.is-full.is-mobile .hb-window { width: min(100%, calc((100vh - 214px) * 390 / 760)); }
+.ai-localize.is-full.is-mobile .hb-window { width: min(100%, calc((100vh - 170px) * 390 / 760)); }
 
 /* 2. the editorial board */
 .bd-grid { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 20px; align-items: start; }

@@ -148,7 +148,7 @@
     let fixes = 1;
     const count = () => { $(".hb-count-v").textContent = fixes; $(".hb-unit").textContent = fixes === 1 ? "fix" : "fixes"; };
     const bar = fig.querySelector(".hb-chapters");
-    if (still) { if (bar) bar.hidden = true; return; }
+    if (still) { for (const el of fig.querySelectorAll(".hb-chapters, .hb-views")) el.hidden = true; return; }
     // the demo runs in chapters; the bar under it shows where it is and jumps to any chapter
     const steps = [...bar.querySelectorAll("button")];
     const review = data.regions.find((r) => r.review);
