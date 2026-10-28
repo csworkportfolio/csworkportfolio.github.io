@@ -1062,7 +1062,7 @@ def flow(b, media, root):
     # "sets": other placements the reader can switch the phone to (the same cuts apply: Nike's story template)
     # a set can also be a placement's screen recording ("video", with a still "poster"), which the 3D phone plays;
     # the flat phone shows its poster
-    sets = [{"name": s_["name"], "src": root + s_["poster"], "next": root + s_["poster"], "video": root + s_["video"], "sound": bool(s_.get("sound"))} if s_.get("video")
+    sets = [{"name": s_["name"], "src": root + s_["poster"], "next": root + s_["poster"], "video": f'{root}{s_["video"]}?v={asset_version(s_["video"])}', "sound": bool(s_.get("sound"))} if s_.get("video")
             else {"name": s_["name"], "src": root + media.get(s_["phone"])["src"], "next": root + media.get(s_["next"])["src"]}
             for s_ in b.get("sets", [])]
     # "phone3d": a still of the 3D phone for each placement (tools/make_phone_stills.cjs) stands in wherever the 3D

@@ -303,6 +303,13 @@ function start(THREE) {
     if (clipOn) { if (!clip.src.endsWith(s.video)) clip.src = s.video; clip.currentTime = 0; } else { clip.pause(); clip.removeAttribute("src"); clip.load(); }
     Promise.all([loadImg(s.src), loadImg(s.next)]).then(([a, b]) => { shots = { src: a, next: b }; rollDrawn = -1; kick(); });
   }
+  // the screen is drawn at 660 wide; during the close-up, which stands still, at the placement's full 1320 so it
+  // stays sharp up close (the texture is remade at the new size)
+  function screenSize(w) {
+    if (screenCanvas.width === w) return;
+    screenCanvas.width = w; screenCanvas.height = Math.round(w * 1434 / 660);
+    screenTex.dispose(); clipTime = -1; rollDrawn = -1;
+  }
   function drawScreen(roll, whole) {
     // the video's newest frame, when it is playing and the screen is whole
     const live = clipOn && whole && clip.readyState >= 2;
@@ -467,9 +474,16 @@ function start(THREE) {
   // screen: one turn to face the reader, then a slow close-up from the top of the placement down to its nav bar
   let spinning = false, spinK = 0, spinAngle = 0, zoomAt = -1;
   const spinBtn = dock.querySelector('[data-act="spin"]');
-  const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) zoomAt = -1; kick(); };
+  const setSpin = (on) => { spinning = on; spinBtn.setAttribute("aria-pressed", String(on)); if (on) { zoomAt = -1; zoomBtn.setAttribute("aria-pressed", "false"); } kick(); };
   spinBtn.addEventListener("click", () => setSpin(!spinning));
-  dock.querySelector('[data-act="zoom"]').addEventListener("click", () => { setSpin(false); zoomAt = performance.now(); showScroll = scrollY; kick(); });
+  // the zoom is a switch too: pressed again mid-show, it pulls straight back out
+  const zoomBtn = dock.querySelector('[data-act="zoom"]');
+  zoomBtn.setAttribute("aria-pressed", "false");
+  const zoomIn = () => zoomAt >= 0 && performance.now() - zoomAt < ZOOM_MS - Z_OUT;
+  zoomBtn.addEventListener("click", () => {
+    if (zoomIn()) { endShow(); return; }
+    setSpin(false); zoomAt = performance.now(); showScroll = scrollY; zoomBtn.setAttribute("aria-pressed", "true"); kick();
+  });
   // a little scrolling, or a click or tap anywhere outside the controls, ends a show: the spin eases back, and the
   // close-up skips ahead to its pull-back
   let showScroll = 0;
@@ -478,6 +492,7 @@ function start(THREE) {
     if (spinning) setSpin(false);
     const now = performance.now();
     if (zoomAt >= 0 && now - zoomAt < ZOOM_MS - Z_OUT) { zoomAt = now - (ZOOM_MS - Z_OUT); kick(); }
+    zoomBtn.setAttribute("aria-pressed", "false");
   }
   const showing = () => spinning || zoomAt >= 0;
   addEventListener("scroll", () => { if (showing() && Math.abs(scrollY - showScroll) > 40) endShow(); }, { passive: true });
@@ -580,7 +595,7 @@ function start(THREE) {
     let zk = 0, zf = 0, zturn = 0, shotY = PAN_TOP, sway = 0;
     if (zoomAt >= 0) {
       const t = now - zoomAt;
-      if (t >= ZOOM_MS) zoomAt = -1;
+      if (t >= ZOOM_MS) { zoomAt = -1; zoomBtn.setAttribute("aria-pressed", "false"); }
       else {
         zturn = ease(clamp(t / Z_SPIN)) * Math.PI * 2;
         zf = t > ZOOM_MS - Z_OUT ? 1 - ease((t - (ZOOM_MS - Z_OUT)) / Z_OUT) : ease(clamp(t / Z_SPIN));
@@ -622,6 +637,7 @@ function start(THREE) {
     const whole = apart < 0.002;
     // (it holds still during the zoom's close-up, so the screen isn't moving under a moving camera; the spin leaves it playing)
     if (clipOn) { if (whole && onScreen && !document.hidden && zoomAt < 0 && !stillMode) { if (clip.paused) clip.play().catch(() => {}); } else if (!clip.paused) clip.pause(); }
+    screenSize(zoomAt >= 0 && !lowPower ? 1320 : 660);
     drawScreen(clipOn ? 0 : o.roll, whole);
     // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
