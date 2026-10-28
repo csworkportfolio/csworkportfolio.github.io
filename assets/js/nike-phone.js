@@ -140,6 +140,7 @@ function start(THREE) {
     ring.holes.push(roundedRect(SW, h, rTop, rBottom));
     card.add(new THREE.Mesh(new THREE.ShapeGeometry(ring, 32), sliceEdge));
     card.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
+    card.userData.h = h;
     card.userData.away = away;
     card.visible = false; phone.add(card); list.push(card);
     // its shadow on the screen below, so it reads as floating: soft, larger and further off the higher it is
@@ -654,6 +655,12 @@ function start(THREE) {
       camera.lookAt(lookAt.set(0, fy, 0));
       spinClose = close;
     } else if (camera.position.z !== camBase || camera.position.x !== 0 || camera.position.y !== 0) { camera.position.set(0, 0, camBase); camera.lookAt(0, 0, 0); }
+    // the phone and its floating pieces centre as one group in the column: while pieces are out the phone sits to one
+    // side, and it glides to the middle as they come in (not during the shows, which frame themselves)
+    if (!full) {
+      const want = rig.position.x - groupCentre();
+      rig.position.x += (want - rig.position.x) * Math.min(1, dt * 6);
+    }
     // out over the page during the shows; back in its column after
     const showing = zk > 0 || zf > 0 || spinK > 0.01;
     setFull(showing);
@@ -676,6 +683,19 @@ function start(THREE) {
     raf = requestAnimationFrame(frame);
   }
   let lastSig = [], still = 0, lastDraw = 0;
+  // how far the visible group's middle sits off the canvas's middle, in world units at the phone's depth: the phone's
+  // body corners and every visible piece's corners, projected
+  const _p = new THREE.Vector3();
+  function groupCentre() {
+    rig.updateMatrixWorld(true);
+    let lo = Infinity, hi = -Infinity;
+    const add = (obj, x, y, z) => { _p.set(x, y, z); obj.localToWorld(_p); _p.project(camera); lo = Math.min(lo, _p.x); hi = Math.max(hi, _p.x); };
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) for (const sz of [-1, 1]) add(phone, sx * W / 2, sy * H / 2, sz * D / 2);
+    for (const m of [...slices, ...wholeCards]) if (m.visible) for (const sx of [-1, 1]) for (const sy of [-1, 1]) add(m, sx * SW / 2, sy * m.userData.h / 2, 0);
+    if (!isFinite(lo)) return 0;
+    const halfW = camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
+    return (lo + hi) / 2 * halfW;
+  }
   // classes are only written when they change: any write wakes the loop (it watches the section's classes)
   function flag(c, on) { if (scene.classList.contains(c) !== on) { scene.classList.toggle(c, on); if (c === "has-3d") fitSwitch(); } }
   // in a narrower window the four placements can run past the window's edge: the switcher shifts left just as far as

@@ -1679,13 +1679,20 @@
       const play = document.createElement("button");
       play.type = "button"; play.className = "sc-play"; play.setAttribute("aria-label", "Play the steps");
       play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-stop" d="M9 6v12M15 6v12"/></svg>';
-      const step = document.createElement("p");
-      step.className = "sc-step"; step.setAttribute("aria-live", "polite");
+      // where the walk-through is: a bar per step like a story's, the reader's steps in the accent and the handoffs in
+      // gray, filling as it goes, and the step's name with whose it was
+      const step = document.createElement("div");
+      step.className = "sc-step";
+      const bars = el("div", { class: "sc-bars", "aria-hidden": "true" });
+      names.forEach((nm) => { const b = el("span", { class: nm.classList.contains("is-me") ? "is-me" : "" }); b.append(el("i", {})); bars.append(b); });
+      const stepName = el("p", { class: "sc-step-name", "aria-live": "polite" });
+      step.append(bars, stepName);
+      const owners = [...scene.querySelectorAll(".sc-panel .sc-who")].map((w) => w.textContent);
       const row = document.createElement("div");   // the switcher and the play button share one centred row
       row.className = "sc-row"; sw.before(row); row.append(sw, play); row.after(step);
       const STEP_S = [2.6, 2.6, 3.6, 2.4, 2.6, 2.4, 3.4];   // seconds per step; the device check and Live get a little longer
       const total = STEP_S.reduce((a, b) => a + b, 0);
-      let raf = 0, t0 = 0, last = -1;
+      let raf = 0, t0 = 0, last = -1, held = 0;   // held: seconds already played when paused
       const stop = () => {
         cancelAnimationFrame(raf); raf = 0; last = -1;
         // reset in one step: without this the next screen (shown at Verify) lingers below the phone while it fades out
@@ -1693,7 +1700,9 @@
         scene.classList.remove("is-demo", "is-whole"); scene.removeAttribute("data-stage"); scene.removeAttribute("data-demo");
         requestAnimationFrame(() => requestAnimationFrame(() => ph.classList.remove("is-reset")));
         ["--apart", "--scan"].forEach((v) => ph.style.removeProperty(v));
-        play.classList.remove("is-on"); play.setAttribute("aria-label", "Play the steps"); step.textContent = "";
+        play.classList.remove("is-on"); play.setAttribute("aria-label", "Play the steps"); stepName.innerHTML = "";
+        step.classList.remove("is-on"); [...bars.children].forEach((b) => { b.style.setProperty("--f", 0); b.classList.remove("is-cur", "is-done"); });
+        held = 0;
       };
       const frame = (now) => {
         const sec = (now - t0) / 1000;
@@ -1705,8 +1714,11 @@
         if (at !== last) {
           last = at; scene.dataset.stage = String(at);
           const name = names[at] ? names[at].textContent : "";
-          step.textContent = `${at + 1} of ${n} \u00b7 ${name}${names[at] && names[at].classList.contains("is-me") ? " \u00b7 my part" : ""}`;
+          stepName.innerHTML = "";
+          stepName.append(el("strong", {}, name), el("span", { class: names[at] && names[at].classList.contains("is-me") ? "is-me" : "" }, owners[at] || ""));
         }
+        step.classList.add("is-on");
+        [...bars.children].forEach((b, i) => { b.style.setProperty("--f", i === at ? local.toFixed(3) : 0); b.classList.toggle("is-cur", i === at); b.classList.toggle("is-done", i < at); });
         const apart = Math.max(0, 1 - p * n / 1.6);
         ph.style.setProperty("--apart", (apart * apart).toFixed(3));
         scene.classList.toggle("is-whole", apart === 0);
@@ -1715,11 +1727,14 @@
         raf = requestAnimationFrame(frame);
       };
       play.addEventListener("click", () => {
-        if (raf) { stop(); return; }
-        scene.classList.add("is-demo"); play.classList.add("is-on"); play.setAttribute("aria-label", "Stop");
-        t0 = performance.now(); raf = requestAnimationFrame(frame);
+        if (raf) {   // pause: hold the place
+          cancelAnimationFrame(raf); raf = 0; held = (performance.now() - t0) / 1000;
+          play.classList.remove("is-on"); play.setAttribute("aria-label", "Play the steps"); return;
+        }
+        scene.classList.add("is-demo"); play.classList.add("is-on"); play.setAttribute("aria-label", "Pause");
+        t0 = performance.now() - held * 1000; raf = requestAnimationFrame(frame);
       });
-      if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { if (!e.isIntersecting && raf) stop(); }).observe(ph);
+      if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { if (!e.isIntersecting && (raf || held)) stop(); }).observe(ph);
     }
     const live = () => {
       scene.classList.toggle("is-live", !!ph && !phone.matches && !tooTall);   // a still walkthrough (a photo, no phone) never pins

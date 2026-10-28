@@ -2154,7 +2154,26 @@ html .pills > .seg.is-scrolling { background: none; }
   .scene.n3-phone .n3-sound { display: none !important; }   /* on phones the sound button is the one under play */
   .scene.n3-phone.has-3d .ph { margin-top: 56px; }   /* room above for the 3D phone's opening tilt */
   .sc-row .sc-switch { margin-top: 0; }
-  .sc-step { min-height: 1.4em; margin: 12px 0 0; font-size: 15px; color: var(--muted); text-align: center; }
+  /* the walk-through's place: the site's bubbles, one per step (the reader's in the accent, the handoffs gray; the
+     current one long and filling), then its name and owner;
+     the space is held while it's stopped, so nothing below jumps when it starts */
+  .sc-step { width: min(300px, 80%); margin: 16px auto 0; text-align: center; opacity: 0; transition: opacity .3s; }
+  .sc-step.is-on { opacity: 1; }
+  .sc-bars { display: flex; justify-content: center; align-items: center; gap: 8px; }
+  .sc-bars span { position: relative; width: 8px; height: 8px; border-radius: 999px; overflow: hidden;
+    background: color-mix(in srgb, var(--muted) 30%, transparent); transition: width .35s cubic-bezier(.2,.7,.2,1), background-color .3s; }
+  .sc-bars span.is-done { background: var(--muted); }
+  .sc-bars span.is-me.is-done { background: var(--rust); }
+  .sc-bars span.is-cur { width: 40px; }
+  .sc-bars i { position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(var(--f, 0)); background: var(--muted); }
+  .sc-bars span.is-me i { background: var(--rust); }
+  .sc-bars span:not(.is-cur) i { display: none; }
+  .sc-step-name { min-height: 1.4em; margin: 10px 0 0; font-size: 15px; color: var(--ink); }
+  .sc-step-name strong { font-weight: 600; }
+  .sc-step-name span { margin-left: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .sc-step-name span.is-me { color: var(--rust); }
+  /* the 3D phone stands in for the flat one: the demo's sizing never changes its place (that redrew the 3D view, a flash) */
+  .scene.n3-phone.has-3d.is-demo .ph { width: min(210px, 56vw); transform: none; transition: none; }
   .scene.is-demo .ph { transition: transform .9s cubic-bezier(.2,.7,.2,1); }
 }
 
