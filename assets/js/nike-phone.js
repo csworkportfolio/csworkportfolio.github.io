@@ -54,7 +54,7 @@ function start(THREE) {
 
   // ---------- the phone (modeled on a current pro phone, burgundy, Christian's CS mark on the back) ----------
   const W = 0.76, H = 1.62, D = 0.088, R = 0.125;
-  const BURGUNDY = new THREE.Color(0x4d1822), GRAPHITE = new THREE.Color(0x9a9aa0);   // the handoffs' gray, light enough to read as gray
+  const BURGUNDY = new THREE.Color(0x4d1822);
   // the phone sits in a rig: the turntable tips the rig to a hero angle (leaning back and to one side) and the
   // phone turns about its own long axis inside it
   const rig = new THREE.Group(); world.add(rig);
@@ -84,13 +84,12 @@ function start(THREE) {
   const slab = (shape, depth, bevel = 0.004) => new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelSize: bevel, bevelThickness: bevel, bevelSegments: 4, curveSegments: 32 });
   const rbox = (w, h, d) => { const g = slab(roundedRect(w, h, Math.min(w, h) / 2 - 0.0005), d, 0.002); g.translate(0, 0, -d / 2); return g; };
 
-  // the materials the handoffs gray out
+  // the materials
   const metal = new THREE.MeshPhysicalMaterial({ color: BURGUNDY, metalness: 0.7, roughness: 0.42, clearcoat: 0.2, clearcoatRoughness: 0.4 });
   const plateauMat = new THREE.MeshPhysicalMaterial({ color: BURGUNDY, metalness: 0.75, roughness: 0.32, clearcoat: 0.3 });
   const panelMat = new THREE.MeshPhysicalMaterial({ color: 0x531b26, roughness: 0.72, metalness: 0.35, clearcoat: 0.1, clearcoatRoughness: 0.7 });
   const ringMat = new THREE.MeshPhysicalMaterial({ color: 0x5a1d28, metalness: 0.85, roughness: 0.28, clearcoat: 0.5 });
   const markMat = new THREE.MeshPhysicalMaterial({ color: 0xa45566, alphaTest: 0.5, metalness: 0.25, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.15 });
-  const tinted = [[metal, BURGUNDY.clone()], [plateauMat, BURGUNDY.clone()], [panelMat, new THREE.Color(0x531b26)], [ringMat, new THREE.Color(0x5a1d28)], [markMat, new THREE.Color(0xa45566)]];
 
   const bodyGeo = new THREE.ExtrudeGeometry(roundedRect(W - 0.02, H - 0.02, R), { depth: D - 0.02, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.01, bevelSegments: 6, curveSegments: 40 });
   bodyGeo.translate(0, 0, -(D - 0.02) / 2);
@@ -590,10 +589,9 @@ function start(THREE) {
     phone.rotation.set(cur.rx + off.x + lx + wob + (0 - cur.rx - off.x) * zf, cur.ry + off.y + ly + spinAngle + zturn + (0 - cur.ry - off.y) * zf, cur.rz * (1 - zf));   // straight on, to read
     phone.position.y = cur.y + Math.sin(now / 900) * 0.012;   // the slow float
     phone.scale.setScalar(cur.s);
-    // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
-    tinted.forEach(([m, c]) => m.color.copy(c).lerp(GRAPHITE, cur.gray));
-    screenMat.color.setScalar(1 - 0.35 * cur.gray); sliceMat.color.copy(screenMat.color);
-    rim.color.set(0xc25a4a); rim.intensity = (dark ? 3.2 : 1.4) * cur.mine;
+    // the phone stays burgundy the whole way, with its warm accent edge light; the QA and Legal notifications show the
+    // handoff
+    rim.color.set(0xc25a4a); rim.intensity = dark ? 3.2 : 1.4;
     rim2.color.set(dark ? 0xff9fb2 : 0xffffff); rim2.intensity = dark ? 1.2 : 0.4;
     // the brief's slices, or the whole screen
     // a show (spin, zoom) first gathers the brief's pieces into the screen, and lets them float back out after
