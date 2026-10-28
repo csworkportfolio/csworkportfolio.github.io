@@ -263,46 +263,32 @@ function start(THREE) {
   const clip = Object.assign(document.createElement("video"), { muted: true, loop: true, playsInline: true, preload: "auto" });
   clip.setAttribute("muted", ""); clip.setAttribute("playsinline", ""); clip.className = "n3-clip";
   let clipOn = false, clipTime = -1;
-  // a placement with sound (ACG) gets a mute button in the switcher. It starts muted (browsers only play sound
-  // after the reader asks for it); the button turns it on and off
+  // a placement with sound (ACG) shows a small speaker in a circle at the start of its own pill. Choosing it
+  // starts it muted (browsers only play sound after the reader asks for it); pressing its pill again turns the sound
+  // on, and again off
   const sound = document.createElement("span");
-  sound.className = "n3-sound"; sound.hidden = true;
-  sound.innerHTML = '<button type="button" class="n3-sound-btn" aria-label="Turn sound on" aria-pressed="false">'
-    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>'
-    + '<path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>';
-  const soundBtn = sound.querySelector(".n3-sound-btn");
-  let wantSound = false;
+  sound.className = "n3-sound"; sound.setAttribute("aria-hidden", "true");
+  sound.innerHTML = '<svg viewBox="0 0 24 24"><path class="spk" d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>'
+    + '<path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>';
+  const soundIdx = sets.findIndex((x) => x.sound);
+  const soundPill = scene.querySelectorAll(".sc-switch button[data-set]")[soundIdx];
+  const soundName = soundPill ? soundPill.textContent : "";
+  if (soundPill) soundPill.prepend(sound);
+  let wantSound = false, curSet = 0;
   const paintSound = () => {
-    soundBtn.setAttribute("aria-pressed", String(wantSound));
-    soundBtn.setAttribute("aria-label", wantSound ? "Turn sound off" : "Turn sound on");
     sound.classList.toggle("is-on", wantSound);
     clip.muted = !wantSound;
+    if (soundPill) soundPill.setAttribute("aria-label", curSet === soundIdx ? `${soundName}, sound ${wantSound ? "on" : "off"}. Press again to turn it ${wantSound ? "off" : "on"}.` : soundName);
   };
-  soundBtn.addEventListener("click", () => { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); });
-  paintSound();
-  // it sits inside the switcher, right after the placement it belongs to
-  function placeSound() {
-    const i = sets.findIndex((x) => x.sound), btn = scene.querySelectorAll(".sc-switch button[data-set]")[i];
-    if (btn && sound.previousElementSibling !== btn) btn.after(sound);
-    fitSwitch();
+  function pickSet(i) {
+    if (i === curSet && i === soundIdx) { wantSound = !wantSound; paintSound(); if (wantSound && clip.paused) clip.play().catch(() => {}); return; }
+    useSet(i);
   }
-  // with the sound control in it the switcher grows; it shifts left as far as it needs to stay clear of the window's
-  // edge and the controls tab there
-  function fitSwitch() {
-    const sw = scene.querySelector(".sc-switch");
-    if (!sw) return;
-    sw.style.left = "";
-    const over = sw.getBoundingClientRect().right - (innerWidth - 40);
-    if (over > 0 && scene.classList.contains("has-3d")) { sw.style.position = "relative"; sw.style.left = `${-Math.ceil(over)}px`; }
-  }
-  addEventListener("resize", fitSwitch, { passive: true });
   const loadImg = (url) => new Promise((ok) => { if (!url) return ok(null); const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = url; });
   function useSet(i) {
     const s = sets[i] || sets[0];
     clipOn = !!s.video; clipTime = -1;
-    sound.hidden = !s.sound;
-    if (!s.sound) { wantSound = false; paintSound(); }
-    placeSound();
+    curSet = sets.indexOf(s); wantSound = false; paintSound();
     if (clipOn) { if (!clip.src.endsWith(s.video)) clip.src = s.video; clip.currentTime = 0; } else { clip.pause(); clip.removeAttribute("src"); clip.load(); }
     Promise.all([loadImg(s.src), loadImg(s.next)]).then(([a, b]) => { shots = { src: a, next: b }; rollDrawn = -1; kick(); });
   }
@@ -325,7 +311,7 @@ function start(THREE) {
     screenTex.needsUpdate = true;
   }
   useSet(0);
-  scene.querySelectorAll(".sc-switch button[data-set]").forEach((b) => b.addEventListener("click", () => useSet(+b.dataset.set)));
+  scene.querySelectorAll(".sc-switch button[data-set]").forEach((b) => b.addEventListener("click", () => pickSet(+b.dataset.set)));
 
   // ---------- light and dark: the page's setting, or the switch in the header ----------
   let wake = () => {};
@@ -673,7 +659,7 @@ function start(THREE) {
   }
   let lastSig = [], still = 0, lastDraw = 0;
   // classes are only written when they change: any write wakes the loop (it watches the section's classes)
-  function flag(c, on) { if (scene.classList.contains(c) !== on) { scene.classList.toggle(c, on); if (c === "has-3d") fitSwitch(); } }
+  function flag(c, on) { if (scene.classList.contains(c) !== on) scene.classList.toggle(c, on); }
   wake = () => kick();
   const kick = () => { still = 0; if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
   addEventListener("scroll", () => { if (onScreen) kick(); }, { passive: true });
