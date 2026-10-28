@@ -1025,11 +1025,13 @@ a.tl-label:hover strong { color: #ff9a66; }
 .ref-list li::before { counter-increment: ref; content: counter(ref); flex: none; width: 1.6em; font-family: var(--round); color: var(--muted); font-variant-numeric: tabular-nums; }
 @media (max-width: 900px) {
   .ref-split { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .ref-split .ref-page { max-width: 560px; justify-self: center; }
+  .ref-split .ref-page { margin-left: 9px; width: calc(100% - 9px); }   /* stacked: as wide as the words above it */
 }
 @media (max-width: 720px) {
   .ph-scene + .ph-notes { margin-top: 64px; }
   .ref-band { padding: 40px 0 24px; }
+  .ref-words { padding-left: 0; }   /* phones drop the 9px inset, like .prose */
+  .ref-split .ref-page { margin-left: 0; width: 100%; }
   .ref-page { padding: 24px 22px 28px; }
 }
 
