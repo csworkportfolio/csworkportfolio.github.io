@@ -1448,7 +1448,10 @@ def demo_board(b, root):
   </div>'''
     canvas = (f'<div class="mb-view"><div class="mb" lang="en" aria-hidden="true"><div class="mb-track">{monday}{zapier}</div>'
               f'<svg class="mb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg></div></div>')
-    inner = ai_window("monday.com  ·  Editorial Calendar", canvas, " mb-window")
+    chapters = "".join(f'<button type="button" style="--p:0"><span class="hb-fill"></span><span class="hb-ch-t">{esc(c)}</span></button>'
+                       for c in b["chapters"])
+    inner = (ai_window("monday.com  ·  Editorial Calendar", canvas, " mb-window")
+             + f'<nav class="hb-chapters" aria-label="Skip to a part of the demo">{chapters}</nav>')
     return ai_figure(b, "Illustration: an editorial calendar in Monday.com whose Generate button runs a Zapier workflow with Claude", inner)
 
 

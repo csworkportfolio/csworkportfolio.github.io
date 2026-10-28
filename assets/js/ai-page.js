@@ -344,7 +344,7 @@
     };
     new ResizeObserver(frame).observe(view);
     frame();
-    if (still) return;
+    if (still) { const bar = $(".hb-chapters"); if (bar) bar.hidden = true; return; }
     const touch = document.createElement("span");
     touch.className = "mb-touch";
     mb.append(touch);
@@ -363,75 +363,110 @@
       const n = data.statuses.map((_, k) => rows.filter((r) => r.querySelector(".mb-status").classList.contains("s" + k)).length);
       cells.forEach((c, k) => c.style.setProperty("--n", n[k] * 5 / rows.length));
     };
+    // the demo runs in chapters; the bar under it shows where it is and jumps to any chapter
+    const bars = [...fig.querySelectorAll(".hb-chapters button")];
+    let gen = 0;
+    const STOP = Symbol("stop");
+    const w = async (ms) => { const g = gen; await d.wait(ms); if (g !== gen) throw STOP; };
+    const mark = (n, p = 0) => bars.forEach((b, i) => {
+      b.classList.toggle("is-on", i === n);
+      b.classList.toggle("is-done", i < n);
+      b.style.setProperty("--p", i === n ? p : i < n ? 1 : 0);
+      if (i === n) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+    });
     const press = async (r) => {
       point(r.querySelector(".mb-btn"));
-      await d.wait(800);
-      tap(); r.classList.add("is-press"); await d.wait(180); r.classList.remove("is-press");
+      await w(800);
+      tap(); r.classList.add("is-press"); await w(180); r.classList.remove("is-press");
     };
-    const fill = (r, i) => { const ai = r.querySelector(".mb-ai"); ai.classList.remove("is-busy"); ai.classList.add("is-on"); status(r, 1); tally(); };
-    async function loop() {
-      for (;;) {
-        // every item starts as an idea, with no AI output yet
-        ["is-zap", "is-writing", "is-toast"].forEach((c) => set(c, false));
-        rows.forEach((r) => { status(r, 0); r.querySelector(".mb-ai").classList.remove("is-on", "is-busy"); });
-        steps.forEach((s) => s.classList.remove("is-run", "is-ok"));
-        $(".zp-out-v").textContent = "";
-        tally();
-        set("is-pointing", !mobile);
+    const fill = (r) => { const ai = r.querySelector(".mb-ai"); ai.classList.remove("is-busy"); ai.classList.add("is-on"); status(r, 1); tally(); };
+    const reset = () => {
+      ["is-zap", "is-writing", "is-toast"].forEach((c) => set(c, false));
+      rows.forEach((r) => { status(r, 0); r.querySelector(".mb-ai").classList.remove("is-on", "is-busy"); r.classList.remove("is-press"); });
+      steps.forEach((s) => s.classList.remove("is-run", "is-ok"));
+      $(".zp-out-v").textContent = "";
+      tally();
+      set("is-pointing", !mobile);
+    };
+    const chapters = [
+      async () => {   // every item starts as an idea; Generate on the first one
+        reset();
         cursor.style.left = "760px"; cursor.style.top = "560px";
-        await d.wait(900);
-        // Generate on the first item: the board slides away to the zap behind the button, which runs step by step
+        await w(900);
         await press(rows[0]);
         rows[0].querySelector(".mb-ai").classList.add("is-busy");
-        await d.wait(300);
+        mark(0, 1);
+        await w(300);
+      },
+      async (jumped) => {   // the board slides away to the zap behind the button, which runs step by step
+        if (jumped) { reset(); rows[0].querySelector(".mb-ai").classList.add("is-busy"); await w(400); }
         set("is-zap", true);
-        await d.wait(1100);
+        await w(1100);
         point(steps[0], 0.9);
-        steps[0].classList.add("is-run"); await d.wait(700);
+        steps[0].classList.add("is-run"); await w(700);
         steps[0].classList.replace("is-run", "is-ok");
+        mark(1, .2);
         point(steps[1], 0.9);
         steps[1].classList.add("is-run"); set("is-writing", true);
-        await d.wait(600);
+        await w(600);
         point($(".zp-area"), 0.7, 0.4);   // Claude works from the do's and don'ts
-        await d.wait(2000);
+        await w(2000);
         set("is-writing", false); steps[1].classList.replace("is-run", "is-ok");
         $(".zp-out-v").textContent = data.rows[0].ai;
-        await d.wait(900);
+        mark(1, .6);
+        await w(900);
         point(steps[2], 0.9);
-        steps[2].classList.add("is-run"); await d.wait(800);
+        steps[2].classList.add("is-run"); await w(800);
         steps[2].classList.replace("is-run", "is-ok");
-        await d.wait(1600);
-        // back on the board, the result is in
-        set("is-zap", false);
-        await d.wait(900);
-        fill(rows[0], 0);
-        await d.wait(900);
-        // the same zap for the other items, each a click away
+        await w(1600);
+        set("is-zap", false);   // back on the board, the result is in
+        await w(900);
+        fill(rows[0]);
+        mark(1, 1);
+        await w(900);
+      },
+      async (jumped) => {   // the same zap for the other items, each a click away
+        if (jumped) { reset(); fill(rows[0]); await w(500); }
         for (const [i, r] of rows.slice(1).entries()) {
           await press(r);
           r.querySelector(".mb-ai").classList.add("is-busy");
           set("is-toast", true);
-          await d.wait(1100);
-          fill(r, i + 1);
+          await w(1100);
+          fill(r);
           set("is-toast", false);
-          await d.wait(250);
+          mark(2, (i + 1) / (rows.length - 1));
+          await w(250);
         }
-        // then the work moves along the statuses
+      },
+      async (jumped) => {   // then the work moves along the statuses
+        if (jumped) { reset(); rows.forEach(fill); await w(500); }
         for (let step = 2; step <= top; step++) {
-          for (const [i, r] of rows.entries()) {
-            if (Math.min(i + 1, top) < step) continue;
+          for (const r of rows.slice(step - 1)) {
             point(r.querySelector(".mb-status"));
-            await d.wait(380);
+            await w(380);
             tap(); status(r, step); tally();
-            await d.wait(120);
+            await w(120);
           }
-          await d.wait(400);
+          mark(3, (step - 1) / (top - 1));
+          await w(400);
         }
         set("is-pointing", false);
-        await d.wait(4200);
-      }
+        await w(4200);
+      },
+    ];
+    async function run(from) {
+      const g = ++gen;
+      let jumped = from > 0;
+      try {
+        for (let n = from; ; n = (n + 1) % chapters.length) {
+          mark(n, 0);
+          await chapters[n](jumped);
+          jumped = false;
+        }
+      } catch (e) { if (e !== STOP || g === gen) throw e; }
     }
-    wire(d, loop);
+    bars.forEach((b, n) => b.addEventListener("click", () => { d.resume(); run(n); }));
+    wire(d, () => run(0));
   }
 
   // ---------- 3. the Mars Men cut ----------
