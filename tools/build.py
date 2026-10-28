@@ -1316,7 +1316,7 @@ def demo_localize(b, root):
     <span class="hb-tile">{hb_icon("trend")}</span>
     <div><p class="hb-h">Trending Posts{hb_icon("chev")}{hb_icon("filter")}{hb_icon("sliders")}</p>
       <p class="hb-sub">Find all the content with the highest activity over the last 7 days.</p></div>
-    <span class="hb-auto">{hb_icon("translate")}Localize every post<span class="hb-state"><span class="is-off">Off</span><span class="is-on">{esc(b["auto"]["name"])}</span></span></span>
+    <span class="hb-auto">{hb_icon("translate")}Localize Every Post<span class="hb-state"><span class="is-off">Off</span><span class="is-on">{esc(b["auto"]["name"])}</span></span></span>
     <span class="hb-search">{hb_icon("search")}Search</span>{tools}
   </header>
   <div class="hb-feed">{cards}</div>
@@ -1325,26 +1325,27 @@ def demo_localize(b, root):
   <div class="hb-modal">
     <p class="hb-mh"><span class="hb-in">in</span>Share{hb_icon("close", "hb-i hb-x")}</p>
     <div class="hb-mb">
-      <p class="hb-row"><span>My comment</span>
+      <p class="hb-row"><span>My Comment</span>
         <span class="hb-lang"><span class="hb-lang-v">{esc(ko["name"])}</span> · Tone: <span class="hb-tone">{esc(ko["tone"])}</span></span>
         <span class="hb-tr">{hb_icon("translate")}Translate</span></p>
       <div class="hb-menu">
-        <p class="hb-menu-h">{AI_SPARK}<span>Localize with the brand agent<small>{srcs}</small></span></p>
-        <ul>{langs}<li class="hb-menu-more">+ more regions</li></ul>
+        <p class="hb-menu-h">{AI_SPARK}<span>Localize with the Brand Agent<small>{srcs}</small></span></p>
+        <ul>{langs}<li class="hb-menu-more">+ More Regions</li></ul>
       </div>
       <div class="hb-text">
         <p class="hb-t" lang="ko">{esc(before)}<del>{esc(old)}</del> <ins>{esc(new)}</ins>{esc(after)}</p>
         <p class="hb-hash">{esc(b["tags"])}</p>
         <p class="hb-busy">{AI_SPARK}<span class="hb-busy-v">Localizing</span></p>
-        <p class="hb-review"><span class="hb-ca">CA</span><span><b>Champion advocate</b> <span class="hb-review-v">{esc(ko["review"])}</span></span></p>
+        <p class="hb-review"><span class="hb-ca">CA</span><span><b>Champion Advocate</b> <span class="hb-review-v">{esc(ko["review"])}</span></span></p>
       </div>
       <p class="hb-tags">Click on a tag to add it to your post: <span>@Cohesity</span> <span>#Cohesity</span></p>
-      <p class="hb-photos-h">You can select photos</p>
+      <p class="hb-photos-h">You Can Select Photos</p>
       <div class="hb-photos"><span class="hb-photo">{guide(ko["art"])}<i>1</i></span><span class="hb-addimg">{hb_icon("addimg")}</span></div>
       <div class="hb-btns"><span class="hb-learned">{AI_SPARK}<span class="hb-count-v">1</span> <span class="hb-unit">fix</span> learned</span>
         <span class="hb-b is-brown">Schedule</span><span class="hb-b is-brown">Share next</span><span class="hb-b is-blue">Share now</span></div>
     </div>
   </div>
+  <div class="hb-preview"><p class="hb-preview-h">Photo \u00b7 <span class="hb-preview-v">{esc(ko["name"])}</span>{hb_icon("close", "hb-i hb-x")}</p>{guide(ko["art"])}</div>
   <p class="hb-toast">Shared on LinkedIn</p>
   <svg class="hb-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
 </div></div>'''

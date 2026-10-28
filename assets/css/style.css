@@ -2746,6 +2746,12 @@ html .pills > .seg.is-scrolling { background: none; }
 .hb-b.is-brown { background: #864313; }
 .hb-b.is-blue { background: #0d7bbd; padding: 0 19px; }
 .hb.is-send .hb-b.is-blue { filter: brightness(1.25); transform: scale(.96); }
+.hb-preview { position: absolute; left: 525px; top: 96px; z-index: 3; width: 230px; padding: 0 12px 12px; border-radius: 6px; background: var(--hb-card);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5); opacity: 0; transform: scale(.85); transform-origin: 30% 95%; transition: opacity .25s, transform .4s var(--ease); pointer-events: none; }
+.hb.is-preview .hb-preview { opacity: 1; transform: none; }
+.hb-preview-h { display: flex; align-items: center; gap: 4px; height: 36px; font-size: 11px; font-weight: 600; color: var(--hb-ink2); }
+.hb-preview-h .hb-x { width: 13px; height: 13px; }
+.hb-preview .hb-guide { transform: scale(1.585); transform-origin: 0 0; margin-bottom: 95px; }
 .hb-toast { position: absolute; left: 50%; bottom: 26px; padding: 9px 16px; border-radius: 6px; background: #0d7bbd; color: #fff; font-size: 13px; font-weight: 600;
   transform: translate(-50%, 10px); opacity: 0; transition: opacity .3s, transform .4s var(--ease); }
 .hb.is-sent .hb-toast { opacity: 1; transform: translate(-50%, 0); }

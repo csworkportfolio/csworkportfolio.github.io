@@ -109,7 +109,7 @@
     async function loop() {
       for (;;) {
         // the feed in English, then the share window on the post
-        ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy", "is-auto"].forEach((c) => set(c, false));
+        ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy", "is-auto", "is-preview"].forEach((c) => set(c, false));
         cards.forEach((c, i) => word(c, english[i], false));
         fixes = 0; count(); frame("feed");
         text.lang = "en"; text.textContent = data.post; art($(".hb-photo"), data.art);
@@ -142,14 +142,23 @@
           const m = r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
           await d.type(text, m ? m[1] + m[2] + m[4] : r.text, 22);
           art($(".hb-photo"), r.art);   // the graphic is localized too
-          say(`The graphic is localized into ${r.name} too.`);
           set("is-busy", false);
+          // open the photo to show its words changed with the post
+          art($(".hb-preview .hb-guide"), r.art);
+          $(".hb-preview-v").textContent = r.name;
+          point($(".hb-photo"));
+          await d.wait(800);
+          set("is-preview", true);
+          say(`The graphic is localized into ${r.name} too.`);
+          await d.wait(2000);
+          set("is-preview", false);
+          await d.wait(300);
           if (m) {
             // a Champion's fix, sent back so the agent learns it
             await d.wait(700);
             $(".hb-review-v").textContent = r.review;
             set("is-review", true);
-            say("A Champion advocate asks for a softer ask. The fix goes back to the agent, so it learns.");
+            say("A Champion Advocate asks for a softer ask. The fix goes back to the agent, so it learns.");
             await d.wait(1500);
             text.innerHTML = "";
             const del = document.createElement("del"), ins = document.createElement("ins");
@@ -171,7 +180,7 @@
         set("is-sent", false);
         // or switch the whole feed into one's own language and region, graphics included
         frame("top");
-        say("Or an employee switches on Localize every post.");
+        say("Or an employee switches on Localize Every Post.");
         point($(".hb-auto"), 0.8);
         await d.wait(1300);
         set("is-auto", true);
