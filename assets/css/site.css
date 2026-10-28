@@ -754,8 +754,10 @@ main { view-transition-name: page; }
 .sc-visual { position: relative; display: flex; flex-direction: column; align-items: center; perspective: 1400px; }
 /* the phone in 3D (assets/js/nike-phone.js): on the pinned desktop layout it takes the flat phone's place, which
    keeps its room in the column (so the switcher and the count stay put) but steps out of sight */
-.ph3d { position: absolute; display: none; z-index: 1; cursor: grab; }
-.ph3d.is-dragging { cursor: grabbing; }
+.ph3d { position: absolute; display: none; z-index: 1; pointer-events: none; }   /* it reaches over the words: clicks pass through */
+.scene.is-live.has-3d .sc-visual { cursor: grab; }
+.scene.is-live.has-3d .sc-visual.is-dragging { cursor: grabbing; }
+.scene.is-live.has-3d .sc-visual button { cursor: pointer; }
 .scene.is-live.has-3d .ph3d { display: block; }
 .scene.is-live.has-3d .ph { visibility: hidden; }
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */

@@ -102,15 +102,25 @@ function start(THREE) {
 
   // the brief: the screen in its three slices (the story template's sections), apart and then together
   const sliceMat = new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false });
+  const sliceBack = new THREE.MeshPhysicalMaterial({ color: 0x1c1c1e, roughness: 0.25, metalness: 0.2, clearcoat: 1 });
+  const sliceEdge = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.55, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
   const slices = [];
+  const EDGE = 0.006;
   for (let i = 0; i < cuts.length - 1; i++) {
     const t = cuts[i], b = cuts[i + 1], h = (b - t) * SH;
     // each slice keeps the screen's own rounded corners where it has them: the top one at the top, the last at the bottom
     const rTop = i === 0 ? SR : 0.0001, rBottom = i === cuts.length - 2 ? SR : 0.0001;
-    const m = shapeMesh(SW, h, rTop, sliceMat, 0, rBottom, 1 - b, 1 - t);
-    m.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
-    m.userData.away = [new THREE.Vector3(-0.09, 0.1, 0.12), new THREE.Vector3(0.14, -0.015, 0.26), new THREE.Vector3(-0.045, -0.075, 0.4)][i] || new THREE.Vector3();
-    m.visible = false; phone.add(m); slices.push(m);
+    const card = new THREE.Group();
+    card.add(shapeMesh(SW, h, rTop, sliceMat, 0.0004, rBottom, 1 - b, 1 - t));
+    const backFace = shapeMesh(SW, h, rTop, sliceBack, -0.0004, rBottom); backFace.rotation.y = Math.PI; card.add(backFace);   // seen from behind
+    // the bright edge, so a black slice never disappears into the black phone or page
+    const ring = roundedRect(SW + EDGE, h + EDGE, rTop + EDGE / 2, rBottom + EDGE / 2);
+    ring.holes.push(roundedRect(SW, h, rTop, rBottom));
+    card.add(new THREE.Mesh(new THREE.ShapeGeometry(ring, 32), sliceEdge));
+    card.userData.home = new THREE.Vector3(0, SH / 2 - (t + b) / 2 * SH, front + 0.0012);
+    // further out toward the reader, each a step nearer than the last
+    card.userData.away = [new THREE.Vector3(-0.07, 0.07, 0.22), new THREE.Vector3(0.1, -0.01, 0.42), new THREE.Vector3(-0.035, -0.06, 0.62)][i] || new THREE.Vector3();
+    card.visible = false; phone.add(card); slices.push(card);
   }
 
   // sides: buttons and antenna lines
@@ -224,13 +234,6 @@ function start(THREE) {
     const g = screenCanvas.getContext("2d"), w = screenCanvas.width, h = screenCanvas.height;
     g.fillStyle = "#000"; g.fillRect(0, 0, w, h);
     g.drawImage(shots.src, 0, -roll * h, w, h);
-    // in light mode the placement's caption band (black, white words) turns white with black words, as the app
-    // shows it in light mode: the band is inverted in place
-    if (!dark && cuts.length > 3) {
-      g.globalCompositeOperation = "difference"; g.fillStyle = "#fff";
-      g.fillRect(0, (cuts[1] - roll) * h, w, (cuts[2] - cuts[1]) * h);
-      g.globalCompositeOperation = "source-over";
-    }
     if (shots.next && roll > 0) g.drawImage(shots.next, 0, (1 - roll) * h, w, h);
     screenTex.needsUpdate = true;
   }
@@ -246,7 +249,6 @@ function start(THREE) {
     if (d === dark) return;
     dark = d;
     notes.forEach(({ n, c, tex }) => { drawNote(c, n, d); tex.needsUpdate = true; });
-    rollDrawn = -1;   // the screen redraws in the other mode (its caption band follows it)
     glassBanner.color.set(d ? 0xd8d8de : 0xffffff);
     renderer.toneMappingExposure = d ? 0.95 : 1.1;
     key.intensity = d ? 1.1 : 1.6;
@@ -295,29 +297,32 @@ function start(THREE) {
 
   // ---------- grab and turn: follows the pointer, coasts, then eases back to the step's pose ----------
   let drag = null, off = { x: 0, y: 0 }, vel = { x: 0, y: 0 }, idle = 0;
-  canvas.addEventListener("pointerdown", (e) => {
+  visual.addEventListener("pointerdown", (e) => {
     if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;   // touch scrolls the page
-    drag = { x: e.clientX, y: e.clientY }; canvas.setPointerCapture(e.pointerId); canvas.classList.add("is-dragging"); vel = { x: 0, y: 0 };
+    if (!scene.classList.contains("has-3d") || e.target.closest("button, a, .sc-count")) return;
+    drag = { x: e.clientX, y: e.clientY }; visual.setPointerCapture(e.pointerId); visual.classList.add("is-dragging"); vel = { x: 0, y: 0 };
   });
-  canvas.addEventListener("pointermove", (e) => {
+  visual.addEventListener("pointermove", (e) => {
     if (!drag) return;
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag = { x: e.clientX, y: e.clientY };
     off.y += dx * 0.009; off.x = clamp(off.x + dy * 0.006, -0.7, 0.7);
     vel = { x: dy * 0.006, y: dx * 0.009 };
   });
-  const release = () => { if (!drag) return; drag = null; canvas.classList.remove("is-dragging"); idle = performance.now(); };
-  canvas.addEventListener("pointerup", release); canvas.addEventListener("pointercancel", release);
+  const release = () => { if (!drag) return; drag = null; visual.classList.remove("is-dragging"); idle = performance.now(); };
+  visual.addEventListener("pointerup", release); visual.addEventListener("pointercancel", release);
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
   function size() {
     const v = visual.getBoundingClientRect(), f = flat.getBoundingClientRect();
     if (!f.width) return;
-    const ROOM = 1.6;   // the canvas is this many phones tall, so the brief's lifted slices and the turn stay in view
-    const h = f.height * ROOM, w = v.width;
-    Object.assign(canvas.style, { left: "0px", top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
+    // the canvas is this many phones tall, and reaches past the column on both sides, so the brief's slices, the
+    // full turn and a phone spun by hand are never cut off; it is centred on the flat phone's place
+    const ROOM = 1.75, SIDE = 0.4;
+    const h = f.height * ROOM, w = v.width * (1 + 2 * SIDE);
+    const cx = f.left + f.width / 2 - v.left;
+    Object.assign(canvas.style, { left: `${cx - w / 2}px`, top: `${f.top - v.top - f.height * (ROOM - 1) / 2}px`, width: `${w}px`, height: `${h}px` });
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // the phone stands as tall as the flat one did
     camera.position.set(0, 0, (H * ROOM / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
     camera.updateProjectionMatrix();
   }
@@ -357,7 +362,7 @@ function start(THREE) {
     // the brief's slices, or the whole screen
     const apart = o.apart;
     screen.visible = apart < 0.002;
-    slices.forEach((m) => { m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart * 1.3); });
+    slices.forEach((m) => { m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart); });
     drawScreen(o.roll);
     scan.visible = o.scan >= 0; if (scan.visible) scan.position.y = SH / 2 - o.scan * SH;
     // the notifications drop in (and leave) like iOS banners
