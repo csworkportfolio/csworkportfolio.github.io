@@ -467,16 +467,18 @@ function start(THREE) {
   let noteTimer = 0, noteLeft = 0, noteFrom = 0;
   const noteRun = () => { clearTimeout(noteTimer); noteFrom = performance.now(); noteTimer = setTimeout(() => setNote(false), noteLeft); note.classList.remove("is-held"); };
   const noteHold = () => { if (!scene.classList.contains("n3-noting") || note.classList.contains("is-held")) return; clearTimeout(noteTimer); noteLeft -= performance.now() - noteFrom; note.classList.add("is-held"); };
-  note.addEventListener("pointerenter", noteHold);
-  note.addEventListener("pointerleave", () => { if (!note.contains(document.activeElement) && scene.classList.contains("n3-noting")) noteRun(); });
+  // (the pointer resting on the note or on its info button both hold it)
+  const noteResume = () => setTimeout(() => { if (scene.classList.contains("n3-noting") && note.classList.contains("is-held") && !note.contains(document.activeElement) && !note.matches(":hover") && !infoBtn.matches(":hover")) noteRun(); });
+  for (const el of [note, infoBtn]) { el.addEventListener("pointerenter", noteHold); el.addEventListener("pointerleave", noteResume); }
   note.addEventListener("focusin", noteHold);
-  note.addEventListener("focusout", (e) => { if (!note.contains(e.relatedTarget) && !note.matches(":hover") && scene.classList.contains("n3-noting")) noteRun(); });
+  note.addEventListener("focusout", (e) => { if (!note.contains(e.relatedTarget)) noteResume(); });
   const setNote = (on) => {
     scene.classList.toggle("n3-noting", on); infoBtn.setAttribute("aria-expanded", String(on));
     clearTimeout(noteTimer);
     if (on) {
       noteLeft = NOTE_MS;   // (the bar starts full again: the note was hidden, which restarts its drain)
-      noteRun(); showControls(true, true);
+      noteRun(); if (infoBtn.matches(":hover")) noteHold();   // opened by a click, the pointer is still resting on the button
+      showControls(true, true);
     } else tuckLater();
   };
   infoBtn.addEventListener("click", () => setNote(!scene.classList.contains("n3-noting")));
