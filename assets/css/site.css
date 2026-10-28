@@ -1346,6 +1346,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
   grid-column: 1; grid-row: 1; visibility: hidden;
   opacity: calc(var(--te, 0) * (1 - var(--tl, 0)));
   transform: translateY(calc((1 - var(--te, 0)) * 24px - var(--tl, 0) * 24px));
+  will-change: opacity, transform;   /* its own layer the whole time, so the glass Read More inside never switches how it is drawn mid-fade (Safari flickered) */
 }
 .work.is-live .wk-case.is-shown .wk-text { visibility: visible; }
 .work.is-live .wk-case.is-on .wk-text { pointer-events: auto; }

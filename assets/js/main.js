@@ -1902,18 +1902,20 @@
       let at = 0;
       starts.forEach((st, k) => { if (u >= st - HAND / 2) at = k; });
       hydrate(cases[at]); hydrate(cases[at + 1]); hydrate(cases[at + 2]);
+      // a value is written only when it changes, so a scroll that moves nothing repaints nothing
+      const put = (c, v, x) => { if (c.style.getPropertyValue(v) !== x) c.style.setProperty(v, x); };
       cases.forEach((c, k) => {
         const st = starts[k];
         const e = k === 0 ? 1 : clamp((u - (st - HAND)) / HAND);
         const l = k === n - 1 ? 0 : clamp((u - (st + widths[k] - HAND)) / HAND);
-        c.style.setProperty("--e", e.toFixed(3));
+        put(c, "--e", e.toFixed(3));
         // the next case peeks up from the bottom edge once the one before it has fully arrived
         const prevE = k === 0 ? 0 : (k === 1 ? 1 : clamp((u - (starts[k - 1] - HAND)) / HAND));
-        c.style.setProperty("--p", prevE.toFixed(3));
-        c.style.setProperty("--l", l.toFixed(3));
+        put(c, "--p", prevE.toFixed(3));
+        put(c, "--l", l.toFixed(3));
         // the words hand over in turn (out, then in) so two sets never overlap
-        c.style.setProperty("--te", (k === 0 ? 1 : clamp(e * 2 - 1)).toFixed(3));
-        c.style.setProperty("--tl", clamp(l * 2).toFixed(3));
+        put(c, "--te", (k === 0 ? 1 : clamp(e * 2 - 1)).toFixed(3));
+        put(c, "--tl", clamp(l * 2).toFixed(3));
         c.classList.toggle("is-shown", e > 0 && l < 1);
         c.classList.toggle("is-on", k === at);
         // the first case's figures count on their own as they come into view (below)
