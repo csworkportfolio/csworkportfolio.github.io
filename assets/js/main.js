@@ -1752,8 +1752,12 @@
     };
     const fits = () => {
       if (tooTall || phone.matches || !isLive()) return;
-      const need = text.offsetHeight - panelsBox.offsetHeight + Math.max(panelsBox.offsetHeight, ...panels.map((p) => p.offsetHeight));
-      if (need > viewH() - pinTop()) { tooTall = true; live(); }
+      // the stages stack in one box as tall as the tallest, so the words keep one height whatever the stage and sit
+      // centred top to bottom beside the phone (a taller stage used to hang below the centred box)
+      panelsBox.style.minHeight = "";
+      const tallest = Math.max(...panels.map((p) => p.offsetHeight));
+      panelsBox.style.minHeight = `${tallest}px`;
+      if (text.offsetHeight > viewH() - pinTop()) { tooTall = true; panelsBox.style.minHeight = ""; live(); }
     };
     live();
     fits();
