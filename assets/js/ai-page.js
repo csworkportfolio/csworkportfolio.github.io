@@ -101,6 +101,16 @@
     addEventListener("keydown", (e) => { if (e.key === "Escape" && fig.classList.contains("is-full")) full(false); });
     frame(hub.classList.contains("is-open") ? "modal" : "feed");
     // the cursor's point, in the Hub's own 1280 by 708 pixels
+    // on a phone there is no pointer: each tap shows as a touch that pulses where the finger lands
+    const touch = document.createElement("span");
+    touch.className = "hb-touch";
+    hub.append(touch);
+    const tap = () => {
+      if (!mobile) return;
+      touch.style.left = parseFloat(cursor.style.left) + 4 + "px";
+      touch.style.top = parseFloat(cursor.style.top) + 2 + "px";
+      touch.classList.remove("is-tap"); void touch.offsetWidth; touch.classList.add("is-tap");
+    };
     const point = (el, dx = 0.5, dy = 0.5) => {
       let x = 0, y = 0;
       for (let e = el; e && e !== hub; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
@@ -178,11 +188,11 @@
       const k = data.regions.indexOf(r);
       point($(".hb-tr"));
       await w(700);
-      set("is-menu", true);
+      tap(); set("is-menu", true);
       await w(400);
       point(items[k], 0.35);
       await w(650);
-      items.forEach((li, j) => li.classList.toggle("is-hover", j === k));
+      tap(); items.forEach((li, j) => li.classList.toggle("is-hover", j === k));
       await w(300);
       set("is-menu", false); items[k].classList.remove("is-hover");
       $(".hb-lang-v").textContent = r.name; $(".hb-tone").textContent = r.tone; text.lang = r.code.toLowerCase();
@@ -200,7 +210,7 @@
       $(".hb-preview-v").textContent = r.name;
       point($(".hb-photo"));
       await w(800);
-      set("is-preview", true);
+      tap(); set("is-preview", true);
       say(`The words on the graphic change to ${r.name} too.`);
       await w(2000);
       set("is-preview", false);
@@ -218,7 +228,7 @@
         point($(".is-post .hb-share"));
         await w(1100);
         say("An employee clicks Share to post it on LinkedIn.");
-        set("is-press", true); await w(250); set("is-press", false);
+        tap(); set("is-press", true); await w(250); set("is-press", false);
         open();
         mark(0, 1);
         await w(1500);
@@ -250,7 +260,7 @@
         await w(jumped ? 1200 : 600);
         point($(".hb-b.is-blue"));
         await w(1000);
-        set("is-send", true); await w(200); set("is-send", false);
+        tap(); set("is-send", true); await w(200); set("is-send", false);
         set("is-sent", true); set("is-open", false); frame("feed");
         say("Then it goes out on LinkedIn.");
         mark(3, 1);
@@ -263,7 +273,7 @@
         say("Employees can also switch on Localize Every Post.");
         point($(".hb-auto"), 0.8);
         await w(1300);
-        set("is-auto", true);
+        tap(); set("is-auto", true);
         await w(500);
         frame("feed");
         say(`Now the whole feed reads in ${data.auto.name}.`);
