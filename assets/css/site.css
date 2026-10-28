@@ -1705,6 +1705,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
   html:not(.theme-light).can-dark {
     --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
     --tabglass: color-mix(in srgb, #2c2c2e 62%, transparent); --tabink: #f5f5f7; --glassline: rgba(255,255,255,.12);
+    --tablens: rgba(255,255,255,.1); --tabaccent: #409cff;
     --tabshadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0,0,0,.5);
     color-scheme: dark;
   }
@@ -1740,6 +1741,7 @@ html.theme-dark.can-dark .contact-row a:first-child, html.theme-dark .page-home 
 html.theme-dark.can-dark {
     --ink: #f5f5f7; --muted: #a1a1a6; --paper: #000; --tabband: #161618;
     --tabglass: color-mix(in srgb, #2c2c2e 62%, transparent); --tabink: #f5f5f7; --glassline: rgba(255,255,255,.12);
+    --tablens: rgba(255,255,255,.1); --tabaccent: #409cff;
     --tabshadow: inset 0 .5px 0 rgba(255,255,255,.14), 0 0 0 .5px var(--glassline), 0 8px 24px rgba(0,0,0,.5);
     color-scheme: dark;
   }
@@ -2400,33 +2402,40 @@ html.theme-dark.can-dark .pills:has(> .seg.is-scrolling), html.theme-dark .page-
 .pj-credits-close:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
 .pj-credits-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
 :root[data-os="ios"] .pj-credits-close { width: 44px; height: 44px; top: 2px; right: 2px; }
-.pj-caption { transition: opacity .25s; }
-.pj-stage.show-credits .pj-caption:not(.is-center) { opacity: 0; }
-@media (prefers-reduced-transparency: reduce) { .pj-credits { background: var(--bg, #fff); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+/* (the words fade, not the caption box: the scene sets that box's own fade on every frame) */
+.pj-line { transition: opacity .25s; }
+.pj-stage.show-credits .pj-caption:not(.is-center) .pj-line { opacity: 0; }
+@media (prefers-reduced-transparency: reduce) { .pj-credits, .pj-tab, .pj-controls { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (prefers-color-scheme: dark) and (prefers-reduced-transparency: reduce) {
+  html:not(.theme-light).can-dark :is(.pj-credits, .pj-tab, .pj-controls) { background: #1c1c1e; }
+}
+@media all and (prefers-reduced-transparency: reduce) {
+  html.theme-dark.can-dark :is(.pj-credits, .pj-tab, .pj-controls) { background: #1c1c1e; }
+}
 @media (max-width: 720px) {
   /* the picture keeps the top 16:9 of the stage; the subtitles follow beneath it */
   .pj-stage { aspect-ratio: auto; padding-top: 56.25%; }
   /* phones: like a video tucked off the side of an iPhone screen, the controls wait behind a small dark tab on
      the picture's right edge; a tap on the tab slides the pill out beside it, and another tucks it away */
   .pj-dock { position: absolute; top: 0; left: 0; right: 0; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: flex-end;
-    overflow: hidden; pointer-events: none; }
+    overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .2s; }
+  .pj-stage.is-ready .pj-dock { opacity: 1; }   /* like the pill on wider screens, it waits for the scene */
   .pj-drawer { display: flex; align-items: center; gap: 6px; transform: translateX(calc(100% - 30px)); transition: transform .35s cubic-bezier(.32, .72, 0, 1); }
   .pj-stage.show-controls .pj-drawer { transform: translateX(-8px); }
   .pj-tab { display: grid; place-items: center; position: relative; width: 30px; height: 84px; border: 0; padding: 0; border-radius: 15px 0 0 15px;
-    cursor: pointer; pointer-events: auto; color: rgba(235, 235, 245, .6); background: rgba(44, 44, 46, .88);
+    cursor: pointer; pointer-events: auto; color: color-mix(in srgb, var(--tabink) 60%, transparent); background: var(--tabglass); box-shadow: var(--tabshadow);
     -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); transition: border-radius .35s; }
   .pj-tab::before { content: ""; position: absolute; inset: -8px 0 -8px -14px; }   /* a 44pt wide target */
   .pj-tab svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s; }
   .pj-stage.show-controls .pj-tab { border-radius: 15px; }
   .pj-stage.show-controls .pj-tab svg { transform: scaleX(-1); }
   .pj-tab:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
-  .pj-controls { position: static; opacity: 1; pointer-events: auto; color: #fff; background: rgba(44, 44, 46, .88); box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
-    -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); }
+  .pj-controls { position: static; opacity: 1; pointer-events: auto; }
   .pj-btn:hover { background: transparent; }
   /* on a phone the note opens under the subtitles, and they stay */
   .pj-credits { position: static; width: auto; margin: 10px var(--gutter) 0; transform: none; display: none; }
   .pj-stage.show-credits .pj-credits { display: block; transform: none; animation: pj-in .35s ease; }
-  .pj-stage.show-credits .pj-caption:not(.is-center) { opacity: 1; }
+  .pj-stage.show-credits .pj-caption:not(.is-center) .pj-line { opacity: 1; }
   .pj-pin { margin: 40px 0; }
   .pj-caption, .pj-caption.is-center { min-height: 3em; }
   .pj-stage canvas { bottom: auto; height: auto; aspect-ratio: 16 / 9; }
