@@ -456,15 +456,17 @@ html.lb-page .lightbox:not(.no-caption) .lb-prev, html.lb-page .lightbox:not(.no
 .lb-pdf:not(.is-ready) { justify-content: center; }
 .lb-pdf:focus { outline: none; }
 .lb-pdf-page { width: 100%; flex: none; background: #fff; border-radius: 3px; overflow: hidden; }
+.lb-pdf-page.lb-pdf-copy { background: none; }
 .lb-pdf-page { cursor: zoom-in; }
-.lb-pdf-page canvas {
+.lb-pdf-page canvas, .lb-pdf-page.lb-pdf-copy img {
   display: block; width: 100%; height: auto;
   transform-origin: var(--zx, 50%) var(--zy, 50%); transition: transform .25s var(--ease);
 }
 .lb-pdf-page.is-zoomed { cursor: zoom-out; }
-.lb-pdf-page.is-zoomed canvas { transform: scale(1.5); }
-@media (prefers-reduced-motion: reduce) { .lb-pdf-page canvas { transition: none; } }
+.lb-pdf-page.is-zoomed :is(canvas, img) { transform: scale(1.5); }
+@media (prefers-reduced-motion: reduce) { .lb-pdf-page :is(canvas, img) { transition: none; } }
 .lb-media .lb-pdf img { max-height: 100%; }
+.lb-media .lb-pdf .lb-pdf-copy img { max-height: none; }   /* the dark copy runs its full length and scrolls */
 .lb-caption h2 { font-size: 20px; line-height: 1.3; margin-bottom: 4px; }
 .lb-caption .lb-by { color: #aaa; font-size: 14px; margin-bottom: 14px; }
 .lb-caption .lb-tools { font-style: italic; color: #ccc; font-size: 14px; margin-bottom: 12px; }

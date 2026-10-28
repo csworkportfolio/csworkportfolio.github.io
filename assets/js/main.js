@@ -698,7 +698,8 @@
   const darkPage = () => root.classList.contains("can-dark") && isDark();
   function render() {
     let item = current.items[current.index];
-    if (item.full_dark && darkPage()) item = { ...item, full: item.full_dark, thumb: item.thumb_dark || item.thumb };
+    const darkCopy = !!(item.full_dark && darkPage());
+    if (darkCopy) item = { ...item, full: item.full_dark, thumb: item.thumb_dark || item.thumb };
     if (item.src_dark && darkPage()) item = { ...item, src: item.src_dark, thumb: item.thumb_dark || item.thumb };
     if (item.pop_full) item = { ...item, type: "image", full: item.pop_full, thumb: item.pop_full, w: item.pop_w, h: item.pop_h };   // a moving tile opens as a still
     const inner = dialog.querySelector(".lb-inner");
@@ -707,7 +708,16 @@
     lbCaption.replaceChildren();
     const label = item.title || "";
 
-    if (item.type === "image" && isPdf(item)) {
+    if (item.type === "image" && isPdf(item) && darkCopy) {
+      // in dark mode a document with a dark copy (a page captured in its dark theme) shows that copy instead of
+      // the light PDF, read and zoomed the same way: it scrolls in the box, and a click zooms in around the pointer
+      const box = el("div", { class: "lb-pdf is-ready", tabindex: "0", "aria-label": `${label || "Document"}: scroll to read` });
+      const slot = el("div", { class: "lb-pdf-page lb-pdf-copy" });
+      slot.append(el("img", { src: item.full, alt: label, width: item.w, height: item.h }));
+      zoomable(slot);
+      box.append(slot);
+      lbMedia.append(box);
+    } else if (item.type === "image" && isPdf(item)) {
       // the cover shows while the document loads; if the PDF can't be shown, the cover stays
       const box = el("div", { class: "lb-pdf", tabindex: "0", "aria-label": `${label || "Document"}: scroll to read` });
       box.append(el("img", { src: item.full, alt: label, width: item.w, height: item.h }));
