@@ -272,21 +272,22 @@ function start(THREE) {
   // the pose of each step: turn (y), tilt (x), drop (into the gray lane), gray, and what's on the screen
   function pose(p) {
     const at = Math.min(N - 1, Math.floor(p * N)), k = p * N - at;
-    const o = { ry: -0.42, rx: 0.1, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), sweep: 0, glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
+    const o = { ry: -0.42, rx: 0.1, y: 0, s: 1, gray: 0, apart: Math.pow(Math.max(0, 1 - p * N / 1.6), 2), glow: 0, roll: 0, notes: [0, 0, 0, 0], mine: 1 };
     if (at === 1) { o.ry = -0.42 + 0.22 * ease(k); o.rx = 0.1 - 0.04 * ease(k); }
     if (at === 2) {   // the device check: the phone lifts and turns all the way round, then a line of light runs down it
       o.ry = -0.2 + ease(clamp(k / 0.6)) * Math.PI * 2; o.rx = 0.06; o.y = 0.05 * Math.sin(Math.PI * clamp(k / 0.6));
-      o.glow = k > 0.56 ? 1 : 0; o.sweep = clamp((k - 0.6) / 0.32);
+      // the glow slowly appears round the whole edge, pulses, and fades away before the step ends
+      o.glow = k < 0.55 ? 0 : k < 0.72 ? ease((k - 0.55) / 0.17) : k < 0.86 ? 1 : 1 - ease((k - 0.86) / 0.12);
     }
     if (at === 3 || at === 4) {   // out of his hands: lower, smaller, gray; the sign-offs arrive
       const d = at === 3 ? ease(clamp(k / 0.35)) : 1;
-      o.ry = -0.2 + 0.1 * d; o.rx = 0.06; o.y = -0.16 * d; o.s = 1 - 0.07 * d; o.gray = d; o.mine = 1 - d;
+      o.ry = -0.2 + 0.1 * d; o.rx = 0.06; o.y = -0.06 * d; o.s = 1 - 0.08 * d; o.gray = d; o.mine = 1 - d;   // it sinks from the top; its foot stays clear of the switcher
       o.notes[0] = at === 4 ? 1 : clamp((k - 0.45) / 0.2);
       o.notes[1] = at === 4 ? clamp((k - 0.3) / 0.2) : 0;
     }
     if (at === 5) {   // back in his lane, stamped: color returns, and he schedules it
       const u = 1 - ease(clamp(k / 0.35));
-      o.ry = -0.1 - 0.12 * (1 - u); o.rx = 0.06; o.y = -0.16 * u; o.s = 1 - 0.07 * u; o.gray = u; o.mine = 1 - u;
+      o.ry = -0.1 - 0.12 * (1 - u); o.rx = 0.06; o.y = -0.06 * u; o.s = 1 - 0.08 * u; o.gray = u; o.mine = 1 - u;
       o.notes = [1, 1, clamp((k - 0.45) / 0.2), 0];
     }
     if (at === 6) {   // live: the sign-offs clear, the next screen rolls up, Live arrives
@@ -366,13 +367,13 @@ function start(THREE) {
     screen.visible = apart < 0.002;
     slices.forEach((m) => { m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart); });
     drawScreen(o.roll);
-    // the island grows in as the slices close; the glow fades in, sweeps round, and fades when the step is done
+    // the island grows in as the slices close; the glow fades in, breathes, and fades before the step is done
     const ik = clamp(1 - apart * 3);
     island.material.opacity = ik; island.scale.set(0.5 + 0.5 * ease(ik), 0.6 + 0.4 * ease(ik), 1); island.visible = ik > 0.01;
     island.position.copy(islandHome); if (slices[0]) island.position.addScaledVector(slices[0].userData.away, apart);   // it rides in on the top slice
     const u = siri.material.uniforms;
-    u.uOpacity.value += (o.glow - u.uOpacity.value) * Math.min(1, dt * 6);
-    u.uProg.value += (o.sweep - u.uProg.value) * Math.min(1, dt * 10);
+    u.uOpacity.value += (o.glow * (0.72 + 0.28 * Math.sin(now / 420)) - u.uOpacity.value) * Math.min(1, dt * 6);   // breathing
+    u.uProg.value = 1;
     u.uTime.value = now / 1000;
     siri.visible = u.uOpacity.value > 0.01;
     // the notifications drop in (and leave) like iOS banners
@@ -407,7 +408,7 @@ function studio(THREE) {
 }
 
 // the Apple Intelligence edge glow: a band just inside the screen's rounded edge, brightest at the edge and fading
-// inward, its colors flowing round; uProg reveals it from the bottom centre all the way round (0 to 1)
+// inward, its colors flowing round (uProg below 1 would reveal it from the bottom centre round; the scene keeps it at 1)
 function siriGlow(THREE, roundedRect, w, h, r) {
   const BAND = 0.07, N = 360;
   const outer = roundedRect(w, h, r).getSpacedPoints(N), inner = roundedRect(w - 2 * BAND, h - 2 * BAND, Math.max(0.001, r - BAND)).getSpacedPoints(N);
