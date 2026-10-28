@@ -103,7 +103,7 @@ function start(THREE) {
   // the brief: the screen in its three slices (the story template's sections), apart and then together
   // both sides show the picture, so from behind a slice reads as a pane of glass (the picture mirrored)
   const sliceMat = new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false, side: THREE.DoubleSide });
-  const sliceEdge = new THREE.MeshBasicMaterial({ color: 0xaeaeb2, transparent: true, opacity: 0.3, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
+  const sliceEdge = new THREE.MeshBasicMaterial({ color: 0xaeaeb2, transparent: true, opacity: 0.2, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
   const slices = [];
   const EDGE = 0.006;
   for (let i = 0; i < cuts.length - 1; i++) {
