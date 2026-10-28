@@ -425,7 +425,9 @@ function start(THREE) {
   note.innerHTML = '<button class="n3-note-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button>'
     + '<p class="n3-note-title">How This Phone Was Made</p>'
     + "<p>Directing Claude Code, I storyboarded the journey from request to live, then built the phone and every step in three.js, refining the details against real phone photography until they held up.</p>";
-  visual.append(dock, note);
+  // the tab lives in the pinned stage, which spans the window, so it scrolls with the page instead of being moved after it
+  const stage = scene.querySelector(".sc-stage") || visual;
+  visual.append(note); stage.append(dock);
   const tab = dock.querySelector(".n3-tab"), pill = dock.querySelector(".n3-controls"), infoBtn = dock.querySelector('[data-act="info"]');
   let tuckTimer = 0, overPill = false;
   function showControls(on, stay) {
@@ -677,7 +679,8 @@ function start(THREE) {
     const sk = Math.max(zk, spinK);
     cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
     // the tab sits on the window's right edge, level with the phone
-    const fr = flat.getBoundingClientRect(); dock.style.top = `${fr.top + fr.height / 2}px`;
+    const fr = flat.getBoundingClientRect(), dockTop = `${Math.round(fr.top - stage.getBoundingClientRect().top + fr.height / 2)}px`;
+    if (dock.style.top !== dockTop) dock.style.top = dockTop;
     renderer.render(world, camera);
     // once the phone has settled (no scroll, pointer, drag, show, glow or banner moving) only the float runs, at half
     // the frame rate; the next scroll, pointer move, click or resize brings it back to full

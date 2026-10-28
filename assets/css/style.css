@@ -770,7 +770,7 @@ main { view-transition-name: page; }
 /* its side controls (nike-phone.js), as on the Cohesity animation: a tab on the column's right edge slides out a pill
    (spin, zoom, how it was made) that tucks back on its own; light or dark glass like every control on the site */
 .n3-dock, .n3-note { display: none; }
-.scene.is-live.has-3d .n3-dock { display: flex; position: fixed; right: 0; z-index: 3; transform: translateY(-50%); overflow: hidden; pointer-events: none; padding: 8px 0 8px 12px; }
+.scene.is-live.has-3d .n3-dock { display: flex; position: absolute; right: 0; z-index: 3; transform: translateY(-50%); overflow: hidden; pointer-events: none; padding: 8px 0 8px 12px; }
 .n3-drawer { display: flex; align-items: center; gap: 8px; transform: translateX(calc(100% - 26px)); transition: transform .45s cubic-bezier(.32, .72, 0, 1); }
 .n3-dock.is-out .n3-drawer { transform: translateX(-4px); }
 .n3-tab { display: grid; place-items: center; position: relative; width: 26px; height: 96px; border: 0; padding: 0 0 0 2px; border-radius: 18px 0 0 18px;
