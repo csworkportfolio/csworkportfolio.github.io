@@ -399,8 +399,8 @@ function start(THREE) {
   const midOf = (a, b) => SH / 2 - (a + b) / 2 * SH;   // the screen height at the middle of a stretch of the placement
   // the close-up: one full turn that ends facing straight on, then the camera moves in close to the top of the screen
   // and slowly travels down it so the words can be read, then pulls back
-  const Z_SPIN = 1500, Z_IN = 900, Z_PAN = 9000, Z_OUT = 1000, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
-  const PAN_TOP = SH / 2 - 0.2, PAN_BOTTOM = -SH / 2 + 0.2;
+  const Z_SPIN = 1600, Z_IN = 1200, Z_PAN = 16000, Z_OUT = 1200, ZOOM_MS = Z_SPIN + Z_IN + Z_PAN + Z_OUT;
+  const PAN_TOP = SH / 2 - 0.3, PAN_BOTTOM = -SH / 2 + 0.3;
   const lookAt = new THREE.Vector3(), aim = new THREE.Vector3();
 
   // ---------- sizing: the canvas covers the flat phone's place, with room round it to turn ----------
@@ -428,7 +428,7 @@ function start(THREE) {
   // words (casting a soft shadow on them), behind the tab bar, the switcher and these controls. The phone stays
   // the same size and in the same place, by shifting the lens's centre to where it stood
   const stageEl = scene.querySelector(".sc-stage");
-  let full = false, fullW = 0, fullH = 0;
+  let full = false, fullW = 0, fullH = 0, centreK = 0;
   function setFull(on) {
     if (on === full) return;
     full = on;
@@ -441,8 +441,9 @@ function start(THREE) {
     camera.aspect = W / Hv;
     camera.fov = 2 * THREE.MathUtils.radToDeg(Math.atan((H * ROOM * Hv / (f.height * ROOM)) / 2 / camBase));
     camera.updateProjectionMatrix();
+    // centred on the phone's place, moving to the window's centre as the close-up comes in
     const e = camera.projectionMatrix.elements;
-    e[8] = -(2 * (f.left + f.width / 2) / W - 1); e[9] = -(1 - 2 * (f.top + f.height / 2) / Hv);
+    e[8] = -(2 * (f.left + f.width / 2) / W - 1) * (1 - centreK); e[9] = -(1 - 2 * (f.top + f.height / 2) / Hv) * (1 - centreK);
     camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
   }
   new ResizeObserver(size).observe(visual);
@@ -528,7 +529,9 @@ function start(THREE) {
     if (zk > 0) {   // close on the screen, a little to one side, looking at the shot's point on it
       phone.updateMatrixWorld();
       const target = phone.localToWorld(aim.set(sway, shotY, front));
-      camera.position.set(target.x * zk, target.y * zk, camBase + (target.z + 1.05 - camBase) * zk);   // straight on, close enough to read
+      // straight on, close enough to read, with both sides of the phone still in the frame
+      const fit = (W * 1.3 / 2) / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(camera.aspect, 1.6));
+      camera.position.set(target.x * zk, target.y * zk, camBase + (target.z + fit - camBase) * zk);
       camera.lookAt(lookAt.set(target.x * zk, target.y * zk, target.z * zk));
     } else if (spinK > 0.002) {   // the turntable's camera drifts in and out, its aim wandering up and down the phone
       const fy = (Math.sin(now / 2300) * 0.3 + Math.sin(now / 3700 + 2) * 0.14) * spinK;
@@ -539,6 +542,7 @@ function start(THREE) {
     // out over the page during the shows; back in its column after
     const showing = zk > 0 || zf > 0 || spinK > 0.01;
     setFull(showing);
+    centreK = zk;
     if (full) fullFrame();
     const sk = Math.max(zk, spinK);
     cast.visible = sk > 0.01; cast.material.opacity = sk * (dark ? 0.7 : 0.45) * (1 - zk * 0.6);
