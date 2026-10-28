@@ -457,6 +457,9 @@ function start(THREE) {
   const live = () => scene.classList.contains("is-live");
   function frame(now) {
     raf = 0;
+    // settled, only the float is moving: it draws at 30 frames a second instead of 60
+    if (still > 20 && now - lastDraw < 32) { raf = requestAnimationFrame(frame); return; }
+    lastDraw = now;
     if (!onScreen || !live()) { flag("has-3d", false); return; }
     flag("has-3d", true);
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
@@ -499,7 +502,7 @@ function start(THREE) {
     const hero = ease(spinK);
     rig.rotation.set(0.3 * hero, 0, -0.32 * hero);                            // the hero angle: leaning back, tilted to one side
     phone.rotation.set(cur.rx + off.x + lx + wob + (0 - cur.rx - off.x) * zf, cur.ry + off.y + ly + spinAngle + zturn + (0 - cur.ry - off.y) * zf, 0);   // straight on, to read
-    phone.position.y = cur.y;
+    phone.position.y = cur.y + Math.sin(now / 900) * 0.012;   // the slow float
     phone.scale.setScalar(cur.s);
     // gray in the handoffs, burgundy in his steps; his steps also get a warm accent edge light
     tinted.forEach(([m, c]) => m.color.copy(c).lerp(GRAPHITE, cur.gray));
@@ -553,18 +556,17 @@ function start(THREE) {
     // the tab sits on the window's right edge, level with the phone
     const fr = flat.getBoundingClientRect(); dock.style.top = `${fr.top + fr.height / 2}px`;
     renderer.render(world, camera);
-    // rest when nothing moves: once the phone has settled (no scroll, pointer, drag, show, glow or banner still
-    // moving) the loop stops, and the next scroll, pointer move, click or resize wakes it
-    const sig = [phone.rotation.x, phone.rotation.y, phone.position.y, phone.scale.x, cur.gray, look.x, look.y, off.x, off.y, apart, o.roll,
+    // once the phone has settled (no scroll, pointer, drag, show, glow or banner moving) only the float runs, at half
+    // the frame rate; the next scroll, pointer move, click or resize brings it back to full
+    const sig = [phone.rotation.x, phone.rotation.y, cur.y, phone.scale.x, cur.gray, look.x, look.y, off.x, off.y, apart, o.roll,
       ...notes.map((n) => n.k), island.material.opacity, camera.position.z];
     const moved = sig.some((v, i) => Math.abs(v - (lastSig[i] ?? 1e9)) > 3e-4);
     lastSig = sig;
     const busy = drag || spinning || spinK > 0.002 || zoomAt >= 0 || siri.visible || Math.abs(vel.x) + Math.abs(vel.y) > 1e-5;
     still = moved || busy ? 0 : still + 1;
-    if (still > 20) { raf = 0; return; }
     raf = requestAnimationFrame(frame);
   }
-  let lastSig = [], still = 0;
+  let lastSig = [], still = 0, lastDraw = 0;
   // classes are only written when they change: any write wakes the loop (it watches the section's classes)
   function flag(c, on) { if (scene.classList.contains(c) !== on) scene.classList.toggle(c, on); }
   wake = () => kick();

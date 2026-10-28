@@ -764,7 +764,7 @@ main { view-transition-name: page; }
 .scene.is-live.has-3d .ph3d.ph3d-full { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; }
 .scene.has-3d .sc-visual { perspective: none; }
 /* desktop: the 3D phone's column sits further right, the phone, its switcher and the count together */
-.scene.is-live[data-phone3d] .sc-visual { padding-left: 16%; }
+.scene.is-live[data-phone3d] .sc-visual { padding-left: 28%; }
 .scene.has-3d.n3-zooming .sc-switch { z-index: 0; }   /* the close-up covers the placement switcher; the tab bar and controls stay on top */   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
 .scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
