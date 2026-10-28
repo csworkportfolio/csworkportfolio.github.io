@@ -1285,15 +1285,10 @@ def demo_localize(b, root):
 
     # the post's graphic, in the style of Cohesity's own: a visual on top under the wordmark, a condensed
     # headline whose last line is pink, and a green button; its words change with the region
-    blocks = "".join(f'<rect x="{8 + 9 * (i % 6)}" y="{9 + 9 * (i // 6)}" width="6" height="6" rx="1" fill="#18e05a" opacity="{o}"/>'
-                     for i, o in enumerate((.9, .25, .5, .25, .7, .25, .25, .7, .25, .9, .25, .5, .5, .25, .9, .25, .25, .7, .25, .5, .25, .25, .7, .25)))
-    art_svg = (f'<svg class="hb-guide-art" viewBox="0 0 130 64" aria-hidden="true"><rect width="130" height="64" fill="#06100b"/>'
-               f'<path d="M58 0h72v64H40z" fill="#0b2416"/>{blocks}'
-               '<path d="M96 12l17 6v12c0 11-7.5 18-17 22-9.5-4-17-11-17-22V18z" fill="#06100b" stroke="#18e05a" stroke-width="2.6" stroke-linejoin="round"/>'
-               '<path d="M89 31l5 5 9-10" fill="none" stroke="#18e05a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+    art_img = f'<img class="hb-guide-art" src="{img("guide-photo")}" alt="" loading="lazy">'   # cut from a Cohesity webinar post he designed
 
     def guide(art):
-        return (f'<span class="hb-guide">{art_svg}<span class="hb-guide-logo"><img src="{root}assets/ai/hub/cohesity-wordmark.png" alt=""></span>'
+        return (f'<span class="hb-guide">{art_img}<span class="hb-guide-logo"><img src="{root}assets/ai/hub/cohesity-wordmark.png" alt=""></span>'
                 f'<b>{esc(art[0])}</b><b>{esc(art[1])}</b><b class="is-pink">{esc(art[2])}</b><span class="hb-guide-btn">{esc(art[3])}</span></span>')
 
     cards = "".join(card(c, i) for i, c in enumerate(b["feed"]))
@@ -1307,7 +1302,7 @@ def demo_localize(b, root):
     hub = f'''
 <div class="hb-view"><div class="hb is-open is-lang is-review" lang="en" aria-hidden="true">
   <nav class="hb-rail">
-    <img class="hb-logo" src="{root}assets/ai/hub/cohesity-s.png" alt="">
+    <span class="hb-logo" style="-webkit-mask-image:url({root}assets/ai/hub/cohesity-s.png);mask-image:url({root}assets/ai/hub/cohesity-s.png)"></span>
     {hb_icon("swap", "hb-i hb-swap")}
     <span class="hb-me"><img src="{img("me")}" alt=""><span>My account</span></span>
     <ul>{rail}</ul>
@@ -1334,7 +1329,7 @@ def demo_localize(b, root):
       </div>
       <div class="hb-text">
         <p class="hb-t" lang="ko">{esc(before)}<del>{esc(old)}</del> <ins>{esc(new)}</ins>{esc(after)}</p>
-        <p class="hb-hash">{esc(b["tags"])}</p>
+        <p class="hb-hash">{esc(ko["tags"])}</p>
         <p class="hb-busy">{AI_SPARK}<span class="hb-busy-v">Localizing</span></p>
         <p class="hb-review"><span class="hb-ca">CA</span><span><b>Champion Advocate</b> <span class="hb-review-v">{esc(ko["review"])}</span></span></p>
       </div>

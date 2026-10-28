@@ -43,7 +43,8 @@
               "mantener tus",
               "datos seguros",
               "Lee la guía"
-            ]
+            ],
+            "tags": "#Cohesity #SeguridadDeDatos"
           },
           {
             "code": "FR",
@@ -55,7 +56,8 @@
               "pour protéger",
               "vos données",
               "Lire le guide"
-            ]
+            ],
+            "tags": "#Cohesity #SécuritéDesDonnées"
           },
           {
             "code": "DE",
@@ -67,7 +69,8 @@
               "So schützen Sie",
               "Ihre Daten",
               "Zum Leitfaden"
-            ]
+            ],
+            "tags": "#Cohesity #Datensicherheit"
           },
           {
             "code": "JA",
@@ -79,7 +82,8 @@
               "安全に守る",
               "クイックガイド",
               "ガイドを読む"
-            ]
+            ],
+            "tags": "#Cohesity #データセキュリティ"
           },
           {
             "code": "KO",
@@ -92,7 +96,8 @@
               "안전하게 지키는",
               "간단한 가이드",
               "가이드 읽기"
-            ]
+            ],
+            "tags": "#Cohesity #데이터보안"
           },
           {
             "code": "ZH",
@@ -104,7 +109,8 @@
               "安全的",
               "快速指南",
               "閱讀指南"
-            ]
+            ],
+            "tags": "#Cohesity #資料安全"
           },
           {
             "code": "PT",
@@ -116,7 +122,8 @@
               "manter seus",
               "dados seguros",
               "Leia o guia"
-            ]
+            ],
+            "tags": "#Cohesity #SegurançaDeDados"
           }
         ],
         "art": [

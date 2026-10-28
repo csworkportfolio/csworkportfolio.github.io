@@ -112,7 +112,7 @@
         ["is-open", "is-lang", "is-review", "is-menu", "is-sent", "is-press", "is-busy", "is-auto", "is-preview"].forEach((c) => set(c, false));
         cards.forEach((c, i) => word(c, english[i], false));
         fixes = 0; count(); frame("feed");
-        text.lang = "en"; text.textContent = data.post; art($(".hb-photo"), data.art);
+        text.lang = "en"; text.textContent = data.post; $(".hb-hash").textContent = data.tags; art($(".hb-photo"), data.art);
         cursor.style.left = "560px"; cursor.style.top = "560px";
         await say("The Champions Hub's Trending Posts, recreated from a screen recording. The post is a generic example.");
         await d.wait(1400);
@@ -141,6 +141,7 @@
           point($(".hb-text"), 0.85, 0.3);
           const m = r.text.match(/^(.*)\[(.*)\|(.*)\](.*)$/);
           await d.type(text, m ? m[1] + m[2] + m[4] : r.text, 22);
+          $(".hb-hash").textContent = r.tags;   // the brand tag stays; the topic tag is the one people search there
           art($(".hb-photo"), r.art);   // the graphic is localized too
           set("is-busy", false);
           // open the photo to show its words changed with the post

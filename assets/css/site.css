@@ -2789,16 +2789,16 @@ html.theme-dark.can-dark .ai-page {
 /* the Hub had a light and a dark mode; it follows the page's */
 .hb-window { --hb-bg: #f2f3f5; --hb-card: #fff; --hb-thumb: #e6e8eb; --hb-raise: #e8eaed; --hb-chip: #e8eaed; --hb-ink: #1d1d1f; --hb-ink2: #3c3c43;
   --hb-muted: #86868b; --hb-line: #dcdee2; --hb-menu: #fff; --hb-field: #fff; --hb-ok: #0a8a3a; --hb-okbg: #dff6e7; --hb-sel: #e1effa;
-  --hb-rev: #5a4300; --hb-revbg: #fff6dd; --hb-revline: #f0d48a; --hb-dim: rgba(20, 22, 24, .42); --hb-blur: brightness(1.05) saturate(.7) opacity(.55);
+  --hb-rev: #5a4300; --hb-revbg: #fff6dd; --hb-revline: #f0d48a; --hb-dim: rgba(20, 22, 24, .42); --hb-blur: brightness(1.05) saturate(.7) opacity(.55); --hb-mark: #009e60;
   background: var(--hb-bg); }
 @media (prefers-color-scheme: dark) {
   html:not(.theme-light) .hb-window { --hb-bg: #050508; --hb-card: #101213; --hb-thumb: #1a1c1e; --hb-raise: #17191c; --hb-chip: #050508; --hb-ink: #eee; --hb-ink2: #d0d0d0;
     --hb-muted: #8c8a89; --hb-line: #23262a; --hb-menu: #1b1e22; --hb-field: #0b0c0e; --hb-ok: #3ee07a; --hb-okbg: #0f2c22; --hb-sel: #16324a;
-    --hb-rev: #f1e3c2; --hb-revbg: #2a2416; --hb-revline: #5a4719; --hb-dim: rgba(240, 244, 240, .7); --hb-blur: brightness(.45); }
+    --hb-rev: #f1e3c2; --hb-revbg: #2a2416; --hb-revline: #5a4719; --hb-dim: rgba(240, 244, 240, .7); --hb-blur: brightness(.45); --hb-mark: #00dd68; }
 }
 html.theme-dark .hb-window { --hb-bg: #050508; --hb-card: #101213; --hb-thumb: #1a1c1e; --hb-raise: #17191c; --hb-chip: #050508; --hb-ink: #eee; --hb-ink2: #d0d0d0;
     --hb-muted: #8c8a89; --hb-line: #23262a; --hb-menu: #1b1e22; --hb-field: #0b0c0e; --hb-ok: #3ee07a; --hb-okbg: #0f2c22; --hb-sel: #16324a;
-    --hb-rev: #f1e3c2; --hb-revbg: #2a2416; --hb-revline: #5a4719; --hb-dim: rgba(240, 244, 240, .7); --hb-blur: brightness(.45); }
+    --hb-rev: #f1e3c2; --hb-revbg: #2a2416; --hb-revline: #5a4719; --hb-dim: rgba(240, 244, 240, .7); --hb-blur: brightness(.45); --hb-mark: #00dd68; }
 .hb-window .ai-bar { border-color: var(--hb-line); }
 .hb-window .ai-dots i { background: var(--hb-line); }
 .hb-window .ai-title { color: var(--hb-muted); }
@@ -2810,7 +2810,7 @@ html.theme-dark .hb-window { --hb-bg: #050508; --hb-card: #101213; --hb-thumb: #
 .hb .hb-i { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
 .hb-rail { position: absolute; left: 0; top: 0; bottom: 0; width: 74px; display: flex; flex-direction: column; align-items: center; color: var(--hb-ink2); }
-.hb-logo { width: 26px; height: 30px; margin: 20px 0 14px; object-fit: contain; }
+.hb-logo { display: block; width: 26px; height: 30px; margin: 20px 0 14px; background: var(--hb-mark); -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
 .hb .hb-swap { width: 13px; height: 13px; margin-bottom: 8px; }
 .hb-me { display: grid; justify-items: center; gap: 4px; font-size: 8.5px; margin-bottom: 9px; }
 .hb-me img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
@@ -2879,14 +2879,14 @@ html.theme-dark .hb-window { --hb-bg: #050508; --hb-card: #101213; --hb-thumb: #
 .hb-more { margin-left: auto; font-size: 15px; letter-spacing: 1px; line-height: 0; }
 .hb.is-press .is-post .hb-share { color: #fff; background: #0dbe4a; box-shadow: 0 0 0 4px #0dbe4a; }
 
-.hb-guide { position: relative; display: flex; flex-direction: column; height: 162px; width: 130px; padding: 0 0 10px; background: #fbf9f4; color: #111; text-align: left;
+.hb-guide { position: relative; display: flex; flex-direction: column; height: 162px; width: 130px; padding: 0 0 10px; background: #fff; color: #111; text-align: left;
   font: 700 17.5px/.9 "DIN Condensed", "Barlow Condensed", "Arial Narrow", sans-serif; font-stretch: condensed; text-transform: uppercase; }
-.hb-guide-art { display: block; width: 130px; height: 64px; flex: none; }
-.hb-guide-logo { align-self: flex-start; display: block; margin: -7px 0 7px 9px; padding: 3px 5px; background: #fff; line-height: 0; }
-.hb-guide-logo img { display: block; width: 46px; height: auto; }
+.hb-guide .hb-guide-art { display: block; max-width: none; max-height: none; width: 130px; height: 64px; flex: none; object-fit: cover; object-position: 60% 40%; }
+.hb-guide-logo { align-self: flex-start; display: block; margin: 8px 0 6px 10px; line-height: 0; }
+.hb-guide .hb-guide-logo img { display: block; width: 46px; height: auto; max-height: none; }
 .hb-guide b { display: block; padding: 0 10px; font-weight: 700; }
-.hb-guide b.is-pink { color: #e6007e; }
-.hb-guide-btn { align-self: flex-start; margin: auto 0 0 10px; padding: 3px 5px 2px; background: #18e05a; font: 700 6px/1 Arial, Helvetica, sans-serif; letter-spacing: .4px; color: #111; }
+.hb-guide b.is-pink { color: #fc0080; }
+.hb-guide-btn { align-self: flex-start; margin: auto 0 0 10px; padding: 3px 5px 2px; background: #00dd68; font: 700 6px/1 Arial, Helvetica, sans-serif; letter-spacing: .4px; color: #111; }
 .hb-ua { position: absolute; left: 1003px; top: 86px; width: 244px; height: 640px; border-radius: 8px; background: var(--hb-card); padding: 10px 0 0; }
 .hb-ua-h { display: flex; justify-content: space-between; padding: 0 11px; font-size: 14.5px; color: var(--hb-ink); }
 .hb-ua-h span { font-size: 17px; line-height: 1; }
