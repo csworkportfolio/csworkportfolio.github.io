@@ -521,7 +521,8 @@ function start(THREE) {
     rim.color.set(0xc25a4a); rim.intensity = (dark ? 3.2 : 1.4) * cur.mine;
     rim2.color.set(dark ? 0xff9fb2 : 0xffffff); rim2.intensity = dark ? 1.2 : 0.4;
     // the brief's slices, or the whole screen
-    const apart = o.apart;
+    // a show (spin, zoom) first gathers the brief's pieces into the screen, and lets them float back out after
+    const apart = o.apart * (1 - ease(Math.max(zf, spinK)));
     screen.visible = apart < 0.002;
     slices.forEach((m) => {
       m.visible = !screen.visible; m.position.copy(m.userData.home).addScaledVector(m.userData.away, apart);

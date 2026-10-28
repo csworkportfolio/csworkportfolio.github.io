@@ -772,7 +772,8 @@ main { view-transition-name: page; }
    nike-phone.js), so the three centre top to bottom, level with the words */
 .scene.is-live[data-phone3d] :is(.ph3d:not(.ph3d-full), .sc-switch, .sc-count) { transition: transform .7s cubic-bezier(.2,.7,.2,1), opacity .4s, translate .7s cubic-bezier(.2,.7,.2,1); }
 .scene.is-live[data-phone3d][data-stage="6"] :is(.ph3d:not(.ph3d-full), .sc-switch, .sc-count) { translate: 0 calc(-1 * var(--n3-lift, 50px)); }
-.scene.has-3d.n3-zooming .sc-switch { z-index: 0; }   /* the close-up covers the placement switcher; the tab bar and controls stay on top */   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
+.scene.has-3d.n3-zooming .sc-switch { z-index: 0; }   /* the close-up covers the placement switcher; the tab bar and controls stay on top */
+.scene.is-live.has-3d.n3-zooming .sc-count { opacity: 0; }   /* and the reach count steps out of the way */   /* the flat phone's 3D isn't in use, and fixed layers need the window as their frame */
 .scene.is-live.has-3d .ph, .scene.is-live.has-3d .ph * { visibility: hidden !important; }   /* parts of it (the next screen at Verify) switch themselves back on otherwise */
 .scene.has-3d .sc-switch, .scene.has-3d .sc-count { position: relative; z-index: 2; }   /* above the canvas's spare room */
 /* its side controls (nike-phone.js), as on the Cohesity animation: a tab on the column's right edge slides out a pill
