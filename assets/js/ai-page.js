@@ -735,9 +735,12 @@
     marks.forEach((m) => { const i = +m.querySelector("button").dataset.i; m.style.left = `${snap(data.outputs[i].at / data.episode.length) * 100}%`; });
     let progress = still ? 1 : 0;
     function draw() {
-      const r = bar.getBoundingClientRect(), dpr = devicePixelRatio || 1;
-      if (!r.width) return;
-      canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+      const b = bar.getBoundingClientRect(), dpr = devicePixelRatio || 1;
+      if (!b.width) return;
+      // the canvas is a whole number of screen pixels, shown at exactly that size, so nothing is resampled (blurred)
+      canvas.width = Math.round(b.width * dpr); canvas.height = Math.round(b.height * dpr);
+      canvas.style.width = `${canvas.width / dpr}px`; canvas.style.height = `${canvas.height / dpr}px`;
+      const r = { width: canvas.width / dpr, height: canvas.height / dpr };
       const g = canvas.getContext("2d"), cs = getComputedStyle(fig);
       g.scale(dpr, dpr);
       const w = r.width / N;
@@ -749,10 +752,10 @@
       // the playhead, as in Voice Memos: a thin line through the waveform with a dot at each end, and the time under
       // it counting along
       if (progress > 0 && progress < 1) {
-        const x = progress * r.width;
-        g.fillStyle = g.strokeStyle = cs.getPropertyValue("--fn-head");
-        g.lineWidth = 1.5;
-        g.beginPath(); g.moveTo(x, 3); g.lineTo(x, r.height - 3); g.stroke();   // the full height, its dots at the edges
+        // the line sits on whole screen pixels (2 points wide), so its edges stay sharp
+        const lw = 2 * Math.round(dpr), xd = Math.round(progress * r.width * dpr), x = xd / dpr;
+        g.fillStyle = cs.getPropertyValue("--fn-head");
+        g.fillRect((xd - lw / 2) / dpr, 3, lw / dpr, r.height - 6);   // the full height, its dots at the edges
         for (const y of [3, r.height - 3]) { g.beginPath(); g.arc(x, y, 3, 0, Math.PI * 2); g.fill(); }
       }
       if (now) {
