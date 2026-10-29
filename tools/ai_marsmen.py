@@ -52,9 +52,12 @@ FRAMES = [(1.0, .5, .12), (1.3, .5, .1), (1.12, .4, .12), (1.45, .5, .08), (1.06
 # head, "sub" a small yellow film subtitle; and the most words a phrase of that style holds
 STYLES = ["top", "stack", "stack", "top", "stack", "top", "stack", "top", "stack", "top"]   # always big; "sub" is kept for reference
 PHRASE = {"top": 2, "stack": 5, "sub": 3}
-BUILD = {"stack", "thirds"}
+BUILD = {"stack"}
 SNAP = 0.45   # how far ahead of a cut to B-roll a phrase may start and still wait for the cut
-THIRDS = {"own your results": "thirds"}   # phrases set a word to each third of the screen, top to bottom
+# the captions vary phrase by phrase, in this order: big behind his head, a small bold line, a stack to one side,
+# and now and then the full height of the frame; some phrases always get the full height
+PLACES = ["behind", "small", "side-l", "behind", "small", "side-r", "behind", "small", "full"]
+FULL = {"own your results"}
 ORANGE = (255, 86, 0)   # Mars Men's brand orange
 FINISHED = CLIPS.parent / "Mars Men Video.mov"   # the finished video: its timeline, soundtrack and B-roll
 PEXELS = ROOT.parent / "source-extra/pexels"   # the clean B-roll originals from Pexels, named by their Pexels id
@@ -67,7 +70,7 @@ THEMES = {
              "subfill": WHITE, "track": 0.0, "label": True, "accent": ORANGE},
 }
 T = THEMES["wes"]   # the styles whose phrases build a word at a time; the rest pop in a word or two at once
-BEHIND = {"top", "stack"}
+BEHIND = {"behind"}
 
 
 def run(*a):
@@ -167,6 +170,40 @@ def text_layer(full, shown, pop, style, room=None, at=None):
             d.text((x, y), c, font=f, fill=fill, anchor="lt")
             x += f.getlength(c) + gap
     behind = True
+    key_i = key
+    def col(i):
+        return (T["accent"] if i == key_i else T["stack"]) + (255,)
+    if style == "small":
+        # one small bold line, low in the frame, in front of him
+        line = " ".join(full)
+        size = min(fit(line, W * 0.86, 54, hp, hi, 0.02), 54)
+        f, gap = font(hp, hi, size), size * 0.02
+        x, y = W / 2 - spaced_width(line, f, gap) / 2, H * 0.74
+        for i, w in enumerate(full):
+            if i < shown:
+                word(x, y, w, hp, hi, size, gap, col(i), i == shown - 1)
+            x += spaced_width(w + " ", f, gap) + gap
+        return soft_shadow(layer, 5, 0.6), False
+    if style in ("side-l", "side-r"):
+        # a medium stack to one side of him, in front
+        sizes = [min(fit(w, W * 0.46, 120, hp, hi, 0.0), 104) for w in full]
+        total = sum(sizes) * 0.9
+        y = H * 0.56 - total / 2
+        for i, w in enumerate(full):
+            size = sizes[i]
+            ww = spaced_width(w, font(hp, hi, size), 0)
+            x = W * 0.05 if style == "side-l" else W * 0.95 - ww
+            if i < shown:
+                word(x, y, w, hp, hi, size, 0, col(i), i == shown - 1)
+            y += size * 0.9
+        return soft_shadow(layer, 6, 0.55), False
+    if style == "full":
+        style, room = "stack", None   # the full height of the frame, below
+    if style == "behind":
+        # big behind his head; if it would come out too small there, it moves to the side instead
+        style = "stack"
+        if room is None:
+            room = H * 0.3
     if style == "top" and fit(" ".join(full), W * 0.9, 200, hp, hi, T["track"]) < 140:
         style = "stack"   # one line would come out small in a wide face: stack the words big instead
     if style == "thirds":
@@ -190,9 +227,9 @@ def text_layer(full, shown, pop, style, room=None, at=None):
         k = min(1.0, H * 0.46 / total)
         if room is not None:
             k = min(k, (room - y0 + sizes[-1] * 0.25) / total)
-            if max(sizes) * k < 110:
-                behind = False
-        if room is None or not behind:
+            if max(sizes) * k < 80:
+                return text_layer([w.lower() for w in full], shown, pop, "side-r", None)
+        if room is None:
             # in front of him: the words get the full height of the frame, larger, centered top to bottom
             behind = False
             sizes = [min(fit(w, W * 0.92, 300, hp, hi, T["track"]), 250) for w in full]
@@ -260,7 +297,7 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     shots = json.loads((ROOT / "tools/marsmen-shots.json").read_text())
     tmp = Path(tempfile.mkdtemp())
     sdr = {}
-    for take in {s["take"] for s in shots if "broll" not in s}:   # tone-map each HDR take to standard video once
+    for take in {s["take"] for s in shots if "broll" not in s or "keyed" in s}:   # tone-map each HDR take to standard video once
         sdr[take] = tmp / f"{take}.mov"
         run(sdr_tool, CLIPS / FILES[take], sdr[take])
 
@@ -269,6 +306,13 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     n, total = 0, int(round(shots[-1]["to"] * FPS))
     for s in shots:
         f0, f1 = int(round(s["from"] * FPS)), int(round(s["to"] * FPS))
+        if "keyed" in s:
+            # the speaker keyed over the explosion: his clean take now, the clean Pexels explosion behind him later
+            vf = f"scale={W}:{H},fps={FPS},setsar=1"
+            run("ffmpeg", "-v", "error", "-y", "-ss", f"{s['at']:.4f}", "-i", sdr[s["take"]], "-frames:v", f1 - f0, "-vf", vf,
+                "-an", "-c:v", "libx264", "-crf", 14, "-pix_fmt", "yuv420p", tmp / f"p{n:03d}.mp4")
+            n += 1
+            continue
         if "pexels" in s:
             # the clean original, cropped to the edit's framing: a 9:16 window `zoom` times into the frame
             px = s["pexels"]
@@ -304,6 +348,8 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     for s in shots:
         if "broll" not in s:
             continue
+        if "keyed" in s:   # his own shot: captions treat it like his other shots
+            continue
         x0, y0, x1, y1 = s["box"]
         if "pexels" in s:   # a clean original: nothing to paint out, the new caption goes where the old one was
             windows.append((s["from"], s["to"], (y0 + y1) / 4 / H))
@@ -319,6 +365,23 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
             cv2.imwrite(str(path), cv2.inpaint(im, hole, 6, cv2.INPAINT_TELEA))
         windows.append((s["from"], s["to"], (y0 + y1) / 4 / H))   # where the old caption sat, as a share of the height
     run(mask_tool, tmp / "frames", tmp / "masks")
+    # the keyed shot: put the clean explosion behind the speaker, using his mask
+    for s in shots:
+        if "keyed" not in s:
+            continue
+        kd, f0, f1 = s["keyed"], int(round(s["from"] * FPS)), int(round(s["to"] * FPS))
+        z = kd["zoom"]
+        bdir = tmp / "keybg"
+        bdir.mkdir(exist_ok=True)
+        vf = (f"crop=min(iw\\,ih/{z}*9/16):ih/{z}:min(iw-min(iw\\,ih/{z}*9/16)\\,iw*{kd['x']}):min(ih-ih/{z}\\,ih*{kd['y']}),"
+              f"scale={W}:{H},fps={FPS}")
+        run("ffmpeg", "-v", "error", "-y", "-ss", f"{kd['bg_at']:.3f}", "-i", PEXELS / f"{kd['bg']}.mp4", "-frames:v", f1 - f0, "-vf", vf, bdir / "%05d.png")
+        for k in range(f0, f1):
+            name = f"{k + 1:05d}.png"
+            fg = Image.open(tmp / "frames" / name).convert("RGB")
+            bg = Image.open(bdir / f"{k - f0 + 1:05d}.png").convert("RGB")
+            m = Image.open(tmp / "masks" / name).convert("L").filter(ImageFilter.GaussianBlur(1.5))
+            Image.composite(fg, bg, m).save(tmp / "frames" / name)
 
     # every word he says, on the timeline: each shot plays its take from `at`, so a word lands at from + (start - at)
     timed = {}
@@ -355,12 +418,20 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
                 times = [max(t, snap) for t in times]
             words_ = [x[2] for x in ph]
             key = " ".join(w.lower().rstrip(",.?!") for w in words_)
-            caps.append({"start": times[0], "times": times, "words": words_, "style": THIRDS.get(key, style)})
+            caps.append({"start": times[0], "times": times, "words": words_, "style": style})
     caps.sort(key=lambda c: c["start"])
+    for k, c in enumerate(caps):
+        key = " ".join(w.lower().rstrip(",.?!") for w in c["words"])
+        c["style"] = "full" if key in FULL else PLACES[k % len(PLACES)]
+        if c["style"] == "small":   # a small line shows the whole phrase at once
+            c["times"] = [c["times"][0]] * len(c["times"])
     end = shots[-1]["to"]
     for k, c in enumerate(caps):
         c["end"] = caps[k + 1]["start"] if k + 1 < len(caps) else end
 
+    (ROOT.parent / "storyboards").mkdir(exist_ok=True)
+    (ROOT.parent / "storyboards/marsmen-captions.json").write_text(json.dumps(
+        [{"start": round(c["start"], 2), "end": round(c["end"], 2), "words": c["words"], "style": c["style"]} for c in caps], indent=1))
     frames = sorted((tmp / "frames").iterdir())
     enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
                             "-i", "-", "-i", str(FINISHED), "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-crf", "26",
@@ -375,6 +446,8 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
             # over B-roll a phrase keeps its own style and place (so nothing restarts or shows twice), in front of the
             # shot; only the small subtitles move to where the old caption sat
             front = cut_away is not None and cap["style"] != "sub"
+            if front and cap["style"] == "behind":
+                cap = dict(cap, style="side-l")
             if front:
                 cut_away = None
             if not cut_away and not front and cap["style"] in BEHIND and "room" not in cap:
