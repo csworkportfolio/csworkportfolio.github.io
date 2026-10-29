@@ -3681,3 +3681,6 @@ a.tl-cta:active { transform: scale(.96); }
 
 /* the loop step a section shows, above its heading */
 .prose .ai-step { margin: 0 0 6px; font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--ai-blue); }
+/* the episode demo's caption: centered at the foot of its box, clear of the cards */
+.ai-fan .ai-stage { padding-bottom: 26px; }
+.ai-fan .ai-live { margin-top: 34px; display: flex; align-items: flex-end; justify-content: center; }
