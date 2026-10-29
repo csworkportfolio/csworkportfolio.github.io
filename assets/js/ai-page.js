@@ -859,18 +859,31 @@
       play(d.running);
       opener && opener.focus();
     };
+    let shown = 0;
+    // show piece i full size (the one before or after it from the arrows, wrapping round)
+    const showBig = (i) => {
+      shown = (i + bigs.length) % bigs.length;
+      bigs.forEach((b) => { b.hidden = +b.dataset.i !== shown; const v = b.querySelector("video"); if (v && +b.dataset.i !== shown) v.pause(); });
+      const v = bigs[shown].querySelector("video");
+      if (v) { v.currentTime = 0; const p = v.play(); p && p.catch(() => {}); }
+    };
     fig.querySelectorAll(".fn-open").forEach((btn, i) => btn.addEventListener("click", () => {
       opener = btn;
       const small = btn.querySelector(".fn-video");
       if (small) { heard = small; voice(); }   // a clip picked here is the one the sound button plays from now on
-      bigs.forEach((b) => { b.hidden = +b.dataset.i !== i; });
       sheet.hidden = false;
       document.documentElement.classList.add("ai-locked");   // full screen over the page, which stays put
       play(false);   // the small clips wait, so the opened one is the only voice
-      const v = bigs[i].querySelector("video");
-      if (v) { v.currentTime = 0; const p = v.play(); p && p.catch(() => {}); }
+      showBig(i);
       sheet.querySelector(".fn-close").focus();
     }));
+    sheet.querySelector(".fn-prev").addEventListener("click", () => showBig(shown - 1));
+    sheet.querySelector(".fn-next").addEventListener("click", () => showBig(shown + 1));
+    addEventListener("keydown", (e) => {
+      if (sheet.hidden) return;
+      if (e.key === "ArrowLeft") showBig(shown - 1);
+      if (e.key === "ArrowRight") showBig(shown + 1);
+    });
     // a number on the waveform opens its piece, the same as its card
     const opens = [...fig.querySelectorAll(".fn-open")];
     fig.querySelectorAll(".fn-mark button").forEach((m) => m.addEventListener("click", () => opens[+m.dataset.i].click()));

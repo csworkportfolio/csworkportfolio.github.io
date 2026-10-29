@@ -4145,3 +4145,20 @@ html.theme-dark.can-dark .ai-geo[data-case="nike"] .ai-live[data-step]::before {
 .ai-geo.is-fresh.is-paused .geo-results li:not(.is-on), .ai-geo.is-fresh.is-paused .geo-answer:not(.is-on),
 .ai-geo.is-fresh.is-paused .geo-cite:not(.is-on), .ai-geo.is-fresh.is-paused .geo-fields li:not(.is-on),
 .ai-geo.is-fresh.is-paused .geo-sr:not(.is-on), .ai-fan.is-fresh.is-paused .fn-card:not(.is-on) { opacity: 1; transform: none; }
+
+/* the opened piece: its name and time small, then its path large (how it gets made), no number badge */
+.fn-big-cap { max-width: 720px; display: grid; gap: 6px; }
+.fn-big-kind { margin: 0; font-size: 13px; color: var(--ai-sub); }
+.fn-big-cap .fn-big-path { display: block; margin: 0; font-size: 19px; line-height: 1.45; font-weight: 500; color: var(--ink); }
+.fn-big-cap .fn-big-path span + span::before { color: var(--fn-mag); font-weight: 600; }
+/* glass arrows on the left and right edges to the piece before and after */
+.fn-step { position: fixed; top: 50%; z-index: 1; width: 48px; height: 48px; margin-top: -24px; border: 0; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; color: var(--tabink); background: var(--tabglass);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--tabshadow), inset 0 1px 0 rgba(255, 255, 255, .35); transition: transform .18s var(--ease); }
+.fn-step:hover { transform: scale(1.06); }
+.fn-step:focus-visible { outline: 2px solid var(--fn-mag); outline-offset: 2px; }
+.fn-step svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.fn-prev { left: 20px; }
+.fn-next { right: 20px; }
+@media (max-width: 720px) { .fn-step { top: auto; bottom: 16px; margin-top: 0; width: 44px; height: 44px; } .fn-big-cap .fn-big-path { font-size: 16px; } }
