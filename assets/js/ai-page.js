@@ -541,20 +541,20 @@
     const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
     const clips = [...fig.querySelectorAll(".is-v1 .pr-clip")], audio = [...fig.querySelectorAll(".is-a1 .pr-clip")];
     // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
-    // ChatGPT window (drawn 380 wide) overlaps Premiere's right side: on a wide screen the two sit level, Premiere on
-    // the left 78% and ChatGPT the right third, as tall as Premiere; on a phone ChatGPT sits under Premiere,
-    // overlapping its bottom
+    // ChatGPT window (drawn 380 wide) overlaps Premiere's right side: on a wide screen the two sit level, Premiere the
+    // bigger one on the left 84%, ChatGPT smaller (28% wide, 80% of Premiere's height) and centered beside it; on a
+    // phone ChatGPT sits under Premiere, overlapping its bottom
     const stage = fig.querySelector(".pr-stage"), cl = fig.querySelector(".cl-window");
     const frame = () => {
       const W = stage.clientWidth, mobile = W < 640;
       pr.classList.toggle("is-mobile", mobile);
       fig.classList.toggle("is-mobile", mobile);
-      const pw = mobile ? W : W * 0.78, s = pw / (mobile ? 420 : 1280);
+      const pw = mobile ? W : W * 0.84, s = pw / (mobile ? 420 : 1280);
       view.style.setProperty("--pr-s", s);
       view.style.height = (mobile ? 760 : 720) * s + "px";
       const ph = view.parentElement.offsetHeight;
-      const cw = mobile ? W * 0.84 : W * 0.34, cs = cw / 380, chH = mobile ? 440 : ph / cs;
-      const cx = W - cw, cy = mobile ? ph - 48 : 0;
+      const cw = mobile ? W * 0.84 : W * 0.28, cs = cw / 380, chH = mobile ? 440 : ph * 0.8 / cs;
+      const cx = W - cw, cy = mobile ? ph - 48 : ph * 0.1;
       stage.style.setProperty("--pw", pw + "px");
       stage.style.setProperty("--cl-s", cs);
       stage.style.setProperty("--cl-h", chH);
