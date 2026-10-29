@@ -3658,7 +3658,8 @@ html.theme-dark.can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255
 .fn-big-doc .fn-doc-t { font-size: 19px; }
 .fn-big-doc :is(.fn-blurb, .fn-outline, .fn-link) { font-size: 15px; line-height: 1.5; }
 .fn-big-doc .fn-outline { gap: 8px; color: inherit; }
-.fn-big-cap { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ai-sub); }
+.fn-big-cap { max-width: 640px; font-size: 13px; line-height: 1.6; text-align: center; color: var(--ai-sub); }
+.fn-big-cap .fn-num { display: inline-grid; margin-right: 6px; vertical-align: -3px; }
 .fn-close { position: fixed; top: 16px; right: 16px; z-index: 1; width: 32px; height: 32px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
   color: var(--tabink); background: var(--tabglass); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--tabshadow); }
 .fn-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
@@ -3669,8 +3670,9 @@ html.theme-dark.can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255
 .fn-spec { margin-top: 6px; font-size: 12px; line-height: 1.35; }
 /* how each piece gets made: Claude's draft, his edits, publishing, joined by arrows */
 .fn-path { list-style: none; margin: 6px 0 0; padding: 0; font-size: 12px; line-height: 1.35; }
-.fn-path li { display: inline; }
-.fn-path li + li::before { content: " \2794  "; color: var(--ai-blue); }
+.fn-path :is(li, span) { display: inline; }
+.fn-path :is(li, span) + :is(li, span)::before { content: " \2794  "; color: var(--ai-blue); }
+.fn-big-cap .fn-path { display: inline; margin: 0; font-size: inherit; }
 .fn-where { margin-top: 4px; font-size: 12px; color: var(--ai-sub); }
 .ai-fan.is-fresh .fn-card:not(.is-on) { opacity: .25; transform: translateY(10px); }
 .ai-fan.is-fresh .fn-mark:not(.is-on) span { transform: scale(.6); background: var(--ai-sub); }

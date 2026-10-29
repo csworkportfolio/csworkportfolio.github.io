@@ -1635,7 +1635,8 @@ def demo_fan(b, root):
                      f'<ol class="fn-path" aria-label="How it gets made">{"".join(f"<li>{esc(x)}</li>" for x in o["path"])}</ol>'
                      f'<p class="fn-where">{esc(o["where"])}</p></li>')
         opens.append(f'<div class="fn-big fn-{esc(o["shape"].replace(":", "x"))}" data-i="{i}" hidden>{big}'
-                     f'<p class="fn-big-cap"><span class="fn-num">{i + 1}</span>{esc(o["kind"])} \u00b7 {esc(o["spec"])} \u00b7 {mm(o["at"])} in the episode</p></div>')
+                     f'<p class="fn-big-cap"><span class="fn-num">{i + 1}</span>{esc(o["kind"])} \u00b7 '
+                     f'<span class="fn-path">{"".join(f"<span>{esc(x)}</span>" for x in o["path"])}</span> \u00b7 {mm(o["at"])} in the episode</p></div>')
     head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'
             f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the Episode</a></div>'
             f'<div class="fn-wavebar" aria-hidden="true"><canvas class="fn-canvas"></canvas>{marks}</div>'
