@@ -282,20 +282,19 @@ def text_layer(full, shown, pop, style, room=None, at=None):
     return (layer if behind else soft_shadow(layer, 4 if style == "sub" else 6, 0.6)), behind
 
 
-def placed(words, times, start, t, fonts):
+def placed(words, t, fonts, mask=None, shot=None):
     """A caption as Christian laid it out on the caption board (tools/marsmen-layout.json): each word at its own
     place, size, stretch, weight and color, italic where he wants it, landing with a small pop when it is said.
-    Returns the words set in front of the speaker and the ones set behind him, as two layers."""
+    Returns the words set in front of the speaker and the ones set behind him, as two layers. A word meant to be
+    behind him that he would mostly hide (more than half of it, by `mask`) comes in front, so it can still be read;
+    that is decided once per shot, where the word first shows in it, so a word never flickers between the two."""
     front, back = Image.new("RGBA", (W, H)), Image.new("RGBA", (W, H))
     for w in words:
-        at = times[w["i"]] if w["i"] >= 0 else start
-        if at > t:
+        if w["at"] > t:
             continue
-        pop = 1.12 - 0.12 * min(1, (t - at) / 0.12)
+        pop = 1.12 - 0.12 * min(1, (t - w["at"]) / 0.12)
         size = int(round(w["size"] * pop))
         f = font(str(Path(fonts) / f"fold-grotesque-{w['weight']}-pro.otf"), 0, size)
-        # a lighter or heavier weight is wider or narrower than the Heavy he placed: keep the word's center
-        placed_w = font(str(Path(fonts) / "fold-grotesque-heavy-pro.otf"), 0, int(round(w["size"]))).getlength(w["text"]) * w["stretch"]
         asc, desc = f.getmetrics()
         im = Image.new("RGBA", (int(f.getlength(w["text"]) + size * 0.4), asc + desc))
         ImageDraw.Draw(im).text((0, asc), w["text"], font=f, fill=w["color"], anchor="ls")
@@ -305,13 +304,18 @@ def placed(words, times, start, t, fonts):
             # a 12 degree slant, leaning from the baseline
             k = 0.21
             im = im.transform((im.width + int(asc * k), im.height), Image.AFFINE, (1, k, -asc * k, 0, 1, 0), Image.BICUBIC)
-        cx = w["x"] + placed_w / 2
-        new_w = f.getlength(w["text"]) * w["stretch"]
-        x = cx - new_w / 2
+        x = w["x"] - (f.getlength(w["text"]) * w["stretch"] - w["width"]) / 2   # the pop grows from the word's middle
         y = w["baseline"] - w["size"] * (pop - 1) / 2 - asc
         layer = Image.new("RGBA", (W, H))
         layer.paste(im, (int(round(x)), int(round(y))))
-        (back if w["behind"] else front).alpha_composite(layer)
+        behind = w["behind"]
+        if behind and mask is not None:
+            seen = w.setdefault("_behind", {})
+            if shot not in seen:
+                a = np.asarray(layer.getchannel("A"), dtype=np.float32)
+                seen[shot] = (a * (np.asarray(mask, dtype=np.float32) / 255)).sum() <= a.sum() * 0.5
+            behind = seen[shot]
+        (back if behind else front).alpha_composite(layer)
     return soft_shadow(front, 6, 0.55), back
 
 
@@ -467,11 +471,20 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     # as the video opens) shows from the first frame
     lay_file = ROOT / "tools/marsmen-layout.json"
     layout = json.loads(lay_file.read_text()) if lay_file.exists() and fonts else {}
-    if any(w["i"] < 0 for w in layout.get("1", [])):
+    if any(w["i"] < 0 and w["n"] == 1 for w in layout.get("1", [])):
         caps[0]["start"] = 0.0
     for k, c in enumerate(caps):
         c["end"] = caps[k + 1]["start"] if k + 1 < len(caps) else end
 
+    # each frame of the board as one screen: its words land when they are said (a word he dragged in from a
+    # neighboring caption keeps its own timing) and the screen lasts from its first caption to its last
+    shows = []
+    for m, ws in layout.items():
+        for w in ws:
+            c = caps[w["n"] - 1]
+            w["at"] = c["times"][w["i"]] if w["i"] >= 0 else c["start"]
+        ns = [int(m)] + [w["n"] for w in ws]
+        shows.append((min(caps[n - 1]["start"] for n in ns), max(caps[n - 1]["end"] for n in ns), ws))
     (ROOT.parent / "storyboards").mkdir(exist_ok=True)
     (ROOT.parent / "storyboards/marsmen-captions.json").write_text(json.dumps(
         [{"start": round(c["start"], 2), "end": round(c["end"], 2), "words": c["words"], "style": c["style"]} for c in caps], indent=1))
@@ -494,11 +507,12 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
             frame.convert("RGB").save(bdir / f"{k + 1:02d}.jpg", quality=90)
             REC = []
         cap = next((c for c in caps if c["start"] <= t < c["end"]), None)
-        if cap and str(caps.index(cap) + 1) in layout:
-            front, back = placed(layout[str(caps.index(cap) + 1)], cap["times"], cap["start"], t, fonts)
+        show = next((s for s in shows if s[0] <= t < s[1]), None)
+        if show:
+            mask = Image.open(tmp / "masks" / f.name).convert("L").filter(ImageFilter.GaussianBlur(1.2))
+            front, back = placed(show[2], t, fonts, mask, next((k for k, s in enumerate(shots) if s["from"] <= t < s["to"]), None))
             behind = back.getbbox() is not None
             if behind:
-                mask = Image.open(tmp / "masks" / f.name).convert("L").filter(ImageFilter.GaussianBlur(1.2))
                 frame = Image.composite(frame, Image.alpha_composite(frame, back), mask)
             frame = Image.alpha_composite(frame, front)
         elif cap:
