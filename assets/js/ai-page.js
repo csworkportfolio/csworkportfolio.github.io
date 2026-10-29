@@ -384,11 +384,12 @@
     const touch = document.createElement("span");
     touch.className = "mb-touch";
     mb.append(touch);
-    // the cursor's point in the canvas: the track slides, so on the zap the point moves by a screen's width
+    // the cursor's point in the canvas: on a wide screen the track slides, so on the zap the point moves by a screen's
+    // width; on a phone the two are stacked cards, so the point is where the card sits
     const point = (el, dx = 0.5, dy = 0.5) => {
       let x = 0, y = 0;
       for (let e = el; e && e !== mb; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; }
-      if (mb.classList.contains("is-zap")) x -= mobile ? 420 : 1200;
+      if (mb.classList.contains("is-zap") && !mobile) x -= 1200;
       x += el.offsetWidth * dx; y += el.offsetHeight * dy;
       cursor.style.left = x - 4 + "px"; cursor.style.top = y - 2 + "px";
       touch.style.left = x + "px"; touch.style.top = y + "px";

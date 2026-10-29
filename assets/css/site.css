@@ -3290,8 +3290,7 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 .mb.is-mobile { width: 420px; height: 700px; }
 .mb.is-mobile .mb-side, .mb.is-mobile .mb-product, .mb.is-mobile .mb-title-r, .mb.is-mobile .mb-tools > span:not(.mb-new):not(:nth-child(2)),
 .mb.is-mobile .mb-cursor, .mb.is-mobile .mb-sum { display: none; }
-.mb.is-mobile .mb-track { width: 840px; }
-.mb.is-mobile.is-zap .mb-track { transform: translateX(-420px); }
+
 .mb.is-mobile :is(.mb-pane, .zp-pane) { width: 420px; }
 .mb.is-mobile .mb-main { left: 0; right: 0; border-radius: 12px 12px 0 0; }
 .mb.is-mobile .mb-main { padding: 16px 14px; }
@@ -3305,6 +3304,17 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
   background: rgba(150, 150, 160, .45); box-shadow: 0 0 0 2px rgba(255, 255, 255, .8), 0 2px 10px rgba(0, 0, 0, .25); }
 .mb.is-mobile .mb-touch.is-tap { animation: hb-tap .65s var(--ease) forwards; }
 .ai-board.is-mobile .mb-window .ai-bar { display: none; }
+/* on a phone, Monday and Zapier are two apps stacked like Wallet cards: the one behind lifted to show its top edge,
+   and they swap places when the zap runs (the same as Premiere and ChatGPT) */
+.ai-board.is-mobile .mb-window { background: transparent; box-shadow: none; overflow: visible; }
+.mb.is-mobile { background: transparent; }
+.mb.is-mobile .mb-track { position: relative; width: 420px; transform: none; }
+.mb.is-mobile :is(.mb-pane, .zp-pane) { position: absolute; left: 0; top: 0; height: calc(100% - 44px); border-radius: 16px; transform-origin: 50% 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 18px 40px -16px rgba(0, 0, 0, .35); transition: top .6s var(--ease), transform .6s var(--ease), filter .6s; }
+.mb.is-mobile .mb-pane { background: var(--mb-shell); }
+.mb.is-mobile:not(.is-zap) .mb-pane, .mb.is-mobile.is-zap .zp-pane { top: 44px; z-index: 2; }
+.mb.is-mobile:not(.is-zap) .zp-pane, .mb.is-mobile.is-zap .mb-pane { z-index: 1; transform: scale(.94); filter: brightness(.94); }
+@media (prefers-reduced-motion: reduce) { .mb.is-mobile :is(.mb-pane, .zp-pane) { transition: none; } }
 @media (prefers-reduced-motion: reduce) { .mb, .mb-cursor, .mb-track { transition: none; } }
 
 /* 3. the Mars Men cut, in a copy of Adobe Premiere Pro: drawn at 1280 x 800 and scaled to the window by
