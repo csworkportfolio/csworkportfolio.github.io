@@ -774,6 +774,7 @@
         }
         say(data.says.end);
         await d.wait(5000);
+        await done();   // with sound on, it starts over only once the clip being heard has played to its end
       }
     }
     // the two clips play small, muted, while the demo plays; a card opens its piece full screen, sized to fit (the
@@ -784,6 +785,18 @@
     // number or card picked the other clip; the waveform is only a map of the episode and has no sound of its own
     const sound = fig.querySelector(".ai-sound");
     let loud = false, heard = clips[0];
+    // resolves when the sound is off, or when the clip being heard reaches its end (the clips loop, so its end shows
+    // as its time jumping back to the start)
+    const done = () => new Promise((ok) => {
+      if (!loud) return ok();
+      let last = heard.currentTime;
+      const tick = () => {
+        const t = heard.currentTime;
+        if (!loud || t < last || t >= heard.duration - 0.2) { heard.removeEventListener("timeupdate", tick); ok(); }
+        last = t;
+      };
+      heard.addEventListener("timeupdate", tick);
+    });
     const voice = () => clips.forEach((v) => { v.muted = !(loud && v === heard); });
     sound && sound.addEventListener("click", () => {
       loud = !loud;
@@ -843,7 +856,6 @@
         await d.wait(900);
         cite.classList.add("is-on");
         for (const f of fields) { await d.wait(500); f.classList.add("is-on"); }
-        say(data.says.end);
         await d.wait(5000);
       }
     }
