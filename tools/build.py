@@ -1709,13 +1709,22 @@ GEO_THUMB = {   # a shadow of what each search result would show
 }
 
 
+ROOT_REL = "../"   # the AI page sits one folder down
+
+
 def demo_geo(b):
     """The same need typed as a search and asked as a question, and the page fields both of them read: once for a
     Nike product page, once for QAD Redzone's FAQ and blog. The demo plays one, then the other; the switch picks."""
     cases = []
     for k, c in enumerate(b["cases"]):
-        res = "".join(f'<li><span class="geo-thumb" aria-hidden="true"><svg viewBox="0 0 24 24">{GEO_THUMB[i]}</svg></span>{esc(r)}</li>'
+        # a thumb is a picture from the real page when it names a file, otherwise a drawn shape
+        thumb = lambda t: (f'<img src="{ROOT_REL}{esc(t)}?v={asset_version(t)}" alt="" loading="lazy">' if "/" in t
+                           else f'<svg viewBox="0 0 24 24">{GEO_THUMB[t]}</svg>')
+        res = "".join(f'<li><span class="geo-thumb" aria-hidden="true">{thumb(i)}</span>{esc(r)}</li>'
                       for r, i in zip(c["results"], c["thumbs"]))
+        # the real product page, when there is one, above the fields both kinds of search read from it
+        page = (f'<img class="geo-page" src="{ROOT_REL}{esc(c["page"])}?v={asset_version(c["page"])}" alt="{esc(c["page_alt"])}" loading="lazy">'
+                if c.get("page") else "")
         fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(f)}</span><span>{esc(v)}</span></li>' for f, v in c["fields"]) + "</ul>"
         search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
                            f'<span class="geo-typed" data-text="{esc(c["search"])}">{esc(c["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
@@ -1723,7 +1732,7 @@ def demo_geo(b):
                         f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
         cases.append(f'<div class="geo-case geo-{esc(c["id"])}" data-case="{k}"{"" if k == 0 else " hidden"}>'
                      f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A question</p>{search}{ask}</div>'
-                     f'<div class="geo-src">{ai_window(c["source"], fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
+                     f'<div class="geo-src">{ai_window(c["source"], page + fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
     switch = ('<div class="hb-views geo-switch" role="group" aria-label="Which example">'
               + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'
                         for k, c in enumerate(b["cases"])) + "</div>")

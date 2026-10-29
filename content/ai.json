@@ -916,43 +916,45 @@
         "h": "Written for Search Engines and AI Answers",
         "p": [
           "People type keywords into Google and sometimes ask their AI full questions. GEO and AEO, generative and answer engine optimization, mean writing pages that work for both.",
-          "At QAD Redzone in 2024 I organized our FAQs and blogs so search engines and AI answers could find them. At Nike I wrote alt text and product tags for both kinds of search: for someone who knows exactly what they want, and for someone who only roughly knows."
+          "In 2024, I organized QAD Redzone's FAQs and blogs so search engines and AI answers could find them. At Nike I wrote alt text and product tags for both kinds of search: for someone who knows exactly what they want, and for someone who only knows roughly."
         ],
         "demo": "geo",
-        "note": "An illustration: the searches, questions and wording are examples.",
+        "note": "The Nike product page is real; the searches, questions and wording are examples.",
         "cases": [
           {
             "id": "nike",
             "label": "Nike",
             "source": "Nike.com product page: what both of them read",
             "cite": "From the product page",
-            "search": "mens blue running shoes",
-            "ask": "What's a good road running shoe if I'm just getting started?",
+            "search": "jannik sinner nike shirt",
+            "ask": "What should I wear to play tennis on a hot day?",
             "thumbs": [
-              "shoe",
-              "shoe",
-              "shoe"
+              "assets/ai/nike-thumb-1.jpg",
+              "assets/ai/nike-thumb-2.jpg",
+              "assets/ai/nike-thumb-3.jpg"
             ],
             "results": [
-              "Nike Pegasus 41 Men's Road Running Shoes",
-              "Nike Vomero 18 Men's Road Running Shoes",
-              "Nike Winflo 11 Men's Road Running Shoes"
+              "Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt",
+              "NikeCourt Men's Dri-FIT Tennis Tops",
+              "Men's Tennis Clothing"
             ],
-            "answer": "For a first road shoe, look for cushioning and an everyday fit. The Nike Pegasus 41 is made for daily miles.",
+            "answer": "For heat, pick a light top that pulls sweat away from your skin. The Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt is made for that.",
             "fields": [
               [
                 "Alt text",
-                "Nike Pegasus 41 men's road running shoe in blue, side view, with a white foam midsole"
+                "Man wearing the Jannik Sinner NikeCourt Dri-FIT graphic tennis T-shirt in cream with a red print, front view, with green shorts"
               ],
               [
                 "Product tags",
-                "running, road, men's, everyday, cushioned, blue"
+                "tennis, men's, Dri-FIT, graphic tee, NikeCourt, Jannik Sinner, cream"
               ],
               [
                 "Written for",
-                "Someone who knows the shoe, and someone who only knows roughly what they need"
+                "Someone who knows the shirt, and someone who only roughly knows what they need"
               ]
-            ]
+            ],
+            "page": "assets/ai/nike-pdp.jpg",
+            "page_alt": "The Nike.com product page for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt"
           },
           {
             "id": "redzone",
