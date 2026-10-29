@@ -1618,9 +1618,16 @@ def demo_fan(b, root):
             hero = f'<img class="fn-hero" src="{src(o["image"])}" alt="" loading="lazy">' if o.get("image") else ""   # the episode's art heads the post
             art, big = hero + body, f'<div class="fn-big-doc">{hero}{body}</div>'
         else:
-            body = f'<span class="fn-doc-t">{esc(o["topic"])}</span><span class="fn-blurb">{esc(o["blurb"])}</span>'
-            art = body + '<span class="fn-link">Listen to the Episode</span>'   # inside the card's button: no link
-            big = (f'<div class="fn-big-doc">{body}<a class="fn-link" href="{esc(ep["href"])}" target="_blank" rel="noopener">'
+            # the top of a LinkedIn newsletter issue, like Security Spotlight: its bar, the green header, the title,
+            # who posted it, and the intro paragraph, cut off where the reader would click through
+            top = (f'<span class="li-nl-bar"><img class="li-nl-s" src="{src("assets/ai/hub/cohesity-s.png")}" alt="">'
+                   f'<span class="li-nl-n"><b>{esc(o["newsletter"])}</b><small>Newsletter</small></span><span class="li-nl-sub">+ Subscribe</span></span>'
+                   f'<img class="li-nl-hero" src="{src(o["image"])}" alt="{esc(o["topic"])}" loading="lazy">'
+                   f'<span class="li-nl-t">{esc(o["topic"])}</span>'
+                   f'<span class="li-nl-by"><img class="li-nl-s" src="{src("assets/ai/hub/cohesity-s.png")}" alt=""><b>Cohesity</b></span>'
+                   f'<span class="li-nl-p">{esc(o["blurb"])}</span>')
+            art = f'<span class="li-nl">{top}</span>'
+            big = (f'<div class="li-nl is-big">{top}<a class="fn-link" href="{esc(ep["href"])}" target="_blank" rel="noopener">'
                    f'Listen to the Episode</a></div>')
         cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><button class="fn-open" type="button" aria-label="Open the {label}">'
                      f'<span class="fn-art">{art}</span></button>'

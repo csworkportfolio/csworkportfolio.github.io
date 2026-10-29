@@ -3611,6 +3611,38 @@ html.theme-dark.can-dark .ai-fan { --fn-off: rgba(255,255,255,.18); }
 .fn-blurb { display: block; font-size: 11.5px; line-height: 1.45; color: var(--ai-sub); }
 .fn-link { font-size: 11.5px; font-weight: 600; color: var(--ai-blue); text-decoration: none; }
 .fn-outline { display: grid; gap: 5px; font-size: 11.5px; line-height: 1.35; color: var(--ai-sub); }
+/* the newsletter blurb as the top of a LinkedIn newsletter issue (LinkedIn's light and dark looks) */
+.li-nl { --li-bg: #fff; --li-ink: rgba(0, 0, 0, .9); --li-sub: rgba(0, 0, 0, .6); --li-line: #e8e8e8; --li-btn: #0a66c2; --li-btnink: #fff;
+  display: flex; flex-direction: column; width: 100%; height: 100%; background: var(--li-bg); color: var(--li-ink); text-align: left;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255, .9); --li-sub: rgba(255, 255, 255, .6); --li-line: #38434f; --li-btn: #71b7fb; --li-btnink: #000; }
+}
+html.theme-dark.can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255, .9); --li-sub: rgba(255, 255, 255, .6); --li-line: #38434f; --li-btn: #71b7fb; --li-btnink: #000; }
+.li-nl-bar { display: flex; align-items: center; gap: 6px; padding: 7px 8px; border-bottom: 1px solid var(--li-line); }
+.li-nl-s, .fn-art .li-nl-s { width: 16px; height: 18px; object-fit: contain; flex: none; }   /* over the card art's own image rule */
+.li-nl-n { display: grid; min-width: 0; font-size: 9px; line-height: 1.2; }
+.li-nl-n b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.li-nl-n small { font-size: 8px; color: var(--li-sub); }
+.li-nl-sub { margin-left: auto; flex: none; padding: 2px 7px; border-radius: 99px; font-size: 8.5px; font-weight: 600; color: var(--li-btnink); background: var(--li-btn); }
+.li-nl-hero { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.fn-art .li-nl-hero { height: auto; }
+.li-nl-t { display: block; padding: 7px 8px 4px; font-size: 11.5px; line-height: 1.25; font-weight: 600; }
+.li-nl-by { display: flex; align-items: center; gap: 5px; padding: 0 8px 5px; font-size: 9px; }
+.li-nl-p { display: block; padding: 0 8px; font-size: 9.5px; line-height: 1.45; color: var(--li-ink);
+  -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent); mask-image: linear-gradient(180deg, #000 40%, transparent); }
+.fn-text .fn-art { padding: 0; place-items: stretch; background: var(--li-bg, #fff); -webkit-mask-image: none; mask-image: none; }
+.li-nl.is-big { width: min(100%, 520px); height: auto; border-radius: 12px; overflow: hidden; box-shadow: var(--ai-shadow); padding-bottom: 18px; }
+.li-nl.is-big .li-nl-bar { padding: 12px 16px; gap: 10px; }
+.li-nl.is-big .li-nl-s { width: 26px; height: 28px; }
+.li-nl.is-big .li-nl-n { font-size: 14px; }
+.li-nl.is-big .li-nl-n small { font-size: 12px; }
+.li-nl.is-big .li-nl-sub { padding: 5px 14px; font-size: 14px; }
+.li-nl.is-big .li-nl-t { padding: 16px 20px 8px; font-size: 24px; }
+.li-nl.is-big .li-nl-by { padding: 0 20px 12px; gap: 8px; font-size: 14px; }
+.li-nl.is-big .li-nl-p { padding: 0 20px; font-size: 15px; -webkit-mask-image: linear-gradient(180deg, #000 55%, rgba(0,0,0,.25)); mask-image: linear-gradient(180deg, #000 55%, rgba(0,0,0,.25)); }
+.li-nl.is-big .fn-link { padding: 12px 20px 0; font-size: 15px; }
+
 /* a card opened large, over the demo */
 .fn-sheet { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 56px 24px 24px; border-radius: inherit;
   background: color-mix(in srgb, var(--paper, #fff) 86%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }

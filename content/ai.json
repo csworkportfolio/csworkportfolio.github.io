@@ -629,6 +629,8 @@
             "spec": "Three sentences and a link",
             "where": "Weekly newsletter",
             "topic": "Assume Breach Starts with Identity",
+            "newsletter": "Security Spotlight",
+            "image": "assets/ai/episode-newsletter.jpg",
             "blurb": "Assume someone gets in, Kevin Mandia says: a spear-phished employee, a help desk that helps the wrong person, a bad hire. Then the job is stopping them from moving around inside, and that makes it an identity problem first. On Resilience Universe he explains why identity is the Achilles heel of assume breach."
           },
           {
