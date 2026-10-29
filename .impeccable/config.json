@@ -11,6 +11,21 @@
         ],
         "createdAt": "2026-10-27T19:56:14.445Z",
         "reason": "Claude: the Slide to Unlock shimmer Christian asked for (iOS lock-screen gesture); the moving highlight is the classic cue, not decoration"
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "createdAt": "2026-10-29T11:17:20.935Z"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-29T11:17:21.464Z"
+      },
+      {
+        "rule": "overused-font",
+        "value": "helvetica",
+        "createdAt": "2026-10-29T11:17:21.989Z"
       }
     ]
   }
