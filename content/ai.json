@@ -68,10 +68,10 @@
       },
       {
         "id": "editorial",
-        "h": "From Calendar to Do's and Don'ts",
+        "h": "From Calendar to First Draft",
         "p": [
-          "At QAD Redzone and Cohesity I used AI across the editorial workflow: the content calendar in Monday.com, briefs and first drafts that I then edited, A/B tests, localized content, and do's and don'ts docs the whole team could follow.",
-          "I set up the calendar to do some of the work itself. Each item had a Generate button. Clicking it ran a Zapier workflow that sent the item to Claude, with instructions built from our do's and don'ts, and wrote the result back into the board for me to edit."
+          "At QAD Redzone and Cohesity I ran the editorial calendar in Monday.com. AI helped with briefs, first drafts and A/B tests, working from a knowledge base of brand guidelines, AI do's and don'ts, visual examples, product details, customer stories and more. I edited everything before it went out.",
+          "Each calendar item had a Generate button I built: it sent the item to Claude through Zapier, with instructions from that knowledge base, and wrote the draft back into the board."
         ],
         "demo": "board",
         "note": "Every item generated and moving along. This is a copy of Monday.com and Zapier, rebuilt for this page, and the rows are made-up examples.",
