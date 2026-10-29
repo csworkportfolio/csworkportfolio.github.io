@@ -764,15 +764,17 @@
       }
     }
     const now = fig.querySelector(".fn-ep-now");
-    // the newsletter and the blog post show on their cards as the opened piece itself, laid out at its full size
-    // and scaled down until all of it fits, centred: what you see before opening is what opens
+    // the newsletter and the blog post show on their cards as the opened piece itself, scaled down to the card's
+    // width: the newsletter runs to the card's foot, the blog post (laid out narrower, so its text reads bigger) runs
+    // off it, as a page does
     const fits = [...fig.querySelectorAll(".fn-fit")];
     const fit = () => fits.forEach((f) => {
       const box = f.parentElement, piece = f.firstElementChild;
-      const W = piece.offsetWidth, H = piece.offsetHeight, bw = box.clientWidth, bh = box.clientHeight;
-      if (!W || !H || !bw) return;
-      const k = Math.min(bw / W, bh / H);
-      f.style.transform = `translate(${(bw - W * k) / 2}px, ${(bh - H * k) / 2}px) scale(${k})`;
+      const W = piece.offsetWidth, bw = box.clientWidth, bh = box.clientHeight;
+      if (!W || !bw) return;
+      const k = bw / W;
+      piece.style.minHeight = `${Math.ceil(bh / k)}px`;
+      f.style.transform = `scale(${k})`;
     });
     fits.forEach((f) => { new ResizeObserver(fit).observe(f.parentElement); f.querySelectorAll("img").forEach((im) => im.addEventListener("load", fit)); });
     fit();
