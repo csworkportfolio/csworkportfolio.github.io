@@ -610,7 +610,7 @@
             "shape": "4:5",
             "spec": "1080 by 1350, 48 seconds, captions on",
             "path": ["Claude drafts 48 sec video", "I give re-edits", "Claude drafts caption", "I or Claude publish once finalized"],
-            "where": "LinkedIn feed",
+            "where": "LinkedIn Feed",
             "topic": "Resilience or Prevention: Which Comes First?",
             "video": "assets/ai/episode-linkedin.mp4",
             "poster": "assets/ai/episode-linkedin.jpg"
@@ -632,7 +632,7 @@
             "shape": "text",
             "spec": "Three sentences and a link",
             "path": ["Claude drafts blurb and link", "I edit for voice", "I or Claude publish once finalized"],
-            "where": "Weekly newsletter",
+            "where": "Weekly Newsletter",
             "topic": "Assume Breach Starts with Identity",
             "newsletter": "Security Spotlight",
             "image": "assets/ai/episode-newsletter.jpg",
@@ -644,7 +644,7 @@
             "shape": "doc",
             "spec": "An outline in three sections",
             "path": ["Claude outlines three sections", "I give re-edits", "Claude drafts post", "I or Claude publish once finalized"],
-            "where": "Company blog",
+            "where": "Company Blog",
             "topic": "Three Waves of Threat Intelligence",
             "image": "assets/ai/episode-blog.jpg",
             "outline": [
