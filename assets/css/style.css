@@ -3456,7 +3456,9 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .fn-big-cap .fn-path { display: inline; margin: 0; font-size: inherit; }
 .fn-where { margin-top: auto; padding-top: 10px; font-size: 12px; color: var(--ai-sub); }   /* in the card's bottom corner, level across the row */
 .ai-fan.is-fresh .fn-card:not(.is-on) { opacity: .25; transform: translateY(10px); }
-.ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); background: var(--ai-sub); }
+.ai-fan.is-fresh .fn-mark:not(.is-on) { border-left-color: var(--fn-off); }   /* not reached yet: the waveform's own gray, */
+.ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); color: transparent; background: var(--fn-off); }   /* no number until it turns magenta */
+.fn-mark, .fn-mark button { transition: transform .4s var(--ease), background-color .4s, color .4s, border-color .4s; }
 
 /* 5. GEO and AEO */
 /* the switch beside pause, and each example in its brand: Nike in black and white, QAD Redzone in its red */
