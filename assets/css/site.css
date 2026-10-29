@@ -4123,7 +4123,7 @@ html.theme-dark.can-dark .ai-board, html.theme-dark.can-dark .ai-geo[data-case="
   html.theme-dark.can-dark .ai-localize { --sec-tint: #00dd68; }
 :is(.ai-board, .ai-cut, .ai-localize, .ai-geo) .ai-live[data-step]::before { color: var(--sec-tint, var(--ai-blue)); }
 /* Nike's in the same silver, with the same soft shine */
-.ai-geo[data-case="nike"] .ai-live[data-step]::before { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+.ai-geo[data-case="nike"] .ai-live[data-step]::before { display: table; margin: 0 auto 3px; color: transparent; -webkit-background-clip: text; background-clip: text;
   background-image: linear-gradient(105deg, #55555a 0%, #8e8e93 38%, #d1d1d6 50%, #8e8e93 62%, #55555a 100%);
   background-size: 260% 100%; background-position: 100% 0; animation: nike-shine 7s ease-in-out infinite; }
 @media (prefers-color-scheme: dark) {
