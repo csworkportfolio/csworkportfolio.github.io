@@ -3332,6 +3332,8 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .pr.is-mobile .pr-block { grid-template-columns: 1fr; }
 .pr.is-mobile .pr-who { grid-row: auto; }
 .pr.is-mobile .pr-tl { left: 4px; top: 454px; width: 412px; height: 268px; }
+/* its bottom corners follow the window's rounded ones (14px on screen), so the gray gap runs all the way around */
+.pr.is-mobile .pr-tl { border-radius: 4px 4px calc(14px / var(--pr-s, .8) - 4px) calc(14px / var(--pr-s, .8) - 4px); }
 .pr.is-mobile .pr-shead, .pr.is-mobile .pr-track { grid-template-columns: 54px minmax(0, 1fr); }
 .pr.is-mobile .pr-shead b { padding-left: 8px; font-size: 0; }
 .pr.is-mobile .pr-th { padding: 0 6px; }
