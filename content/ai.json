@@ -146,7 +146,7 @@
         "id": "video",
         "h": "93 Seconds of Takes, Cut to 43",
         "p": [
-          "I was given raw footage for a Mars Men project: six takes, two hooks, three overall takes, and a call to action. I started by feeding the transcripts of every take to the AI tool. ChatGPT made timestamped cut suggestions and helped me pick the best hook. I edited the video in Adobe Premiere Pro, used ChatGPT to find B-roll on Pexels that fit what I had in mind, and let AI make the captions for sound-off viewing."
+          "I was given raw footage for a Mars Men project: six takes, two hooks, three overall takes, and a call to action. I started by feeding the transcripts of every take to ChatGPT. The tool timestamped suggested cuts and helped me pick the best hook. I edited the video in Adobe Premiere Pro, used ChatGPT to find B-roll on Pexels that fit what I had in mind, and let AI make the captions for sound-off viewing."
         ],
         "demo": "cut",
         "note": "Rebuilt for this page on the finished edit's own timeline and soundtrack, from the clean raw takes, with the color corrected, the B-roll's old captions painted out and new captions on top. The transcript is from the real takes, and the playhead and highlighted line follow the video.",
