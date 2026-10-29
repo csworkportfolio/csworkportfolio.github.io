@@ -4031,3 +4031,7 @@ html.theme-dark.can-dark .geo-page:not(.geo-page-dark):has(+ .geo-page-dark) { d
   html:not(.theme-light).can-dark .geo-page-wrap { background: #111; }
 }
 html.theme-dark.can-dark .geo-page-wrap { background: #111; }
+
+/* the search demo's windows have no title bars: each one's name is the label above it, to keep the demo compact */
+.ai-geo .ai-window > .ai-bar { display: none; }
+.geo-src > .geo-k, .geo-sr > .geo-k { margin-bottom: 8px; }
