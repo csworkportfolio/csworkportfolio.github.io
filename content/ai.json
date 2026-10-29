@@ -995,9 +995,9 @@
       },
       {
         "id": "tools",
-        "h": "Tools I Built With Claude Code",
+        "h": "Tools I Built With Claude Code and Codex",
         "p": [
-          "In the evenings I build my own apps with Claude Code. I direct the work in plain English, test every build, and decide how each one looks and behaves. These are the ones I use every day."
+          "In the evenings I build my own apps with Claude Code and Codex. I direct the work in plain English, test every build, and decide how each one looks and behaves. These are the ones I use every day."
         ],
         "demo": "tools",
         "tools": [
