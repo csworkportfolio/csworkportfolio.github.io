@@ -71,7 +71,7 @@
         "h": "From Calendar to First Draft",
         "p": [
           "At QAD Redzone and Cohesity I ran the editorial calendar in Monday.com. AI helped with briefs, first drafts and A/B tests, working from a knowledge base of brand guidelines, AI do's and don'ts, visual examples, product details, customer stories and more. I edited everything before it went out.",
-          "Each calendar item had a Generate button I built: it sent the item to Claude through Zapier, with instructions from that knowledge base, and wrote the draft back into the board."
+          "Each calendar item had a Generate button I built: it sent the item to Claude through Zapier, with instructions from that knowledge base, and wrote drafts back into the project board."
         ],
         "demo": "board",
         "note": "Every item generated and moving along. This is a copy of Monday.com and Zapier, rebuilt for this page, and the rows are made-up examples.",
@@ -115,26 +115,27 @@
           "Scheduled"
         ],
         "dos": [
-          "Lead with the person, then the product",
-          "One idea per post",
-          "Write the way people talk"
-        ],
-        "donts": [
-          "Internal acronyms",
-          "Claims we can't back up",
-          "Walls of hashtags"
+          "Match the brand guidelines and the visual examples",
+          "Follow the AI do's and don'ts",
+          "Use only facts from the product details and customer stories"
         ],
         "zap": {
           "name": "Editorial Calendar: Generate",
-          "file": "Dos-and-Donts.txt",
-          "intro": "You write for our marketing team. Follow our do's and don'ts:",
+          "intro": "You write for our marketing team. Use the knowledge base for every draft:",
           "message": [
             "Write the next step for",
             "Item Name",
             "on",
             "Channel"
           ],
-          "model": "Claude Sonnet 4"
+          "model": "Claude Sonnet 4",
+          "files": [
+            "Brand-Guidelines.pdf",
+            "AI-Dos-and-Donts.docx",
+            "Visual-Examples",
+            "Product-Details.pdf",
+            "Customer-Stories.docx"
+          ]
         },
         "chapters": [
           "Click Generate",

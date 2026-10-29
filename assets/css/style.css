@@ -3036,8 +3036,8 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .zp-area li { display: flex; gap: 6px; }
 .zp-area li b { width: 10px; flex: none; color: var(--zp-sub); font-weight: 600; }
 .zp-sub { margin-top: 6px; font-weight: 600; }
-.zp-files { display: flex; gap: 8px; margin-top: 5px; font-size: 12.5px; }
-.zp-file { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 4px; background: var(--zp-chip); color: var(--zp-chipink); }
+.zp-files { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; font-size: 12px; }
+.zp-file { display: flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 4px; background: var(--zp-chip); color: var(--zp-chipink); }
 .zp-file .mb-i { width: 13px; height: 13px; }
 .zp-file small { color: var(--zp-sub); font-size: 11px; }
 .zp-upload { padding: 6px 10px; border: 1px dashed var(--zp-link); border-radius: 4px; color: var(--zp-sub); }

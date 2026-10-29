@@ -490,9 +490,9 @@
         mark(1, .2);
         point(steps[1], 0.9);
         steps[1].classList.add("is-run"); set("is-writing", true);
-        say("Then it sends the item to Claude, with our do's and don'ts as the instructions.");
+        say("Then it sends the item to Claude, with our knowledge base as the instructions.");
         await w(600);
-        point($(".zp-area"), 0.7, 0.4);   // Claude works from the do's and don'ts
+        point($(".zp-files"), 0.5, 0.5);   // Claude works from the knowledge base
         frame("claude");
         await w(2000);
         set("is-writing", false); steps[1].classList.replace("is-run", "is-ok");

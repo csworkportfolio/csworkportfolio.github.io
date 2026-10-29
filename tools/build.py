@@ -1243,6 +1243,7 @@ HB_ICONS = {   # line icons for the Hub copy, drawn on a 24 grid
     "sliders": "M6 4v16M12 4v16M18 4v16M4 9h4M10 15h4M16 7h4",
     "search": "M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 21 21",
     "edit": "M4 20h4L19 9l-4-4L4 16zM4 4h8M4 4v8",
+    "doc": "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6",
     "adduser": "M9 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM2 20c1-4 13-4 14 0M19 8v6M16 11h6",
     "bell": "M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20h4",
     "help": "M9 9a3 3 0 1 1 4 2.8c-.7.3-1 1-1 1.7V15M12 18v.5",
@@ -1428,7 +1429,7 @@ def demo_board(b, root):
     mday = f'<span class="zp-mday">{MB_LOGO}</span>'
     steps = (step(1, mday, "Trigger", "Button Clicked in monday.com", "Editorial Calendar · Generate column")
              + '<span class="zp-link"><i>+</i></span>'
-             + step(2, CLAUDE_MARK, "Action", "Send Message in Claude", "Instructions from our do's and don'ts", " is-sel")
+             + step(2, CLAUDE_MARK, "Action", "Send Message in Claude", "Instructions from our knowledge base", " is-sel")
              + '<span class="zp-link"><i>+</i></span>'
              + step(3, mday, "Action", "Update Item in monday.com", "AI Output, then Status to Brief"))
     li = lambda xs, mark: "".join(f"<li><b>{mark}</b>{esc(x)}</li>" for x in xs)
@@ -1447,10 +1448,9 @@ def demo_board(b, root):
         <div class="zp-fields">
           <p class="zp-label">Model</p><p class="zp-input">{esc(z["model"])}{ico("chev")}</p>
           <p class="zp-label">Instructions</p>
-          <div class="zp-area"><p>{esc(z["intro"])}</p><p class="zp-sub">Do</p><ul>{li(b["dos"], "+")}</ul>
-            <p class="zp-sub">Don't</p><ul>{li(b["donts"], "–")}</ul></div>
-          <p class="zp-label">Knowledge</p>
-          <p class="zp-files"><span class="zp-file">{ico("edit")}{esc(z["file"])}<small>uploaded</small></span><span class="zp-upload">+ Upload</span></p>
+          <div class="zp-area"><p>{esc(z["intro"])}</p><ul>{li(b["dos"], "+")}</ul></div>
+          <p class="zp-label">Knowledge base</p>
+          <p class="zp-files">{"".join(f'<span class="zp-file">{ico("doc")}{esc(f)}</span>' for f in z["files"])}<span class="zp-upload">+ Upload</span></p>
           <p class="zp-label">User Message</p><p class="zp-input zp-msg">{msg}</p>
         </div>
         <p class="zp-out"><span class="zp-out-busy">Claude is writing…</span><span class="zp-out-v"></span></p>
