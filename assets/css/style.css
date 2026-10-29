@@ -3773,3 +3773,4 @@ a.tl-cta:active { transform: scale(.96); }
 .ai-geo .geo-live { margin: 20px 0 0; padding-left: 0; text-align: center; min-height: 2.9em; font-size: 15px; line-height: 1.45; transition: opacity .25s; }
 .ai-geo .geo-live.is-fading { opacity: 0; }
 @media (max-width: 720px) { .ai-geo .geo-live { font-size: 14px; } }
+.ai-geo .geo-fine { margin: 10px 0 0; text-align: center; font-size: 12px; color: var(--muted); opacity: .55; }

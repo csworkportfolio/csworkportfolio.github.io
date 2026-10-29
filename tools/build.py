@@ -1742,8 +1742,10 @@ def demo_geo(b):
               + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'
                         for k, c in enumerate(b["cases"])) + "</div>")
     # a caption in the box says what is happening at each step, as the other demos do (ai-page.js)
-    return ai_figure(b, "Illustration: a Nike product and a QAD Redzone FAQ, each found by a keyword search and by an AI answer",
-                     switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>')
+    # the note on what is real sits faintly at the foot of the box
+    fine = f'<p class="geo-fine">{esc(b["note"])}</p>' if b.get("note") else ""
+    return ai_figure({**b, "note": None}, "Illustration: a Nike product and a QAD Redzone FAQ, each found by a keyword search and by an AI answer",
+                     switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>' + fine)
 
 
 def demo_tools(b, root):
