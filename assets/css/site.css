@@ -3599,14 +3599,17 @@ html.theme-dark.can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,
 .fn-card { background: var(--ai-win); border-radius: 14px; box-shadow: var(--ai-shadow); padding: 12px; display: flex; flex-direction: column;
   transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .fn-open { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: zoom-in; }
-.fn-open:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; border-radius: 10px; }
-.fn-art { height: 210px; display: grid; place-items: center; border-radius: 9px; background: var(--ai-soft); overflow: hidden; }
+.fn-open:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: -3px; }
+.fn-art { height: 222px; display: grid; place-items: center; border-radius: 0; background: var(--ai-soft); overflow: hidden; }
+/* each piece fills the top of its card, edge to edge (no inset frame), like the opened view */
+.fn-card { overflow: hidden; }
+.fn-open { width: calc(100% + 24px); margin: -12px -12px 0; }
 .fn-video, .fn-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .fn-9x16 .fn-art { background: #111; }
 .fn-9x16 .fn-video { width: auto; max-width: 100%; aspect-ratio: 9 / 16; }
 .fn-quote .fn-art { background: #0c0c0c; }
 .fn-quote .fn-art img { object-fit: contain; }
-.fn-text .fn-art, .fn-doc .fn-art { place-items: start; align-content: start; gap: 8px; padding: 12px; background: var(--ai-win); border: .5px solid var(--ai-line); }
+.fn-text .fn-art, .fn-doc .fn-art { place-items: start; align-content: start; gap: 8px; padding: 12px; background: var(--ai-win); border-bottom: .5px solid var(--ai-line); }
 .fn-text .fn-art { -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent); mask-image: linear-gradient(180deg, #000 78%, transparent); }
 .fn-art .fn-hero, .fn-hero { display: block; width: calc(100% + 24px); height: auto; max-width: none; margin: -12px -12px 2px; aspect-ratio: 16 / 9; object-fit: cover; }   /* full bleed, over the card art's own image rule */
 .fn-big .fn-big-doc .fn-hero { width: calc(100% + 48px); max-width: none; max-height: none; margin: -22px -24px 6px; border-radius: 14px 14px 0 0; box-shadow: none; }   /* full bleed, over the opened view's own image rule */
