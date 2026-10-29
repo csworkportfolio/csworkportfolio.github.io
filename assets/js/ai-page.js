@@ -921,17 +921,25 @@
       const results = [...c.querySelectorAll(".geo-results li")], fields = [...c.querySelectorAll(".geo-fields li")];
       const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite"), sr = c.querySelector(".geo-sr");
       const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
-      kw.textContent = ""; q.textContent = "";
+      // the search and the question show dimmed from the start and fill in as they are typed
+      const type = async (el, speed) => {
+        const chars = [...el.dataset.text];
+        for (let i = 0; i < chars.length; i++) {
+          el.textContent = chars.slice(0, i + 1).join(""); el.dataset.rest = chars.slice(i + 1).join("");
+          await wait(speed);
+        }
+      };
+      [kw, q].forEach((t) => { t.textContent = ""; t.dataset.rest = t.dataset.text; });
       [...results, ...fields, answer, cite, sr].forEach((el) => el && el.classList.remove("is-on"));
       say(k, 0);
       await wait(600);
-      await d.type(kw, kw.dataset.text, 70);
+      await type(kw, 70);
       say(k, 1);
       for (const r of results) { await wait(220); r.classList.add("is-on"); }
       await wait(1800);
       say(k, 2);
       await wait(400);
-      await d.type(q, q.dataset.text, 38);
+      await type(q, 38);
       await wait(500);
       say(k, 3);
       answer.classList.add("is-on");
@@ -953,7 +961,7 @@
     // paused, the example shows whole: the search and the question typed out (the rest is shown by the CSS)
     const pause = fig.querySelector(".ai-toggle");
     pause && pause.addEventListener("click", () => setTimeout(() => {   // after the button's own handler has paused it
-      if (fig.classList.contains("is-paused")) cases[now].querySelectorAll(".geo-typed").forEach((t) => { t.textContent = t.dataset.text; });
+      if (fig.classList.contains("is-paused")) cases[now].querySelectorAll(".geo-typed").forEach((t) => { t.textContent = t.dataset.text; t.dataset.rest = ""; });
     }));
     show(0);
     if (!still) { fig.classList.add("is-fresh"); wire(d, loop); }

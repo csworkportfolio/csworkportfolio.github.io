@@ -3461,7 +3461,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 }
 /* QAD Redzone's measuring: a copy of Semrush's SEO dashboard, values hidden as soft bars */
 .geo-sr { margin-top: 20px; transition: opacity .5s, transform .5s var(--ease); }
-.ai-geo.is-fresh .geo-sr:not(.is-on) { opacity: .2; }
+.ai-geo.is-fresh .geo-sr:not(.is-on) { opacity: .45; }
 .sr-window { --sr-blue: #006dca; --sr-line: #e4e7eb; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; }
 @media (prefers-color-scheme: dark) { html.can-dark .sr-window { --sr-blue: #4ea4ff; --sr-line: rgba(255,255,255,.1); } }
 .sr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; }
@@ -3545,9 +3545,9 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .geo-src { margin-top: 20px; }
 .geo-fields { list-style: none; margin: 0; padding: 6px 18px 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .geo-fields li { display: grid; gap: 4px; padding-top: 10px; font-size: 13px; line-height: 1.4; transition: opacity .4s; }
-.ai-geo.is-fresh .geo-results li:not(.is-on) { opacity: 0; transform: translateY(4px); }
-.ai-geo.is-fresh .geo-answer:not(.is-on) { opacity: 0; transform: translateY(4px); }
-.ai-geo.is-fresh .geo-cite:not(.is-on), .ai-geo.is-fresh .geo-fields li:not(.is-on) { opacity: .2; }
+/* everything waiting to play stays readable, dimmed, and fills in as the example reaches it */
+.ai-geo.is-fresh :is(.geo-results li, .geo-answer, .geo-cite, .geo-fields li):not(.is-on) { opacity: .45; }
+.geo-typed[data-rest]::after { content: attr(data-rest); opacity: .45; }
 
 /* 6. the tools */
 .ai-tools { margin-top: 40px; }
