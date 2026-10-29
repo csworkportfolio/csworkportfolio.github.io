@@ -3596,7 +3596,7 @@ html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,
 .fn-ep-t { font-size: 14px; font-weight: 600; }
 .fn-ep-a { font-size: 13px; font-weight: 500; color: var(--ai-blue); text-decoration: none; }
 .fn-ep-a:hover { text-decoration: underline; }
-.fn-wavebar { position: relative; height: 56px; margin-top: 44px; }   /* room above for the marker dots, clear of the title */
+.fn-wavebar { position: relative; height: 56px; margin-top: 18px; }
 .fn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .fn-mark { position: absolute; top: 5px; bottom: -6px; width: 0; }   /* a dot above the waveform, no line: the playhead shows the spot */
 .fn-mark button { position: absolute; top: -29px; left: -10px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
@@ -4009,3 +4009,4 @@ html.theme-dark.can-dark .ai-fan { --fn-docbg: #2a2a2d; }
    57.3% down), and the video stays its exact 9:16 in the middle */
 .fn-9x16 .fn-art { background: linear-gradient(180deg, #07e593 0 57.3%, #fcfefd 57.3% 100%); }   /* the colors the video shows on screen (sampled from a screen capture: video and page colors take different color paths), and where its white starts (550 of 960) */
 .fn-fit .fn-big-doc .fn-doc-t { font-size: 27px; line-height: 1.2; }   /* the blog card's title, big enough to read on the cover */
+.fn-mark { display: none; }   /* no marker dots: the playhead and the caption's time show each moment */
