@@ -3299,8 +3299,9 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 .ai-board.is-mobile .mb-window { background: transparent; box-shadow: none; overflow: visible; }
 .mb.is-mobile { background: transparent; }
 .mb.is-mobile .mb-track { position: relative; width: 420px; transform: none; }
-.mb.is-mobile :is(.mb-pane, .zp-pane) { position: absolute; left: 0; top: 0; height: calc(100% - 44px); border-radius: 16px; transform-origin: 50% 0;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 18px 40px -16px rgba(0, 0, 0, .35); transition: top .6s var(--ease), transform .6s var(--ease), filter .6s; }
+/* (each stops short of the frame's bottom so its shadow fades out whole: cut off by the frame, it showed as square corners) */
+.mb.is-mobile :is(.mb-pane, .zp-pane) { position: absolute; left: 0; top: 0; height: calc(100% - 72px); border-radius: 16px; transform-origin: 50% 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 10px 24px -12px rgba(0, 0, 0, .35); transition: top .6s var(--ease), transform .6s var(--ease), filter .6s; }
 .mb.is-mobile .mb-pane { background: var(--mb-shell); }
 .mb.is-mobile:not(.is-zap) .mb-pane, .mb.is-mobile.is-zap .zp-pane { top: 44px; z-index: 2; }
 .mb.is-mobile:not(.is-zap) .zp-pane, .mb.is-mobile.is-zap .mb-pane { z-index: 1; transform: scale(.94); filter: brightness(.94); }
