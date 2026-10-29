@@ -3990,7 +3990,7 @@ html.theme-dark.can-dark .ai-fan { --fn-head: #f5f5f7; }
 .fn-text .fn-art { background: var(--li-bg, var(--ai-win)); }
 .fn-fit { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
 .fn-fit > * { max-height: none; overflow: visible; box-shadow: none; border-radius: 0; }
-.fn-fit .li-nl.is-big { width: 560px; }
+.fn-fit .li-nl.is-big { width: 420px; padding-top: 16px; }   /* narrower than opened, so it reads bigger; clear of the card's rounded top */
 .fn-fit .fn-big-doc { width: 400px; background: var(--fn-docbg); }   /* narrower than opened, so its text reads bigger */
 .fn-art .fn-fit img { width: auto; height: auto; max-width: none; object-fit: fill; }
 .fn-art .fn-fit .li-nl-hero { display: block; width: 100%; }
@@ -4006,5 +4006,6 @@ html.theme-dark.can-dark .ai-fan { --fn-head: #f5f5f7; }
 html.theme-dark.can-dark .ai-fan { --fn-docbg: #2a2a2d; }
 .fn-doc .fn-art { background: var(--fn-docbg); }
 /* the vertical's card: its cover runs on past the video's sides in the cover's own green and white (the green ends
-   57.5% down), and the video stays its exact 9:16 in the middle */
-.fn-9x16 .fn-art { background: linear-gradient(180deg, #1cff89 0 57.5%, #fff 57.5% 100%); }
+   57.3% down), and the video stays its exact 9:16 in the middle */
+.fn-9x16 .fn-art { background: linear-gradient(180deg, #0ae287 0 57.3%, #fff 57.3% 100%); }   /* the video's own green as the browser shows it, and where its white starts (550 of 960) */
+.fn-fit .fn-big-doc .fn-doc-t { font-size: 27px; line-height: 1.2; }   /* the blog card's title, big enough to read on the cover */
