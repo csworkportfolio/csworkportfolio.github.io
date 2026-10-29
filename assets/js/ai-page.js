@@ -780,20 +780,18 @@
     // clips with sound)
     const clips = [...fig.querySelectorAll(".fn-video")];
     const play = (on) => clips.forEach((v) => { if (on) { const p = v.play(); p && p.catch(() => {}); } else v.pause(); });
-    // the sound button: with sound on, only the clip whose card lit up last is heard, so the two never talk over each other
+    // the sound button: one voice only, the audiogram's, unless a number or card picked one of the clips; the
+    // waveform is only a map of the episode and has no sound of its own
     const sound = fig.querySelector(".ai-sound");
-    let loud = false, heard = clips[0];
+    let loud = false, heard = clips[clips.length - 1];
     const voice = () => clips.forEach((v) => { v.muted = !(loud && v === heard); });
     sound && sound.addEventListener("click", () => {
       loud = !loud;
       sound.setAttribute("aria-pressed", String(loud));
       sound.setAttribute("aria-label", loud ? "Turn sound off" : "Turn sound on");
       voice();
+      if (loud) { heard.currentTime = 0; const p = heard.play(); p && p.catch(() => {}); }
     });
-    cards.forEach((c) => new MutationObserver(() => {
-      const v = c.querySelector(".fn-video");
-      if (v && c.classList.contains("is-on")) { heard = v; voice(); }
-    }).observe(c, { attributes: true, attributeFilter: ["class"] }));
     const sheet = fig.querySelector(".fn-sheet"), bigs = [...fig.querySelectorAll(".fn-big")];
     let opener = null;
     const close = () => {
@@ -806,6 +804,8 @@
     };
     fig.querySelectorAll(".fn-open").forEach((btn, i) => btn.addEventListener("click", () => {
       opener = btn;
+      const small = btn.querySelector(".fn-video");
+      if (small) { heard = small; voice(); }   // a clip picked here is the one the sound button plays from now on
       bigs.forEach((b) => { b.hidden = +b.dataset.i !== i; });
       sheet.hidden = false;
       document.documentElement.classList.add("ai-locked");   // full screen over the page, which stays put
