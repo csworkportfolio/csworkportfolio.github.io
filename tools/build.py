@@ -1700,7 +1700,7 @@ def semrush(c):
                         f'<p class="sr-h sr-cited-h">Top Cited Pages</p><ul class="sr-cited">{cited}</ul></section>'
                         f'<section class="sr-box"><p class="sr-tab sr-tab-seo">SEO</p><ul class="sr-seo">{seo}</ul></section>'
                         f'{ranking(n)}</div>', " sr-window")
-            + f'<p class="geo-k sr-note">{esc(c["platform"])}</p></div>')
+            + '</div>')
 
 
 GEO_THUMB = {   # a shadow of what each search result would show
