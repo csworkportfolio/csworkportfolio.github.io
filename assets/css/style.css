@@ -3454,6 +3454,23 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); background: var(--ai-sub); }
 
 /* 5. GEO and AEO */
+/* the switch beside pause, and each example in its brand: Nike in black and white, QAD Redzone in its red */
+.geo-switch { z-index: 2; }
+.ai-geo .geo-case { margin-top: 14px; }
+:root[data-os="ios"] .ai-geo .geo-case { margin-top: 22px; }
+.geo-case[hidden] { display: none; }
+.geo-nike { --ai-blue: #111; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.geo-nike .geo-thumb { background: linear-gradient(135deg, #f5f5f5, #d6d6d6); }
+.geo-nike .geo-results li { color: #111; font-weight: 500; }
+.geo-redzone { --ai-blue: #d71920; }
+.geo-redzone .geo-thumb { background: linear-gradient(135deg, #d71920, #ff6b5e); }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .geo-nike { --ai-blue: #f5f5f5; }
+  html.can-dark .geo-nike .geo-results li { color: #f5f5f5; }
+  html.can-dark .geo-nike .geo-ask { color: #111; }
+  html.can-dark .geo-nike .geo-thumb { background: linear-gradient(135deg, #3a3a3c, #1c1c1e); }
+  html.can-dark .geo-redzone { --ai-blue: #ff453a; }
+}
 .geo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
 .geo-k { font-size: 13px; font-weight: 600; color: var(--ai-sub); padding-left: 4px; }
 .geo-k:nth-child(2) { grid-column: 2; }

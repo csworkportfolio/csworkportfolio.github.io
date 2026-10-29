@@ -674,28 +674,64 @@
           "At QAD Redzone in 2024 I organized our FAQs and blogs so search engines and AI answers could find them. At Nike I wrote alt text and product tags for both kinds of search: for someone who knows exactly what they want, and for someone who only knows roughly."
         ],
         "demo": "geo",
-        "note": "An illustration. The product is a generic example.",
-        "search": "blue running shoe men",
-        "ask": "What's a good blue running shoe if I'm just starting out?",
-        "results": [
-          "Men's Running Shoe, Blue",
-          "Blue Road Runner, Men's",
-          "Lightweight Trainer, Blue"
-        ],
-        "answer": "For a first pair, look for a cushioned, lightweight road shoe. This blue trainer is built for beginners and daily miles.",
-        "fields": [
-          [
-            "Alt text",
-            "A blue lightweight running shoe, side view, cushioned white sole"
-          ],
-          [
-            "Tags",
-            "running, road, beginner, cushioned, blue"
-          ],
-          [
-            "FAQ",
-            "Is it good for beginners? Yes, it's built for daily miles."
-          ]
+        "note": "An illustration: the searches, questions and wording are examples.",
+        "cases": [
+          {
+            "id": "nike",
+            "label": "Nike",
+            "source": "Nike.com product page: what both of them read",
+            "cite": "From the product page",
+            "search": "mens blue running shoes",
+            "ask": "What's a good road running shoe if I'm just getting started?",
+            "results": [
+              "Nike Pegasus 41 Men's Road Running Shoes",
+              "Nike Vomero 18 Men's Road Running Shoes",
+              "Nike Winflo 11 Men's Road Running Shoes"
+            ],
+            "answer": "For a first road shoe, look for cushioning and an everyday fit. The Nike Pegasus 41 is made for daily miles.",
+            "fields": [
+              [
+                "Alt text",
+                "Nike Pegasus 41 men's road running shoe in blue, side view, with a white foam midsole"
+              ],
+              [
+                "Product tags",
+                "running, road, men's, everyday, cushioned, blue"
+              ],
+              [
+                "Written for",
+                "Someone who knows the shoe, and someone who only knows roughly what they need"
+              ]
+            ]
+          },
+          {
+            "id": "redzone",
+            "label": "QAD Redzone",
+            "source": "QAD Redzone FAQ and blog: what both of them read",
+            "cite": "From the FAQ",
+            "search": "OEE software manufacturing",
+            "ask": "What is OEE, and how do frontline teams improve it?",
+            "results": [
+              "What Is OEE? A Guide for Manufacturers",
+              "How Frontline Teams Improve OEE",
+              "QAD Redzone Production System"
+            ],
+            "answer": "OEE, overall equipment effectiveness, is how much of a line's planned time is truly productive. Frontline teams improve it by tracking losses as they happen and fixing them shift by shift.",
+            "fields": [
+              [
+                "FAQ",
+                "The question as the heading, a short answer first, then the detail"
+              ],
+              [
+                "Blog",
+                "One question per post, answered in the first lines"
+              ],
+              [
+                "Written for",
+                "Someone searching a keyword, and someone asking an AI a full question"
+              ]
+            ]
+          }
         ]
       },
       {

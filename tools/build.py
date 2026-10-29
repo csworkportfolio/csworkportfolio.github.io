@@ -1649,16 +1649,24 @@ def demo_fan(b, root):
 
 
 def demo_geo(b):
-    """The same need typed as a search and asked as a question, and the product page fields both of them read."""
-    res = "".join(f'<li><span class="geo-thumb" aria-hidden="true"></span>{esc(r)}</li>' for r in b["results"])
-    fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(k)}</span><span>{esc(v)}</span></li>' for k, v in b["fields"]) + "</ul>"
-    search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
-                       f'<span class="geo-typed" data-text="{esc(b["search"])}">{esc(b["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
-    ask = ai_window("AI assistant", f'<div class="geo-in geo-ask"><span class="geo-typed" data-text="{esc(b["ask"])}">{esc(b["ask"])}</span></div>'
-                    f'<p class="geo-answer">{AI_SPARK}<span>{esc(b["answer"])}</span></p><p class="geo-cite">From the product page</p>', " geo-pane")
-    inner = (f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A question</p>{search}{ask}</div>'
-             f'<div class="geo-src">{ai_window("Product page: what both of them read", fields)}</div>')
-    return ai_figure(b, "Illustration: one product found by a keyword search and by an AI answer", inner)
+    """The same need typed as a search and asked as a question, and the page fields both of them read: once for a
+    Nike product page, once for QAD Redzone's FAQ and blog. The demo plays one, then the other; the switch picks."""
+    cases = []
+    for k, c in enumerate(b["cases"]):
+        res = "".join(f'<li><span class="geo-thumb" aria-hidden="true"></span>{esc(r)}</li>' for r in c["results"])
+        fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(f)}</span><span>{esc(v)}</span></li>' for f, v in c["fields"]) + "</ul>"
+        search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
+                           f'<span class="geo-typed" data-text="{esc(c["search"])}">{esc(c["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
+        ask = ai_window("AI assistant", f'<div class="geo-in geo-ask"><span class="geo-typed" data-text="{esc(c["ask"])}">{esc(c["ask"])}</span></div>'
+                        f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
+        cases.append(f'<div class="geo-case geo-{esc(c["id"])}" data-case="{k}"{"" if k == 0 else " hidden"}>'
+                     f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A question</p>{search}{ask}</div>'
+                     f'<div class="geo-src">{ai_window(c["source"], fields)}</div></div>')
+    switch = ('<div class="hb-views geo-switch" role="group" aria-label="Which example">'
+              + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'
+                        for k, c in enumerate(b["cases"])) + "</div>")
+    return ai_figure(b, "Illustration: a Nike product and a QAD Redzone FAQ, each found by a keyword search and by an AI answer",
+                     switch + "".join(cases))
 
 
 def demo_tools(b, root):

@@ -839,26 +839,42 @@
   // ---------- 5. GEO and AEO ----------
   function geo(fig) {
     const d = demo(fig);
-    const [kw, q] = fig.querySelectorAll(".geo-typed");
-    const results = [...fig.querySelectorAll(".geo-results li")], fields = [...fig.querySelectorAll(".geo-fields li")];
-    const answer = fig.querySelector(".geo-answer"), cite = fig.querySelector(".geo-cite");
+    const cases = [...fig.querySelectorAll(".geo-case")], picks = [...fig.querySelectorAll(".geo-switch button")];
+    let now = 0, gen = 0;
+    const show = (k) => {
+      now = k;
+      cases.forEach((c, i) => { c.hidden = i !== k; });
+      picks.forEach((p, i) => p.setAttribute("aria-pressed", String(i === k)));
+    };
+    // one example plays through (the keywords typed and their results, the question and its answer, then the page
+    // fields both of them read), then the other; a pick on the switch starts that one now
+    async function play(k, g) {
+      const c = cases[k];
+      const [kw, q] = c.querySelectorAll(".geo-typed");
+      const results = [...c.querySelectorAll(".geo-results li")], fields = [...c.querySelectorAll(".geo-fields li")];
+      const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite");
+      const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
+      kw.textContent = ""; q.textContent = "";
+      [...results, ...fields, answer, cite].forEach((el) => el.classList.remove("is-on"));
+      await wait(600);
+      await d.type(kw, kw.dataset.text, 70);
+      for (const r of results) { await wait(220); r.classList.add("is-on"); }
+      await wait(800);
+      await d.type(q, q.dataset.text, 38);
+      await wait(500);
+      answer.classList.add("is-on");
+      await wait(900);
+      cite.classList.add("is-on");
+      for (const f of fields) { await wait(500); f.classList.add("is-on"); }
+      await wait(5000);
+    }
     async function loop() {
       for (;;) {
-        kw.textContent = ""; q.textContent = "";
-        [...results, ...fields, answer, cite].forEach((el) => el.classList.remove("is-on"));
-        await d.wait(600);
-        await d.type(kw, kw.dataset.text, 70);
-        for (const r of results) { await d.wait(220); r.classList.add("is-on"); }
-        await d.wait(800);
-        await d.type(q, q.dataset.text, 38);
-        await d.wait(500);
-        answer.classList.add("is-on");
-        await d.wait(900);
-        cite.classList.add("is-on");
-        for (const f of fields) { await d.wait(500); f.classList.add("is-on"); }
-        await d.wait(5000);
+        const g = gen;
+        try { await play(now, g); show((now + 1) % cases.length); } catch (e) { /* a pick started another example */ }
       }
     }
+    picks.forEach((p, k) => p.addEventListener("click", () => { gen++; show(k); }));
     if (!still) { fig.classList.add("is-fresh"); wire(d, loop); }
   }
 
