@@ -446,9 +446,9 @@
           "A demonstration on a public episode of Cohesity's Resilience Universe podcast: CEO Sanjay Poonen with Kevin Mandia, 26 minutes. Claude reads the transcript and marks the moments that make sense on their own. I cut each one to the shape and length of the place it will run."
         ],
         "demo": "fan",
-        "note": "Claude reads the transcript and marks the moments that make sense on their own.",
+        "note": "Claude reads the 26-minute transcript and marks five moments.",
         "says": {
-          "start": "Claude reads the transcript and marks the moments that make sense on their own.",
+          "start": "Claude reads the 26-minute transcript and marks five moments.",
           "each": [
             "9:45: a 48-second clip for LinkedIn, with captions.",
             "10:37: one line becomes a quote card.",
