@@ -3906,7 +3906,12 @@ html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
 .ai-page .ai-head + .ai-machine { margin-top: 32px; }
 
 /* the loop step a section shows, above its heading */
-.prose .ai-step { margin: 0 0 6px; font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--ai-blue); }
+.prose .ai-step { display: flex; width: fit-content; align-items: center; gap: 7px; height: 26px; margin: 0 0 10px; padding: 0 11px 0 3px;
+  border-radius: 13px; font-size: 13px; font-weight: 600; letter-spacing: .01em; text-decoration: none; color: var(--ai-blue);
+  background: color-mix(in srgb, currentColor 10%, transparent); transition: background .2s, transform .2s var(--ease); }
+.prose .ai-step:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
+.prose .ai-step:active { transform: scale(.97); }
+.ai-step-n { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; font-size: 11px; color: var(--paper); background: var(--sec-tint, var(--ai-blue)); }
 /* the episode demo's caption: centered at the foot of its box, clear of the cards */
 .ai-fan .ai-stage { padding-bottom: 26px; }
 .ai-fan .ai-live { margin-top: 34px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
@@ -4074,15 +4079,15 @@ html.theme-dark.can-dark .ai-fan :is(.fn-ep, .fn-card) {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 .5px rgba(255, 255, 255, .08), 0 14px 34px -14px rgba(0, 0, 0, .6); }
 @media (prefers-reduced-transparency: reduce) { .ai-fan :is(.fn-ep, .fn-card) { background: var(--ai-win); -webkit-backdrop-filter: none; backdrop-filter: none; } }
 /* Nike's step label in silver with a soft shine: a light band sweeps across it now and then (graphite on light) */
-#geo[data-case="nike"] .ai-step { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+#geo[data-case="nike"] .ai-step-w { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
   background-image: linear-gradient(105deg, #55555a 0%, #8e8e93 38%, #d1d1d6 50%, #8e8e93 62%, #55555a 100%);
   background-size: 260% 100%; background-position: 100% 0; animation: nike-shine 7s ease-in-out infinite; }
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light).can-dark #geo[data-case="nike"] .ai-step { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
+  html:not(.theme-light).can-dark #geo[data-case="nike"] .ai-step-w { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
 }
-html.theme-dark.can-dark #geo[data-case="nike"] .ai-step { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
+html.theme-dark.can-dark #geo[data-case="nike"] .ai-step-w { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
 @keyframes nike-shine { 0%, 62% { background-position: 100% 0; } 92%, 100% { background-position: 0 0; } }
-@media (prefers-reduced-motion: reduce) { #geo[data-case="nike"] .ai-step { animation: none; background-position: 50% 0; } }
+@media (prefers-reduced-motion: reduce) { #geo[data-case="nike"] .ai-step-w { animation: none; background-position: 50% 0; } }
 /* the "Step 1 of 5" over each demo's caption takes its section's brand color too */
 .ai-board { --sec-tint: #d71920; }
 .ai-cut { --sec-tint: #ff5600; }

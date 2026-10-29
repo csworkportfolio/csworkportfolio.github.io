@@ -1802,8 +1802,10 @@ def ai_block(b, root):
     if b.get("links"):
         links = '<p class="ai-links">' + "".join(f'<a href="{root}{esc(l["href"])}">{esc(l["label"])}</a>' for l in b["links"]) + "</p>"
     words = section_open(b, " ai-sec") + links + "</section>" if b.get("h") else ""   # the opening's words are in the page's own head
-    if b.get("step"):   # which step of the loop at the top this section shows, in the loop's own blue
-        words = words.replace("<h2>", f'<p class="ai-step">{esc(b["step"])}</p><h2>', 1)
+    if b.get("step"):   # which step of the loop at the top this section shows: a pill in its section's color, back to the loop
+        n, name = [x.strip() for x in b["step"].split("\u00b7")]
+        words = words.replace("<h2>", f'<a class="ai-step" href="#machine" aria-label="Step {esc(n)} of the loop, {esc(name)}: back to the loop">'
+                                       f'<span class="ai-step-n">{esc(n)}</span><span class="ai-step-w">{esc(name)}</span></a><h2>', 1)
     kind = b.get("demo")
     if not kind:
         return words
