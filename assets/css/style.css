@@ -3393,6 +3393,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .li-nl-n b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .li-nl-n small { font-size: 8px; color: var(--li-sub); }
 .li-nl-sub { margin-left: auto; flex: none; padding: 2px 7px; border-radius: 99px; font-size: 8.5px; font-weight: 600; color: var(--li-btnink); background: var(--li-btn); }
+.fn-art .li-nl-sub { display: none; }   /* the small card has no room for it; the opened issue keeps it */
 .li-nl-hero { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .fn-art .li-nl-hero { height: auto; }
 .li-nl-t { display: block; padding: 7px 8px 4px; font-size: 11.5px; line-height: 1.25; font-weight: 600; }
