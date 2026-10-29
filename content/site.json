@@ -4,7 +4,7 @@
   "byline": "by Christian Sanchez",
   "avatar": "Updated Portrait BW_edited_edited.jpg",
   "avatar_light": "Updated Portrait Color avatar.jpg",
-  "description": "Digital marketing and design portfolio of Christian Sanchez: case studies, graphic design, web, video, social, and paid media.",
+  "description": "Digital marketing and design portfolio of Christian Sanchez: case studies, graphic design, web, video, social, and AI workflows.",
   "nav": [
     {
       "label": "Case Studies",
@@ -27,8 +27,8 @@
       "slug": "social-writing"
     },
     {
-      "label": "Paid Media",
-      "slug": "paid-ads"
+      "label": "AI Workflows",
+      "slug": "ai"
     }
   ],
   "videos": {

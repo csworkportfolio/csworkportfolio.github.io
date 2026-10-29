@@ -874,6 +874,7 @@
     "eager_first": 4,
     "contact": {
       "statement": "Hiring for a content, web, or marketing operations role? I would like to talk."
-    }
+    },
+    "robots": "noindex, nofollow"
   }
 ]

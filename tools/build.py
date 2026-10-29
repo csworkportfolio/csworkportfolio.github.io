@@ -1787,7 +1787,7 @@ def ai_block(b, root):
 
 def render_ai(page, site, media):
     """The hidden AI page (content/ai.json): a case study's frame (banner, hero, lede, sections, the way on),
-    with a demo under most sections. Not in the switcher and kept out of search (robots)."""
+    with a demo under most sections. In the switcher as AI Workflows."""
     root = "../"
     hero = page["hero"]
     parts = [f'''<script src="{root}assets/js/ai-page.js?v={asset_version("assets/js/ai-page.js")}" defer></script>
@@ -1806,7 +1806,7 @@ def render_ai(page, site, media):
   <a class="case-nav-link" href="{root}">Back to Case Studies</a>
   <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>
 </nav>''')
-    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 ai-page"}   # no switcher item is lit
+    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 ai-page"}
     return layout(page, site, root, "\n".join(parts), media)
 
 
