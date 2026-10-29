@@ -3106,7 +3106,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
     --p-tick: #4a4a4a; --p-well: #232323; --p-field: #161616; --p-text: #c9c9c9; --p-ink: #e6e6e6; --p-strong: #fff; --p-sub: #a8a8a8; --p-dim: #8a8a8a; }
 }
 .pr-window { background: var(--p-bg); }
-.pr-window .ai-bar { border-color: var(--p-line); }
+.pr-window > .ai-bar { display: none; }   /* Premiere draws its own bar, window buttons and all */
 .pr-window .ai-dots i { background: var(--p-line2); }
 .pr-window .ai-title { color: var(--p-dim); }
 .pr-view { position: relative; overflow: hidden; height: calc(800px * var(--pr-s, .6)); }
@@ -3255,8 +3255,8 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .ai-cut .pr-stage { margin-top: 14px; }
 :root[data-os="ios"] .ai-cut .pr-stage { margin-top: 22px; }
 .ai-cut.is-full .pr-stage { margin-top: 40px; }
-.ai-cut.is-full :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 206px) / .525)); }
-.ai-cut.is-full.is-mobile :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 292px) / 1.81)); }
+.ai-cut.is-full :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 170px) / .525)); }
+.ai-cut.is-full.is-mobile :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 256px) / 1.81)); }
 
 /* the switch for which window is in front (beside sound and pause): glass while automatic, blue while locked */
 .ai-front { position: absolute; top: 14px; right: 94px; z-index: 2; display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px 0 10px;
