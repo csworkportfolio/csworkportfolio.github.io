@@ -1648,6 +1648,22 @@ def demo_fan(b, root):
     return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{sheet}{AI_SOUND}')
 
 
+def ranking(v):
+    """Semrush's Position Tracking box: visibility, how many keywords rank in the top 3, 10, 20 and 100, and the top
+    keywords. The keywords are examples from the demo; every position, share and count is hidden."""
+    area = ('<svg class="sr-area" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true">'
+            '<path d="M0 34 L14 22 L28 36 L44 20 L60 26 L74 16 L88 30 L102 24 L116 38 L130 30 L146 44 L160 36 L176 48 L200 46 V80 H0Z"/></svg>')
+    tops = "".join(f'<li><span>{n}</span><span class="sr-ring"></span>{v}<svg class="sr-spark" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">'
+                   '<path d="M0 14 L12 12 L20 15 L30 8 L40 11 L52 6 L62 10 L74 5 L86 9 L100 7"/></svg></li>'
+                   for n in ("Top 3", "Top 10", "Top 20", "Top 100"))
+    kws = "".join(f'<li><span>{k}</span>{v}{v}</li>' for k in ("oee software", "what is oee", "how to improve oee", "manufacturing downtime", "frontline production"))
+    return ('<section class="sr-box sr-wide"><p class="sr-tab sr-tab-pt">Position Tracking</p><div class="sr-pt">'
+            f'<div class="sr-vis"><p class="sr-h">Visibility</p>{v}{area}</div>'
+            f'<div><p class="sr-h">Keywords</p><ul class="sr-tops">{tops}</ul></div>'
+            '<div><p class="sr-h">Top Keywords</p><p class="sr-kh"><span>Keywords</span><span>Position</span><span>Visibility</span></p>'
+            f'<ul class="sr-kw">{kws}</ul></div></div></section>')
+
+
 def semrush(c):
     """Where it was measured: a copy of Semrush's SEO dashboard, its AI Search and SEO boxes, with every value
     hidden (no QAD Redzone numbers are confirmed for the page)."""
@@ -1661,7 +1677,7 @@ def semrush(c):
                         f'<p class="sr-cols"><span></span><span>Mentions</span><span>Cited pages</span></p><ul class="sr-ai">{ai_rows}'
                         '<li><span class="sr-src sr-gem"></span>Gemini<i class="sr-soon">soon</i></li></ul></section>'
                         f'<section class="sr-box"><p class="sr-tab sr-tab-seo">SEO</p><ul class="sr-seo">{seo}</ul></section>'
-                        '</div>', " sr-window")
+                        f'{ranking(v)}</div>', " sr-window")
             + f'<p class="geo-k sr-note">{esc(c["platform"])}</p></div>')
 
 
