@@ -1791,13 +1791,10 @@ def render_ai(page, site, media):
     root = "../"
     hero = page["hero"]
     parts = [f'''<script src="{root}assets/js/ai-page.js?v={asset_version("assets/js/ai-page.js")}" defer></script>
-<section class="case-hero ai-hero">
-  <div class="ai-hero-glow" aria-hidden="true"></div>
-  <div class="wrap case-hero-inner">
-    <h1>{esc(hero["title"])}</h1>
-    <p class="case-sub">{esc(hero["subtitle"])}</p>
-  </div>
-</section>
+<header class="wrap prose ai-head">
+  <h1>{esc(hero["title"])}</h1>
+  <p class="ai-sub">{esc(hero["subtitle"])}</p>
+</header>
 <div class="wrap prose lede-wrap"><p class="lede">{esc(page["lede"])}</p></div>''']
     parts += [ai_block(b, root) for b in page["blocks"]]
     nxt = page["next"]

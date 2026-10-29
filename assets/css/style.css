@@ -3672,3 +3672,10 @@ a.tl-cta:active { transform: scale(.96); }
 :is(.ai-localize, .ai-board, .ai-cut, .ai-fan) .ai-note { font-size: 15px; line-height: 1.45; }
 .ai-live[data-step]::before { font-size: 12px; margin-bottom: 3px; }
 @media (max-width: 720px) { :is(.ai-localize, .ai-board, .ai-cut, .ai-fan) .ai-note { font-size: 14px; } }
+
+/* The AI page opens on its title and subtitle as plain type, with no banner */
+.ai-head { margin-top: 56px; }
+.ai-head h1 { margin: 0; font-size: clamp(32px, 4.2vw, 48px); line-height: 1.05; font-weight: 700; letter-spacing: -.025em; color: var(--ink); }
+.ai-head .ai-sub { margin: 12px 0 0; font-size: 17px; line-height: 1.45; color: var(--muted); max-width: 72ch; }
+.ai-head + .lede-wrap { margin-top: 24px; }
+@media (max-width: 720px) { .ai-head { margin-top: 32px; } .ai-head .ai-sub { font-size: 16px; } }
