@@ -3353,6 +3353,8 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .ai-fan { --fn-on: #009e60; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; }
 @media (prefers-color-scheme: dark) { html.can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,.18); --ai-blue: #00c45c; --fn-link: #00dd68; } }
 .ai-fan :is(.fn-ep-a, .fn-link) { color: var(--fn-link); }
+.ai-fan .fn-ep { margin-top: 14px; }   /* room under the sound and pause buttons */
+:root[data-os="ios"] .ai-fan .fn-ep { margin-top: 22px; }
 .fn-ep { background: var(--ai-win); border-radius: 14px; box-shadow: var(--ai-shadow); padding: 16px 18px 12px; }
 .fn-ep-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; padding-right: 30px; }
 .fn-ep-t { font-size: 14px; font-weight: 600; }
@@ -3361,8 +3363,11 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .fn-wavebar { position: relative; height: 56px; margin-top: 24px; }
 .fn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .fn-mark { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 1.5px dashed var(--ai-blue); }
-.fn-mark span { position: absolute; top: -12px; left: -11px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+.fn-mark button { position: absolute; top: -12px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
   font-family: var(--round); font-size: 11px; font-weight: 700; color: #fff; background: var(--ai-blue); transition: transform .4s var(--ease); }
+.fn-mark button:hover { transform: scale(1.15); }
+.fn-mark button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 2px; }
+.fn-mark button::after { content: ""; position: absolute; inset: -8px; }   /* a bigger target than the dot */
 .fn-ep-len { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--round); font-size: 11px; color: var(--ai-sub); }
 .fn-cards { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .fn-card { background: var(--ai-win); border-radius: 14px; box-shadow: var(--ai-shadow); padding: 12px; display: flex; flex-direction: column;
@@ -3446,7 +3451,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .fn-big-cap .fn-path { display: inline; margin: 0; font-size: inherit; }
 .fn-where { margin-top: auto; padding-top: 10px; font-size: 12px; color: var(--ai-sub); }   /* in the card's bottom corner, level across the row */
 .ai-fan.is-fresh .fn-card:not(.is-on) { opacity: .25; transform: translateY(10px); }
-.ai-fan.is-fresh .fn-mark:not(.is-on) span { transform: scale(.6); background: var(--ai-sub); }
+.ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); background: var(--ai-sub); }
 
 /* 5. GEO and AEO */
 .geo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }

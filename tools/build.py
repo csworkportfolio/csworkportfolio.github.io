@@ -1199,6 +1199,9 @@ def scene(b, root):
 # Each demo is drawn here in its finished state, so it reads without script and with Reduce Motion on;
 # ai-page.js then plays it while it is on screen. Its data rides along as JSON for the script.
 
+AI_SOUND = ('<button class="ai-btn ai-sound" type="button" aria-pressed="false" aria-label="Turn sound on">'
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>'
+            '<path class="i-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="i-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>')
 AI_PAUSE = ('<button class="ai-btn ai-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
             '<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>')
 AI_SPARK = ('<svg class="ai-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7'
@@ -1573,9 +1576,7 @@ def demo_cut(b, root):
   </section>
 </div></div>'''
     # sound: the video starts muted (browsers only play sound after a click); this turns his voice on
-    sound = ('<button class="ai-btn ai-sound" type="button" aria-pressed="false" aria-label="Turn sound on">'
-             '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>'
-             '<path class="i-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="i-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>')
+    sound = AI_SOUND
     chapters = "".join(f'<button type="button" style="--p:0" data-from="{c["from"]}" data-to="{c["to"]}"><span class="hb-fill"></span>'
                        f'<span class="hb-ch-t">{esc(c["label"])}</span></button>' for c in b["chapters"])
     gpt = (f'<div class="ai-window cl-window" aria-label="The chat with ChatGPT about the cut"><div class="cl-app" lang="en">'
@@ -1599,7 +1600,8 @@ def demo_fan(b, root):
     ep = b["episode"]
     mm = lambda s: f"{s // 60}:{s % 60:02d}"
     src = lambda path: f'{root}{path}?v={asset_version(path)}'
-    marks = "".join(f'<span class="fn-mark" style="left:{o["at"] / ep["length"] * 100:.2f}%"><span>{i + 1}</span></span>'
+    marks = "".join(f'<span class="fn-mark" style="left:{o["at"] / ep["length"] * 100:.2f}%"><button type="button" data-i="{i}" '
+                    f'aria-label="Open the {esc(o["kind"])}, {mm(o["at"])} in the episode">{i + 1}</button></span>'
                     for i, o in enumerate(b["outputs"]))
     cards, opens = [], []
     for i, o in enumerate(b["outputs"]):
@@ -1639,11 +1641,11 @@ def demo_fan(b, root):
                      f'<span class="fn-path">{"".join(f"<span>{esc(x)}</span>" for x in o["path"])}</span> \u00b7 {mm(o["at"])} in the episode</p></div>')
     head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'
             f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the Episode</a></div>'
-            f'<div class="fn-wavebar" aria-hidden="true"><canvas class="fn-canvas"></canvas>{marks}</div>'
+            f'<div class="fn-wavebar"><canvas class="fn-canvas" aria-hidden="true"></canvas>{marks}</div>'
             f'<p class="fn-ep-len"><span>0:00</span><span>{mm(ep["length"])}</span></p></div>')
     sheet = (f'<div class="fn-sheet" hidden><button class="fn-close" type="button" aria-label="Close">'
              f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>{"".join(opens)}</div>')
-    return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{sheet}')
+    return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{sheet}{AI_SOUND}')
 
 
 def demo_geo(b):

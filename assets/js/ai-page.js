@@ -780,6 +780,20 @@
     // clips with sound)
     const clips = [...fig.querySelectorAll(".fn-video")];
     const play = (on) => clips.forEach((v) => { if (on) { const p = v.play(); p && p.catch(() => {}); } else v.pause(); });
+    // the sound button: with sound on, only the clip whose card lit up last is heard, so the two never talk over each other
+    const sound = fig.querySelector(".ai-sound");
+    let loud = false, heard = clips[0];
+    const voice = () => clips.forEach((v) => { v.muted = !(loud && v === heard); });
+    sound && sound.addEventListener("click", () => {
+      loud = !loud;
+      sound.setAttribute("aria-pressed", String(loud));
+      sound.setAttribute("aria-label", loud ? "Turn sound off" : "Turn sound on");
+      voice();
+    });
+    cards.forEach((c) => new MutationObserver(() => {
+      const v = c.querySelector(".fn-video");
+      if (v && c.classList.contains("is-on")) { heard = v; voice(); }
+    }).observe(c, { attributes: true, attributeFilter: ["class"] }));
     const sheet = fig.querySelector(".fn-sheet"), bigs = [...fig.querySelectorAll(".fn-big")];
     let opener = null;
     const close = () => {
@@ -787,6 +801,7 @@
       bigs.forEach((b) => { b.hidden = true; const v = b.querySelector("video"); v && v.pause(); });
       sheet.hidden = true;
       document.documentElement.classList.remove("ai-locked");
+      play(d.running);
       opener && opener.focus();
     };
     fig.querySelectorAll(".fn-open").forEach((btn, i) => btn.addEventListener("click", () => {
@@ -794,10 +809,14 @@
       bigs.forEach((b) => { b.hidden = +b.dataset.i !== i; });
       sheet.hidden = false;
       document.documentElement.classList.add("ai-locked");   // full screen over the page, which stays put
+      play(false);   // the small clips wait, so the opened one is the only voice
       const v = bigs[i].querySelector("video");
       if (v) { v.currentTime = 0; const p = v.play(); p && p.catch(() => {}); }
       sheet.querySelector(".fn-close").focus();
     }));
+    // a number on the waveform opens its piece, the same as its card
+    const opens = [...fig.querySelectorAll(".fn-open")];
+    fig.querySelectorAll(".fn-mark button").forEach((m) => m.addEventListener("click", () => opens[+m.dataset.i].click()));
     sheet.querySelector(".fn-close").addEventListener("click", close);
     sheet.addEventListener("click", (e) => { if (e.target === sheet) close(); });
     addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
