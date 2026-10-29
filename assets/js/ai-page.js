@@ -780,10 +780,10 @@
     // clips with sound)
     const clips = [...fig.querySelectorAll(".fn-video")];
     const play = (on) => clips.forEach((v) => { if (on) { const p = v.play(); p && p.catch(() => {}); } else v.pause(); });
-    // the sound button: one voice only, the audiogram's, unless a number or card picked one of the clips; the
-    // waveform is only a map of the episode and has no sound of its own
+    // the sound button: one voice only, the LinkedIn clip's (his mouth on screen matches what you hear), unless a
+    // number or card picked the other clip; the waveform is only a map of the episode and has no sound of its own
     const sound = fig.querySelector(".ai-sound");
-    let loud = false, heard = clips[clips.length - 1];
+    let loud = false, heard = clips[0];
     const voice = () => clips.forEach((v) => { v.muted = !(loud && v === heard); });
     sound && sound.addEventListener("click", () => {
       loud = !loud;
