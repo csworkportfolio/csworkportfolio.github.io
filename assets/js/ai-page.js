@@ -889,8 +889,8 @@
       cases.forEach((c, i) => { c.hidden = i !== k; });
       picks.forEach((p, i) => p.setAttribute("aria-pressed", String(i === k)));
     };
-    // one example plays through (the keywords typed and their results, the question and its answer, then the page
-    // fields both of them read), then the other; a pick on the switch starts that one now
+    // the picked example plays through (the keywords typed and their results, the question and its answer, then the
+    // page fields both of them read) and plays again; only the switch changes which example it is
     async function play(k, g) {
       const c = cases[k];
       const [kw, q] = c.querySelectorAll(".geo-typed");
@@ -915,7 +915,7 @@
     async function loop() {
       for (;;) {
         const g = gen;
-        try { await play(now, g); show((now + 1) % cases.length); } catch (e) { /* a pick started another example */ }
+        try { await play(now, g); } catch (e) { /* a pick started another example */ }
       }
     }
     picks.forEach((p, k) => p.addEventListener("click", () => { gen++; show(k); }));
