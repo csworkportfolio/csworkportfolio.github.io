@@ -4007,5 +4007,5 @@ html.theme-dark.can-dark .ai-fan { --fn-docbg: #2a2a2d; }
 .fn-doc .fn-art { background: var(--fn-docbg); }
 /* the vertical's card: its cover runs on past the video's sides in the cover's own green and white (the green ends
    57.3% down), and the video stays its exact 9:16 in the middle */
-.fn-9x16 .fn-art { background: linear-gradient(180deg, #0ae287 0 57.3%, #fff 57.3% 100%); }   /* the video's own green as the browser shows it, and where its white starts (550 of 960) */
+.fn-9x16 .fn-art { background: linear-gradient(180deg, #07e593 0 57.3%, #fcfefd 57.3% 100%); }   /* the colors the video shows on screen (sampled from a screen capture: video and page colors take different color paths), and where its white starts (550 of 960) */
 .fn-fit .fn-big-doc .fn-doc-t { font-size: 27px; line-height: 1.2; }   /* the blog card's title, big enough to read on the cover */
