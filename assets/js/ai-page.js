@@ -730,6 +730,9 @@
     const marks = [...fig.querySelectorAll(".fn-mark")], cards = [...fig.querySelectorAll(".fn-card")];
     // the episode's own waveform: its loudness in slices, measured from the audio (tools/ai_episode.py)
     const amp = data.episode.peaks, N = amp.length;
+    // each moment sits on the middle of the bar it falls in, so its dot, the playhead and that bar share one line
+    const snap = (p) => (Math.min(N - 1, Math.floor(p * N)) + 0.5) / N;
+    marks.forEach((m) => { const i = +m.querySelector("button").dataset.i; m.style.left = `${snap(data.outputs[i].at / data.episode.length) * 100}%`; });
     let progress = still ? 1 : 0;
     function draw() {
       const r = bar.getBoundingClientRect(), dpr = devicePixelRatio || 1;
@@ -746,7 +749,7 @@
       // the playhead, as in Voice Memos: a thin line through the waveform with a dot at each end, and the time under
       // it counting along
       if (progress > 0 && progress < 1) {
-        const x = Math.round(progress * r.width) + 0.5;
+        const x = progress * r.width;
         g.fillStyle = g.strokeStyle = cs.getPropertyValue("--fn-head");
         g.lineWidth = 1.5;
         g.beginPath(); g.moveTo(x, 3); g.lineTo(x, r.height - 3); g.stroke();   // the full height, its dots at the edges
@@ -781,7 +784,7 @@
         cards.forEach((c) => c.classList.remove("is-on")); marks.forEach((m) => m.classList.remove("is-on"));
         await d.wait(500);
         say(data.says.start);
-        const order = data.outputs.map((o, i) => ({ at: o.at / data.episode.length, i })).sort((a, b) => a.at - b.at);
+        const order = data.outputs.map((o, i) => ({ at: snap(o.at / data.episode.length), i })).sort((a, b) => a.at - b.at);
         // the playhead takes the same time to reach each moment however far apart they sit in the episode, and
         // each piece holds long enough to read its caption
         const glide = async (to) => {
