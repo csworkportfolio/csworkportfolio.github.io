@@ -1198,6 +1198,8 @@
     });
   }
   document.querySelectorAll("[data-gallery]").forEach((g) => tiltStrip(g));   // not forEach(tiltStrip): its index would land in "pieces"
+  // the AI page's demos lean toward the pointer the same way: each window, the episode bar and each format card
+  document.querySelectorAll(".ai-stage").forEach((s) => tiltStrip(s, ".mb-window, .pr-stage, .hb-window, .fn-ep, .fn-open, .ai-window.geo-pane, .geo-src > .ai-window, .sr-window"));
 
   // ---------- password-locked pages (Ghostwriting) ----------
   // The gallery and text are stored encrypted (tools/lock_ghostwriting.py): PBKDF2-SHA256 turns the password
