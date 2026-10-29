@@ -3676,7 +3676,7 @@ html.theme-dark.can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255
 .fn-path :is(li, span) { display: inline; }
 .fn-path :is(li, span) + :is(li, span)::before { content: " \2794  "; color: var(--ai-blue); }
 .fn-big-cap .fn-path { display: inline; margin: 0; font-size: inherit; }
-.fn-where { margin-top: 4px; font-size: 12px; color: var(--ai-sub); }
+.fn-where { margin-top: auto; padding-top: 10px; font-size: 12px; color: var(--ai-sub); }   /* in the card's bottom corner, level across the row */
 .ai-fan.is-fresh .fn-card:not(.is-on) { opacity: .25; transform: translateY(10px); }
 .ai-fan.is-fresh .fn-mark:not(.is-on) span { transform: scale(.6); background: var(--ai-sub); }
 
