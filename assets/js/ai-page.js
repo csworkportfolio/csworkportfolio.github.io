@@ -887,6 +887,7 @@
     const show = (k) => {
       now = k;
       cases.forEach((c, i) => { c.hidden = i !== k; });
+      fig.querySelectorAll(".geo-fine").forEach((f) => { f.hidden = +f.dataset.case !== k; });
       picks.forEach((p, i) => p.setAttribute("aria-pressed", String(i === k)));
     };
     // the picked example plays through (the keywords typed and their results, the question and its answer, then the

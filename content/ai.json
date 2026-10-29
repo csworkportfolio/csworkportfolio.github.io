@@ -962,7 +962,8 @@
               "Someone less sure asks an AI assistant a full question.",
               "The answer comes from the same product page.",
               "Both read these fields: the alt text, the product tags, and who it's written for."
-            ]
+            ],
+            "fine": "The Nike product page is real; the searches, questions and wording are examples."
           },
           {
             "id": "redzone",
@@ -1004,7 +1005,8 @@
               "The answer comes straight from the FAQ.",
               "Both read the same pages: the question as the heading, a short answer first.",
               "Semrush tracked how the pages did in search and AI answers. The numbers are hidden."
-            ]
+            ],
+            "fine": "Analytics have been hidden; the searches and questions are real examples."
           }
         ],
         "step": "5 · Optimize"

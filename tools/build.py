@@ -1743,7 +1743,8 @@ def demo_geo(b):
                         for k, c in enumerate(b["cases"])) + "</div>")
     # a caption in the box says what is happening at each step, as the other demos do (ai-page.js)
     # the note on what is real sits faintly at the foot of the box
-    fine = f'<p class="geo-fine">{esc(b["note"])}</p>' if b.get("note") else ""
+    fine = "".join(f'<p class="geo-fine" data-case="{k}"{"" if k == 0 else " hidden"}>{esc(c.get("fine") or b.get("note", ""))}</p>'
+                   for k, c in enumerate(b["cases"]))   # each example's own note, shown with it
     return ai_figure({**b, "note": None}, "Illustration: a Nike product and a QAD Redzone FAQ, each found by a keyword search and by an AI answer",
                      switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>' + fine)
 
