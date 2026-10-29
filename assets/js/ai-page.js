@@ -768,15 +768,19 @@
         await d.wait(500);
         say(data.says.start);
         const order = data.outputs.map((o, i) => ({ at: o.at / data.episode.length, i })).sort((a, b) => a.at - b.at);
-        let k = 0;
-        for (let step = 0; step <= 100; step++) {
-          progress = step / 100; draw();
-          while (k < order.length && order[k].at <= progress) {
-            marks[order[k].i].classList.add("is-on"); cards[order[k].i].classList.add("is-on"); say(data.says.each[order[k].i]); k++;
-            await d.wait(700);
-          }
-          await d.wait(70);
+        // the playhead takes the same time to reach each moment however far apart they sit in the episode, and
+        // each piece holds long enough to read its caption
+        const glide = async (to) => {
+          const from = progress;
+          for (let f = 1; f <= 20; f++) { progress = from + (to - from) * (1 - (1 - f / 20) ** 2); draw(); await d.wait(50); }
+        };
+        await d.wait(1400);
+        for (const o of order) {
+          await glide(o.at);
+          marks[o.i].classList.add("is-on"); cards[o.i].classList.add("is-on"); say(data.says.each[o.i]);
+          await d.wait(2600);
         }
+        await glide(1);
         say(data.says.end);
         await d.wait(5000);
         await done();   // with sound on, it starts over only once the clip being heard has played to its end
