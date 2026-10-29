@@ -496,6 +496,11 @@ def layout(page, site, root, body, media, og_image=None):
 </header>'''
     desc = page.get("description", site["description"])
     robots = f'\n<meta name="robots" content="{page["robots"]}">' if page.get("robots") else ""
+    # Back to Top, and on a page that asks for it, its way back beside the pill
+    footer_start = '<a href="#top" class="to-top">Back to top <span aria-hidden="true">↑</span></a>'
+    if page.get("footer_back"):
+        footer_start = (f'<span class="footer-start">{footer_start}'
+                        f'<a class="footer-back" href="{root}{page["footer_back"]["href"]}">{esc(page["footer_back"]["label"])}</a></span>')
     # every page shares the same preview: the top of the home page (absolute URL, as link previews need)
     share = "https://csworkportfolio.github.io/assets/share.jpg"
     og = (f'\n<meta property="og:image" content="{share}">\n<meta property="og:image:width" content="1200">'
@@ -538,7 +543,7 @@ def layout(page, site, root, body, media, og_image=None):
 </main>
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <a href="#top" class="to-top">Back to top <span aria-hidden="true">↑</span></a>
+    {footer_start}
     <span class="footer-meta"><span>© {esc(site["name"])}</span>{footer_links(site)}</span>
   </div>
 </footer>
@@ -1830,14 +1835,9 @@ def render_ai(page, site, media):
   {paragraphs(opening["p"])}
 </section>''']
     parts += [ai_block(b, root) for b in page["blocks"]]
-    nxt = page.get("next")   # the button on to another page, when the page names one
-    nxt_btn = (f'\n  <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>'
-               if nxt else "")
-    parts.append(f'''
-<nav class="wrap case-nav" aria-label="Case study navigation">
-  <a class="case-nav-link" href="{root}">Back to Case Studies</a>{nxt_btn}
-</nav>''')
-    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 cat-v2 ai-page"}
+    # the way back sits in the footer, beside Back to Top
+    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 cat-v2 ai-page",
+            "footer_back": {"href": "", "label": "Back to Case Studies"}}
     return layout(page, site, root, "\n".join(parts), media)
 
 

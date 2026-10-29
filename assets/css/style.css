@@ -3787,3 +3787,8 @@ a.tl-cta:active { transform: scale(.96); }
 .ai-page .case-nav { padding-left: var(--gutter); }
 .ai-page .case-nav-link { align-self: flex-start; }
 @media (max-width: 720px) { .ai-page .case-nav { align-items: flex-start; } }
+
+/* a page's way back, beside the Back to Top pill in the footer */
+.footer-start { display: inline-flex; align-items: center; gap: 20px; }
+.footer-back { font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; }
+.footer-back:hover { text-decoration: underline; text-underline-offset: 3px; }
