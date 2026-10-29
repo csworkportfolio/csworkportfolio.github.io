@@ -1224,6 +1224,10 @@ def front_switch(first):
 def ai_figure(b, label, inner, pause=True):
     data = {k: v for k, v in b.items() if k not in ("h", "p", "id", "note", "link", "demo")}
     note = f'<figcaption class="ai-note">{esc(b["note"])}</figcaption>' if b.get("note") else ""
+    nav = '<nav class="hb-chapters"'
+    if note and nav in inner:   # a demo told in steps: its caption sits right under the window, like a tutorial
+        inner = inner.replace(nav, f'<p class="ai-note ai-live">{esc(b["note"])}</p>{nav}', 1)
+        note = ""
     return (f'<figure class="wrap ai-demo ai-{b["demo"]}" data-demo="{b["demo"]}" aria-label="{esc(label)}">'
             f'<script type="application/json" class="ai-data">{json_script(data)}</script>'
             f'<div class="ai-stage">{inner}{AI_PAUSE if pause else ""}</div>{note}</figure>')

@@ -3660,3 +3660,11 @@ a.tl-cta:active { transform: scale(.96); }
 @keyframes mc-run { 0%, 48% { left: calc(100% - 80px); opacity: 0; } 52% { opacity: 1; } 92% { opacity: 1; } 97%, 100% { left: 0; opacity: 0; } }
 @keyframes mc-icon { 0%, 64%, 82%, 100% { filter: none; } 73% { filter: drop-shadow(0 0 4px var(--ai-blue)); } }
 @media (prefers-reduced-motion: reduce) { .mc-back::after, .mc-steps li::before, .mc-steps .mc-n, .mc-back svg { animation: none; } }
+
+/* The caption of a demo told in steps sits right under its window, with the step it is on */
+.ai-live { margin: 14px 0 0; }
+.ai-live + .hb-chapters { margin-top: 10px; }
+.ai-live[data-step]::before { content: attr(data-step); display: block; margin-bottom: 2px; font-size: 11px; font-weight: 600; letter-spacing: .02em; color: var(--ai-blue); }
+:is(.ai-localize, .ai-board, .ai-cut, .ai-fan) .ai-note { font-size: 15px; line-height: 1.45; }
+.ai-live[data-step]::before { font-size: 12px; margin-bottom: 3px; }
+@media (max-width: 720px) { :is(.ai-localize, .ai-board, .ai-cut, .ai-fan) .ai-note { font-size: 14px; } }

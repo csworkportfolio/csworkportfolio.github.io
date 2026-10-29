@@ -948,3 +948,14 @@
     k(fig);
   }
 })();
+
+// A demo told in steps names its step above its caption ("Step 2 of 4"), following the chapter bar
+for (const live of document.querySelectorAll(".ai-live")) {
+  const bars = [...live.parentElement.querySelectorAll(".hb-chapters button")];
+  const step = () => {
+    const i = bars.findIndex((b) => b.classList.contains("is-on"));
+    if (i >= 0) live.dataset.step = `Step ${i + 1} of ${bars.length}`;
+  };
+  bars.forEach((b) => new MutationObserver(step).observe(b, { attributes: true, attributeFilter: ["class"] }));
+  step();
+}
