@@ -26,8 +26,9 @@
     d.wait = (ms) => new Promise((done) => waiters.add({ demo: d, left: ms, done }));
     // type text into an element a few characters at a time (wider characters type a little slower)
     d.type = async (el, text, speed = 26) => {
+      const chars = [...text];   // set from the text each step, so a pause can show it whole and the typing still picks up
       el.textContent = "";
-      for (const ch of text) { el.textContent += ch; await d.wait(ch.charCodeAt(0) > 0x2e80 ? speed * 2.2 : speed); }
+      for (let i = 0; i < chars.length; i++) { el.textContent = chars.slice(0, i + 1).join(""); await d.wait(chars[i].charCodeAt(0) > 0x2e80 ? speed * 2.2 : speed); }
     };
     return d;
   }
@@ -938,6 +939,11 @@
       }
     }
     picks.forEach((p, k) => p.addEventListener("click", () => { gen++; show(k); }));
+    // paused, the example shows whole: the search and the question typed out (the rest is shown by the CSS)
+    const pause = fig.querySelector(".ai-toggle");
+    pause && pause.addEventListener("click", () => setTimeout(() => {   // after the button's own handler has paused it
+      if (fig.classList.contains("is-paused")) cases[now].querySelectorAll(".geo-typed").forEach((t) => { t.textContent = t.dataset.text; });
+    }));
     show(0);
     if (!still) { fig.classList.add("is-fresh"); wire(d, loop); }
   }

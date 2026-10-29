@@ -4140,3 +4140,8 @@ html.theme-dark.can-dark .ai-geo[data-case="nike"] .ai-live[data-step]::before {
     transition: transform .45s cubic-bezier(.2,.7,.2,1);
   }
 }
+
+/* paused, the search and the episode demos show everything at once, nothing grayed out or waiting to appear */
+.ai-geo.is-fresh.is-paused .geo-results li:not(.is-on), .ai-geo.is-fresh.is-paused .geo-answer:not(.is-on),
+.ai-geo.is-fresh.is-paused .geo-cite:not(.is-on), .ai-geo.is-fresh.is-paused .geo-fields li:not(.is-on),
+.ai-geo.is-fresh.is-paused .geo-sr:not(.is-on), .ai-fan.is-fresh.is-paused .fn-card:not(.is-on) { opacity: 1; transform: none; }
