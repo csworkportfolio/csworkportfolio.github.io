@@ -1,0 +1,1498 @@
+{
+ "46": [
+  {
+   "text": "IT",
+   "i": 0,
+   "x": 398.0,
+   "baseline": 760.8,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "45": [
+  {
+   "text": "AFTER",
+   "i": 1,
+   "x": 26.5,
+   "baseline": 685.2,
+   "size": 152.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "GET",
+   "i": 0,
+   "x": 10.0,
+   "baseline": 547.7,
+   "size": 142.9,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "44": [
+  {
+   "text": "LET'S",
+   "i": 0,
+   "x": 36.8,
+   "baseline": 137.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "bold",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "43": [
+  {
+   "text": "FOR",
+   "i": 1,
+   "x": 163.0,
+   "baseline": 214.9,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "MADE",
+   "i": 0,
+   "x": 124.0,
+   "baseline": 121.6,
+   "size": 97.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "42": [
+  {
+   "text": "WERE",
+   "i": 1,
+   "x": 32.0,
+   "baseline": 691.6,
+   "size": 84.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "YOU",
+   "i": 0,
+   "x": 281.0,
+   "baseline": 547.0,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "medium",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "41": [
+  {
+   "text": "STANDARD",
+   "i": 1,
+   "x": 174.4,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "THE",
+   "i": 0,
+   "x": 53.1,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "40": [
+  {
+   "text": "TO",
+   "i": 1,
+   "x": 193.5,
+   "baseline": 230.7,
+   "size": 109.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "UP",
+   "i": 0,
+   "x": 194.0,
+   "baseline": 132.6,
+   "size": 109.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "39": [
+  {
+   "text": "LIVING",
+   "i": 0,
+   "x": 172.0,
+   "baseline": 144.2,
+   "size": 72.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "38": [
+  {
+   "text": "NOT",
+   "i": 1,
+   "x": 287.6,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "JUST",
+   "i": 0,
+   "x": 133.2,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "37": [
+  {
+   "text": "RESULTS",
+   "i": 2,
+   "x": 28.5,
+   "baseline": 691.4,
+   "size": 108.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 1,
+   "x": 25.5,
+   "baseline": 594.2,
+   "size": 168.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "OWN",
+   "i": 0,
+   "x": 22.0,
+   "baseline": 442.4,
+   "size": 192.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "36": [
+  {
+   "text": "HEALTH",
+   "i": 2,
+   "x": 31.5,
+   "baseline": 760.2,
+   "size": 124.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 1,
+   "x": 24.5,
+   "baseline": 635.0,
+   "size": 168.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "OWN",
+   "i": 0,
+   "x": 170.9,
+   "baseline": 494.6,
+   "size": 79.5,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "35": [
+  {
+   "text": "ROUTINE",
+   "i": 2,
+   "x": 307.8,
+   "baseline": 575.4,
+   "size": 42.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 1,
+   "x": 172.6,
+   "baseline": 575.4,
+   "size": 42.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "OWN",
+   "i": 0,
+   "x": 51.2,
+   "baseline": 575.4,
+   "size": 42.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "34": [
+  {
+   "text": "ONE",
+   "i": 1,
+   "x": 169.0,
+   "baseline": 201.3,
+   "size": 93.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "LIKE",
+   "i": 0,
+   "x": 168.5,
+   "baseline": 117.6,
+   "size": 93.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "33": [
+  {
+   "text": "LIVING",
+   "i": 0,
+   "x": 156.0,
+   "baseline": 519.2,
+   "size": 72.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "32": [
+  {
+   "text": "START",
+   "i": 0,
+   "x": 193.8,
+   "baseline": 730.2,
+   "size": 60.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "31": [
+  {
+   "text": "PLACE",
+   "i": 4,
+   "x": 34.0,
+   "baseline": 822.4,
+   "size": 72.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "INTO",
+   "i": 3,
+   "x": 34.0,
+   "baseline": 757.4,
+   "size": 100.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "FALLS",
+   "i": 2,
+   "x": 34.0,
+   "baseline": 667.4,
+   "size": 80.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "ELSE",
+   "i": 1,
+   "x": 34.0,
+   "baseline": 595.4,
+   "size": 100.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "EVERYTHING",
+   "i": 0,
+   "x": 34.0,
+   "baseline": 506.0,
+   "size": 36.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "30": [
+  {
+   "text": "MINDSET",
+   "i": 1,
+   "x": 260.0,
+   "baseline": 207.0,
+   "size": 52.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": true
+  },
+  {
+   "text": "YOUR",
+   "i": 0,
+   "x": 263.0,
+   "baseline": 117.4,
+   "size": 84.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "29": [
+  {
+   "text": "HABITS",
+   "i": 1,
+   "x": 253.5,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 0,
+   "x": 80.1,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "28": [
+  {
+   "text": "HORMONES",
+   "i": 1,
+   "x": 100.0,
+   "baseline": 191.8,
+   "size": 57.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 0,
+   "x": 98.0,
+   "baseline": 140.6,
+   "size": 118.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "27": [
+  {
+   "text": "FOUNDATION",
+   "i": 4,
+   "x": 24.5,
+   "baseline": 814.9,
+   "size": 72.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 3,
+   "x": 26.5,
+   "baseline": 728.7,
+   "size": 168.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "FIX",
+   "i": 2,
+   "x": 29.7,
+   "baseline": 559.9,
+   "size": 208.4,
+   "stretch": 1.401,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOU",
+   "i": 1,
+   "x": 30.0,
+   "baseline": 365.7,
+   "size": 220.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "medium",
+   "italic": false,
+   "behind": true
+  },
+  {
+   "text": "WHEN",
+   "i": 0,
+   "x": 26.0,
+   "baseline": 174.3,
+   "size": 156.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": true
+  }
+ ],
+ "26": [
+  {
+   "text": "POTENTIAL",
+   "i": 2,
+   "x": 275.4,
+   "baseline": 745.4,
+   "size": 38.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "OWN",
+   "i": 1,
+   "x": 166.3,
+   "baseline": 745.4,
+   "size": 38.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 0,
+   "x": 44.5,
+   "baseline": 745.4,
+   "size": 38.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "25": [
+  {
+   "text": "DODGING",
+   "i": 1,
+   "x": 109.0,
+   "baseline": 198.8,
+   "size": 65.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "AND",
+   "i": 0,
+   "x": 137.5,
+   "baseline": 140.6,
+   "size": 118.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "24": [
+  {
+   "text": "HACKS",
+   "i": 0,
+   "x": 152.0,
+   "baseline": 592.0,
+   "size": 68.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "23": [
+  {
+   "text": "CHASING",
+   "i": 1,
+   "x": 220.5,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "STOP",
+   "i": 0,
+   "x": 58.1,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "22": [
+  {
+   "text": "GONE",
+   "i": 3,
+   "x": 32.0,
+   "baseline": 330.4,
+   "size": 84.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": true
+  },
+  {
+   "text": "ARE",
+   "i": 2,
+   "x": 278.0,
+   "baseline": 246.8,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "DRIVES",
+   "i": 1,
+   "x": 30.0,
+   "baseline": 138.8,
+   "size": 80.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "21": [
+  {
+   "text": "ENERGY",
+   "i": 4,
+   "x": 71.0,
+   "baseline": 823.4,
+   "size": 60.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "OUR",
+   "i": 3,
+   "x": 225.0,
+   "baseline": 741.8,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "WHY",
+   "i": 2,
+   "x": 22.0,
+   "baseline": 331.8,
+   "size": 100.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "WONDERING",
+   "i": 1,
+   "x": 33.0,
+   "baseline": 209.4,
+   "size": 36.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "AND",
+   "i": 0,
+   "x": 263.0,
+   "baseline": 129.8,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "20": [
+  {
+   "text": "AWAY",
+   "i": 3,
+   "x": 399.1,
+   "baseline": 737.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "LIVES",
+   "i": 2,
+   "x": 305.5,
+   "baseline": 737.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "OUR",
+   "i": 1,
+   "x": 231.1,
+   "baseline": 737.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "SCROLLING",
+   "i": 0,
+   "x": 44.1,
+   "baseline": 737.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "bold",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "19": [
+  {
+   "text": "HATE",
+   "i": 4,
+   "x": 31.0,
+   "baseline": 698.8,
+   "size": 92.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "WE",
+   "i": 3,
+   "x": 31.0,
+   "baseline": 616.2,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "JOBS",
+   "i": 2,
+   "x": 31.0,
+   "baseline": 522.4,
+   "size": 92.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "IN",
+   "i": 1,
+   "x": 31.0,
+   "baseline": 209.8,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "STUCK",
+   "i": 0,
+   "x": 31.0,
+   "baseline": 116.6,
+   "size": 68.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "18": [
+  {
+   "text": "ALIGNMENT",
+   "i": 2,
+   "x": 27.0,
+   "baseline": 724.1,
+   "size": 80.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "OF",
+   "i": 1,
+   "x": 46.1,
+   "baseline": 375.5,
+   "size": 78.4,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": true
+  },
+  {
+   "text": "OUT",
+   "i": 0,
+   "x": 25.0,
+   "baseline": 256.9,
+   "size": 228.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": true
+  }
+ ],
+ "17": [
+  {
+   "text": "PROBLEM",
+   "i": 0,
+   "x": 134.8,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "16": [
+  {
+   "text": "THE",
+   "i": 1,
+   "x": 313.5,
+   "baseline": 185.8,
+   "size": 98.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "BUT",
+   "i": 0,
+   "x": 44.0,
+   "baseline": 179.6,
+   "size": 98.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "15": [
+  {
+   "text": "EVERYTHING",
+   "i": 0,
+   "x": 154.0,
+   "baseline": 115.4,
+   "size": 36.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "14": [
+  {
+   "text": "BLAMING",
+   "i": 1,
+   "x": 200.4,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "ARE",
+   "i": 0,
+   "x": 77.1,
+   "baseline": 759.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "13": [
+  {
+   "text": "GUYS",
+   "i": 1,
+   "x": 146.0,
+   "baseline": 187.3,
+   "size": 87.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "medium",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "MOST",
+   "i": 0,
+   "x": 146.5,
+   "baseline": 108.6,
+   "size": 83.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "12": [
+  {
+   "text": "UNDERWEAR",
+   "i": 0,
+   "x": 162.0,
+   "baseline": 109.4,
+   "size": 36.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "heavy",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "11": [
+  {
+   "text": "YOUR",
+   "i": 4,
+   "x": 404.5,
+   "baseline": 734.4,
+   "size": 26.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "NOT",
+   "i": 3,
+   "x": 340.4,
+   "baseline": 734.4,
+   "size": 26.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "DEFINITELY",
+   "i": 2,
+   "x": 178.7,
+   "baseline": 734.4,
+   "size": 26.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "IT'S",
+   "i": 1,
+   "x": 124.1,
+   "baseline": 734.4,
+   "size": 26.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "AND",
+   "i": 0,
+   "x": 58.0,
+   "baseline": 734.4,
+   "size": 26.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "regular",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "10": [
+  {
+   "text": "TRACKER",
+   "i": 3,
+   "x": 52.0,
+   "baseline": 810.8,
+   "size": 52.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "SLEEP",
+   "i": 2,
+   "x": 52.0,
+   "baseline": 763.8,
+   "size": 80.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOUR",
+   "i": 1,
+   "x": 52.0,
+   "baseline": 692.2,
+   "size": 84.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "OR",
+   "i": 0,
+   "x": 52.0,
+   "baseline": 616.6,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "9": [
+  {
+   "text": "OILS",
+   "i": 4,
+   "x": 24.5,
+   "baseline": 834.8,
+   "size": 212.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "SEED",
+   "i": 3,
+   "x": 25.0,
+   "baseline": 644.6,
+   "size": 188.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "ABOUT",
+   "i": 2,
+   "x": 28.5,
+   "baseline": 475.2,
+   "size": 136.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "ISN'T",
+   "i": 1,
+   "x": 23.0,
+   "baseline": 352.4,
+   "size": 192.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "TESTOSTERONE",
+   "i": 0,
+   "x": 31.5,
+   "baseline": 179.4,
+   "size": 60.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "8": [
+  {
+   "text": "OUT",
+   "i": 4,
+   "x": 116.1,
+   "baseline": 583.2,
+   "size": 141.2,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "STAND",
+   "i": 3,
+   "x": 398.9,
+   "baseline": 171.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "TO",
+   "i": 2,
+   "x": 346.1,
+   "baseline": 171.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "BUILT",
+   "i": 1,
+   "x": 356.1,
+   "baseline": 123.2,
+   "size": 52.2,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOU'RE",
+   "i": 0,
+   "x": 391.3,
+   "baseline": 61.4,
+   "size": 30.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "7": [
+  {
+   "text": "OVERLOOKED",
+   "i": 1,
+   "x": 250.0,
+   "baseline": 177.0,
+   "size": 32.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "OR",
+   "i": 0,
+   "x": 51.0,
+   "baseline": 181.4,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "6": [
+  {
+   "text": "SOFT",
+   "i": 0,
+   "x": 11.3,
+   "baseline": 550.0,
+   "size": 197.3,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "light",
+   "italic": false,
+   "behind": true
+  }
+ ],
+ "5": [
+  {
+   "text": "TIRED",
+   "i": 0,
+   "x": 195.8,
+   "baseline": 119.4,
+   "size": 54.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  }
+ ],
+ "4": [
+  {
+   "text": "BE",
+   "i": 4,
+   "x": 367.0,
+   "baseline": 480.9,
+   "size": 109.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": true
+  },
+  {
+   "text": "TO",
+   "i": 3,
+   "x": 361.0,
+   "baseline": 347.0,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "HERE",
+   "i": 2,
+   "x": 259.0,
+   "baseline": 215.2,
+   "size": 92.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "heavy",
+   "italic": false,
+   "behind": true
+  },
+  {
+   "text": "NOT",
+   "i": 1,
+   "x": 27.7,
+   "baseline": 855.2,
+   "size": 100.6,
+   "stretch": 1.082,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "YOU'RE",
+   "i": 0,
+   "x": 25.0,
+   "baseline": 750.0,
+   "size": 64.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": false,
+   "behind": false
+  }
+ ],
+ "3": [
+  {
+   "text": "AVERAGE",
+   "i": 4,
+   "x": 33.1,
+   "baseline": 766.6,
+   "size": 80.0,
+   "stretch": 1.016,
+   "color": "#ffffff",
+   "weight": "black",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "BE",
+   "i": 3,
+   "x": 194.0,
+   "baseline": 653.2,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "TO",
+   "i": 2,
+   "x": 31.0,
+   "baseline": 654.6,
+   "size": 104.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "light",
+   "italic": true,
+   "behind": false
+  },
+  {
+   "text": "BUILT",
+   "i": 1,
+   "x": 278.0,
+   "baseline": 277.0,
+   "size": 84.0,
+   "stretch": 1.0,
+   "color": "#ffffff",
+   "weight": "ultra",
+   "italic": false,
+   "behind": true
+  },
+  {
+   "text": "WE WEREN'T",
+   "i": 0,
+   "x": 27.0,
+   "baseline": 164.2,
+   "size": 60.4,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "bold",
+   "italic": true,
+   "behind": true
+  }
+ ],
+ "2": [
+  {
+   "text": "BRO",
+   "i": 0,
+   "x": 47.6,
+   "baseline": 204.7,
+   "size": 212.5,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "regular",
+   "italic": false,
+   "behind": true
+  }
+ ],
+ "1": [
+  {
+   "text": "F&%@",
+   "i": -1,
+   "x": 123.0,
+   "baseline": 707.4,
+   "size": 102.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "ultra",
+   "italic": false,
+   "behind": false
+  },
+  {
+   "text": "BIOHACKING",
+   "i": 0,
+   "x": 127.7,
+   "baseline": 780.7,
+   "size": 46.0,
+   "stretch": 1.0,
+   "color": "#ff5600",
+   "weight": "medium",
+   "italic": true,
+   "behind": false
+  }
+ ]
+}
