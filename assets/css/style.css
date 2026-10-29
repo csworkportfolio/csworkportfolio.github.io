@@ -3097,10 +3097,10 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 @media (prefers-reduced-motion: reduce) { .mb, .mb-cursor, .mb-track { transition: none; } }
 
 /* 3. the Mars Men cut, in a copy of Adobe Premiere Pro: drawn at 1280 x 800 and scaled to the window by
-   ai-page.js (--pr-s); a phone gets a narrower layout (420 x 760). Premiere follows the page: its Light theme
-   (Preferences > Appearance, since Premiere Pro 25.0) on the light page, its usual dark one on the dark page. */
-.pr-window { --p-bg: #dcdcdc; --p-top: #ececec; --p-panel: #f5f5f5; --p-head: #e9e9e9; --p-edge: #c6c6c6; --p-line: #dedede; --p-line2: #c4c4c4;
-  --p-tick: #adadad; --p-well: #d4d4d4; --p-field: #e6e6e6; --p-text: #3a3a3a; --p-ink: #1d1d1d; --p-strong: #000; --p-sub: #6b6b6b; --p-dim: #8c8c8c; }
+   ai-page.js (--pr-s); a phone gets a narrower layout (420 x 760). Premiere follows the page: on the light page
+   its lighter mid-gray look (the classic charcoal panels), on the dark page its usual dark one. */
+.pr-window { --p-bg: #3b3b3b; --p-top: #5c5c5c; --p-panel: #535353; --p-head: #4b4b4b; --p-edge: #2e2e2e; --p-line: #474747; --p-line2: #6b6b6b;
+  --p-tick: #8a8a8a; --p-well: #3a3a3a; --p-field: #424242; --p-text: #d4d4d4; --p-ink: #ececec; --p-strong: #fff; --p-sub: #b3b3b3; --p-dim: #959595; }
 @media (prefers-color-scheme: dark) {
   html.can-dark .pr-window { --p-bg: #161616; --p-top: #1f1f1f; --p-panel: #1e1e1e; --p-head: #1b1b1b; --p-edge: #111; --p-line: #2a2a2a; --p-line2: #3a3a3a;
     --p-tick: #4a4a4a; --p-well: #232323; --p-field: #161616; --p-text: #c9c9c9; --p-ink: #e6e6e6; --p-strong: #fff; --p-sub: #a8a8a8; --p-dim: #8a8a8a; }
