@@ -36,8 +36,8 @@ FIX = {"phone": "vulnerability"}
 # each clip: where it starts and ends in the episode (seconds), its size, and the crop (across, in the 1920 x 1080
 # frame) that keeps Mandia centered
 CLIPS = {
-    "linkedin": {"from": 585.4, "to": 633.55, "size": (432, 540), "crop": (864, 1080, 508), "y": 0.8, "font": 30},
-    "vertical": {"from": 1160.4, "to": 1181.7, "size": (406, 720), "crop": (608, 1080, 636), "y": 0.7, "font": 30},
+    "linkedin": {"from": 585.4, "to": 633.55, "size": (432, 540), "crop": (864, 1080, 508), "y": 0.93, "font": 30},
+    "vertical": {"from": 1160.4, "to": 1181.7, "size": (406, 720), "crop": (608, 1080, 636), "y": 0.9, "font": 30},
 }
 
 
