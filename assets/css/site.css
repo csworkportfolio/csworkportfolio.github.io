@@ -3599,7 +3599,7 @@ html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,
 .fn-wavebar { position: relative; height: 56px; margin-top: 44px; }   /* room above for the marker dots, clear of the title */
 .fn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .fn-mark { position: absolute; top: 5px; bottom: -6px; width: 0; }   /* a dot above the waveform, no line: the playhead shows the spot */
-.fn-mark button { position: absolute; top: -23px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+.fn-mark button { position: absolute; top: -29px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
   font-family: var(--round); font-size: 11px; font-weight: 700; color: #fff; background: var(--fn-mag); transition: transform .4s var(--ease); }
 .fn-mark button:hover { transform: scale(1.15); }
 .fn-mark button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 2px; }
@@ -3688,8 +3688,8 @@ html.theme-dark.can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255
 .fn-big-cap .fn-path { display: inline; margin: 0; font-size: inherit; }
 .fn-where { margin-top: auto; padding-top: 10px; font-size: 12px; color: var(--ai-sub); }   /* in the card's bottom corner, level across the row */
 .ai-fan.is-fresh .fn-card:not(.is-on) { opacity: .25; transform: translateY(10px); }
-.ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); color: transparent; background: var(--fn-off); }   /* not reached yet: the waveform's gray, no number until it turns magenta */
-.fn-mark button { transition: transform .4s var(--ease), background-color .4s, color .4s; }
+.ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); opacity: 0; pointer-events: none; }   /* not reached yet: hidden until the playhead gets there */
+.fn-mark button { transition: transform .4s var(--ease), opacity .4s; }
 
 /* 5. GEO and AEO */
 /* the switch beside pause, and each example in its brand: Nike in black and white, QAD Redzone in its red */
