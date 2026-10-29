@@ -2785,7 +2785,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 }
 :root[data-os="ios"] .hb-views { top: 8px; right: 60px; height: 44px; padding: 3px; }
 :root[data-os="ios"] .hb-views button { height: 38px; padding: 0 16px; font-size: 15px; }
-@media (max-width: 720px) { .hb-views { display: none; } }
+@media (max-width: 720px) { .hb-views:not(.geo-switch) { display: none; } }   /* the search demo's Nike / QAD Redzone switch stays */
 @media (prefers-reduced-motion: reduce) { .hb-views button { transition: none; } }
 /* Mobile on a wide screen: the desktop window steps away (its frame stays, so nothing around it moves) and the
    phone screen stands on its own, with the window's rounded corners and shadow */
