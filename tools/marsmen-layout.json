@@ -10,8 +10,8 @@
    "italic": false,
    "behind": false,
    "text": "IT",
-   "x": 414.1,
-   "baseline": 792.8,
+   "x": 220.7,
+   "baseline": 823.8,
    "width": 98.7
   },
   {
@@ -24,8 +24,8 @@
    "italic": false,
    "behind": false,
    "text": "AFTER",
-   "x": 18.8,
-   "baseline": 685.2,
+   "x": 23.0,
+   "baseline": 721.2,
    "width": 494.0
   },
   {
@@ -39,7 +39,7 @@
    "behind": false,
    "text": "GET",
    "x": 18.8,
-   "baseline": 547.7,
+   "baseline": 585.7,
    "width": 282.9
   },
   {
@@ -53,7 +53,7 @@
    "behind": false,
    "text": "LET'S",
    "x": 18.8,
-   "baseline": 418.4,
+   "baseline": 454.4,
    "width": 141.5
   }
  ],
@@ -68,7 +68,7 @@
    "italic": true,
    "behind": false,
    "text": "FOR",
-   "x": 166.6,
+   "x": 166.5,
    "baseline": 214.9,
    "width": 206.9
   },
@@ -98,23 +98,23 @@
    "italic": true,
    "behind": false,
    "text": "WERE",
-   "x": 32.0,
-   "baseline": 691.6,
+   "x": 247.0,
+   "baseline": 749.6,
    "width": 245.8
   },
   {
    "n": 42,
    "i": 0,
-   "size": 104.0,
+   "size": 121.2,
    "stretch": 1.0,
    "color": "#ffffff",
    "weight": "medium",
    "italic": false,
    "behind": false,
    "text": "YOU",
-   "x": 281.0,
-   "baseline": 547.0,
-   "width": 223.2
+   "x": 247.0,
+   "baseline": 664.0,
+   "width": 260.2
   }
  ],
  "41": [
@@ -143,7 +143,7 @@
    "behind": false,
    "text": "THE",
    "x": 53.1,
-   "baseline": 759.4,
+   "baseline": 660.4,
    "width": 102.6
   }
  ],
@@ -158,8 +158,8 @@
    "italic": true,
    "behind": false,
    "text": "TO",
-   "x": 193.5,
-   "baseline": 230.7,
+   "x": 335.5,
+   "baseline": 155.7,
    "width": 144.6
   },
   {
@@ -172,8 +172,8 @@
    "italic": false,
    "behind": false,
    "text": "UP",
-   "x": 193.5,
-   "baseline": 132.6,
+   "x": 57.5,
+   "baseline": 156.6,
    "width": 153.1
   }
  ],
@@ -204,8 +204,8 @@
    "italic": false,
    "behind": false,
    "text": "NOT",
-   "x": 287.6,
-   "baseline": 759.4,
+   "x": 327.6,
+   "baseline": 727.4,
    "width": 117.9
   },
   {
@@ -218,8 +218,8 @@
    "italic": true,
    "behind": false,
    "text": "JUST",
-   "x": 133.2,
-   "baseline": 759.4,
+   "x": 99.2,
+   "baseline": 631.4,
    "width": 133.1
   }
  ],
@@ -234,23 +234,23 @@
    "italic": false,
    "behind": false,
    "text": "RESULTS",
-   "x": 20.5,
-   "baseline": 691.4,
+   "x": 30.4,
+   "baseline": 799.4,
    "width": 479.2
   },
   {
    "n": 37,
    "i": 1,
    "size": 168.0,
-   "stretch": 1.0,
+   "stretch": 1.062,
    "color": "#ffffff",
    "weight": "light",
    "italic": false,
    "behind": false,
    "text": "YOUR",
-   "x": 20.5,
-   "baseline": 594.2,
-   "width": 465.0
+   "x": 23.1,
+   "baseline": 681.2,
+   "width": 493.8
   },
   {
    "n": 37,
@@ -263,7 +263,7 @@
    "behind": false,
    "text": "OWN",
    "x": 20.5,
-   "baseline": 442.4,
+   "baseline": 232.4,
    "width": 499.0
   }
  ],
@@ -278,8 +278,8 @@
    "italic": false,
    "behind": false,
    "text": "HEALTH",
-   "x": 26.4,
-   "baseline": 760.2,
+   "x": 26.3,
+   "baseline": 817.2,
    "width": 487.4
   },
   {
@@ -292,8 +292,8 @@
    "italic": true,
    "behind": false,
    "text": "YOUR",
-   "x": 24.5,
-   "baseline": 635.0,
+   "x": 23.5,
+   "baseline": 692.0,
    "width": 465.0
   },
   {
@@ -307,7 +307,7 @@
    "behind": false,
    "text": "OWN",
    "x": 166.8,
-   "baseline": 494.6,
+   "baseline": 551.6,
    "width": 206.5
   }
  ],
@@ -366,7 +366,7 @@
    "italic": false,
    "behind": false,
    "text": "ONE",
-   "x": 172.0,
+   "x": 168.3,
    "baseline": 201.3,
    "width": 203.4
   },
@@ -412,8 +412,8 @@
    "italic": false,
    "behind": false,
    "text": "START",
-   "x": 193.8,
-   "baseline": 730.2,
+   "x": 172.4,
+   "baseline": 127.2,
    "width": 195.1
   }
  ],
@@ -428,7 +428,7 @@
    "italic": false,
    "behind": false,
    "text": "PLACE",
-   "x": 34.0,
+   "x": 30.7,
    "baseline": 822.4,
    "width": 238.0
   },
@@ -442,8 +442,8 @@
    "italic": false,
    "behind": false,
    "text": "INTO",
-   "x": 34.0,
-   "baseline": 757.4,
+   "x": 36.0,
+   "baseline": 758.4,
    "width": 233.8
   },
   {
@@ -456,7 +456,7 @@
    "italic": false,
    "behind": false,
    "text": "FALLS",
-   "x": 34.0,
+   "x": 36.0,
    "baseline": 667.4,
    "width": 239.5
   },
@@ -470,7 +470,7 @@
    "italic": true,
    "behind": false,
    "text": "ELSE",
-   "x": 34.0,
+   "x": 36.0,
    "baseline": 595.4,
    "width": 231.9
   },
@@ -484,7 +484,7 @@
    "italic": false,
    "behind": false,
    "text": "EVERYTHING",
-   "x": 34.0,
+   "x": 36.0,
    "baseline": 506.0,
    "width": 227.3
   }
@@ -500,7 +500,7 @@
    "italic": false,
    "behind": true,
    "text": "MINDSET",
-   "x": 256.2,
+   "x": 269.2,
    "baseline": 207.0,
    "width": 242.1
   },
@@ -514,8 +514,8 @@
    "italic": true,
    "behind": false,
    "text": "YOUR",
-   "x": 261.0,
-   "baseline": 141.4,
+   "x": 34.0,
+   "baseline": 144.4,
    "width": 232.5
   }
  ],
@@ -560,23 +560,23 @@
    "italic": false,
    "behind": false,
    "text": "HORMONES",
-   "x": 106.7,
-   "baseline": 191.8,
+   "x": 98.9,
+   "baseline": 209.8,
    "width": 342.2
   },
   {
    "n": 28,
    "i": 0,
-   "size": 118.0,
+   "size": 127.4,
    "stretch": 1.0,
    "color": "#ffffff",
    "weight": "light",
    "italic": true,
    "behind": false,
    "text": "YOUR",
-   "x": 106.7,
-   "baseline": 140.6,
-   "width": 326.6
+   "x": 79.2,
+   "baseline": 143.8,
+   "width": 352.5
   }
  ],
  "27": [
@@ -584,71 +584,71 @@
    "n": 27,
    "i": 4,
    "size": 72.0,
-   "stretch": 1.0,
+   "stretch": 0.967,
    "color": "#ff5600",
    "weight": "black",
    "italic": false,
    "behind": false,
    "text": "FOUNDATION",
-   "x": 35.0,
-   "baseline": 814.9,
-   "width": 488.6
+   "x": 33.8,
+   "baseline": 813.9,
+   "width": 472.4
   },
   {
    "n": 27,
    "i": 3,
-   "size": 168.0,
-   "stretch": 1.0,
+   "size": 179.2,
+   "stretch": 0.938,
    "color": "#ffffff",
    "weight": "light",
    "italic": false,
    "behind": false,
    "text": "YOUR",
-   "x": 37.5,
-   "baseline": 728.7,
-   "width": 465.0
+   "x": 37.4,
+   "baseline": 731.6,
+   "width": 465.2
   },
   {
    "n": 27,
    "i": 2,
    "size": 208.4,
-   "stretch": 1.401,
+   "stretch": 1.446,
    "color": "#ffffff",
    "weight": "ultra",
    "italic": false,
    "behind": false,
    "text": "FIX",
-   "x": 35.0,
+   "x": 20.2,
    "baseline": 559.9,
-   "width": 484.2
+   "width": 499.5
   },
   {
    "n": 27,
    "i": 1,
-   "size": 220.0,
+   "size": 225.8,
    "stretch": 1.0,
    "color": "#ffffff",
    "weight": "medium",
    "italic": false,
    "behind": true,
    "text": "YOU",
-   "x": 33.9,
-   "baseline": 365.7,
-   "width": 472.1
+   "x": 27.7,
+   "baseline": 369.8,
+   "width": 484.6
   },
   {
    "n": 27,
    "i": 0,
-   "size": 156.0,
-   "stretch": 1.0,
+   "size": 163.6,
+   "stretch": 0.961,
    "color": "#ffffff",
    "weight": "light",
    "italic": true,
    "behind": true,
    "text": "WHEN",
-   "x": 35.0,
-   "baseline": 174.3,
-   "width": 470.0
+   "x": 12.7,
+   "baseline": 177.9,
+   "width": 473.9
   }
  ],
  "13": [
@@ -663,7 +663,7 @@
    "behind": false,
    "text": "GUYS",
    "x": 316.4,
-   "baseline": 134.3,
+   "baseline": 117.3,
    "width": 188.6
   },
   {
@@ -736,7 +736,7 @@
    "italic": true,
    "behind": false,
    "text": "DODGING",
-   "x": 108.3,
+   "x": 108.4,
    "baseline": 198.8,
    "width": 323.3
   },
@@ -767,7 +767,7 @@
    "behind": false,
    "text": "HACKS",
    "x": 149.3,
-   "baseline": 592.0,
+   "baseline": 616.0,
    "width": 241.4
   }
  ],
@@ -782,7 +782,7 @@
    "italic": true,
    "behind": false,
    "text": "CHASING",
-   "x": 220.5,
+   "x": 233.5,
    "baseline": 759.4,
    "width": 247.8
   },
@@ -796,7 +796,7 @@
    "italic": false,
    "behind": false,
    "text": "STOP",
-   "x": 58.1,
+   "x": 62.1,
    "baseline": 759.4,
    "width": 146.7
   }
@@ -813,7 +813,7 @@
    "behind": true,
    "text": "GONE",
    "x": 30.0,
-   "baseline": 330.4,
+   "baseline": 300.4,
    "width": 249.6
   },
   {
@@ -826,8 +826,8 @@
    "italic": true,
    "behind": false,
    "text": "ARE",
-   "x": 278.0,
-   "baseline": 246.8,
+   "x": 30.0,
+   "baseline": 227.8,
    "width": 199.1
   },
   {
@@ -856,8 +856,8 @@
    "italic": false,
    "behind": false,
    "text": "ENERGY",
-   "x": 71.0,
-   "baseline": 823.4,
+   "x": 31.0,
+   "baseline": 805.4,
    "width": 245.2
   },
   {
@@ -870,23 +870,23 @@
    "italic": false,
    "behind": false,
    "text": "OUR",
-   "x": 225.0,
-   "baseline": 741.8,
+   "x": 26.9,
+   "baseline": 732.8,
    "width": 224.7
   },
   {
    "n": 21,
    "i": 2,
-   "size": 100.0,
+   "size": 85.5,
    "stretch": 1.0,
    "color": "#ffffff",
    "weight": "ultra",
    "italic": false,
    "behind": false,
    "text": "WHY",
-   "x": 20.2,
-   "baseline": 331.8,
-   "width": 253.1
+   "x": 31.0,
+   "baseline": 632.8,
+   "width": 216.5
   },
   {
    "n": 21,
@@ -898,8 +898,8 @@
    "italic": true,
    "behind": false,
    "text": "WONDERING",
-   "x": 33.0,
-   "baseline": 209.4,
+   "x": 31.0,
+   "baseline": 200.4,
    "width": 227.5
   },
   {
@@ -912,8 +912,8 @@
    "italic": false,
    "behind": false,
    "text": "AND",
-   "x": 263.0,
-   "baseline": 129.8,
+   "x": 31.0,
+   "baseline": 153.8,
    "width": 225.0
   }
  ],
@@ -929,7 +929,7 @@
    "behind": false,
    "text": "AWAY",
    "x": 399.1,
-   "baseline": 737.4,
+   "baseline": 725.4,
    "width": 89.8
   },
   {
@@ -942,8 +942,8 @@
    "italic": false,
    "behind": false,
    "text": "LIVES",
-   "x": 305.5,
-   "baseline": 737.4,
+   "x": 306.5,
+   "baseline": 725.4,
    "width": 81.6
   },
   {
@@ -957,7 +957,7 @@
    "behind": false,
    "text": "OUR",
    "x": 237.4,
-   "baseline": 737.4,
+   "baseline": 725.4,
    "width": 65.2
   },
   {
@@ -971,7 +971,7 @@
    "behind": false,
    "text": "SCROLLING",
    "x": 44.1,
-   "baseline": 737.4,
+   "baseline": 725.4,
    "width": 173.9
   }
  ],
@@ -986,7 +986,7 @@
    "italic": false,
    "behind": false,
    "text": "HATE",
-   "x": 31.0,
+   "x": 26.9,
    "baseline": 698.8,
    "width": 244.2
   },
@@ -1000,7 +1000,7 @@
    "italic": false,
    "behind": false,
    "text": "WE",
-   "x": 31.0,
+   "x": 25.4,
    "baseline": 616.2,
    "width": 160.7
   },
@@ -1014,7 +1014,7 @@
    "italic": false,
    "behind": false,
    "text": "JOBS",
-   "x": 31.0,
+   "x": 25.4,
    "baseline": 522.4,
    "width": 247.1
   },
@@ -1058,7 +1058,7 @@
    "italic": false,
    "behind": false,
    "text": "ALIGNMENT",
-   "x": 28.7,
+   "x": 28.6,
    "baseline": 724.1,
    "width": 482.7
   },
@@ -1072,8 +1072,8 @@
    "italic": true,
    "behind": true,
    "text": "OF",
-   "x": 46.1,
-   "baseline": 485.5,
+   "x": 36.1,
+   "baseline": 409.5,
    "width": 106.2
   },
   {
@@ -1087,7 +1087,7 @@
    "behind": true,
    "text": "OUT",
    "x": 22.3,
-   "baseline": 366.9,
+   "baseline": 252.9,
    "width": 495.4
   }
  ],
@@ -1118,7 +1118,7 @@
    "italic": true,
    "behind": false,
    "text": "THE",
-   "x": 313.5,
+   "x": 301.5,
    "baseline": 185.8,
    "width": 186.2
   },
@@ -1148,8 +1148,8 @@
    "italic": false,
    "behind": false,
    "text": "EVERYTHING",
-   "x": 174.0,
-   "baseline": 115.4,
+   "x": 167.0,
+   "baseline": 130.4,
    "width": 234.5
   }
  ],
@@ -1282,8 +1282,8 @@
    "italic": false,
    "behind": false,
    "text": "TRACKER",
-   "x": 34.6,
-   "baseline": 810.8,
+   "x": 37.6,
+   "baseline": 816.8,
    "width": 247.3
   },
   {
@@ -1296,7 +1296,7 @@
    "italic": false,
    "behind": false,
    "text": "SLEEP",
-   "x": 35.9,
+   "x": 26.0,
    "baseline": 763.8,
    "width": 244.6
   },
@@ -1310,7 +1310,7 @@
    "italic": true,
    "behind": false,
    "text": "YOUR",
-   "x": 42.0,
+   "x": 26.0,
    "baseline": 691.2,
    "width": 232.5
   },
@@ -1324,7 +1324,7 @@
    "italic": true,
    "behind": false,
    "text": "OR",
-   "x": 42.0,
+   "x": 26.0,
    "baseline": 614.6,
    "width": 149.4
   }
@@ -1340,7 +1340,7 @@
    "italic": false,
    "behind": false,
    "text": "OILS",
-   "x": 31.3,
+   "x": 22.8,
    "baseline": 834.8,
    "width": 494.4
   },
@@ -1354,7 +1354,7 @@
    "italic": false,
    "behind": false,
    "text": "SEED",
-   "x": 31.3,
+   "x": 22.1,
    "baseline": 644.6,
    "width": 495.8
   },
@@ -1368,7 +1368,7 @@
    "italic": false,
    "behind": false,
    "text": "ABOUT",
-   "x": 31.3,
+   "x": 28.4,
    "baseline": 475.2,
    "width": 483.2
   },
@@ -1382,7 +1382,7 @@
    "italic": true,
    "behind": false,
    "text": "ISN'T",
-   "x": 38.0,
+   "x": 20.0,
    "baseline": 352.4,
    "width": 464.1
   },
@@ -1396,7 +1396,7 @@
    "italic": false,
    "behind": false,
    "text": "TESTOSTERONE",
-   "x": 31.3,
+   "x": 31.4,
    "baseline": 179.4,
    "width": 477.3
   }
@@ -1412,37 +1412,37 @@
    "italic": false,
    "behind": false,
    "text": "OUT",
-   "x": 116.6,
+   "x": 117.9,
    "baseline": 583.2,
    "width": 306.8
   },
   {
    "n": 8,
    "i": 3,
-   "size": 30.0,
+   "size": 30.3,
    "stretch": 1.0,
    "color": "#ffffff",
    "weight": "light",
    "italic": true,
    "behind": false,
    "text": "STAND",
-   "x": 404.9,
-   "baseline": 221.4,
-   "width": 97.6
+   "x": 117.9,
+   "baseline": 463.5,
+   "width": 98.6
   },
   {
    "n": 8,
    "i": 2,
-   "size": 30.0,
+   "size": 46.2,
    "stretch": 1.0,
    "color": "#ffffff",
    "weight": "light",
    "italic": true,
    "behind": false,
    "text": "TO",
-   "x": 362.6,
-   "baseline": 221.4,
-   "width": 39.8
+   "x": 431.8,
+   "baseline": 248.9,
+   "width": 61.2
   },
   {
    "n": 8,
@@ -1454,23 +1454,23 @@
    "italic": false,
    "behind": false,
    "text": "BUILT",
-   "x": 362.6,
-   "baseline": 173.2,
+   "x": 359.8,
+   "baseline": 183.2,
    "width": 145.5
   },
   {
    "n": 8,
    "i": 0,
-   "size": 30.0,
+   "size": 40.6,
    "stretch": 1.0,
    "color": "#ff5600",
    "weight": "medium",
    "italic": false,
    "behind": false,
    "text": "YOU'RE",
-   "x": 399.3,
-   "baseline": 111.4,
-   "width": 108.8
+   "x": 359.8,
+   "baseline": 121.0,
+   "width": 147.3
   }
  ],
  "7": [
@@ -1484,8 +1484,8 @@
    "italic": false,
    "behind": false,
    "text": "OVERLOOKED",
-   "x": 250.0,
-   "baseline": 177.0,
+   "x": 263.0,
+   "baseline": 176.0,
    "width": 223.7
   },
   {
@@ -1523,19 +1523,17 @@
   {
    "n": 5,
    "i": 0,
-   "size": 54.0,
+   "size": 69.9,
    "stretch": 1.0,
    "color": "#ff5600",
    "weight": "light",
    "italic": true,
    "behind": false,
    "text": "TIRED",
-   "x": 193.3,
-   "baseline": 119.4,
-   "width": 153.4
-  }
- ],
- "4": [
+   "x": 159.0,
+   "baseline": 514.8,
+   "width": 198.6
+  },
   {
    "n": 4,
    "i": 4,
@@ -1546,8 +1544,8 @@
    "italic": true,
    "behind": true,
    "text": "BE",
-   "x": 365.7,
-   "baseline": 370.9,
+   "x": 4.7,
+   "baseline": 418.9,
    "width": 135.3
   },
   {
@@ -1560,8 +1558,8 @@
    "italic": true,
    "behind": false,
    "text": "TO",
-   "x": 363.0,
-   "baseline": 259.0,
+   "x": 358.0,
+   "baseline": 248.0,
    "width": 138.0
   },
   {
@@ -1574,10 +1572,12 @@
    "italic": false,
    "behind": true,
    "text": "HERE",
-   "x": 260.0,
-   "baseline": 146.2,
+   "x": 39.0,
+   "baseline": 132.2,
    "width": 241.0
-  },
+  }
+ ],
+ "4": [
   {
    "n": 4,
    "i": 1,
@@ -1588,8 +1588,8 @@
    "italic": false,
    "behind": false,
    "text": "NOT",
-   "x": 22.2,
-   "baseline": 855.2,
+   "x": 41.0,
+   "baseline": 766.2,
    "width": 237.7
   },
   {
@@ -1602,8 +1602,8 @@
    "italic": false,
    "behind": false,
    "text": "YOU'RE",
-   "x": 25.0,
-   "baseline": 750.0,
+   "x": 41.0,
+   "baseline": 663.0,
    "width": 232.1
   }
  ],
@@ -1618,8 +1618,8 @@
    "italic": false,
    "behind": false,
    "text": "AVERAGE",
-   "x": 42.0,
-   "baseline": 766.6,
+   "x": 26.4,
+   "baseline": 822.6,
    "width": 386.9
   },
   {
@@ -1632,8 +1632,8 @@
    "italic": true,
    "behind": false,
    "text": "BE",
-   "x": 194.0,
-   "baseline": 653.2,
+   "x": 180.0,
+   "baseline": 746.2,
    "width": 129.1
   },
   {
@@ -1646,8 +1646,8 @@
    "italic": true,
    "behind": false,
    "text": "TO",
-   "x": 31.0,
-   "baseline": 654.6,
+   "x": 15.0,
+   "baseline": 747.6,
    "width": 138.0
   },
   {
@@ -1660,37 +1660,23 @@
    "italic": false,
    "behind": true,
    "text": "BUILT",
-   "x": 42.0,
-   "baseline": 551.0,
+   "x": 26.4,
+   "baseline": 649.0,
    "width": 239.2
   },
   {
    "n": 3,
    "i": 0,
-   "size": 60.4,
+   "size": 38.6,
    "stretch": 1.0,
    "color": "#ff5600",
    "weight": "bold",
    "italic": true,
    "behind": true,
-   "text": "WE",
-   "x": 390.8,
-   "baseline": 130.2,
-   "width": 96.2
-  },
-  {
-   "n": 3,
-   "i": 0,
-   "size": 60.4,
-   "stretch": 1.0,
-   "color": "#ff5600",
-   "weight": "bold",
-   "italic": true,
-   "behind": true,
-   "text": "WEREN'T",
-   "x": 218.3,
-   "baseline": 202.6,
-   "width": 268.7
+   "text": "WE WEREN'T",
+   "x": 26.4,
+   "baseline": 564.8,
+   "width": 241.8
   }
  ],
  "2": [
@@ -1734,7 +1720,7 @@
    "italic": true,
    "behind": false,
    "text": "BIOHACKING",
-   "x": 113.9,
+   "x": 123.7,
    "baseline": 780.7,
    "width": 292.6
   }

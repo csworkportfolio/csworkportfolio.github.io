@@ -459,7 +459,8 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
                 times = [max(t, snap) for t in times]
             words_ = [x[2] for x in ph]
             key = " ".join(w.lower().rstrip(",.?!") for w in words_)
-            caps.append({"start": times[0], "times": times, "words": words_, "style": style})
+            said = [max(x[0], times[0]) for x in ph]   # when each word is said (never before its phrase starts)
+            caps.append({"start": times[0], "times": times, "said": said, "words": words_, "style": style})
     caps.sort(key=lambda c: c["start"])
     for k, c in enumerate(caps):
         key = " ".join(w.lower().rstrip(",.?!") for w in c["words"])
@@ -476,13 +477,13 @@ def main(mask_tool, sdr_tool, theme="wes", fonts=None):
     for k, c in enumerate(caps):
         c["end"] = caps[k + 1]["start"] if k + 1 < len(caps) else end
 
-    # each frame of the board as one screen: its words land when they are said (a word he dragged in from a
+    # each frame of the board as one screen: every word lands on its own, as it is said (a word he dragged in from a
     # neighboring caption keeps its own timing) and the screen lasts from its first caption to its last
     shows = []
     for m, ws in layout.items():
         for w in ws:
             c = caps[w["n"] - 1]
-            w["at"] = c["times"][w["i"]] if w["i"] >= 0 else c["start"]
+            w["at"] = c["said"][w["i"]] if w["i"] >= 0 else c["start"]
         ns = [int(m)] + [w["n"] for w in ws]
         shows.append((min(caps[n - 1]["start"] for n in ns), max(caps[n - 1]["end"] for n in ns), ws))
     (ROOT.parent / "storyboards").mkdir(exist_ok=True)
