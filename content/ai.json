@@ -604,17 +604,17 @@
         "outputs": [
           {
             "at": 585,
-            "kind": "LinkedIn clip",
+            "kind": "LinkedIn Clip",
             "shape": "4:5",
             "spec": "1080 by 1350, 48 seconds, captions on",
             "where": "LinkedIn feed",
-            "topic": "Resilience or prevention: which comes first?",
+            "topic": "Resilience or Prevention: Which Comes First?",
             "video": "assets/ai/episode-linkedin.mp4",
             "poster": "assets/ai/episode-linkedin.jpg"
           },
           {
             "at": 637,
-            "kind": "Quote card",
+            "kind": "Quote Card",
             "shape": "quote",
             "spec": "1080 by 1350, the line, his photo and name",
             "where": "LinkedIn, Instagram",
@@ -624,20 +624,21 @@
           },
           {
             "at": 715,
-            "kind": "Newsletter blurb",
+            "kind": "Newsletter Blurb",
             "shape": "text",
             "spec": "Three sentences and a link",
             "where": "Weekly newsletter",
-            "topic": "Assume breach starts with identity",
+            "topic": "Assume Breach Starts with Identity",
             "blurb": "Assume someone gets in, Kevin Mandia says: a spear-phished employee, a help desk that helps the wrong person, a bad hire. Then the job is stopping them from moving around inside, and that makes it an identity problem first. On Resilience Universe he explains why identity is the Achilles heel of assume breach."
           },
           {
             "at": 1050,
-            "kind": "Blog post",
+            "kind": "Blog Post",
             "shape": "doc",
             "spec": "An outline in three sections",
             "where": "Company blog",
-            "topic": "Three waves of threat intelligence",
+            "topic": "Three Waves of Threat Intelligence",
+            "image": "assets/ai/episode-blog.jpg",
             "outline": [
               "Signatures: antivirus asked you to send in what it missed",
               "Breach response: find the new attack at one company, so there's only one victim",
@@ -646,11 +647,11 @@
           },
           {
             "at": 1160,
-            "kind": "Short vertical",
+            "kind": "Short Vertical",
             "shape": "9:16",
             "spec": "Vertical audiogram, 21 seconds",
             "where": "Shorts, Reels",
-            "topic": "What an agent does in five minutes takes a human five days",
+            "topic": "What an Agent Does in Five Minutes Takes a Human Five Days",
             "video": "assets/ai/episode-vertical.mp4",
             "poster": "assets/ai/episode-vertical.jpg"
           }

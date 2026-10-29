@@ -1615,12 +1615,13 @@ def demo_fan(b, root):
         elif o.get("outline"):
             body = (f'<span class="fn-doc-t">{esc(o["topic"])}</span>'
                     f'<span class="fn-outline">{"".join(f"<span>{k + 1}. {esc(x)}</span>" for k, x in enumerate(o["outline"]))}</span>')
-            art, big = body, f'<div class="fn-big-doc">{body}</div>'
+            hero = f'<img class="fn-hero" src="{src(o["image"])}" alt="" loading="lazy">' if o.get("image") else ""   # the episode's art heads the post
+            art, big = hero + body, f'<div class="fn-big-doc">{hero}{body}</div>'
         else:
             body = f'<span class="fn-doc-t">{esc(o["topic"])}</span><span class="fn-blurb">{esc(o["blurb"])}</span>'
-            art = body + '<span class="fn-link">Listen to the episode</span>'   # inside the card's button: no link
+            art = body + '<span class="fn-link">Listen to the Episode</span>'   # inside the card's button: no link
             big = (f'<div class="fn-big-doc">{body}<a class="fn-link" href="{esc(ep["href"])}" target="_blank" rel="noopener">'
-                   f'Listen to the episode</a></div>')
+                   f'Listen to the Episode</a></div>')
         cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><button class="fn-open" type="button" aria-label="Open the {label}">'
                      f'<span class="fn-art">{art}</span></button>'
                      f'<p class="fn-kind"><span class="fn-num">{i + 1}</span>{esc(o["kind"])}<span class="fn-at">{mm(o["at"])}</span></p>'
@@ -1628,7 +1629,7 @@ def demo_fan(b, root):
         opens.append(f'<div class="fn-big fn-{esc(o["shape"].replace(":", "x"))}" data-i="{i}" hidden>{big}'
                      f'<p class="fn-big-cap"><span class="fn-num">{i + 1}</span>{esc(o["kind"])} \u00b7 {esc(o["spec"])} \u00b7 {mm(o["at"])} in the episode</p></div>')
     head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'
-            f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the episode</a></div>'
+            f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the Episode</a></div>'
             f'<div class="fn-wavebar" aria-hidden="true"><canvas class="fn-canvas"></canvas>{marks}</div>'
             f'<p class="fn-ep-len"><span>0:00</span><span>{mm(ep["length"])}</span></p></div>')
     sheet = (f'<div class="fn-sheet" hidden><button class="fn-close" type="button" aria-label="Close">'
