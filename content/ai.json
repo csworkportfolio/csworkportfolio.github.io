@@ -4,13 +4,13 @@
     "slug": "ai",
     "robots": "noindex, nofollow",
     "title": "AI in My Workflow | Christian Sanchez",
-    "description": "How Christian Sanchez, a digital marketer, uses AI across localization, editorial planning, video, repurposing, GEO and AEO, and the tools he builds with Claude Code.",
+    "description": "How Christian Sanchez, a digital marketer, uses AI across localization, editorial planning, video, repurposing, GEO and AEO, and the tools he builds with AI.",
     "hero": {
       "title": "AI in My Workflow",
-      "subtitle": "Localization, editorial planning, video, repurposing, GEO and AEO, and the tools I build with Claude Code",
+      "subtitle": "Localization, editorial planning, video, repurposing, GEO and AEO, and the tools I build with AI",
       "logos": []
     },
-    "lede": "I'm a digital marketer, and AI is part of how I work every day. I use it for the slow, repetitive parts so I have more time for the ideas, and I check everything it makes before it goes out. These are the places it shows up, from posts localized for 10+ regions to apps I built for myself.",
+    "lede": "I'm a digital marketer, and AI is part of how I work every day. I use it for the slow, repetitive parts so I have more time for the ideas, and I check everything it makes before it goes out. Day to day that means Claude Code, ChatGPT, Codex, Gemini and Copilot. These are the places it shows up, from posts localized for 10+ regions to apps I built for myself.",
     "blocks": [
       {
         "id": "machine",
@@ -56,6 +56,14 @@
           {
             "v": "7x",
             "t": "LinkedIn engagement at QAD Redzone, 2% to 14%"
+          },
+          {
+            "v": "3x",
+            "t": "Reels and YouTube reach at QAD Redzone, 20K to 60K"
+          },
+          {
+            "v": "33%",
+            "t": "More website traffic at QAD Redzone year over year, 56K to 75K sessions"
           },
           {
             "v": "70%",
