@@ -3783,3 +3783,7 @@ a.tl-cta:active { transform: scale(.96); }
 .sr-kw .sr-n { justify-self: end; }
 .sr-cited .sr-n { justify-self: end; }
 .sr-tops .sr-n { font-size: 17px; }
+/* the AI page's way back starts on the same left edge as its text and the Back to Top button, at every width */
+.ai-page .case-nav { padding-left: var(--gutter); }
+.ai-page .case-nav-link { align-self: flex-start; }
+@media (max-width: 720px) { .ai-page .case-nav { align-items: flex-start; } }
