@@ -3583,11 +3583,11 @@ html.theme-dark.can-dark .cl-window { box-shadow: 0 0 0 .5px rgba(255, 255, 255,
 /* Cohesity's greens for the accents, as its logo guidelines (July 2025) set them: #009e60 on light backgrounds,
    the bright #00dd68 on dark ones (digital only). Numbers on the green are white on the deep green and black on the
    bright one, as Cohesity sets its bright green buttons; links take a deeper green so small text stays readable on white */
-.ai-fan { --fn-on: #009e60; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; --fn-ink: #fff; }
+.ai-fan { --fn-on: #fc0080; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; --fn-ink: #fff; }
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light).can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; --fn-ink: #000; }
+  html:not(.theme-light).can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; --fn-ink: #000; }
 }
-html.theme-dark.can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; --fn-ink: #000; }
+html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; --fn-ink: #000; }
 .ai-fan :is(.fn-ep-a, .fn-link) { color: var(--fn-link); }
 .ai-fan .fn-ep { margin-top: 14px; }   /* room under the sound and pause buttons */
 :root[data-os="ios"] .ai-fan .fn-ep { margin-top: 22px; }
@@ -3936,7 +3936,7 @@ html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
 /* the episode demo's caption: centered at the foot of its box, clear of the cards */
 .ai-fan .ai-stage { padding-bottom: 26px; }
 .ai-fan .ai-live { margin-top: 34px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-/* Cohesity's second accent, its brand magenta (#FC0080 on cohesity.com): the time a format came from, and the
+/* Cohesity's second accent, its brand magenta (#FC0080 on cohesity.com): the played part of the waveform, the time a format came from, and the
    arrows along each format's path */
 .ai-fan { --fn-mag: #fc0080; }
 .ai-fan .ai-live[data-step]::before { color: var(--fn-mag); }
