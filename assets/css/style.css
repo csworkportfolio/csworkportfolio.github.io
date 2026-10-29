@@ -560,6 +560,7 @@ html.lb-page .lightbox:not(.no-caption) .lb-prev, html.lb-page .lightbox:not(.no
   .case-sub { font-size: 17px; }
 
   .prose p, .cat-text p:not(.kicker-italic):not(.tools) { font-size: 17px; }
+  .prose .ai-step { font-size: 17px; }   /* the AI page's step pills keep the paragraph's size */
   .cat-text { padding-bottom: 56px; }  /* phones: the Wix mobile gap above each gallery (~56px at phone scale) */
   .prose .lede { font-size: 16px; }
 
@@ -3655,12 +3656,13 @@ a.tl-cta:active { transform: scale(.96); }
 .ai-page .ai-head + .ai-machine { margin-top: 32px; }
 
 /* the loop step a section shows, above its heading */
-.prose .ai-step { display: flex; width: fit-content; align-items: center; gap: 7px; height: 26px; margin: 0 0 10px; padding: 0 11px 0 3px;
-  border-radius: 13px; font-size: 13px; font-weight: 600; letter-spacing: .01em; text-decoration: none; color: var(--ai-blue);
+/* one blue for every step, the loop's own, with its text the size of the paragraph below */
+.prose .ai-step { display: flex; width: fit-content; align-items: center; gap: 8px; height: 32px; margin: 0 0 12px; padding: 0 14px 0 4px;
+  border-radius: 16px; font-size: 18px; font-weight: 600; text-decoration: none; color: var(--ai-blue);
   background: color-mix(in srgb, currentColor 10%, transparent); transition: background .2s, transform .2s var(--ease); }
 .prose .ai-step:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
 .prose .ai-step:active { transform: scale(.97); }
-.ai-step-n { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; font-size: 11px; color: var(--paper); background: var(--sec-tint, var(--ai-blue)); }
+.ai-step-n { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: 13px; color: #fff; background: var(--ai-blue); }
 /* the episode demo's caption: centered at the foot of its box, clear of the cards */
 .ai-fan .ai-stage { padding-bottom: 26px; }
 .ai-fan .ai-live { margin-top: 34px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
@@ -3786,7 +3788,6 @@ a.tl-cta:active { transform: scale(.96); }
   html.can-dark #localize { --sec-tint: #00dd68; }   /* Cohesity's bright green on dark */
   html.can-dark #geo[data-case="nike"] { --sec-tint: #f5f5f7; }
 }
-.ai-sec .ai-step { color: var(--sec-tint, var(--ai-blue)); }
 .prose.ai-sec .ai-links a { color: var(--sec-tint, var(--ai-blue)); }
 /* the Resilience Universe demo's episode bar and format cards as frosted glass (blur, a color lift, a bright
    hairline at the top edge); no glow behind them */
@@ -3801,15 +3802,6 @@ a.tl-cta:active { transform: scale(.96); }
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 .5px rgba(255, 255, 255, .08), 0 14px 34px -14px rgba(0, 0, 0, .6); }
 }
 @media (prefers-reduced-transparency: reduce) { .ai-fan :is(.fn-ep, .fn-card) { background: var(--ai-win); -webkit-backdrop-filter: none; backdrop-filter: none; } }
-/* Nike's step label in silver with a soft shine: a light band sweeps across it now and then (graphite on light) */
-#geo[data-case="nike"] .ai-step-w { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
-  background-image: linear-gradient(105deg, #55555a 0%, #8e8e93 38%, #d1d1d6 50%, #8e8e93 62%, #55555a 100%);
-  background-size: 260% 100%; background-position: 100% 0; animation: nike-shine 7s ease-in-out infinite; }
-@media (prefers-color-scheme: dark) {
-  html.can-dark #geo[data-case="nike"] .ai-step-w { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
-}
-@keyframes nike-shine { 0%, 62% { background-position: 100% 0; } 92%, 100% { background-position: 0 0; } }
-@media (prefers-reduced-motion: reduce) { #geo[data-case="nike"] .ai-step-w { animation: none; background-position: 50% 0; } }
 /* the "Step 1 of 5" over each demo's caption takes its section's brand color too */
 .ai-board { --sec-tint: #d71920; }
 .ai-cut { --sec-tint: #ff5600; }
@@ -3827,6 +3819,7 @@ a.tl-cta:active { transform: scale(.96); }
 @media (prefers-color-scheme: dark) {
   html.can-dark .ai-geo[data-case="nike"] .ai-live[data-step]::before { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
 }
+@keyframes nike-shine { 0%, 62% { background-position: 100% 0; } 92%, 100% { background-position: 0 0; } }
 @media (prefers-reduced-motion: reduce) { .ai-geo[data-case="nike"] .ai-live[data-step]::before { animation: none; background-position: 50% 0; } }
 
 /* the AI page's demos held in 3D like the category carousels: each window leans toward the pointer (main.js), not
