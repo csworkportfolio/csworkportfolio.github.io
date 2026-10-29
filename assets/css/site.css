@@ -2762,6 +2762,8 @@ html.theme-dark.can-dark .ai-page {
 .ai-btn .i-play { display: none; fill: currentColor; stroke: none; }
 .is-paused .ai-btn .i-pause { display: none; }
 .is-paused .ai-btn .i-play { display: block; }
+.ai-reset:active svg { transform: rotate(-90deg); }
+.ai-reset svg { transition: transform .3s var(--ease); }
 @media (prefers-reduced-motion: reduce) { .ai-btn { display: none; } }
 /* the sound button, beside the pause button */
 .ai-sound { right: 54px; }
@@ -3698,7 +3700,7 @@ html.theme-dark.can-dark .geo-nike { --ai-blue: #f5f5f5; }
   html.theme-dark.can-dark .geo-redzone { --ai-blue: #ff453a; }
 /* QAD Redzone's measuring: a copy of Semrush's SEO dashboard, values hidden as soft bars */
 .geo-sr { margin-top: 20px; transition: opacity .5s, transform .5s var(--ease); }
-.ai-geo.is-fresh .geo-sr:not(.is-on) .ai-window > :not(.ai-bar) { opacity: .45; }   /* the card stays solid, like the windows above */
+.ai-geo.is-fresh .geo-sr:not(.is-on) .ai-window > :not(.ai-bar) { opacity: .2; }   /* the card stays solid, like the windows above */
 .geo-sr .ai-window > :not(.ai-bar) { transition: opacity .5s; }
 .sr-window { --sr-blue: #006dca; --sr-line: #e4e7eb; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; }
 @media (prefers-color-scheme: dark) {
@@ -3792,9 +3794,9 @@ html.theme-dark.can-dark .geo-nike .geo-thumb .gt-fill { opacity: 1; }
 .geo-src { margin-top: 20px; }
 .geo-fields { list-style: none; margin: 0; padding: 6px 18px 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .geo-fields li { display: grid; gap: 4px; padding-top: 10px; font-size: 13px; line-height: 1.4; transition: opacity .4s; }
-/* everything waiting to play stays readable, dimmed, and fills in as the example reaches it */
-.ai-geo.is-fresh :is(.geo-results li, .geo-answer, .geo-cite, .geo-fields li):not(.is-on) { opacity: .45; }
-.geo-typed[data-rest]::after { content: attr(data-rest); opacity: .45; }
+.ai-geo.is-fresh .geo-results li:not(.is-on) { opacity: 0; transform: translateY(4px); }
+.ai-geo.is-fresh .geo-answer:not(.is-on) { opacity: 0; transform: translateY(4px); }
+.ai-geo.is-fresh .geo-cite:not(.is-on), .ai-geo.is-fresh .geo-fields li:not(.is-on) { opacity: .2; }
 
 /* 6. the tools */
 .ai-tools { margin-top: 40px; }
@@ -4098,10 +4100,8 @@ html.theme-dark.can-dark .ai-geo[data-case="nike"] .ai-live[data-step]::before {
   }
 }
 
-/* paused, the search and the episode demos show everything at once, nothing grayed out or waiting to appear */
-.ai-geo.is-fresh.is-paused .geo-results li:not(.is-on), .ai-geo.is-fresh.is-paused .geo-answer:not(.is-on),
-.ai-geo.is-fresh.is-paused .geo-cite:not(.is-on), .ai-geo.is-fresh.is-paused .geo-fields li:not(.is-on),
-.ai-geo.is-fresh.is-paused .geo-sr:not(.is-on) .ai-window > :not(.ai-bar), .ai-fan.is-fresh.is-paused .fn-card:not(.is-on) { opacity: 1; transform: none; }
+/* paused, the episode demo shows everything at once, nothing grayed out or waiting to appear */
+.ai-fan.is-fresh.is-paused .fn-card:not(.is-on) { opacity: 1; transform: none; }
 
 /* the opened piece: its name and time small, then its path large (how it gets made), no number badge */
 .fn-big-cap { max-width: 720px; display: grid; gap: 6px; }

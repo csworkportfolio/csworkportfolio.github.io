@@ -905,8 +905,8 @@
       fig.dataset.case = data.cases[k].id;   // and so does its caption's step label
       picks.forEach((p, i) => p.setAttribute("aria-pressed", String(i === k)));
     };
-    // the picked example plays through (the keywords typed and their results, the question and its answer, then the
-    // page fields both of them read) and plays again; only the switch changes which example it is
+    // the picked example plays through once (the keywords typed and their results, the question and its answer, then
+    // the page fields both of them read) and stays whole; the reset button or the switch plays it from the start
     // the caption in the box: what each step shows, with its step number above it
     const live = fig.querySelector(".geo-live");
     const say = (k, n) => {
@@ -921,15 +921,12 @@
       const results = [...c.querySelectorAll(".geo-results li")], fields = [...c.querySelectorAll(".geo-fields li")];
       const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite"), sr = c.querySelector(".geo-sr");
       const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
-      // the search and the question show dimmed from the start and fill in as they are typed
+      // typed a few characters at a time; a reset stops it where it is
       const type = async (el, speed) => {
         const chars = [...el.dataset.text];
-        for (let i = 0; i < chars.length; i++) {
-          el.textContent = chars.slice(0, i + 1).join(""); el.dataset.rest = chars.slice(i + 1).join("");
-          await wait(speed);
-        }
+        for (let i = 0; i < chars.length; i++) { el.textContent = chars.slice(0, i + 1).join(""); await wait(speed); }
       };
-      [kw, q].forEach((t) => { t.textContent = ""; t.dataset.rest = t.dataset.text; });
+      kw.textContent = ""; q.textContent = "";
       [...results, ...fields, answer, cite, sr].forEach((el) => el && el.classList.remove("is-on"));
       say(k, 0);
       await wait(600);
@@ -949,22 +946,13 @@
       say(k, 4);
       for (const f of fields) { await wait(500); f.classList.add("is-on"); }
       if (sr) { await wait(2400); say(k, 5); sr.classList.add("is-on"); }   // then where it was measured
-      await wait(5000);
     }
-    async function loop() {
-      for (;;) {
-        const g = gen;
-        try { await play(now, g); } catch (e) { /* a pick started another example */ }
-      }
-    }
-    picks.forEach((p, k) => p.addEventListener("click", () => { gen++; show(k); }));
-    // paused, the example shows whole: the search and the question typed out (the rest is shown by the CSS)
-    const pause = fig.querySelector(".ai-toggle");
-    pause && pause.addEventListener("click", () => setTimeout(() => {   // after the button's own handler has paused it
-      if (fig.classList.contains("is-paused")) cases[now].querySelectorAll(".geo-typed").forEach((t) => { t.textContent = t.dataset.text; t.dataset.rest = ""; });
-    }));
+    const run = () => { const g = ++gen; play(now, g).catch(() => { /* a reset or a pick started it again */ }); };
+    picks.forEach((p, k) => p.addEventListener("click", () => { show(k); if (!still) run(); }));
+    const reset = fig.querySelector(".ai-reset");
+    reset && reset.addEventListener("click", run);
     show(0);
-    if (!still) { fig.classList.add("is-fresh"); wire(d, loop); }
+    if (!still) { fig.classList.add("is-fresh"); wire(d, run); }   // it first plays when it comes into view
   }
 
   // ---------- 6. the tools: each screen tour plays while it is on screen ----------

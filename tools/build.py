@@ -1212,6 +1212,8 @@ AI_SOUND = ('<button class="ai-btn ai-sound" type="button" aria-pressed="false" 
             '<g class="i-on"><path class="i-spk" d="M3 9.5h3.5L11 5.5v13l-4.5-4H3z"/><path d="M14.5 9a4 4 0 0 1 0 6M17 6.5a7.5 7.5 0 0 1 0 11"/></g></svg></button>')
 AI_PAUSE = ('<button class="ai-btn ai-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
             '<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>')
+AI_RESET = ('<button class="ai-btn ai-reset" type="button" aria-label="Play again from the start"><svg viewBox="0 0 24 24" aria-hidden="true">'
+            '<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 3.5v4h4"/></svg></button>')
 AI_SPARK = ('<svg class="ai-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7'
             '-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z"/></svg>')
 
@@ -1229,7 +1231,7 @@ def front_switch(first):
             '<span>Auto</span></button>')
 
 
-def ai_figure(b, label, inner, pause=True):
+def ai_figure(b, label, inner, pause=True):   # pause="reset": a demo that plays once gets a reset button instead
     data = {k: v for k, v in b.items() if k not in ("h", "p", "id", "note", "link", "demo")}
     note = f'<figcaption class="ai-note">{esc(b["note"])}</figcaption>' if b.get("note") else ""
     nav = '<nav class="hb-chapters"'
@@ -1238,7 +1240,7 @@ def ai_figure(b, label, inner, pause=True):
         note = ""
     return (f'<figure class="wrap ai-demo ai-{b["demo"]}" data-demo="{b["demo"]}" aria-label="{esc(label)}">'
             f'<script type="application/json" class="ai-data">{json_script(data)}</script>'
-            f'<div class="ai-stage">{inner}{AI_PAUSE if pause else ""}</div>{note}</figure>')
+            f'<div class="ai-stage">{inner}{AI_RESET if pause == "reset" else AI_PAUSE if pause else ""}</div>{note}</figure>')
 
 
 HB_ICONS = {   # line icons for the Hub copy, drawn on a 24 grid
@@ -1759,7 +1761,7 @@ def demo_geo(b):
     fine = "".join(f'<p class="geo-fine" data-case="{k}"{"" if k == 0 else " hidden"}>{esc(c.get("fine") or b.get("note", ""))}</p>'
                    for k, c in enumerate(b["cases"]))   # each example's own note, shown with it
     return ai_figure({**b, "note": None}, "Illustration: a Nike product and a QAD Redzone FAQ, each found by a keyword search and by an AI answer",
-                     switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>' + fine)
+                     switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>' + fine, pause="reset")
 
 
 def demo_tools(b, root):
