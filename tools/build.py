@@ -1690,10 +1690,10 @@ def semrush(c):
             + ai_window("Semrush  \u00b7  SEO Dashboard: QAD Redzone",
                         '<div class="sr-grid">'
                         '<section class="sr-box"><p class="sr-tab sr-tab-ai">AI Search</p>'
-                        f'<div class="sr-tot"><p><span>AI Visibility</span><span class="sr-gauge"></span>{v}</p><p><span>Mentions</span>{v}</p><p><span>Cited pages</span>{v}</p></div>'
+                        f'<div class="sr-tot"><p><span>AI Visibility</span><span class="sr-gauge"></span>{v}</p><p><span>Mentions</span>{v}</p><p><span>Cited Pages</span>{v}</p></div>'
                         f'<ul class="sr-ai">{ai_rows}'
                         '<li><span class="sr-src sr-gem"></span>Gemini<i class="sr-soon">soon</i></li></ul>'
-                        f'<p class="sr-h sr-cited-h">Top cited pages</p><ul class="sr-cited">{cited}</ul></section>'
+                        f'<p class="sr-h sr-cited-h">Top Cited Pages</p><ul class="sr-cited">{cited}</ul></section>'
                         f'<section class="sr-box"><p class="sr-tab sr-tab-seo">SEO</p><ul class="sr-seo">{seo}</ul></section>'
                         f'{ranking(v)}</div>', " sr-window")
             + f'<p class="geo-k sr-note">{esc(c["platform"])}</p></div>')
@@ -1729,12 +1729,12 @@ def demo_geo(b):
             page += (f'<img class="geo-page geo-page-dark" src="{ROOT_REL}{esc(c["page_dark"])}?v={asset_version(c["page_dark"])}" '
                      f'alt="{esc(c["page_alt"])}" loading="lazy">')
         fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(f)}</span><span>{esc(v)}</span></li>' for f, v in c["fields"]) + "</ul>"
-        search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
+        search = ai_window("Search Engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
                            f'<span class="geo-typed" data-text="{esc(c["search"])}">{esc(c["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
-        ask = ai_window("AI assistant", f'<div class="geo-in geo-ask"><span class="geo-typed" data-text="{esc(c["ask"])}">{esc(c["ask"])}</span></div>'
+        ask = ai_window("AI Assistant", f'<div class="geo-in geo-ask"><span class="geo-typed" data-text="{esc(c["ask"])}">{esc(c["ask"])}</span></div>'
                         f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
         cases.append(f'<div class="geo-case geo-{esc(c["id"])}" data-case="{k}"{"" if k == 0 else " hidden"}>'
-                     f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A question</p>{search}{ask}</div>'
+                     f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A Question</p>{search}{ask}</div>'
                      f'<div class="geo-src">{ai_window(c["source"], page + fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
     switch = ('<div class="hb-views geo-switch" role="group" aria-label="Which example">'
               + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'

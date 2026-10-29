@@ -924,8 +924,8 @@
           {
             "id": "nike",
             "label": "Nike",
-            "source": "Nike.com product page: what both of them read",
-            "cite": "From the product page",
+            "source": "Nike.com Product Page: What Both of Them Read",
+            "cite": "From the Product Page",
             "search": "jannik sinner nike shirt",
             "ask": "What should I wear to play tennis on a hot day?",
             "thumbs": [
@@ -941,15 +941,15 @@
             "answer": "For heat, pick a light top that pulls sweat away from your skin. The Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt is made for that.",
             "fields": [
               [
-                "Alt text",
+                "Alt Text",
                 "Man wearing the Jannik Sinner NikeCourt Dri-FIT graphic tennis T-shirt in cream with a red print, front view, with green shorts"
               ],
               [
-                "Product tags",
+                "Product Tags",
                 "tennis, men's, Dri-FIT, graphic tee, NikeCourt, Jannik Sinner, cream"
               ],
               [
-                "Written for",
+                "Written For",
                 "Someone who knows the shirt, and someone who only roughly knows what they need"
               ]
             ],
@@ -960,7 +960,7 @@
           {
             "id": "redzone",
             "label": "QAD Redzone",
-            "source": "QAD Redzone FAQ and blog: what both of them read",
+            "source": "QAD Redzone FAQ and Blog: What Both of Them Read",
             "cite": "From the FAQ",
             "platform": "Semrush, where I tracked it at QAD Redzone. The numbers are hidden.",
             "search": "OEE software manufacturing",
@@ -986,7 +986,7 @@
                 "One question per post, answered in the first lines"
               ],
               [
-                "Written for",
+                "Written For",
                 "Someone searching a keyword, and someone asking an AI a full question"
               ]
             ]
