@@ -3795,3 +3795,38 @@ a.tl-cta:active { transform: scale(.96); }
 .ai-localize .ai-stage > .hb-window { margin-top: 14px; }   /* clear of the Desktop/Mobile switch and pause, as in the other demos */
 /* the AI page's demo bubbles in the loop cards' darker gray (#0F0F0F), in dark mode */
 @media (prefers-color-scheme: dark) { html.can-dark .ai-page .ai-stage { background: #0f0f0f; } }
+/* each section's step label (and its links) in the color of the brand it shows; the search section's follows the
+   Nike / QAD Redzone switch (ai-page.js sets data-case) */
+#editorial { --sec-tint: #d71920; }   /* QAD Redzone red */
+#video { --sec-tint: #ff5600; }       /* Mars Men orange, from the video's captions */
+#repurpose { --sec-tint: #fc0080; }   /* Cohesity magenta */
+#localize { --sec-tint: #009e60; }    /* Cohesity green on light */
+#geo[data-case="nike"] { --sec-tint: #111; }
+#geo[data-case="redzone"] { --sec-tint: #d71920; }
+@media (prefers-color-scheme: dark) {
+  html.can-dark #editorial, html.can-dark #geo[data-case="redzone"] { --sec-tint: #ff453a; }
+  html.can-dark #localize { --sec-tint: #00dd68; }   /* Cohesity's bright green on dark */
+  html.can-dark #geo[data-case="nike"] { --sec-tint: #f5f5f7; }
+}
+.ai-sec .ai-step { color: var(--sec-tint, var(--ai-blue)); }
+.prose.ai-sec .ai-links a { color: var(--sec-tint, var(--ai-blue)); }
+/* the Resilience Universe demo in liquid glass: a soft glow of Cohesity's green and magenta in its box, and the
+   episode bar and format cards as frosted glass over it (blur, a color lift, a bright hairline at the top edge) */
+.ai-fan .ai-stage { position: relative; isolation: isolate; }
+.ai-fan .ai-stage::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  clip-path: inset(0 round 28px);
+  background: radial-gradient(38% 46% at 16% 22%, rgba(0, 158, 96, .32), transparent 70%),
+              radial-gradient(34% 44% at 86% 78%, rgba(252, 0, 128, .22), transparent 70%),
+              radial-gradient(30% 36% at 62% 18%, rgba(0, 221, 104, .14), transparent 70%);
+  filter: blur(28px); }
+.ai-fan :is(.fn-ep, .fn-card) {
+  background: rgba(255, 255, 255, .58);
+  -webkit-backdrop-filter: blur(26px) saturate(1.8); backdrop-filter: blur(26px) saturate(1.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), inset 0 0 0 .5px rgba(255, 255, 255, .45), 0 10px 30px -12px rgba(0, 0, 0, .25); }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .ai-fan .ai-stage::before { opacity: .9; }
+  html.can-dark .ai-fan :is(.fn-ep, .fn-card) {
+    background: rgba(40, 40, 44, .5);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 .5px rgba(255, 255, 255, .08), 0 14px 34px -14px rgba(0, 0, 0, .6); }
+}
+@media (prefers-reduced-transparency: reduce) { .ai-fan :is(.fn-ep, .fn-card) { background: var(--ai-win); -webkit-backdrop-filter: none; backdrop-filter: none; } }

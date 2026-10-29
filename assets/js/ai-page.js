@@ -888,6 +888,8 @@
       now = k;
       cases.forEach((c, i) => { c.hidden = i !== k; });
       fig.querySelectorAll(".geo-fine").forEach((f) => { f.hidden = +f.dataset.case !== k; });
+      const sec = document.getElementById("geo");   // the section's label takes the picked brand's color
+      if (sec) sec.dataset.case = data.cases[k].id;
       picks.forEach((p, i) => p.setAttribute("aria-pressed", String(i === k)));
     };
     // the picked example plays through (the keywords typed and their results, the question and its answer, then the
@@ -935,6 +937,7 @@
       }
     }
     picks.forEach((p, k) => p.addEventListener("click", () => { gen++; show(k); }));
+    show(0);
     if (!still) { fig.classList.add("is-fresh"); wire(d, loop); }
   }
 
