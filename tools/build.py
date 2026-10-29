@@ -1791,7 +1791,7 @@ def render_ai(page, site, media):
     root = "../"
     hero = page["hero"]
     parts = [f'''<script src="{root}assets/js/ai-page.js?v={asset_version("assets/js/ai-page.js")}" defer></script>
-<header class="wrap prose ai-head">
+<header class="wrap cat-text is-lead is-first ai-head">
   <h1>{esc(hero["title"])}</h1>
   <p class="ai-sub">{esc(hero["subtitle"])}</p>
 </header>
