@@ -1805,7 +1805,7 @@ def ai_block(b, root):
     if b.get("step"):   # which step of the loop at the top this section shows: a pill in its section's color, back to the loop
         n, name = [x.strip() for x in b["step"].split("\u00b7")]
         words = words.replace("<h2>", f'<a class="ai-step" href="#machine" aria-label="Step {esc(n)} of the loop, {esc(name)}: back to the loop">'
-                                       f'<span class="ai-step-n">{esc(n)}</span><span class="ai-step-w">{esc(name)}</span></a><h2>', 1)
+                                       f'<span>{esc(n)}</span><span>{esc(name)}</span></a><h2>', 1)
     kind = b.get("demo")
     if not kind:
         return words

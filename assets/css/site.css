@@ -3907,13 +3907,16 @@ html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
 .ai-page .ai-head + .ai-machine { margin-top: 32px; }
 
 /* the loop step a section shows, above its heading */
-/* one blue for every step, the loop's own, with its text the size of the paragraph below */
-.prose .ai-step { display: flex; width: fit-content; align-items: center; gap: 8px; height: 32px; margin: 0 0 12px; padding: 0 14px 0 4px;
-  border-radius: 16px; font-size: 18px; font-weight: 600; text-decoration: none; color: var(--ai-blue);
-  background: color-mix(in srgb, currentColor 10%, transparent); transition: background .2s, transform .2s var(--ease); }
-.prose .ai-step:hover { background: color-mix(in srgb, currentColor 16%, transparent); }
+/* one solid blue for every step, the loop's own, with its text the size of the paragraph below */
+.prose .ai-step { --step: #0071e3; display: flex; width: fit-content; align-items: center; gap: 6px; height: 32px; margin: 0 0 12px; padding: 0 14px;
+  border-radius: 16px; font-size: 18px; font-weight: 600; text-decoration: none; color: #fff;
+  background: var(--step); transition: background .2s, transform .2s var(--ease); }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .prose .ai-step { --step: #0a84ff; }
+}
+html.theme-dark.can-dark .prose .ai-step { --step: #0a84ff; }   /* Apple's dark-mode blue keeps white text readable */
+.prose .ai-step:hover { background: color-mix(in srgb, var(--step) 88%, #000); }
 .prose .ai-step:active { transform: scale(.97); }
-.ai-step-n { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: 13px; color: #fff; background: var(--ai-blue); }
 /* the episode demo's caption: centered at the foot of its box, clear of the cards */
 .ai-fan .ai-stage { padding-bottom: 26px; }
 .ai-fan .ai-live { margin-top: 34px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
