@@ -1200,8 +1200,11 @@ def scene(b, root):
 # ai-page.js then plays it while it is on screen. Its data rides along as JSON for the script.
 
 AI_SOUND = ('<button class="ai-btn ai-sound" type="button" aria-pressed="false" aria-label="Turn sound on">'
-            '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>'
-            '<path class="i-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="i-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>')
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><defs><mask id="ai-snd-cut"><rect width="24" height="24" fill="#fff"/>'
+            '<path d="M3.5 20.5 20.5 3.5" stroke="#000" stroke-width="5"/></mask></defs>'   # muted: the speaker and its waves, struck through
+            '<g class="i-off"><g mask="url(#ai-snd-cut)"><path class="i-spk" d="M3 9.5h3.5L11 5.5v13l-4.5-4H3z"/>'
+            '<path d="M14.5 9a4 4 0 0 1 0 6M17 6.5a7.5 7.5 0 0 1 0 11"/></g><path d="M3.5 20.5 20.5 3.5"/></g>'
+            '<g class="i-on"><path class="i-spk" d="M3 9.5h3.5L11 5.5v13l-4.5-4H3z"/><path d="M14.5 9a4 4 0 0 1 0 6M17 6.5a7.5 7.5 0 0 1 0 11"/></g></svg></button>')
 AI_PAUSE = ('<button class="ai-btn ai-toggle" type="button" aria-label="Pause animation"><svg viewBox="0 0 24 24" aria-hidden="true">'
             '<path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l11-6.5z"/></svg></button>')
 AI_SPARK = ('<svg class="ai-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7'

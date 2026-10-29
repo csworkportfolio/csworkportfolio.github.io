@@ -269,8 +269,11 @@ function start(THREE) {
   // on, and again off
   const sound = document.createElement("span");
   sound.className = "n3-sound"; sound.setAttribute("aria-hidden", "true");
-  sound.innerHTML = '<svg viewBox="0 0 24 24"><path class="spk" d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>'
-    + '<path class="on" d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>';
+  // muted: the speaker and its waves, struck through with a gap around the line
+  const spk = '<path class="spk" d="M3 9.5h3.2L11 5.5v13l-4.8-4H3z"/><path d="M14.5 9a4.2 4.2 0 0 1 0 6M17 6.5a7.6 7.6 0 0 1 0 11"/>';
+  sound.innerHTML = '<svg viewBox="0 0 24 24"><defs><mask id="n3-snd-cut"><rect width="24" height="24" fill="#fff"/>'
+    + '<path d="M3.5 20.5 20.5 3.5" stroke="#000" stroke-width="5"/></mask></defs>'
+    + `<g class="on">${spk}</g><g class="off"><g mask="url(#n3-snd-cut)">${spk}</g><path d="M3.5 20.5 20.5 3.5"/></g></svg>`;
   const soundIdx = sets.findIndex((x) => x.sound);
   const soundPill = scene.querySelectorAll(".sc-switch button[data-set]")[soundIdx];
   const soundName = soundPill ? soundPill.textContent : "";
