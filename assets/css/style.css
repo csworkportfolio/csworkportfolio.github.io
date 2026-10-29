@@ -3768,3 +3768,8 @@ a.tl-cta:active { transform: scale(.96); }
 .ai-geo .ai-window > .ai-bar { display: none; }
 .ai-geo .geo-src .ai-window > .ai-bar { display: flex; }   /* the product page keeps its window bar, with its name in it */
 .geo-src > .geo-k, .geo-sr > .geo-k { margin-bottom: 8px; }
+
+/* the search demo's caption, in its box under the windows, as in the other demos */
+.ai-geo .geo-live { margin: 20px 0 0; padding-left: 0; text-align: center; min-height: 2.9em; font-size: 15px; line-height: 1.45; transition: opacity .25s; }
+.ai-geo .geo-live.is-fading { opacity: 0; }
+@media (max-width: 720px) { .ai-geo .geo-live { font-size: 14px; } }

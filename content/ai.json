@@ -955,7 +955,14 @@
             ],
             "page": "assets/ai/nike-pdp.jpg",
             "page_alt": "The Nike.com product page for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt",
-            "page_dark": "assets/ai/nike-pdp-dark.jpg"
+            "page_dark": "assets/ai/nike-pdp-dark.jpg",
+            "says": [
+              "Someone who knows what they want types a few keywords.",
+              "The results match the product's name and tags.",
+              "Someone less sure asks an AI assistant a full question.",
+              "The answer comes from the same product page.",
+              "Both read these fields: the alt text, the product tags, and who it's written for."
+            ]
           },
           {
             "id": "redzone",
@@ -989,6 +996,14 @@
                 "Written For",
                 "Someone searching a keyword, and someone asking an AI a full question"
               ]
+            ],
+            "says": [
+              "Someone searches a few keywords.",
+              "The results are FAQ and blog pages, titled the way people search.",
+              "Someone else asks an AI assistant the full question.",
+              "The answer comes straight from the FAQ.",
+              "Both read the same pages: the question as the heading, a short answer first.",
+              "Semrush tracked how the pages did in search and AI answers. The numbers are hidden."
             ]
           }
         ],

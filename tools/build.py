@@ -1741,8 +1741,9 @@ def demo_geo(b):
     switch = ('<div class="hb-views geo-switch" role="group" aria-label="Which example">'
               + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'
                         for k, c in enumerate(b["cases"])) + "</div>")
+    # a caption in the box says what is happening at each step, as the other demos do (ai-page.js)
     return ai_figure(b, "Illustration: a Nike product and a QAD Redzone FAQ, each found by a keyword search and by an AI answer",
-                     switch + "".join(cases))
+                     switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>')
 
 
 def demo_tools(b, root):

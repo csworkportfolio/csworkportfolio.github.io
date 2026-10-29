@@ -881,7 +881,7 @@
 
   // ---------- 5. GEO and AEO ----------
   function geo(fig) {
-    const d = demo(fig);
+    const d = demo(fig), data = parse(fig);
     const cases = [...fig.querySelectorAll(".geo-case")], picks = [...fig.querySelectorAll(".geo-switch button")];
     let now = 0, gen = 0;
     const show = (k) => {
@@ -891,6 +891,14 @@
     };
     // the picked example plays through (the keywords typed and their results, the question and its answer, then the
     // page fields both of them read) and plays again; only the switch changes which example it is
+    // the caption in the box: what each step shows, with its step number above it
+    const live = fig.querySelector(".geo-live");
+    const say = (k, n) => {
+      const all = data.cases[k].says, t = all[n];
+      if (!live || live.textContent === t) return;
+      live.classList.add("is-fading");
+      setTimeout(() => { live.textContent = t; live.dataset.step = `Step ${n + 1} of ${all.length}`; live.classList.remove("is-fading"); }, 250);
+    };
     async function play(k, g) {
       const c = cases[k];
       const [kw, q] = c.querySelectorAll(".geo-typed");
@@ -899,17 +907,24 @@
       const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
       kw.textContent = ""; q.textContent = "";
       [...results, ...fields, answer, cite, sr].forEach((el) => el && el.classList.remove("is-on"));
+      say(k, 0);
       await wait(600);
       await d.type(kw, kw.dataset.text, 70);
+      say(k, 1);
       for (const r of results) { await wait(220); r.classList.add("is-on"); }
-      await wait(800);
+      await wait(1800);
+      say(k, 2);
+      await wait(400);
       await d.type(q, q.dataset.text, 38);
       await wait(500);
+      say(k, 3);
       answer.classList.add("is-on");
       await wait(900);
       cite.classList.add("is-on");
+      await wait(1400);
+      say(k, 4);
       for (const f of fields) { await wait(500); f.classList.add("is-on"); }
-      if (sr) { await wait(700); sr.classList.add("is-on"); }   // then where it was measured
+      if (sr) { await wait(2400); say(k, 5); sr.classList.add("is-on"); }   // then where it was measured
       await wait(5000);
     }
     async function loop() {
