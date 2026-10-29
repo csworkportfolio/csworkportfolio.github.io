@@ -3811,16 +3811,6 @@ html.theme-dark.can-dark .geo-nike .geo-thumb .gt-fill { opacity: 1; }
 .ai-geo.is-fresh .geo-results li:not(.is-on) { opacity: 0; transform: translateY(4px); }
 .ai-geo.is-fresh :is(.geo-ask, .geo-answer, .geo-cite):not(.is-on) { opacity: 0; transform: translateY(6px) scale(.6); }
 .ai-geo.is-fresh .geo-fields li:not(.is-on) { opacity: .2; }
-/* when the results or the answer land, the part of the page they came from glows for a moment (ai-page.js) */
-.geo-fields li { border-radius: 8px; outline: 2px solid transparent; outline-offset: 4px; }
-.geo-fields li.geo-glow { animation: geo-glow 2.2s ease-out; }
-@keyframes geo-glow {
-  0%, 55% { opacity: 1; outline-color: var(--ai-blue); background: color-mix(in srgb, var(--ai-blue) 8%, transparent); }
-}
-.geo-page-wrap { position: relative; }
-.geo-page-wrap::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 3px var(--ai-blue); opacity: 0; }
-.geo-page-wrap.geo-glow::after { animation: geo-glow-page 2.2s ease-out; }
-@keyframes geo-glow-page { 0%, 55% { opacity: 1; } }
 
 /* 6. the tools */
 .ai-tools { margin-top: 40px; }
