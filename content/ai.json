@@ -545,7 +545,7 @@
             "label": "B-Roll",
             "from": 17.23,
             "to": 25.1,
-            "say": "ChatGPT helped me find the B-roll on Pexels. For this page I rebuilt the edit with Claude Code from those clean clips, with the color fixed."
+            "say": "ChatGPT helped me find the B-roll on Pexels, and I cut those clips into the edit."
           },
           {
             "label": "Captions",
