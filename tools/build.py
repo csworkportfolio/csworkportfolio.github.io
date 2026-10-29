@@ -1830,11 +1830,12 @@ def render_ai(page, site, media):
   {paragraphs(opening["p"])}
 </section>''']
     parts += [ai_block(b, root) for b in page["blocks"]]
-    nxt = page["next"]
+    nxt = page.get("next")   # the button on to another page, when the page names one
+    nxt_btn = (f'\n  <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>'
+               if nxt else "")
     parts.append(f'''
 <nav class="wrap case-nav" aria-label="Case study navigation">
-  <a class="case-nav-link" href="{root}">Back to Case Studies</a>
-  <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>
+  <a class="case-nav-link" href="{root}">Back to Case Studies</a>{nxt_btn}
 </nav>''')
     page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 cat-v2 ai-page"}
     return layout(page, site, root, "\n".join(parts), media)

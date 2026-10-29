@@ -1129,10 +1129,6 @@
         "demo_off": "meta"
       }
     ],
-    "next": {
-      "slug": "cohesity",
-      "label": "Cohesity Case Study"
-    },
     "tools": "Claude Code, ChatGPT, Codex, Gemini, Copilot"
   }
 ]
