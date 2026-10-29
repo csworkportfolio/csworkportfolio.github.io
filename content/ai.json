@@ -558,7 +558,7 @@
           {
             "who": "me",
             "ch": 0,
-            "text": "Here's the transcript of all six takes for a short PSA. What should I cut?",
+            "text": "Here's the transcript of all six takes for a short PSA, with timestamps. What should I cut?",
             "file": "MarsMen_Takes.txt"
           },
           {
@@ -566,11 +566,11 @@
             "ch": 0,
             "text": "Open on Hook 1. It's the shortest and hits hardest. Follow it with \"You weren't built to be average.\" Then cut:",
             "cuts": [
-              "Hook 2: says what Hook 1 says, slower",
-              "\"The truth? Most men today are running from the real work.\"",
-              "\"to lead, to walk into any room and command respect.\"",
-              "\"You want to feel like a man again?\"",
-              "\"Push yourself. Get aligned with your purpose.\""
+              {"at": "0:03–0:15", "t": "Hook 2: says what Hook 1 says, slower"},
+              {"at": "0:29–0:33", "t": "\"The truth? Most men today are running from the real work.\""},
+              {"at": "0:53–1:00", "t": "\"to lead, to walk into any room and command respect.\""},
+              {"at": "1:12–1:14", "t": "\"You want to feel like a man again?\""},
+              {"at": "1:19–1:23", "t": "\"Push yourself. Get aligned with your purpose.\""}
             ]
           },
           {

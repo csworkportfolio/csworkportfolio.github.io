@@ -540,16 +540,28 @@
     const clocks = [...fig.querySelectorAll(".pr-tc-now")];
     const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
     const clips = [...fig.querySelectorAll(".is-v1 .pr-clip")], audio = [...fig.querySelectorAll(".is-a1 .pr-clip")];
-    // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760
+    // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
+    // Claude window (drawn 380 wide) overlaps Premiere's lower right corner: on a wide screen Premiere takes the
+    // left 80% and Claude the right third; on a phone Claude sits under Premiere, overlapping its bottom
+    const stage = fig.querySelector(".pr-stage"), cl = fig.querySelector(".cl-window");
     const frame = () => {
-      const w = view.clientWidth, mobile = w < 640;
+      const W = stage.clientWidth, mobile = W < 640;
       pr.classList.toggle("is-mobile", mobile);
       fig.classList.toggle("is-mobile", mobile);
-      const s = w / (mobile ? 420 : 1280);
+      const pw = mobile ? W : W * 0.8, s = pw / (mobile ? 420 : 1280);
       view.style.setProperty("--pr-s", s);
       view.style.height = (mobile ? 760 : 720) * s + "px";
+      const ph = view.parentElement.offsetHeight;
+      const cw = mobile ? W * 0.84 : W * 0.33, cs = cw / 380, chH = mobile ? 440 : 560;
+      const cx = W - cw, cy = mobile ? ph - 48 : ph * 0.3;
+      stage.style.setProperty("--pw", pw + "px");
+      stage.style.setProperty("--cl-s", cs);
+      stage.style.setProperty("--cl-h", chH);
+      stage.style.setProperty("--cx", cx + "px");
+      stage.style.setProperty("--cy", cy + "px");
+      stage.style.setProperty("--st-h", Math.max(ph, cy + chH * cs) + "px");
     };
-    new ResizeObserver(frame).observe(view);
+    new ResizeObserver(frame).observe(stage);
     frame();
     const tc = (sec) => {
       const f = Math.round(sec * 30), p = (n) => String(n).padStart(2, "0");
