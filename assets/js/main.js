@@ -1197,7 +1197,7 @@
       tiles().forEach((t) => ["--rx", "--ry", "--rz", "--lift", "--tx", "--ty"].forEach((v) => t.style.removeProperty(v)));
     });
   }
-  document.querySelectorAll("[data-gallery]").forEach(tiltStrip);
+  document.querySelectorAll("[data-gallery]").forEach((g) => tiltStrip(g));   // not forEach(tiltStrip): its index would land in "pieces"
 
   // ---------- password-locked pages (Ghostwriting) ----------
   // The gallery and text are stored encrypted (tools/lock_ghostwriting.py): PBKDF2-SHA256 turns the password
