@@ -3431,9 +3431,34 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 /* the ChatGPT window, overlapping Premiere's lower right corner like a device lineup (no device frames): drawn at
    380 by 560 and scaled; ai-page.js sets the sizes and places */
 .pr-stage { position: relative; height: var(--st-h, auto); }
-.pr-stage .pr-window { position: absolute; left: 0; top: 0; width: var(--pw, 100%); }
-.cl-window { position: absolute; z-index: 1; left: var(--cx, 60%); top: var(--cy, 30%); width: calc(380px * var(--cl-s, .7));
+.pr-stage .pr-window { position: absolute; z-index: 1; left: 0; top: 0; width: var(--pw, 100%); }
+.cl-window { position: absolute; z-index: 0; left: var(--cx, 60%); top: var(--cy, 0); width: calc(380px * var(--cl-s, .7));
   height: calc(var(--cl-h, 560) * 1px * var(--cl-s, .7)); box-shadow: 0 0 0 .5px rgba(0, 0, 0, .14), 0 30px 70px -20px rgba(0, 0, 0, .45); }
+/* the window in front: the one behind steps back a little, and the one coming forward settles into place */
+.pr-stage .pr-window, .cl-window { transition: transform .5s var(--ease), filter .5s; }
+.pr-stage:not(.is-gpt) .cl-window { transform: scale(.96); transform-origin: 100% 50%; filter: brightness(.94); }
+.pr-stage.is-gpt .cl-window { z-index: 2; }
+.pr-stage.is-gpt .pr-window { transform: scale(.98); transform-origin: 0 50%; filter: brightness(.9); }
+.pr-stage.is-swap > .is-up { animation: pr-up .5s var(--ease); }
+@keyframes pr-up { from { transform: scale(.96); } }
+@media (prefers-reduced-motion: reduce) { .pr-stage .pr-window, .cl-window { transition: none; } .pr-stage.is-swap > .is-up { animation: none; } }
+
+/* the switch for which window is in front (beside sound and pause): glass while automatic, blue while locked */
+.ai-front { position: absolute; top: 14px; right: 94px; z-index: 2; display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px 0 10px;
+  border: 0; border-radius: 999px; cursor: pointer; font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--tabink);
+  background: var(--tabglass); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--tabshadow);
+  transition: transform .18s var(--ease), background-color .18s, color .18s; }
+.ai-front svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.ai-front:hover { transform: scale(1.03); }
+.ai-front:active { transform: scale(.96); }
+.ai-front:not([data-mode="auto"]) { background: #007aff; color: #fff; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .ai-front:not([data-mode="auto"]) { background: #0a84ff; }
+}
+html.theme-dark.can-dark .ai-front:not([data-mode="auto"]) { background: #0a84ff; }
+.ai-front:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: 2px; }
+:root[data-os="ios"] .ai-front { top: 8px; right: 112px; height: 44px; padding: 0 16px 0 14px; }
+@media (prefers-reduced-motion: reduce) { .ai-front { right: 54px; } }
 .cl-app { --cl-bg: #fff; --cl-ink: #0d0d0d; --cl-sub: #8f8f8f; --cl-line: #e5e5e5; --cl-me: #f4f4f4; --cl-card: #fff; --cl-send: #0d0d0d; --cl-sendink: #fff;
   width: 380px; height: calc(var(--cl-h, 560) * 1px); display: flex; flex-direction: column; transform-origin: 0 0; transform: scale(var(--cl-s, .7));
   background: var(--cl-bg); color: var(--cl-ink); font: 400 13.5px/1.5 -apple-system, "Helvetica Neue", Arial, sans-serif; }

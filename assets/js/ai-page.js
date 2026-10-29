@@ -541,19 +541,20 @@
     const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
     const clips = [...fig.querySelectorAll(".is-v1 .pr-clip")], audio = [...fig.querySelectorAll(".is-a1 .pr-clip")];
     // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
-    // ChatGPT window (drawn 380 wide) overlaps Premiere's lower right corner: on a wide screen Premiere takes the
-    // left 80% and ChatGPT the right third; on a phone ChatGPT sits under Premiere, overlapping its bottom
+    // ChatGPT window (drawn 380 wide) overlaps Premiere's right side: on a wide screen the two sit level, Premiere on
+    // the left 78% and ChatGPT the right third, as tall as Premiere; on a phone ChatGPT sits under Premiere,
+    // overlapping its bottom
     const stage = fig.querySelector(".pr-stage"), cl = fig.querySelector(".cl-window");
     const frame = () => {
       const W = stage.clientWidth, mobile = W < 640;
       pr.classList.toggle("is-mobile", mobile);
       fig.classList.toggle("is-mobile", mobile);
-      const pw = mobile ? W : W * 0.8, s = pw / (mobile ? 420 : 1280);
+      const pw = mobile ? W : W * 0.78, s = pw / (mobile ? 420 : 1280);
       view.style.setProperty("--pr-s", s);
       view.style.height = (mobile ? 760 : 720) * s + "px";
       const ph = view.parentElement.offsetHeight;
-      const cw = mobile ? W * 0.84 : W * 0.33, cs = cw / 380, chH = mobile ? 440 : 560;
-      const cx = W - cw, cy = mobile ? ph - 48 : ph * 0.3;
+      const cw = mobile ? W * 0.84 : W * 0.34, cs = cw / 380, chH = mobile ? 440 : ph / cs;
+      const cx = W - cw, cy = mobile ? ph - 48 : 0;
       stage.style.setProperty("--pw", pw + "px");
       stage.style.setProperty("--cl-s", cs);
       stage.style.setProperty("--cl-h", chH);
@@ -610,12 +611,39 @@
         b.style.setProperty("--p", i < n ? 1 : i > n ? 0 : Math.min(1, (t - c.from) / (c.to - c.from)));
       });
       msgs.forEach((m) => m.classList.toggle("is-later", +m.dataset.ch > n));
+      ahead = data.chat.some((m) => m.ch === n);
+      stack();
       if (n !== said && note) {
         said = n;
         note.classList.add("is-fading");
         setTimeout(() => { note.textContent = data.chapters[n].say; note.classList.remove("is-fading"); }, 250);
       }
     }
+    // which window is in front: automatic (ChatGPT in the chapters it was used in, Premiere otherwise), or locked
+    // by the switch; three presses bring it back to automatic
+    const front = fig.querySelector(".ai-front");
+    const modes = { auto: ["Auto", "automatic", "keep ChatGPT in front", "gpt"], gpt: ["ChatGPT", "ChatGPT, locked", "keep Premiere in front", "pr"],
+      pr: ["Premiere", "Premiere, locked", "go back to automatic", "auto"] };
+    let ahead = true, up = null;
+    function stack() {
+      const mode = front ? front.dataset.mode : "auto";
+      const gpt = mode === "gpt" || (mode === "auto" && ahead);
+      if (gpt === up) return;
+      const first = up === null;
+      up = gpt;
+      stage.classList.toggle("is-gpt", gpt);
+      cl.classList.toggle("is-up", gpt);
+      view.parentElement.classList.toggle("is-up", !gpt);
+      if (!first) { stage.classList.remove("is-swap"); void stage.offsetWidth; stage.classList.add("is-swap"); }
+    }
+    front && front.addEventListener("click", () => {
+      const next = modes[front.dataset.mode][3], m = modes[next];
+      front.dataset.mode = next;
+      front.querySelector("span").textContent = m[0];
+      front.setAttribute("aria-label", `Window in front: ${m[1]}. Press to ${m[2]}`);
+      stack();
+    });
+    stack();
     bars.forEach((b, i) => b.addEventListener("click", () => {
       video.currentTime = data.chapters[i].from + 0.01;
       d.resume && d.resume();
