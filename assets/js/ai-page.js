@@ -920,14 +920,15 @@
       const [kw, q] = c.querySelectorAll(".geo-typed");
       const results = [...c.querySelectorAll(".geo-results li")], fields = [...c.querySelectorAll(".geo-fields li")];
       const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite"), sr = c.querySelector(".geo-sr");
+      const ask = c.querySelector(".geo-ask"), dots = c.querySelector(".geo-dots");
       const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
-      // typed a few characters at a time; a reset stops it where it is
+      // the search typed a few characters at a time; a reset stops it where it is
       const type = async (el, speed) => {
         const chars = [...el.dataset.text];
         for (let i = 0; i < chars.length; i++) { el.textContent = chars.slice(0, i + 1).join(""); await wait(speed); }
       };
-      kw.textContent = ""; q.textContent = "";
-      [...results, ...fields, answer, cite, sr].forEach((el) => el && el.classList.remove("is-on"));
+      kw.textContent = ""; q.textContent = q.dataset.text;   // the question arrives whole, as a sent message does
+      [...results, ...fields, ask, dots, answer, cite, sr].forEach((el) => el && el.classList.remove("is-on"));
       say(k, 0);
       await wait(600);
       await type(kw, 70);
@@ -936,9 +937,12 @@
       await wait(1800);
       say(k, 2);
       await wait(400);
-      await type(q, 38);
-      await wait(500);
+      ask.classList.add("is-on");
+      await wait(700);
+      dots.classList.add("is-on");   // the AI typing
+      await wait(1500);
       say(k, 3);
+      dots.classList.remove("is-on");
       answer.classList.add("is-on");
       await wait(900);
       cite.classList.add("is-on");

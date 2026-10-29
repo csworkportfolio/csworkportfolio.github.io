@@ -1749,7 +1749,8 @@ def demo_geo(b):
         search = ai_window("Search Engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
                            f'<span class="geo-typed" data-text="{esc(c["search"])}">{esc(c["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
         ask = ai_window("AI Assistant", f'<div class="geo-in geo-ask"><span class="geo-typed" data-text="{esc(c["ask"])}">{esc(c["ask"])}</span></div>'
-                        f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
+                        f'<div class="geo-reply"><p class="geo-dots" aria-hidden="true"><i></i><i></i><i></i></p>'   # the AI typing, as in Messages
+                        f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p></div><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
         cases.append(f'<div class="geo-case geo-{esc(c["id"])}" data-case="{k}"{"" if k == 0 else " hidden"}>'
                      f'<div class="geo-grid"><p class="geo-k">Search Engine Keywords</p><p class="geo-k">AI Assistant Questions</p>{search}{ask}</div>'
                      f'<div class="geo-src">{ai_window(c["source"], page + fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
