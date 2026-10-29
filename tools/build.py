@@ -1750,6 +1750,17 @@ def demo_meta(b, root):
     return ai_figure(b, "This page, shown inside itself", inner)
 
 
+def demo_machine(b, root):
+    """The page as one content machine: its steps in order, each a jump to the demo that shows it, the way back to
+    the start, and results from the programs it ran in."""
+    steps = "".join(f'<li><a href="{esc(st["href"])}"><span class="mc-n">{k}</span><b>{esc(st["n"])}</b><span>{esc(st["t"])}</span></a></li>'
+                    for k, st in enumerate(b["steps"], 1))
+    res = "".join(f'<li><b>{esc(r["v"])}</b><span>{esc(r["t"])}</span></li>' for r in b["results"])
+    return (f'<div class="wrap ai-demo ai-machine"><ol class="mc-steps">{steps}</ol>'
+            f'<p class="mc-back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5"/></svg>{esc(b["back"])}</p>'
+            f'<ul class="mc-results">{res}</ul></div>')
+
+
 def ai_block(b, root):
     """A section of the AI page: its words, then its demo."""
     links = ""
@@ -1762,8 +1773,8 @@ def ai_block(b, root):
     if not kind:
         return words
     fig = {"geo": demo_geo}.get(kind)
-    if kind in ("localize", "board", "cut", "fan", "tools", "meta"):
-        return words + {"localize": demo_localize, "board": demo_board, "cut": demo_cut, "fan": demo_fan, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
+    if kind in ("localize", "board", "cut", "fan", "tools", "meta", "machine"):
+        return words + {"machine": demo_machine, "localize": demo_localize, "board": demo_board, "cut": demo_cut, "fan": demo_fan, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
     return words + fig(b)
 
 

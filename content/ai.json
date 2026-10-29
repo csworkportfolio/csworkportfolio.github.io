@@ -13,6 +13,57 @@
     "lede": "I'm a digital marketer, and AI is part of how I work every day. I use it for the slow, repetitive parts so I have more time for the ideas, and I check everything it makes before it goes out. These are the places it shows up, from posts localized for 10+ regions to apps I built for myself.",
     "blocks": [
       {
+        "id": "machine",
+        "h": "How It Fits Together",
+        "p": [
+          "Put together, these are one content machine. I plan in Monday.com, Claude drafts from our do's and don'ts, and one piece becomes five. Each is adapted for its region, written so search engines and AI answers find it, and tracked, so what works goes back into the next plan."
+        ],
+        "demo": "machine",
+        "steps": [
+          {
+            "n": "Plan",
+            "t": "Editorial calendar in Monday.com",
+            "href": "#editorial"
+          },
+          {
+            "n": "Draft",
+            "t": "Claude drafts from the do's and don'ts",
+            "href": "#editorial"
+          },
+          {
+            "n": "Repurpose",
+            "t": "One episode becomes five pieces",
+            "href": "#repurpose"
+          },
+          {
+            "n": "Localize",
+            "t": "Adapted for 10+ regions",
+            "href": "#localize"
+          },
+          {
+            "n": "Get found",
+            "t": "Written for search and AI answers",
+            "href": "#geo"
+          },
+          {
+            "n": "Measure",
+            "t": "Tracked in Semrush",
+            "href": "#geo"
+          }
+        ],
+        "back": "What works goes back into the next plan",
+        "results": [
+          {
+            "v": "7x",
+            "t": "LinkedIn engagement at QAD Redzone, 2% to 14%"
+          },
+          {
+            "v": "70%",
+            "t": "Engagement across 3,000 Cohesity Champions"
+          }
+        ]
+      },
+      {
         "id": "localize",
         "h": "One Post, Ready for 10+ Regions",
         "p": [
@@ -565,11 +616,26 @@
             "ch": 0,
             "text": "Open on Hook 1. It's the shortest and hits hardest. Follow it with \"You weren't built to be average.\" Then cut:",
             "cuts": [
-              {"at": "0:03–0:15", "t": "Hook 2: says what Hook 1 says, slower"},
-              {"at": "0:29–0:33", "t": "\"The truth? Most men today are running from the real work.\""},
-              {"at": "0:53–1:00", "t": "\"to lead, to walk into any room and command respect.\""},
-              {"at": "1:12–1:14", "t": "\"You want to feel like a man again?\""},
-              {"at": "1:19–1:23", "t": "\"Push yourself. Get aligned with your purpose.\""}
+              {
+                "at": "0:03–0:15",
+                "t": "Hook 2: says what Hook 1 says, slower"
+              },
+              {
+                "at": "0:29–0:33",
+                "t": "\"The truth? Most men today are running from the real work.\""
+              },
+              {
+                "at": "0:53–1:00",
+                "t": "\"to lead, to walk into any room and command respect.\""
+              },
+              {
+                "at": "1:12–1:14",
+                "t": "\"You want to feel like a man again?\""
+              },
+              {
+                "at": "1:19–1:23",
+                "t": "\"Push yourself. Get aligned with your purpose.\""
+              }
             ]
           },
           {
@@ -596,12 +662,163 @@
         ],
         "demo": "fan",
         "note": "Claude reads the transcript and marks the moments that stand on their own.",
-        "says": {"start": "Claude reads the transcript and marks the moments that stand on their own.", "each": ["9:45: a 48-second clip for LinkedIn, with captions.", "10:37: one line becomes a quote card.", "11:55: three sentences for the weekly newsletter.", "17:30: an outline for a blog post.", "19:20: a 21-second audiogram for Shorts and Reels."], "end": "One episode, five pieces, each in the shape its channel expects."},
-"episode": {
+        "says": {
+          "start": "Claude reads the transcript and marks the moments that stand on their own.",
+          "each": [
+            "9:45: a 48-second clip for LinkedIn, with captions.",
+            "10:37: one line becomes a quote card.",
+            "11:55: three sentences for the weekly newsletter.",
+            "17:30: an outline for a blog post.",
+            "19:20: a 21-second audiogram for Shorts and Reels."
+          ],
+          "end": "One episode, five pieces, each in the shape its channel expects."
+        },
+        "episode": {
           "title": "Resilience Universe with Sanjay Poonen | Kevin Mandia",
           "length": 1555,
           "href": "https://www.youtube.com/watch?v=ouVaNJjI_fA",
-          "peaks": [1.0, 0.47, 0.42, 0.37, 0.42, 0.87, 0.43, 0.2, 0.21, 0.31, 0.25, 0.26, 0.27, 0.38, 0.31, 0.54, 0.46, 0.29, 0.35, 0.36, 0.32, 0.29, 0.31, 0.31, 0.21, 0.54, 0.95, 0.36, 0.23, 0.44, 0.27, 0.68, 0.21, 0.39, 0.45, 0.48, 0.53, 0.21, 0.28, 0.27, 0.28, 0.27, 0.23, 0.21, 0.18, 0.25, 0.23, 0.27, 0.36, 0.32, 0.61, 0.45, 0.85, 0.28, 0.33, 0.3, 0.24, 0.31, 0.27, 0.28, 0.25, 0.24, 0.43, 0.47, 0.37, 0.27, 0.22, 0.31, 0.18, 0.21, 0.28, 0.2, 0.34, 0.2, 0.37, 0.26, 0.51, 0.84, 0.83, 0.39, 0.35, 0.3, 0.24, 0.21, 0.14, 0.4, 0.27, 0.94, 0.3, 0.16, 0.22, 0.28, 0.2, 0.33, 0.27, 0.3, 0.34, 0.35, 0.32, 0.34, 0.41, 0.44, 0.29, 0.35, 0.22, 0.2, 0.27, 0.57, 0.75, 0.46, 0.22, 0.21, 0.21, 0.26, 0.31, 0.29, 0.21, 0.29, 0.35, 0.26, 0.31, 0.23, 0.32, 0.24, 0.19, 0.38, 0.49, 0.48, 0.48, 0.29, 0.18, 0.23, 0.18, 0.25, 0.31, 0.24, 0.43, 0.42, 0.47, 0.34]
+          "peaks": [
+            1.0,
+            0.47,
+            0.42,
+            0.37,
+            0.42,
+            0.87,
+            0.43,
+            0.2,
+            0.21,
+            0.31,
+            0.25,
+            0.26,
+            0.27,
+            0.38,
+            0.31,
+            0.54,
+            0.46,
+            0.29,
+            0.35,
+            0.36,
+            0.32,
+            0.29,
+            0.31,
+            0.31,
+            0.21,
+            0.54,
+            0.95,
+            0.36,
+            0.23,
+            0.44,
+            0.27,
+            0.68,
+            0.21,
+            0.39,
+            0.45,
+            0.48,
+            0.53,
+            0.21,
+            0.28,
+            0.27,
+            0.28,
+            0.27,
+            0.23,
+            0.21,
+            0.18,
+            0.25,
+            0.23,
+            0.27,
+            0.36,
+            0.32,
+            0.61,
+            0.45,
+            0.85,
+            0.28,
+            0.33,
+            0.3,
+            0.24,
+            0.31,
+            0.27,
+            0.28,
+            0.25,
+            0.24,
+            0.43,
+            0.47,
+            0.37,
+            0.27,
+            0.22,
+            0.31,
+            0.18,
+            0.21,
+            0.28,
+            0.2,
+            0.34,
+            0.2,
+            0.37,
+            0.26,
+            0.51,
+            0.84,
+            0.83,
+            0.39,
+            0.35,
+            0.3,
+            0.24,
+            0.21,
+            0.14,
+            0.4,
+            0.27,
+            0.94,
+            0.3,
+            0.16,
+            0.22,
+            0.28,
+            0.2,
+            0.33,
+            0.27,
+            0.3,
+            0.34,
+            0.35,
+            0.32,
+            0.34,
+            0.41,
+            0.44,
+            0.29,
+            0.35,
+            0.22,
+            0.2,
+            0.27,
+            0.57,
+            0.75,
+            0.46,
+            0.22,
+            0.21,
+            0.21,
+            0.26,
+            0.31,
+            0.29,
+            0.21,
+            0.29,
+            0.35,
+            0.26,
+            0.31,
+            0.23,
+            0.32,
+            0.24,
+            0.19,
+            0.38,
+            0.49,
+            0.48,
+            0.48,
+            0.29,
+            0.18,
+            0.23,
+            0.18,
+            0.25,
+            0.31,
+            0.24,
+            0.43,
+            0.42,
+            0.47,
+            0.34
+          ]
         },
         "outputs": [
           {
@@ -609,7 +826,12 @@
             "kind": "LinkedIn Clip",
             "shape": "4:5",
             "spec": "1080 by 1350, 48 seconds, captions on",
-            "path": ["Claude drafts 48 sec video", "I give re-edits", "Claude drafts caption", "I or Claude publish once finalized"],
+            "path": [
+              "Claude drafts 48 sec video",
+              "I give re-edits",
+              "Claude drafts caption",
+              "I or Claude publish once finalized"
+            ],
             "where": "LinkedIn Feed",
             "topic": "Resilience or Prevention: Which Comes First?",
             "video": "assets/ai/episode-linkedin.mp4",
@@ -620,7 +842,11 @@
             "kind": "Quote Card",
             "shape": "quote",
             "spec": "1080 by 1350, the line, his photo and name",
-            "path": ["Claude drafts visual and pulls quote", "I re-edit in Adobe Photoshop", "I or Claude publish once finalized"],
+            "path": [
+              "Claude drafts visual and pulls quote",
+              "I re-edit in Adobe Photoshop",
+              "I or Claude publish once finalized"
+            ],
             "where": "LinkedIn, Instagram",
             "quote": "Offense is going to force defense to be autonomous.",
             "by": "Kevin Mandia",
@@ -631,7 +857,11 @@
             "kind": "Newsletter Blurb",
             "shape": "text",
             "spec": "Three sentences and a link",
-            "path": ["Claude drafts blurb and link", "I edit for voice", "I or Claude publish once finalized"],
+            "path": [
+              "Claude drafts blurb and link",
+              "I edit for voice",
+              "I or Claude publish once finalized"
+            ],
             "where": "Weekly Newsletter",
             "topic": "Assume Breach Starts with Identity",
             "newsletter": "Security Spotlight",
@@ -643,7 +873,12 @@
             "kind": "Blog Post",
             "shape": "doc",
             "spec": "An outline in three sections",
-            "path": ["Claude outlines three sections", "I give re-edits", "Claude drafts post", "I or Claude publish once finalized"],
+            "path": [
+              "Claude outlines three sections",
+              "I give re-edits",
+              "Claude drafts post",
+              "I or Claude publish once finalized"
+            ],
             "where": "Company Blog",
             "topic": "Three Waves of Threat Intelligence",
             "image": "assets/ai/episode-blog.jpg",
@@ -658,7 +893,12 @@
             "kind": "Short Vertical",
             "shape": "9:16",
             "spec": "Vertical audiogram, 21 seconds",
-            "path": ["Claude drafts 21 sec audiogram", "I re-edit in Adobe Photoshop", "Claude drafts caption", "I or Claude publish once finalized"],
+            "path": [
+              "Claude drafts 21 sec audiogram",
+              "I re-edit in Adobe Photoshop",
+              "Claude drafts caption",
+              "I or Claude publish once finalized"
+            ],
             "where": "Shorts, Reels",
             "topic": "What an Agent Does in Five Minutes Takes a Human Five Days",
             "video": "assets/ai/episode-vertical.mp4",
@@ -683,7 +923,11 @@
             "cite": "From the product page",
             "search": "mens blue running shoes",
             "ask": "What's a good road running shoe if I'm just getting started?",
-            "thumbs": ["shoe", "shoe", "shoe"],
+            "thumbs": [
+              "shoe",
+              "shoe",
+              "shoe"
+            ],
             "results": [
               "Nike Pegasus 41 Men's Road Running Shoes",
               "Nike Vomero 18 Men's Road Running Shoes",
@@ -713,7 +957,11 @@
             "platform": "Semrush, where I tracked it at QAD Redzone. The numbers are hidden.",
             "search": "OEE software manufacturing",
             "ask": "What is OEE, and how do frontline teams improve it?",
-            "thumbs": ["guide", "team", "dash"],
+            "thumbs": [
+              "guide",
+              "team",
+              "dash"
+            ],
             "results": [
               "What Is OEE? A Guide for Manufacturers",
               "How Frontline Teams Improve OEE",
