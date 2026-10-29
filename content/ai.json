@@ -1119,14 +1119,14 @@
             "href": "cohesity/"
           }
         ],
-        "demo": "meta",
         "note": "A live copy of this page, running inside this page.",
         "address": "csworkportfolio.github.io/ai/",
         "chips": [
           "This is the page you're reading.",
           "Moved off Wix and rebuilt with Claude Code.",
           "You are here."
-        ]
+        ],
+        "demo_off": "meta"
       }
     ],
     "next": {
