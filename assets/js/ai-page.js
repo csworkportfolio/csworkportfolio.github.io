@@ -764,6 +764,18 @@
       }
     }
     const now = fig.querySelector(".fn-ep-now");
+    // the newsletter and the blog post show on their cards as the opened piece itself, laid out at its full size
+    // and scaled down until all of it fits, centred: what you see before opening is what opens
+    const fits = [...fig.querySelectorAll(".fn-fit")];
+    const fit = () => fits.forEach((f) => {
+      const box = f.parentElement, piece = f.firstElementChild;
+      const W = piece.offsetWidth, H = piece.offsetHeight, bw = box.clientWidth, bh = box.clientHeight;
+      if (!W || !H || !bw) return;
+      const k = Math.min(bw / W, bh / H);
+      f.style.transform = `translate(${(bw - W * k) / 2}px, ${(bh - H * k) / 2}px) scale(${k})`;
+    });
+    fits.forEach((f) => { new ResizeObserver(fit).observe(f.parentElement); f.querySelectorAll("img").forEach((im) => im.addEventListener("load", fit)); });
+    fit();
     new ResizeObserver(draw).observe(bar);
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });

@@ -1625,7 +1625,8 @@ def demo_fan(b, root):
             body = (f'<span class="fn-doc-t">{esc(o["topic"])}</span>'
                     f'<span class="fn-outline">{"".join(f"<span>{k + 1}. {esc(x)}</span>" for k, x in enumerate(o["outline"]))}</span>')
             hero = f'<img class="fn-hero" src="{src(o["image"])}" alt="" loading="lazy">' if o.get("image") else ""   # the episode's art heads the post
-            art, big = hero + body, f'<div class="fn-big-doc">{hero}{body}</div>'
+            big = f'<div class="fn-big-doc">{hero}{body}</div>'
+            art = f'<span class="fn-fit" aria-hidden="true">{big}</span>'   # the opened post itself, scaled down to fit the card
         else:
             # the top of a LinkedIn newsletter issue, like Security Spotlight: its bar, the green header, the title,
             # who posted it, and the intro paragraph, cut off where the reader would click through
@@ -1635,7 +1636,7 @@ def demo_fan(b, root):
                    f'<span class="li-nl-t">{esc(o["topic"])}</span>'
                    f'<span class="li-nl-by"><img class="li-nl-s" src="{src("assets/ai/hub/cohesity-s.png")}" alt=""><b>Cohesity</b></span>'
                    f'<span class="li-nl-p">{esc(o["blurb"])}</span>')
-            art = f'<span class="li-nl">{top}</span>'
+            art = f'<span class="fn-fit" aria-hidden="true"><span class="li-nl is-big">{top}</span></span>'   # the opened issue, scaled down
             big = (f'<div class="li-nl is-big">{top}<a class="fn-link" href="{esc(ep["href"])}" target="_blank" rel="noopener">'
                    f'Listen to the Episode</a></div>')
         cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><button class="fn-open" type="button" aria-label="Open the {label}">'

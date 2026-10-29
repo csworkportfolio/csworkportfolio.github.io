@@ -3724,3 +3724,19 @@ a.tl-cta:active { transform: scale(.96); }
 .fn-open { overflow: hidden; border-radius: 14px 14px 0 0; }
 .fn-card .fn-num { position: absolute; z-index: 2; top: -8px; right: -8px; width: 24px; height: 24px; font-size: 13px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .3); }
+
+/* every card shows its whole piece, fitted, at the piece's own shape: the clip and quote card fill a 4:5 frame, the
+   vertical sits in it at 9:16, and the newsletter and blog post are their opened layouts scaled down (ai-page.js) */
+.fn-art { height: auto; aspect-ratio: 4 / 5; position: relative; }
+.fn-9x16 .fn-art .fn-video { position: absolute; top: 0; left: 50%; width: auto; height: 100%; max-width: none; transform: translateX(-50%); }
+.fn-text .fn-art, .fn-doc .fn-art { display: block; padding: 0; -webkit-mask-image: none; mask-image: none; }
+.fn-text .fn-art { background: var(--li-bg, var(--ai-win)); }
+.fn-fit { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
+.fn-fit > * { max-height: none; overflow: visible; box-shadow: none; border-radius: 0; }
+.fn-fit .li-nl.is-big { width: 560px; }
+.fn-fit .fn-big-doc { width: 640px; }
+.fn-art .fn-fit img { width: auto; height: auto; max-width: none; object-fit: fill; }
+.fn-art .fn-fit .li-nl-hero { display: block; width: 100%; }
+.fn-art .fn-fit .li-nl-s { width: 26px; height: 28px; }
+.fn-art .fn-fit .fn-big-doc .fn-hero { display: block; width: calc(100% + 48px); margin: -22px -24px 6px; }
+.fn-fit .li-nl-sub { visibility: hidden; }   /* no Subscribe on the small card */
