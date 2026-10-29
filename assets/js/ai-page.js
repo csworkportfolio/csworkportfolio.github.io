@@ -743,7 +743,21 @@
         g.fillStyle = i / N < progress ? cs.getPropertyValue("--fn-on") : cs.getPropertyValue("--fn-off");
         g.beginPath(); g.roundRect(i * w + w * 0.2, (r.height - h) / 2, w * 0.6, h, w * 0.3); g.fill();
       }
+      // the playhead, as in Voice Memos: a thin line through the waveform with a dot at each end, and the time under
+      // it counting along
+      if (progress > 0 && progress < 1) {
+        const x = Math.round(progress * r.width) + 0.5;
+        g.fillStyle = g.strokeStyle = cs.getPropertyValue("--fn-head");
+        g.lineWidth = 1.5;
+        g.beginPath(); g.moveTo(x, 3); g.lineTo(x, r.height - 3); g.stroke();
+        for (const y of [3, r.height - 3]) { g.beginPath(); g.arc(x, y, 3, 0, Math.PI * 2); g.fill(); }
+      }
+      if (now) {
+        const t = Math.round(progress * data.episode.length);
+        now.textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+      }
     }
+    const now = fig.querySelector(".fn-ep-now");
     new ResizeObserver(draw).observe(bar);
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });

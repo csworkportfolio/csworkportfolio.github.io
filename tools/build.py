@@ -1647,9 +1647,10 @@ def demo_fan(b, root):
                      f'<p class="fn-big-cap"><span class="fn-num">{i + 1}</span>{esc(o["kind"])} \u00b7 '
                      f'<span class="fn-path">{"".join(f"<span>{esc(x)}</span>" for x in o["path"])}</span> \u00b7 {mm(o["at"])} in the episode</p></div>')
     head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'
-            f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the Episode</a></div>'
+            f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">'
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l10.6-6.8a.8.8 0 0 0 0-1.4L9.2 4.5A.8.8 0 0 0 8 5.2z"/></svg>Watch Episode</a></div>'
             f'<div class="fn-wavebar"><canvas class="fn-canvas" aria-hidden="true"></canvas>{marks}</div>'
-            f'<p class="fn-ep-len"><span>0:00</span><span>{mm(ep["length"])}</span></p></div>')
+            f'<p class="fn-ep-len"><span class="fn-ep-now">0:00</span><span>{mm(ep["length"])}</span></p></div>')
     sheet = (f'<div class="fn-sheet" hidden><button class="fn-close" type="button" aria-label="Close">'
              f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>{"".join(opens)}</div>')
     # its caption sits in the box, right under the pieces it describes

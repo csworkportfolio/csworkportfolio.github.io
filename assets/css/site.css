@@ -3956,3 +3956,17 @@ html.theme-dark.can-dark .ai-fan { --ai-blue: var(--fn-mag); --fn-link: #ff3d9a;
 /* 2. thin arrows between the steps of a path (set above: \2192)
    3. closed cards show the format, its time and its channel; the path is in the opened view's caption */
 .fn-card .fn-path { display: none; }
+
+/* the episode bar as Voice Memos and Podcasts set it: Watch Episode is a tinted capsule with a play symbol, and the
+   waveform has a playhead (drawn in ai-page.js) whose time counts along under it */
+.ai-fan { --fn-head: #1d1d1f; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .ai-fan { --fn-head: #f5f5f7; }
+}
+html.theme-dark.can-dark .ai-fan { --fn-head: #f5f5f7; }
+.fn-ep-head { align-items: center; }
+.ai-fan .fn-ep-a { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px 0 10px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; color: var(--fn-link); background: color-mix(in srgb, var(--fn-mag) 15%, transparent); text-decoration: none; transition: background .2s; }
+.ai-fan .fn-ep-a:hover { text-decoration: none; background: color-mix(in srgb, var(--fn-mag) 24%, transparent); }
+.fn-ep-a svg { width: 12px; height: 12px; fill: currentColor; }
+.fn-ep-now { font-variant-numeric: tabular-nums; }
