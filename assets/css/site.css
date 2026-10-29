@@ -3584,9 +3584,9 @@ html.theme-dark.can-dark .cl-window { box-shadow: 0 0 0 .5px rgba(255, 255, 255,
    deeper green so small text stays readable on white */
 .ai-fan { --fn-on: #009e60; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; }
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light).can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,.18); --ai-blue: #00c45c; --fn-link: #00dd68; }
+  html:not(.theme-light).can-dark .ai-fan { --fn-on: #009e60; --fn-off: rgba(255,255,255,.18); --ai-blue: #009e60; --fn-link: #00b06b; }
 }
-html.theme-dark.can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,.18); --ai-blue: #00c45c; --fn-link: #00dd68; }
+html.theme-dark.can-dark .ai-fan { --fn-on: #009e60; --fn-off: rgba(255,255,255,.18); --ai-blue: #009e60; --fn-link: #00b06b; }   /* the darker green of the Cohesity S, in dark mode too */
 .ai-fan :is(.fn-ep-a, .fn-link) { color: var(--fn-link); }
 .ai-fan .fn-ep { margin-top: 14px; }   /* room under the sound and pause buttons */
 :root[data-os="ios"] .ai-fan .fn-ep { margin-top: 22px; }
