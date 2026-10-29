@@ -4022,3 +4022,12 @@ html.theme-dark.can-dark .ai-fan { --fn-docbg: #2a2a2d; }
 }
 html.theme-dark.can-dark .geo-page:not(.geo-page-dark):has(+ .geo-page-dark) { display: none; }
   html.theme-dark.can-dark .geo-page-dark { display: block; }
+
+/* the product page sits shorter, centred on its own white (or, in dark mode, its #111) running out to the window's
+   sides, so the whole page shows without scrolling */
+.geo-page-wrap { display: flex; justify-content: center; background: #fff; border-bottom: .5px solid var(--ai-line); }
+.geo-page-wrap .geo-page { width: auto; max-width: 100%; height: auto; max-height: 400px; border-bottom: 0; }
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light).can-dark .geo-page-wrap { background: #111; }
+}
+html.theme-dark.can-dark .geo-page-wrap { background: #111; }
