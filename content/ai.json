@@ -1071,9 +1071,9 @@
       },
       {
         "id": "tools",
-        "h": "Tools I Built With Claude Code and Codex",
+        "h": "Tools I Built With Claude Code and ChatGPT Codex",
         "p": [
-          "In the evenings I build my own apps with Claude Code and Codex. I tell them what I want in plain English, then test each build and decide how it should look and behave. I use all of these every day."
+          "In my personal time, I build my own productivity apps. I tell each AI tool what I want to create, then test each build hundreds of times and decide how it should look and behave. I use all of these every day."
         ],
         "demo": "tools",
         "tools": [
