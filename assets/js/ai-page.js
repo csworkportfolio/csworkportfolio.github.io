@@ -852,10 +852,10 @@
       const c = cases[k];
       const [kw, q] = c.querySelectorAll(".geo-typed");
       const results = [...c.querySelectorAll(".geo-results li")], fields = [...c.querySelectorAll(".geo-fields li")];
-      const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite");
+      const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite"), sr = c.querySelector(".geo-sr");
       const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
       kw.textContent = ""; q.textContent = "";
-      [...results, ...fields, answer, cite].forEach((el) => el.classList.remove("is-on"));
+      [...results, ...fields, answer, cite, sr].forEach((el) => el && el.classList.remove("is-on"));
       await wait(600);
       await d.type(kw, kw.dataset.text, 70);
       for (const r of results) { await wait(220); r.classList.add("is-on"); }
@@ -866,6 +866,7 @@
       await wait(900);
       cite.classList.add("is-on");
       for (const f of fields) { await wait(500); f.classList.add("is-on"); }
+      if (sr) { await wait(700); sr.classList.add("is-on"); }   // then where it was measured
       await wait(5000);
     }
     async function loop() {

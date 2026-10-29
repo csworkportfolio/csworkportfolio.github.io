@@ -1648,6 +1648,23 @@ def demo_fan(b, root):
     return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{sheet}{AI_SOUND}')
 
 
+def semrush(c):
+    """Where it was measured: a copy of Semrush's SEO dashboard, its AI Search and SEO boxes, with every value
+    hidden (no QAD Redzone numbers are confirmed for the page)."""
+    v = '<b class="sr-v" aria-hidden="true"></b>'
+    ai_rows = "".join(f'<li><span class="sr-src sr-{k}"></span>{n}{v}{v}</li>' for k, n in (("g", "AI Overview"), ("g", "AI Mode"), ("gpt", "ChatGPT")))
+    seo = "".join(f'<li><span>{n}</span>{v}</li>' for n in ("Authority Score", "Organic Traffic", "Organic Keywords", "Ref. Domains"))
+    return (f'<div class="geo-sr">'
+            + ai_window("Semrush  \u00b7  SEO Dashboard: QAD Redzone",
+                        '<div class="sr-grid">'
+                        '<section class="sr-box"><p class="sr-tab sr-tab-ai">AI Search</p>'
+                        f'<p class="sr-cols"><span></span><span>Mentions</span><span>Cited pages</span></p><ul class="sr-ai">{ai_rows}'
+                        '<li><span class="sr-src sr-gem"></span>Gemini<i class="sr-soon">soon</i></li></ul></section>'
+                        f'<section class="sr-box"><p class="sr-tab sr-tab-seo">SEO</p><ul class="sr-seo">{seo}</ul></section>'
+                        '</div>', " sr-window")
+            + f'<p class="geo-k sr-note">{esc(c["platform"])}</p></div>')
+
+
 def demo_geo(b):
     """The same need typed as a search and asked as a question, and the page fields both of them read: once for a
     Nike product page, once for QAD Redzone's FAQ and blog. The demo plays one, then the other; the switch picks."""
@@ -1661,7 +1678,7 @@ def demo_geo(b):
                         f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
         cases.append(f'<div class="geo-case geo-{esc(c["id"])}" data-case="{k}"{"" if k == 0 else " hidden"}>'
                      f'<div class="geo-grid"><p class="geo-k">Keywords</p><p class="geo-k">A question</p>{search}{ask}</div>'
-                     f'<div class="geo-src">{ai_window(c["source"], fields)}</div></div>')
+                     f'<div class="geo-src">{ai_window(c["source"], fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
     switch = ('<div class="hb-views geo-switch" role="group" aria-label="Which example">'
               + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'
                         for k, c in enumerate(b["cases"])) + "</div>")
