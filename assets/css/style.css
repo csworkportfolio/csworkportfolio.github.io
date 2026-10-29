@@ -3720,3 +3720,23 @@ a.tl-cta:active { transform: scale(.96); }
 @media (max-width: 720px) { .fn-ep-head { padding-right: 24px; } .ai-fan .fn-ep-a, :root[data-os="ios"] .ai-fan .fn-ep-a { margin-right: 0; } }
 /* the format cards: square top corners, rounded at the foot */
 .fn-card { border-radius: 0 0 14px 14px; }
+/* Wide screens: the format cards hang from the episode bar like tickets on a perforated edge, and each one tears off
+   when the playhead reaches its moment (phones keep the stacked cards as they are) */
+@media (min-width: 901px) {
+  .ai-fan .fn-ep { border-radius: 14px 14px 0 0; }
+  .ai-fan .fn-cards { margin-top: 0; }
+  .ai-fan .fn-card { position: relative; transform-origin: 0 0; }
+  .ai-fan .fn-card::before { content: ""; position: absolute; z-index: 3; left: 0; right: 0; top: 0; border-top: 2px dashed var(--fn-off);
+    opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .ai-fan.is-fresh .fn-card:not(.is-on) { transform: none; }
+  .ai-fan.is-fresh .fn-card:not(.is-on)::before { opacity: 1; }
+  .ai-fan .fn-card.is-on, .ai-fan:not(.is-fresh) .fn-card { transform: translateY(18px); }
+  .ai-fan.is-fresh .fn-card.is-on { animation: fn-rip .7s var(--ease) both; }
+}
+@keyframes fn-rip {
+  0% { transform: none; }
+  25% { transform: translateY(5px) rotate(-2.5deg); }
+  60% { transform: translateY(16px) rotate(.6deg); }
+  100% { transform: translateY(18px); }
+}
+@media (prefers-reduced-motion: reduce) { .ai-fan.is-fresh .fn-card.is-on { animation: none; } }
