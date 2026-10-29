@@ -3282,7 +3282,7 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 .mb.is-mobile .mb-cursor, .mb.is-mobile .mb-sum { display: none; }
 
 .mb.is-mobile :is(.mb-pane, .zp-pane) { width: 420px; }
-.mb.is-mobile .mb-main { left: 0; right: 0; border-radius: 12px 12px 0 0; }
+.mb.is-mobile .mb-main { left: 0; right: 0; border-radius: 0; }   /* full width on a phone: square, so no gray shows at its corners */
 .mb.is-mobile .mb-main { padding: 16px 14px; }
 .mb.is-mobile .mb-title h4 { font-size: 21px; }
 .mb.is-mobile .mb-table { --mb-cols: minmax(0, 1fr) 118px 104px; }
