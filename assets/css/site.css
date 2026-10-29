@@ -4032,6 +4032,7 @@ html.theme-dark.can-dark .geo-page:not(.geo-page-dark):has(+ .geo-page-dark) { d
 }
 html.theme-dark.can-dark .geo-page-wrap { background: #111; }
 
-/* the search demo's windows have no title bars: each one's name is the label above it, to keep the demo compact */
+/* the search demo's windows (but the product page's) have no title bars: each one's name is the label above it, to keep the demo compact */
 .ai-geo .ai-window > .ai-bar { display: none; }
+.ai-geo .geo-src .ai-window > .ai-bar { display: flex; }   /* the product page keeps its window bar, with its name in it */
 .geo-src > .geo-k, .geo-sr > .geo-k { margin-bottom: 8px; }

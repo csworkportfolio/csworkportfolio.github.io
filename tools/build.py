@@ -1737,7 +1737,7 @@ def demo_geo(b):
                         f'<p class="geo-answer">{AI_SPARK}<span>{esc(c["answer"])}</span></p><p class="geo-cite">{esc(c["cite"])}</p>', " geo-pane")
         cases.append(f'<div class="geo-case geo-{esc(c["id"])}" data-case="{k}"{"" if k == 0 else " hidden"}>'
                      f'<div class="geo-grid"><p class="geo-k">Search Engine Keywords</p><p class="geo-k">AI Assistant Questions</p>{search}{ask}</div>'
-                     f'<div class="geo-src"><p class="geo-k">{esc(c["source"])}</p>{ai_window(c["source"], page + fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
+                     f'<div class="geo-src">{ai_window(c["source"], page + fields)}</div>{semrush(c) if c.get("platform") else ""}</div>')
     switch = ('<div class="hb-views geo-switch" role="group" aria-label="Which example">'
               + "".join(f'<button type="button" data-case="{k}" aria-pressed="{"true" if k == 0 else "false"}">{esc(c["label"])}</button>'
                         for k, c in enumerate(b["cases"])) + "</div>")
