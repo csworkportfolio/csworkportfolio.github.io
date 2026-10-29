@@ -3365,7 +3365,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .fn-ep-t { font-size: 14px; font-weight: 600; }
 .fn-ep-a { font-size: 13px; font-weight: 500; color: var(--ai-blue); text-decoration: none; }
 .fn-ep-a:hover { text-decoration: underline; }
-.fn-wavebar { position: relative; height: 56px; margin-top: 24px; }
+.fn-wavebar { position: relative; height: 56px; margin-top: 44px; }   /* room above for the marker dots, clear of the title */
 .fn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .fn-mark { position: absolute; top: 5px; bottom: -6px; width: 0; border-left: 1.5px dashed var(--fn-mag); }   /* the line starts under its dot, never through it */
 .fn-mark button { position: absolute; top: -23px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
