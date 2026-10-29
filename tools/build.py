@@ -959,7 +959,7 @@ def render_category(page, site, media):
         else:
             tag = "h1" if first_heading else "h2"
             first_heading = False
-            tools = f'<p class="tools">Tools: {esc(b["tools"])}</p>' if b.get("tools") else ""
+            tools = f'<p class="tools">{esc(b["tools"])}</p>' if b.get("tools") else ""
             # a heading that introduces the strip below it sits close to that strip
             lead = ""
             if page.get("v2") and n + 1 < len(blocks) and "gallery" in blocks[n + 1]:
