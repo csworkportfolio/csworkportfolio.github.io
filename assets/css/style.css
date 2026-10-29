@@ -3712,3 +3712,11 @@ a.tl-cta:active { transform: scale(.96); }
 .ai-fan .fn-ep-a:hover { text-decoration: none; background: color-mix(in srgb, var(--fn-mag) 24%, transparent); }
 .fn-ep-a svg { width: 12px; height: 12px; fill: currentColor; }
 .fn-ep-now { font-variant-numeric: tabular-nums; }
+/* Watch Episode lines up on the sound button's right edge above it (the sound button sits 54px in from the box's
+   edge, the episode bar 44px in, with 18px of its own padding) */
+.fn-ep-head { padding-right: 0; }
+.ai-fan .fn-ep-a { margin-right: -8px; }
+:root[data-os="ios"] .ai-fan .fn-ep-a { margin-right: -2px; }
+@media (max-width: 720px) { .fn-ep-head { padding-right: 24px; } .ai-fan .fn-ep-a, :root[data-os="ios"] .ai-fan .fn-ep-a { margin-right: 0; } }
+/* the format cards: square top corners, rounded at the foot */
+.fn-card { border-radius: 0 0 14px 14px; }
