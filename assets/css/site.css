@@ -3598,8 +3598,8 @@ html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,
 .fn-ep-a:hover { text-decoration: underline; }
 .fn-wavebar { position: relative; height: 56px; margin-top: 24px; }
 .fn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.fn-mark { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 1.5px dashed var(--fn-mag); }
-.fn-mark button { position: absolute; top: -12px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+.fn-mark { position: absolute; top: 5px; bottom: -6px; width: 0; border-left: 1.5px dashed var(--fn-mag); }   /* the line starts under its dot, never through it */
+.fn-mark button { position: absolute; top: -23px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
   font-family: var(--round); font-size: 11px; font-weight: 700; color: #fff; background: var(--fn-mag); transition: transform .4s var(--ease); }
 .fn-mark button:hover { transform: scale(1.15); }
 .fn-mark button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 2px; }
