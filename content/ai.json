@@ -683,6 +683,7 @@
             "cite": "From the product page",
             "search": "mens blue running shoes",
             "ask": "What's a good road running shoe if I'm just getting started?",
+            "thumbs": ["shoe", "shoe", "shoe"],
             "results": [
               "Nike Pegasus 41 Men's Road Running Shoes",
               "Nike Vomero 18 Men's Road Running Shoes",
@@ -712,6 +713,7 @@
             "platform": "Semrush, where I tracked it at QAD Redzone. The numbers are hidden.",
             "search": "OEE software manufacturing",
             "ask": "What is OEE, and how do frontline teams improve it?",
+            "thumbs": ["guide", "team", "dash"],
             "results": [
               "What Is OEE? A Guide for Manufacturers",
               "How Frontline Teams Improve OEE",

@@ -1656,11 +1656,13 @@ def ranking(v):
     tops = "".join(f'<li><span>{n}</span><span class="sr-ring"></span>{v}<svg class="sr-spark" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">'
                    '<path d="M0 14 L12 12 L20 15 L30 8 L40 11 L52 6 L62 10 L74 5 L86 9 L100 7"/></svg></li>'
                    for n in ("Top 3", "Top 10", "Top 20", "Top 100"))
-    kws = "".join(f'<li><span>{k}</span>{v}{v}</li>' for k in ("oee software", "what is oee", "how to improve oee", "manufacturing downtime", "frontline production"))
+    kws = "".join(f'<li><span>{k}</span><i class="sr-tag sr-tag-{t.lower()}">{t}</i>{v}{v}</li>'
+                  for k, t in (("oee software", "Keyword"), ("what is oee", "Question"), ("how to improve oee", "Question"),
+                               ("manufacturing downtime", "Keyword"), ("frontline production", "Keyword")))
     return ('<section class="sr-box sr-wide"><p class="sr-tab sr-tab-pt">Position Tracking</p><div class="sr-pt">'
             f'<div class="sr-vis"><p class="sr-h">Visibility</p>{v}{area}</div>'
             f'<div><p class="sr-h">Keywords</p><ul class="sr-tops">{tops}</ul></div>'
-            '<div><p class="sr-h">Top Keywords</p><p class="sr-kh"><span>Keywords</span><span>Position</span><span>Visibility</span></p>'
+            '<div><p class="sr-h">Top Keywords</p><p class="sr-kh"><span>Keywords</span><span></span><span>Position</span><span>Visibility</span></p>'
             f'<ul class="sr-kw">{kws}</ul></div></div></section>')
 
 
@@ -1670,15 +1672,29 @@ def semrush(c):
     v = '<b class="sr-v" aria-hidden="true"></b>'
     ai_rows = "".join(f'<li><span class="sr-src sr-{k}"></span>{n}{v}{v}</li>' for k, n in (("g", "AI Overview"), ("g", "AI Mode"), ("gpt", "ChatGPT")))
     seo = "".join(f'<li><span>{n}</span>{v}</li>' for n in ("Authority Score", "Organic Traffic", "Organic Keywords", "Ref. Domains"))
+    cited = "".join(f'<li><span class="sr-kind">{k}</span><span class="sr-url">{u}</span>{v}</li>'
+                    for k, u in (("FAQ", "/faq/what-is-oee"), ("Blog", "/blog/how-frontline-teams-improve-oee")))
     return (f'<div class="geo-sr">'
             + ai_window("Semrush  \u00b7  SEO Dashboard: QAD Redzone",
                         '<div class="sr-grid">'
                         '<section class="sr-box"><p class="sr-tab sr-tab-ai">AI Search</p>'
-                        f'<p class="sr-cols"><span></span><span>Mentions</span><span>Cited pages</span></p><ul class="sr-ai">{ai_rows}'
-                        '<li><span class="sr-src sr-gem"></span>Gemini<i class="sr-soon">soon</i></li></ul></section>'
+                        f'<div class="sr-tot"><p><span>AI Visibility</span><span class="sr-gauge"></span>{v}</p><p><span>Mentions</span>{v}</p><p><span>Cited pages</span>{v}</p></div>'
+                        f'<ul class="sr-ai">{ai_rows}'
+                        '<li><span class="sr-src sr-gem"></span>Gemini<i class="sr-soon">soon</i></li></ul>'
+                        f'<p class="sr-h sr-cited-h">Top cited pages</p><ul class="sr-cited">{cited}</ul></section>'
                         f'<section class="sr-box"><p class="sr-tab sr-tab-seo">SEO</p><ul class="sr-seo">{seo}</ul></section>'
                         f'{ranking(v)}</div>', " sr-window")
             + f'<p class="geo-k sr-note">{esc(c["platform"])}</p></div>')
+
+
+GEO_THUMB = {   # a shadow of what each search result would show
+    "shoe": '<path class="gt-fill" d="M2.5 15.2c0-1.4.6-2.6 1.6-3.3l2.3-1.6c.6-.4 1-1.1 1.1-1.8l.2-1.3c.1-.5.7-.7 1.1-.4 1.5 1.2 3.2 1.9 5 2l2.2.2c2.4.2 4.6 1.4 5.8 3.4.4.7.2 1.6-.5 2-.3.2-.6.2-.9.2H3.6c-.6 0-1.1-.5-1.1-1.1z"/>'
+            '<path class="gt-line" d="M2.6 17.6h18.6c.5 0 .9-.3 1-.8"/><path class="gt-line" d="M9.8 9.2l1.3 1.5M11.8 9.9l1.1 1.4"/>',
+    "guide": '<rect class="gt-fill" x="5.5" y="3" width="13" height="18" rx="2"/><path class="gt-line" d="M8.5 8h7M8.5 11.5h7M8.5 15h4.5"/>',
+    "team": '<circle class="gt-fill" cx="8.5" cy="9" r="3"/><circle class="gt-fill" cx="15.8" cy="9.5" r="2.5"/>'
+            '<path class="gt-fill" d="M3 19c.4-3.2 2.7-5.3 5.5-5.3s5.1 2.1 5.5 5.3zM13.6 14.3c.7-.4 1.4-.6 2.2-.6 2.4 0 4.3 1.8 4.7 4.6h-5.4c-.2-1.6-.7-2.9-1.5-4z"/>',
+    "dash": '<rect class="gt-fill" x="3" y="4.5" width="18" height="15" rx="2.5"/><path class="gt-line" d="M6.5 15.5l3.2-3.6 2.8 2.2 4.8-5.6"/><path class="gt-line" d="M6.5 8h3"/>',
+}
 
 
 def demo_geo(b):
@@ -1686,7 +1702,8 @@ def demo_geo(b):
     Nike product page, once for QAD Redzone's FAQ and blog. The demo plays one, then the other; the switch picks."""
     cases = []
     for k, c in enumerate(b["cases"]):
-        res = "".join(f'<li><span class="geo-thumb" aria-hidden="true"></span>{esc(r)}</li>' for r in c["results"])
+        res = "".join(f'<li><span class="geo-thumb" aria-hidden="true"><svg viewBox="0 0 24 24">{GEO_THUMB[i]}</svg></span>{esc(r)}</li>'
+                      for r, i in zip(c["results"], c["thumbs"]))
         fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(f)}</span><span>{esc(v)}</span></li>' for f, v in c["fields"]) + "</ul>"
         search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
                            f'<span class="geo-typed" data-text="{esc(c["search"])}">{esc(c["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
