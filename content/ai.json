@@ -441,7 +441,7 @@
       },
       {
         "id": "repurpose",
-        "h": "One Episode, Five Pieces",
+        "h": "One Episode, Five Formats",
         "p": [
           "A demonstration on a public episode of Cohesity's Resilience Universe podcast: CEO Sanjay Poonen with Kevin Mandia, 26 minutes. Claude reads the transcript and marks the moments that make sense on their own. I cut each one to the shape and length of the place it will run."
         ],
@@ -456,7 +456,7 @@
             "17:30: an outline for a blog post.",
             "19:20: a 21-second audiogram for Shorts and Reels."
           ],
-          "end": "Five pieces from one 26-minute episode."
+          "end": "Five formats from one 26-minute episode."
         },
         "episode": {
           "title": "Resilience Universe with Sanjay Poonen | Kevin Mandia",

@@ -749,10 +749,17 @@
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     // the line under the demo says what is happening: the moments being found, then each piece as it lands
     const note = fig.querySelector(".ai-note");
+    // a piece's line ("9:45: a 48-second clip...") shows its time in blue above it: "Content Developed from 9:45"
     const say = (t) => {
-      if (!note || note.textContent === t) return;
+      const m = /^(\d+:\d\d): (.)(.*)$/.exec(t);
+      const text = m ? m[2].toUpperCase() + m[3] : t;
+      if (!note || note.textContent === text) return;
       note.classList.add("is-fading");
-      setTimeout(() => { note.textContent = t; note.classList.remove("is-fading"); }, 250);
+      setTimeout(() => {
+        note.textContent = text;
+        if (m) note.dataset.step = `Content Developed from ${m[1]}`; else delete note.dataset.step;
+        note.classList.remove("is-fading");
+      }, 250);
     };
     async function loop() {
       for (;;) {

@@ -1654,7 +1654,7 @@ def demo_fan(b, root):
              f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>{"".join(opens)}</div>')
     # its caption sits in the box, right under the pieces it describes
     live = f'<p class="ai-note ai-live">{esc(b["note"])}</p>' if b.get("note") else ""
-    return ai_figure({**b, "note": None}, "One podcast episode turned into five pieces",
+    return ai_figure({**b, "note": None}, "One podcast episode turned into five formats",
                      f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{live}{sheet}{AI_SOUND}')
 
 
