@@ -776,7 +776,8 @@
         await d.wait(5000);
       }
     }
-    // the two clips play small, muted, while the demo plays; a card opens its piece large (the clips with sound)
+    // the two clips play small, muted, while the demo plays; a card opens its piece full screen, sized to fit (the
+    // clips with sound)
     const clips = [...fig.querySelectorAll(".fn-video")];
     const play = (on) => clips.forEach((v) => { if (on) { const p = v.play(); p && p.catch(() => {}); } else v.pause(); });
     const sheet = fig.querySelector(".fn-sheet"), bigs = [...fig.querySelectorAll(".fn-big")];
@@ -785,12 +786,14 @@
       if (sheet.hidden) return;
       bigs.forEach((b) => { b.hidden = true; const v = b.querySelector("video"); v && v.pause(); });
       sheet.hidden = true;
+      document.documentElement.classList.remove("ai-locked");
       opener && opener.focus();
     };
     fig.querySelectorAll(".fn-open").forEach((btn, i) => btn.addEventListener("click", () => {
       opener = btn;
       bigs.forEach((b) => { b.hidden = +b.dataset.i !== i; });
       sheet.hidden = false;
+      document.documentElement.classList.add("ai-locked");   // full screen over the page, which stays put
       const v = bigs[i].querySelector("video");
       if (v) { v.currentTime = 0; const p = v.play(); p && p.catch(() => {}); }
       sheet.querySelector(".fn-close").focus();
