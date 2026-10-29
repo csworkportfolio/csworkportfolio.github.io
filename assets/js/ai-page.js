@@ -543,7 +543,7 @@
     // drawn at 1280 by 800 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
     // ChatGPT window (drawn 380 wide) overlaps Premiere's right side: on a wide screen the two sit level, Premiere the
     // bigger one on the left 84%, ChatGPT smaller (28% wide, 80% of Premiere's height) and centered beside it; on a
-    // phone ChatGPT sits under Premiere, overlapping its bottom
+    // phone they stack like cards in Apple Wallet, the same size, the one behind showing its top edge above the other
     const stage = fig.querySelector(".pr-stage"), cl = fig.querySelector(".cl-window");
     const frame = () => {
       const W = stage.clientWidth, mobile = W < 640;
@@ -553,14 +553,15 @@
       view.style.setProperty("--pr-s", s);
       view.style.height = (mobile ? 760 : 800) * s + "px";
       const ph = view.parentElement.offsetHeight;
-      const cw = mobile ? W * 0.84 : W * 0.28, cs = cw / 380, chH = mobile ? 440 : ph * 0.8 / cs;
-      const cx = W - cw, cy = mobile ? ph - 48 : ph * 0.1;
+      const peek = 46, cw = mobile ? W : W * 0.28, cs = cw / 380, chH = (mobile ? ph : ph * 0.8) / cs;
+      const cx = W - cw, cy = mobile ? 0 : ph * 0.1;
+      stage.style.setProperty("--peek", peek + "px");
       stage.style.setProperty("--pw", pw + "px");
       stage.style.setProperty("--cl-s", cs);
       stage.style.setProperty("--cl-h", chH);
       stage.style.setProperty("--cx", cx + "px");
       stage.style.setProperty("--cy", cy + "px");
-      stage.style.setProperty("--st-h", Math.max(ph, cy + chH * cs) + "px");
+      stage.style.setProperty("--st-h", (mobile ? ph + peek : Math.max(ph, cy + chH * cs)) + "px");
     };
     new ResizeObserver(frame).observe(stage);
     frame();
@@ -666,7 +667,8 @@
       requestAnimationFrame(frame);
     };
     full(false);
-    win.addEventListener("click", () => full(!fig.classList.contains("is-full")));
+    // Premiere behind ChatGPT: a click brings it to the front (and keeps it there) instead
+    win.addEventListener("click", () => { if (up) lock("pr"); else full(!fig.classList.contains("is-full")); });
     win.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); full(!fig.classList.contains("is-full")); } });
     fig.querySelector(".ai-stage").addEventListener("click", (e) => { if (e.target === e.currentTarget && fig.classList.contains("is-full")) full(false); });
     addEventListener("keydown", (e) => { if (e.key === "Escape" && fig.classList.contains("is-full")) full(false); });
