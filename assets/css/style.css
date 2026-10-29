@@ -3348,8 +3348,11 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .pr.is-mobile .pr-track.is-cap { height: 40px; }
 
 /* 4. one episode, five pieces */
-.ai-fan { --fn-on: #0a84ff; --fn-off: rgba(0,0,0,.14); }
-@media (prefers-color-scheme: dark) { html.can-dark .ai-fan { --fn-off: rgba(255,255,255,.18); } }
+/* Cohesity's greens for the accents (its brand guidelines: #009e60, and the bright #00dd68 on dark); links take a
+   deeper green so small text stays readable on white */
+.ai-fan { --fn-on: #009e60; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; }
+@media (prefers-color-scheme: dark) { html.can-dark .ai-fan { --fn-on: #00dd68; --fn-off: rgba(255,255,255,.18); --ai-blue: #00c45c; --fn-link: #00dd68; } }
+.ai-fan :is(.fn-ep-a, .fn-link) { color: var(--fn-link); }
 .fn-ep { background: var(--ai-win); border-radius: 14px; box-shadow: var(--ai-shadow); padding: 16px 18px 12px; }
 .fn-ep-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; padding-right: 30px; }
 .fn-ep-t { font-size: 14px; font-weight: 600; }
