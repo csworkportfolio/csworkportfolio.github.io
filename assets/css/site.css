@@ -3581,13 +3581,13 @@ html.theme-dark.can-dark .cl-window { box-shadow: 0 0 0 .5px rgba(255, 255, 255,
 
 /* 4. one episode, five pieces */
 /* Cohesity's greens for the accents, as its logo guidelines (July 2025) set them: #009e60 on light backgrounds,
-   the bright #00dd68 on dark ones (digital only). Numbers on the green are white on the deep green and black on the
-   bright one, as Cohesity sets its bright green buttons; links take a deeper green so small text stays readable on white */
-.ai-fan { --fn-on: #fc0080; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; --fn-ink: #fff; }
+   the bright #00dd68 on dark ones (digital only); links take a deeper green so small text stays readable on white.
+   The waveform, timecode markers and card numbers are its magenta (below), the numbers white on it */
+.ai-fan { --fn-on: #fc0080; --fn-off: rgba(0,0,0,.14); --ai-blue: #009e60; --fn-link: #007a4a; }
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light).can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; --fn-ink: #000; }
+  html:not(.theme-light).can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; }
 }
-html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; --fn-ink: #000; }
+html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,.18); --ai-blue: #00dd68; --fn-link: #00dd68; }
 .ai-fan :is(.fn-ep-a, .fn-link) { color: var(--fn-link); }
 .ai-fan .fn-ep { margin-top: 14px; }   /* room under the sound and pause buttons */
 :root[data-os="ios"] .ai-fan .fn-ep { margin-top: 22px; }
@@ -3598,9 +3598,9 @@ html.theme-dark.can-dark .ai-fan { --fn-on: #fc0080; --fn-off: rgba(255,255,255,
 .fn-ep-a:hover { text-decoration: underline; }
 .fn-wavebar { position: relative; height: 56px; margin-top: 24px; }
 .fn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.fn-mark { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 1.5px dashed var(--ai-blue); }
+.fn-mark { position: absolute; top: -6px; bottom: -6px; width: 0; border-left: 1.5px dashed var(--fn-mag); }
 .fn-mark button { position: absolute; top: -12px; left: -11px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
-  font-family: var(--round); font-size: 11px; font-weight: 700; color: var(--fn-ink, #fff); background: var(--ai-blue); transition: transform .4s var(--ease); }
+  font-family: var(--round); font-size: 11px; font-weight: 700; color: #fff; background: var(--fn-mag); transition: transform .4s var(--ease); }
 .fn-mark button:hover { transform: scale(1.15); }
 .fn-mark button:focus-visible { outline: 2px solid var(--ai-blue); outline-offset: 2px; }
 .fn-mark button::after { content: ""; position: absolute; inset: -8px; }   /* a bigger target than the dot */
@@ -3678,7 +3678,7 @@ html.theme-dark.can-dark .li-nl { --li-bg: #1b1f23; --li-ink: rgba(255, 255, 255
 .fn-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
 :root[data-os="ios"] .fn-close { width: 44px; height: 44px; top: 8px; right: 8px; }
 .fn-kind { display: flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 13px; font-weight: 600; }
-.fn-num { flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-family: var(--round); font-size: 10px; font-weight: 700; color: var(--fn-ink, #fff); background: var(--ai-blue); }
+.fn-num { flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-family: var(--round); font-size: 10px; font-weight: 700; color: #fff; background: var(--fn-mag); }
 .fn-at { margin-left: auto; font-family: var(--round); font-size: 11px; font-weight: 500; color: var(--ai-sub); }
 .fn-spec { margin-top: 6px; font-size: 12px; line-height: 1.35; }
 /* how each piece gets made: Claude's draft, his edits, publishing, joined by arrows */
