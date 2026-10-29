@@ -1159,7 +1159,8 @@
   // ---------- category strips held in 3D: on a desktop each tile leans toward the pointer and lifts on its
   // shadow, the nearest most (the long-form notes also drift a little toward it). Phones stay flat. ----------
   // ("pieces": what leans, for other holders; the locked post's pane uses it too)
-  function tiltStrip(strip, pieces = ".tile") {
+  // ("together": every piece leans and lifts as one sheet, measured from the holder, so none sits farther back)
+  function tiltStrip(strip, pieces = ".tile", together = false) {
     if (!canHover || reduceMotion || !strip.closest(".cat-v2")) return;
     const notes = strip.classList.contains("strip-notes");
     let px = 0, py = 0, inside = false, frame = 0;
@@ -1169,7 +1170,7 @@
       if (!inside) return;
       const vw = innerWidth;
       tiles().forEach((t) => {
-        const r = t.getBoundingClientRect();
+        const r = (together ? strip : t).getBoundingClientRect();
         if (r.right < 0 || r.left > vw) return;
         const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
         const dx = Math.max(-1, Math.min(1, (px - cx) / Math.max(r.width, 300)));
@@ -1199,7 +1200,9 @@
   }
   document.querySelectorAll("[data-gallery]").forEach((g) => tiltStrip(g));   // not forEach(tiltStrip): its index would land in "pieces"
   // the AI page's demos lean toward the pointer the same way: each window, the episode bar and each format card
-  document.querySelectorAll(".ai-stage").forEach((s) => tiltStrip(s, ".mb-window, .pr-stage, .hb-window, .fn-ep, .fn-open, .ai-window.geo-pane, .geo-src > .ai-window, .sr-window"));
+  // (the search demo's windows stack in rows, so they lean together: the lower ones never look farther back)
+  document.querySelectorAll(".ai-stage").forEach((s) => tiltStrip(s, ".mb-window, .pr-stage, .hb-window, .fn-ep, .fn-open, .ai-window.geo-pane, .geo-src > .ai-window, .sr-window",
+    !!s.closest(".ai-geo")));
 
   // ---------- password-locked pages (Ghostwriting) ----------
   // The gallery and text are stored encrypted (tools/lock_ghostwriting.py): PBKDF2-SHA256 turns the password
