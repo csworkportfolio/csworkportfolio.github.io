@@ -3823,3 +3823,12 @@ a.tl-cta:active { transform: scale(.96); }
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 .5px rgba(255, 255, 255, .08), 0 14px 34px -14px rgba(0, 0, 0, .6); }
 }
 @media (prefers-reduced-transparency: reduce) { .ai-fan :is(.fn-ep, .fn-card) { background: var(--ai-win); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+/* Nike's step label in silver with a soft shine: a light band sweeps across it now and then (graphite on light) */
+#geo[data-case="nike"] .ai-step { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(105deg, #55555a 0%, #8e8e93 38%, #d1d1d6 50%, #8e8e93 62%, #55555a 100%);
+  background-size: 260% 100%; background-position: 100% 0; animation: nike-shine 7s ease-in-out infinite; }
+@media (prefers-color-scheme: dark) {
+  html.can-dark #geo[data-case="nike"] .ai-step { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
+}
+@keyframes nike-shine { 0%, 62% { background-position: 100% 0; } 92%, 100% { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { #geo[data-case="nike"] .ai-step { animation: none; background-position: 50% 0; } }
