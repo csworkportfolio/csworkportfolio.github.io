@@ -327,6 +327,7 @@ button { font: inherit; color: inherit; }
 .tools { margin-top: 14px; }
 .cat-text .kicker-italic + p { margin-top: 14px; }
 .cat-text .tools + p { margin-top: 4px; }
+.cat-text :is(h1, h2) + .tools { margin-top: 0; }   /* the tools sit right under the title, the description after them */
 .cat-text p:not(.kicker-italic):not(.tools) + p { margin-top: 16px; }  /* a blank line between body paragraphs */
 .cat-text p:not(.kicker-italic):not(.tools) { font-size: 17px; line-height: 1.5; }
 /* a heading that introduces the strip below it sits close to that strip (Graphic Design) */

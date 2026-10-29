@@ -967,8 +967,8 @@ def render_category(page, site, media):
             parts.append(f'''
 <section class="wrap cat-text{lead}">
   <{tag}>{esc(b["heading"])}</{tag}>
-  <p class="kicker-italic">{esc(b["kicker"])}</p>
   {tools}
+  <p class="kicker-italic">{esc(b["kicker"])}</p>
   {paragraphs(b["body"])}
 </section>''')
     if page.get("contact"):
@@ -1820,14 +1820,14 @@ def render_ai(page, site, media):
     with a demo under most sections. In the switcher as AI Workflows."""
     root = "../"
     hero = page["hero"]
-    # it opens as a category page does (title, description, tools, a paragraph), and the content machine's loop
+    # it opens as a category page does (title, tools, description, a paragraph), and the content machine's loop
     # comes straight after as the first thing shown
     opening = next(b for b in page["blocks"] if b["demo"] == "machine")
     parts = [f'''<script src="{root}assets/js/ai-page.js?v={asset_version("assets/js/ai-page.js")}" defer></script>
 <section class="wrap cat-text is-lead is-first ai-head">
   <h1>{esc(hero["title"])}</h1>
-  <p class="kicker-italic">{esc(page["lede"])}</p>
   <p class="tools">{esc(page["tools"])}</p>
+  <p class="kicker-italic">{esc(page["lede"])}</p>
   {paragraphs(opening["p"])}
 </section>''']
     parts += [ai_block(b, root) for b in page["blocks"]]
