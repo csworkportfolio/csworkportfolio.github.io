@@ -610,7 +610,6 @@
             "at": 585,
             "kind": "LinkedIn Clip",
             "shape": "4:5",
-            "spec": "1080 by 1350, 48 seconds, captions on",
             "path": [
               "Claude drafts 48 sec video",
               "I give re-edits",
@@ -626,7 +625,6 @@
             "at": 637,
             "kind": "Quote Card",
             "shape": "quote",
-            "spec": "1080 by 1350, the line, his photo and name",
             "path": [
               "Claude drafts visual and pulls quote",
               "I re-edit in Adobe Photoshop",
@@ -641,7 +639,6 @@
             "at": 715,
             "kind": "Newsletter Blurb",
             "shape": "text",
-            "spec": "Three sentences and a link",
             "path": [
               "Claude drafts blurb and link",
               "I edit for voice",
@@ -657,7 +654,6 @@
             "at": 1050,
             "kind": "Blog Post",
             "shape": "doc",
-            "spec": "An outline in three sections",
             "path": [
               "Claude outlines three sections",
               "I give re-edits",
@@ -677,7 +673,6 @@
             "at": 1160,
             "kind": "Short Vertical",
             "shape": "9:16",
-            "spec": "Vertical audiogram, 21 seconds",
             "path": [
               "Claude drafts 21 sec audiogram",
               "I re-edit in Adobe Photoshop",
@@ -1118,15 +1113,7 @@
             "label": "See the Cohesity 3D Animation",
             "href": "cohesity/"
           }
-        ],
-        "note": "A live copy of this page, running inside this page.",
-        "address": "csworkportfolio.github.io/ai/",
-        "chips": [
-          "This is the page you're reading.",
-          "Moved off Wix and rebuilt with Claude Code.",
-          "You are here."
-        ],
-        "demo_off": "meta"
+        ]
       }
     ],
     "tools": "Claude Code, ChatGPT, Codex, Gemini, Copilot"

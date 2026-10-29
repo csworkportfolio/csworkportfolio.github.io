@@ -1780,19 +1780,6 @@ def demo_tools(b, root):
     return f'<div class="wrap ai-demo ai-tools" data-demo="tools"><ul class="tl-grid">{"".join(cards)}</ul></div>'
 
 
-def demo_meta(b, root):
-    """The site inside itself: a browser window that zooms out from this page, holding a live copy of it (an
-    iframe at desktop size, scaled down) that a cursor scrolls through and back to this very section, where the
-    copy shows the window again. ai-page.js stops the copies two deep."""
-    chips = "".join(f'<span class="mt-chip">{esc(c)}</span>' for c in b["chips"])
-    inner = (f'<div class="mt-zoom"><div class="ai-window mt-win"><div class="ai-bar mt-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
-             f'<span class="mt-url">{esc(b["address"])}</span></div><div class="mt-view">'
-             f'<iframe class="mt-frame" title="This page, inside itself" tabindex="-1" loading="lazy" data-src="{root}ai/?frame=1#site"></iframe>'
-             f'<svg class="mt-cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>'
-             f'<span class="mt-here" aria-hidden="true">You are here</span></div></div></div><div class="mt-chips" aria-hidden="true">{chips}</div>')
-    return ai_figure(b, "This page, shown inside itself", inner)
-
-
 def demo_machine(b, root):
     """The page as one content machine: its steps in order, each a jump to the demo that shows it, the way back to
     the start, and results from the programs it ran in."""
@@ -1818,8 +1805,8 @@ def ai_block(b, root):
     if not kind:
         return words
     fig = {"geo": demo_geo}.get(kind)
-    if kind in ("localize", "board", "cut", "fan", "tools", "meta", "machine"):
-        return words + {"machine": demo_machine, "localize": demo_localize, "board": demo_board, "cut": demo_cut, "fan": demo_fan, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
+    if kind in ("localize", "board", "cut", "fan", "tools", "machine"):
+        return words + {"machine": demo_machine, "localize": demo_localize, "board": demo_board, "cut": demo_cut, "fan": demo_fan, "tools": demo_tools}[kind](b, root)
     return words + fig(b)
 
 

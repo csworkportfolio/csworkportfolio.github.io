@@ -3,9 +3,7 @@
 // every demo stays in its finished state and no video starts by itself.
 (() => {
   "use strict";
-  // the page inside itself (the last demo) loads with ?frame=1 or 2; those copies hold still
-  const depth = +new URLSearchParams(location.search).get("frame") || 0;
-  const still = depth > 0 || matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // one clock for every demo: a demo's waits only count down while it is playing
   const waiters = new Set();
@@ -971,62 +969,11 @@
     }
   }
 
-  // ---------- 7. this site, inside itself ----------
-  function meta(fig) {
-    const d = demo(fig);
-    const frame = fig.querySelector(".mt-frame"), view = fig.querySelector(".mt-view");
-    const cursor = fig.querySelector(".mt-cursor"), chips = [...fig.querySelectorAll(".mt-chip")];
-    // the copy is drawn at desktop size and scaled to the window; two copies deep, the window just says so
-    new ResizeObserver(() => view.style.setProperty("--mt-scale", view.clientWidth / 1280)).observe(view);
-    if (depth >= 2) { frame.remove(); fig.classList.add("is-here"); return; }
-    const src = frame.dataset.src.replace("frame=1", "frame=" + (depth + 1));
-    if (depth > 0) { frame.src = src; fig.classList.add("is-here"); return; }
-    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { frame.src = src; o.disconnect(); } }, { rootMargin: "600px 0px" }).observe(fig);
-    const win = () => frame.contentWindow;
-    // scroll the copy smoothly, a step per frame, on the demo's own clock
-    async function glide(to, ms) {
-      const w = win(); if (!w) return;
-      const from = w.scrollY, steps = Math.max(1, Math.round(ms / 16));
-      for (let i = 1; i <= steps; i++) {
-        const k = i / steps, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-        w.scrollTo({ top: from + (to - from) * e, behavior: "instant" });
-        await d.wait(16);
-      }
-    }
-    const point = (x, y) => { cursor.style.left = x + "%"; cursor.style.top = y + "%"; };
-    const chip = (i) => chips.forEach((c, k) => c.classList.toggle("is-on", k === i));
-    async function loop() {
-      for (;;) {
-        fig.classList.add("is-close"); fig.classList.remove("is-here", "is-pointing"); chip(-1);
-        const doc = frame.contentDocument, site = doc && doc.getElementById("site");
-        const target = site ? site.getBoundingClientRect().top + win().scrollY - 60 : 0;
-        if (win()) win().scrollTo({ top: target, behavior: "instant" });
-        await d.wait(500);
-        fig.classList.remove("is-close");          // zoom out of the page you are reading
-        chip(0);
-        await d.wait(3000);
-        fig.classList.add("is-pointing"); point(62, 40);
-        await d.wait(900);
-        chip(1); point(30, 22);
-        await glide(0, 2200);                       // up to the top of the page
-        await d.wait(1000);
-        point(70, 70);
-        const end = doc ? doc.documentElement.scrollHeight - win().innerHeight : 0;
-        await glide(end * 0.55, 4200);              // down through the demos
-        point(48, 55);
-        await glide(target, 2600);                  // and back to this section
-        fig.classList.add("is-here"); chip(2); point(54, 62);
-        await d.wait(5200);
-      }
-    }
-    frame.addEventListener("load", () => wire(d, loop), { once: true });
-  }
-
-  const kinds = { localize, board, cut, fan, geo, tools, meta };
+  const kinds = { localize, board, cut, fan, geo, tools };
   for (const fig of document.querySelectorAll(".ai-demo[data-demo]")) {
     const k = kinds[fig.dataset.demo];
     if (!k) continue;
-    if (still && !["localize", "board", "cut", "tools", "meta"].includes(fig.dataset.demo)) continue;
+    if (still && !["localize", "board", "cut", "tools"].includes(fig.dataset.demo)) continue;
     k(fig);
   }
 })();
