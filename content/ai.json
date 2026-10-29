@@ -311,8 +311,7 @@
         "id": "video",
         "h": "93 Seconds of Takes, Cut to 43",
         "p": [
-          "I was given raw footage for a Mars Men project: six takes, with two hooks, three body takes and a call to action. I started by giving ChatGPT the transcript of every take. It told me what to cut and helped me pick the hook. Then I cut the video in Premiere by deleting those lines from the transcript, used ChatGPT to find B-roll on Pexels that fit what I had in mind, and let AI make the captions for sound-off viewing.",
-          "The short hook won. The \"You weren't built to be average\" take moved up to sit right behind it, and lines that repeated a point came out."
+          "I was given raw footage for a Mars Men project: six takes, with two hooks, three body takes and a call to action. I started by giving ChatGPT the transcript of every take. It told me what to cut and helped me pick the hook. Then I cut the video in Premiere by deleting those lines from the transcript, used ChatGPT to find B-roll on Pexels that fit what I had in mind, and let AI make the captions for sound-off viewing."
         ],
         "demo": "cut",
         "note": "Rebuilt for this page on the finished edit's own timeline and soundtrack, from the clean raw takes, with the color corrected, the B-roll's old captions painted out and new captions on top. The transcript is from the real takes, and the playhead and highlighted line follow the video.",
