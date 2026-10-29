@@ -3454,18 +3454,22 @@ html.theme-dark.can-dark .pr-window { --p-bg: #161616; --p-top: #1f1f1f; --p-pan
 .cl-window { position: absolute; z-index: 0; left: var(--cx, 60%); top: var(--cy, 0); width: calc(380px * var(--cl-s, .7));
   height: calc(var(--cl-h, 560) * 1px * var(--cl-s, .7)); box-shadow: 0 0 0 .5px rgba(0, 0, 0, .14), 0 30px 70px -20px rgba(0, 0, 0, .45); }
 /* the window in front: the one behind steps back a little, and the one coming forward settles into place */
-.pr-stage .pr-window, .cl-window { transition: transform .5s var(--ease), filter .5s; }
-.pr-stage:not(.is-gpt) .cl-window { transform: scale(.96); transform-origin: 100% 50%; filter: brightness(.94); }
+.pr-stage .pr-window, .cl-window { transition: transform .5s var(--ease); }
+.pr-stage:not(.is-gpt) .cl-window { transform: scale(.96); transform-origin: 100% 50%; }
 .pr-stage.is-gpt .cl-window { z-index: 2; }
-.pr-stage.is-gpt .pr-window { transform: scale(.98); transform-origin: 0 50%; filter: brightness(.9); }
-.pr-stage.is-swap > .is-up { animation: pr-up .5s var(--ease); }
-@keyframes pr-up { from { transform: scale(.96); } }
-@media (prefers-reduced-motion: reduce) { .pr-stage .pr-window, .cl-window { transition: none; } .pr-stage.is-swap > .is-up { animation: none; } }
+.pr-stage.is-gpt .pr-window { transform: scale(.98); transform-origin: 0 50%; }
+/* the window behind is dimmed by a shade over it, not a filter: a filter over the playing video makes the window
+   flash as it comes and goes */
+.pr-stage .pr-window::after, .cl-window::after { content: ""; position: absolute; inset: 0; z-index: 20; border-radius: inherit; background: #000;
+  opacity: 0; pointer-events: none; transition: opacity .5s; }
+.pr-stage:not(.is-gpt) .cl-window::after { opacity: .06; }
+.pr-stage.is-gpt .pr-window::after { opacity: .1; }
+@media (prefers-reduced-motion: reduce) { .pr-stage .pr-window, .cl-window, .pr-stage .pr-window::after, .cl-window::after { transition: none; } }
 
 /* a phone: the two stack like Wallet cards, the one behind lifted to show its top edge, and swap places */
 .ai-cut.is-mobile .pr-stage > :is(.pr-window, .cl-window) { transform: translateY(var(--peek)); transform-origin: 50% 0; filter: none; }
-.ai-cut.is-mobile .pr-stage:not(.is-gpt) .cl-window, .ai-cut.is-mobile .pr-stage.is-gpt .pr-window { transform: scale(.94); filter: brightness(.94); }
-.ai-cut.is-mobile .pr-stage.is-swap > .is-up { animation: none; }
+.ai-cut.is-mobile .pr-stage:not(.is-gpt) .cl-window, .ai-cut.is-mobile .pr-stage.is-gpt .pr-window { transform: scale(.94); }
+.ai-cut.is-mobile .pr-stage:not(.is-gpt) .cl-window::after, .ai-cut.is-mobile .pr-stage.is-gpt .pr-window::after { opacity: .06; }
 /* on a phone they are apps, not Mac windows: no title bars or window buttons, each card starts with its app's own header */
 .ai-cut.is-mobile :is(.pr-window, .cl-window) .ai-bar, .pr.is-mobile .pr-dots { display: none; }
 

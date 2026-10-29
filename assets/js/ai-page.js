@@ -660,12 +660,10 @@
       const mode = front ? front.dataset.mode : "auto";
       const gpt = mode === "gpt" || (mode === "auto" && ahead);
       if (gpt === up) return;
-      const first = up === null;
       up = gpt;
       stage.classList.toggle("is-gpt", gpt);
       cl.classList.toggle("is-up", gpt);
       view.parentElement.classList.toggle("is-up", !gpt);
-      if (!first) { stage.classList.remove("is-swap"); void stage.offsetWidth; stage.classList.add("is-swap"); }
     }
     function lock(mode) {
       const m = modes[mode];
