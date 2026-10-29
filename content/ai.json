@@ -25,7 +25,7 @@
           {
             "n": "Draft",
             "t": "Claude and ChatGPT draft from a knowledge base of rules and ideas",
-            "href": "#editorial"
+            "href": "#video"
           },
           {
             "n": "Repurpose",
@@ -139,7 +139,8 @@
           "Zapier and Claude",
           "Every Item",
           "Statuses"
-        ]
+        ],
+        "step": "1 · Plan"
       },
       {
         "id": "video",
@@ -435,7 +436,8 @@
               "A man in bed looking at his phone"
             ]
           }
-        ]
+        ],
+        "step": "2 · Draft"
       },
       {
         "id": "repurpose",
@@ -687,7 +689,8 @@
             "video": "assets/ai/episode-vertical.mp4",
             "poster": "assets/ai/episode-vertical.jpg"
           }
-        ]
+        ],
+        "step": "3 · Repurpose"
       },
       {
         "id": "localize",
@@ -905,7 +908,8 @@
         "views": [
           "Desktop",
           "Mobile"
-        ]
+        ],
+        "step": "4 · Localize"
       },
       {
         "id": "geo",
@@ -984,7 +988,8 @@
               ]
             ]
           }
-        ]
+        ],
+        "step": "5 · Optimize"
       },
       {
         "id": "tools",

@@ -3929,3 +3929,6 @@ html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
 .ai-page .prose { padding-left: var(--gutter); }
 .ai-page .ai-head { padding-bottom: 0; }
 .ai-page .ai-head + .ai-machine { margin-top: 32px; }
+
+/* the loop step a section shows, above its heading */
+.prose .ai-step { margin: 0 0 6px; font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--ai-blue); }
