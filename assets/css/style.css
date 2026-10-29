@@ -3793,3 +3793,5 @@ a.tl-cta:active { transform: scale(.96); }
 .footer-back { font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; }
 .footer-back:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ai-localize .ai-stage > .hb-window { margin-top: 14px; }   /* clear of the Desktop/Mobile switch and pause, as in the other demos */
+/* the AI page's demo bubbles in the loop cards' darker gray (#0F0F0F), in dark mode */
+@media (prefers-color-scheme: dark) { html.can-dark .ai-page .ai-stage { background: #0f0f0f; } }
