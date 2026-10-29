@@ -2,9 +2,13 @@
 Kevin Mandia (the public YouTube episode, kept in source-extra/episode with its Whisper word timings):
 
     assets/ai/episode-linkedin.mp4  the LinkedIn clip, 4:5 (LinkedIn's 1080 by 1350 post), with captions
-    assets/ai/episode-vertical.mp4  the Shorts and Reels cut, 9:16, with captions
-    assets/ai/episode-quote.jpg     the quote card, 1080 by 1350, in the show's look: the Resilience Universe
-                                    lockup, his line and his headshot cut out (Apple Vision, tools/person_mask.swift)
+    assets/ai/episode-vertical.mp4  the Shorts and Reels piece: a 9:16 audiogram of 19:20 to 19:41, laid out by
+                                    Christian in PhotoCraft (storyboards/audiogram.pcraft), its waveform moving
+                                    with his voice
+    assets/ai/episode-quote.jpg     the quote card, 1080 by 1350, in the show's look; exported from Christian's
+                                    PhotoCraft file (storyboards/linkedin-quote.pcraft) when there is one, or else
+                                    drawn here: the lockup, his line and his headshot cut out (Apple Vision,
+                                    tools/person_mask.swift)
     (and a poster .jpg for each clip)
 
 and prints the episode's waveform (its loudness in 140 slices) for content/ai.json. The captions are his words as
@@ -37,7 +41,6 @@ FIX = {"phone": "vulnerability"}
 # frame) that keeps Mandia centered
 CLIPS = {
     "linkedin": {"from": 585.4, "to": 633.55, "size": (432, 540), "crop": (864, 1080, 508), "y": 0.93, "font": 30},
-    "vertical": {"from": 1160.4, "to": 1181.7, "size": (406, 720), "crop": (608, 1080, 636), "y": 0.9, "font": 30},
 }
 
 
@@ -159,11 +162,82 @@ def quote_card(mask_tool):
     card.save(ROOT / "assets/ai/episode-quote.jpg", quality=88)
 
 
+BOARDS = ROOT.parent / "storyboards"
+AUDIOGRAM = {"from": 1160.4, "to": 1181.7, "size": (540, 960)}
+
+
+def layers(pcraft):
+    return json.loads(subprocess.run(["photocraft-cli", "info", pcraft], capture_output=True, text=True, check=True).stdout)["layers"]
+
+
+def export(pcraft, hide, out):
+    """The PhotoCraft file as a PNG, with the given layers hidden."""
+    args = ["photocraft-cli", "run", pcraft]
+    for i in hide:
+        args += ["--cmd", "layer.hideLayers", "--params", json.dumps({"layer": i})]
+    subprocess.run(args + ["--out", out], check=True, capture_output=True)
+
+
+def audiogram():
+    """The vertical: his layout from PhotoCraft (the green panel and background under the waveform, everything else
+    over it), with the waveform redrawn every frame from his voice, the bars scrolling past as he speaks."""
+    board = BOARDS / "audiogram.pcraft"
+    ls = layers(board)
+    wave = next(l for l in ls if l["name"].lower().startswith("waveform"))
+    under = [l["id"] for l in ls if l["name"] in ("Background", "green")]
+    W, H = AUDIOGRAM["size"]
+    with tempfile.TemporaryDirectory() as tmp:
+        export(board, [l["id"] for l in ls if l["id"] not in under], f"{tmp}/under.png")
+        export(board, under + [wave["id"]], f"{tmp}/over.png")
+        base = Image.open(f"{tmp}/under.png").convert("RGBA")
+        over = Image.open(f"{tmp}/over.png").convert("RGBA")
+    k = W / base.width
+    base, over = base.resize((W, H), Image.LANCZOS), over.resize((W, H), Image.LANCZOS)
+    x0, y0, bw, bh = (v * k for v in wave["bounds"])
+    t0, dur = AUDIOGRAM["from"], AUDIOGRAM["to"] - AUDIOGRAM["from"]
+    pcm = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t0:.3f}", "-t", f"{dur:.3f}", "-i", str(EP), "-vn", "-ac", "1", "-ar", "8000",
+                          "-f", "s16le", "-"], capture_output=True, check=True).stdout
+    a = np.frombuffer(pcm, dtype=np.int16).astype(np.float32)
+    step = 0.05   # each bar is 50 ms of his voice; the bars scroll right to left, the newest at the right
+    loud = np.array([np.sqrt(np.mean(s ** 2)) if len(s) else 0 for s in np.array_split(a, int(dur / step))])
+    loud = (loud / np.percentile(loud, 98)).clip(0, 1) ** 1.3
+    bars = 58
+    out = ROOT / "assets/ai/episode-vertical.mp4"
+    enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
+                            "-ss", f"{t0:.3f}", "-t", f"{dur:.3f}", "-i", str(EP), "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-crf", "26",
+                            "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "96k", "-shortest", "-movflags", "+faststart", str(out)],
+                           stdin=subprocess.PIPE)
+    gap = bw / bars
+    for n in range(int(dur * FPS)):
+        now = n / FPS / step
+        frame = base.copy()
+        d = ImageDraw.Draw(frame)
+        for i in range(bars):
+            j = now - (bars - 1 - i)
+            v = loud[int(j)] if 0 <= j < len(loud) else 0
+            h = max(3 * k * 2, v * bh)
+            x = x0 + i * gap + gap * 0.35
+            d.rounded_rectangle([x, y0 + bh / 2 - h / 2, x + max(2, gap * 0.32), y0 + bh / 2 + h / 2], radius=2, fill=(0, 0, 0, 255))
+        frame.alpha_composite(over)
+        enc.stdin.write(frame.convert("RGB").tobytes())
+        if n == int(4 * FPS):
+            frame.convert("RGB").save(ROOT / "assets/ai/episode-vertical.jpg", quality=84)
+    enc.stdin.close()
+    enc.wait()
+    print("audiogram", dur, "seconds")
+
+
 def main():
     words = json.loads((SRC / "words.json").read_text())
     for name, c in CLIPS.items():
         cut(name, c, words)
-    quote_card(sys.argv[1])
+    audiogram()
+    if (BOARDS / "linkedin-quote.pcraft").exists():
+        export(BOARDS / "linkedin-quote.pcraft", [], ROOT / "assets/ai/episode-quote.png")
+        Image.open(ROOT / "assets/ai/episode-quote.png").convert("RGB").save(ROOT / "assets/ai/episode-quote.jpg", quality=88)
+        (ROOT / "assets/ai/episode-quote.png").unlink()
+    else:
+        quote_card(sys.argv[1])
     # the waveform: the episode's loudness in 140 slices, 0 to 1
     pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", str(EP), "-vn", "-ac", "1", "-ar", "8000", "-f", "s16le", "-"],
                          capture_output=True, check=True).stdout
