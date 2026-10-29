@@ -3895,3 +3895,19 @@ html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
   html.theme-dark.can-dark .mc-steps a:hover { background: rgba(10,132,255,.18); }
 @media (max-width: 900px) { .mc-steps { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); } .mc-steps li:nth-child(4)::before { display: none; } }
 @media (max-width: 560px) { .mc-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mc-steps li:nth-child(odd)::before { display: none; } }
+/* A faint pulse runs the loop: card 1, each arrow in turn, then back along the return line to the start */
+.mc-back { position: relative; }
+.mc-back::after { content: ""; position: absolute; bottom: -1.5px; left: calc(100% - 80px); width: 80px; height: 2px; border-radius: 2px; opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--ai-blue), transparent); box-shadow: 0 0 8px var(--ai-blue); animation: mc-run 6s linear infinite; }
+.mc-steps li + li::before { animation: mc-chev 6s ease-out infinite; }
+.mc-steps li:nth-child(2)::before { animation-delay: .5s; }
+.mc-steps li:nth-child(3)::before { animation-delay: 1s; }
+.mc-steps li:nth-child(4)::before { animation-delay: 1.5s; }
+.mc-steps li:nth-child(5)::before { animation-delay: 2s; }
+.mc-steps li:first-child .mc-n { animation: mc-dot 6s ease-out infinite; }
+.mc-back svg { animation: mc-icon 6s ease-out infinite; }
+@keyframes mc-chev { 0%, 100% { opacity: .5; } 5% { opacity: 1; border-color: var(--ai-blue); filter: drop-shadow(0 0 3px var(--ai-blue)); } 16% { opacity: .5; } }
+@keyframes mc-dot { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 4% { box-shadow: 0 0 0 5px rgba(10,132,255,.22); } 14% { box-shadow: 0 0 0 9px transparent; } }
+@keyframes mc-run { 0%, 48% { left: calc(100% - 80px); opacity: 0; } 52% { opacity: 1; } 92% { opacity: 1; } 97%, 100% { left: 0; opacity: 0; } }
+@keyframes mc-icon { 0%, 64%, 82%, 100% { filter: none; } 73% { filter: drop-shadow(0 0 4px var(--ai-blue)); } }
+@media (prefers-reduced-motion: reduce) { .mc-back::after, .mc-steps li::before, .mc-steps .mc-n, .mc-back svg { animation: none; } }
