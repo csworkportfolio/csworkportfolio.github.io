@@ -3792,3 +3792,4 @@ a.tl-cta:active { transform: scale(.96); }
 .footer-start { display: inline-flex; align-items: center; gap: 20px; }
 .footer-back { font-size: 15px; font-weight: 500; color: var(--ink); text-decoration: none; }
 .footer-back:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ai-localize .ai-stage > .hb-window { margin-top: 14px; }   /* clear of the Desktop/Mobile switch and pause, as in the other demos */
