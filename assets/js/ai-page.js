@@ -739,7 +739,7 @@
       g.scale(dpr, dpr);
       const w = r.width / N;
       for (let i = 0; i < N; i++) {
-        const h = Math.max(3, amp[i] * r.height * 0.9);
+        const h = Math.max(3, amp[i] * r.height * 0.78);   // the loudest bars stop short, so the playhead runs past them
         g.fillStyle = i / N < progress ? cs.getPropertyValue("--fn-on") : cs.getPropertyValue("--fn-off");
         g.beginPath(); g.roundRect(i * w + w * 0.2, (r.height - h) / 2, w * 0.6, h, w * 0.3); g.fill();
       }
@@ -749,7 +749,7 @@
         const x = Math.round(progress * r.width) + 0.5;
         g.fillStyle = g.strokeStyle = cs.getPropertyValue("--fn-head");
         g.lineWidth = 1.5;
-        g.beginPath(); g.moveTo(x, 3); g.lineTo(x, r.height - 3); g.stroke();
+        g.beginPath(); g.moveTo(x, 3); g.lineTo(x, r.height - 3); g.stroke();   // the full height, its dots at the edges
         for (const y of [3, r.height - 3]) { g.beginPath(); g.arc(x, y, 3, 0, Math.PI * 2); g.fill(); }
       }
       if (now) {
