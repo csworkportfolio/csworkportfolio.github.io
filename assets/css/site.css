@@ -3456,7 +3456,8 @@ html.theme-dark.can-dark .pr-window { --p-bg: #161616; --p-top: #1f1f1f; --p-pan
 .ai-cut.is-mobile .pr-stage > :is(.pr-window, .cl-window) { transform: translateY(var(--peek)); transform-origin: 50% 0; filter: none; }
 .ai-cut.is-mobile .pr-stage:not(.is-gpt) .cl-window, .ai-cut.is-mobile .pr-stage.is-gpt .pr-window { transform: scale(.94); filter: brightness(.94); }
 .ai-cut.is-mobile .pr-stage.is-swap > .is-up { animation: none; }
-.ai-cut.is-mobile .pr-window .ai-bar { display: flex; }
+/* on a phone they are apps, not Mac windows: no title bars or window buttons, each card starts with its app's own header */
+.ai-cut.is-mobile :is(.pr-window, .cl-window) .ai-bar, .pr.is-mobile .pr-dots { display: none; }
 
 /* a click on Premiere opens both windows larger (sized to fit the screen's height); a click on ChatGPT locks it in front */
 .pr-stage .pr-window { cursor: zoom-in; }
