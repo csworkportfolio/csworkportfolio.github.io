@@ -890,6 +890,7 @@
       fig.querySelectorAll(".geo-fine").forEach((f) => { f.hidden = +f.dataset.case !== k; });
       const sec = document.getElementById("geo");   // the section's label takes the picked brand's color
       if (sec) sec.dataset.case = data.cases[k].id;
+      fig.dataset.case = data.cases[k].id;   // and so does its caption's step label
       picks.forEach((p, i) => p.setAttribute("aria-pressed", String(i === k)));
     };
     // the picked example plays through (the keywords typed and their results, the question and its answer, then the

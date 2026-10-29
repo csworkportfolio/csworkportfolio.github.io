@@ -3832,3 +3832,21 @@ a.tl-cta:active { transform: scale(.96); }
 }
 @keyframes nike-shine { 0%, 62% { background-position: 100% 0; } 92%, 100% { background-position: 0 0; } }
 @media (prefers-reduced-motion: reduce) { #geo[data-case="nike"] .ai-step { animation: none; background-position: 50% 0; } }
+/* the "Step 1 of 5" over each demo's caption takes its section's brand color too */
+.ai-board { --sec-tint: #d71920; }
+.ai-cut { --sec-tint: #ff5600; }
+.ai-localize { --sec-tint: #009e60; }
+.ai-geo[data-case="redzone"] { --sec-tint: #d71920; }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .ai-board, html.can-dark .ai-geo[data-case="redzone"] { --sec-tint: #ff453a; }
+  html.can-dark .ai-localize { --sec-tint: #00dd68; }
+}
+:is(.ai-board, .ai-cut, .ai-localize, .ai-geo) .ai-live[data-step]::before { color: var(--sec-tint, var(--ai-blue)); }
+/* Nike's in the same silver, with the same soft shine */
+.ai-geo[data-case="nike"] .ai-live[data-step]::before { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(105deg, #55555a 0%, #8e8e93 38%, #d1d1d6 50%, #8e8e93 62%, #55555a 100%);
+  background-size: 260% 100%; background-position: 100% 0; animation: nike-shine 7s ease-in-out infinite; }
+@media (prefers-color-scheme: dark) {
+  html.can-dark .ai-geo[data-case="nike"] .ai-live[data-step]::before { background-image: linear-gradient(105deg, #8e8e93 0%, #c7c7cc 38%, #ffffff 50%, #c7c7cc 62%, #8e8e93 100%); }
+}
+@media (prefers-reduced-motion: reduce) { .ai-geo[data-case="nike"] .ai-live[data-step]::before { animation: none; background-position: 50% 0; } }
