@@ -1632,7 +1632,8 @@ def demo_fan(b, root):
         cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><button class="fn-open" type="button" aria-label="Open the {label}">'
                      f'<span class="fn-art">{art}</span></button>'
                      f'<p class="fn-kind"><span class="fn-num">{i + 1}</span>{esc(o["kind"])}<span class="fn-at">{mm(o["at"])}</span></p>'
-                     f'<p class="fn-spec">{esc(o["spec"])}</p><p class="fn-where">{esc(o["where"])}</p></li>')
+                     f'<ol class="fn-path" aria-label="How it gets made">{"".join(f"<li>{esc(x)}</li>" for x in o["path"])}</ol>'
+                     f'<p class="fn-where">{esc(o["where"])}</p></li>')
         opens.append(f'<div class="fn-big fn-{esc(o["shape"].replace(":", "x"))}" data-i="{i}" hidden>{big}'
                      f'<p class="fn-big-cap"><span class="fn-num">{i + 1}</span>{esc(o["kind"])} \u00b7 {esc(o["spec"])} \u00b7 {mm(o["at"])} in the episode</p></div>')
     head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'

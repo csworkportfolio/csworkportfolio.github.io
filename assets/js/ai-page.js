@@ -749,21 +749,30 @@
     new ResizeObserver(draw).observe(bar);
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    // the line under the demo says what is happening: the moments being found, then each piece as it lands
+    const note = fig.querySelector(".ai-note");
+    const say = (t) => {
+      if (!note || note.textContent === t) return;
+      note.classList.add("is-fading");
+      setTimeout(() => { note.textContent = t; note.classList.remove("is-fading"); }, 250);
+    };
     async function loop() {
       for (;;) {
         progress = 0; draw();
         cards.forEach((c) => c.classList.remove("is-on")); marks.forEach((m) => m.classList.remove("is-on"));
         await d.wait(500);
+        say(data.says.start);
         const order = data.outputs.map((o, i) => ({ at: o.at / data.episode.length, i })).sort((a, b) => a.at - b.at);
         let k = 0;
         for (let step = 0; step <= 100; step++) {
           progress = step / 100; draw();
           while (k < order.length && order[k].at <= progress) {
-            marks[order[k].i].classList.add("is-on"); cards[order[k].i].classList.add("is-on"); k++;
+            marks[order[k].i].classList.add("is-on"); cards[order[k].i].classList.add("is-on"); say(data.says.each[order[k].i]); k++;
             await d.wait(700);
           }
           await d.wait(70);
         }
+        say(data.says.end);
         await d.wait(5000);
       }
     }
@@ -812,6 +821,7 @@
         await d.wait(900);
         cite.classList.add("is-on");
         for (const f of fields) { await d.wait(500); f.classList.add("is-on"); }
+        say(data.says.end);
         await d.wait(5000);
       }
     }
