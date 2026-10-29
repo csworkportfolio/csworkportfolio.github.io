@@ -636,14 +636,40 @@
       view.parentElement.classList.toggle("is-up", !gpt);
       if (!first) { stage.classList.remove("is-swap"); void stage.offsetWidth; stage.classList.add("is-swap"); }
     }
-    front && front.addEventListener("click", () => {
-      const next = modes[front.dataset.mode][3], m = modes[next];
-      front.dataset.mode = next;
-      front.querySelector("span").textContent = m[0];
-      front.setAttribute("aria-label", `Window in front: ${m[1]}. Press to ${m[2]}`);
+    function lock(mode) {
+      const m = modes[mode];
+      if (front) {
+        front.dataset.mode = mode;
+        front.querySelector("span").textContent = m[0];
+        front.setAttribute("aria-label", `Window in front: ${m[1]}. Press to ${m[2]}`);
+      }
+      cl.setAttribute("aria-label", mode === "gpt" ? "ChatGPT, locked in front. Press to go back to automatic" : "The chat with ChatGPT about the cut. Press to keep it in front");
       stack();
-    });
-    stack();
+    }
+    front && front.addEventListener("click", () => lock(modes[front.dataset.mode][3]));
+    // a click on the ChatGPT window locks it in front; another click goes back to automatic
+    cl.tabIndex = 0;
+    cl.setAttribute("role", "button");
+    const pick = () => lock(front && front.dataset.mode === "gpt" ? "auto" : "gpt");
+    cl.addEventListener("click", pick);
+    cl.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+    lock("auto");
+    // a click on the Premiere window (or Enter) opens both windows larger, over the page; another click, Esc or the
+    // backdrop closes it
+    const win = view.parentElement;
+    win.tabIndex = 0;
+    win.setAttribute("role", "button");
+    const full = (on) => {
+      fig.classList.toggle("is-full", on);
+      document.documentElement.classList.toggle("ai-locked", on);
+      win.setAttribute("aria-label", on ? "Close the larger view" : "Open Premiere and ChatGPT larger");
+      requestAnimationFrame(frame);
+    };
+    full(false);
+    win.addEventListener("click", () => full(!fig.classList.contains("is-full")));
+    win.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); full(!fig.classList.contains("is-full")); } });
+    fig.querySelector(".ai-stage").addEventListener("click", (e) => { if (e.target === e.currentTarget && fig.classList.contains("is-full")) full(false); });
+    addEventListener("keydown", (e) => { if (e.key === "Escape" && fig.classList.contains("is-full")) full(false); });
     bars.forEach((b, i) => b.addEventListener("click", () => {
       video.currentTime = data.chapters[i].from + 0.01;
       d.resume && d.resume();

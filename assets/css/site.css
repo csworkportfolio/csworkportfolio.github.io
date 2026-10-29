@@ -2814,10 +2814,10 @@ html.theme-dark .hb-window { --hb-bg: #050508; --hb-card: #101213; --hb-thumb: #
 .mb-view { cursor: zoom-in; }
 .mb-view:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; }
 :is(.ai-localize, .ai-board).is-full :is(.hb-view, .mb-view) { cursor: zoom-out; }
-:is(.ai-localize, .ai-board).is-full .ai-stage { position: fixed; inset: 0; z-index: 10000; margin: 0; border-radius: 0; padding: 24px 24px 64px; display: grid; place-items: center; align-content: center;
+:is(.ai-localize, .ai-board, .ai-cut).is-full .ai-stage { position: fixed; inset: 0; z-index: 10000; margin: 0; border-radius: 0; padding: 24px 24px 64px; display: grid; place-items: center; align-content: center;
   background: var(--paper); }
 .ai-localize.is-full .hb-window { width: min(100%, calc((100vh - 170px) * 1280 / 708)); }
-:is(.ai-localize, .ai-board).is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: var(--muted); }
+:is(.ai-localize, .ai-board, .ai-cut).is-full .ai-note { position: fixed; left: 0; right: 0; bottom: 18px; z-index: 10001; margin: 0; padding: 0 24px; min-height: 0; color: var(--muted); }
 html.ai-locked { overflow: hidden; }
 html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has its own controls in that corner */
 .hb-view { position: relative; overflow: hidden; height: calc(708px * var(--hb-s, .6)); }
@@ -3442,6 +3442,14 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 .pr-stage.is-swap > .is-up { animation: pr-up .5s var(--ease); }
 @keyframes pr-up { from { transform: scale(.96); } }
 @media (prefers-reduced-motion: reduce) { .pr-stage .pr-window, .cl-window { transition: none; } .pr-stage.is-swap > .is-up { animation: none; } }
+
+/* a click on Premiere opens both windows larger (sized to fit the screen's height); a click on ChatGPT locks it in front */
+.pr-stage .pr-window { cursor: zoom-in; }
+.ai-cut.is-full .pr-stage .pr-window { cursor: zoom-out; }
+.cl-window { cursor: pointer; }
+:is(.pr-stage .pr-window, .cl-window):focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; }
+.ai-cut.is-full :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 206px) / .525)); }
+.ai-cut.is-full.is-mobile :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 122px) / 2.78)); }
 
 /* the switch for which window is in front (beside sound and pause): glass while automatic, blue while locked */
 .ai-front { position: absolute; top: 14px; right: 94px; z-index: 2; display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px 0 10px;
