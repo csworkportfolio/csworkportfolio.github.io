@@ -3364,31 +3364,35 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .fn-cards { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .fn-card { background: var(--ai-win); border-radius: 14px; box-shadow: var(--ai-shadow); padding: 12px; display: flex; flex-direction: column;
   transition: opacity .5s var(--ease), transform .5s var(--ease); }
-.fn-art { height: 170px; display: grid; place-items: center; border-radius: 9px; background: var(--ai-soft); padding: 10px; overflow: hidden; }
-.fn-frame { position: relative; display: grid; place-items: center; background: linear-gradient(160deg, #1d1d1f, #3a3a3c); border-radius: 6px; }
-.fn-1x1 .fn-art { grid-template-rows: auto auto; align-content: center; gap: 8px; }
-.fn-1x1 .fn-frame { width: 96px; height: 96px; }
-.fn-9x16 .fn-art { grid-template-columns: auto minmax(0, 1fr); gap: 10px; }
-.fn-9x16 .fn-frame { width: 66px; height: 117px; }
-.fn-wave { display: flex; align-items: center; gap: 3px; height: 30px; }
-.fn-wave i { width: 4px; border-radius: 2px; background: #fff; opacity: .85; animation: fn-bar 1.1s ease-in-out infinite alternate; }
-.fn-wave i:nth-child(1) { height: 30%; } .fn-wave i:nth-child(2) { height: 80%; animation-delay: -.3s; } .fn-wave i:nth-child(3) { height: 55%; animation-delay: -.6s; }
-.fn-wave i:nth-child(4) { height: 95%; animation-delay: -.2s; } .fn-wave i:nth-child(5) { height: 40%; animation-delay: -.8s; }
-@keyframes fn-bar { to { transform: scaleY(.45); } }
-@media (prefers-reduced-motion: reduce) { .fn-wave i { animation: none; } }
-.fn-cap { font-size: 11px; line-height: 1.3; font-weight: 600; text-align: center; }
-.fn-9x16 .fn-cap { text-align: left; }
-.fn-4x5 .fn-art { background: linear-gradient(160deg, #0b2a4a, #0a84ff); }
-.fn-quote { margin: 0; color: #fff; }
-.fn-quote p { font-family: var(--display); font-size: 15px; line-height: 1.2; font-weight: 700; letter-spacing: -.01em; }
-.fn-quote cite { display: block; margin-top: 8px; font-size: 11px; font-style: normal; opacity: .8; }
-.fn-text .fn-art, .fn-doc .fn-art { place-items: start; align-content: start; gap: 8px; background: var(--ai-win); border: .5px solid var(--ai-line); }
-.fn-doc-t { font-size: 12px; line-height: 1.3; font-weight: 700; }
-.fn-lines { display: grid; gap: 6px; width: 100%; }
-.fn-lines i { height: 6px; border-radius: 3px; background: var(--ai-soft); }
-.fn-lines i:last-child { width: 60%; }
-.fn-link { font-size: 11px; font-weight: 600; color: var(--ai-blue); }
-.fn-outline { margin: 0; padding-left: 16px; display: grid; gap: 4px; font-size: 11px; line-height: 1.3; color: var(--ai-sub); }
+.fn-open { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: zoom-in; }
+.fn-open:focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; border-radius: 10px; }
+.fn-art { height: 210px; display: grid; place-items: center; border-radius: 9px; background: var(--ai-soft); overflow: hidden; }
+.fn-video, .fn-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fn-9x16 .fn-art { background: #111; }
+.fn-9x16 .fn-video { width: auto; max-width: 100%; aspect-ratio: 9 / 16; }
+.fn-quote .fn-art { background: #0c0c0c; }
+.fn-quote .fn-art img { object-fit: contain; }
+.fn-text .fn-art, .fn-doc .fn-art { place-items: start; align-content: start; gap: 8px; padding: 12px; background: var(--ai-win); border: .5px solid var(--ai-line); }
+.fn-text .fn-art { -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent); mask-image: linear-gradient(180deg, #000 78%, transparent); }
+.fn-doc-t { display: block; font-size: 12.5px; line-height: 1.3; font-weight: 700; }
+.fn-blurb { display: block; font-size: 11.5px; line-height: 1.45; color: var(--ai-sub); }
+.fn-link { font-size: 11.5px; font-weight: 600; color: var(--ai-blue); text-decoration: none; }
+.fn-outline { display: grid; gap: 5px; font-size: 11.5px; line-height: 1.35; color: var(--ai-sub); }
+/* a card opened large, over the demo */
+.fn-sheet { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 56px 24px 24px; border-radius: inherit;
+  background: color-mix(in srgb, var(--paper, #fff) 86%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.fn-sheet[hidden], .fn-big[hidden] { display: none; }
+.fn-big { display: grid; justify-items: center; gap: 12px; max-height: 100%; }
+.fn-big :is(video, img) { display: block; max-width: 100%; max-height: min(64vh, 520px); border-radius: 12px; box-shadow: var(--ai-shadow); background: #000; }
+.fn-big-doc { width: min(100%, 480px); padding: 22px 24px; border-radius: 14px; background: var(--ai-win); box-shadow: var(--ai-shadow); display: grid; gap: 10px; }
+.fn-big-doc .fn-doc-t { font-size: 19px; }
+.fn-big-doc :is(.fn-blurb, .fn-outline, .fn-link) { font-size: 15px; line-height: 1.5; }
+.fn-big-doc .fn-outline { gap: 8px; color: inherit; }
+.fn-big-cap { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ai-sub); }
+.fn-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  color: var(--tabink); background: var(--tabglass); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--tabshadow); }
+.fn-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+:root[data-os="ios"] .fn-close { width: 44px; height: 44px; top: 8px; right: 8px; }
 .fn-kind { display: flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 13px; font-weight: 600; }
 .fn-num { flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-family: var(--round); font-size: 10px; color: #fff; background: var(--ai-blue); }
 .fn-at { margin-left: auto; font-family: var(--round); font-size: 11px; font-weight: 500; color: var(--ai-sub); }

@@ -1592,31 +1592,48 @@ def demo_cut(b, root):
     return ai_figure(b, "The Mars Men PSA in Premiere Pro: its transcript, the vertical cut and the timeline", inner)
 
 
-def demo_fan(b):
-    """One podcast episode as a waveform with five moments marked, and the five pieces cut from them."""
+def demo_fan(b, root):
+    """One podcast episode (its real waveform) with five moments marked, and the five real pieces cut from them: a
+    square clip and a vertical one with captions, a quote card, a newsletter blurb and a blog outline. Each card
+    shows its piece small; a click opens it large (the clips with sound)."""
     ep = b["episode"]
     mm = lambda s: f"{s // 60}:{s % 60:02d}"
+    src = lambda path: f'{root}{path}?v={asset_version(path)}'
     marks = "".join(f'<span class="fn-mark" style="left:{o["at"] / ep["length"] * 100:.2f}%"><span>{i + 1}</span></span>'
                     for i, o in enumerate(b["outputs"]))
-    cards = []
+    cards, opens = [], []
     for i, o in enumerate(b["outputs"]):
-        if o.get("quote"):
-            art = f'<blockquote class="fn-quote"><p>“{esc(o["quote"])}”</p><cite>{esc(o["by"])}</cite></blockquote>'
+        label = f'{esc(o["kind"])}: {esc(o.get("topic") or o.get("quote", ""))}'
+        if o.get("video"):
+            art = (f'<video class="fn-video" src="{src(o["video"])}" poster="{src(o["poster"])}" muted loop playsinline preload="none" '
+                   f'aria-hidden="true"></video>')
+            big = (f'<video class="fn-big-video" src="{src(o["video"])}" poster="{src(o["poster"])}" controls playsinline preload="none" '
+                   f'aria-label="{label}"></video>')
+        elif o.get("quote"):
+            img = f'<img src="{src(o["image"])}" alt="Quote card: \u201c{esc(o["quote"])}\u201d {esc(o["by"])}, Resilience Universe" loading="lazy">'
+            art, big = img, img
         elif o.get("outline"):
-            art = f'<p class="fn-doc-t">{esc(o["topic"])}</p><ol class="fn-outline">{"".join(f"<li>{esc(x)}</li>" for x in o["outline"])}</ol>'
-        elif o["shape"] == "text":
-            art = f'<p class="fn-doc-t">{esc(o["topic"])}</p><span class="fn-lines" aria-hidden="true"><i></i><i></i><i></i></span><span class="fn-link">Listen to the episode</span>'
+            body = (f'<span class="fn-doc-t">{esc(o["topic"])}</span>'
+                    f'<span class="fn-outline">{"".join(f"<span>{k + 1}. {esc(x)}</span>" for k, x in enumerate(o["outline"]))}</span>')
+            art, big = body, f'<div class="fn-big-doc">{body}</div>'
         else:
-            art = (f'<span class="fn-frame" aria-hidden="true"><span class="fn-wave"><i></i><i></i><i></i><i></i><i></i></span></span>'
-                   f'<span class="fn-cap">{esc(o["topic"])}</span>')
-        cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><div class="fn-art">{art}</div>'
+            body = f'<span class="fn-doc-t">{esc(o["topic"])}</span><span class="fn-blurb">{esc(o["blurb"])}</span>'
+            art = body + '<span class="fn-link">Listen to the episode</span>'   # inside the card's button: no link
+            big = (f'<div class="fn-big-doc">{body}<a class="fn-link" href="{esc(ep["href"])}" target="_blank" rel="noopener">'
+                   f'Listen to the episode</a></div>')
+        cards.append(f'<li class="fn-card fn-{esc(o["shape"].replace(":", "x"))}"><button class="fn-open" type="button" aria-label="Open the {label}">'
+                     f'<span class="fn-art">{art}</span></button>'
                      f'<p class="fn-kind"><span class="fn-num">{i + 1}</span>{esc(o["kind"])}<span class="fn-at">{mm(o["at"])}</span></p>'
                      f'<p class="fn-spec">{esc(o["spec"])}</p><p class="fn-where">{esc(o["where"])}</p></li>')
+        opens.append(f'<div class="fn-big fn-{esc(o["shape"].replace(":", "x"))}" data-i="{i}" hidden>{big}'
+                     f'<p class="fn-big-cap"><span class="fn-num">{i + 1}</span>{esc(o["kind"])} \u00b7 {esc(o["spec"])} \u00b7 {mm(o["at"])} in the episode</p></div>')
     head = (f'<div class="fn-ep"><div class="fn-ep-head"><span class="fn-ep-t">{esc(ep["title"])}</span>'
             f'<a class="fn-ep-a" href="{esc(ep["href"])}" target="_blank" rel="noopener">Watch the episode</a></div>'
             f'<div class="fn-wavebar" aria-hidden="true"><canvas class="fn-canvas"></canvas>{marks}</div>'
             f'<p class="fn-ep-len"><span>0:00</span><span>{mm(ep["length"])}</span></p></div>')
-    return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>')
+    sheet = (f'<div class="fn-sheet" hidden><button class="fn-close" type="button" aria-label="Close">'
+             f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>{"".join(opens)}</div>')
+    return ai_figure(b, "One podcast episode turned into five pieces", f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{sheet}')
 
 
 def demo_geo(b):
@@ -1674,9 +1691,9 @@ def ai_block(b, root):
     kind = b.get("demo")
     if not kind:
         return words
-    fig = {"fan": demo_fan, "geo": demo_geo}.get(kind)
-    if kind in ("localize", "board", "cut", "tools", "meta"):
-        return words + {"localize": demo_localize, "board": demo_board, "cut": demo_cut, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
+    fig = {"geo": demo_geo}.get(kind)
+    if kind in ("localize", "board", "cut", "fan", "tools", "meta"):
+        return words + {"localize": demo_localize, "board": demo_board, "cut": demo_cut, "fan": demo_fan, "tools": demo_tools, "meta": demo_meta}[kind](b, root)
     return words + fig(b)
 
 

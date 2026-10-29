@@ -730,9 +730,8 @@
     const data = parse(fig), d = demo(fig);
     const canvas = fig.querySelector(".fn-canvas"), bar = fig.querySelector(".fn-wavebar");
     const marks = [...fig.querySelectorAll(".fn-mark")], cards = [...fig.querySelectorAll(".fn-card")];
-    const N = 140, amp = [];
-    let seed = 7;
-    for (let i = 0; i < N; i++) { seed = (seed * 16807) % 2147483647; amp.push(0.25 + 0.75 * Math.abs(Math.sin(i * 0.37) * 0.6 + (seed / 2147483647 - 0.5))); }
+    // the episode's own waveform: its loudness in slices, measured from the audio (tools/ai_episode.py)
+    const amp = data.episode.peaks, N = amp.length;
     let progress = still ? 1 : 0;
     function draw() {
       const r = bar.getBoundingClientRect(), dpr = devicePixelRatio || 1;
@@ -768,7 +767,29 @@
         await d.wait(5000);
       }
     }
-    if (!still) { fig.classList.add("is-fresh"); wire(d, loop); }
+    // the two clips play small, muted, while the demo plays; a card opens its piece large (the clips with sound)
+    const clips = [...fig.querySelectorAll(".fn-video")];
+    const play = (on) => clips.forEach((v) => { if (on) { const p = v.play(); p && p.catch(() => {}); } else v.pause(); });
+    const sheet = fig.querySelector(".fn-sheet"), bigs = [...fig.querySelectorAll(".fn-big")];
+    let opener = null;
+    const close = () => {
+      if (sheet.hidden) return;
+      bigs.forEach((b) => { b.hidden = true; const v = b.querySelector("video"); v && v.pause(); });
+      sheet.hidden = true;
+      opener && opener.focus();
+    };
+    fig.querySelectorAll(".fn-open").forEach((btn, i) => btn.addEventListener("click", () => {
+      opener = btn;
+      bigs.forEach((b) => { b.hidden = +b.dataset.i !== i; });
+      sheet.hidden = false;
+      const v = bigs[i].querySelector("video");
+      if (v) { v.currentTime = 0; const p = v.play(); p && p.catch(() => {}); }
+      sheet.querySelector(".fn-close").focus();
+    }));
+    sheet.querySelector(".fn-close").addEventListener("click", close);
+    sheet.addEventListener("click", (e) => { if (e.target === sheet) close(); });
+    addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+    if (!still) { fig.classList.add("is-fresh"); wire(d, loop, { change: play }); }
   }
 
   // ---------- 5. GEO and AEO ----------
