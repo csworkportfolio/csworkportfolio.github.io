@@ -10,13 +10,13 @@
       "subtitle": "Localization, editorial planning, video, repurposing, GEO and AEO, and the tools I build with AI",
       "logos": []
     },
-    "lede": "I'm a digital marketer, and AI is part of how I work every day. I use it for the slow, repetitive parts so I have more time for the ideas, and I check everything it makes before it goes out. Day to day that means Claude Code, ChatGPT, Codex, Gemini and Copilot. These are the places it shows up, from posts localized for 10+ regions to apps I built for myself.",
+    "lede": "I'm a digital marketer, and AI is part of how I work every day. I use it for the slow, repetitive parts so I have more time for the ideas, and I check everything it makes before it goes out. Day to day that means Claude Code, ChatGPT, Codex, Gemini and Copilot. Below is where it shows up, from posts localized for 10+ regions to apps I built for myself.",
     "blocks": [
       {
         "id": "machine",
         "h": "How It Fits Together",
         "p": [
-          "Put together, these are one content machine. I plan in Monday.com, Claude drafts from our do's and don'ts, and one piece becomes five. Each is adapted for its region, written so search engines and AI answers find it, and tracked, so what works goes back into the next plan."
+          "The demos below are parts of one content machine. I plan in Monday.com, Claude drafts from our do's and don'ts, and one piece becomes five. Each piece is adapted for its region and written so search engines and AI answers can find it. Then I track how it does, and what works goes into the next plan."
         ],
         "demo": "machine",
         "steps": [
@@ -666,12 +666,12 @@
         "id": "repurpose",
         "h": "One Episode, Five Pieces",
         "p": [
-          "A demonstration on a public episode of Cohesity's Resilience Universe podcast: CEO Sanjay Poonen with Kevin Mandia, 26 minutes. AI reads the transcript and marks the moments that stand on their own. Each one is then cut for where it will run, in the shape and length that place expects."
+          "A demonstration on a public episode of Cohesity's Resilience Universe podcast: CEO Sanjay Poonen with Kevin Mandia, 26 minutes. Claude reads the transcript and marks the moments that make sense on their own. I cut each one to the shape and length of the place it will run."
         ],
         "demo": "fan",
-        "note": "Claude reads the transcript and marks the moments that stand on their own.",
+        "note": "Claude reads the transcript and marks the moments that make sense on their own.",
         "says": {
-          "start": "Claude reads the transcript and marks the moments that stand on their own.",
+          "start": "Claude reads the transcript and marks the moments that make sense on their own.",
           "each": [
             "9:45: a 48-second clip for LinkedIn, with captions.",
             "10:37: one line becomes a quote card.",
@@ -679,7 +679,7 @@
             "17:30: an outline for a blog post.",
             "19:20: a 21-second audiogram for Shorts and Reels."
           ],
-          "end": "One episode, five pieces, each in the shape its channel expects."
+          "end": "Five pieces from one 26-minute episode."
         },
         "episode": {
           "title": "Resilience Universe with Sanjay Poonen | Kevin Mandia",
@@ -918,7 +918,7 @@
         "id": "geo",
         "h": "Written for Search Engines and AI Answers",
         "p": [
-          "People type keywords into Google. They ask ChatGPT a question. GEO and AEO, generative and answer engine optimization, mean writing for both.",
+          "People type keywords into Google and ask ChatGPT full questions. GEO and AEO, generative and answer engine optimization, mean writing pages that work for both.",
           "At QAD Redzone in 2024 I organized our FAQs and blogs so search engines and AI answers could find them. At Nike I wrote alt text and product tags for both kinds of search: for someone who knows exactly what they want, and for someone who only knows roughly."
         ],
         "demo": "geo",
@@ -997,7 +997,7 @@
         "id": "tools",
         "h": "Tools I Built With Claude Code and Codex",
         "p": [
-          "In the evenings I build my own apps with Claude Code and Codex. I direct the work in plain English, test every build, and decide how each one looks and behaves. These are the ones I use every day."
+          "In the evenings I build my own apps with Claude Code and Codex. I tell them what I want in plain English, then test each build and decide how it should look and behave. I use all of these every day."
         ],
         "demo": "tools",
         "tools": [
