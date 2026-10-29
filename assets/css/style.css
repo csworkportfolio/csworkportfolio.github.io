@@ -3099,7 +3099,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 /* 3. the Mars Men cut, in a copy of Adobe Premiere Pro: drawn at 1280 x 800 and scaled to the window by
    ai-page.js (--pr-s); a phone gets a narrower layout (420 x 760). Premiere follows the page: on the light page
    its lighter mid-gray look (the classic charcoal panels), on the dark page its usual dark one. */
-.pr-window { --p-bg: #4a4a4a; --p-top: #6b6b6b; --p-panel: #606060; --p-head: #585858; --p-edge: #3e3e3e; --p-line: #545454; --p-line2: #787878;
+.pr-window { --p-bg: #555555; --p-top: #6b6b6b; --p-panel: #606060; --p-head: #585858; --p-edge: #3e3e3e; --p-line: #545454; --p-line2: #787878;
   --p-tick: #959595; --p-well: #484848; --p-field: #505050; --p-text: #dedede; --p-ink: #f2f2f2; --p-strong: #fff; --p-sub: #c2c2c2; --p-dim: #a3a3a3; }
 @media (prefers-color-scheme: dark) {
   html.can-dark .pr-window { --p-bg: #161616; --p-top: #1f1f1f; --p-panel: #1e1e1e; --p-head: #1b1b1b; --p-edge: #111; --p-line: #2a2a2a; --p-line2: #3a3a3a;
