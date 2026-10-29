@@ -6,14 +6,12 @@
     "description": "How Christian Sanchez, a digital marketer, uses AI across localization, editorial planning, video, repurposing, GEO and AEO, and the tools he builds with AI.",
     "hero": {
       "title": "AI in My Workflow",
-      "subtitle": "Localization, editorial planning, video, repurposing, GEO and AEO, and the tools I build with AI",
       "logos": []
     },
-    "lede": "I'm a digital marketer, and AI is part of how I work every day within Claude Code, ChatGPT, Codex, Gemini, and Copilot. It takes on the slow, repetitive tasks and sits as another springboard for ideas.",
+    "lede": "I'm a digital marketer, and AI is part of how I work every day. It takes on the slow, repetitive tasks and sits as another springboard for ideas.",
     "blocks": [
       {
         "id": "machine",
-        "h": "How It Fits Together",
         "p": [
           "The workflows below show the moving parts of content machines I've owned and delivered across my previous roles at QAD Redzone, Cohesity, Nike, and freelance."
         ],
@@ -1051,6 +1049,7 @@
     "next": {
       "slug": "cohesity",
       "label": "Cohesity Case Study"
-    }
+    },
+    "tools": "Claude Code, ChatGPT, Codex, Gemini, Copilot"
   }
 ]

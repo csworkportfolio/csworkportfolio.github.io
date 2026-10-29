@@ -1763,7 +1763,7 @@ def demo_machine(b, root):
     steps = "".join(f'<li><a href="{esc(st["href"])}"><span class="mc-n">{k}</span><b>{esc(st["n"])}</b><span>{esc(st["t"])}</span></a></li>'
                     for k, st in enumerate(b["steps"], 1))
     res = "".join(f'<li><b>{esc(r["v"])}</b><span>{esc(r["t"])}</span></li>' for r in b["results"])
-    return (f'<div class="wrap ai-demo ai-machine"><ol class="mc-steps">{steps}</ol>'
+    return (f'<div class="wrap ai-demo ai-machine" id="{esc(b["id"])}"><ol class="mc-steps">{steps}</ol>'
             f'<p class="mc-back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5"/></svg>{esc(b["back"])}</p>'
             f'<ul class="mc-results">{res}</ul></div>')
 
@@ -1775,7 +1775,7 @@ def ai_block(b, root):
         links = f'<p class="ai-links"><a href="{root}{esc(b["link"]["href"])}">{esc(b["link"]["label"])}</a></p>'
     if b.get("links"):
         links = '<p class="ai-links">' + "".join(f'<a href="{root}{esc(l["href"])}">{esc(l["label"])}</a>' for l in b["links"]) + "</p>"
-    words = section_open(b, " ai-sec") + links + "</section>"
+    words = section_open(b, " ai-sec") + links + "</section>" if b.get("h") else ""   # the opening's words are in the page's own head
     kind = b.get("demo")
     if not kind:
         return words
@@ -1790,12 +1790,16 @@ def render_ai(page, site, media):
     with a demo under most sections. In the switcher as AI Workflows."""
     root = "../"
     hero = page["hero"]
+    # it opens as a category page does (title, description, tools, a paragraph), and the content machine's loop
+    # comes straight after as the first thing shown
+    opening = next(b for b in page["blocks"] if b["demo"] == "machine")
     parts = [f'''<script src="{root}assets/js/ai-page.js?v={asset_version("assets/js/ai-page.js")}" defer></script>
-<header class="wrap cat-text is-lead is-first ai-head">
+<section class="wrap cat-text is-lead is-first ai-head">
   <h1>{esc(hero["title"])}</h1>
-  <p class="ai-sub">{esc(hero["subtitle"])}</p>
-</header>
-<div class="wrap prose lede-wrap"><p class="lede">{esc(page["lede"])}</p></div>''']
+  <p class="kicker-italic">{esc(page["lede"])}</p>
+  <p class="tools">{esc(page["tools"])}</p>
+  {paragraphs(opening["p"])}
+</section>''']
     parts += [ai_block(b, root) for b in page["blocks"]]
     nxt = page["next"]
     parts.append(f'''
@@ -1803,7 +1807,7 @@ def render_ai(page, site, media):
   <a class="case-nav-link" href="{root}">Back to Case Studies</a>
   <a class="btn btn-rust" href="{root}{nxt["slug"]}/" style="{case_shine(nxt["slug"], media)}">{esc(nxt["label"])}</a>
 </nav>''')
-    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 ai-page"}
+    page = {**page, "type": "case", "nav_active": "ai", "body_class": "case-v2 cat-v2 ai-page"}
     return layout(page, site, root, "\n".join(parts), media)
 
 

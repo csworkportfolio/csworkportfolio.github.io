@@ -3924,11 +3924,8 @@ html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
 .ai-live[data-step]::before { font-size: 12px; margin-bottom: 3px; }
 @media (max-width: 720px) { :is(.ai-localize, .ai-board, .ai-cut, .ai-fan) .ai-note { font-size: 14px; } }
 
-/* The AI page opens on its title and subtitle as plain type, with no banner, set where the category pages set
-   theirs; its text lines up on the same left edge as theirs */
-.ai-page .ai-head { padding-bottom: 0; }
-.ai-page .ai-head h1 { margin: 0 0 14px; font-size: clamp(34px, 3.8vw, 46px); line-height: 1.05; font-weight: 700; letter-spacing: -.025em; color: var(--ink); }
-.ai-page .ai-head .ai-sub { margin: 0; font-size: 17px; line-height: 1.45; color: var(--muted); max-width: 72ch; }
+/* The AI page opens as the category pages do (title, description, tools, a paragraph, set by .cat-v2 .cat-text),
+   and its text lines up on the same left edge as theirs */
 .ai-page .prose { padding-left: var(--gutter); }
-.ai-head + .lede-wrap { margin-top: 28px; }
-@media (max-width: 720px) { .ai-page .ai-head h1 { font-size: 28px; line-height: 1.1; margin-bottom: 10px; } .ai-page .ai-head .ai-sub { font-size: 16px; } }
+.ai-page .ai-head { padding-bottom: 0; }
+.ai-page .ai-head + .ai-machine { margin-top: 32px; }
