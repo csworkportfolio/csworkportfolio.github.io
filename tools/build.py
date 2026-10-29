@@ -1467,7 +1467,7 @@ def tc(sec, fps=30):
 
 
 def demo_cut(b, root):
-    """The Mars Men PSA in a copy of Adobe Premiere Pro (drawn at 1280 by 720 and scaled to fit; a phone gets a
+    """The Mars Men PSA in a copy of Adobe Premiere Pro (drawn at 1280 by 800 and scaled to fit; a phone gets a
     narrower layout): the transcript of every take in the Text panel with the cut lines struck, the vertical video
     in the Program monitor, the six takes in the Project panel, and the 43-second cut on the timeline, whose
     playhead, timecode and highlighted line follow the video."""

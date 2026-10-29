@@ -540,7 +540,7 @@
     const clocks = [...fig.querySelectorAll(".pr-tc-now")];
     const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
     const clips = [...fig.querySelectorAll(".is-v1 .pr-clip")], audio = [...fig.querySelectorAll(".is-a1 .pr-clip")];
-    // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
+    // drawn at 1280 by 800 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
     // ChatGPT window (drawn 380 wide) overlaps Premiere's right side: on a wide screen the two sit level, Premiere the
     // bigger one on the left 84%, ChatGPT smaller (28% wide, 80% of Premiere's height) and centered beside it; on a
     // phone ChatGPT sits under Premiere, overlapping its bottom
@@ -551,7 +551,7 @@
       fig.classList.toggle("is-mobile", mobile);
       const pw = mobile ? W : W * 0.84, s = pw / (mobile ? 420 : 1280);
       view.style.setProperty("--pr-s", s);
-      view.style.height = (mobile ? 760 : 720) * s + "px";
+      view.style.height = (mobile ? 760 : 800) * s + "px";
       const ph = view.parentElement.offsetHeight;
       const cw = mobile ? W * 0.84 : W * 0.28, cs = cw / 380, chH = mobile ? 440 : ph * 0.8 / cs;
       const cx = W - cw, cy = mobile ? ph - 48 : ph * 0.1;
