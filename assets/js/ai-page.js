@@ -921,6 +921,13 @@
       const results = [...c.querySelectorAll(".geo-results li")], fields = [...c.querySelectorAll(".geo-fields li")];
       const answer = c.querySelector(".geo-answer"), cite = c.querySelector(".geo-cite"), sr = c.querySelector(".geo-sr");
       const ask = c.querySelector(".geo-ask"), dots = c.querySelector(".geo-dots");
+      // the part of the page a result or an answer came from glows for a moment: a field by its number, or the page itself
+      const glow = (when) => (data.cases[k].glow?.[when] || []).forEach((n) => {
+        const el = n === "page" ? c.querySelector(".geo-page-wrap") : fields[n];
+        if (!el) return;
+        el.classList.remove("geo-glow"); void el.offsetWidth; el.classList.add("geo-glow");
+      });
+      c.querySelectorAll(".geo-glow").forEach((el) => el.classList.remove("geo-glow"));
       const wait = async (ms) => { await d.wait(ms); if (g !== gen) throw g; };
       // the search typed a few characters at a time; a reset stops it where it is
       const type = async (el, speed) => {
@@ -934,6 +941,8 @@
       await type(kw, 70);
       say(k, 1);
       for (const r of results) { await wait(220); r.classList.add("is-on"); }
+      await wait(300);
+      glow("results");
       await wait(1800);
       say(k, 2);
       await wait(400);
@@ -944,6 +953,8 @@
       say(k, 3);
       dots.classList.remove("is-on");
       answer.classList.add("is-on");
+      await wait(400);
+      glow("answer");
       await wait(900);
       cite.classList.add("is-on");
       await wait(1400);

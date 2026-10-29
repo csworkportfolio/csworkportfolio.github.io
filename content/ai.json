@@ -921,6 +921,7 @@
             "label": "Nike",
             "source": "Nike.com Product Page: What Both of Them Read",
             "cite": "From the Product Page",
+            "glow": {"results": [1], "answer": ["page"]},
             "search": "jannik sinner nike shirt",
             "ask": "What should I wear to play tennis on a hot day?",
             "thumbs": [
@@ -965,6 +966,7 @@
             "label": "QAD Redzone",
             "source": "QAD Redzone FAQ and Blog: What Both of Them Read",
             "cite": "From the FAQ",
+            "glow": {"results": [0, 1], "answer": [0]},
             "platform": "Semrush, where I tracked it at QAD Redzone.",
             "search": "OEE software manufacturing",
             "ask": "What is OEE, and how do frontline teams improve it?",
