@@ -1660,42 +1660,46 @@ def demo_fan(b, root):
                      f'{head}<ol class="fn-cards">{"".join(cards)}</ol>{live}{sheet}{AI_SOUND}')
 
 
-def ranking(v):
+def ranking(n):
     """Semrush's Position Tracking box: visibility, how many keywords rank in the top 3, 10, 20 and 100, and the top
-    keywords. The keywords are examples from the demo; every position, share and count is hidden."""
+    keywords. The keywords are examples from the demo; the figures are example figures (content: numbers)."""
+    v = lambda x: f'<b class="sr-n">{esc(x)}</b>'
     area = ('<svg class="sr-area" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true">'
             '<path d="M0 34 L14 22 L28 36 L44 20 L60 26 L74 16 L88 30 L102 24 L116 38 L130 30 L146 44 L160 36 L176 48 L200 46 V80 H0Z"/></svg>')
-    tops = "".join(f'<li><span>{n}</span><span class="sr-ring"></span>{v}<svg class="sr-spark" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">'
+    tops = "".join(f'<li><span>{t}</span><span class="sr-ring"></span>{v(x)}<svg class="sr-spark" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">'
                    '<path d="M0 14 L12 12 L20 15 L30 8 L40 11 L52 6 L62 10 L74 5 L86 9 L100 7"/></svg></li>'
-                   for n in ("Top 3", "Top 10", "Top 20", "Top 100"))
-    kws = "".join(f'<li><span>{k}</span><i class="sr-tag sr-tag-{t.lower()}">{t}</i>{v}{v}</li>'
-                  for k, t in (("oee software", "Keyword"), ("what is oee", "Question"), ("how to improve oee", "Question"),
-                               ("manufacturing downtime", "Keyword"), ("frontline production", "Keyword")))
+                   for t, x in zip(("Top 3", "Top 10", "Top 20", "Top 100"), n["tops"]))
+    kws = "".join(f'<li><span>{k}</span><i class="sr-tag sr-tag-{t.lower()}">{t}</i>{v(pos)}{v(vis)}</li>'
+                  for (k, t), (pos, vis) in zip((("oee software", "Keyword"), ("what is oee", "Question"), ("how to improve oee", "Question"),
+                                                  ("manufacturing downtime", "Keyword"), ("frontline production", "Keyword")), n["keywords"]))
     return ('<section class="sr-box sr-wide"><p class="sr-tab sr-tab-pt">Position Tracking</p><div class="sr-pt">'
-            f'<div class="sr-vis"><p class="sr-h">Visibility</p>{v}{area}</div>'
+            f'<div class="sr-vis"><p class="sr-h">Visibility</p>{v(n["pt_visibility"])}{area}</div>'
             f'<div><p class="sr-h">Keywords</p><ul class="sr-tops">{tops}</ul></div>'
             '<div><p class="sr-h">Top Keywords</p><p class="sr-kh"><span>Keywords</span><span></span><span>Position</span><span>Visibility</span></p>'
             f'<ul class="sr-kw">{kws}</ul></div></div></section>')
 
 
 def semrush(c):
-    """Where it was measured: a copy of Semrush's SEO dashboard, its AI Search and SEO boxes, with every value
-    hidden (no QAD Redzone numbers are confirmed for the page)."""
-    v = '<b class="sr-v" aria-hidden="true"></b>'
-    ai_rows = "".join(f'<li><span class="sr-src sr-{k}"></span>{n}{v}{v}</li>' for k, n in (("g", "AI Overview"), ("g", "AI Mode"), ("gpt", "ChatGPT")))
-    seo = "".join(f'<li><span>{n}</span>{v}</li>' for n in ("Authority Score", "Organic Traffic", "Organic Keywords", "Ref. Domains"))
-    cited = "".join(f'<li><span class="sr-kind">{k}</span><span class="sr-url">{u}</span>{v}</li>'
-                    for k, u in (("FAQ", "/faq/what-is-oee"), ("Blog", "/blog/how-frontline-teams-improve-oee")))
+    """Where it was measured: a copy of Semrush's SEO dashboard (AI Search, SEO and Position Tracking) filled with
+    example figures, changed for the page; the fine print under the demo says so."""
+    n = c["numbers"]
+    v = lambda x: f'<b class="sr-n">{esc(x)}</b>'
+    ai_rows = "".join(f'<li><span class="sr-src sr-{k}"></span>{name}{v(m)}{v(p)}</li>'
+                      for (k, name), (m, p) in zip((("g", "AI Overview"), ("g", "AI Mode"), ("gpt", "ChatGPT")), n["ai_rows"]))
+    seo = "".join(f'<li><span>{name}</span>{v(x)}</li>' for name, x in zip(("Authority Score", "Organic Traffic", "Organic Keywords", "Ref. Domains"), n["seo"]))
+    cited = "".join(f'<li><span class="sr-kind">{k}</span><span class="sr-url">{u}</span>{v(x)}</li>'
+                    for (k, u), x in zip((("FAQ", "/faq/what-is-oee"), ("Blog", "/blog/how-frontline-teams-improve-oee")), n["cited_pages"]))
     return (f'<div class="geo-sr"><p class="geo-k">Semrush SEO Dashboard: QAD Redzone</p>'
             + ai_window("Semrush  \u00b7  SEO Dashboard: QAD Redzone",
                         '<div class="sr-grid">'
                         '<section class="sr-box"><p class="sr-tab sr-tab-ai">AI Search</p>'
-                        f'<div class="sr-tot"><p><span>AI Visibility</span><span class="sr-gauge"></span>{v}</p><p><span>Mentions</span>{v}</p><p><span>Cited Pages</span>{v}</p></div>'
+                        f'<div class="sr-tot"><p><span>AI Visibility</span><span class="sr-gauge"></span>{v(n["ai_visibility"])}</p>'
+                        f'<p><span>Mentions</span>{v(n["mentions"])}</p><p><span>Cited Pages</span>{v(n["cited"])}</p></div>'
                         f'<ul class="sr-ai">{ai_rows}'
                         '<li><span class="sr-src sr-gem"></span>Gemini<i class="sr-soon">soon</i></li></ul>'
                         f'<p class="sr-h sr-cited-h">Top Cited Pages</p><ul class="sr-cited">{cited}</ul></section>'
                         f'<section class="sr-box"><p class="sr-tab sr-tab-seo">SEO</p><ul class="sr-seo">{seo}</ul></section>'
-                        f'{ranking(v)}</div>', " sr-window")
+                        f'{ranking(n)}</div>', " sr-window")
             + f'<p class="geo-k sr-note">{esc(c["platform"])}</p></div>')
 
 

@@ -970,7 +970,7 @@
             "label": "QAD Redzone",
             "source": "QAD Redzone FAQ and Blog: What Both of Them Read",
             "cite": "From the FAQ",
-            "platform": "Semrush, where I tracked it at QAD Redzone. The numbers are hidden.",
+            "platform": "Semrush, where I tracked it at QAD Redzone.",
             "search": "OEE software manufacturing",
             "ask": "What is OEE, and how do frontline teams improve it?",
             "thumbs": [
@@ -1006,7 +1006,65 @@
               "Both read the same pages: the question as the heading, a short answer first.",
               "Semrush tracked how the pages did in search and AI answers. The numbers are hidden."
             ],
-            "fine": "Analytics have been hidden; the searches and questions are real examples."
+            "fine": "Analytics have been changed for example purposes; the searches and questions are real examples.",
+            "numbers": {
+              "ai_visibility": "28",
+              "mentions": "186",
+              "cited": "412",
+              "ai_rows": [
+                [
+                  "94",
+                  "221"
+                ],
+                [
+                  "38",
+                  "117"
+                ],
+                [
+                  "54",
+                  "74"
+                ]
+              ],
+              "seo": [
+                "34",
+                "21.4K",
+                "6.8K",
+                "1.2K"
+              ],
+              "cited_pages": [
+                "63",
+                "41"
+              ],
+              "pt_visibility": "12.6%",
+              "tops": [
+                "18",
+                "64",
+                "121",
+                "287"
+              ],
+              "keywords": [
+                [
+                  "2",
+                  "3.1%"
+                ],
+                [
+                  "1",
+                  "2.8%"
+                ],
+                [
+                  "4",
+                  "1.9%"
+                ],
+                [
+                  "7",
+                  "1.2%"
+                ],
+                [
+                  "3",
+                  "0.9%"
+                ]
+              ]
+            }
           }
         ],
         "step": "5 · Optimize"

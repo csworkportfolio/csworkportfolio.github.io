@@ -3775,3 +3775,11 @@ a.tl-cta:active { transform: scale(.96); }
 @media (max-width: 720px) { .ai-geo .geo-live { font-size: 14px; } }
 .ai-geo .geo-fine { margin: 10px 0 0; text-align: center; font-size: 12px; color: var(--muted); opacity: .55; }
 .ai-geo .ai-stage { padding-bottom: 22px; }   /* the fine print is the last line, so the box ends close under it */
+
+/* the Semrush copy's figures, in Semrush's blue: big for the headline numbers, smaller in the lists */
+.sr-n { font-weight: 600; color: var(--sr-blue); font-variant-numeric: tabular-nums; }
+.sr-tot .sr-n, .sr-seo .sr-n, .sr-vis .sr-n { font-size: 22px; line-height: 1.1; }
+.sr-ai .sr-n, .sr-cited .sr-n, .sr-kw .sr-n { font-size: 13px; font-weight: 500; }
+.sr-kw .sr-n { justify-self: end; }
+.sr-cited .sr-n { justify-self: end; }
+.sr-tops .sr-n { font-size: 17px; }
