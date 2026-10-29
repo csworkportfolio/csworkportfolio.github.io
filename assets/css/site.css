@@ -3448,6 +3448,10 @@ html.theme-dark .zp-pane { --zp-bg: #141414; --zp-ink: #f2f2f2; --zp-card: #2323
 .ai-cut.is-full .pr-stage .pr-window { cursor: zoom-out; }
 .cl-window { cursor: pointer; }
 :is(.pr-stage .pr-window, .cl-window):focus-visible { outline: 3px solid var(--ai-blue); outline-offset: 2px; }
+/* room under the switch, sound and pause buttons, so they never sit on the windows */
+.ai-cut .pr-stage { margin-top: 14px; }
+:root[data-os="ios"] .ai-cut .pr-stage { margin-top: 22px; }
+.ai-cut.is-full .pr-stage { margin-top: 40px; }
 .ai-cut.is-full :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 206px) / .525)); }
 .ai-cut.is-full.is-mobile :is(.pr-stage, .hb-chapters) { width: min(100%, calc((100vh - 122px) / 2.78)); }
 
