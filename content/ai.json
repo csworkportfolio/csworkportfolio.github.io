@@ -311,7 +311,7 @@
         "id": "video",
         "h": "93 Seconds of Takes, Cut to 43",
         "p": [
-          "I was given raw footage for a Mars Men project: six takes, with two hooks, three body takes and a call to action. I started by giving Claude the transcript of every take. It told me what to cut and helped me pick the hook. Then I cut the video in Premiere by deleting those lines from the transcript, used Claude to find B-roll on Pexels that fit what I had in mind, and let AI make the captions for sound-off viewing.",
+          "I was given raw footage for a Mars Men project: six takes, with two hooks, three body takes and a call to action. I started by giving ChatGPT the transcript of every take. It told me what to cut and helped me pick the hook. Then I cut the video in Premiere by deleting those lines from the transcript, used ChatGPT to find B-roll on Pexels that fit what I had in mind, and let AI make the captions for sound-off viewing.",
           "The short hook won. The \"You weren't built to be average\" take moved up to sit right behind it, and lines that repeated a point came out."
         ],
         "demo": "cut",
@@ -533,19 +533,19 @@
             "label": "The Hook",
             "from": 0,
             "to": 2.0,
-            "say": "I gave Claude the transcript of all six takes, and it helped me pick the shortest hook."
+            "say": "I gave ChatGPT the transcript of all six takes, and it helped me pick the shortest hook."
           },
           {
             "label": "Text-Based Cut",
             "from": 2.0,
             "to": 17.23,
-            "say": "Claude told me which lines to cut. I cut them in Premiere by deleting them from the transcript."
+            "say": "ChatGPT told me which lines to cut. I cut them in Premiere by deleting them from the transcript."
           },
           {
             "label": "B-Roll",
             "from": 17.23,
             "to": 25.1,
-            "say": "Claude helped me find the B-roll on Pexels. For this page I rebuilt the edit with Claude Code from those clean clips, with the color fixed."
+            "say": "ChatGPT helped me find the B-roll on Pexels. For this page I rebuilt the edit with Claude Code from those clean clips, with the color fixed."
           },
           {
             "label": "Captions",
@@ -554,7 +554,7 @@
             "say": "AI finds the speaker in every frame, so the big captions sit behind him, and each word lands as he says it."
           }
         ],
-        "claude": [
+        "chat": [
           {
             "who": "me",
             "ch": 0,

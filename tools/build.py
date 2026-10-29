@@ -1504,8 +1504,8 @@ def demo_cut(b, root):
     track = lambda name, inner, cls="": (f'<div class="pr-track{cls}"><span class="pr-th"><b>{name}</b>{ico("bell") if False else ""}'
                                           f'<i class="pr-lock"></i></span><div class="pr-lane">{inner}</div></div>')
     tools = "".join(ico(n) for n in ("play", "sliders", "search", "edit", "people"))
-    # the chat with Claude, in its own window over Premiere's corner (he worked it out with Claude before opening
-    # Premiere): his timestamped transcript and Claude's cuts, then the B-roll search; each message shows from the
+    # the chat with ChatGPT, in its own window over Premiere's corner (he worked it out with ChatGPT before opening
+    # Premiere): his timestamped transcript and ChatGPT's cuts, then the B-roll search; each message shows from the
     # chapter it belongs to
     def msg(m):
         extra = ""
@@ -1516,9 +1516,8 @@ def demo_cut(b, root):
         if m.get("links"):
             extra += '<ul class="cl-links">' + "".join(f"<li><span>pexels.com</span>{esc(c)}</li>" for c in m["links"]) + "</ul>"
         return (f'<li class="cl-msg is-{m["who"]}" data-ch="{m["ch"]}">'
-                + (f'<span class="cl-who">{CLAUDE_MARK}</span>' if m["who"] == "ai" else "")
                 + f'<div><p>{esc(m["text"])}</p>{extra}</div></li>')
-    chat = "".join(msg(m) for m in b["claude"])
+    chat = "".join(msg(m) for m in b["chat"])
     src = f'{root}assets/ai/marsmen.mp4?v={asset_version("assets/ai/marsmen.mp4")}'
     canvas = f'''
 <div class="pr-view"><div class="pr" lang="en">
@@ -1571,13 +1570,13 @@ def demo_cut(b, root):
              '<path class="i-off" d="M16 9.5l5 5M21 9.5l-5 5"/><path class="i-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>')
     chapters = "".join(f'<button type="button" style="--p:0" data-from="{c["from"]}" data-to="{c["to"]}"><span class="hb-fill"></span>'
                        f'<span class="hb-ch-t">{esc(c["label"])}</span></button>' for c in b["chapters"])
-    claude = (f'<div class="ai-window cl-window" aria-label="The chat with Claude about the cut"><div class="cl-app" lang="en">'
-              f'<div class="ai-bar cl-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
-              f'<span class="ai-title">Claude</span></div>'
-              f'<p class="cl-head" aria-hidden="true">{CLAUDE_MARK}Mars Men PSA: what to cut</p>'
-              f'<ol class="cl-chat">{chat}</ol>'
-              f'<p class="cl-input" aria-hidden="true">Reply to Claude\u2026<i></i></p></div></div>')
-    inner = (f'<div class="pr-stage">{ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window")}{claude}</div>' + sound
+    gpt = (f'<div class="ai-window cl-window" aria-label="The chat with ChatGPT about the cut"><div class="cl-app" lang="en">'
+           f'<div class="ai-bar cl-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
+           f'<span class="ai-title">ChatGPT</span></div>'
+           f'<p class="cl-head" aria-hidden="true">ChatGPT{ico("chev")}</p>'
+           f'<ol class="cl-chat">{chat}</ol>'
+           f'<p class="cl-input" aria-hidden="true"><b>+</b>Ask anything<i></i></p></div></div>')
+    inner = (f'<div class="pr-stage">{ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window")}{gpt}</div>' + sound
              + f'<nav class="hb-chapters" aria-label="Skip to a part of the video">{chapters}</nav>')
     return ai_figure(b, "The Mars Men PSA in Premiere Pro: its transcript, the vertical cut and the timeline", inner)
 

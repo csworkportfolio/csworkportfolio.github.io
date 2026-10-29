@@ -541,8 +541,8 @@
     const keep = [...fig.querySelectorAll(".ct-line[data-at]")];
     const clips = [...fig.querySelectorAll(".is-v1 .pr-clip")], audio = [...fig.querySelectorAll(".is-a1 .pr-clip")];
     // drawn at 1280 by 720 and scaled to the window; a phone gets the narrower layout, drawn at 420 by 760. The
-    // Claude window (drawn 380 wide) overlaps Premiere's lower right corner: on a wide screen Premiere takes the
-    // left 80% and Claude the right third; on a phone Claude sits under Premiere, overlapping its bottom
+    // ChatGPT window (drawn 380 wide) overlaps Premiere's lower right corner: on a wide screen Premiere takes the
+    // left 80% and ChatGPT the right third; on a phone ChatGPT sits under Premiere, overlapping its bottom
     const stage = fig.querySelector(".pr-stage"), cl = fig.querySelector(".cl-window");
     const frame = () => {
       const W = stage.clientWidth, mobile = W < 640;
