@@ -4042,3 +4042,4 @@ html.theme-dark.can-dark .geo-page-wrap { background: #111; }
 .ai-geo .geo-live.is-fading { opacity: 0; }
 @media (max-width: 720px) { .ai-geo .geo-live { font-size: 14px; } }
 .ai-geo .geo-fine { margin: 10px 0 0; text-align: center; font-size: 12px; color: var(--muted); opacity: .55; }
+.ai-geo .ai-stage { padding-bottom: 22px; }   /* the fine print is the last line, so the box ends close under it */
