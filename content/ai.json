@@ -954,7 +954,8 @@
               ]
             ],
             "page": "assets/ai/nike-pdp.jpg",
-            "page_alt": "The Nike.com product page for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt"
+            "page_alt": "The Nike.com product page for the Jannik Sinner Men's NikeCourt Dri-FIT Graphic Tennis T-Shirt",
+            "page_dark": "assets/ai/nike-pdp-dark.jpg"
           },
           {
             "id": "redzone",

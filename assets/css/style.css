@@ -3755,3 +3755,5 @@ a.tl-cta:active { transform: scale(.96); }
 .geo-page { display: block; width: 100%; height: auto; border-bottom: .5px solid var(--ai-line); }
 .geo-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .geo-nike .geo-thumb:has(img) { background: #f5f5f5; }
+.geo-page-dark { display: none; }
+@media (prefers-color-scheme: dark) { html.can-dark .geo-page:not(.geo-page-dark):has(+ .geo-page-dark) { display: none; } html.can-dark .geo-page-dark { display: block; } }

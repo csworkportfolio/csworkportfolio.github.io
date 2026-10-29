@@ -1725,6 +1725,9 @@ def demo_geo(b):
         # the real product page, when there is one, above the fields both kinds of search read from it
         page = (f'<img class="geo-page" src="{ROOT_REL}{esc(c["page"])}?v={asset_version(c["page"])}" alt="{esc(c["page_alt"])}" loading="lazy">'
                 if c.get("page") else "")
+        if c.get("page_dark"):   # the same page in dark mode (made from his screenshot: the photos kept, the rest darkened)
+            page += (f'<img class="geo-page geo-page-dark" src="{ROOT_REL}{esc(c["page_dark"])}?v={asset_version(c["page_dark"])}" '
+                     f'alt="{esc(c["page_alt"])}" loading="lazy">')
         fields = '<ul class="geo-fields">' + "".join(f'<li><span class="ai-label">{esc(f)}</span><span>{esc(v)}</span></li>' for f, v in c["fields"]) + "</ul>"
         search = ai_window("Search engine", f'<div class="geo-in geo-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>'
                            f'<span class="geo-typed" data-text="{esc(c["search"])}">{esc(c["search"])}</span></div><ul class="geo-results">{res}</ul>', " geo-pane")
