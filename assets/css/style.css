@@ -3461,7 +3461,8 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 }
 /* QAD Redzone's measuring: a copy of Semrush's SEO dashboard, values hidden as soft bars */
 .geo-sr { margin-top: 20px; transition: opacity .5s, transform .5s var(--ease); }
-.ai-geo.is-fresh .geo-sr:not(.is-on) { opacity: .45; }
+.ai-geo.is-fresh .geo-sr:not(.is-on) .ai-window > :not(.ai-bar) { opacity: .45; }   /* the card stays solid, like the windows above */
+.geo-sr .ai-window > :not(.ai-bar) { transition: opacity .5s; }
 .sr-window { --sr-blue: #006dca; --sr-line: #e4e7eb; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; }
 @media (prefers-color-scheme: dark) { html.can-dark .sr-window { --sr-blue: #4ea4ff; --sr-line: rgba(255,255,255,.1); } }
 .sr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; }
@@ -3819,7 +3820,7 @@ a.tl-cta:active { transform: scale(.96); }
 /* paused, the search and the episode demos show everything at once, nothing grayed out or waiting to appear */
 .ai-geo.is-fresh.is-paused .geo-results li:not(.is-on), .ai-geo.is-fresh.is-paused .geo-answer:not(.is-on),
 .ai-geo.is-fresh.is-paused .geo-cite:not(.is-on), .ai-geo.is-fresh.is-paused .geo-fields li:not(.is-on),
-.ai-geo.is-fresh.is-paused .geo-sr:not(.is-on), .ai-fan.is-fresh.is-paused .fn-card:not(.is-on) { opacity: 1; transform: none; }
+.ai-geo.is-fresh.is-paused .geo-sr:not(.is-on) .ai-window > :not(.ai-bar), .ai-fan.is-fresh.is-paused .fn-card:not(.is-on) { opacity: 1; transform: none; }
 
 /* the opened piece: its name and time small, then its path large (how it gets made), no number badge */
 .fn-big-cap { max-width: 720px; display: grid; gap: 6px; }
