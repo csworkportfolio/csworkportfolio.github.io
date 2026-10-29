@@ -342,7 +342,31 @@
     const cells = [...fig.querySelectorAll(".mb-battery i")];
     const steps = [...fig.querySelectorAll(".zp-step")];
     const top = data.statuses.length - 1;
-    const set = (cls, on) => { mb.classList.toggle(cls, on); if (cls === "is-zap") fig.classList.toggle("is-zap", on); };
+    // which app is in front: the demo's own (Zapier while the zap runs), or the one the switch, a tab or a card locks
+    let zap = false, mode = "auto";
+    const shown = () => {
+      const on = mode === "zp" || (mode === "auto" && zap);
+      mb.classList.toggle("is-zap", on);
+      fig.classList.toggle("is-zap", on);
+      mb.classList.toggle("is-locked", mode !== "auto");
+      frame();
+    };
+    const set = (cls, on) => { if (cls === "is-zap") { zap = on; shown(); } else mb.classList.toggle(cls, on); };
+    const front = $(".ai-front");
+    const modes = { auto: ["Auto", "automatic", "keep monday.com in front", "mb"], mb: ["monday.com", "monday.com, locked", "keep Zapier in front", "zp"],
+      zp: ["Zapier", "Zapier, locked", "go back to automatic", "auto"] };
+    const lock = (m) => {
+      mode = m;
+      front.dataset.mode = m;
+      front.querySelector("span").textContent = modes[m][0];
+      front.setAttribute("aria-label", `Window in front: ${modes[m][1]}. Press to ${modes[m][2]}`);
+      shown();
+    };
+    front.addEventListener("click", () => lock(modes[mode][3]));
+    // a tab (or, on a phone, the card behind) locks that app in front; the same again goes back to automatic
+    const pickApp = (m) => lock(mode === m ? "auto" : m);
+    $(".mbt.is-mb").addEventListener("click", () => pickApp("mb"));
+    $(".mbt.is-zp").addEventListener("click", () => pickApp("zp"));
     // each screen is drawn at 1200 by 640 and scaled to the window; a phone gets the mobile layouts, drawn at 420 by 700
     let mobile = false;
     // filmed like the Hub: on a wide screen the view leans in on the part in use (the Generate column, then
@@ -358,7 +382,7 @@
       const s = w / (mobile ? 420 : 1200), h = (mobile ? 700 : 640) * s;
       view.style.setProperty("--mb-s", s);
       view.style.height = h + "px";
-      const [cx, cy, z] = (!mobile && FOCUS[f]) || [0, 0, 1];
+      const [cx, cy, z] = (!mobile && mode === "auto" && FOCUS[f]) || [0, 0, 1];   // a locked app shows whole
       const k = s * z, clamp = (v, lo) => Math.min(0, Math.max(lo, v));
       view.style.setProperty("--mb-k", k);
       view.style.setProperty("--mb-tx", z === 1 ? 0 : clamp(w / 2 - cx * k, w - 1200 * k));
@@ -376,7 +400,12 @@
       requestAnimationFrame(() => frame());
     };
     full(false);
-    view.addEventListener("click", () => full(!fig.classList.contains("is-full")));
+    view.addEventListener("click", (e) => {
+      // on a phone, a tap on the card behind brings that app to the front instead
+      const pane = mobile && e.target.closest(".mb-pane, .zp-pane");
+      if (pane && pane.classList.contains("zp-pane") !== mb.classList.contains("is-zap")) { pickApp(pane.classList.contains("zp-pane") ? "zp" : "mb"); return; }
+      full(!fig.classList.contains("is-full"));
+    });
     view.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); full(!fig.classList.contains("is-full")); } });
     fig.querySelector(".ai-stage").addEventListener("click", (e) => { if (e.target === e.currentTarget && fig.classList.contains("is-full")) full(false); });
     addEventListener("keydown", (e) => { if (e.key === "Escape" && fig.classList.contains("is-full")) full(false); });

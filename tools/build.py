@@ -1210,6 +1210,14 @@ def ai_window(title, inner, cls=""):
             f'<span class="ai-title">{esc(title)}</span></div>{inner}</div>')
 
 
+def front_switch(first):
+    """The switch for which of a demo's two windows is in front: automatic, then the first one locked in front, then
+    the other, then automatic again (ai-page.js keeps its label and state)."""
+    return (f'<button class="ai-front" type="button" data-mode="auto" aria-label="Window in front: automatic. Press to keep {esc(first)} in front">'
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="13" height="11" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>'
+            '<span>Auto</span></button>')
+
+
 def ai_figure(b, label, inner, pause=True):
     data = {k: v for k, v in b.items() if k not in ("h", "p", "id", "note", "link", "demo")}
     note = f'<figcaption class="ai-note">{esc(b["note"])}</figcaption>' if b.get("note") else ""
@@ -1455,7 +1463,7 @@ def demo_board(b, root):
             f'<span class="mbt is-zp"><i class="mbt-z"></i>Zapier \u00b7 {esc(b["zap"]["name"])}</span>')
     window = (f'<div class="ai-window mb-window"><div class="ai-bar mb-bar" aria-hidden="true"><span class="ai-dots"><i></i><i></i><i></i></span>'
               f'<span class="mbt-row">{tabs}</span></div>{canvas}</div>')
-    inner = (window
+    inner = (window + front_switch("monday.com")
              + f'<nav class="hb-chapters" aria-label="Skip to a part of the demo">{chapters}</nav>')
     return ai_figure(b, "Illustration: an editorial calendar in Monday.com whose Generate button runs a Zapier workflow with Claude", inner)
 
@@ -1578,9 +1586,7 @@ def demo_cut(b, root):
            f'<p class="cl-input" aria-hidden="true"><b>+</b>Ask anything<i></i></p></div></div>')
     # which window is in front: on its own, ChatGPT comes forward in the chapters it was used in; each press of this
     # button moves on, from automatic to ChatGPT locked in front, Premiere locked in front, and back to automatic
-    front = ('<button class="ai-front" type="button" data-mode="auto" aria-label="Window in front: automatic. Press to keep ChatGPT in front">'
-             '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="13" height="11" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>'
-             '<span>Auto</span></button>')
+    front = front_switch("ChatGPT")
     inner = (f'<div class="pr-stage">{ai_window("Adobe Premiere Pro  ·  Mars Men PSA", canvas, " pr-window")}{gpt}</div>' + sound + front
              + f'<nav class="hb-chapters" aria-label="Skip to a part of the video">{chapters}</nav>')
     return ai_figure(b, "The Mars Men PSA in Premiere Pro: its transcript, the vertical cut and the timeline", inner)

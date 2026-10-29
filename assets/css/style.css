@@ -3271,6 +3271,17 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .ai-front:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: 2px; }
 :root[data-os="ios"] .ai-front { top: 8px; right: 112px; height: 44px; padding: 0 16px 0 14px; }
 @media (prefers-reduced-motion: reduce) { .ai-front { right: 54px; } }
+/* the Monday demo has no sound button, so its switch sits right beside pause; its tabs (and, on a phone, the card
+   behind) pick the app in front too */
+.ai-board .ai-front { right: 54px; }
+:root[data-os="ios"] .ai-board .ai-front { right: 60px; }
+@media (prefers-reduced-motion: reduce) { .ai-board .ai-front { right: 14px; } }
+.ai-board .mb-window { margin-top: 14px; }
+:root[data-os="ios"] .ai-board .mb-window { margin-top: 22px; }
+.ai-board.is-full .mb-window { margin-top: 40px; }
+.mbt { cursor: pointer; }
+.mb.is-locked .mb-cursor, .mb.is-locked .mb-touch { visibility: hidden; }
+.mb.is-mobile:not(.is-zap) .zp-pane, .mb.is-mobile.is-zap .mb-pane { cursor: pointer; }
 .cl-app { --cl-bg: #fff; --cl-ink: #0d0d0d; --cl-sub: #8f8f8f; --cl-line: #e5e5e5; --cl-me: #f4f4f4; --cl-card: #fff; --cl-send: #0d0d0d; --cl-sendink: #fff;
   width: 380px; height: calc(var(--cl-h, 560) * 1px); display: flex; flex-direction: column; transform-origin: 0 0; transform: scale(var(--cl-s, .7));
   background: var(--cl-bg); color: var(--cl-ink); font: 400 13.5px/1.5 -apple-system, "Helvetica Neue", Arial, sans-serif; }
