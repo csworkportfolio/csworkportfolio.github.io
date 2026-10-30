@@ -24,8 +24,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png">
 <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
-<script src="./assets/js/main.js?v=7e3701dd" defer></script>
-<link rel="stylesheet" href="./assets/trm.css?v=89942470">
+<script src="./assets/js/main.js?v=1b0cc29b" defer></script>
+<link rel="stylesheet" href="./assets/trm.css?v=815b4750">
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body id="top" class="page-case case-v2 cat-v2 ai-page trm-page">
@@ -291,6 +291,23 @@ document.querySelectorAll('.trm-tabs').forEach(function(bar){
     bar.querySelectorAll('[role=tab]').forEach(function(x){ x.setAttribute('aria-selected', x===b ? 'true' : 'false'); });
     panels.forEach(function(p){ p.hidden = p.dataset.tab !== b.dataset.tab; });
   }); });
+});
+/* the campaign and More Ideas figures open full screen in the portfolio's lightbox, each gallery as one set */
+document.querySelectorAll('.trm-box').forEach(function(box){
+  var figs=[].slice.call(box.querySelectorAll('figure'));
+  var items=figs.map(function(f){
+    var cap=f.querySelector('figcaption'), b=cap&&cap.querySelector('b'), m=f.querySelector('img,video');
+    var title=b?b.textContent:'', desc=cap?cap.textContent.replace(title,'').trim():'';
+    if(m.tagName==='VIDEO') return {type:'loop', src:m.getAttribute('src'), thumb:m.getAttribute('poster'), title:title, desc:desc, vw:1600, vh:900};
+    return {type:'image', full:m.getAttribute('src'), thumb:m.getAttribute('src'), w:m.naturalWidth||1600, h:m.naturalHeight||900, title:title, desc:desc};
+  });
+  figs.forEach(function(f,k){
+    var m=f.querySelector('img,video'); if(!m) return;
+    m.setAttribute('tabindex','0'); m.setAttribute('role','button'); m.setAttribute('aria-label','Open ' + (items[k].title||'the piece') + ' full screen');
+    var go=function(e){ if(!window.__trmLightbox) return; if(m.tagName==='IMG'&&m.naturalWidth){ items[k].w=m.naturalWidth; items[k].h=m.naturalHeight; } window.__trmLightbox(items, k, e.type==='click'); };
+    m.addEventListener('click', go);
+    m.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); } });
+  });
 });
 </script>
 </main>

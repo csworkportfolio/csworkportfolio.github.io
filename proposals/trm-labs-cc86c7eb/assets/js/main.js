@@ -833,6 +833,7 @@
   let lastPointer = -Infinity;
   document.addEventListener("pointerdown", () => { lastPointer = performance.now(); }, true);
 
+  window.__trmLightbox = (items, i, p) => open(items, i, p);
   function open(items, index, byPointer) {
     byPointer = byPointer || performance.now() - lastPointer < 1500;
     openedByPointer = byPointer;
