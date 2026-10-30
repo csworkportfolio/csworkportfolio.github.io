@@ -270,8 +270,9 @@
     return 0.97 + 0.03 * Math.sin(s * 31) * Math.sin(s * 17);
   }
   let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false, onFixture = false;
-  // the pointer steers the light only once it has passed over the fixture itself; a pointer that just crosses
-  // the sky leaves the beam alone. Leaving the scene, or resting long enough for the beam to drift home, disarms it.
+  // the pointer steers the light only once it has touched the fixture itself; a pointer that just crosses the
+  // sky leaves the beam alone. Once touched, it stays the visitor's for the rest of the page (leaving the scene or
+  // resting only lets the beam drift home until the pointer moves again).
   const caster = new THREE.Raycaster(), ndc = new THREE.Vector2();
   host.addEventListener("pointermove", (e) => {
     const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true;
@@ -279,7 +280,7 @@
     ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); onFixture = caster.intersectObject(fixture, true).some((h) => h.object !== cone && h.object !== pts && h.object !== lensGlow);
     if (onFixture) armed = true;
   });
-  host.addEventListener("pointerleave", () => { pointerIn = false; armed = false; onFixture = false; haveHit = false; });
+  host.addEventListener("pointerleave", () => { pointerIn = false; onFixture = false; });   // the beam drifts home while the pointer is away; it stays armed
   // the deck point under the pointer: the camera's ray through it, onto the cloud
   const pointerHit = new THREE.Vector3(), tryHit = new THREE.Vector3(); let haveHit = false;
   function aimUnderPointer() {
@@ -307,8 +308,7 @@
     const sp = LOCK.pan + sw.pan * (1 - lock) + 0.012 * Math.sin(s * 0.7) * lock, st = LOCK.tilt + sw.tilt * (1 - lock) + 0.008 * Math.sin(s * 0.9 + 2.0) * lock;
     let wantPan = VIEW.pan + (sp - VIEW.pan) * turn, wantTilt = VIEW.tilt + (st - VIEW.tilt) * turn;
     // from the first frame, a pointer that has touched the fixture steers the light, the opening sequence yielding
-    // to it; still for a moment, or gone, and it drifts back to wherever the sequence has got to
-    if (armed && performance.now() - lastMove > 4000) armed = false;
+    // to it; still for a moment, or away from the scene, and it drifts back to wherever the sequence has got to
     const active = !still && pointerIn && armed && performance.now() - lastMove < 1400 && aimUnderPointer();
     steer += ((active ? 1 : 0) - steer) * (active ? 0.16 : 0.05);   // quick to take, slow to let go
     // the pan comes out of atan2 and wraps at +-PI right where the lock sits (the deck is behind the fixture's
