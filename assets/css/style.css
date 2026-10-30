@@ -3577,7 +3577,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 /* 6. the tools */
 .ai-tools { margin-top: 40px; }
 .tl-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.tl-card { background: var(--tabband); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
+.tl-card { background: var(--tabband); border-radius: 0 0 22px 22px; overflow: hidden; display: flex; flex-direction: column; }
 .tl-screen { aspect-ratio: 16 / 10; background: #111113; }
 .tl-screen video, .tl-screen img { width: 100%; height: 100%; object-fit: cover; }
 .tl-screen.is-empty { display: grid; place-items: center; align-content: center; gap: 14px; background: linear-gradient(160deg, #1c1c1e, #2c2c2e); }
