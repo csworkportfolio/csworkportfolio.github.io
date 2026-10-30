@@ -3445,9 +3445,10 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .fn-path :is(li, span) + :is(li, span)::before { content: " \2192  "; color: var(--ai-blue); }
 .fn-big-cap .fn-path { display: inline; margin: 0; font-size: inherit; }
 .fn-where { margin-top: auto; padding-top: 10px; font-size: 12px; color: var(--ai-sub); }   /* in the card's bottom corner, level across the row */
-.ai-fan .fn-card.is-on { animation: fn-wiggle .7s ease-in-out; }   /* the playhead reached its moment: the card wiggles, nothing dims */
-@keyframes fn-wiggle { 20% { transform: rotate(-2deg) translateY(-3px); } 45% { transform: rotate(2deg) translateY(-3px); } 70% { transform: rotate(-1deg); } 85% { transform: rotate(.6deg); } }
-@media (prefers-reduced-motion: reduce) { .ai-fan .fn-card.is-on { animation: none; } }
+.ai-fan.is-fresh .fn-card:not(.is-on) .fn-num { transform: scale(0); }   /* not reached yet: no badge on the card; nothing dims */
+.ai-fan .fn-card.is-on .fn-num { animation: fn-badge .5s cubic-bezier(.34, 1.56, .64, 1) both; }   /* the playhead reached its moment: the number pops on like an app badge */
+@keyframes fn-badge { from { transform: scale(0); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .ai-fan .fn-card.is-on .fn-num { animation: none; } }
 .ai-fan.is-fresh .fn-mark:not(.is-on) button { transform: scale(.6); opacity: 0; pointer-events: none; }   /* not reached yet: hidden until the playhead gets there */
 
 /* 5. GEO and AEO */
