@@ -1348,9 +1348,9 @@
     wire(d, loop);
   }
 
-  // Job Search AI's five walkthroughs on its tool card, one at a time: the dots pick one, and it loops on its own.
-  // To play all five in order instead (each once, then the next), set SEQUENCE to true.
-  const SEQUENCE = false;
+  // Job Search AI's five walkthroughs on its tool card play in order, each once, then the next; the dots jump to one.
+  // Set SEQUENCE to false to keep each one looping on its own instead.
+  const SEQUENCE = true;
   function jobs(screen) {
     const view = screen.querySelector(".jb-view"), jb = view.querySelector(".jb");
     const scenes = [...jb.querySelectorAll(".jb-sc")], dots = [...screen.querySelectorAll(".jb-dot")];
