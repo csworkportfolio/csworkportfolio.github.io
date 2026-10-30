@@ -3583,31 +3583,6 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .tl-screen.is-empty { display: grid; place-items: center; align-content: center; gap: 14px; background: linear-gradient(160deg, #1c1c1e, #2c2c2e); }
 .tl-icon img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,.4); }
 .tl-soon-n { font-size: 13px; color: #a1a1a6; }
-/* the app on its devices: a MacBook, with an iPad or iPhone beside it where it has one, turned in space on a lit
-   stage (sizes in cqw so the scene scales with the card; --ry, --rx and --rz come from the pointer tilt in main.js) */
-.tl-devices { position: relative; overflow: hidden; container-type: inline-size; perspective: 130cqw; perspective-origin: 50% 35%;
-  background: radial-gradient(70% 60% at 50% 0%, #3a3a40, transparent 70%), linear-gradient(#17171a, #0e0e10); }
-.tl-devices::before { content: ""; position: absolute; left: -10%; right: -10%; bottom: 0; height: 13cqw;
-  background: linear-gradient(#2e2e33, #19191c 45%, #0c0c0e); box-shadow: 0 -.2cqw 0 rgba(255, 255, 255, .08); }   /* the ledge */
-.dv { position: absolute; display: block; transform-style: preserve-3d; filter: drop-shadow(0 2cqw 3cqw rgba(0, 0, 0, .55));
-  transform: rotateY(calc(var(--py, 0deg) + var(--ry, 0deg))) rotateX(calc(var(--px, 0deg) + var(--rx, 0deg))) rotateZ(var(--pz, 0deg)) translateZ(var(--rz, 0px)); transition: transform .25s ease-out; }
-.dv-screen { position: relative; display: block; overflow: hidden; background: #000; }
-.dv-screen :is(img, video) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.dv-screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .03) 38%, transparent 55%); }   /* a glass sheen */
-.dv-mac .dv-screen { aspect-ratio: 16 / 10; border: 1.5cqw solid #111113; border-bottom-width: 1.2cqw; border-radius: 2cqw 2cqw 1cqw 1cqw; box-shadow: inset 0 0 0 .15cqw #2a2a2d;
-  transform-origin: 50% 100%; transform: rotateX(-8deg); }   /* the lid leans back a little */
-.dv-mac::before { content: ""; position: absolute; z-index: 1; left: 50%; top: 0; width: 9cqw; height: 1.4cqw; transform: translateX(-50%); background: #111113; border-radius: 0 0 .7cqw .7cqw; }   /* the camera notch */
-.dv-mac::after { content: ""; display: block; margin: 0 -6cqw; height: 2cqw; background: linear-gradient(#6a6a70, #2c2c2f 55%, #1b1b1d); border-radius: .3cqw .3cqw 1.4cqw 1.4cqw; transform-origin: 50% 0; transform: rotateX(50deg); }   /* the base, lying back on the ledge */
-.dv-ipad .dv-screen { aspect-ratio: 834 / 1194; border: 1.3cqw solid #0f0f10; border-radius: 2.4cqw; box-shadow: 0 0 0 .25cqw #4a4a4e; }
-.dv-phone .dv-screen { aspect-ratio: 393 / 852; border: .9cqw solid #0a0a0b; border-radius: 3.4cqw; box-shadow: 0 0 0 .3cqw #3d3d41; }
-.dv-phone::after { content: ""; position: absolute; z-index: 1; left: 50%; top: 1.6cqw; width: 5.2cqw; height: 1.5cqw; transform: translateX(-50%); background: #000; border-radius: 1cqw; }   /* the Dynamic Island */
-.is-mac .dv-mac { left: 9cqw; bottom: 8cqw; width: 74cqw; --py: -14deg; --px: 3deg; }
-.is-mac-phone .dv-mac { left: 5cqw; bottom: 9cqw; width: 70cqw; --py: -14deg; --px: 3deg; }
-.is-mac-phone .dv-phone { right: 6cqw; bottom: 4cqw; width: 19cqw; --py: 18deg; --pz: -2deg; --rz: 4cqw; }
-.is-mac-ipad-phone .dv-mac { left: 13cqw; bottom: 11cqw; width: 62cqw; --py: -6deg; --px: 3deg; }
-.is-mac-ipad-phone .dv-ipad { right: 3cqw; bottom: 4cqw; width: 27cqw; --py: -22deg; --rz: 3cqw; }
-.is-mac-ipad-phone .dv-phone { left: 4cqw; bottom: 4cqw; width: 16cqw; --py: 24deg; --pz: -2deg; --rz: 5cqw; }
-@media (prefers-reduced-motion: reduce) { .dv { transition: none; } }
 .tl-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
 .tl-body h3 { font-family: var(--display); font-size: 21px; line-height: 1.2; letter-spacing: -.015em; }
 .tl-body h3 .tl-tag { display: inline-block; vertical-align: 3px; margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-family: var(--sans); font-size: 11px; line-height: 1.4; font-weight: 600; letter-spacing: .01em; color: var(--muted); background: var(--ai-soft); }   /* the name is not final */

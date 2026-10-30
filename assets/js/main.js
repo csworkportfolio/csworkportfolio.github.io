@@ -1201,7 +1201,6 @@
   document.querySelectorAll("[data-gallery]").forEach((g) => tiltStrip(g));   // not forEach(tiltStrip): its index would land in "pieces"
   // the AI page's demos lean toward the pointer the same way: each window, the episode bar and each format card
   // (the search demo's windows stack in rows, so they lean together: the lower ones never look farther back)
-  document.querySelectorAll(".tl-devices").forEach((s) => tiltStrip(s, ".dv", true));   // the devices turn together toward the pointer
   document.querySelectorAll(".ai-stage").forEach((s) => tiltStrip(s, ".mb-window, .pr-stage, .hb-window, .fn-ep, .fn-open, .ai-window.geo-pane, .geo-src > .ai-window, .sr-window",
     !!s.closest(".ai-geo")));
 

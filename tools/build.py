@@ -1769,22 +1769,17 @@ def demo_tools(b, root):
     cards = []
     for t in b["tools"]:
         v = lambda f: f'{root}assets/ai/{f}?v={asset_version("assets/ai/" + f)}'
-        # the app on the devices it runs on: a MacBook, and an iPad or iPhone beside it where it has one
-        devices = {"mac": "a Mac", "ipad": "an iPad", "phone": "an iPhone"}
-        parts = []
-        for d in t.get("scene", []):
-            if d.get("video"):
-                inner = (f'<video class="tl-video" src="{v(d["video"])}" poster="{v(d["img"])}" muted loop playsinline preload="none" '
-                         f'aria-label="{esc(t["name"])} on {devices[d["on"]]}, a short tour of its screens"></video>')
-            else:
-                inner = f'<img src="{v(d["img"])}" alt="{esc(t["name"])} on {devices[d["on"]]}" loading="lazy">'
-            parts.append(f'<span class="dv dv-{d["on"]}"><span class="dv-screen">{inner}</span></span>')
-        layout = "-".join(d["on"] for d in t.get("scene", []))
-        screen = "".join(parts)
+        if t.get("video"):
+            screen = (f'<video class="tl-video" src="{v(t["video"])}" poster="{v(t["img"])}" muted loop playsinline preload="none" '
+                      f'aria-label="{esc(t["name"])}, a short tour of its screens"></video>')
+        elif t.get("img"):
+            screen = f'<img src="{v(t["img"])}" alt="{esc(t["name"])}" loading="lazy">'
+        else:
+            screen = f'<span class="tl-icon"><img src="{v(t["icon"])}" alt="" loading="lazy"></span><span class="tl-soon-n">Screen recording coming soon</span>'
         cta = (f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a>' if t.get("href")
                else '<span class="tl-cta is-soon">Coming soon</span>')
         tag = f'<span class="tl-tag">{esc(t["tag"])}</span>' if t.get("tag") else ""   # the name is not final
-        cards.append(f'<li class="tl-card"><div class="tl-screen tl-devices is-{layout}">{screen}</div>'
+        cards.append(f'<li class="tl-card"><div class="tl-screen{"" if t.get("video") or t.get("img") else " is-empty"}">{screen}</div>'
                      f'<div class="tl-body"><h3>{esc(t["name"])}{tag}</h3><p>{esc(t["line"])}</p>{cta}</div></li>')
     return f'<div class="wrap ai-demo ai-tools" data-demo="tools"><ul class="tl-grid">{"".join(cards)}</ul></div>'
 
