@@ -3583,6 +3583,24 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .tl-screen.is-empty { display: grid; place-items: center; align-content: center; gap: 14px; background: linear-gradient(160deg, #1c1c1e, #2c2c2e); }
 .tl-icon img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,.4); }
 .tl-soon-n { font-size: 13px; color: #a1a1a6; }
+/* the app on its devices: a MacBook, with an iPad or iPhone beside it where it has one; sizes in cqw so the
+   scene scales with the card */
+.tl-devices { position: relative; overflow: hidden; container-type: inline-size; background: radial-gradient(120% 90% at 50% 100%, #2a2a2e, #141416 70%); }
+.dv { position: absolute; display: block; filter: drop-shadow(0 1.2cqw 2.4cqw rgba(0, 0, 0, .5)); }
+.dv-screen { display: block; overflow: hidden; background: #000; }
+.dv-screen :is(img, video) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.dv-mac .dv-screen { aspect-ratio: 16 / 10; border: 1.5cqw solid #111113; border-bottom-width: 1.2cqw; border-radius: 2cqw 2cqw 1cqw 1cqw; box-shadow: inset 0 0 0 .15cqw #2a2a2d; }
+.dv-mac::before { content: ""; position: absolute; z-index: 1; left: 50%; top: 0; width: 9cqw; height: 1.4cqw; transform: translateX(-50%); background: #111113; border-radius: 0 0 .7cqw .7cqw; }   /* the camera notch */
+.dv-mac::after { content: ""; display: block; margin: 0 -6cqw; height: 1.6cqw; background: linear-gradient(#5c5c60, #2c2c2f 60%, #1b1b1d); border-radius: .3cqw .3cqw 1.2cqw 1.2cqw; }   /* the base, wider than the lid */
+.dv-ipad .dv-screen { aspect-ratio: 834 / 1194; border: 1.3cqw solid #0f0f10; border-radius: 2.4cqw; box-shadow: 0 0 0 .25cqw #4a4a4e; }
+.dv-phone .dv-screen { aspect-ratio: 393 / 852; border: .9cqw solid #0a0a0b; border-radius: 3.4cqw; box-shadow: 0 0 0 .3cqw #3d3d41; }
+.dv-phone::after { content: ""; position: absolute; z-index: 1; left: 50%; top: 1.6cqw; width: 5.2cqw; height: 1.5cqw; transform: translateX(-50%); background: #000; border-radius: 1cqw; }   /* the Dynamic Island */
+.is-mac .dv-mac { left: 50%; bottom: 5cqw; width: 80cqw; transform: translateX(-50%); }
+.is-mac-phone .dv-mac { left: 4cqw; bottom: 7cqw; width: 72cqw; }
+.is-mac-phone .dv-phone { right: 5cqw; bottom: 3cqw; width: 19cqw; }
+.is-mac-ipad-phone .dv-mac { left: 12cqw; bottom: 9cqw; width: 64cqw; }
+.is-mac-ipad-phone .dv-ipad { right: 3cqw; bottom: 2.5cqw; width: 27cqw; }
+.is-mac-ipad-phone .dv-phone { left: 3cqw; bottom: 2.5cqw; width: 16cqw; }
 .tl-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
 .tl-body h3 { font-family: var(--display); font-size: 21px; line-height: 1.2; letter-spacing: -.015em; }
 .tl-body h3 .tl-tag { display: inline-block; vertical-align: 3px; margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-family: var(--sans); font-size: 11px; line-height: 1.4; font-weight: 600; letter-spacing: .01em; color: var(--muted); background: var(--ai-soft); }   /* the name is not final */

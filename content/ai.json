@@ -1075,7 +1075,7 @@
           {
             "name": "heardhum",
             "line": "A Mac menu bar app that records calls and saves timed transcripts with speaker labels, all on your Mac.",
-            "img": "heardhum.jpg",
+            "scene": [{ "on": "mac", "img": "heardhum-mac.jpg" }],
             "href": "https://github.com/chrishtean/heardhum/releases/latest",
             "cta": "Download for Mac"
           },
@@ -1083,21 +1083,19 @@
             "name": "Budget AI",
             "tag": "Working Title",
             "line": "A budgeting app that runs on your own computer, with a review inbox, budgets that understand bills, and a Home Screen widget.",
-            "video": "budget-ai.mp4",
-            "img": "budget-ai.jpg"
+            "scene": [{ "on": "mac", "video": "budget-ai.mp4", "img": "budget-ai.jpg" }, { "on": "phone", "img": "budget-phone.jpg" }]
           },
           {
             "name": "Job Search AI",
             "tag": "Working Title",
             "line": "A job search system that runs in your own Claude: it finds roles that fit, tailors a resume and cover letter for each, and tracks every application.",
-            "icon": "job-search-ai.png"
+            "scene": [{ "on": "mac", "img": "jsai-mac.jpg" }, { "on": "ipad", "img": "jsai-ipad.jpg" }, { "on": "phone", "img": "jsai-phone.jpg" }]
           },
           {
             "name": "Markup AI",
             "tag": "Working Title",
             "line": "Comment threads on top of any app, answered by Claude. I mark up a design, and the change comes back in place.",
-            "video": "markup-ai.mp4",
-            "img": "markup-ai.jpg"
+            "scene": [{ "on": "mac", "video": "markup-ai.mp4", "img": "markup-ai.jpg" }]
           }
         ]
       },
