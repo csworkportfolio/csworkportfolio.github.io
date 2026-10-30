@@ -20,12 +20,12 @@
 (function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){var r=document.documentElement;r.classList.add("theme-"+t);r.style.colorScheme=t;r.style.background=t==="dark"?"#000":"#fff";document.addEventListener("DOMContentLoaded",function(){r.style.background=""});document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.content=t==="dark"?"#000000":"#e8e8ed"})}}catch(e){}})();</script>
 <script>/* like the Job Search AI app: "ios" on an iPhone or iPad, or any window 720px wide or less, gets touch-sized controls */
 (function(){var r=document.documentElement,i=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1),m=matchMedia("(max-width: 720px)");function a(){r.setAttribute("data-os",i||m.matches?"ios":"mac")}a();m.addEventListener&&m.addEventListener("change",a)})();</script>
-<link rel="stylesheet" href="./assets/css/site.css?v=240ebd23">
+<link rel="stylesheet" href="./assets/css/site.css?v=6a65b81c">
 <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="./assets/icons/icon-512.png">
 <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
 <script src="./assets/js/main.js?v=1b0cc29b" defer></script>
-<link rel="stylesheet" href="./assets/trm.css?v=4fa8b6d3">
+<link rel="stylesheet" href="./assets/trm.css?v=aa12b4e4">
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body id="top" class="page-case case-v2 cat-v2 ai-page trm-page">
@@ -116,7 +116,12 @@
 
 </div></details><details class="trm-acc" open id="proof"><summary><span class="trm-acc-t">Proof: The Machine, Run on TRM&#x27;s Own Content</span><span class="trm-acc-step"><a class="ai-step" href="#machine" aria-label="Step 1 of the loop, Source: back to the loop"><span>1</span><span>Source</span></a><a class="ai-step" href="#machine" aria-label="Step 2 of the loop, Atomize: back to the loop"><span>2</span><span>Atomize</span></a></span><span class="trm-acc-chev" aria-hidden="true"></span></summary><div class="trm-acc-body"><section class="wrap prose ai-sec"><p>Five anchors TRM already made, each cut ten ways, the campaign that carries the human element, and six more ideas in TRM's own language. Pick one; every piece opens full size.</p></section><div class="wrap trm-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="campaign">Be the Someone<span class="trm-tab-n" aria-label="10 pieces">10</span></button><button type="button" role="tab" aria-selected="false" data-tab="source-3">Career Post<span class="trm-tab-n" aria-label="10 pieces">10</span></button><button type="button" role="tab" aria-selected="false" data-tab="episode">Ep. 122<span class="trm-tab-n" aria-label="10 pieces">10</span></button><button type="button" role="tab" aria-selected="false" data-tab="source-4">Coinbase Case<span class="trm-tab-n" aria-label="10 pieces">10</span></button><button type="button" role="tab" aria-selected="false" data-tab="source-5">CEO Letter<span class="trm-tab-n" aria-label="10 pieces">10</span></button><button type="button" role="tab" aria-selected="false" data-tab="source-2">Data Post<span class="trm-tab-n" aria-label="10 pieces">10</span></button><button type="button" role="tab" aria-selected="false" data-tab="box">More Ideas<span class="trm-tab-n" aria-label="6 pieces">6</span></button></div><div class="trm-tabpanel" role="tabpanel" data-tab="campaign"><section class="wrap prose ai-sec">
   <h3>The Campaign: Be the Someone</h3>
-  <p>TRM's mission page says: "We build for a world where every victim can count on someone to help." The campaign makes the engineer that someone. One line, one visual device, and ten pieces that carry the human element the rest of TRM's content leaves out. The device is Resolve: every image begins as TRM's particle art and resolves into a real person as you watch, scroll or tap. The photo is a stand-in candid; TRM's own would replace it, with consent.</p>
+  <p>TRM's About page says: "We build for a world where every victim can count on someone to help." The campaign makes the engineer that someone. One line, one visual device, and ten pieces that carry the human element the rest of TRM's content leaves out. The device is Resolve: every image begins as TRM's particle art and resolves into a real person as you watch, scroll or tap. The photo is a stand-in candid; TRM's own would replace it, with consent.</p>
+  <div class="trm-bethe" aria-live="off">
+    <p class="trm-bethe-line" aria-label="Be the someone.">Be the <span class="trm-bethe-w">someone.</span></p>
+    <p class="trm-bethe-proof">The line every piece lands on.</p>
+  </div>
+  <p>The blank is the system. Each piece fills it with something an engineer here actually does, with the proof underneath, and the film and the header cycle through them before landing on the one word that comes from TRM's own sentence. "Hero" and "best" stay out: TRM never says the first, and the second is a claim, not a picture.</p>
 </section>
 <div class="wrap trm-box">
   <figure class="trm-wide"><video src="./assets/trm/be-the-someone.mp4?v=8472ff9a" poster="./assets/trm/be-the-someone-poster.png?v=8472ff9a" autoplay muted loop playsinline aria-label="The Resolve hero as a three-second film: TRM particles, a face resolving out of them, then the line Be the someone."></video><figcaption><b>The Hero, as a Film</b> Five seconds: TRM's own particle bands flow, then gather into the crowd; the face resolves out of the dots; the line arrives. Drawn dot by dot, so it can be re-cut with any photo.</figcaption></figure>
@@ -290,6 +295,15 @@ document.querySelectorAll('.trm-tabs').forEach(function(bar){
     bar.querySelectorAll('[role=tab]').forEach(function(x){ x.setAttribute('aria-selected', x===b ? 'true' : 'false'); });
     panels.forEach(function(p){ p.hidden = p.dataset.tab !== b.dataset.tab; });
   }); });
+});
+/* Be the ___: the blank cycles through what an engineer here does, each with its proof, and lands on someone */
+document.querySelectorAll('.trm-bethe').forEach(function(box){
+  var w=box.querySelector('.trm-bethe-w'), pr=box.querySelector('.trm-bethe-proof');
+  var words=[['trace.','The graph that followed $3.5M through swaps and peeling chains.'],['freeze.','Screening fast enough to stop a withdrawal.'],['130 seconds.','Criminals move in 130 seconds. Cases take 576 days.'],['47 years.','The sentence the evidence held up for.'],['crimefighter.','TRM’s own word for the people who use what you build.'],['someone.','The line every piece lands on.']];
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var k=words.length-1;
+  function step(){ k=(k+1)%words.length; box.classList.add('is-out'); setTimeout(function(){ w.textContent=words[k][0]; pr.textContent=words[k][1]; box.classList.remove('is-out'); setTimeout(step, k===words.length-1?4200:1900); },260); }
+  setTimeout(step, 1600);
 });
 /* the campaign and More Ideas figures open full screen in the portfolio's lightbox, each gallery as one set */
 document.querySelectorAll('.trm-box').forEach(function(box){

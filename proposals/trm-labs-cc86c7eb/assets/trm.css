@@ -341,3 +341,11 @@ html.theme-dark .trm-bets .trm-card:nth-child(6), html.can-dark:not(.theme-light
 /* one rhythm: 36px between blocks; the pull quote in Where TRM Stands sits 48px under the cards, not the portfolio's 110 */
 .trm-page #machine { margin-top: 36px; }
 .case-v2 .trm-acc-body .prose.statement-wrap { margin-top: 48px; }
+
+/* Be the ___: the campaign's line with a blank that cycles */
+.trm-bethe { margin: 26px 0 22px; }
+.trm-bethe-line { margin: 0; font-size: clamp(34px, 5vw, 56px); line-height: 1.05; font-weight: 300; letter-spacing: -.01em; color: var(--ink); }
+.trm-bethe-w { font-weight: 600; color: var(--co-hero-text); transition: opacity .26s, filter .26s; }
+.trm-bethe-proof { margin: 10px 0 0; font-size: 15px; color: var(--ai-sub); min-height: 1.5em; transition: opacity .26s; }
+.trm-bethe.is-out .trm-bethe-w { opacity: 0; filter: blur(6px); }
+.trm-bethe.is-out .trm-bethe-proof { opacity: 0; }
