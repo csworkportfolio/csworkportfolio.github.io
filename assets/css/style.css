@@ -3585,6 +3585,7 @@ html.ai-locked .theme-toggle { visibility: hidden; }   /* the larger view has it
 .tl-soon-n { font-size: 13px; color: #a1a1a6; }
 .tl-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
 .tl-body h3 { font-family: var(--display); font-size: 21px; line-height: 1.2; letter-spacing: -.015em; }
+.tl-body h3 .tl-tag { display: inline-block; vertical-align: 3px; margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-family: var(--sans); font-size: 11px; line-height: 1.4; font-weight: 600; letter-spacing: .01em; color: var(--muted); background: var(--ai-soft); }   /* the name is not final */
 .tl-body p { margin-top: 8px; font-size: 15px; line-height: 1.45; color: var(--muted); flex: 1; }
 .tl-cta { align-self: flex-start; margin-top: 16px; display: inline-flex; align-items: center; min-height: 32px; padding: 0 16px; border-radius: 999px;
   font-size: 14px; font-weight: 500; text-decoration: none; color: #fff; background: var(--ai-blue); transition: transform .18s var(--ease); }
