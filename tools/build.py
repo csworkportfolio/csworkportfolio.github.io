@@ -1765,10 +1765,120 @@ def demo_geo(b):
                      switch + "".join(cases) + '<p class="ai-note ai-live geo-live"></p>' + fine, pause="reset")
 
 
+HH_WHALE = ('<svg class="hh-whale" viewBox="4 6 60 56" aria-hidden="true"><path class="hh-tail" d="M31.5 31C28 24 18 15 9 9C7 17 9 27 17 32'
+            'C21.5 34.8 26 36 28.6 38.5C29.6 43 29.4 48 28 53L41 53C37.5 50 35.6 45 35.4 40C40 38.5 48 36 54 31C58 27.5 60 22 60.5 16'
+            'C52 21 44 24 37 27.5C35 28.6 33.2 29.8 31.5 31Z"/><path class="hh-ripple" d="M17.9 58.6C12 58 7.5 56.5 8.5 53.7'
+            'M60.5 53.7C61.5 56.5 57 58 51.1 58.6M44.5 57.1C38 58 31 58 24.5 57.1"/></svg>')
+HH_ICONS = {   # SF Symbol look-alikes on a 24 grid
+    "search": "M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 20 20",
+    "plus": "M12 5v14M5 12h14",
+    "folder": "M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z",
+    "tray": "M4 13l2-7h12l2 7v5H4zM4 13h5l1 2h4l1-2h5",
+    "trash": "M5 7h14M9 7V5h6v2M7 7l1 12h8l1-12",
+    "check": "M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM8 12l3 3 5-6",
+    "gear": "M12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1",
+    "spark": "M12 4c.5 3.6 2.4 5.5 6 6-3.6.5-5.5 2.4-6 6-.5-3.6-2.4-5.5-6-6 3.6-.5 5.5-2.4 6-6z",
+    "dots": "M6 12h.01M12 12h.01M18 12h.01",
+    "share": "M12 3v12M8 7l4-4 4 4M6 11v9h12v-9",
+    "stack": "M5 9h14v11H5zM7 6h10M9 3h6",
+    "chev": "M9 6l6 6-6 6",
+}
+
+
+def hh_icon(n, cls="hh-i"):
+    return f'<svg class="{cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="{HH_ICONS[n]}"/></svg>'
+
+
+def demo_heardhum(w, root):
+    """heardhum, Christian's Mac menu bar app, in its default navy theme (drawn at 720 by 450 and scaled to the card;
+    after the app's SwiftUI views). The menu bar card catches a call, the recording opens in All Files, a voice gets
+    its name and a word of the AI summary is fixed. Every name, call and line is made up. Drawn finished."""
+    icon = f'<img class="hh-app" src="{root}assets/ai/heardhum-icon.png?v={asset_version("assets/ai/heardhum-icon.png")}" alt="">'
+    brand = f'<p class="hh-brand">{icon}<b>heardhum</b></p>'
+    files = [[w["call"], w["length"].replace(":", "m ") + "s", "2026-10-29 10:02"]] + w["files"]
+    rows = "".join(
+        f'<div class="hh-row{" is-new" if i == 0 else ""}"><span class="hh-row-t">{esc(f[0])}'
+        f'<small class="hh-badge">{hh_icon("check")}<span class="hh-badge-v">Summarized</span></small></span>'
+        f'<span>{esc(f[1])}</span><span>{esc(f[2])}</span><span class="hh-more">{hh_icon("dots")}</span></div>'
+        for i, f in enumerate(files))
+    side_rows = "".join(
+        f'<div class="hh-srow{" is-on" if i == 0 else ""}"><b>{esc(f[0])}</b><small>{esc(f[2][5:].replace("-", "/"))}  |  {esc(f[1])}</small></div>'
+        for i, f in enumerate(files[:4]))
+
+    def para(p):
+        t, s, text = p
+        m = re.match(r"(.*)\[(.*)\](.*)", text)
+        body = (f'{esc(m[1])}<span class="hh-sel">{esc(m[2])}</span>{esc(m[3])}' if m else esc(text))
+        who = esc(w["name"]) if s == 1 else f"Speaker {s}"
+        return (f'<div class="hh-para"><p class="hh-ph"><span class="hh-time">{t}</span>'
+                f'<span class="hh-spk" data-s="{s}">{who}</span>{"<span class=hh-ren>Rename</span>" if s == 1 else ""}</p>'
+                f'<p class="hh-pt">{body}</p></div>')
+    first = next(i for i, p in enumerate(w["transcript"]) if p[1] == 1)
+    paras = "".join(para(p).replace('class="hh-para"', 'class="hh-para is-first"', 1) if i == first else para(p)
+                    for i, p in enumerate(w["transcript"]))
+
+    def block(kind, text):
+        m = re.match(r"(.*)\[(.*)\|(.*)\](.*)", text)
+        body = (f'{esc(m[1])}<span class="hh-edit" data-old="{esc(m[2])}">{esc(m[3])}</span>{esc(m[4])}' if m else esc(text))
+        if kind == "h":
+            return f'<h5>{body}</h5>'
+        if kind == "add":
+            return f'<li class="hh-add" data-text="{esc(text)}"><span class="hh-add-v">{body}</span><i class="hh-caret"></i></li>'
+        return f'<li><span>{body}</span></li>' if kind == "li" else f'<p>{body}</p>'
+    summary, ul = "", False
+    for kind, text in w["summary"]:
+        li = kind in ("li", "add")
+        if li and not ul: summary += "<ul>"
+        if ul and not li: summary += "</ul>"
+        ul = li
+        summary += block(kind, text)
+    summary += "</ul>" if ul else ""
+    nav = "".join(f'<p class="hh-nav{c}">{hh_icon(i)}<span>{t}</span>{n}</p>' for i, t, n, c in (
+        ("folder", "All Files", f"<small>({len(files)})</small>", " is-on"), ("tray", "Unfiled", f"<small>({len(files)})</small>", ""),
+        ("trash", "Trash", "<small>(0)</small>", "")))
+    return f'''<div class="hh-view"><div class="hh is-win is-page" lang="en" aria-hidden="true">
+  <div class="hh-desk"></div>
+  <p class="hh-bar"><b>Finder</b><span>File</span><span>Edit</span><span>View</span><span>Window</span>
+    <span class="hh-bar-r"><span class="hh-mbi">{HH_WHALE}</span><span>Thu Oct 29</span><span>10:02 AM</span></span></p>
+  <div class="hh-card">
+    <p class="hh-card-h">{icon}<b>heardhum</b><span>{hh_icon("stack")}{hh_icon("folder")}{hh_icon("gear")}</span></p>
+    <p class="hh-big"><i class="hh-stop"></i><span class="hh-big-v">Start Recording</span></p>
+    <p class="hh-line"><i class="hh-dot"></i><span class="hh-line-v">Watching for calls</span><span class="hh-clock">0:00</span></p>
+    <p class="hh-call">{esc(w["call"])}</p>
+    <p class="hh-dont">Don’t Record This Call</p>
+    <p class="hh-recent">Recent Recordings{hh_icon("chev")}</p>
+  </div>
+  <div class="hh-win">
+    <nav class="hh-side"><span class="hh-lights"><i></i><i></i><i></i></span>{brand}
+      <p class="hh-search">{hh_icon("search")}Search</p><p class="hh-upload">{hh_icon("plus")}Upload Recording</p>{nav}
+      <p class="hh-sub">Summaries</p><p class="hh-nav">{hh_icon("check")}<span>Summarized</span><small>({len(files)})</small></p>
+      <p class="hh-nav hh-gear">{hh_icon("gear")}<span>Settings</span></p>
+      <p class="hh-watch"><i></i>Watching for calls</p></nav>
+    <main class="hh-list"><h4>All Files{hh_icon("folder")}</h4>
+      <div class="hh-row hh-head"><span>Name</span><span>Duration</span><span>Date Created</span><span></span></div>{rows}</main>
+    <section class="hh-page">
+      <p class="hh-top">{hh_icon("folder")}All Files{hh_icon("chev")}<b>{esc(w["call"])}</b>
+        <span class="hh-top-r">{hh_icon("spark")}{hh_icon("dots")}<span class="hh-share">{hh_icon("share")}Share</span></span></p>
+      <div class="hh-cols"><div class="hh-slist">{side_rows}</div>
+        <div class="hh-detail"><p class="hh-seg"><span class="is-t">Transcript</span><span class="is-s">Summary</span></p>
+          <div class="hh-tr">{paras}</div><div class="hh-sum">{summary}</div></div></div>
+    </section>
+  </div>
+  <div class="hh-pop"><b>Who is Speaker 1?</b><span class="hh-field"><span class="hh-field-v">{esc(w["name"])}</span><i class="hh-caret"></i></span>
+    <span class="hh-pop-b"><span>Cancel</span><span class="hh-save">Save</span></span></div>
+  <svg class="hh-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
+</div></div><script type="application/json" class="hh-data">{json_script({"name": w["name"], "length": w["length"]})}</script>'''
+
+
 def demo_tools(b, root):
     cards = []
     for t in b["tools"]:
         v = lambda f: f'{root}assets/ai/{f}?v={asset_version("assets/ai/" + f)}'
+        if t.get("walk"):
+            cards.append(f'<li class="tl-card"><div class="tl-screen hh-screen">{demo_heardhum(t["walk"], root)}{AI_PAUSE}</div>'
+                         f'<div class="tl-body"><h3>{esc(t["name"])}</h3><p>{esc(t["line"])}</p>'
+                         f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a></div></li>')
+            continue
         if t.get("video"):
             screen = (f'<video class="tl-video" src="{v(t["video"])}" poster="{v(t["img"])}" muted loop playsinline preload="none" '
                       f'aria-label="{esc(t["name"])}, a short tour of its screens"></video>')

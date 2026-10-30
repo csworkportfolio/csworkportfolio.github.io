@@ -961,12 +961,166 @@
 
   // ---------- 6. the tools: each screen tour plays while it is on screen ----------
   function tools(fig) {
+    fig.querySelectorAll(".hh-screen").forEach(heardhum);
     if (still) return;
     for (const v of fig.querySelectorAll(".tl-video")) {
       new IntersectionObserver(([e]) => {
         if (e.isIntersecting) { const p = v.play(); p && p.catch(() => {}); } else v.pause();
       }, { threshold: 0.4 }).observe(v);
     }
+  }
+
+  // heardhum's walkthrough on its tool card: the menu bar catches a call, the recording opens, a voice gets its
+  // name and the summary gets two small edits, then it starts over
+  function heardhum(screen) {
+    const view = screen.querySelector(".hh-view"), hh = view.querySelector(".hh"), cursor = hh.querySelector(".hh-cursor");
+    const data = JSON.parse(screen.querySelector(".hh-data").textContent);
+    const $ = (s) => hh.querySelector(s), $$ = (s) => [...hh.querySelectorAll(s)];
+    const fit = () => view.style.setProperty("--hh-s", view.clientWidth / 720);
+    new ResizeObserver(fit).observe(view);
+    fit();
+    if (still) return;   // stays on the finished transcript
+    const d = demo(screen), w = d.wait;
+    const set = (cls, on) => hh.classList.toggle(cls, on);
+    const point = (el, dx = 0.5, dy = 0.5) => {
+      const a = hh.getBoundingClientRect(), b = el.getBoundingClientRect(), s = a.width / 720;
+      cursor.style.left = (b.left - a.left + b.width * dx) / s - 3 + "px";
+      cursor.style.top = (b.top - a.top + b.height * dy) / s - 2 + "px";
+    };
+    const click = async () => { cursor.classList.add("is-click"); await w(140); cursor.classList.remove("is-click"); };
+    // the selected stretch of transcript, a word at a time
+    const sel = $(".hh-sel");
+    sel.replaceChildren(...sel.textContent.match(/\S+\s*/g).map((t) => {   // each word keeps its space, so the highlight runs on
+      const x = document.createElement("span");
+      x.className = "hh-w";
+      x.textContent = t;
+      return x;
+    }));
+    const words = $$(".hh-w");
+    const spk = $$('.hh-spk[data-s="1"]'), edit = $(".hh-edit"), add = $(".hh-add"), addV = $(".hh-add-v");
+    const big = $(".hh-big-v"), line = $(".hh-line-v"), clock = $(".hh-clock"), row = $(".hh-row.is-new"), badge = $(".hh-badge-v");
+    const newEdit = edit.textContent, newLine = add.dataset.text;
+    const [mm, ss] = data.length.split(":").map(Number), total = mm * 60 + ss;
+    const time = (t) => `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+
+    function reset() {
+      ["is-card", "is-rec", "is-win", "is-page", "is-sum", "is-pop", "is-hover"].forEach((c) => set(c, false));
+      set("is-pointing", true);
+      spk.forEach((s) => (s.textContent = "Speaker 1"));
+      edit.textContent = edit.dataset.old;
+      edit.classList.remove("is-on", "is-typing");
+      add.classList.add("is-off");
+      add.classList.remove("is-typing");
+      addV.textContent = "";
+      words.forEach((x) => x.classList.remove("is-on"));
+      row.classList.add("is-off");
+      row.classList.remove("is-press");
+      big.textContent = "Start Recording";
+      line.textContent = "Watching for calls";
+      $(".hh-field-v").textContent = "";
+    }
+    async function loop() {
+      for (;;) {
+        reset();
+        cursor.style.left = "380px"; cursor.style.top = "250px";
+        await w(700);
+        // 1. the whale in the menu bar: its card is watching for calls, and one starts recording by itself
+        point($(".hh-mbi"));
+        await w(900);
+        await click(); set("is-card", true);
+        await w(1500);
+        set("is-rec", true);
+        line.textContent = "Recording";
+        for (let k = 0; k <= 24; k++) {
+          const t = Math.round(total * (k / 24) ** 1.6);
+          clock.textContent = time(t);
+          big.textContent = "Stop Recording  " + time(t);
+          await w(k < 4 ? 450 : 85);
+        }
+        await w(500);
+        point($(".hh-big"));
+        await w(900);
+        await click();
+        set("is-rec", false);
+        big.textContent = "Start Recording";
+        line.textContent = "Saving and transcribing…";
+        await w(1200);
+        set("is-card", false);
+        // 2. the window: the call lands in All Files, then its transcript opens and a stretch is selected
+        set("is-win", true);
+        badge.textContent = "Queued";
+        badge.parentElement.classList.add("is-q");
+        await w(500);
+        row.classList.remove("is-off");
+        await w(1100);
+        badge.textContent = "Summarized";
+        badge.parentElement.classList.remove("is-q");
+        await w(500);
+        point(row.querySelector(".hh-row-t"), 0.3);
+        await w(900);
+        await click(); row.classList.add("is-press");
+        await w(250);
+        set("is-page", true);
+        await w(1100);
+        point(words[0], 0);
+        await w(850);
+        for (const x of words) { x.classList.add("is-on"); point(x, 1); await w(110); }
+        await w(1400);
+        // 3. a name for Speaker 1, and every line of that voice takes it
+        const first = $(".is-first .hh-spk");
+        point(first);
+        await w(800);
+        words.forEach((x) => x.classList.remove("is-on"));
+        set("is-hover", true);
+        await w(500);
+        await click();
+        const r = first.getBoundingClientRect(), a = hh.getBoundingClientRect(), s = a.width / 720;
+        const pop = $(".hh-pop");
+        pop.style.left = (r.left - a.left) / s - 8 + "px";
+        pop.style.top = (r.bottom - a.top) / s + 8 + "px";
+        set("is-pop", true);
+        await w(400);
+        await d.type($(".hh-field-v"), data.name, 70);
+        await w(400);
+        point($(".hh-save"));
+        await w(800);
+        await click(); $(".hh-save").classList.add("is-press");
+        await w(150);
+        $(".hh-save").classList.remove("is-press");
+        set("is-pop", false); set("is-hover", false);
+        for (const x of spk) { x.textContent = data.name; x.classList.add("is-flash"); await w(160); }
+        await w(700);
+        spk.forEach((x) => x.classList.remove("is-flash"));
+        await w(600);
+        // 4. the summary: one word changed and a line added
+        point($(".hh-seg .is-s"));
+        await w(900);
+        await click(); set("is-sum", true);
+        await w(1200);
+        point(edit);
+        await w(900);
+        await click(); await w(120); await click();
+        edit.classList.add("is-on");
+        await w(600);
+        edit.classList.remove("is-on");
+        edit.classList.add("is-typing");
+        await d.type(edit, newEdit, 80);
+        edit.classList.remove("is-typing");
+        await w(700);
+        const last = add.previousElementSibling;
+        point(last.firstElementChild, 1);
+        await w(800);
+        await click();
+        add.classList.remove("is-off");
+        add.classList.add("is-typing");
+        await d.type(addV, newLine, 45);
+        await w(400);
+        add.classList.remove("is-typing");
+        set("is-pointing", false);
+        await w(2600);
+      }
+    }
+    wire(d, loop);
   }
 
   const kinds = { localize, board, cut, fan, geo, tools };

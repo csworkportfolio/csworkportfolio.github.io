@@ -1075,7 +1075,33 @@
           {
             "name": "heardhum",
             "line": "A Mac menu bar app that records calls and saves timed transcripts with speaker labels, all on your Mac.",
-            "img": "heardhum-mac.jpg",
+            "walk": {
+              "call": "Interview With Harbor & Pine",
+              "length": "31:48",
+              "name": "Dana Brooks",
+              "files": [
+                ["Weekly Content Sync", "24m 10s", "2026-10-28 09:30"],
+                ["Interview With Northwind Studio", "41m 2s", "2026-10-27 14:00"],
+                ["Portfolio Review Call", "18m 45s", "2026-10-26 11:15"],
+                ["Interview With Bright Lane Media", "36m 20s", "2026-10-24 16:30"],
+                ["Newsletter Planning", "27m 5s", "2026-10-23 10:00"]
+              ],
+              "transcript": [
+                ["00:00:04", 1, "Thanks for making the time today. Could you start by walking me through your background?"],
+                ["00:00:12", 2, "Sure. I've spent the last few years in content and social, and I like owning a channel from the plan to the post."],
+                ["00:00:26", 1, "What does a good week look like for you?"],
+                ["00:00:31", 2, "[A calendar planned two weeks out, drafts reviewed early,] and time left over to try a new format."],
+                ["00:00:45", 1, "That's close to how our team works. We publish on four channels."]
+              ],
+              "summary": [
+                ["h", "Overview"],
+                ["p", "A first interview for a content marketing role. The team publishes on four channels and plans two weeks ahead."],
+                ["h", "Next Steps"],
+                ["li", "Send a writing sample by [Friday|Thursday]."],
+                ["li", "Dana shares the team's calendar after the call."],
+                ["add", "Send Dana a thank-you note today."]
+              ]
+            },
             "href": "https://github.com/chrishtean/heardhum/releases/latest",
             "cta": "Download for Mac"
           },
