@@ -2193,29 +2193,29 @@ def demo_jobs(j):
         + w("is-res is-green", "build", "Resumes", f'<b class="jb-big" data-n="{h["resumes"][0]}">{h["resumes"][0]}</b><p class="jb-ws">builds · 2 passed</p>'
             f'<p class="jb-wl"><b>{esc(h["resumes"][1])}</b><span><em>Passed</em> · {esc(h["resumes"][2])}</span></p>', f'2 of 4 passed {jb_icon("plus")}'))
     find = f'<span class="jb-find">{jb_icon("search")}Search</span>'
-    home = (f'<div class="jb-home"><div class="jb-scroll">{head("Job Search AI", "Good morning, " + esc(j["name"]) + ".", find)}'
-            f'{jb_nav("home")}<div class="jb-grid">{widgets}</div></div></div>')
-    s1 = f'<div class="jb-sc is-mac is-1" data-k="0">{jb_mac(welcome + home)}{JB_CURSOR}</div>'
+    home = (f'<div class="jb-home">{jb_nav("home")}<div class="jb-scroll">{head("Job Search AI", "Good morning, " + esc(j["name"]) + ".", find)}'
+            f'<div class="jb-grid">{widgets}</div></div></div>')
+    s1 = f'<div class="jb-sc is-mac is-1 is-on is-home is-in" data-k="0">{jb_mac(welcome + home)}{JB_CURSOR}</div>'
 
     # 2. the resume builder, on the phone: New Build from a role the sweep found, the rounds of writing and checking, the build
     rows = "".join(f'<p class="jb-brow"><i class="jb-st is-{"ok" if s == "Passed" else "fix"}">{jb_icon("check") if s == "Passed" else "!"}</i>'
                    f'<span><b>{esc(c)}</b><span>{esc(r)}</span><em class="is-{"ok" if s == "Passed" else "fix"}">{esc(s)}</em></span><small>{esc(d)}</small></p>'
                    for c, r, s, d in bd["list"])
-    new_row = (f'<p class="jb-brow is-new"><i class="jb-st is-run"><i class="jb-spin"></i>{jb_icon("check")}</i><span><b>{esc(bd["company"])}</b><span>{esc(bd["role"])}</span>'
-               f'<em class="jb-bst">Building</em></span><small>Oct 30</small></p>')
+    new_row = (f'<p class="jb-brow is-new"><i class="jb-st is-ok"><i class="jb-spin"></i>{jb_icon("check")}</i><span><b>{esc(bd["company"])}</b><span>{esc(bd["role"])}</span>'
+               f'<em class="jb-bst is-ok">Passed</em></span><small>Oct 30</small></p>')
     steps = [("posting", "Reading the Posting", ""), ("planned", "Planned", f'{bd["company"]}, {bd["role"]}'),
              ("w1", "Writing", "Claude is writing from your facts"), ("c1", "Checked", "2 problems to fix"),
              ("w2", "Writing, Round 2", f'{bd["chars"]} characters so far'), ("c2", "Checked, Round 2", "Passed every rule that is on"),
              ("done", "Saved", "In its Applications folder")]
     stp = "".join(f'<p class="jb-stp" data-s="{k}"><i class="jb-si"><i></i>{jb_icon("check")}</i><span><b>{esc(t)}</b><small>{esc(s)}</small></span></p>' for k, t, s in steps)
-    sheet = (f'<div class="jb-sheet"><i class="jb-grab"></i><p class="jb-sht"><span class="is-new">New Build</span><span class="is-run">Building</span></p>'
+    sheet = (f'<div class="jb-sheet"><i class="jb-grab"></i><p class="jb-sht"><span class="jb-ln">New Build</span><span class="jb-lr">Building</span></p>'
              f'<div class="jb-form"><p class="jb-gl">Posting</p><div class="jb-grp"><p class="jb-fr"><span>From</span><span class="jb-seg"><i class="is-on">Role Sweep</i><i>A Link</i></span></p>'
              f'<p class="jb-fr"><span>Role</span><span class="jb-pop">{esc(bd["company"])}, {esc(bd["role"])}</span></p></div>'
              f'<p class="jb-gl">Layout</p><div class="jb-grp"><p class="jb-fr"><span>Template</span><span class="jb-pop">Classic (Suggested)</span></p>'
              f'<p class="jb-fr"><span>Cover Letter</span><i class="jb-sw is-on"></i></p></div>'
              '<p class="jb-note">Claude reads the posting, writes from your facts, checks the pages against your writing rules and fixes what it can, up to 3 rounds.</p></div>'
              f'<div class="jb-run"><p class="jb-rolel">{esc(bd["company"])}, {esc(bd["role"])}</p>{stp}</div>'
-             '<p class="jb-shf"><span class="jb-b is-x">Cancel</span><span class="jb-b is-go"><span class="is-new">Build</span><span class="is-run">Open Build</span></span></p></div>')
+             '<p class="jb-shf"><span class="jb-b is-x">Cancel</span><span class="jb-b is-go"><span class="jb-ln">Build</span><span class="jb-lr">Open Build</span></span></p></div>')
     sc = bd["score"]
     detail = (f'<div class="jb-detail"><p class="jb-backl">{jb_icon("back")}Builds</p><h5>{esc(bd["company"])}</h5><p class="jb-dek">{esc(bd["role"])}</p>'
               f'<div class="jb-score"><i class="jb-ring is-big" style="--p:{sc}"><b>{sc}%</b></i><p class="jb-kv"><span><small>Status</small><b class="is-ok">{jb_icon("check")}Passed</b></span>'
@@ -2226,7 +2226,7 @@ def demo_jobs(j):
               f'<div class="jb-paper"><b>{esc(j["name"])} Rivera</b>' + '<i></i>' * 9 + '</div></div>')
     resumes = (f'<div class="jb-pg jb-res"><p class="jb-ptop"><span class="jb-circ">{jb_icon("plus")}</span>{av}</p><p class="jb-eye">{day}</p><h4>Resumes</h4>'
                f'<p class="jb-dek">5 builds · 3 passed · Classic template</p><p class="jb-gl is-list">Builds</p><div class="jb-blist">{new_row}{rows}</div></div>')
-    s2 = f'<div class="jb-sc is-ios is-2" data-k="1">{jb_iphone(resumes + detail + sheet, "build")}</div>'
+    s2 = f'<div class="jb-sc is-ios is-2 is-listed is-detail" data-k="1">{jb_iphone(resumes + detail + sheet, "build")}</div>'
 
     # 3. the application tracker: a thing owed gets done, then the live pipeline, booked and waiting
     stats = "".join(f'<span><b>{esc(v)}</b>{esc(t)}</span>' for v, t in tr["stats"])
@@ -2235,20 +2235,20 @@ def demo_jobs(j):
     owed = "".join(f'<p class="jb-or{" is-first" if i == 0 else ""}"><i class="jb-tick">{jb_icon("check")}</i><span><b>{esc(t)}</b><small>{esc(s)}</small></span><em>{esc(d)}</em></p>'
                    for i, (t, s, d) in enumerate(tr["owed"]))
     pipe = lambda rs, cls: "".join(f'<p class="jb-pr {cls}"><i></i><span><b>{esc(c)}</b><small>{esc(r)}</small></span><span class="jb-prn">{esc(n)}</span><em>{esc(d)}</em></p>' for c, r, n, d in rs)
-    tracker = (f'{head("Application Tracker", "Day 71 · Updated today at 9:05am", "<span class=jb-circ>" + jb_icon("plus") + "</span>")}{jb_nav("track")}'
-               f'<div class="jb-scroll"><p class="jb-tabs"><span class="jb-seg"><i class="is-on">Briefing</i><i>Log</i><i>Analysis</i><i>Prep</i></span></p>'
+    tracker = (f'{jb_nav("track")}<div class="jb-scroll">{head("Application Tracker", "Day 71 · Updated today at 9:05am", "<span class=jb-circ>" + jb_icon("plus") + "</span>")}'
+               f'<p class="jb-tabs"><span class="jb-seg"><i class="is-on">Briefing</i><i>Log</i><i>Analysis</i><i>Prep</i></span></p>'
                f'<p class="jb-subs"><i class="is-on">Right Now</i><i>Owed</i><i class="jb-pipe">Pipeline</i></p><p class="jb-stats">{stats}</p>'
                f'<h5>Briefing</h5><div class="jb-brief">{brief}</div>'
                f'<h5 class="jb-sh">Owed by You<b class="jb-oc" data-n="2">2</b></h5><p class="jb-cap">Asks someone is waiting on.</p><div class="jb-owed">{owed}</div>'
                f'<h5 class="jb-sh">Live Pipeline<b>8</b></h5><p class="jb-cap">Roles past the application stage.</p>'
                f'<p class="jb-seg is-sm jb-pseg"><i class="is-on" data-p="booked">Booked</i><i data-p="waiting">Waiting</i><i>Quiet</i></p>'
                f'<div class="jb-pipeL">{pipe(tr["booked"], "is-booked")}{pipe(tr["waiting"], "is-waiting")}</div></div>')
-    s3 = f'<div class="jb-sc is-mac is-3" data-k="2">{jb_mac(tracker)}{JB_CURSOR}</div>'
+    s3 = f'<div class="jb-sc is-mac is-3 is-done" data-k="2">{jb_mac(tracker)}{JB_CURSOR}</div>'
 
     # 4. the role sweeper, on the phone: the morning sweep lands, one role goes in the queue, one is passed
     def role(i, r):
         t, c, pay, lane, call, star = r
-        return (f'<div class="jb-role{" is-first" if i == 0 else ""}{" is-second" if i == 1 else ""}" style="--i:{i}">{jb_icon("star", "jb-i jb-star") if star else ""}'
+        return (f'<div class="jb-role{" is-first is-queued" if i == 0 else ""}{" is-second is-passed" if i == 1 else ""}" style="--i:{i}">{jb_icon("star", "jb-i jb-star") if star else ""}'
                 f'<p class="jb-rt"><b>{esc(t)}</b><small>Fri, 10/30</small></p><p class="jb-rc">{esc(c)} · {esc(pay)} · {esc(lane)}</p>'
                 f'<p class="jb-call"><span class="jb-tag">New</span><span class="jb-tag is-q">Queue</span>{esc(call)}</p>'
                 f'<p class="jb-bsw"><i class="is-x">{jb_icon("x")}</i><i class="is-r">{jb_icon("res")}</i><i class="is-cl">{jb_icon("plus")}{jb_icon("mail")}</i><i class="is-qq">{jb_icon("q")}</i></p></div>')
@@ -2257,22 +2257,22 @@ def demo_jobs(j):
              f'<p class="jb-chips"><span><b class="jb-found" data-n="{len(j["roles"])}">{len(j["roles"])}</b>Found in the Last 24 Hours</span><span><b class="jb-queued" data-n="3">3</b>Queued for Claude</span></p>'
              f'<p class="jb-srch"><span class="jb-find">{jb_icon("search")}Search</span></p>'
              f'<p class="jb-seg is-full"><i class="is-on">Open</i><i>Queue</i><i>Applied</i><i>All</i></p><div class="jb-roles">{roles}</div></div>')
-    s4 = f'<div class="jb-sc is-ios is-4" data-k="3">{jb_iphone(sweep, "roles")}</div>'
+    s4 = f'<div class="jb-sc is-ios is-4 is-swept" data-k="3">{jb_iphone(sweep, "roles")}</div>'
 
     # 5. the company mapper: the morning's finds, a map of lookalikes around a company, one with a role found
     finds = "".join(f'<p class="jb-fc" style="--i:{i}"><b><i class="is-{col}"></i>{esc(n)}{jb_icon("out")}</b><span>{esc(d)}</span><small>{esc(s)}<em>{esc(o)}</em></small></p>'
                     for i, (n, d, s, o, col) in enumerate(mp["finds"]))
-    nodes = "".join(f'<i class="jb-node is-{c}" style="--a:{a}deg;--i:{i}">{t}</i>' for i, (a, c, t) in enumerate(
+    nodes = "".join(f'<span class="jb-arm" style="--a:{a}deg;--i:{i}"><i class="jb-node is-{c}">{t}</i></span>' for i, (a, c, t) in enumerate(
         ((-90, "green", "Q"), (-36, "green is-hit", ""), (18, "green", ""), (72, "slate", ""), (126, "sky", ""), (180, "purple", ""), (234, "ring", ""))))
     pk = mp["pick"]
-    cmap = (f'{head("Company Map", "<span class=jb-mapn data-n=90>90</span> companies mapped · Updated today at 7:02am", "<span class=jb-circ>" + jb_icon("plus") + "</span>")}{jb_nav("map")}'
-            f'<div class="jb-scroll"><h5 class="jb-sh">Latest Finds<span>4 companies</span></h5><p class="jb-cap">Added today by the Company Mapper. Click one to open its job board.</p>'
+    cmap = (f'{jb_nav("map")}<div class="jb-scroll">{head("Company Map", "<span class=jb-mapn>90</span> companies mapped · Updated today at 7:02am", "<span class=jb-circ>" + jb_icon("plus") + "</span>")}'
+            f'<h5 class="jb-sh">Latest Finds<span>4 companies</span></h5><p class="jb-cap">Added today by the Company Mapper. Click one to open its job board.</p>'
             f'<div class="jb-finds">{finds}</div><p class="jb-led"><span>Led By</span><span class="jb-pop">{esc(mp["center"])} (7)</span></p>'
             f'<div class="jb-orbit"><i class="jb-glow"></i><i class="jb-ringd"></i>{nodes}<span class="jb-hub"><b>{esc(mp["center"][0])}</b></span>'
             f'<p class="jb-hubn"><b>{esc(mp["center"])}</b><span>7 companies</span></p>'
             f'<div class="jb-tipc"><b>{esc(pk[0])}</b><span>{esc(pk[1])}</span><small>{esc(pk[2])}</small><em><i></i>1 Role Found</em>'
             f'<p><span>Open Board</span><span class="jb-ors">Open Role Sweep</span></p></div></div></div>')
-    s5 = f'<div class="jb-sc is-mac is-5" data-k="4">{jb_mac(cmap)}{JB_CURSOR}</div>'
+    s5 = f'<div class="jb-sc is-mac is-5 is-finds is-mapped is-tip" data-k="4">{jb_mac(cmap)}{JB_CURSOR}</div>'
 
     dots = "".join(f'<button type="button" class="jb-dot{" is-on" if k == 0 else ""}" data-k="{k}" aria-label="Demo {k + 1} of 5: {esc(n)}"'
                    f'{" aria-current=true" if k == 0 else ""}><i></i></button>' for k, n in enumerate(j["scenes"]))

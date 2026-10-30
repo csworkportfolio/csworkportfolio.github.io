@@ -964,6 +964,7 @@
     fig.querySelectorAll(".hh-screen").forEach(heardhum);
     fig.querySelectorAll(".bg-screen").forEach(budget);
     fig.querySelectorAll(".mk-screen").forEach(markup);
+    fig.querySelectorAll(".jb-screen").forEach(jobs);
     if (still) return;
     for (const v of fig.querySelectorAll(".tl-video")) {
       new IntersectionObserver(([e]) => {
@@ -1345,6 +1346,225 @@
       for (;;) { await scene("photo"); await scene("model"); }
     }
     wire(d, loop);
+  }
+
+  // Job Search AI's five walkthroughs on its tool card, one at a time: the dots pick one, and it loops on its own.
+  // To play all five in order instead (each once, then the next), set SEQUENCE to true.
+  const SEQUENCE = false;
+  function jobs(screen) {
+    const view = screen.querySelector(".jb-view"), jb = view.querySelector(".jb");
+    const scenes = [...jb.querySelectorAll(".jb-sc")], dots = [...screen.querySelectorAll(".jb-dot")];
+    const fit = () => view.style.setProperty("--jb-s", view.clientWidth / 720);
+    new ResizeObserver(fit).observe(view);
+    fit();
+    let cur = 0, gen = 0;
+    const show = (k) => {
+      cur = k;
+      scenes.forEach((s, i) => s.classList.toggle("is-on", i === k));
+      dots.forEach((b, i) => { b.classList.toggle("is-on", i === k); if (i === k) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+    };
+    if (still) { dots.forEach((b, k) => b.addEventListener("click", () => show(k))); return; }   // each stays on its finished screen
+    jb.classList.add("is-live");
+    const d = demo(screen), STOP = {};
+    // a wait that ends the scene when another dot was picked meanwhile
+    const w = async (ms) => { const g = gen; await d.wait(ms); if (g !== gen) throw STOP; };
+    const at = (el, dx = 0.5, dy = 0.5) => {
+      const a = jb.getBoundingClientRect(), b = el.getBoundingClientRect(), s = a.width / 720;
+      return [(b.left - a.left + b.width * dx) / s, (b.top - a.top + b.height * dy) / s];
+    };
+    // the Mac's pointer, and a finger on the phone (in the screen's own points, so it rides along with the pan)
+    const point = (sc, el, dx, dy) => {
+      const c = sc.querySelector(".jb-cursor"), [x, y] = at(el, dx, dy);
+      c.style.left = x - 3 + "px"; c.style.top = y - 2 + "px";
+    };
+    const click = async (sc, press) => {
+      const c = sc.querySelector(".jb-cursor");
+      c.classList.add("is-click"); press && press.classList.add("is-press");
+      await w(150);
+      c.classList.remove("is-click"); press && press.classList.remove("is-press");
+    };
+    const tap = async (sc, el, press = el) => {
+      const scr = sc.querySelector(".jb-scr"), t = sc.querySelector(".jb-touch");
+      const a = scr.getBoundingClientRect(), b = el.getBoundingClientRect(), k = a.width / 393;
+      t.style.left = (b.left - a.left + b.width / 2) / k + "px";
+      t.style.top = (b.top - a.top + b.height / 2) / k + "px";
+      t.classList.add("is-on"); press.classList.add("is-press");
+      await w(260);
+      t.classList.remove("is-on"); press.classList.remove("is-press");
+    };
+    // a number counting up (or down) to where it ends, keeping its % or commas
+    const count = async (el, from, to, ms = 900) => {
+      const suf = el.textContent.replace(/[\d,.]/g, ""), n = Math.max(1, Math.min(Math.abs(to - from), 24));
+      for (let i = 1; i <= n; i++) { el.textContent = Math.round(from + (to - from) * i / n).toLocaleString("en-US") + suf; await w(ms / n); }
+    };
+    const flash = (el) => { el.classList.remove("is-flash"); void el.offsetWidth; el.classList.add("is-flash"); };
+    const cls = (sc, on, ...c) => c.forEach((x) => sc.classList.toggle(x, on));
+
+    const [s1, s2, s3, s4, s5] = scenes;
+    const q = (sc, s) => sc.querySelector(s), qa = (sc, s) => [...sc.querySelectorAll(s)];
+    const park = (sc, x = 520, y = 330) => { const c = q(sc, ".jb-cursor"); if (c) { c.style.left = x + "px"; c.style.top = y + "px"; } };
+    const runs = [
+      // 1. Get Started: Alex picks their search, and the home screen's widgets come in
+      async () => {
+        cls(s1, false, "is-home", "is-in");
+        park(s1);
+        await w(2200);
+        const me = q(s1, ".jb-pf.is-me");
+        point(s1, q(me, ".jb-pav"));
+        await w(950);
+        await click(s1, me);
+        await w(250);
+        cls(s1, true, "is-home");
+        await w(450);
+        cls(s1, true, "is-in");
+        await Promise.all(qa(s1, ".jb-big").map((b) => count(b, 0, +b.textContent.replace(/\D/g, ""), 1000)));
+        park(s1, 600, 120);
+        await w(1200);
+        point(s1, q(s1, ".jb-w.is-sweep"), 0.6, 0.4);
+        await w(1400);
+        point(s1, q(s1, ".jb-w.is-cmap"), 0.6, 0.4);
+        await w(1400);
+        point(s1, q(s1, ".jb-w.is-res"), 0.5, 0.4);
+        await w(3000);
+      },
+      // 2. the resume builder on the phone: New Build from a role the sweep found, two rounds, the passed build
+      async () => {
+        cls(s2, false, "is-listed", "is-detail", "is-sheet", "is-running", "is-built", "is-pan");
+        const steps = qa(s2, ".jb-stp"), row = q(s2, ".jb-brow.is-new"), st = q(row, ".jb-st"), bst = q(row, ".jb-bst");
+        steps.forEach((s) => s.classList.remove("is-on", "is-ok", "is-bad", "is-run"));
+        st.className = "jb-st is-run"; bst.textContent = "Building"; bst.classList.remove("is-ok");
+        const chars = q(s2, '[data-s="w2"] small'), charsText = chars.dataset.t || (chars.dataset.t = chars.textContent);
+        await w(1200);
+        await tap(s2, q(s2, ".jb-res .jb-circ"));
+        cls(s2, true, "is-sheet", "is-pan");
+        await w(1900);
+        await tap(s2, q(s2, ".jb-b.is-go"));
+        cls(s2, true, "is-running");
+        for (const s of steps) {
+          const k = s.dataset.s;
+          s.classList.add("is-on", "is-run");
+          if (k === "w2") {
+            const n = parseInt(charsText.replace(/\D/g, ""), 10);
+            for (let i = 1; i <= 12; i++) { chars.textContent = Math.round(n * i / 12).toLocaleString("en-US") + " characters so far"; await w(120); }
+          } else await w({ posting: 1000, planned: 700, w1: 1500, c1: 1200, c2: 1100, done: 500 }[k]);
+          s.classList.remove("is-run");
+          s.classList.add(k === "c1" ? "is-bad" : "is-ok");
+          if (k === "c1") await w(700);
+        }
+        cls(s2, true, "is-built");
+        await w(1300);
+        await tap(s2, q(s2, ".jb-b.is-go"));
+        st.className = "jb-st is-ok"; bst.textContent = "Passed"; bst.classList.add("is-ok");
+        cls(s2, false, "is-sheet", "is-pan");
+        cls(s2, true, "is-listed");
+        await w(1300);
+        await tap(s2, row);
+        cls(s2, true, "is-detail");
+        cls(s2, false, "is-running", "is-built");
+        await w(3200);
+        cls(s2, true, "is-pan");
+        await w(3000);
+      },
+      // 3. the tracker: an ask that is owed gets done, then the live pipeline, booked and waiting
+      async () => {
+        cls(s3, false, "is-done", "is-waiting");
+        const first = q(s3, ".jb-or.is-first"), oc = q(s3, ".jb-oc"), scroll = q(s3, ".jb-scroll");
+        const [booked, waiting] = qa(s3, ".jb-pseg i");
+        first.classList.remove("is-check");
+        oc.textContent = "2";
+        booked.classList.add("is-on"); waiting.classList.remove("is-on");
+        scroll.style.setProperty("--y", "0px");
+        park(s3, 560, 300);
+        await w(1400);
+        point(s3, q(first, ".jb-tick"));
+        await w(950);
+        await click(s3, q(first, ".jb-tick"));
+        first.classList.add("is-check");
+        await w(900);
+        cls(s3, true, "is-done");
+        oc.textContent = "1"; flash(oc);
+        await w(1800);
+        park(s3, 470, 380);
+        scroll.style.setProperty("--y", "-128px");
+        await w(1600);
+        point(s3, waiting);
+        await w(950);
+        await click(s3, waiting);
+        booked.classList.remove("is-on"); waiting.classList.add("is-on");
+        cls(s3, true, "is-waiting");
+        await w(2600);
+        point(s3, booked);
+        await w(900);
+        await click(s3, booked);
+        waiting.classList.remove("is-on"); booked.classList.add("is-on");
+        cls(s3, false, "is-waiting");
+        await w(2400);
+      },
+      // 4. the role sweeper on the phone: the morning sweep lands, one role goes in the queue, one is passed
+      async () => {
+        cls(s4, false, "is-swept", "is-pan", "is-acting");
+        const roles = qa(s4, ".jb-role"), found = q(s4, ".jb-found"), nnew = q(s4, ".jb-nnew"), queued = q(s4, ".jb-queued");
+        roles.forEach((r) => r.classList.remove("is-queued", "is-passed"));
+        found.textContent = nnew.textContent = "0"; queued.textContent = "2";
+        await w(1300);
+        cls(s4, true, "is-swept");
+        for (let i = 1; i <= roles.length; i++) { await w(350); found.textContent = nnew.textContent = i; flash(found); }
+        await w(1500);
+        cls(s4, true, "is-pan", "is-acting");
+        await w(1300);
+        const [a, b] = roles;
+        await tap(s4, q(a, ".is-cl"));
+        a.classList.add("is-queued");
+        await w(1300);
+        await tap(s4, q(b, ".is-x"));
+        b.classList.add("is-passed");
+        await w(1700);
+        cls(s4, false, "is-pan");
+        await w(900);
+        queued.textContent = "3"; flash(queued);
+        await w(3000);
+      },
+      // 5. the company mapper: the morning's finds, then the lookalikes around a company, and one with a role found
+      async () => {
+        cls(s5, false, "is-finds", "is-mapped", "is-tip");
+        const n = q(s5, ".jb-mapn"), scroll = q(s5, ".jb-scroll"), ors = q(s5, ".jb-ors");
+        n.textContent = "85"; ors.classList.remove("is-hover");
+        scroll.style.setProperty("--y", "0px");
+        park(s5, 600, 380);
+        await w(1100);
+        cls(s5, true, "is-finds");
+        await count(n, 85, 90, 1300);
+        await w(1500);
+        scroll.style.setProperty("--y", "-96px");
+        await w(1200);
+        cls(s5, true, "is-mapped");
+        await w(2400);
+        point(s5, q(s5, ".jb-node.is-hit"));
+        await w(950);
+        await click(s5);
+        cls(s5, true, "is-tip");
+        await w(1500);
+        point(s5, ors, 0.4);
+        await w(800);
+        ors.classList.add("is-hover");
+        await w(3000);
+      },
+    ];
+    async function play(k) {
+      const g = ++gen;
+      show(k);
+      for (;;) {
+        try { await runs[k](); } catch (e) { if (e === STOP) return; throw e; }
+        if (g !== gen) return;
+        if (SEQUENCE) return play((k + 1) % runs.length);
+      }
+    }
+    dots.forEach((b, k) => b.addEventListener("click", () => {
+      if (k === cur && d.seen) return d.resume();
+      if (d.seen) play(k); else show(k);
+      d.resume();
+    }));
+    wire(d, () => play(cur));
   }
 
   const kinds = { localize, board, cut, fan, geo, tools };
