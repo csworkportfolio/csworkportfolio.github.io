@@ -242,3 +242,21 @@ p.wrap.trm-fullnote { padding-left: var(--gutter); padding-right: var(--gutter);
 
 /* for now, no outer card around the demos: the player and the pieces sit straight on the page */
 .trm-fan .ai-stage { background: transparent !important; border-radius: 0; padding: 0; }   /* the dark-mode stage rules are more specific */
+
+/* the demos' pause button sits above the player now that the outer card is gone */
+.trm-fan .ai-stage { padding-top: 48px; }
+.trm-fan .ai-btn { top: 0; right: 0; }
+
+/* the article demos read instead of play: the post's sentences, the current one lit, the column keeping it in view;
+   each piece's number sits inline before the sentence it was cut from and pops in when the reader reaches it */
+.trm-fan .fn-read { --fn-ink: #1d1d1f; position: relative; height: 184px; margin-top: 18px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent); mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent); }
+html.theme-dark .trm-fan .fn-read { --fn-ink: #f5f5f7; }
+@media (prefers-color-scheme: dark) { html.can-dark:not(.theme-light) .trm-fan .fn-read { --fn-ink: #f5f5f7; } }
+.trm-fan .fn-read-col { position: relative; padding: 70px 0; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+.trm-fan .fn-para { margin: 0 0 12px; font-size: 15px; line-height: 1.55; color: var(--ai-sub); }
+.trm-fan .fn-front { font-family: var(--round); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+.trm-fan .fn-s { transition: color .35s; }
+.trm-fan .fn-s.is-now { color: var(--fn-ink); }
+.trm-fan .fn-read .fn-mark { display: inline-block !important; position: static !important; width: auto; height: auto; vertical-align: -3px; margin-right: 5px; }
+.trm-fan .fn-read .fn-mark button { position: static; width: 18px; height: 18px; font-size: 10px; }

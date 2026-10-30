@@ -726,6 +726,16 @@
   function fan(fig) {
     const data = parse(fig), d = demo(fig);
     const canvas = fig.querySelector(".fn-canvas"), bar = fig.querySelector(".fn-wavebar");
+    const read = fig.querySelector(".fn-read"), sents = read ? [...read.querySelectorAll(".fn-s")] : [];
+    function drawRead() {
+      const w = progress * data.read.words; let cur = -1;
+      sents.forEach((s, i) => { const a = +s.dataset.w0, b = +s.dataset.w1, on = a <= w && w < b; s.classList.toggle("is-past", b <= w); s.classList.toggle("is-now", on); if (on) cur = i; });
+      if (cur < 0) cur = progress >= 1 ? sents.length - 1 : 0;
+      const col = read.firstElementChild, s = sents[cur];
+      if (s) { const y = s.offsetTop + s.offsetHeight / 2 - read.clientHeight / 2; col.style.transform = `translateY(${-Math.max(0, Math.min(col.offsetHeight - read.clientHeight, y))}px)`; }
+      const el = fig.querySelector(".fn-ep-now");
+      if (el) { const t = Math.round(progress * data.episode.length); el.textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`; }
+    }
     const marks = [...fig.querySelectorAll(".fn-mark")], cards = [...fig.querySelectorAll(".fn-card")];
     // the episode's own waveform: its loudness in slices, measured from the audio (tools/ai_episode.py)
     const amp = data.episode.peaks, N = amp.length;
@@ -734,6 +744,7 @@
     marks.forEach((m) => { const i = +m.querySelector("button").dataset.i; m.style.left = `${snap(data.outputs[i].at / data.episode.length) * 100}%`; });
     let progress = still ? 1 : 0;
     function draw() {
+      if (read) { drawRead(); return; }
       const b = bar.getBoundingClientRect(), dpr = devicePixelRatio || 1;
       if (!b.width) return;
       // the canvas is a whole number of screen pixels, shown at exactly that size, so nothing is resampled (blurred)
@@ -777,7 +788,7 @@
     });
     fits.forEach((f) => { new ResizeObserver(fit).observe(f.parentElement); f.querySelectorAll("img").forEach((im) => im.addEventListener("load", fit)); });
     fit();
-    new ResizeObserver(draw).observe(bar);
+    new ResizeObserver(draw).observe(bar || read);
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
     new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     // the line under the demo says what is happening: the moments being found, then each piece as it lands
@@ -1245,10 +1256,10 @@
     };
     // the pin on its target, and its thread beside it (to the right when it fits)
     const place = (k) => {
-      const [x, y] = k === "photo" ? at(typo, 0.82, 0.12) : at(targets.model, 0.68, 0.3);
+      const [x, y] = k === "photo" ? at(typo, 1, 0.15) : at(targets.model, 0.82, 0.32);
       pin.style.left = x + "px"; pin.style.top = y + "px";
       card.style.left = (x + 16 + 250 > 710 ? x - 16 - 250 : x + 16) + "px";
-      card.style.top = Math.max(30, Math.min(y - 14, 450 - 62 - 196)) + "px";
+      card.style.top = Math.max(30, Math.min(y - 6, 450 - 62 - 196)) + "px";
     };
     function reset(k) {
       ["is-frozen", "is-markup", "is-pin", "is-card", "is-menu", "is-reading", "is-green"].forEach((c) => set(c, false));
@@ -1284,7 +1295,7 @@
       await w(900);
       await click(); $(".mk-tl.is-cmt").classList.add("is-on");
       await w(400);
-      k === "photo" ? point(typo, 0.82, 0.3) : point(targets.model, 0.68, 0.35);
+      k === "photo" ? point(typo, 1, 0.3) : point(targets.model, 0.82, 0.37);
       await w(1000);
       await click();
       place(k);
