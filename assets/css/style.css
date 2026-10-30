@@ -4109,7 +4109,7 @@ a.tl-cta:active { transform: scale(.96); }
 :root[data-os="ios"] .jb-dots { height: 44px; border-radius: 22px; left: 8px; bottom: 8px; padding: 0 4px; }
 :root[data-os="ios"] .jb-dot { width: 22px; height: 44px; }
 .jb-screen .ai-btn { z-index: 4; top: auto; bottom: 12px; }
-:root[data-os="ios"] .jb-screen .ai-btn { bottom: 8px; }
+:root[data-os="ios"] .jb-screen .ai-btn { top: auto; bottom: 8px; }
 
 /* the Mac: the app's window on a desktop, cropped by the card at the bottom; a pointer does the clicking */
 .jb-desk { position: absolute; inset: 0; background: var(--wall); }

@@ -1496,7 +1496,7 @@
         oc.textContent = "1"; flash(oc);
         await w(1800);
         park(s3, 470, 380);
-        scroll.style.setProperty("--y", "-128px");
+        scroll.style.setProperty("--y", "-172px");
         await w(1600);
         point(s3, waiting);
         await w(950);

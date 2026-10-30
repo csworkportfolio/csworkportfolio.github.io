@@ -334,3 +334,6 @@ html.theme-dark .trm-bets .trm-card:nth-child(6), html.can-dark:not(.theme-light
 
 /* the pipeline's human step and the chart's second series */
 .trm-pipe li.is-human { box-shadow: var(--ai-shadow), inset 0 0 0 2px var(--co-pink); }
+
+/* a piece in a format TRM already posts says what is new about it */
+.trm-fan .fn-new { margin: 6px 0 0; font-size: 12px; line-height: 1.35; color: var(--trm-link); }
