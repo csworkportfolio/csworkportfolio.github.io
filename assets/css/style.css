@@ -3604,8 +3604,7 @@ a.tl-cta:active { transform: scale(.96); }
   .geo-pane { grid-row: auto; }
   .geo-pane:last-child { grid-row: 4; }
   .geo-fields { grid-template-columns: 1fr; gap: 6px; }
-  .fn-cards { grid-template-columns: 1fr; }
-  .fn-card:last-child { grid-column: auto; }
+  .fn-cards { gap: 10px; }   /* phones keep the two columns, the last card full width */
   .tl-grid { grid-template-columns: 1fr; }
 }
 
