@@ -269,10 +269,9 @@
     if (s < 1.7) { const k = (s - 0.5) / 1.2; const burst = Math.sin(s * 47) * Math.sin(s * 23) > 0.15 ? 1 : 0.08; return Math.min(1, burst * (0.4 + 0.6 * k)); }
     return 0.97 + 0.03 * Math.sin(s * 31) * Math.sin(s * 17);
   }
-  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false, onFixture = false, hold = 1400;
-  // the pointer steers the light only once it has touched the fixture itself; a pointer that just crosses the
-  // sky leaves the beam alone. Once touched, it stays the visitor's for the rest of the page (leaving the scene or
-  // resting only lets the beam drift home until the pointer moves again).
+  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = true, onFixture = false, hold = 1400;
+  // the pointer steers the light from anywhere in the sky; resting, or leaving the scene, lets it drift home.
+  // (onFixture still marks the projector itself, where the aim holds instead of wrenching down.)
   const caster = new THREE.Raycaster(), ndc = new THREE.Vector2();
   host.addEventListener("pointermove", (e) => {
     const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true; if (e.pointerType === "mouse") hold = 1400;
