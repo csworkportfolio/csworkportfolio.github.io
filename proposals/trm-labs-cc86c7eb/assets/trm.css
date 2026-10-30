@@ -181,8 +181,11 @@ details.trm-acc[open] > summary .trm-acc-chev::before { transform: translateY(2p
 .trm-signal-copy, .trm-signal-replay { z-index: 1; }
 
 /* the proof switcher: four anchors, one block */
+/* the tabs share the row edge to edge: each grows to fill its share, the label stays as it is, the count beside it */
 .trm-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 14px; }
-.trm-tabs button { font: inherit; font-size: 12.5px; font-weight: 500; padding: 5px 11px; border: 0; border-radius: 99px; cursor: pointer; color: var(--ink); background: var(--ai-soft); }
+.trm-tabs button { flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 7px; font: inherit; font-size: 12.5px; font-weight: 500; padding: 5px 11px; border: 0; border-radius: 99px; cursor: pointer; color: var(--ink); background: var(--ai-soft); white-space: nowrap; }
+.trm-tab-n { font-size: 11px; font-weight: 600; font-family: var(--round); line-height: 1; padding: 3px 6px; border-radius: 99px; color: var(--ai-sub); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.trm-tabs button[aria-selected="true"] .trm-tab-n { color: #fff; background: rgba(255, 255, 255, .22); }
 .trm-tabs button[aria-selected="true"] { color: #fff; background: var(--trm); }
 .trm-tabs button:focus-visible { outline: 2px solid var(--trm); outline-offset: 2px; }
 .trm-tabpanel[hidden] { display: none; }
