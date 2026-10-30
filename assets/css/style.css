@@ -3641,7 +3641,8 @@ a.tl-cta:active { transform: scale(.96); }
 .hh-recent { margin: 10px -14px 0; padding: 10px 14px; border-top: 1px solid var(--hh-line); display: flex; justify-content: space-between; align-items: center; color: var(--hh-sub); }
 .hh-recent .hh-i { width: 10px; height: 10px; transform: rotate(90deg); }
 /* the main window: sidebar, then All Files or a recording's page */
-.hh-win { position: absolute; z-index: 2; left: 0; right: 0; top: 24px; bottom: 0; display: grid; grid-template-columns: 172px minmax(0, 1fr); background: var(--hh-bg);
+.hh-win { position: absolute; z-index: 2; left: 24px; right: 24px; top: 42px; bottom: -14px; display: grid; grid-template-columns: 172px minmax(0, 1fr); background: var(--hh-bg);
+  border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 .5px rgba(0,0,0,.4), 0 18px 50px rgba(0,0,0,.45);
   opacity: 0; transform: scale(.97); transition: opacity .3s, transform .35s var(--ease); }
 .hh.is-win .hh-win { opacity: 1; transform: none; }
 .hh-side { position: relative; background: var(--hh-side); padding: 10px 10px; border-right: 1px solid rgba(0,0,0,.3); }
@@ -3902,13 +3903,14 @@ a.tl-cta:active { transform: scale(.96); }
 .mk p, .mk h4 { margin: 0; }
 .mk i { font-style: normal; }
 .mk-i { width: 13px; height: 13px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.mk-desk { position: absolute; inset: 0; background: linear-gradient(160deg, #2b3440, #15181d); }
+.mk-desk { position: absolute; inset: 0; background: radial-gradient(110% 90% at 15% 110%, #2c4a8f 0%, transparent 60%), radial-gradient(90% 80% at 95% 0%, #5a2d63 0%, transparent 60%), linear-gradient(160deg, #1b2440, #101523); }
 .mk-mbar { position: absolute; z-index: 4; left: 0; right: 0; top: 0; height: 22px; display: flex; align-items: center; gap: 15px; padding: 0 14px; font-size: 11.5px;
   background: rgba(20,20,24,.7); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
 .mk-mbar .is-3d, .mk.is-3d .mk-mbar .is-ph { display: none; }
 .mk.is-3d .mk-mbar .is-3d { display: inline; }
 /* the two app windows, one at a time */
-.mk-win { position: absolute; z-index: 1; left: 0; right: 0; top: 22px; bottom: 0; display: flex; flex-direction: column; transition: opacity .45s, transform .5s var(--ease); }
+.mk-win { position: absolute; z-index: 1; left: 24px; right: 24px; top: 40px; bottom: -14px; display: flex; flex-direction: column; transition: opacity .45s, transform .5s var(--ease);
+  border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 .5px rgba(0,0,0,.4), 0 18px 50px rgba(0,0,0,.45); }
 .mk-3d, .mk.is-3d .mk-ph { opacity: 0; transform: scale(.97); }
 .mk.is-3d .mk-3d { opacity: 1; transform: none; }
 .mk-tb { position: relative; flex: none; display: flex; align-items: center; gap: 14px; height: 24px; padding: 0 10px; background: #2d2d31; border-bottom: 1px solid #111; color: #9a9a9f; white-space: nowrap; }
