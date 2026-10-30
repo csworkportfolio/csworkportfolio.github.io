@@ -1091,6 +1091,8 @@
         a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
         a.appendChild(document.createTextNode(back.label));
         seg.appendChild(a);
+        // a proposal taken down later (its folder removed; 404.html sends the link home) drops its tab and its note
+        fetch(back.href, { method: "HEAD" }).then((r) => { if (r.status === 404) { localStorage.removeItem("proposalReturn"); a.remove(); markScrolling(); } }).catch(() => {});
       }
     } catch (e) { /* no storage: six tabs */ }
   }

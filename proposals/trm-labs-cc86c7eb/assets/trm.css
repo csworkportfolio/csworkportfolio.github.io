@@ -160,6 +160,9 @@ details.trm-acc[open] > summary .trm-acc-chev::before { transform: translateY(2p
 .trm-btn-link { text-decoration: none; margin-left: auto; color: var(--trm-link); }
 
 /* the signal: the spotlight header */
+/* the switcher floats over the top of the searchlight, as it floats over the page on every other page */
+.trm-page .pills { margin-bottom: calc(-1 * var(--trm-pills-h, 80px)); }
+.trm-page .trm-signal-replay { top: calc(var(--trm-pills-h, 80px) + 4px); }
 .trm-signal { position: relative; height: clamp(420px, 56vw, 640px); background: #00124D; overflow: hidden; }
 .trm-signal canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
 .trm-signal-copy { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 var(--gutter) 36px; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin: 0 auto; color: #F7F5F4; opacity: 0; }

@@ -12,6 +12,8 @@ It needs no hosting service beyond plain files and runs on GitHub Pages as-is.
 | `assets/` | Stylesheet and the gallery/lightbox script. |
 | `media/` | Optimized images and videos (generated; `manifest.json` tracks them). |
 | `files/` | PDFs and slide decks linked from galleries. |
+| `proposals/<company>-<hex>/` | Unlisted proposal pages, each self-contained (noindex, no links to it). Remove one by deleting its folder; `404.html` then sends its old link to the home page. |
+| `404.html` | GitHub Pages' not-found page: a proposal link that no longer exists goes home; anything else shows a link home. |
 | `index.html`, `*/index.html` | The generated pages. Don't edit by hand; rebuild instead. |
 
 Page addresses match the old Wix ones: `/nike/`, `/graphic-design/`, `/video-work/` and so on.

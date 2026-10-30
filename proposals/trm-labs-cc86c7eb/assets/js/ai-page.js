@@ -962,6 +962,7 @@
   // ---------- 6. the tools: each screen tour plays while it is on screen ----------
   function tools(fig) {
     fig.querySelectorAll(".hh-screen").forEach(heardhum);
+    fig.querySelectorAll(".bg-screen").forEach(budget);
     if (still) return;
     for (const v of fig.querySelectorAll(".tl-video")) {
       new IntersectionObserver(([e]) => {

@@ -1109,8 +1109,21 @@
             "name": "Budget AI",
             "tag": "Working Title",
             "line": "A budgeting app that runs on your own computer, with a review inbox, budgets that understand bills, and a Home Screen widget.",
-            "video": "budget-ai.mp4",
-            "img": "budget-ai.jpg"
+            "phone": {
+              "month": "October",
+              "left": "$1,840",
+              "budgeted": "$3,900",
+              "pace": "$310",
+              "review": [
+                ["SQ *HILLTOP BAKERY #4", "", "$8.75"],
+                ["Fernwood Market", "groceries", "$54.18"],
+                ["City Transit", "transit", "$2.75"],
+                ["Corner Hardware", "household", "$23.40"]
+              ],
+              "category": "restaurants",
+              "rename": "Hilltop Bakery",
+              "past": 3
+            }
           },
           {
             "name": "Job Search AI",

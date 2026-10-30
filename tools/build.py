@@ -1870,10 +1870,101 @@ def demo_heardhum(w, root):
 </div></div><script type="application/json" class="hh-data">{json_script({"name": w["name"], "length": w["length"]})}</script>'''
 
 
+BG_CATS = {   # Budget AI's built-in categories (src/server/default-categories.ts): name, emoji, colour role
+    "groceries": ("Groceries", "🥑", "green"), "restaurants": ("Restaurants", "🍜", "orange"), "rent": ("Rent", "🔑", "amber"),
+    "utilities": ("Utilities", "💡", "sky"), "household": ("Household", "🧺", "teal"), "transit": ("Transit & Rides", "🚌", "blue"),
+}
+BG_ICONS = {   # SF Symbol look-alikes on a 24 grid
+    "gear": "M12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1",
+    "sync": "M4 12a8 8 0 0 1 13.7-5.6L20 9M20 4v5h-5M20 12a8 8 0 0 1-13.7 5.6L4 15M4 20v-5h5",
+    "chev": "M9 6l6 6-6 6",
+    "spark": "M12 4c.5 3.6 2.4 5.5 6 6-3.6.5-5.5 2.4-6 6-.5-3.6-2.4-5.5-6-6 3.6-.5 5.5-2.4 6-6z",
+    "search": "M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 20 20",
+}
+
+
+def bg_icon(n):
+    return f'<svg class="bg-i" viewBox="0 0 24 24" aria-hidden="true"><path d="{BG_ICONS[n]}"/></svg>'
+
+
+def bg_chip(key):
+    if not key:
+        return '<span class="bg-chip is-none">Uncategorized</span>'
+    name, emoji, colour = BG_CATS[key]
+    return f'<span class="bg-chip" style="--c: var(--bc-{colour})">{emoji} {esc(name)}</span>'
+
+
+def demo_budget(p):
+    """Budget AI, Christian's budgeting app, on an iPhone (after its phone layout and design/tokens.json, light or dark
+    with the page). Drawn at 720 by 450 and scaled to the card; the phone sits 0.79 of its 393pt size and is cropped
+    by the card, so the camera pans down for the sheet. The Home Screen widget opens the app, a glance at the pace,
+    then the review inbox: a bakery charge takes the suggested category, and the fix becomes a rule that also renames
+    it. Every name and amount is made up. Drawn finished."""
+    first, *rest = p["review"]
+    cat = BG_CATS[p["category"]]
+    rows = [f'<div class="bg-row is-first"><span class="bg-name" data-raw="{esc(first[0])}">{esc(p["rename"])}</span>'
+            f'<span class="bg-cell">{bg_chip(p["category"])}</span><span class="bg-amt">{esc(first[2])}</span><i class="bg-dot"></i></div>']
+    rows += [f'<div class="bg-row"><span class="bg-name">{esc(r[0])}</span><span class="bg-cell">{bg_chip(r[1])}</span>'
+             f'<span class="bg-amt">{esc(r[2])}</span><i class="bg-dot is-on"></i></div>' for r in rest]
+    n = len(p["review"])
+
+    def opt(key, cls=""):
+        name, emoji, colour = BG_CATS[key]
+        return f'<p class="bg-opt{cls}"><span class="bg-chip" style="--c: var(--bc-{colour})">{emoji} {esc(name)}</span></p>'
+    picker = (f'<div class="bg-pick"><p class="bg-find">Search categories</p>'
+              f'<p class="bg-grp">{bg_icon("spark")}Suggested</p>{opt(p["category"], " is-sug")}'
+              f'<p class="bg-grp">Food</p>{opt("groceries")}{opt("restaurants")}<p class="bg-grp">Home</p>{opt("rent")}{opt("utilities")}</div>')
+    tiles = "".join(f'<i class="bg-tile" style="--t: {t}"></i>' for t in
+                    ("#ff9f0a", "#30d158", "#5ac8fa", "#bf5af2", "#ff375f", "#64d2ff", "#ffd60a", "#8e8e93"))
+    return f'''<div class="bg-view"><div class="bg is-app is-drawn is-scroll is-con" lang="en" aria-hidden="true">
+  <div class="bg-phone"><div class="bg-scr">
+    <div class="bg-home">
+      <div class="bg-wid is-free"><small>{esc(p["month"])}</small><b>{esc(p["left"])}</b><span>Free to Spend</span><em>{esc(p["pace"])} under pace</em></div>
+      <div class="bg-wid is-rev"><small>To Review</small><b class="bg-n" data-n="{n}">{n - 1}</b><span>transactions</span></div>
+      <div class="bg-tiles">{tiles}</div>
+    </div>
+    <div class="bg-app">
+      <p class="bg-head">{bg_icon("gear")}<b>Budget AI</b>{bg_icon("sync")}</p>
+      <p class="bg-tabs"><span>Cash Flow</span><span class="is-on">Dashboard <i class="bg-n" data-n="{n}">{n - 1}</i></span><span>Budgets</span></p>
+      <div class="bg-body">
+        <section class="bg-pace"><p class="bg-left">{esc(p["left"])} left</p><p class="bg-of">out of {esc(p["budgeted"])} budgeted</p>
+          <svg class="bg-chart" viewBox="0 0 320 96" preserveAspectRatio="none"><path class="bg-even" d="M2 92L318 6"/>
+            <path class="bg-fill" d="M2 92L22 91L40 89L58 88L76 84L94 83L112 79L130 77L148 74L166 73L184 71L196 70V94H2Z"/>
+            <path class="bg-spent" pathLength="1" d="M2 92L22 91L40 89L58 88L76 84L94 83L112 79L130 77L148 74L166 73L184 71L196 70"/></svg>
+          <span class="bg-under">{esc(p["pace"])} under</span></section>
+        <p class="bg-rh"><span>To Review · <i class="bg-n" data-n="{n}">{n - 1}</i></span><span>See all{bg_icon("chev")}</span></p>
+        <div class="bg-list">{"".join(rows)}</div>
+      </div>
+      {picker}
+      <div class="bg-toast is-fix"><p><b>{esc(first[0])} → {esc(cat[0])}</b><span>Do the same for other transactions with this name?</span></p><span class="bg-act">Make a rule</span></div>
+      <div class="bg-toast is-saved"><p><b>Rule saved. New transactions will follow it.</b></p></div>
+      <div class="bg-sheet"><i class="bg-grab"></i><h5>Always Use This Category?</h5>
+        <p class="bg-desc">Future transactions that match will be categorized automatically. Anything you’ve set by hand stays as it is.</p>
+        <p class="bg-set"><span>Set to</span>{bg_chip(p["category"])}</p>
+        <p class="bg-lab">Which names match</p><p class="bg-seg"><span class="is-x">This exact name</span><span class="is-c">Names containing…</span></p>
+        <p class="bg-lab">Contains</p><p class="bg-field is-con" data-raw="{esc(first[0])}"><span class="bg-v">{esc(p["rename"].lower())}</span><i class="bg-caret"></i></p>
+        <p class="bg-lab">Also rename them to (optional)</p><p class="bg-field is-ren"><span class="bg-v">{esc(p["rename"])}</span><i class="bg-caret"></i></p>
+        <p class="bg-sw"><span>Also update {p["past"]} past transactions</span><i class="bg-switch"></i></p>
+        <p class="bg-btns"><span>Not now</span><span class="bg-save">Save rule</span></p></div>
+    </div>
+    <div class="bg-island"></div>
+    <p class="bg-status"><b>9:41</b><span class="bg-sig"><i></i><i></i><i></i><i></i></span><span class="bg-bat"></span></p>
+    <i class="bg-touch"></i>
+  </div></div>
+</div></div>'''
+
+
 def demo_tools(b, root):
     cards = []
     for t in b["tools"]:
         v = lambda f: f'{root}assets/ai/{f}?v={asset_version("assets/ai/" + f)}'
+        tag = f'<span class="tl-tag">{esc(t["tag"])}</span>' if t.get("tag") else ""   # the name is not final
+        if t.get("phone"):
+            cta = (f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a>' if t.get("href")
+                   else '<span class="tl-cta is-soon">Coming soon</span>')
+            cards.append(f'<li class="tl-card"><div class="tl-screen bg-screen">{demo_budget(t["phone"])}{AI_PAUSE}</div>'
+                         f'<div class="tl-body"><h3>{esc(t["name"])}{tag}</h3><p>{esc(t["line"])}</p>{cta}</div></li>')
+            continue
         if t.get("walk"):
             cards.append(f'<li class="tl-card"><div class="tl-screen hh-screen">{demo_heardhum(t["walk"], root)}{AI_PAUSE}</div>'
                          f'<div class="tl-body"><h3>{esc(t["name"])}</h3><p>{esc(t["line"])}</p>'
@@ -1888,7 +1979,6 @@ def demo_tools(b, root):
             screen = f'<span class="tl-icon"><img src="{v(t["icon"])}" alt="" loading="lazy"></span><span class="tl-soon-n">Screen recording coming soon</span>'
         cta = (f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a>' if t.get("href")
                else '<span class="tl-cta is-soon">Coming soon</span>')
-        tag = f'<span class="tl-tag">{esc(t["tag"])}</span>' if t.get("tag") else ""   # the name is not final
         cards.append(f'<li class="tl-card"><div class="tl-screen{"" if t.get("video") or t.get("img") else " is-empty"}">{screen}</div>'
                      f'<div class="tl-body"><h3>{esc(t["name"])}{tag}</h3><p>{esc(t["line"])}</p>{cta}</div></li>')
     return f'<div class="wrap ai-demo ai-tools" data-demo="tools"><ul class="tl-grid">{"".join(cards)}</ul></div>'
