@@ -121,10 +121,10 @@
     <p class="trm-bethe-line" aria-label="Be the someone.">Be the <span class="trm-bethe-w">someone.</span></p>
     <p class="trm-bethe-proof">The line every piece lands on.</p>
   </div>
-  <p>The blank is the system. Each piece fills it with something an engineer here actually does, with the proof underneath, and the film and the header cycle through them before landing on the one word that comes from TRM's own sentence. "Hero" and "best" stay out: TRM never says the first, and the second is a claim, not a picture.</p>
+  <p>The blank is the system. Each piece fills it with something an engineer here actually does, with the proof underneath, and the film and the header cycle through them before landing on the one word that comes from TRM's own sentence.</p>
 </section>
 <div class="wrap trm-box">
-  <figure class="trm-wide"><video src="./assets/trm/be-the-someone.mp4?v=8472ff9a" poster="./assets/trm/be-the-someone-poster.png?v=8472ff9a" autoplay muted loop playsinline aria-label="The Resolve hero as a three-second film: TRM particles, a face resolving out of them, then the line Be the someone."></video><figcaption><b>The Hero, as a Film</b> Five seconds: TRM's own particle bands flow, then gather into the crowd; the face resolves out of the dots; the line arrives. Drawn dot by dot, so it can be re-cut with any photo.</figcaption></figure>
+  <figure class="trm-wide"><video src="./assets/trm/be-the-someone.mp4?v=91441e76" poster="./assets/trm/be-the-someone-poster.png?v=91441e76" autoplay muted loop playsinline aria-label="The Resolve hero as a three-second film: TRM particles, a face resolving out of them, then the line Be the someone."></video><figcaption><b>The Hero, as a Film</b> Five seconds: TRM's own particle bands flow, then gather into the crowd; the face resolves out of the dots; the line arrives. Drawn dot by dot, so it can be re-cut with any photo.</figcaption></figure>
   <figure><img src="./assets/trm/bs-02-resolve-system.png" alt="Three frames showing the Resolve device: particles, resolving, a person" loading="lazy"><figcaption><b>Resolve, the System</b> Particles, resolving, a person. Two seconds on video; a circle of photo on a still.</figcaption></figure>
   <figure><img src="./assets/trm/bs-03-capacity-gap.png" alt="Stat card: Criminals move in 130 seconds. Cases take 576 days." loading="lazy"><figcaption><b>The Capacity Gap</b> From the CEO letter. Closing it is engineering work.</figcaption></figure>
   <figure><img src="./assets/trm/bs-04-made-whole.png" alt="Story card: Aleksey Madan lost $141,000 and got all of it back" loading="lazy"><figcaption><b>Made Whole</b> A victim TRM names in its own story, who got every dollar back. The win, not the harm.</figcaption></figure>
@@ -299,7 +299,7 @@ document.querySelectorAll('.trm-tabs').forEach(function(bar){
 /* Be the ___: the blank cycles through what an engineer here does, each with its proof, and lands on someone */
 document.querySelectorAll('.trm-bethe').forEach(function(box){
   var w=box.querySelector('.trm-bethe-w'), pr=box.querySelector('.trm-bethe-proof');
-  var words=[['trace.','The graph that followed $3.5M through swaps and peeling chains.'],['freeze.','Screening fast enough to stop a withdrawal.'],['130 seconds.','Criminals move in 130 seconds. Cases take 576 days.'],['47 years.','The sentence the evidence held up for.'],['crimefighter.','TRM’s own word for the people who use what you build.'],['someone.','The line every piece lands on.']];
+  var words=[['trace.','The graph that followed $3.5M through swaps and peeling chains.'],['freeze.','Screening fast enough to stop a withdrawal.'],['hero.','Code that helps stop fraud, terror financing and exploitation.'],['130 seconds.','Criminals move in 130 seconds. Cases take 576 days.'],['47 years.','The sentence the evidence held up for.'],['crimefighter.','TRM’s own word for the people who use what you build.'],['someone.','The line every piece lands on.']];
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var k=words.length-1;
   function step(){ k=(k+1)%words.length; box.classList.add('is-out'); setTimeout(function(){ w.textContent=words[k][0]; pr.textContent=words[k][1]; box.classList.remove('is-out'); setTimeout(step, k===words.length-1?4200:1900); },260); }
