@@ -337,3 +337,7 @@ html.theme-dark .trm-bets .trm-card:nth-child(6), html.can-dark:not(.theme-light
 
 /* a piece in a format TRM already posts says what is new about it */
 .trm-fan .fn-new { margin: 6px 0 0; font-size: 12px; line-height: 1.35; color: var(--trm-link); }
+
+/* one rhythm: 36px between blocks; the pull quote in Where TRM Stands sits 48px under the cards, not the portfolio's 110 */
+.trm-page #machine { margin-top: 36px; }
+.case-v2 .trm-acc-body .prose.statement-wrap { margin-top: 48px; }
