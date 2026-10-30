@@ -1095,7 +1095,7 @@
             "name": "Markup AI",
             "tag": "Working Title",
             "line": "Comment threads on top of any app, answered by Claude. I mark up a design, and the change comes back in place.",
-            "scene": [{ "on": "mac", "video": "markup-ai.mp4", "img": "markup-ai.jpg" }]
+            "scene": [{ "on": "mac", "img": "markup-mac.jpg" }]
           }
         ]
       },
