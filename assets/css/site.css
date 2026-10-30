@@ -3878,8 +3878,8 @@ a.tl-cta:active { transform: scale(.96); }
 }
 html.theme-dark.can-dark .mc-steps a { background: rgba(255,255,255,.06); }
   html.theme-dark.can-dark .mc-steps a:hover { background: rgba(10,132,255,.18); }
-@media (max-width: 900px) { .mc-steps { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); } .mc-steps li:nth-child(4)::before { display: none; } }
-@media (max-width: 560px) { .mc-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mc-steps li:nth-child(odd)::before { display: none; } }
+@media (max-width: 900px) { .mc-steps { grid-auto-flow: row; grid-template-columns: repeat(6, minmax(0, 1fr)); } .mc-steps li { grid-column: span 2; } .mc-steps li:nth-child(n + 4) { grid-column: span 3; } .mc-steps li:nth-child(4)::before { display: none; } }   /* three on top, two below: no empty cell */
+@media (max-width: 560px) { .mc-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mc-steps li, .mc-steps li:nth-child(n + 4) { grid-column: auto; } .mc-steps li:nth-child(5) { grid-column: 1 / -1; } .mc-steps li::before { display: none; } }   /* phones: pairs, the last card full width, no chevrons */
 /* A faint pulse runs the loop: card 1, each arrow in turn, then back along the return line to the start */
 .mc-back { position: relative; }
 .mc-back::after { content: ""; position: absolute; bottom: -1.5px; left: calc(100% - 80px); width: 80px; height: 2px; border-radius: 2px; opacity: 0;
