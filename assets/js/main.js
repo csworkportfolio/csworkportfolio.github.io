@@ -1079,6 +1079,22 @@
   const seg = document.querySelector(".seg");
   const segOn = seg && seg.querySelector(".is-active");
 
+  // An unlisted proposal page (proposals/<company>/) notes itself in localStorage when it opens. On every other
+  // page the switcher then grows a locked seventh tab back to that one page, and only that one: a visitor who was
+  // never on a proposal sees six tabs, and one who was sees the proposal they came from, never another company's.
+  if (seg && !seg.querySelector(".seg-lock")) {
+    try {
+      const back = JSON.parse(localStorage.getItem("proposalReturn") || "null");
+      if (back && back.href && back.label) {
+        const a = document.createElement("a");
+        a.className = "seg-item seg-lock"; a.href = back.href; a.setAttribute("aria-label", `Back to the ${back.label} proposal`);
+        a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
+        a.appendChild(document.createTextNode(back.label));
+        seg.appendChild(a);
+      }
+    } catch (e) { /* no storage: six tabs */ }
+  }
+
   // A bar too long for the screen runs edge to edge and scrolls (CSS .is-scrolling). Measured in the
   // centred, rounded form first, since the full-width form always has the room it needs.
   function markScrolling() {

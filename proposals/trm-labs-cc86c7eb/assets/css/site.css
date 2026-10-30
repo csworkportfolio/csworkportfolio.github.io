@@ -188,6 +188,9 @@ button { font: inherit; color: inherit; }
 .seg-item:hover { color: #000; text-decoration: none; }
 .seg-item.is-active { background: #007aff; color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .15); }  /* the same blue as the phone chip */
 .seg-item:focus-visible { outline: 2px solid var(--tabaccent); outline-offset: -2px; }
+/* the locked tab back to an unlisted proposal page (main.js adds it for a visitor who has been on one) */
+.seg-lock svg { width: 12px; height: 12px; margin-right: 5px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+:root[data-os="ios"] .seg-lock svg { width: 14px; height: 14px; }
 @media (prefers-reduced-transparency: reduce) { .seg { background: #f2f2f2; -webkit-backdrop-filter: none; backdrop-filter: none; } }
 @media (prefers-reduced-motion: reduce) { .seg-item { transition: none; } }
 
