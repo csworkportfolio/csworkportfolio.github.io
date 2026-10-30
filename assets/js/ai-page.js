@@ -963,6 +963,7 @@
   function tools(fig) {
     fig.querySelectorAll(".hh-screen").forEach(heardhum);
     fig.querySelectorAll(".bg-screen").forEach(budget);
+    fig.querySelectorAll(".mk-screen").forEach(markup);
     if (still) return;
     for (const v of fig.querySelectorAll(".tl-video")) {
       new IntersectionObserver(([e]) => {
@@ -1220,6 +1221,128 @@
         count(counts[0].dataset.n - 1);
         await w(3200);
       }
+    }
+    wire(d, loop);
+  }
+
+  // Markup AI's walkthrough on its tool card: a pin on the typo in a photo editor, sent with Make It, the fix lands
+  // and Claude says so, the thread is resolved; then the same in a 3D app, where the can's label turns green
+  function markup(screen) {
+    const view = screen.querySelector(".mk-view"), mk = view.querySelector(".mk"), cursor = mk.querySelector(".mk-cursor");
+    const data = JSON.parse(screen.querySelector(".mk-data").textContent);
+    const $ = (s) => mk.querySelector(s);
+    const fit = () => view.style.setProperty("--mk-s", view.clientWidth / 720);
+    new ResizeObserver(fit).observe(view);
+    fit();
+    const set = (cls, on) => mk.classList.toggle(cls, on);
+    const pin = $(".mk > .mk-pin"), card = $(".mk-card"), field = $(".mk-field"), fieldV = $(".mk-field-v");
+    const note = $(".mk-msg.is-c"), reply = $(".mk-msg.is-k"), typo = $(".mk-typo"), typoText = typo.textContent;
+    const targets = { photo: typo, model: $(".mk-label") };
+    // where an element sits on the 720 by 450 stage
+    const at = (el, dx = 0.5, dy = 0.5) => {
+      const a = mk.getBoundingClientRect(), b = el.getBoundingClientRect(), s = a.width / 720;
+      return [(b.left - a.left + b.width * dx) / s, (b.top - a.top + b.height * dy) / s];
+    };
+    // the pin on its target, and its thread beside it (to the right when it fits)
+    const place = (k) => {
+      const [x, y] = k === "photo" ? at(typo, 0.82, 0.12) : at(targets.model, 0.68, 0.3);
+      pin.style.left = x + "px"; pin.style.top = y + "px";
+      card.style.left = (x + 16 + 250 > 710 ? x - 16 - 250 : x + 16) + "px";
+      card.style.top = Math.max(30, Math.min(y - 14, 450 - 62 - 196)) + "px";
+    };
+    function reset(k) {
+      ["is-frozen", "is-markup", "is-pin", "is-card", "is-menu", "is-reading", "is-green"].forEach((c) => set(c, false));
+      set("is-3d", k === "model");
+      set("is-pointing", true);
+      $(".mk-title").textContent = data[k].thread;
+      note.classList.remove("is-on"); reply.classList.remove("is-on");
+      note.querySelector(".mk-t").textContent = data[k].note;
+      reply.querySelector(".mk-t").textContent = data[k].reply;
+      fieldV.textContent = "";
+      field.classList.remove("is-typed", "is-focus");
+      typo.textContent = typoText;
+      $(".mk-tl.is-cmt").classList.remove("is-on");
+    }
+    if (still) {   // stays on the finished photo thread
+      reset("photo");
+      typo.textContent = typo.dataset.fix;
+      note.classList.add("is-on"); reply.classList.add("is-on");
+      set("is-pointing", false);
+      requestAnimationFrame(() => { place("photo"); ["is-markup", "is-pin", "is-card"].forEach((c) => set(c, true)); });
+      return;
+    }
+    const d = demo(screen), w = d.wait;
+    const point = (el, dx, dy) => { const [x, y] = at(el, dx, dy); cursor.style.left = x - 3 + "px"; cursor.style.top = y - 2 + "px"; };
+    const click = async () => { cursor.classList.add("is-click"); await w(140); cursor.classList.remove("is-click"); };
+    async function scene(k) {
+      reset(k);
+      await w(800);
+      // 1. Markup AI comes up on a still frame of the screen, and the Comment tool drops a pin on the problem
+      set("is-markup", true); set("is-frozen", true);
+      await w(700);
+      point($(".mk-tl.is-cmt"));
+      await w(900);
+      await click(); $(".mk-tl.is-cmt").classList.add("is-on");
+      await w(400);
+      k === "photo" ? point(typo, 0.82, 0.3) : point(targets.model, 0.68, 0.35);
+      await w(1000);
+      await click();
+      place(k);
+      set("is-pin", true);
+      await w(350);
+      set("is-card", true);
+      field.classList.add("is-focus");
+      await w(500);
+      // 2. the note, typed into the thread
+      field.classList.add("is-typed");
+      await d.type(fieldV, data[k].note, 55);
+      await w(500);
+      fieldV.textContent = "";
+      field.classList.remove("is-typed");
+      note.classList.add("is-on");
+      await w(600);
+      // 3. sent to Claude with Make It: Claude makes the change, then says so in the thread
+      point($(".mk-send"));
+      await w(900);
+      await click(); $(".mk-send").classList.add("is-press");
+      set("is-menu", true);
+      await w(200);
+      $(".mk-send").classList.remove("is-press");
+      await w(500);
+      const make = $(".mk-mi.is-make");
+      point(make, 0.3);
+      await w(700);
+      make.classList.add("is-hover");
+      await w(300);
+      await click();
+      set("is-menu", false); make.classList.remove("is-hover");
+      set("is-frozen", false);
+      field.classList.remove("is-focus");
+      set("is-reading", true);
+      await w(1500);
+      if (k === "photo") {
+        typo.textContent = typo.dataset.fix;
+        typo.classList.add("is-flash");
+      } else set("is-green", true);
+      await w(900);
+      set("is-reading", false);
+      reply.classList.add("is-on");
+      typo.classList.remove("is-flash");
+      await w(2100);
+      // 4. resolved: the thread and its pin go away
+      const res = $(".mk-res");
+      point(res);
+      await w(900);
+      await click(); res.classList.add("is-press");
+      await w(200);
+      res.classList.remove("is-press");
+      set("is-card", false); set("is-pin", false);
+      await w(500);
+      set("is-markup", false);
+      await w(900);
+    }
+    async function loop() {
+      for (;;) { await scene("photo"); await scene("model"); }
     }
     wire(d, loop);
   }

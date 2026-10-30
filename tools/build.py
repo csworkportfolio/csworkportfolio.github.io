@@ -1954,6 +1954,130 @@ def demo_budget(p):
 </div></div>'''
 
 
+MK_ICONS = {   # on a 24 grid
+    "move": "M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3",
+    "marquee": "M5 5h3M11 5h2M16 5h3v3M19 11v2M19 16v3h-3M13 19h-2M8 19H5v-3M5 13v-2M5 8V5",
+    "lasso": "M12 5c4.4 0 8 2.2 8 5s-3.6 5-8 5-8-2.2-8-5 3.6-5 8-5zM7 14c-1 2 0 4 2 5",
+    "crop": "M6 3v15h15M3 6h15v15",
+    "brush": "M14 4l6 6-8 8-3-3zM9 15c-2 0-4 1.5-4 4.5 2 0 4-.5 5-2",
+    "eraser": "M8 20h12M5 15l9-9 5 5-9 9H8z",
+    "text": "M5 7V4h14v3M12 4v16M9 20h6",
+    "drop": "M15 4l5 5-2 2-5-5zM13 6l-8 8v5h5l8-8",
+    "hand": "M8 13V6a1.5 1.5 0 0 1 3 0v5V4.5a1.5 1.5 0 0 1 3 0V11V6a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-3l-2-4a1.5 1.5 0 0 1 2.5-1.5z",
+    "zoom": "M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13zM15.5 15.5 20 20",
+    "eye": "M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12zM12 9.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z",
+    "pointer": "M6 3l12 7-5.5 1.5L10 17z",
+    "pen": "M4 20l1-4L16 5l3 3L8 19zM14 7l3 3",
+    "marker": "M5 20h6M8 16l-2-2 9-10 4 4-9 10z",
+    "comment": "M5 5h14v10h-9l-4 4v-4H5z",
+    "freeze": "M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9M9.5 4.5 12 7l2.5-2.5M9.5 19.5 12 17l2.5 2.5",
+    "send": "M21 3 3 10.5l7 3 3 7zM10 13.5 21 3",
+    "archive": "M3 5h18v4H3zM5 9v10h14V9M10 13h4",
+    "rotate": "M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5",
+    "scale": "M4 20 20 4M14 4h6v6M4 14v6h6",
+    "cube": "M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12 4 7.5",
+    "camera": "M4 8h11v9H4zM15 11l5-3v9l-5-3",
+    "light": "M12 3a6 6 0 0 1 3.5 10.9V17h-7v-3.1A6 6 0 0 1 12 3zM9.5 20h5",
+    "mesh": "M12 4l8 15H4z",
+    "box": "M4 6h16v13H4zM4 10h16",
+    "ball": "M12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16zM4 12h16",
+    "play": "M8 5.5v13l11-6.5z",
+}
+# Claude's spark, as Markup AI draws it on Claude's avatar (the app's own claude-mark.svg, kept next to this script)
+MK_SPARK = re.search(r' d="([^"]+)"', (ROOT / "tools/claude-mark.svg").read_text())[1]
+
+
+def mk_icon(n):
+    return f'<svg class="mk-i" viewBox="0 0 24 24" aria-hidden="true"><path d="{MK_ICONS[n]}"/></svg>'
+
+
+def demo_markup(m):
+    """Markup AI, Christian's comment layer for any app, over two made-up apps (drawn at 720 by 450 and scaled to the
+    card; its colors and sizes from the app's style.json, dark). In a photo editor he pins the typo on a launch graphic
+    for an invented coffee brand, Alder & Fern, sends it with Make It, the fix lands and Claude says so in the thread,
+    and he resolves it; then the same in a 3D app, where the can's label turns the brand green. Every name is made up."""
+    ph, md = m["photo"], m["model"]
+    ph_tools = "".join(f'<i{" class=is-on" if n == "text" else ""}>{mk_icon(n)}</i>' for n in
+                       ("move", "marquee", "lasso", "crop", "brush", "eraser", "text", "drop", "hand", "zoom"))
+    layers = "".join(f'<p class="mk-layer{" is-on" if i == 0 else ""}">{mk_icon("eye")}<i class="mk-thumb{" is-t" if t else ""}">{"T" if t else ""}</i>{n}</p>'
+                     for i, (n, t) in enumerate((("Headline", 1), ("Subline", 1), ("Button", 0), ("Cup", 0), ("Logo", 0), ("Background", 0))))
+    photo = f'''<div class="mk-win mk-ph">
+    <p class="mk-tb"><span class="mk-lights"><i></i><i></i><i></i></span><b>{esc(ph["file"])} @ 50% (Headline, RGB)</b></p>
+    <p class="mk-opt">{mk_icon("text")}<span>Display</span><span>Heavy</span><span>54 pt</span><span class="mk-sw"></span><span>Align Left</span></p>
+    <div class="mk-ph-body"><div class="mk-strip">{ph_tools}</div>
+      <div class="mk-canvas"><div class="mk-art">
+        <p class="mk-logo"><i>A</i>Alder &amp; Fern</p>
+        <p class="mk-kicker">New This Summer</p>
+        <h4 class="mk-h1">The Cold Brew <span class="mk-typo" data-fix="Collection">Collecton</span> Is Here</h4>
+        <p class="mk-sub">Three single-origin cold brews, slow-steeped for 18 hours and poured over ice at every Alder &amp; Fern counter.</p>
+        <p class="mk-cta">Find Your Nearest Counter</p>
+        <p class="mk-date">From Saturday, June 7</p>
+        <div class="mk-cup"><i class="mk-lid"></i><i class="mk-body"></i><i class="mk-band">COLD BREW</i></div>
+        <i class="mk-leaf"></i>
+      </div></div>
+      <div class="mk-panels"><p class="mk-ph-h">Properties</p>
+        <p class="mk-f"><span>Font</span><span>Display</span></p><p class="mk-f"><span>Weight</span><span>Heavy</span></p>
+        <p class="mk-f"><span>Size</span><span>54 pt</span></p><p class="mk-f"><span>Color</span><span><i class="mk-sw"></i>#1E2A24</span></p>
+        <p class="mk-ph-h">Layers</p>{layers}</div>
+    </div>
+  </div>'''
+    outliner = "".join(f'<p class="mk-ol{c}" style="--d:{d}">{mk_icon(i)}{n}</p>' for n, i, d, c in (
+        ("Scene Collection", "box", 0, ""), ("Collection", "box", 1, ""), ("Camera", "camera", 2, ""), ("Light", "light", 2, ""),
+        ("Can", "mesh", 2, " is-on"), ("Label", "ball", 3, "")))
+    can = ('<svg class="mk-can" viewBox="0 0 120 200" aria-hidden="true"><defs>'
+           '<linearGradient id="mk-shade" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".32" stop-color="#fff" stop-opacity=".18"/>'
+           '<stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>'
+           '<linearGradient id="mk-metal" x1="0" x2="1"><stop offset="0" stop-color="#6d7075"/><stop offset=".35" stop-color="#e3e5e8"/><stop offset="1" stop-color="#55585d"/></linearGradient></defs>'
+           '<path class="mk-can-sel" d="M10 22V178A50 10 0 0 0 110 178V22A50 10 0 0 0 10 22Z"/>'
+           '<path d="M10 22V178A50 10 0 0 0 110 178V22Z" fill="url(#mk-metal)"/>'
+           '<path class="mk-label" d="M10 58A50 10 0 0 0 110 58V146A50 10 0 0 1 10 146Z"/>'
+           '<text class="mk-can-t" x="60" y="98" text-anchor="middle">ALDER &amp; FERN</text>'
+           '<text class="mk-can-s" x="60" y="116" text-anchor="middle">COLD BREW</text>'
+           '<path d="M10 22V178A50 10 0 0 0 110 178V22Z" fill="url(#mk-shade)"/>'
+           '<ellipse cx="60" cy="22" rx="50" ry="10" fill="#c9ccd1"/><ellipse cx="60" cy="22" rx="42" ry="7.5" fill="#9fa3a9"/>'
+           '<ellipse cx="66" cy="21" rx="9" ry="2.6" fill="#7b7f85"/></svg>')
+    ticks = "".join(f'<span style="left:{k * 10}%">{k * 25}</span>' for k in range(10))
+    model = f'''<div class="mk-win mk-3d">
+    <p class="mk-tb is-3d"><span class="mk-lights"><i></i><i></i><i></i></span><span>File</span><span>Edit</span><span>Render</span><span>Window</span>
+      <span class="mk-tabs"><span class="is-on">Layout</span><span>Modeling</span><span>Shading</span></span><b>{esc(md["file"])}</b></p>
+    <div class="mk-3d-body"><div class="mk-strip">{"".join(f'<i{" class=is-on" if n == "pointer" else ""}>{mk_icon(n)}</i>' for n in ("pointer", "move", "rotate", "scale", "cube"))}</div>
+      <div class="mk-vp"><p class="mk-vp-h"><span>Object Mode</span><span>View</span><span>Select</span><span>Add</span><span>Object</span></p>
+        <p class="mk-vp-n">User Perspective<br>(1) Collection | Can</p>
+        <div class="mk-floor"></div><i class="mk-shadow"></i>{can}
+        <span class="mk-giz"><i class="is-z">Z</i><i class="is-y">Y</i><i class="is-x">X</i></span></div>
+      <div class="mk-side"><div class="mk-outl">{outliner}</div>
+        <div class="mk-props"><p class="mk-ph-h">{mk_icon("ball")}Label</p><p class="mk-pr-s">Surface</p>
+          <p class="mk-f"><span>Base Color</span><span><i class="mk-sw is-lab"></i></span></p>
+          <p class="mk-f"><span>Roughness</span><span class="mk-bar"><i style="width:40%"></i>0.40</span></p>
+          <p class="mk-f"><span>Metallic</span><span class="mk-bar"><i style="width:0"></i>0.00</span></p></div></div>
+    </div>
+    <div class="mk-time">{mk_icon("play")}<div class="mk-ruler">{ticks}<i class="mk-head"></i></div></div>
+  </div>'''
+    spark = f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="{MK_SPARK}"/></svg>'
+    sw = "".join(f'<i class="mk-swatch{" is-on" if i == 1 else ""}" style="background:{c}"></i>' for i, c in enumerate(("#ff453a", "#ffd60a", "#0a84ff", "#ffffff")))
+    menu = "".join(f'<p class="mk-mi{" is-make" if n == "Make It" else ""}"><b>{n}</b><span>{t}</span></p>' for n, t in (
+        ("Make It", "Claude makes the change in the app, then tells you here"),
+        ("Discuss", "Claude replies with thoughts and options; nothing changes"),
+        ("Just Note", "Claude keeps it for later; no reply")))
+    data = {k: {"file": v["file"], "thread": v["thread"], "note": v["note"], "reply": v["reply"]} for k, v in m.items()}
+    return f'''<div class="mk-view"><div class="mk" lang="en" aria-hidden="true">
+  <div class="mk-desk"></div>
+  <p class="mk-mbar"><b><span class="is-ph">Photo Editor</span><span class="is-3d">3D Editor</span></b><span>File</span><span>Edit</span><span>View</span><span>Window</span><span>Help</span></p>
+  {photo}{model}
+  <div class="mk-edge"></div>
+  <span class="mk-pin">1</span>
+  <div class="mk-card"><p class="mk-head"><span class="mk-pin">1</span><b class="mk-title"></b><span class="mk-res">{mk_icon("archive")}</span></p>
+    <div class="mk-msg is-c"><span class="mk-av">CS</span><div><p class="mk-who">Christian<small>now</small></p><p class="mk-t"></p></div></div>
+    <div class="mk-msg is-k"><span class="mk-av">{spark}</span><div><p class="mk-who">Claude<small>now</small></p><p class="mk-t"></p></div></div>
+    <p class="mk-read"><span class="mk-av">{spark}</span>Claude is reading</p>
+    <p class="mk-field"><span class="mk-field-v"></span><i class="mk-caret"></i><span class="mk-ph-t">Reply…</span>{mk_icon("send")}</p></div>
+  <div class="mk-tools"><i class="mk-tl">{mk_icon("pointer")}</i><i class="mk-tl">{mk_icon("pen")}</i><i class="mk-tl">{mk_icon("marker")}</i>
+    <i class="mk-tl is-cmt">{mk_icon("comment")}</i><span class="mk-sep"></span>{sw}<span class="mk-sep"></span><i class="mk-tl is-frz">{mk_icon("freeze")}</i>
+    <span class="mk-send">{mk_icon("send")}Send</span><div class="mk-menu">{menu}</div></div>
+  <svg class="mk-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6.2 1.6L10 19z"/></svg>
+</div></div><script type="application/json" class="mk-data">{json_script(data)}</script>'''
+
+
 def demo_tools(b, root):
     cards = []
     for t in b["tools"]:
@@ -1963,6 +2087,12 @@ def demo_tools(b, root):
             cta = (f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a>' if t.get("href")
                    else '<span class="tl-cta is-soon">Coming soon</span>')
             cards.append(f'<li class="tl-card"><div class="tl-screen bg-screen">{demo_budget(t["phone"])}{AI_PAUSE}</div>'
+                         f'<div class="tl-body"><h3>{esc(t["name"])}{tag}</h3><p>{esc(t["line"])}</p>{cta}</div></li>')
+            continue
+        if t.get("markup"):
+            cta = (f'<a class="tl-cta" href="{esc(t["href"])}" target="_blank" rel="noopener">{esc(t["cta"])}</a>' if t.get("href")
+                   else '<span class="tl-cta is-soon">Coming soon</span>')
+            cards.append(f'<li class="tl-card"><div class="tl-screen mk-screen">{demo_markup(t["markup"])}{AI_PAUSE}</div>'
                          f'<div class="tl-body"><h3>{esc(t["name"])}{tag}</h3><p>{esc(t["line"])}</p>{cta}</div></li>')
             continue
         if t.get("walk"):

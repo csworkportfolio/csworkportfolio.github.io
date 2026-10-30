@@ -239,3 +239,6 @@ p.wrap.trm-fullnote { padding-left: var(--gutter); padding-right: var(--gutter);
 .trm-acc-step .ai-step { display: flex; align-items: center; gap: 6px; height: 28px; margin: 0; padding: 0 12px; border-radius: 14px; font-size: 14px; font-weight: 600; color: #fff; background: var(--trm); text-decoration: none; }
 .trm-acc-step .ai-step:hover { background: color-mix(in srgb, var(--trm) 85%, #000); }
 @media (max-width: 720px) { details.trm-acc > summary { grid-template-columns: minmax(0, 1fr) auto 20px; grid-template-areas: "t step chev" "m step chev"; } }
+
+/* for now, no outer card around the demos: the player and the pieces sit straight on the page */
+.trm-fan .ai-stage { background: transparent !important; border-radius: 0; padding: 0; }   /* the dark-mode stage rules are more specific */
