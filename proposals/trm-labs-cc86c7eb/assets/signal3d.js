@@ -269,25 +269,29 @@
     if (s < 1.7) { const k = (s - 0.5) / 1.2; const burst = Math.sin(s * 47) * Math.sin(s * 23) > 0.15 ? 1 : 0.08; return Math.min(1, burst * (0.4 + 0.6 * k)); }
     return 0.97 + 0.03 * Math.sin(s * 31) * Math.sin(s * 17);
   }
-  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false;
+  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false, onFixture = false;
   // the pointer steers the light only once it has passed over the fixture itself; a pointer that just crosses
   // the sky leaves the beam alone. Leaving the scene, or resting long enough for the beam to drift home, disarms it.
   const caster = new THREE.Raycaster(), ndc = new THREE.Vector2();
   host.addEventListener("pointermove", (e) => {
     const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true;
     // only the metal counts: the beam cone, its particles and the lens glow are children of the head too
-    if (!armed) { ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); armed = caster.intersectObject(fixture, true).some((h) => h.object !== cone && h.object !== pts && h.object !== lensGlow); }
+    ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); onFixture = caster.intersectObject(fixture, true).some((h) => h.object !== cone && h.object !== pts && h.object !== lensGlow);
+    if (onFixture) armed = true;
   });
-  host.addEventListener("pointerleave", () => { pointerIn = false; armed = false; });
+  host.addEventListener("pointerleave", () => { pointerIn = false; armed = false; onFixture = false; haveHit = false; });
   // the deck point under the pointer: the camera's ray through it, onto the cloud
-  const pointerHit = new THREE.Vector3();
+  const pointerHit = new THREE.Vector3(), tryHit = new THREE.Vector3(); let haveHit = false;
   function aimUnderPointer() {
+    // on the fixture itself, or low in the frame: hold the last aim rather than drop it, so the beam never
+    // bounces between the pointer and home at a boundary
+    if (onFixture) return haveHit;
     const v = new THREE.Vector3(tx, -ty, 0.5).unproject(camera); const d = v.sub(camera.position).normalize();
-    if (d.y < 0.08) return false;
-    const t = (CLOUD_Y - camera.position.y) / d.y; pointerHit.copy(camera.position).addScaledVector(d, t);
-    // only the sky counts: a pointer low in the frame (on the fixture, on the copy) would land far outside the
-    // deck's playable patch, and the head would wrench round to it
-    return Math.abs(pointerHit.x - TARGET.x) <= 70 && pointerHit.z >= TARGET.z - 50 && pointerHit.z <= TARGET.z + 42;
+    if (d.y < 0.08) return haveHit;
+    const t = (CLOUD_Y - camera.position.y) / d.y; tryHit.copy(camera.position).addScaledVector(d, t);
+    // the whole sky steers: a hit beyond the playable patch is pulled to its nearest edge
+    tryHit.x = Math.max(TARGET.x - 70, Math.min(TARGET.x + 70, tryHit.x)); tryHit.z = Math.max(TARGET.z - 50, Math.min(TARGET.z + 42, tryHit.z));
+    pointerHit.copy(tryHit); haveHit = true; return true;
   }
   let curPan = 0, curTilt = 0, steer = 0;
   function resize() {
@@ -306,13 +310,13 @@
     // to it; still for a moment, or gone, and it drifts back to wherever the sequence has got to
     if (armed && performance.now() - lastMove > 4000) armed = false;
     const active = !still && pointerIn && armed && performance.now() - lastMove < 1400 && aimUnderPointer();
-    steer += ((active ? 1 : 0) - steer) * 0.05;
+    steer += ((active ? 1 : 0) - steer) * (active ? 0.16 : 0.05);   // quick to take, slow to let go
     // the pan comes out of atan2 and wraps at +-PI right where the lock sits (the deck is behind the fixture's
     // zero), so take the pointer's pan the short way round from where the head already is, never the long way
     { const a = anglesFor(pointerHit); const dp = Math.atan2(Math.sin(a.pan - wantPan), Math.cos(a.pan - wantPan)); wantPan = wantPan + dp * steer; wantTilt = wantTilt + (a.tilt - wantTilt) * steer; }
     // the scripted sweep is followed exactly; once the pointer has had the light, it eases (by then the eased
     // angle has already converged on the script, so handing back is seamless)
-    if (lock < 1 && steer < 0.001) { curPan = wantPan; curTilt = wantTilt; } else { curPan += (wantPan - curPan) * 0.07; curTilt += (wantTilt - curTilt) * 0.07; }
+    if (lock < 1 && steer < 0.001) { curPan = wantPan; curTilt = wantTilt; } else { curPan += (wantPan - curPan) * 0.11; curTilt += (wantTilt - curTilt) * 0.11; }
     const len = aim(curPan, curTilt);
     cone.scale.y = len; pMat.uniforms.len.value = len;
     // facing the viewer: the lens flares and the beam itself dims, like looking into the light
