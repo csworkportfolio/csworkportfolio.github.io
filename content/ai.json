@@ -1135,7 +1135,20 @@
             "name": "Markup AI",
             "tag": "Working Title",
             "line": "Comment threads on top of any app, answered by Claude. I mark up a design, and the change comes back in place.",
-            "img": "markup-mac.jpg"
+            "markup": {
+              "photo": {
+                "file": "Cold Brew Launch.png",
+                "thread": "Headline",
+                "note": "Collecton is missing an i.",
+                "reply": "Fixed. The headline now reads Collection."
+              },
+              "model": {
+                "file": "Cold Brew Can",
+                "thread": "Can Label",
+                "note": "Make the label our brand green.",
+                "reply": "Done. The label is brand green now, with cream type."
+              }
+            }
           }
         ]
       },
