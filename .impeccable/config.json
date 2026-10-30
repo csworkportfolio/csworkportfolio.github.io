@@ -26,6 +26,15 @@
         "rule": "overused-font",
         "value": "helvetica",
         "createdAt": "2026-10-29T11:17:21.989Z"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "assets/css/style.css"
+        ],
+        "createdAt": "2026-10-30T06:15:15.763Z",
+        "reason": "Agent: the .mb-row border is the Monday.com demo recreating Monday's real group color bar on the AI page, a faithful copy of another product's UI, not a card accent"
       }
     ]
   }

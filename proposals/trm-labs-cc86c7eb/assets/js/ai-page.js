@@ -1124,6 +1124,106 @@
     wire(d, loop);
   }
 
+  // Budget AI's walkthrough on its tool card, on an iPhone: the widget opens the app, the pace draws, then a bakery
+  // charge in the review inbox takes the suggested category and the fix becomes a rule, then it starts over
+  function budget(screen) {
+    const view = screen.querySelector(".bg-view"), bg = view.querySelector(".bg"), scr = bg.querySelector(".bg-scr"), touch = bg.querySelector(".bg-touch");
+    const $ = (s) => bg.querySelector(s), $$ = (s) => [...bg.querySelectorAll(s)];
+    const fit = () => view.style.setProperty("--bg-s", view.clientWidth / 720);
+    new ResizeObserver(fit).observe(view);
+    fit();
+    if (still) return;   // stays on the finished inbox
+    const d = demo(screen), w = d.wait;
+    const set = (cls, on) => bg.classList.toggle(cls, on);
+    const row = $(".bg-row.is-first"), name = row.querySelector(".bg-name"), cell = row.querySelector(".bg-cell"), dot = row.querySelector(".bg-dot");
+    const done = { name: name.textContent, chip: cell.innerHTML }, raw = name.dataset.raw;
+    const counts = $$(".bg-n"), con = $(".bg-field.is-con"), ren = $(".bg-field.is-ren");
+    const conV = con.querySelector(".bg-v"), renV = ren.querySelector(".bg-v"), conText = conV.textContent, renText = renV.textContent;
+    // a finger lands on an element (in the screen's own points, so it rides along with the pan)
+    const tap = async (el, press = el, dx = 0.5, dy = 0.5) => {
+      const a = scr.getBoundingClientRect(), b = el.getBoundingClientRect(), k = a.width / 393;
+      touch.style.left = (b.left - a.left + b.width * dx) / k + "px";
+      touch.style.top = (b.top - a.top + b.height * dy) / k + "px";
+      touch.classList.add("is-on"); press.classList.add("is-press");
+      await w(260);
+      touch.classList.remove("is-on"); press.classList.remove("is-press");
+    };
+    const count = (n) => counts.forEach((c) => { c.textContent = n; c.classList.remove("is-flash"); void c.offsetWidth; c.classList.add("is-flash"); });
+
+    function reset() {
+      ["is-app", "is-drawn", "is-scroll", "is-pick", "is-pan", "is-t1", "is-t2", "is-sheet", "is-con"].forEach((c) => set(c, false));
+      name.textContent = raw;
+      cell.innerHTML = '<span class="bg-chip is-none">Uncategorized</span>';
+      dot.classList.add("is-on");
+      counts.forEach((c) => (c.textContent = c.dataset.n));
+      conV.textContent = raw; renV.textContent = "";
+      [con, ren].forEach((f) => f.classList.remove("is-focus"));
+    }
+    async function loop() {
+      for (;;) {
+        reset();
+        await w(1100);
+        // 1. the Home Screen: the Free to Spend widget opens the app, and the month's pace draws in
+        await tap($(".bg-wid.is-free"));
+        set("is-app", true);
+        await w(650);
+        set("is-drawn", true);
+        await w(2600);
+        // 2. down to the review inbox: the bakery charge has no category yet
+        set("is-scroll", true);
+        await w(1300);
+        await tap(cell.firstElementChild);
+        set("is-pick", true);
+        await w(1500);
+        // 3. the picker's suggestion (what this name was given before), then the offer to make it a rule
+        const sug = $(".bg-opt.is-sug");
+        await tap(sug.firstElementChild, sug);
+        set("is-pick", false);
+        cell.innerHTML = done.chip;
+        cell.firstElementChild.classList.add("is-flash");
+        await w(700);
+        set("is-pan", true);
+        await w(500);
+        set("is-t1", true);
+        await w(1700);
+        await tap($(".bg-act"));
+        set("is-t1", false); set("is-sheet", true);
+        await w(1300);
+        // 4. the rule: names containing the store name, renamed for good
+        await tap($(".bg-seg .is-c"));
+        set("is-con", true);
+        await w(600);
+        await tap(con, con, 0.6);
+        con.classList.add("is-focus");
+        await w(300);
+        await d.type(conV, conText, 60);
+        await w(500);
+        con.classList.remove("is-focus");
+        await tap(ren, ren, 0.4);
+        ren.classList.add("is-focus");
+        await w(300);
+        await d.type(renV, renText, 70);
+        await w(700);
+        ren.classList.remove("is-focus");
+        await tap($(".bg-save"));
+        set("is-sheet", false);
+        await w(350);
+        set("is-t2", true);
+        await w(1800);
+        set("is-t2", false);
+        // 5. back up: the charge has its name and category, and the inbox has one less to review
+        set("is-pan", false);
+        await w(800);
+        name.textContent = done.name;
+        name.classList.remove("is-flash"); void name.offsetWidth; name.classList.add("is-flash");
+        dot.classList.remove("is-on");
+        count(counts[0].dataset.n - 1);
+        await w(3200);
+      }
+    }
+    wire(d, loop);
+  }
+
   const kinds = { localize, board, cut, fan, geo, tools };
   for (const fig of document.querySelectorAll(".ai-demo[data-demo]")) {
     const k = kinds[fig.dataset.demo];

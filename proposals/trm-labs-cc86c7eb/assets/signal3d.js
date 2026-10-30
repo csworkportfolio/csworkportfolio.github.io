@@ -269,9 +269,15 @@
     if (s < 1.7) { const k = (s - 0.5) / 1.2; const burst = Math.sin(s * 47) * Math.sin(s * 23) > 0.15 ? 1 : 0.08; return Math.min(1, burst * (0.4 + 0.6 * k)); }
     return 0.97 + 0.03 * Math.sin(s * 31) * Math.sin(s * 17);
   }
-  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false;
-  host.addEventListener("pointermove", (e) => { const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true; });
-  host.addEventListener("pointerleave", () => { pointerIn = false; });
+  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false;
+  // the pointer steers the light only once it has passed over the fixture itself; a pointer that just crosses
+  // the sky leaves the beam alone. Leaving the scene, or resting long enough for the beam to drift home, disarms it.
+  const caster = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  host.addEventListener("pointermove", (e) => {
+    const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true;
+    if (!armed) { ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); armed = caster.intersectObject(fixture, true).length > 0; }
+  });
+  host.addEventListener("pointerleave", () => { pointerIn = false; armed = false; });
   // the deck point under the pointer: the camera's ray through it, onto the cloud
   const pointerHit = new THREE.Vector3();
   function aimUnderPointer() {
@@ -295,7 +301,8 @@
     const sp = LOCK.pan + sw.pan * (1 - lock) + 0.012 * Math.sin(s * 0.7) * lock, st = LOCK.tilt + sw.tilt * (1 - lock) + 0.008 * Math.sin(s * 0.9 + 2.0) * lock;
     let wantPan = VIEW.pan + (sp - VIEW.pan) * turn, wantTilt = VIEW.tilt + (st - VIEW.tilt) * turn;
     // after the lock, the pointer steers the light; still for a moment, or gone, and it drifts home
-    const active = !still && lock >= 1 && pointerIn && performance.now() - lastMove < 1400 && aimUnderPointer();
+    if (armed && performance.now() - lastMove > 4000) armed = false;
+    const active = !still && lock >= 1 && pointerIn && armed && performance.now() - lastMove < 1400 && aimUnderPointer();
     steer += ((active ? 1 : 0) - steer) * 0.05;
     if (lock >= 1) { const a = anglesFor(pointerHit); wantPan = wantPan + (a.pan - wantPan) * steer; wantTilt = wantTilt + (a.tilt - wantTilt) * steer; }
     if (lock < 1) { curPan = wantPan; curTilt = wantTilt; } else { curPan += (wantPan - curPan) * 0.07; curTilt += (wantTilt - curTilt) * 0.07; }
