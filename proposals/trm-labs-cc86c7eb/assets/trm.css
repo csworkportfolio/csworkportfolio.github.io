@@ -322,14 +322,15 @@ html.theme-dark .trm-tabs button[aria-selected="true"][data-tab="episode"], html
 .trm-funnel li:nth-child(4) { background: var(--co-green); }
 .trm-funnel li:nth-child(5) { background: var(--co-mint); color: var(--co-navy); }
 
-/* a hairline of colour along the top of the cards, cycling through the palette */
-.trm-stats > div, .trm-bets .trm-card, .trm-three .trm-card { border-top: 3px solid var(--co-blue); }
-.trm-stats > div:nth-child(2), .trm-bets .trm-card:nth-child(2), .trm-three .trm-card:nth-child(2) { border-top-color: var(--co-pink); }
-.trm-stats > div:nth-child(3), .trm-bets .trm-card:nth-child(3), .trm-three .trm-card:nth-child(3) { border-top-color: var(--co-mint); }
-.trm-stats > div:nth-child(4), .trm-bets .trm-card:nth-child(4) { border-top-color: var(--co-cyan); }
-.trm-bets .trm-card:nth-child(5) { border-top-color: var(--co-burgundy); }
-.trm-bets .trm-card:nth-child(6) { border-top-color: var(--co-navy); }
-html.theme-dark .trm-bets .trm-card:nth-child(6), html.can-dark:not(.theme-light) .trm-bets .trm-card:nth-child(6) { border-top-color: #3d8bff; }
+/* a hairline of colour along the top of the cards, cycling through the palette: an inset shadow, so it follows the
+   rounded corners instead of cutting across them */
+.trm-stats > div, .trm-bets .trm-card, .trm-three .trm-card { --rule: var(--co-blue); box-shadow: var(--ai-shadow), inset 0 3px 0 var(--rule); }
+.trm-stats > div:nth-child(2), .trm-bets .trm-card:nth-child(2), .trm-three .trm-card:nth-child(2) { --rule: var(--co-pink); }
+.trm-stats > div:nth-child(3), .trm-bets .trm-card:nth-child(3), .trm-three .trm-card:nth-child(3) { --rule: var(--co-mint); }
+.trm-stats > div:nth-child(4), .trm-bets .trm-card:nth-child(4) { --rule: var(--co-cyan); }
+.trm-bets .trm-card:nth-child(5) { --rule: var(--co-burgundy); }
+.trm-bets .trm-card:nth-child(6) { --rule: var(--co-navy); }
+html.theme-dark .trm-bets .trm-card:nth-child(6), html.can-dark:not(.theme-light) .trm-bets .trm-card:nth-child(6) { --rule: #3d8bff; }
 
 /* the pipeline's human step and the chart's second series */
 .trm-pipe li.is-human { box-shadow: var(--ai-shadow), inset 0 0 0 2px var(--co-pink); }
