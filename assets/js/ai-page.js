@@ -1245,10 +1245,10 @@
     };
     // the pin on its target, and its thread beside it (to the right when it fits)
     const place = (k) => {
-      const [x, y] = k === "photo" ? at(typo, 0.82, 0.12) : at(targets.model, 0.68, 0.3);
+      const [x, y] = k === "photo" ? at(typo, 1, 0.15) : at(targets.model, 0.82, 0.32);
       pin.style.left = x + "px"; pin.style.top = y + "px";
       card.style.left = (x + 16 + 250 > 710 ? x - 16 - 250 : x + 16) + "px";
-      card.style.top = Math.max(30, Math.min(y - 14, 450 - 62 - 196)) + "px";
+      card.style.top = Math.max(30, Math.min(y - 6, 450 - 62 - 196)) + "px";
     };
     function reset(k) {
       ["is-frozen", "is-markup", "is-pin", "is-card", "is-menu", "is-reading", "is-green"].forEach((c) => set(c, false));
@@ -1284,7 +1284,7 @@
       await w(900);
       await click(); $(".mk-tl.is-cmt").classList.add("is-on");
       await w(400);
-      k === "photo" ? point(typo, 0.82, 0.3) : point(targets.model, 0.68, 0.35);
+      k === "photo" ? point(typo, 1, 0.3) : point(targets.model, 0.82, 0.37);
       await w(1000);
       await click();
       place(k);

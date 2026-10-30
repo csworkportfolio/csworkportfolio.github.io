@@ -2051,7 +2051,7 @@ def demo_markup(m):
           <p class="mk-f"><span>Roughness</span><span class="mk-bar"><i style="width:40%"></i>0.40</span></p>
           <p class="mk-f"><span>Metallic</span><span class="mk-bar"><i style="width:0"></i>0.00</span></p></div></div>
     </div>
-    <div class="mk-time">{mk_icon("play")}<div class="mk-ruler">{ticks}<i class="mk-head"></i></div></div>
+    <div class="mk-time">{mk_icon("play")}<div class="mk-ruler">{ticks}<i class="mk-play"></i></div></div>
   </div>'''
     spark = f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="{MK_SPARK}"/></svg>'
     sw = "".join(f'<i class="mk-swatch{" is-on" if i == 1 else ""}" style="background:{c}"></i>' for i, c in enumerate(("#ff453a", "#ffd60a", "#0a84ff", "#ffffff")))

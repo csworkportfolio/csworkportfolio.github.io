@@ -3966,11 +3966,11 @@ a.tl-cta:active { transform: scale(.96); }
 .mk-vp-h { position: relative; z-index: 2; display: flex; gap: 12px; height: 24px; align-items: center; padding: 0 10px; color: #c7c7cc; background: rgba(40,40,40,.85); }
 .mk-vp-h span:first-child { padding: 1px 8px; border-radius: 4px; background: #555; color: #fff; }
 .mk-vp-n { position: absolute; z-index: 2; left: 10px; top: 32px; font-size: 10px; color: #c7c7cc; }
-.mk-floor { position: absolute; left: -40%; right: -40%; top: 52%; height: 140%; transform-origin: 50% 0; transform: perspective(380px) rotateX(64deg);
+.mk-floor { position: absolute; left: -54%; right: -26%; top: 52%; height: 140%; transform-origin: 50% 0; transform: perspective(380px) rotateX(64deg);
   background: linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,80,90,.55) calc(50% - 1px) calc(50% + 1px), transparent 0),
     repeating-linear-gradient(0deg, rgba(255,255,255,.1) 0 1px, transparent 1px 34px), repeating-linear-gradient(90deg, rgba(255,255,255,.1) 0 1px, transparent 1px 34px); }
-.mk-shadow { position: absolute; left: 50%; top: calc(50% + 102px); width: 150px; height: 26px; margin-left: -75px; border-radius: 50%; background: radial-gradient(rgba(0,0,0,.5), transparent 70%); }
-.mk-can { position: absolute; left: 50%; top: 50%; width: 120px; height: 200px; margin: -86px 0 0 -60px; overflow: visible; }
+.mk-shadow { position: absolute; left: 36%; top: calc(50% + 102px); width: 150px; height: 26px; margin-left: -75px; border-radius: 50%; background: radial-gradient(rgba(0,0,0,.5), transparent 70%); }
+.mk-can { position: absolute; left: 36%; top: 50%; width: 120px; height: 200px; margin: -86px 0 0 -60px; overflow: visible; }
 .mk-can-sel { fill: none; stroke: #ffa63d; stroke-width: 2.5; }
 .mk-label { fill: var(--mk-cream); transition: fill .6s; }
 .mk-can-t, .mk-can-s { fill: var(--mk-green); font: 800 10px/1 -apple-system, BlinkMacSystemFont, sans-serif; letter-spacing: .08em; transition: fill .6s; }
@@ -3998,7 +3998,7 @@ a.tl-cta:active { transform: scale(.96); }
 .mk-time > .mk-i { width: 11px; fill: currentColor; stroke: none; }
 .mk-ruler { position: relative; flex: 1; height: 100%; font-size: 9px; color: #8e8e93; }
 .mk-ruler span { position: absolute; top: 8px; }
-.mk-head { position: absolute; left: 4%; top: 4px; width: 2px; height: 20px; background: #4f8ef7; }
+.mk-play { position: absolute; left: 4%; top: 4px; width: 2px; height: 20px; background: #4f8ef7; }
 /* Markup AI on top: the frozen edge, a pin, its thread, the toolbar */
 @property --mk-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 .mk-edge { position: absolute; z-index: 5; inset: 0; padding: 5px; pointer-events: none; opacity: 0; transition: opacity .35s;
