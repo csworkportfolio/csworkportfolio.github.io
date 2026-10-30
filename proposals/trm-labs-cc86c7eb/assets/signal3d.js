@@ -285,8 +285,9 @@
     const v = new THREE.Vector3(tx, -ty, 0.5).unproject(camera); const d = v.sub(camera.position).normalize();
     if (d.y < 0.08) return false;
     const t = (CLOUD_Y - camera.position.y) / d.y; pointerHit.copy(camera.position).addScaledVector(d, t);
-    pointerHit.x = Math.max(TARGET.x - 70, Math.min(TARGET.x + 70, pointerHit.x)); pointerHit.z = Math.max(TARGET.z - 50, Math.min(TARGET.z + 42, pointerHit.z));
-    return true;
+    // only the sky counts: a pointer low in the frame (on the fixture, on the copy) would land far outside the
+    // deck's playable patch, and the head would wrench round to it
+    return Math.abs(pointerHit.x - TARGET.x) <= 70 && pointerHit.z >= TARGET.z - 50 && pointerHit.z <= TARGET.z + 42;
   }
   let curPan = 0, curTilt = 0, steer = 0;
   function resize() {
@@ -301,12 +302,17 @@
     const sw = sweep(s - 2.2);
     const sp = LOCK.pan + sw.pan * (1 - lock) + 0.012 * Math.sin(s * 0.7) * lock, st = LOCK.tilt + sw.tilt * (1 - lock) + 0.008 * Math.sin(s * 0.9 + 2.0) * lock;
     let wantPan = VIEW.pan + (sp - VIEW.pan) * turn, wantTilt = VIEW.tilt + (st - VIEW.tilt) * turn;
-    // after the lock, the pointer steers the light; still for a moment, or gone, and it drifts home
+    // from the first frame, a pointer that has touched the fixture steers the light, the opening sequence yielding
+    // to it; still for a moment, or gone, and it drifts back to wherever the sequence has got to
     if (armed && performance.now() - lastMove > 4000) armed = false;
-    const active = !still && lock >= 1 && pointerIn && armed && performance.now() - lastMove < 1400 && aimUnderPointer();
+    const active = !still && pointerIn && armed && performance.now() - lastMove < 1400 && aimUnderPointer();
     steer += ((active ? 1 : 0) - steer) * 0.05;
-    if (lock >= 1) { const a = anglesFor(pointerHit); wantPan = wantPan + (a.pan - wantPan) * steer; wantTilt = wantTilt + (a.tilt - wantTilt) * steer; }
-    if (lock < 1) { curPan = wantPan; curTilt = wantTilt; } else { curPan += (wantPan - curPan) * 0.07; curTilt += (wantTilt - curTilt) * 0.07; }
+    // the pan comes out of atan2 and wraps at +-PI right where the lock sits (the deck is behind the fixture's
+    // zero), so take the pointer's pan the short way round from where the head already is, never the long way
+    { const a = anglesFor(pointerHit); const dp = Math.atan2(Math.sin(a.pan - wantPan), Math.cos(a.pan - wantPan)); wantPan = wantPan + dp * steer; wantTilt = wantTilt + (a.tilt - wantTilt) * steer; }
+    // the scripted sweep is followed exactly; once the pointer has had the light, it eases (by then the eased
+    // angle has already converged on the script, so handing back is seamless)
+    if (lock < 1 && steer < 0.001) { curPan = wantPan; curTilt = wantTilt; } else { curPan += (wantPan - curPan) * 0.07; curTilt += (wantTilt - curTilt) * 0.07; }
     const len = aim(curPan, curTilt);
     cone.scale.y = len; pMat.uniforms.len.value = len;
     // facing the viewer: the lens flares and the beam itself dims, like looking into the light
