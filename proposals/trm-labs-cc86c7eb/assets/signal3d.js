@@ -278,6 +278,13 @@
     const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true; if (e.pointerType === "mouse") hold = 1400;
     // only the metal counts: the beam cone, its particles and the lens glow are children of the head too
     ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); onFixture = caster.intersectObject(fixture, true).some((h) => h.object !== cone && h.object !== pts && h.object !== lensGlow);
+    // a near miss counts too: the projector is a dark silhouette half off the bottom of the frame, so anywhere within
+    // a generous ring around its head on screen hands over the light
+    if (!onFixture) {
+      const hp = new THREE.Vector3(); head.getWorldPosition(hp); hp.project(camera);
+      const bb = host.getBoundingClientRect(), aspect = bb.width / bb.height;
+      onFixture = Math.hypot((tx - hp.x) * aspect, (-ty - hp.y)) < 0.9;
+    }
     if (onFixture) armed = true;
   });
   host.addEventListener("pointerleave", (e) => { if (e.pointerType !== "mouse") return; pointerIn = false; onFixture = false; });   // the beam drifts home while the pointer is away; it stays armed
