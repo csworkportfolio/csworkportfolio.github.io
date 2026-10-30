@@ -275,7 +275,8 @@
   const caster = new THREE.Raycaster(), ndc = new THREE.Vector2();
   host.addEventListener("pointermove", (e) => {
     const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true;
-    if (!armed) { ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); armed = caster.intersectObject(fixture, true).length > 0; }
+    // only the metal counts: the beam cone, its particles and the lens glow are children of the head too
+    if (!armed) { ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); armed = caster.intersectObject(fixture, true).some((h) => h.object !== cone && h.object !== pts && h.object !== lensGlow); }
   });
   host.addEventListener("pointerleave", () => { pointerIn = false; armed = false; });
   // the deck point under the pointer: the camera's ray through it, onto the cloud
