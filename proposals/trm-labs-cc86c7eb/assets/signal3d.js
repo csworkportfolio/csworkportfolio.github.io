@@ -269,18 +269,25 @@
     if (s < 1.7) { const k = (s - 0.5) / 1.2; const burst = Math.sin(s * 47) * Math.sin(s * 23) > 0.15 ? 1 : 0.08; return Math.min(1, burst * (0.4 + 0.6 * k)); }
     return 0.97 + 0.03 * Math.sin(s * 31) * Math.sin(s * 17);
   }
-  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false, onFixture = false;
+  let t0 = performance.now(), px = 0, py = 0, tx = 0, ty = 0, lastMove = -1e9, pointerIn = false, armed = false, onFixture = false, hold = 1400;
   // the pointer steers the light only once it has touched the fixture itself; a pointer that just crosses the
   // sky leaves the beam alone. Once touched, it stays the visitor's for the rest of the page (leaving the scene or
   // resting only lets the beam drift home until the pointer moves again).
   const caster = new THREE.Raycaster(), ndc = new THREE.Vector2();
   host.addEventListener("pointermove", (e) => {
-    const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true;
+    const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2; lastMove = performance.now(); pointerIn = true; if (e.pointerType === "mouse") hold = 1400;
     // only the metal counts: the beam cone, its particles and the lens glow are children of the head too
     ndc.set(tx, -ty); caster.setFromCamera(ndc, camera); onFixture = caster.intersectObject(fixture, true).some((h) => h.object !== cone && h.object !== pts && h.object !== lensGlow);
     if (onFixture) armed = true;
   });
-  host.addEventListener("pointerleave", () => { pointerIn = false; onFixture = false; });   // the beam drifts home while the pointer is away; it stays armed
+  host.addEventListener("pointerleave", (e) => { if (e.pointerType !== "mouse") return; pointerIn = false; onFixture = false; });   // the beam drifts home while the pointer is away; it stays armed
+  // touch screens have no hover: a tap anywhere in the scene aims the light there (and the next taps keep steering);
+  // left alone, it drifts home as with a resting mouse
+  host.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse") return;
+    const b = host.getBoundingClientRect(); tx = ((e.clientX - b.left) / b.width - 0.5) * 2; ty = ((e.clientY - b.top) / b.height - 0.5) * 2;
+    lastMove = performance.now(); pointerIn = true; armed = true; onFixture = false; hold = 4000;   // a tap holds the light where it landed for a few seconds
+  });
   // the deck point under the pointer: the camera's ray through it, onto the cloud
   const pointerHit = new THREE.Vector3(), tryHit = new THREE.Vector3(); let haveHit = false;
   function aimUnderPointer() {
@@ -309,7 +316,7 @@
     let wantPan = VIEW.pan + (sp - VIEW.pan) * turn, wantTilt = VIEW.tilt + (st - VIEW.tilt) * turn;
     // from the first frame, a pointer that has touched the fixture steers the light, the opening sequence yielding
     // to it; still for a moment, or away from the scene, and it drifts back to wherever the sequence has got to
-    const active = !still && pointerIn && armed && performance.now() - lastMove < 1400 && aimUnderPointer();
+    const active = !still && pointerIn && armed && performance.now() - lastMove < hold && aimUnderPointer();
     steer += ((active ? 1 : 0) - steer) * (active ? 0.16 : 0.05);   // quick to take, slow to let go
     // the pan comes out of atan2 and wraps at +-PI right where the lock sits (the deck is behind the fixture's
     // zero), so take the pointer's pan the short way round from where the head already is, never the long way
