@@ -3759,12 +3759,12 @@ a.tl-cta:active { transform: scale(.96); }
     --b-wall: linear-gradient(165deg, #1f2f6e 0%, #4a2c7d 55%, #7d3d3a 100%);
     --b-stage: radial-gradient(90% 120% at 50% 100%, #2a2a2d 0%, #111113 100%); }
 }
-.bg p, .bg h5 { margin: 0; padding: 0; }
+.bg :where(p, h5) { margin: 0; padding: 0; }   /* as light as one class, so the rules below win */
 .bg-i { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 /* the phone: a dark titanium band around the screen; it pans up for the sheet */
 .bg-phone { position: absolute; left: 195px; top: 26px; width: 417px; height: 876px; border-radius: 66px; background: #1d1d1f; transform-origin: 0 0;
   transform: scale(.79); box-shadow: inset 0 0 0 2px #3a3a3c, inset 0 0 0 5px #0b0b0c, 0 30px 60px rgba(0,0,0,.28); transition: transform .9s var(--ease); }
-.bg.is-pan .bg-phone { transform: translateY(-357px) scale(.79); }   /* 282 on the stage, over .79 */
+.bg.is-pan .bg-phone { transform: translateY(-344px) scale(.79); }   /* 272 on the stage, over .79 */
 .bg-scr { position: absolute; inset: 12px; border-radius: 54px; overflow: hidden; background: var(--b-wall); }
 .bg-island { position: absolute; z-index: 8; left: 133px; top: 11px; width: 126px; height: 37px; border-radius: 19px; background: #000; }
 .bg-status { position: absolute; z-index: 7; left: 0; right: 0; top: 0; height: 54px; display: flex; align-items: center; padding: 6px 34px 0 52px;
@@ -3795,7 +3795,7 @@ a.tl-cta:active { transform: scale(.96); }
 .bg-app { position: absolute; inset: 0; z-index: 2; background: var(--b-bg); transform-origin: 26% 22%; opacity: 0; transform: scale(.42);
   border-radius: 54px; transition: opacity .3s, transform .5s var(--ease); }
 .bg.is-app .bg-app { opacity: 1; transform: none; }
-.bg-app::before { content: ""; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 170px; background: linear-gradient(var(--b-bg) 82%, transparent); }
+.bg-app::before { content: ""; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 178px; background: linear-gradient(var(--b-bg) 160px, transparent); }
 .bg-head { position: absolute; z-index: 4; left: 0; right: 0; top: 62px; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
 .bg-head .bg-i { color: var(--b-mu); }
 .bg-head b { font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
@@ -3819,7 +3819,7 @@ a.tl-cta:active { transform: scale(.96); }
 .bg-fill { fill: var(--b-ok); opacity: 0; transition: opacity .6s .9s; }
 .bg.is-drawn .bg-spent { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s var(--ease); }
 .bg.is-drawn .bg-fill { opacity: .12; }
-.bg-under { position: absolute; right: 64px; bottom: 54px; padding: 3px 10px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--b-ok);
+.bg-under { position: absolute; right: 22px; bottom: 20px; padding: 3px 10px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--b-ok);
   background: color-mix(in srgb, var(--b-ok) 16%, transparent); opacity: 0; transition: opacity .4s; }
 .bg.is-drawn .bg-under { opacity: 1; transition-delay: 1.2s; }
 .bg-rh { display: flex; justify-content: space-between; align-items: center; margin: 24px 6px 10px; font-size: 13px; font-weight: 600; letter-spacing: .06em;
@@ -3840,7 +3840,7 @@ a.tl-cta:active { transform: scale(.96); }
 .bg-chip.is-none { color: var(--b-mu); background: var(--b-ctl); }
 .bg-chip.is-press { transform: scale(.94); }
 /* the category picker, with what you picked for this name before at the top */
-.bg-pick { position: absolute; z-index: 5; right: 10px; top: 270px; width: 270px; height: 236px; overflow: hidden; padding: 0 10px; border-radius: 18px;
+.bg-pick { position: absolute; z-index: 5; right: 10px; top: 270px; width: 270px; height: 214px; overflow: hidden; padding: 0 10px; border-radius: 18px;
   background: var(--b-sf); box-shadow: inset 0 0 0 1px var(--b-bd), 0 18px 40px rgba(0,0,0,.25); opacity: 0; transform: translateY(-6px) scale(.97);
   transform-origin: 70% 0; transition: opacity .2s, transform .25s var(--ease); }
 .bg.is-pick .bg-pick { opacity: 1; transform: none; }
@@ -3859,16 +3859,16 @@ a.tl-cta:active { transform: scale(.96); }
 .bg-toast .bg-act { flex: none; padding: 7px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--b-bg); background: var(--b-tx); transition: transform .12s; }
 .bg-act.is-press { transform: scale(.94); }
 .bg.is-t1 .is-fix, .bg.is-t2 .is-saved { opacity: 1; transform: none; }
-.bg-sheet { position: absolute; z-index: 6; left: 8px; right: 8px; bottom: 8px; padding: 10px 20px 18px; border-radius: 38px; background: var(--b-sf);
+.bg-sheet { position: absolute; z-index: 6; left: 8px; right: 8px; bottom: 8px; padding: 8px 18px 16px; border-radius: 38px; background: var(--b-sf);
   box-shadow: 0 -10px 40px rgba(0,0,0,.25); transform: translateY(110%); transition: transform .45s var(--ease); }
 .bg.is-sheet .bg-sheet { transform: none; }
 .bg-app::after { content: ""; position: absolute; z-index: 5; inset: 0; border-radius: inherit; background: rgba(0,0,0,.3); opacity: 0; transition: opacity .3s; pointer-events: none; }
 .bg.is-sheet .bg-app::after { opacity: 1; }
-.bg-grab { display: block; width: 36px; height: 5px; margin: 0 auto 12px; border-radius: 3px; background: var(--b-bd); }
+.bg-grab { display: block; width: 36px; height: 5px; margin: 0 auto 10px; border-radius: 3px; background: var(--b-bd); }
 .bg-sheet h5 { font-size: 20px; font-weight: 700; line-height: 1.2; }
 .bg-desc { margin-top: 6px; font-size: 13px; line-height: 1.35; color: var(--b-mu); }
-.bg-set { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 15px; color: var(--b-mu); }
-.bg-lab { margin: 12px 0 5px; font-size: 13px; font-weight: 600; color: var(--b-mu); }
+.bg-set { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 15px; color: var(--b-mu); }
+.bg-lab { margin: 9px 0 4px; font-size: 13px; font-weight: 600; color: var(--b-mu); }
 .bg-seg { display: grid; grid-template-columns: 1fr 1fr; padding: 2px; border-radius: 10px; background: var(--b-ctl); font-size: 14px; text-align: center; }
 .bg-seg span { padding: 6px 0; border-radius: 8px; transition: background .2s, box-shadow .2s; }
 .bg-seg .is-c, .bg:not(.is-con) .bg-sheet .is-x { background: var(--b-sf); box-shadow: 0 1px 3px rgba(0,0,0,.15), inset 0 0 0 .5px var(--b-bd); font-weight: 600; }
@@ -3878,10 +3878,10 @@ a.tl-cta:active { transform: scale(.96); }
 .bg-field.is-focus { box-shadow: inset 0 0 0 2px var(--b-ac); }
 .bg-caret { display: inline-block; width: 2px; height: 19px; margin-left: 1px; background: var(--b-ac); visibility: hidden; animation: hh-blink 1s steps(1) infinite; }
 .bg-field.is-focus .bg-caret { visibility: visible; }
-.bg-sw { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; font-size: 15px; }
+.bg-sw { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; font-size: 15px; }
 .bg-switch { position: relative; width: 51px; height: 31px; border-radius: 16px; background: #34c759; }
 .bg-switch::after { content: ""; position: absolute; right: 2px; top: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.2); }
-.bg-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.bg-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
 .bg-btns span { padding: 10px 18px; border-radius: 12px; font-size: 16px; font-weight: 600; background: var(--b-ctl); transition: transform .12s, filter .12s; }
 .bg-btns .bg-save { color: #fff; background: var(--b-ac); }
 .bg-save.is-press { transform: scale(.95); filter: brightness(.9); }
