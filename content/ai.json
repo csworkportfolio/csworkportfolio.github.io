@@ -1129,7 +1129,87 @@
             "name": "Job Search AI",
             "tag": "Working Title",
             "line": "A job search system that runs in your own Claude: it finds roles that fit, tailors a resume and cover letter for each, and tracks every application.",
-            "img": "jsai-mac.jpg"
+            "jobs": {
+              "scenes": ["Welcome and Dashboard", "Resume Builder", "Application Tracker", "Role Sweeper", "Company Mapper"],
+              "day": "Friday, October 30",
+              "name": "Alex",
+              "initials": "AR",
+              "profiles": [["AR", "Alex"], ["RC", "Riley"], ["DO", "Dana"]],
+              "tip": "Read the posting out loud once. The words they repeat are the ones to use.",
+              "tiles": [
+                ["Call Ahead", "Northwind Analytics", "Wed 1:00pm"],
+                ["Up Next", "Lumen Health", "Tue 10:00am"],
+                ["Talking With", "Silverleaf Wellness", "Content Marketing Manager"],
+                ["Replies", "38%", "heard from a person"],
+                ["Strong Fit", "Employee Communications Manager", "Cobalt Ridge Software"],
+                ["Queue", "3", "built, ready to fill"],
+                ["Applied", "Beacon Grid", "Content Marketing Manager"],
+                ["Role Sweep", "25", "open leads today"]
+              ],
+              "home": {
+                "queue": [0, 0, 1, 0, 1],
+                "needs": "Driftless Data, ready to submit",
+                "next": ["Lumen Health", "Hiring manager interview", "Tue 11/3, 10:00am"],
+                "apps": [54, [3, 4, 4, 4, 6, 7, 2, 1]],
+                "owed": ["Harbor & Pine", "Send Jo two writing samples by Mon 2 Nov."],
+                "stand": [["Interviewing", 8, "green"], ["Applied", 21, "slate"], ["Paused", 2, "blue"], ["Closed", 20, "red"], ["Withdrew", 3, "amber"]],
+                "replies": [31, "17 of 54 heard from a person"],
+                "sweep": [33, "Internal Communications Manager", "Ashgrove Health · $100,000 to $118,000"],
+                "map": [90, "Larchmont Metrics", "Added today · like Northwind Analytics"],
+                "resumes": [4, "Driftless Data", "Content Marketing Manager"]
+              },
+              "build": {
+                "company": "Ashgrove Health",
+                "role": "Internal Communications Manager",
+                "score": 90,
+                "keywords": "9 of 10",
+                "pages": "2 of 2",
+                "round": "2",
+                "chars": "3,480",
+                "why": "Leads with the employee newsletter and the town hall series, since the posting asks for internal comms and change messaging first.",
+                "list": [
+                  ["Driftless Data", "Content Marketing Manager", "Passed", "Oct 19"],
+                  ["Hollis Park Clinics", "Web Content Specialist", "Passed", "Oct 19"],
+                  ["Pebblebrook Software", "Senior Content Marketing Manager", "Needs a Fix", "Oct 18"]
+                ]
+              },
+              "tracker": {
+                "stats": [["54", "Applications Sent"], ["16", "Roles Interviewed"], ["29.6%", "Interview Rate"], ["8", "In Play"], ["23", "Closed"]],
+                "brief": [
+                  ["Owed", "Harbor & Pine", "Send Jo two writing samples"],
+                  ["Owed", "Silverleaf Wellness", "Send Rachel the 30-60-90 outline"],
+                  ["Follow Up", "Crestline Staffing → Copperline Networks", "Due Mon 11/2"]
+                ],
+                "owed": [
+                  ["Send Jo Two Writing Samples by Mon 2 Nov", "Harbor & Pine · Content Strategist", "Due Mon, 11/2"],
+                  ["Send Rachel a One-page 30-60-90 Outline by Wed 4 Nov", "Silverleaf Wellness · Social Media and Content Manager", "Due Wed, 11/4"]
+                ],
+                "booked": [
+                  ["Lumen Health", "Internal Communications Manager", "Hiring manager interview", "Tue 11/3, 10:00am"],
+                  ["Meridian Learning", "Senior Communications Specialist", "Recruiter screen", "Thu 11/5, 11:30am"]
+                ],
+                "waiting": [
+                  ["Ironwood Payments", "Email and Lifecycle Content Manager", "Passed to the hiring manager", "15 days ago"],
+                  ["Crestline Staffing → Copperline Networks", "Web Content Manager (Contract)", "Client interview held", "15 days ago"]
+                ]
+              },
+              "roles": [
+                ["Internal Communications Manager", "Ashgrove Health", "$100K to $118K", "Comms / IC", "Apply: Strong IC fit and fresh; apply today.", 1],
+                ["Content Writer (Contract)", "Glimmerstone Labs", "$45 to $55/hr", "Content", "Maybe: a short contract at $45 to $55/hr; fine as a bridge.", 0],
+                ["Social Media Manager", "Corvid Media Group", "Not Posted", "Social", "Maybe: good fit on the work; pay not posted, so ask the range first.", 0],
+                ["Web Content Manager", "Fairway Commerce", "$100K to $120K", "Web", "Apply: Strong web fit; the page QA story fits word for word.", 0]
+              ],
+              "map": {
+                "center": "Northwind Analytics",
+                "finds": [
+                  ["Overlook Docs", "Documentation software; remote-first since it started, and hires writers.", "From remoteintech", "37 Open Jobs", "green"],
+                  ["Oxbow Metrics", "Pricing analytics for retailers; a startup content role covering blog and guides.", "Like Driftless Data", "37 Open Jobs", "blue"],
+                  ["Bluffline Analytics", "Product analytics for mobile apps; a small team with a blog and newsletter.", "Like Driftless Data", "13 Open Jobs", "purple"],
+                  ["Farthing Labs", "Bookkeeping for freelancers; a remote-first company with a lifecycle team.", "From remoteintech", "4 Open Jobs", "blue"]
+                ],
+                "pick": ["Larchmont Metrics", "Revenue analytics for subscription businesses; a B2B data company whose content team writes for marketing leaders, like Northwind.", "Greenhouse · 14 open jobs · 200 to 500 staff · Added Oct 30"]
+              }
+            }
           },
           {
             "name": "Markup AI",
