@@ -361,3 +361,4 @@ p > .trm-new:first-child, .prose p .trm-new { margin-left: 0; margin-right: 1px;
 
 /* the intro runs margin to margin too, the same width as the title and the three messages */
 .trm-page #ask p { max-width: none; }
+.trm-page .trm-goals li { padding-left: 0; padding-right: 0; }   /* the words start on the title's edge, not 14px in */
